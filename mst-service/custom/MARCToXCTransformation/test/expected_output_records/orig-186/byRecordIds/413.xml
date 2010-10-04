@@ -1,0 +1,21 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/413</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:128</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/413">
+        <xc:location>SibBJrnl</xc:location>
+        <xc:callNumber>ML1 .I39T</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1- (1977-)</xc:textualHoldings>
+        <xc:textualHoldings type="Indexes">v. 1-3</xc:textualHoldings>
+        <xc:recordID type="NRU">37294</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/258</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

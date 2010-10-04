@@ -1,0 +1,19 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/59</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:14</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/59">
+        <xc:titleOfExpression>Gesänge, op. 2</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <dcterms:language>German</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/58</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

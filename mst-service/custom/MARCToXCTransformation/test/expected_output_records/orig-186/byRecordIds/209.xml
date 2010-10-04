@@ -1,0 +1,23 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/209</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:55</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/209">
+        <xc:titleOfExpression>Amoryus and Cleopes /</xc:titleOfExpression>
+        <dcterms:hasFormat>Also available via the Internet.</dcterms:hasFormat>
+        <dcterms:hasVersion>http://www.lib.rochester.edu/camelot/teams/page.htm</dcterms:hasVersion>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <dcterms:language>English, Middle (1100-1500)</dcterms:language>
+        <xc:contributor>Page, Stephen F., 1951-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/208</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

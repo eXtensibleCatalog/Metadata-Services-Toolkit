@@ -1,0 +1,36 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/340</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:101</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/340">
+        <xc:recordID type="NRU">29692</xc:recordID>
+        <dcterms:title>Bulletin of the New York State Museum.</dcterms:title>
+        <dcterms:alternative>Bulletin of the New York State Museum, no.1 (1887)-no.46 (1901)</dcterms:alternative>
+        <dcterms:alternative>Bulletin (New York State Museum : 1901), 47 (1901)-118 (1908)</dcterms:alternative>
+        <dcterms:alternative>Museum bulletin (New York State Museum), 119 (1908)-[179] (1915)</dcterms:alternative>
+        <dcterms:alternative>New York State Museum bulletin, [no. 181] (1916)-no. 337 (1944)</dcterms:alternative>
+        <dcterms:alternative>Bulletin (New York State Museum : 1945), no. 338 (1945)-no. 351 (1956)</dcterms:alternative>
+        <dcterms:alternative>Bulletin (New York State Museum and Science Service), no. 352 (1956)-no. 424 (1974)</dcterms:alternative>
+        <dcterms:alternative>Bulletin (New York State Museum : 1976), no. 425 (1976)-no. 490 (1997)</dcterms:alternative>
+        <dcterms:alternative>New York State Museum bulletin (1998), no. 491 (1998)-</dcterms:alternative>
+        <rdvocab:placeOfProduction>Albany.</rdvocab:placeOfProduction>
+        <rdvocab:numberingOfSerials>1887-</rdvocab:numberingOfSerials>
+        <dcterms:description>This series has undergone several changes of title and changes in the name of the issuing body since its inception in 1887.</dcterms:description>
+        <rdvocab:numberingOfSerials>Numbers 468, 472, 479 and 480 never published, per NYS Museum.</rdvocab:numberingOfSerials>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Electronic resource</xc:type007>
+        <xc:typeSMD>Remote</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1887-</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/342</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

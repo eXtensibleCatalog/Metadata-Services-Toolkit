@@ -1,0 +1,20 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/41</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/41">
+        <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
+        <rdvocab:titleOfWork>Sonara. </rdvocab:titleOfWork>
+        <xc:creator>Scarpa, Sal.</xc:creator>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

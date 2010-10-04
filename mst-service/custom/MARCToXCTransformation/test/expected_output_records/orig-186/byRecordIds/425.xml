@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/425</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:132</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/425">
+        <xc:titleOfExpression>Life of Christina of Markyate /</xc:titleOfExpression>
+        <rdvocab:illustrationContent>map ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Fanous, Samuel, 1962-</xc:contributor>
+        <xc:contributor>Leyser, Henrietta.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/424</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

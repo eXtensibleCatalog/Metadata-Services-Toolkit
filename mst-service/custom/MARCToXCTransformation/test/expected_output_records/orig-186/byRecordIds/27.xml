@@ -1,0 +1,23 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/27</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:10</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/27">
+        <xc:titleOfExpression>Studies in personnel policy.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill., tables</rdvocab:illustrationContent>
+        <dcterms:relation>No. 15-28 supplement to Conference Board management record.</dcterms:relation>
+        <dcterms:relation dcterms:ISSN="0547-7239">Digest of Studies in personnel policy</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>National Industrial Conference Board.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/26</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,23 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/186</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:48</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/186">
+        <xc:titleOfExpression>African development report.</xc:titleOfExpression>
+        <dcterms:relation>Has supplement: African development report. Executive summary,    -1995; African development report. Summary, 1996-</dcterms:relation>
+        <dcterms:relation>Issues for &lt;1999-&gt; published for the Bank also by Economica in a French edition.</dcterms:relation>
+        <dcterms:relation>Rapport sur le développement en Afrique</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>African Development Bank.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/185</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

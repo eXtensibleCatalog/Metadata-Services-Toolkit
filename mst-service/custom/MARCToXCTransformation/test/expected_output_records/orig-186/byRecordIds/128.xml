@@ -1,0 +1,39 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/128</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:42</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/128">
+        <xc:titleOfExpression>New York times.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:isReferencedBy dcterms:ISSN="0006-3053">Biography index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>National newspaper index 1979-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>NEXIS June 1, 1980-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0006-1530">Bibliography of agriculture</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>BioBusiness 1990-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0524-0581">Book review index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0045-639X">Chemical industry notes</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0147-6521">Energy information abstracts</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0093-3287">Environment abstracts</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy dcterms:ISSN="0093-6758">Film literature index</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>Infobank Jan. 1969-</dcterms:isReferencedBy>
+        <dcterms:isReferencedBy>Predicasts</dcterms:isReferencedBy>
+        <dcterms:hasFormat>Also available on microfilm from University Microfilms International and in an online version.</dcterms:hasFormat>
+        <dcterms:hasFormat>Also available via the Internet.</dcterms:hasFormat>
+        <dcterms:relation>Issued monthly reduced size publication titled: Little times, &lt;1924-1928&gt;.</dcterms:relation>
+        <dcterms:relation>Semi-weekly times (New York, N.Y.) 1857-1867</dcterms:relation>
+        <dcterms:relation>New-York weekly times 1857-&lt;1896&gt;</dcterms:relation>
+        <dcterms:HasFormat>New York times on the Web</dcterms:HasFormat>
+        <dcterms:relation>Little times</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/127</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

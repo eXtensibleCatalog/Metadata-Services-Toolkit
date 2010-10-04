@@ -1,0 +1,21 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/536</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:182</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/536">
+        <dcterms:subject xsi:type="dcterms:LCC">M1013</dcterms:subject>
+        <rdarole:composer>Bruch, Max, 1838-1920.</rdarole:composer>
+        <rdvocab:titleOfWork>Schottische Fantasie; arr.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Violin with orchestra-Solo with piano.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Violin with orchestra</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Solo with piano.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,42 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/268</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:72</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/268">
+        <xc:recordID type="LCCN">00037542</xc:recordID>
+        <xc:identifier type="DNLM">101090724</xc:identifier>
+        <xc:identifier type="YBP">99804148031</xc:identifier>
+        <xc:recordID type="OCoLC">43836551</xc:recordID>
+        <xc:recordID type="NRU">2373818</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Neil Schlager, editor ; Josh Lauer, associate editor.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Science and its times : understanding the social significance of scientific discovery /</dcterms:title>
+        <rdvocab:placeOfProduction>Detroit :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Gale Group,</dcterms:publisher>
+        <dcterms:issued>c2001.</dcterms:issued>
+        <dcterms:extent>8 v. :</dcterms:extent>
+        <rdvocab:dimensions>29 cm.</rdvocab:dimensions>
+        <dcterms:description>Includes bibliographical references and indexes.</dcterms:description>
+        <dcterms:tableOfContents>v. 1. 2000 B.C. to A.D. 699 -- v. 2. 700-1449 -- v. 3. 1450-1699 -- v. 4. 1700-1799 -- v. 5. 1800-1899    -- v. 7. 1950-present -- v. 8. Index.</dcterms:tableOfContents>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">078763932X</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639338</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639346</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639354</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639362</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639370</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639389</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787639397</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0787658170</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/270</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,34 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/432</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:135</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/432">
+        <xc:recordID type="LCCN">2007050332</xc:recordID>
+        <xc:identifier type="YBP">99821656819</xc:identifier>
+        <xc:recordID type="OCoLC">183179621</xc:recordID>
+        <xc:recordID type="NRU">3949333</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Randall Wright, editor ; Charles F. Manski and Whitney Newey, special guest editors.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Economics to econometrics : contributions in honor of Daniel L. McFadden /</dcterms:title>
+        <rdvocab:placeOfProduction>Malden, MA :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Blackwell Pub.,</dcterms:publisher>
+        <dcterms:issued>c2007.</dcterms:issued>
+        <dcterms:extent>1091-1496 p. :</dcterms:extent>
+        <rdvocab:dimensions>27 cm.</rdvocab:dimensions>
+        <dcterms:description>International economic review (Print ISSN 0020-6598, Online ISSN 1468-2354), vol. 48, no.4, Nov. 2007.</dcterms:description>
+        <dcterms:description>Includes bibliographical references.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">9781405180337</dcterms:identifier>
+        <dcterms:identifier type="ISBN">1405180331</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/434</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

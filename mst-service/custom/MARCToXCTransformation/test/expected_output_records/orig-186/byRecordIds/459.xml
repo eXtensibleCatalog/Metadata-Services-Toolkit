@@ -1,0 +1,31 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/459</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:149</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/459">
+        <rdvocab:publisherNumber>No. 289</rdvocab:publisherNumber>
+        <xc:recordID type="OCoLC">10953165</xc:recordID>
+        <xc:recordID type="NRU">496722</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Puccini.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>La bohème : an opera in four acts /</dcterms:title>
+        <dcterms:alternative>Bohème :</dcterms:alternative>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>E.F. Kalmus,</dcterms:publisher>
+        <dcterms:issued>[196-?]</dcterms:issued>
+        <dcterms:extent>1 score (408 p.) ;</dcterms:extent>
+        <rdvocab:dimensions>27 cm.</rdvocab:dimensions>
+        <dcterms:description>Libretto by Giuseppe Giacosa and Luigi Illica.</dcterms:description>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/461</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

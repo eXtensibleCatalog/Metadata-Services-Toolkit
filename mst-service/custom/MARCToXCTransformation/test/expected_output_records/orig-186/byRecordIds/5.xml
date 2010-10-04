@@ -1,0 +1,81 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/5</identifier>
+    <datestamp />
+    <predecessors />
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/5">
+        <xc:location>NewsMicro</xc:location>
+        <xc:callNumber>FILM .Una191 reel 418, 1420- 1481</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">Vol. 1, no. 1 (Dec. 7, 1848)-v. 121 (Oct. 13, 1928) = [Whole no.] 1-4089.</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1-2 (Dec. 7, 1848-Dec. 1850) = reel 418</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 3-5 (Jan. 2, 1851-Dec. 29, 1853) = reel 1420</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 6-7 (Jan. 5, 1854-Dec. 27, 1855) = reel 1421</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 8-9 (Jan. 3, 1856-Dec. 31, 1857) = reel 1422</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 10-11 (Jan. 7, 1858-Dec. 29, 1859) = reel 1423</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 12-13 (Jan. 5, 1860-Dec. 26, 1861) = reel 1424</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 14-15 (Jan. 2, 1862-Dec. 31, 1863) = reel 1425</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 16-17 (Jan. 7, 1864-Dec. 28, 1865) = reel 1426</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 18-19 (Jan. 4, 1866-Dec. 26, 1867) = reel 1427</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 20-21 (Jan. 2, 1868-Dec. 30, 1869) = reel 1428</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 22 (Jan. 6-Dec. 29, 1870) = reel 1429</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 23 (Jan. 5-Dec. 28, 1871) = reel 1430</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 24 (Jan. 4-Dec. 26, 1872) = reel 1431</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 25 (Jan. 2-Dec. 25, 1873) = reel 1432</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 26 (Jan. 1-Dec. 31, 1874) = reel 1433</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 27 (Jan. 7-Dec. 30, 1875) = reel 1434</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 28 (Jan. 6-Dec. 28, 1876) = reel 1435</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 29 (Jan. 4-Dec. 27, 1877) = reel 1436</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 30 (Jan. 3-Dec. 26, 1878) = reel 1437</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 31 (Jan. 2-Dec. 25, 1879) = reel 1438</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 32 (Jan. 1-Dec. 30, 1880) = reel 1439</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 33 (Jan. 6-Dec. 29, 1881) = reel 1440</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 34 (Jan. 5-Dec. 28, 1882) = reel 1441</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 35 (Jan. 4-Dec. 27, 1883) = reel 1442</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 36 (Jan. 3-Dec. 25, 1884) = reel 1443</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 37 (Jan. 1-Dec. 31, 1885) = reel 1444</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 38 (Jan. 7-Dec. 30, 1886) = reel 1445</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 39 (Jan. 20-Dec. 29, 1887) = reel 1446</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 40 (Jan. 5-Dec. 27, 1888) = reel 1447</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 41 (Jan. 3-Dec. 26, 1889) = reel 1448</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 42 (Jan. 2-Dec. 25, 1890) = reel 1449</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 43 (Jan. 1-Dec. 31, 1891) = reel 1450</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 44 ( Jan. 7-Dec. 29, 1892) = reel 1451</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 45 (Jan. 5-Dec. 28, 1893) = reel 1452</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 46 (Jan. 4-Dec. 27, 1894) = reel 1453</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 47 (Jan. 3-Dec. 26, 1895) = reel 1454</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 48 (Jan. 2-Dec. 31, 1896) = reel 1455</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 49 (Jan. 7-Dec. 30, 1897) = reel 1456</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 50 (Jan. 6-Dec. 29, 1898) = reel 1457</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 51 (Jan. 5-Dec. 28, 1899) = reel 1458</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 52 (Jan. 4-Dec. 27, 1900) = reel 1459</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 53 (Jan. 3-Dec. 26, 1901) = reel 1460</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 54 (Jan. 2-Dec. 25, 1902) = reel 1461</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 55 (Jan. 1-Dec. 31, 1903) = reel 1462</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 56-57 (Jan. 7-Dec. 29, 1904) = reel 1463</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 58-59 (Jan. 5-Dec. 28, 1905) = reel 1464</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 60-61 (Jan. 4-Dec. 27, 1906) = reel 1465</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 62-63 (Jan. 3-Dec. 26, 1907) = reel 1466</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 64-65 (Jan. 2-Dec. 31, 1908) = reel 1467</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 66-67 (Jan. 7-Dec. 30, 1909) = reel 1468</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 68-69 (Jan. 6-Dec. 29, 1910) = reel 1469</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 70-71 (Jan. 5-Dec. 28, 1911) = reel 1470</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 72-73 (Jan. 4-Dec. 26, 1912) = reel 1471</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 74-76 (Jan. 2-Dec. 25, 1913) = reel 1472</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 77-80 (Jan. 5-Dec. 28, 1914) = reel 1473</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 81-86 (Jan. 4, 1915-June 26, 1916) = reel 1474</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 87-90 (July 3, 1916-June 30, 1917) = reel 1475</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 91-93 (July 7, 1917-Mar. 30, 1918) = reel 1476</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 94-100 (Apr. 6, 1918-Dec. 27, 1919) = reel 1477</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 101-107 (Jan. 3, 1920-Dec. 31, 1921) = reel 1478</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 108-113 (Jan. 7, 1922-Dec. 27, 1924) = reel 1479</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 114-117 (Jan. 3, 1925-Dec. 25, 1926) = reel 1480</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 118-121 (Jan. 1, 1927-Oct. 13, 1928) = reel 1481</xc:textualHoldings>
+        <xc:recordID type="NRU">1041697</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/4</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

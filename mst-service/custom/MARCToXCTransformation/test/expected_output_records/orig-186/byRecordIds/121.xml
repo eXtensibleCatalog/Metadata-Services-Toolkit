@@ -1,0 +1,27 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/121</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:40</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/121">
+        <dcterms:subject xsi:type="dcterms:LCC">E85</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">PT2660.A1</dcterms:subject>
+        <rdvocab:titleOfWork>Abenteuer unter den Indianern =</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Haviland family-Fiction.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Indian captivities-Fiction.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Mohawk Indians-Captivities-Fiction.</xc:subject>
+        <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Haviland family</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Indian captivities</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Mohawk Indians</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Fiction.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Captivities</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

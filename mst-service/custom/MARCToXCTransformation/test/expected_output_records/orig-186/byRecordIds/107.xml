@@ -1,0 +1,23 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/107</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:32</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/107">
+        <xc:titleOfExpression>Prairie farmer</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : University Microfilms International, [n.d.], 1976. 10 microfilm reels ; 35 mm. (American periodical series: 1800-1850 ; 747-748, 1720-1726, 1936)</dcterms:hasFormat>
+        <dcterms:HasFormat>Prairie farmer</dcterms:HasFormat>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Union Agricultural Society (Chicago, Ill.)</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/106</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/492</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:164</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/492">
+        <rdvocab:titleOfWork>Biochimica et biophysica acta. Molecular basis of disease</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:MESH">Molecular Biology-periodicals.</xc:subject>
+        <xc:subject xsi:type="dcterms:MESH">Pathology-periodicals.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:MESH">Molecular Biology</xc:subject>
+        <xc:subject xsi:type="dcterms:MESH">Pathology</xc:subject>
+        <xc:subject xsi:type="dcterms:MESH">periodicals.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

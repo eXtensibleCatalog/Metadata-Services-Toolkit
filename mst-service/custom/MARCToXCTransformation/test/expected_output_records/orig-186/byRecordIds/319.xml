@@ -1,0 +1,23 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/319</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:91</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/319">
+        <dcterms:subject xsi:type="dcterms:LCC">TA455.C43</dcterms:subject>
+        <rdvocab:titleOfWork>International journal of applied ceramic technology.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Ceramic materials-Periodicals.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Ceramic materials-Technological innovations-Periodicals.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Ceramic materials</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Technological innovations</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

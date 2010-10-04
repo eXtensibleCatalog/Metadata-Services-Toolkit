@@ -1,0 +1,19 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/213</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:59</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/213">
+        <xc:location>SibStack</xc:location>
+        <xc:callNumber>M1621 .S378 op.4</xc:callNumber>
+        <xc:recordID type="NRU">1807357</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/60</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

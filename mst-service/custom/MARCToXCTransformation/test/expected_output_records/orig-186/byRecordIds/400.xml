@@ -1,0 +1,19 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/400</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:123</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/400">
+        <xc:location>MinerRef20</xc:location>
+        <xc:callNumber>WM 203.5 S559u 2006</xc:callNumber>
+        <xc:recordID type="NRU">3696609</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/381</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

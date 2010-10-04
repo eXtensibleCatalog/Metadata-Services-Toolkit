@@ -1,0 +1,33 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/520</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:175</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/520">
+        <xc:recordID type="OCoLC">18671731</xc:recordID>
+        <xc:recordID type="NRU">896124</xc:recordID>
+        <dcterms:title>Proceedings : International Conference of the Association for the Advancement of Rehabilitation Technology, choice for all = Compte rendu : Conférence internationale pour le développement de la technologie en réadaptation, choix pour tous : ICAART 88, Montréal, Palais des Congrès, 25-30, June-juin 1988.</dcterms:title>
+        <rdvocab:placeOfProduction>Washington, D.C. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>RESNA, Association for the Advancement of Rehabilitation Technology,</dcterms:publisher>
+        <dcterms:issued>1988.</dcterms:issued>
+        <dcterms:extent>xviii, 681 p. :</dcterms:extent>
+        <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+        <dcterms:description>"La réadaptation, une priorité à la Régie de l'assurance automobile du Québec."</dcterms:description>
+        <dcterms:description>Includes bibliographies and index.</dcterms:description>
+        <dcterms:description>Text in English and French.</dcterms:description>
+        <dcterms:alternative>Choice for all.</dcterms:alternative>
+        <dcterms:alternative>Choix pour tous.</dcterms:alternative>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0932101178</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/522</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

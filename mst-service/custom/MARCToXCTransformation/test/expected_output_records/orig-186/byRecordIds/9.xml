@@ -1,0 +1,41 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/9</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:4</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/9">
+        <xc:identifier type="SoundNr">425 018-2</xc:identifier>
+        <xc:recordID type="OCoLC">24094664</xc:recordID>
+        <xc:recordID type="NRU">1048559</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Stravinsky. Two portraits / Bartók</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>The firebird /</dcterms:title>
+        <dcterms:alternative>Firebird /</dcterms:alternative>
+        <rdvocab:placeOfProduction>New York, N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>London,</dcterms:publisher>
+        <dcterms:issued>p1990.</dcterms:issued>
+        <dcterms:extent>1 sound disc (57 min., 23 sec.) :</dcterms:extent>
+        <rdvocab:soundCharacteristics>digital, stereo. ;</rdvocab:soundCharacteristics>
+        <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+        <dcterms:description>Eds. recorded: B. Schott's Söhne (1st work) ; Boosey &amp; Hawkes (2nd work).</dcterms:description>
+        <dcterms:description>Compact disc.</dcterms:description>
+        <dcterms:description>Digital recording (1st work); analog recording (2nd work).</dcterms:description>
+        <dcterms:description>Durations: 46:00 ; 12:00.</dcterms:description>
+        <dcterms:description>Translation of program notes by Marie-Cécile Barras inserted in container.</dcterms:description>
+        <dcterms:alternative>Two portraits.</dcterms:alternative>
+        <dcterms:alternative>2 portraits.</dcterms:alternative>
+        <dcterms:isPartOf>Jubilee.</dcterms:isPartOf>
+        <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+        <xc:type007>Sound recording</xc:type007>
+        <xc:typeSMD>Sound disk</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/11</xc:expressionManifested>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/13</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

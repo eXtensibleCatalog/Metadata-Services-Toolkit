@@ -1,0 +1,20 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/301</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:83</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/301">
+        <dcterms:subject xsi:type="dcterms:LCC">M11</dcterms:subject>
+        <rdarole:composer>Reger, Max, 1873-1916.</rdarole:composer>
+        <rdvocab:titleOfWork>Kleine Choralvorspiele</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Chorale preludes.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

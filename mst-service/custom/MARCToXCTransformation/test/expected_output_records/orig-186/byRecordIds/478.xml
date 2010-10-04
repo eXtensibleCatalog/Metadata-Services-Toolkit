@@ -1,0 +1,19 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/478</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:158</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/478">
+        <xc:location>MinerStack</xc:location>
+        <xc:callNumber>QH205 .P895 v.7 1978</xc:callNumber>
+        <xc:recordID type="NRU">573953</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/469</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

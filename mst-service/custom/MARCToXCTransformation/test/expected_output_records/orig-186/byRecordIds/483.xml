@@ -1,0 +1,26 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/483</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:160</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/483">
+        <dcterms:subject xsi:type="dcterms:LCC">ML95.2</dcterms:subject>
+        <rdarole:author>Vogan, Wayne Hamilton.</rdarole:author>
+        <rdvocab:titleOfWork>Rare union of literature with music :</rdvocab:titleOfWork>
+        <rdvocab:dissertationOrThesisInformation>Thesis (M.A.)--University of Rochester.</rdvocab:dissertationOrThesisInformation>
+        <xc:subject xsi:type="dcterms:LCSH">Quarterly musical magazine and review.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Harmonicon.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Music-Periodicals-Indexes.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Music</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Periodicals</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Indexes.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

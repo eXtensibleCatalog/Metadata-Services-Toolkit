@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/256</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:67</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/256">
+        <dcterms:subject xsi:type="dcterms:LCC">JX1977.2.U5</dcterms:subject>
+        <rdvocab:titleOfWork>U.S. participation in the UN.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">United Nations-United States.</xc:subject>
+        <dcterms:replaces dcterms:ISSN="0272-6769">United States and the United Nations</dcterms:replaces>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">United Nations</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States.</xc:spatial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

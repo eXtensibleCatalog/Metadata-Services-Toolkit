@@ -1,0 +1,24 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/275</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:74</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/275">
+        <rdvocab:titleOfWork>Atlas &amp; argus (Albany, N.Y. : Daily)</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Albany (N.Y.)-Newspapers.</xc:spatial>
+        <xc:coverage>United States-New York-Albany-Albany.</xc:coverage>
+        <dcterms:replaces>Daily Albany argus</dcterms:replaces>
+        <dcterms:replaces>Albany evening Atlas (Albany, N.Y. : 1843)</dcterms:replaces>
+        <dcterms:isReplacedBy>Argus (Albany, N.Y. : Daily)</dcterms:isReplacedBy>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:spatial xsi:type="dcterms:LCSH">Albany (N.Y.)</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Newspapers.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

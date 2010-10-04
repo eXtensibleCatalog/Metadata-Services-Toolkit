@@ -1,0 +1,25 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/104</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:31</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/104">
+        <xc:titleOfExpression>Memoirs of the Connecticut Academy of Arts and Sciences</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill., plates (part col.) map, tables, diagrs. ;</rdvocab:illustrationContent>
+        <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : University Microfilms. 1 microfilm reel ; 35 mm. (American periodical series, 1800-1850 ; 770)</dcterms:hasFormat>
+        <dcterms:description>Vols. 2-    published under the auspices of Yale University.</dcterms:description>
+        <dcterms:relation>Papers read before the Academy appeared chiefly in the American journal of science from 1818 until the commencement of the series of Transactions in 1866. The publication of the Memoirs was resumed in July 1910, in 4.</dcterms:relation>
+        <dcterms:HasFormat>Connecticut Academy of Arts and Sciences. Memoirs of the Connecticut Academy of Arts and Sciences</dcterms:HasFormat>
+        <dcterms:relation>American journal of science 1818-1865</dcterms:relation>
+        <dcterms:relation>Connecticut Academy of Arts and Sciences. Transactions 1866-1909</dcterms:relation>
+        <xc:contributor>Yale University.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/103</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
