@@ -10,9 +10,6 @@
         <marc:controlfield tag="001">1724781</marc:controlfield>
         <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="004">1191502</marc:controlfield>
-        <marc:controlfield tag="004">1191506</marc:controlfield>
-        <marc:controlfield tag="004">1191508</marc:controlfield>
-        <marc:controlfield tag="004">1191513</marc:controlfield>
         <marc:controlfield tag="005">19980210163402.0</marc:controlfield>
         <marc:controlfield tag="008">9802104u    8   1001uu   0901128</marc:controlfield>
         <marc:datafield tag="014" ind1="1" ind2=" ">
