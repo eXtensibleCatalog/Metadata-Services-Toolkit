@@ -10,7 +10,9 @@ package xc.mst.spring;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -61,11 +63,24 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void runTests(MetadataService metadataService) {
 		TestTypeFilter.metadataService = metadataService;
 		try {
 			TestListenerAdapter tla = new TestListenerAdapter();
 			TestNG testng = new TestNG();
+			Set<Class> testClassesSet = new HashSet<Class>(testClasses);
+			for (Class c : testClassesSet) {
+				boolean noSubClasses = true;
+				for (Class c2 : testClasses) {
+					if (!c.equals(c2) && c.isAssignableFrom(c2)) {
+						noSubClasses = false;
+					}
+				}
+				if (!noSubClasses) {
+					testClasses.remove(c);
+				}
+			}
 			LOG.debug("testClasses: "+testClasses);
 			testng.setTestClasses(testClasses.toArray(new Class[]{}));
 			testng.addListener(tla);

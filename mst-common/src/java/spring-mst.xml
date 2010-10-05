@@ -46,7 +46,11 @@
 			</list>
 		</property>
 		<property name="hibernateProperties">
-			<value>hibernate.dialect=org.hibernate.dialect.MySQL5Dialect</value>
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+			</props>
 		</property>
 	</bean>
 	

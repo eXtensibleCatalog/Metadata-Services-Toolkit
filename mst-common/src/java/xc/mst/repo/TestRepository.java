@@ -11,6 +11,7 @@ package xc.mst.repo;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
 import gnu.trove.TLongObjectProcedure;
+import gnu.trove.TObjectProcedure;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,6 +145,40 @@ public class TestRepository extends BaseService implements Repository {
 					}
 				}
 			}
+			outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds");
+			if (!outFolder.exists()) {
+				outFolder.mkdir();
+			} else {
+				for (String prevOutFile : outFolder.list()) {
+					LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile);
+					new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile).delete();
+				}
+			}
+			repo.forEachValue(new TObjectProcedure() {
+				public boolean execute(Object obj) {
+					File outFile = null;
+					PrintWriter pw = null;
+					Record r = (Record)obj;
+					outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+r.getId()+".xml");
+					try {
+						LOG.debug("writing outFile: "+outFile);
+						pw = new PrintWriter(outFile, "UTF-8");
+						pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
+					} catch (Throwable t) {
+						LOG.error("file failed: "+r.getId());
+						LOG.error("", t);
+					} finally {
+						try {
+							LOG.debug("closing file: "+outFile.getName());
+							pw.close();
+						} catch (Throwable t) {
+							LOG.error("file close failed: "+outFile.getName());
+							LOG.error("", t);
+						}
+					}
+					return true;
+				}
+			});
 		}
 	}
 	

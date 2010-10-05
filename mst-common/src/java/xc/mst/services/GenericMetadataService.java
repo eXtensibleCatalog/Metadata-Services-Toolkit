@@ -432,10 +432,16 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	protected void endBatch() {
+		endBatch(true);
+	}
+	
+	protected void endBatch(boolean resetTimer) {
 		if (getRepository() != null) {
 			getRepository().endBatch();
 		}
-		TimingLogger.reset();
+		if (resetTimer) {
+			TimingLogger.reset();
+		}
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {

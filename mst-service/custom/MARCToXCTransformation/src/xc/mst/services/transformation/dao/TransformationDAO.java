@@ -19,12 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -55,6 +51,8 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 			Map<String, Long> bibsProcessedStringId,
 			TLongLongHashMap bibsYet2ArriveLongId,
 			Map<String, Long> bibsYet2ArriveStringId ) {
+		
+		TimingLogger.start("TransformationDAO.persistBibMaps");
 		
 		// TODO: probably change these string literals to the above statics
 		Object[] objArr = new Object[] {
@@ -93,6 +91,8 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 		        TimingLogger.stop(tableName+".insert");	
 			}
 		}
+		
+		TimingLogger.stop("TransformationDAO.persistBibMaps");
 		
 	}
 	
@@ -174,6 +174,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 			});
 			TimingLogger.stop(held_holdings_table+".getHoldingIdsToActivate");
 		}
+		TimingLogger.add("holdings2activate", holdings2activate.size());
 		return holdings2activate;
 	}
 	

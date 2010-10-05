@@ -9,54 +9,55 @@
 package xc.mst.services.normalization.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Set;
-import xc.mst.bo.service.Service;
-import xc.mst.common.test.BaseTest;
+import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Status;
-import xc.mst.repo.DefaultRepository;
-import xc.mst.repo.Repository;
-import xc.mst.services.GenericMetadataService;
-import xc.mst.test.BaseMetadataServiceTest;
 
-public class ResumePerfTest extends BaseMetadataServiceTest {
+public class ResumePerfTest extends xc.mst.service.impl.test.ResumePerfTest {
 	
 	private static final Logger LOG = Logger.getLogger(ResumePerfTest.class);
 	
+	@Override
+	protected String getInputRepoName() {
+		return "135_5m";
+	}
 	
+	@Override
 	@Test
 	public void resumePerfTest() {
-
-		try {
-			getRepositoryDAO().deleteSchema(getServiceName());
-			getServicesService().addNewService(getServiceName());
-			
-			Service s = getServicesService().getServiceByName(getServiceName());
-			GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
-			
-			((DefaultRepository)ms.getRepository()).deleteAllData();
-			
-			Set incomingSet = getSetDAO().getById(9);
-			//Set outgoingSet = getSetDAO().getById(10);
-			//LOG.debug("outgoingSet: "+outgoingSet);
-			//outgoingSet = getSetDAO().getById(3);
-			//LOG.debug("outgoingSet: "+outgoingSet);
-			Format format = getFormatDAO().getById(3);
-			
-			Repository repo = (Repository)getBean("Repository");
-			repo.setName("135_5m");
-
-			//ms.process(repo, format, incomingSet, null);
-			ms.process(repo, null, null, null);
-			waitUntilFinished();
-		} catch (Throwable t) {
-			LOG.error("", t);
+		LOG.info("getInputRepoName(): "+getInputRepoName());
+		getJdbcTemplate().update("delete from MetadataServicesToolkit.service_harvests");
+		getJdbcTemplate().update("insert into MetadataServicesToolkit.service_harvests "+
+				"(service_id, repo_name, from_date, until_date, highest_id) values (?, ?, ?, ?, ?)",
+				getMetadataService().getService().getId(),
+				getInputRepoName(),
+				new Date(0),
+				new Date(),
+				2000000);
+		/*
+		ServiceHarvest sh = new ServiceHarvest();
+		sh.setService(getMetadataService().getService());
+		sh.setRepoName(getInputRepoName());
+		sh.setFrom(new Date(0));
+		sh.setHighestId(2000000l);
+		getHibernateTemplate().persist(sh);
+		*/
+		List<ServiceHarvest> shs = getHibernateTemplate().loadAll(ServiceHarvest.class);
+		LOG.info("all service harvests: "+shs);
+		if (shs != null) {
+			for (ServiceHarvest sh : shs) {
+				LOG.info("sh.getId(): "+sh.getId());
+				LOG.info("sh.getHighestId(): "+sh.getHighestId());
+				LOG.info("sh.getFormat(): "+sh.getFormat());
+				LOG.info("sh.getSet(): "+sh.getSet());
+			}
 		}
-		
+		LOG.info("getInputRepoName(): "+getInputRepoName());
+		super.resumePerfTest();
 	}
 	
 	public void waitUntilFinished() {

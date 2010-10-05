@@ -3,24 +3,29 @@ package xc.mst.service.impl.test;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import xc.mst.bo.service.Service;
+import xc.mst.repo.Repository;
 import xc.mst.test.BaseMetadataServiceTest;
+import xc.mst.utils.MSTConfiguration;
 
 public class ResumePerfTest extends BaseMetadataServiceTest {
 	
 	private static final Logger LOG = Logger.getLogger(ResumePerfTest.class);
 	
-	protected String getPriorServiceName() {
+	protected String getInputRepoName() {
 		return null;
 	}
 	
 	@Test
 	public void resumePerfTest() {
 		try {
-			getJdbcTemplate().update("delete from service_harvests");
+			LOG.debug("resumePerfTest");
+			//getJdbcTemplate().update("delete from MetadataServicesToolkit.service_harvests");
 			//((DefaultRepository)getRepository()).deleteAllData();
-			Service priorService = getServicesService().getServiceByName(getPriorServiceName());
-			getMetadataService().process(priorService.getMetadataService().getRepository(), null, null, null);
+			Repository priorRepo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+			priorRepo.setName(getInputRepoName());
+			LOG.debug("getInputRepoName(): "+getInputRepoName());
+			LOG.debug("getMetadataService(): "+getMetadataService());
+			getMetadataService().process(priorRepo, null, null, null);
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}

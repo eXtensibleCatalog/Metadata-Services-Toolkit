@@ -254,7 +254,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected boolean commitIfNecessary(String name, boolean force) {
 		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
-		int batchSize = 5000;
+		int batchSize = 500000;
 		if (recordsToAdd != null) {
 			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
 		}

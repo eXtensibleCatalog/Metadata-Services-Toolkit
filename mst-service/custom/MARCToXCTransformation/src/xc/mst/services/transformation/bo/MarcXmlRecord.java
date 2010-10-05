@@ -333,6 +333,7 @@ public class MarcXmlRecord {
 			TimingLogger.stop("get945.xpath");
 			TimingLogger.stop("xpath");
 
+			TimingLogger.stop("get945");
 			return nodes;
 		}
 		catch(JDOMException e)

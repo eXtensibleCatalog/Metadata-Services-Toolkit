@@ -10,7 +10,9 @@ package xc.mst.test;
 
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.testng.annotations.BeforeSuite;
 
 import xc.mst.common.test.BaseTest;
@@ -22,6 +24,7 @@ import xc.mst.spring.TestTypeFilter;
 public class BaseMetadataServiceTest extends BaseTest {
 	
 	protected JdbcTemplate jdbcTemplate = null;
+	protected HibernateTemplate hibernateTemplate = null; 
 	
 	protected String getServiceName() {
 		return getUtil().normalizeName(System.getenv("service.name"));
@@ -40,10 +43,16 @@ public class BaseMetadataServiceTest extends BaseTest {
 	public void startup() {
 		jdbcTemplate = new JdbcTemplate((DataSource)((GenericMetadataService)TestTypeFilter.metadataService).
 				getConfig().getBean("MetadataServiceDataSource"));
+		hibernateTemplate = new HibernateTemplate((SessionFactory)((GenericMetadataService)TestTypeFilter.metadataService).
+				getConfig().getBean("SessionFactory"));
 	}
 	
 	protected JdbcTemplate getJdbcTemplate() {
 		return this.jdbcTemplate;
+	}
+	
+	protected HibernateTemplate getHibernateTemplate() {
+		return this.hibernateTemplate;
 	}
 	
 	@Override

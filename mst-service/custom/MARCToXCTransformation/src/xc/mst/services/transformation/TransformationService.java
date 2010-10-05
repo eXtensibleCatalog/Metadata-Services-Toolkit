@@ -30,9 +30,9 @@ import xc.mst.bo.record.Record;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.repo.TestRepository;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
 import xc.mst.services.transformation.bo.MarcXmlRecord;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -125,6 +125,9 @@ public class TransformationService extends SolrTransformationService {
 	@Override
 	protected void endBatch() {
 		try {
+			TimingLogger.start("TransformationDAO.endBatch");
+
+			TimingLogger.start("TransformationDAO.non-generic");
 			// persist 4 001->recordId maps
 			getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
 					bibsYet2ArriveLongId, bibsYet2ArriveStringId);
@@ -143,7 +146,9 @@ public class TransformationService extends SolrTransformationService {
 							return true;
 						}
 					});
-			super.endBatch();
+			TimingLogger.stop("TransformationDAO.non-generic");
+			super.endBatch(false);
+			TimingLogger.start("TransformationDAO.non-generic");
 			heldHoldings.clear();
 			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
 			previouslyHeldManifestationIds.clear();
@@ -159,6 +164,10 @@ public class TransformationService extends SolrTransformationService {
 				super.endBatch();				
 			}
 			*/
+			
+			TimingLogger.stop("TransformationDAO.non-generic");
+			TimingLogger.stop("TransformationDAO.endBatch");
+			TimingLogger.reset();
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
@@ -293,8 +302,10 @@ public class TransformationService extends SolrTransformationService {
 						
 						if (holdingsRecords != null) {
 							for (OutputRecord r : holdingsRecords) {
-								for (Long mid : manifestationIds) {
-									heldHoldings.add(new long[] {r.getId(), mid});								
+								if (status ==  Record.HELD) {
+									for (Long mid : manifestationIds) {
+										heldHoldings.add(new long[] {r.getId(), mid});								
+									}
 								}
 								r.setStatus(status);
 								results.add(r);	
@@ -306,6 +317,7 @@ public class TransformationService extends SolrTransformationService {
 				}
 				//update service accordingly w/ new record counts
 			}
+			TimingLogger.add("output records", results.size());
 			return results;
 		} catch (Throwable t) {
 			LOG.error("", t);

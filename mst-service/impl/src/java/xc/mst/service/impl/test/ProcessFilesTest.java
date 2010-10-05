@@ -102,7 +102,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				if (expectedOutputFolder.exists()) {
 					Set<String> expectedOutputFiles = new HashSet<String>();
 					for (String ef : expectedOutputFolder.list()) {
-						if (!ef.contains(".svn")) {
+						if (!ef.contains(".svn") && !new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr+"/"+ef).isDirectory()) {
 							expectedOutputFiles.add(ef);
 						}
 					}
