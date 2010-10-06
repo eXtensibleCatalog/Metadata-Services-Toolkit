@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>02256nas a2200541   4500</marc:leader>
         <marc:controlfield tag="001">3395662</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20070106073108.0</marc:controlfield>
         <marc:controlfield tag="006">m        d        </marc:controlfield>
         <marc:controlfield tag="007">cr  n         </marc:controlfield>
@@ -259,7 +260,6 @@
           <marc:subfield code="a">English</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)3395662</marc:subfield>
         </marc:datafield>

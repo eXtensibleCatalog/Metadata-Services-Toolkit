@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>01268ccm a22003730  45 A</marc:leader>
         <marc:controlfield tag="001">697587</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="008">781109s1954    fr sna         n    N/A d</marc:controlfield>
         <marc:datafield tag="019" ind1=" " ind2=" ">
           <marc:subfield code="a">961643</marc:subfield>
@@ -130,7 +131,6 @@
           <marc:subfield code="a">Monograph/Item</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)697587</marc:subfield>
         </marc:datafield>

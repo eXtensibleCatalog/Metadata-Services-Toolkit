@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>01583nem a2200361   45 A</marc:leader>
         <marc:controlfield tag="001">1225858</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="008">771101s1973    wiugc     a     0   eng  </marc:controlfield>
         <marc:datafield tag="010" ind1=" " ind2=" ">
           <marc:subfield code="a">   77696744 /MAPS</marc:subfield>
@@ -121,7 +122,6 @@
           <marc:subfield code="a">English</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)1225858</marc:subfield>
         </marc:datafield>

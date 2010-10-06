@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>02055cas a2200397 a 4500</marc:leader>
         <marc:controlfield tag="001">1707227</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20071221140426.0</marc:controlfield>
         <marc:controlfield tag="008">990510d19931997nyuar         1    0eng d</marc:controlfield>
         <marc:datafield tag="010" ind1=" " ind2=" ">
@@ -166,7 +167,6 @@
           <marc:subfield code="a">English</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)1707227</marc:subfield>
         </marc:datafield>

@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>01558cgm a2200337Ma 45x0</marc:leader>
         <marc:controlfield tag="001">2406566</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20040422132927.0</marc:controlfield>
         <marc:controlfield tag="007">vd mgaizs</marc:controlfield>
         <marc:controlfield tag="008">021015s2002    enk128 e          vleng d</marc:controlfield>
@@ -132,7 +133,6 @@
           <marc:subfield code="a">Adult</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)2406566</marc:subfield>
         </marc:datafield>

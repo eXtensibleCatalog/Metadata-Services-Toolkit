@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>00943ccm a22002777a 4500</marc:leader>
         <marc:controlfield tag="001">3159543</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20070831112337.0</marc:controlfield>
         <marc:controlfield tag="008">900529s1988    flusua         n    zxx  </marc:controlfield>
         <marc:datafield tag="010" ind1=" " ind2=" ">
@@ -94,7 +95,6 @@
           <marc:subfield code="a">Monograph/Item</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)3159543</marc:subfield>
         </marc:datafield>

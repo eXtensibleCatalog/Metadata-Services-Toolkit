@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>00690cam a2200229Ia 45e0</marc:leader>
         <marc:controlfield tag="001">1694143</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20010526225634.0</marc:controlfield>
         <marc:controlfield tag="008">990222t19931936nyu           000 1 eng d</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
@@ -96,7 +97,6 @@
           <marc:subfield code="a">0446365386</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)1694143</marc:subfield>
         </marc:datafield>

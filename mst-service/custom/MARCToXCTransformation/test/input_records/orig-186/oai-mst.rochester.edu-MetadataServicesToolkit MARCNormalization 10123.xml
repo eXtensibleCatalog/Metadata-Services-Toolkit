@@ -8,6 +8,7 @@
       <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
         <marc:leader>02296cjm a2200445Ia 4500</marc:leader>
         <marc:controlfield tag="001">3711415</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:controlfield tag="005">20080221125447.0</marc:controlfield>
         <marc:controlfield tag="007">sd fungnn|||eu</marc:controlfield>
         <marc:controlfield tag="008">070103p20062006caumun   fi         eng d</marc:controlfield>
@@ -162,7 +163,6 @@
           <marc:subfield code="a">English</marc:subfield>
           <marc:subfield code="5">NRU</marc:subfield>
         </marc:datafield>
-        <marc:controlfield tag="003">NRU</marc:controlfield>
         <marc:datafield tag="035" ind1=" " ind2=" ">
           <marc:subfield code="a">(NRU)3711415</marc:subfield>
         </marc:datafield>
