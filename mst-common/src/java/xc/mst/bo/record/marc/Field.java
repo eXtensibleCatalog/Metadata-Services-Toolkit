@@ -1,5 +1,6 @@
 package xc.mst.bo.record.marc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Field {
@@ -44,6 +45,9 @@ public class Field {
 	}
 	
 	public List<Subfield> getSubfields() {
+		if (subfields == null) {
+			this.subfields = new ArrayList<Subfield>();
+		}
 		return subfields;
 	}
 

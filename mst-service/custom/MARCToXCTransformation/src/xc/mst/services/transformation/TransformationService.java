@@ -22,7 +22,6 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.log4j.Logger;
-import org.jdom.Element;
 
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
@@ -31,7 +30,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.services.transformation.bo.AggregateXCRecord;
-import xc.mst.services.transformation.bo.MarcXmlRecord;
+import xc.mst.services.transformation.bo.SaxMarcXmlRecord;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
@@ -205,10 +204,9 @@ public class TransformationService extends SolrTransformationService {
 					}
 				}
 			} else {
-				record.setMode(Record.JDOM_MODE);
-				Element marcXml = record.getOaiXmlEl();
+				record.setMode(Record.STRING_MODE);
 
-				MarcXmlRecord originalRecord = new MarcXmlRecord(marcXml);
+				SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml());
 				
 				// Get the ORG code from the 035 field
 				orgCode = originalRecord.getOrgCode();
@@ -257,9 +255,10 @@ public class TransformationService extends SolrTransformationService {
 					inputRecordCount++;
 				}
 				if (isBib) {
-					String bib001 = originalRecord.getControlField("001");
+					String bib001 = originalRecord.getControlField(1);
 					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
 					if (manifestationId != null) {
+						TimingLogger.add("found BibYet2Arrive", 1);
 						removeManifestationId4BibYet2Arrive(bib001);
 						previouslyHeldManifestationIds.add(manifestationId);
 					} else {
@@ -329,7 +328,7 @@ public class TransformationService extends SolrTransformationService {
 	 * Process bibliographic record
 	 */
 	protected void processBibliographicRecord(
-			AggregateXCRecord transformedRecord, MarcXmlRecord originalRecord) 
+			AggregateXCRecord transformedRecord, SaxMarcXmlRecord originalRecord) 
 				throws DataException, DatabaseConfigException, TransformerConfigurationException, 
 					IndexException, TransformerException{
 		
@@ -465,7 +464,7 @@ public class TransformationService extends SolrTransformationService {
 	 */
 	protected void processHoldingRecord(
 			AggregateXCRecord transformedRecord,
-			MarcXmlRecord originalRecord) 
+			SaxMarcXmlRecord originalRecord) 
 				throws  DatabaseConfigException, TransformerConfigurationException, 
 					IndexException, TransformerException, DataException {
 

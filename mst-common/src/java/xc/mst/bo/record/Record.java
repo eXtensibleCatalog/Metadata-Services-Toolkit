@@ -38,6 +38,8 @@ public class Record implements InputRecord, OutputRecord {
 	
 	public static final String STRING_MODE = "Record.STRING_MODE";
 	public static final String JDOM_MODE = "Record.JDOM_MODE";
+	public static final String MODE_NOT_SET = "Record.MODE_NOT_SET";
+	
 	public static final String UNCHANGED = "Record.UNCHANGED";
 	
 	public static final char ACTIVE = 'A';
@@ -234,7 +236,7 @@ public class Record implements InputRecord, OutputRecord {
 	}
 	
 	public Element getOaiXmlEl() {
-		if (!this.mode.equals(JDOM_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
@@ -242,15 +244,17 @@ public class Record implements InputRecord, OutputRecord {
 		if (this.oaiXmlEl != null) {
 			this.oaiXmlEl.detach();
 		}
+		this.mode = JDOM_MODE;
 		return this.oaiXmlEl;
 	}
 
 	public void setOaiXmlEl(Element oaiXmlEl) {
-		if (!this.mode.equals(JDOM_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
 		}
+		this.mode = JDOM_MODE;
 		this.oaiXmlEl = oaiXmlEl;
 	}
 	
@@ -476,11 +480,12 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public String getOaiXml()
 	{
-		if (!this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to STRING_MODE.  You must explicitly "+
 					"call Record.setMode(STRING_MODE) before calling this method.");
 		}
+		this.mode = STRING_MODE;
 		return oaiXml;
 	}
 
@@ -491,11 +496,12 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void setOaiXml(String oaiXml)
 	{
-		if (!this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to STRING_MODE.  You must explicitly "+
 					"call Record.setMode(STRING_MODE) before calling this method.");
 		}
+		this.mode = STRING_MODE;
 		this.oaiXml = oaiXml;
 	}
 
