@@ -51,14 +51,18 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		bibsYet2ArriveStringId.put("13", 14L);
 		bibsYet2ArriveStringId.put("15", 16L);
 		
-		getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+		getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId,
+				null, null,
+				bibsYet2ArriveLongId, bibsYet2ArriveStringId,
+				null, null);
 		
 		bibsProcessedLongId.clear();
 		bibsProcessedStringId.clear();
 		bibsYet2ArriveLongId.clear();
 		bibsYet2ArriveStringId.clear();
 		
-		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
+				bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 		
 		assert bibsProcessedLongId.size() == 2;
 		assert bibsProcessedStringId.size() == 2;

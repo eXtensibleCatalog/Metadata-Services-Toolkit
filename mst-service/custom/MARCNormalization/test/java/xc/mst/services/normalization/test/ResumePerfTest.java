@@ -37,7 +37,7 @@ public class ResumePerfTest extends xc.mst.service.impl.test.ResumePerfTest {
 				getInputRepoName(),
 				new Date(0),
 				new Date(),
-				2000000);
+				1540000);
 		/*
 		ServiceHarvest sh = new ServiceHarvest();
 		sh.setService(getMetadataService().getService());

@@ -278,6 +278,11 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+		<exec executable="${mysql.home}/bin/mysql" 
+				input="${build.mst-instance.dir}/sql/create_database_script.sql">
+			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
+		</exec>
+		<!--
 		<sql classpathref="classpath.mst"
 				driver="com.mysql.jdbc.Driver"
 				url="${DatabaseUrl}"
@@ -289,6 +294,7 @@
 				</fileset>
 			</path>
 		</sql>
+		-->
 	</target>
 
 	<target name="unzip-base-tests">

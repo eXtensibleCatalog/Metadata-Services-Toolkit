@@ -159,7 +159,7 @@
 		</javadoc>
 	</target>
 
-	<target name="mc.install-mst">
+	<target name="mc.install-mst" depends="mc.init">
 		<delete dir="${mc.build.mst-instances.dir}" />
 		<unzip src="${mc.build.lib}/MST-instances-${mi.version}.jar"
 			dest="${mc.build.dir}" />
@@ -169,17 +169,10 @@
 				<include name="**/install.properties" />
 			</fileset>
 		</copy>
-		<sql classpathref="mc.classpath.compile"
-				driver="com.mysql.jdbc.Driver"
-				url="${DatabaseUrl}"
-				userid="${DatabaseUsername}"
-				password="${DatabasePassword}">
-			<path>
-				<fileset dir="${mc.build.mst-instance.dir}/sql">
-					<include name="create_database_script.sql"/>
-				</fileset>
-			</path>
-		</sql>
+		<exec executable="${mysql.home}/bin/mysql" 
+				input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
+			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
+		</exec>
 	</target>
 
 	<target name="mc.test" depends="mc.install-mst, mc.test.nodep" />

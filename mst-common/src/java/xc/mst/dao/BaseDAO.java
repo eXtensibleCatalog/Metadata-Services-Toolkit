@@ -35,6 +35,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
@@ -285,5 +286,8 @@ public class BaseDAO {
 	}
 	public RecordDAO getRecordDAO() {
 		return (RecordDAO)config.getBean("DBRecordDAO");
+	}
+	public MessageDAO getMessageDAO() {
+		return (MessageDAO)config.getBean("MessageDAO");
 	}
 }

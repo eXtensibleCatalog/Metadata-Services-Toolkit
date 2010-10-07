@@ -803,3 +803,45 @@ insert into record_types values(4, 'XC-Expression', 4);
 insert into record_types values(5, 'XC-Manifestation', 5);
 insert into record_types values(6, 'XC-Holding', 6);
 
+drop table if exists record_messages;
+CREATE TABLE record_messages (
+  record_message_id  BIGINT       NOT NULL,
+  rec_in_out         char(1)      not null,
+  record_id          int          NOT NULL,
+  msg_code           int          not null,
+  msg_level          char(1)      not null,
+  service_id         int(11)      not null,
+
+  PRIMARY KEY (record_message_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+drop table if exists record_message_details;
+create table record_message_details (
+  record_message_id  int(11)       NOT NULL,
+  detail             varchar(255) not null,
+
+  PRIMARY KEY (record_message_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+drop table if exists record_message_seq;
+create table record_message_seq (
+	id                    int        NOT NULL,
+	PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+insert into record_message_seq values (1);
+
+drop function if exists get_next_record_message_id;
+
+delimiter //
+create function get_next_record_message_id(incr int)
+returns int
+begin
+	declare record_message_id int;
+	select id into record_message_id from record_message_seq;
+	update record_message_seq set id=id+incr;
+	return record_message_id;
+end
+//
+
+delimiter ;

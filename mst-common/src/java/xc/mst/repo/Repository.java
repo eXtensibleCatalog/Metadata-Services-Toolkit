@@ -87,5 +87,7 @@ public interface Repository {
 	public void activateRecord(long recordId);
 	
 	public List<Long> getLinkedRecordIds(Long toRecordId);
+	
+	public void processComplete();
 
 }

@@ -732,15 +732,17 @@ public class MarcXmlManager {
 		try
 		{
 			boolean ret = false;
-			TimingLogger.start("doesSubFieldExist.xpath");
-			TimingLogger.start("xpath");
 			if (useXpath) {
+				TimingLogger.start("doesSubFieldExist.xpath");
+				TimingLogger.start("xpath");
 				// Use XPATH to get a list of all subfields of the passed tag with the passed subfield value.
 				// Return true iff this list is not empty
 				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + tag + "']/marc:subfield[@code='" + subfield + "']");
 				xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
 				List nodes = xpath.selectNodes(marcXml);
 				ret = !nodes.isEmpty();
+				TimingLogger.stop("doesSubFieldExist.xpath");
+				TimingLogger.stop("xpath");
 			} else {
 				TimingLogger.start("doesSubFieldExist.noxpath");
 				TimingLogger.start("noxpath");
@@ -750,8 +752,6 @@ public class MarcXmlManager {
 						for (Object o2 : e.getChildren("subfield", marcXml.getNamespace())) {
 							Element e2 = (Element)o2;
 							if (subfield.equals(e2.getAttributeValue("code"))) {
-								TimingLogger.stop("doesSubFieldExist.noxpath");
-								TimingLogger.stop("noxpath");
 								ret = true;
 								break;
 							}
@@ -761,9 +761,10 @@ public class MarcXmlManager {
 						}
 					}
 				}
+				TimingLogger.stop("doesSubFieldExist.noxpath");
+				TimingLogger.stop("noxpath");
 			}
-			TimingLogger.stop("doesSubFieldExist.xpath");
-			TimingLogger.stop("xpath");
+			TimingLogger.stop("doesSubFieldExist:709");
 			return ret;
 		}
 		catch(Throwable e)
@@ -2386,7 +2387,6 @@ public class MarcXmlManager {
 
 		try
 		{
-			TimingLogger.start("getField945");
 			TimingLogger.start("getField945.xpath");
 			List<Element> elements = null;
 			if (useXpath) {
@@ -2394,7 +2394,6 @@ public class MarcXmlManager {
 				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
 				xpath.addNamespace(marcNamespace);
 
-				TimingLogger.stop("getField945");
 				elements = xpath.selectNodes(marcXml);
 			} else {
 				elements = new ArrayList<Element>();
@@ -2405,9 +2404,8 @@ public class MarcXmlManager {
 					}
 				}
 			}
-			TimingLogger.stop("getField945");
 			TimingLogger.stop("getField945.xpath");
-
+			TimingLogger.stop("getField945");
 			return elements;
 		}
 		catch(Throwable e)

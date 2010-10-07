@@ -867,8 +867,9 @@ public class DefaultRecordService extends RecordService
 
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
-			for(Object error : errors)
-				record.addMessage(new RecordMessage((String)error));
+			for(Object error : errors) {
+				//record.addMessage(new RecordMessage((String)error));
+			}
 		
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null) {
@@ -1112,11 +1113,13 @@ public class DefaultRecordService extends RecordService
 			TimingLogger.add("SOLR-"+FIELD_TRAIT, trait.length());
 		}
 
+		/*
 		for(RecordMessage error : record.getMessages()) {
 			String message = error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage();
 			doc.addField(FIELD_ERROR, message);
 			TimingLogger.add("SOLR-"+FIELD_ERROR, message.length());
 		}
+		*/
 
 		StringBuffer all = new StringBuffer();
 		if (record.getFormat() != null) {
@@ -1143,7 +1146,7 @@ public class DefaultRecordService extends RecordService
 		
 		for(RecordMessage error : record.getMessages())
 		{
-			all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
+			//all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
 		

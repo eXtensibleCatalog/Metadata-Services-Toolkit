@@ -26,6 +26,7 @@ import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.ScheduleService;
@@ -122,6 +123,10 @@ public class BaseTest {
 	
 	protected SetDAO getSetDAO() {
 		return (SetDAO)getBean("SetDAO");
+	}
+	
+	protected MessageDAO getMessageDAO() {
+		return (MessageDAO)getBean("MessageDAO");
 	}
 	
 	protected SetService getSetService() {

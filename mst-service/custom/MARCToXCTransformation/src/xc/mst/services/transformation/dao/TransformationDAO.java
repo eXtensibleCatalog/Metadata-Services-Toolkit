@@ -47,20 +47,26 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 	
 	@SuppressWarnings("unchecked")
 	public void persistBibMaps(
-			TLongLongHashMap bibsProcessedLongId, 
-			Map<String, Long> bibsProcessedStringId,
-			TLongLongHashMap bibsYet2ArriveLongId,
-			Map<String, Long> bibsYet2ArriveStringId ) {
+			TLongLongHashMap bibsProcessedLongIdAdded, 
+			Map<String, Long> bibsProcessedStringIdAdded,
+			TLongLongHashMap bibsProcessedLongIdRemoved, 
+			Map<String, Long> bibsProcessedStringIdRemoved,
+			TLongLongHashMap bibsYet2ArriveLongIdAdded,
+			Map<String, Long> bibsYet2ArriveStringIdAdded,
+			TLongLongHashMap bibsYet2ArriveLongIdRemoved,
+			Map<String, Long> bibsYet2ArriveStringIdRemoved ) {
 		
 		TimingLogger.start("TransformationDAO.persistBibMaps");
 		
-		// TODO: probably change these string literals to the above statics
 		Object[] objArr = new Object[] {
-				bibsProcessedLongId, bibsProcessedLongId_table,
-				bibsProcessedStringId, bibsProcessedStringId_table,
-				bibsYet2ArriveLongId, bibsYet2ArriveLongId_table,
-				bibsYet2ArriveStringId, bibsYet2ArriveStringId_table};
+				bibsProcessedLongIdAdded, bibsProcessedLongId_table,
+				bibsProcessedStringIdAdded, bibsProcessedStringId_table,
+				bibsYet2ArriveLongIdAdded, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringIdAdded, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
+			if (objArr[i] == null) {
+				continue;
+			}
 			String tableName = (String)objArr[i+1];
 			final List<Object[]> params = new ArrayList<Object[]>();
 			if (objArr[i] instanceof TLongLongHashMap) {
@@ -89,6 +95,45 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 					"values (?,?) ;";
 		        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
 		        TimingLogger.stop(tableName+".insert");	
+			}
+		}
+		
+		objArr = new Object[] {
+				bibsProcessedLongIdRemoved, bibsProcessedLongId_table,
+				bibsProcessedStringIdRemoved, bibsProcessedStringId_table,
+				bibsYet2ArriveLongIdRemoved, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringIdRemoved, bibsYet2ArriveStringId_table};
+		for (int i=0; i<objArr.length; i+=2){
+			if (objArr[i] == null) {
+				continue;
+			}
+			String tableName = (String)objArr[i+1];
+			final List<Object[]> params = new ArrayList<Object[]>();
+			if (objArr[i] instanceof TLongLongHashMap) {
+				TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
+				if (longKeyedMap != null && longKeyedMap.size() > 0) {
+					longKeyedMap.forEachEntry(new TLongLongProcedure() {
+						public boolean execute(long key, long value) {
+							params.add(new Object[] {key, value});
+							return true;
+						}
+					});		
+				}
+			} else if (objArr[i] instanceof Map) {
+				Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
+				if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
+					for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
+						params.add(new Object[] {me.getKey(), me.getValue()});
+					}
+				}
+			}
+			if (params.size() > 0) {
+				TimingLogger.start(tableName+".delete");
+				String sql =
+					"delete from "+tableName+
+					" where bib_001=? and record_id=?";
+		        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
+		        TimingLogger.stop(tableName+".delete");	
 			}
 		}
 		

@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -53,9 +54,18 @@ public class TransformationService extends SolrTransformationService {
 	// records with some id higher than something.
 	protected TLongLongHashMap bibsProcessedLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsProcessedStringId = new HashMap<String, Long>();
-	
 	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
 	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	
+	protected TLongLongHashMap bibsProcessedLongIdAdded = new TLongLongHashMap();
+	protected Map<String, Long> bibsProcessedStringIdAdded = new HashMap<String, Long>();
+	protected TLongLongHashMap bibsYet2ArriveLongIdAdded = new TLongLongHashMap();
+	protected Map<String, Long> bibsYet2ArriveStringIdAdded = new HashMap<String, Long>();
+	
+	protected TLongLongHashMap bibsProcessedLongIdRemoved = new TLongLongHashMap();
+	protected Map<String, Long> bibsProcessedStringIdRemoved = new HashMap<String, Long>();
+	protected TLongLongHashMap bibsYet2ArriveLongIdRemoved = new TLongLongHashMap();
+	protected Map<String, Long> bibsYet2ArriveStringIdRemoved = new HashMap<String, Long>();
 	
 	protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 	protected List<long[]> heldHoldings = new ArrayList<long[]>();
@@ -84,21 +94,27 @@ public class TransformationService extends SolrTransformationService {
 		}
 	}
 	
-	protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s, long lv) {
+	protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+			TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
 		try {
 			Long bibMarcId = Long.parseLong(s);
 			longLongMap.put(bibMarcId, lv);
+			longLongMapAdded.put(bibMarcId, lv);
 		} catch (NumberFormatException nfe) {
 			stringLongMap.put(s, lv);
+			stringLongMapAdded.put(s, lv);
 		}
 	}
 	
-	protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
+	protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+			TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s) {
 		try {
 			Long bibMarcId = Long.parseLong(s);
 			longLongMap.remove(bibMarcId);
+			longLongMapRemoved.remove(bibMarcId);
 		} catch (NumberFormatException nfe) {
 			stringLongMap.remove(s);
+			stringLongMapRemoved.remove(s);
 		}
 	}
 	
@@ -106,19 +122,19 @@ public class TransformationService extends SolrTransformationService {
 		return getLongFromMap(bibsProcessedLongId, bibsProcessedStringId, s);
 	}
 	protected void addManifestationId4BibProcessed(String s, Long l) {
-		add2Map(bibsProcessedLongId, bibsProcessedStringId, s, l);
+		add2Map(bibsProcessedLongId, bibsProcessedStringId, bibsProcessedLongIdAdded, bibsProcessedStringIdAdded, s, l);
 	}
 	protected void removeManifestationId4BibProcessed(String s) {
-		removeFromMap(bibsProcessedLongId, bibsProcessedStringId, s);
+		removeFromMap(bibsProcessedLongId, bibsProcessedStringId, bibsProcessedLongIdRemoved, bibsProcessedStringIdRemoved, s);
 	}
 	protected Long getManifestationId4BibYet2Arrive(String s) {
 		return getLongFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s);
 	}
 	protected void addManifestationId4BibYet2Arrive(String s, Long l) {
-		add2Map(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s, l);
+		add2Map(bibsYet2ArriveLongId, bibsYet2ArriveStringId, bibsYet2ArriveLongIdAdded, bibsYet2ArriveStringIdAdded, s, l);
 	}
 	protected void removeManifestationId4BibYet2Arrive(String s) {
-		removeFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s);
+		removeFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, bibsYet2ArriveLongIdRemoved, bibsYet2ArriveStringIdRemoved, s);
 	}
 	
 	@Override
@@ -128,8 +144,21 @@ public class TransformationService extends SolrTransformationService {
 
 			TimingLogger.start("TransformationDAO.non-generic");
 			// persist 4 001->recordId maps
-			getTransformationDAO().persistBibMaps(bibsProcessedLongId, bibsProcessedStringId, 
-					bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+			getTransformationDAO().persistBibMaps(
+					bibsProcessedLongIdAdded, bibsProcessedStringIdAdded,
+					bibsProcessedLongIdRemoved, bibsProcessedStringIdRemoved,
+					bibsYet2ArriveLongIdAdded, bibsYet2ArriveStringIdAdded,
+					bibsYet2ArriveLongIdRemoved, bibsYet2ArriveStringIdRemoved);
+			
+			bibsProcessedLongIdAdded.clear();
+			bibsProcessedStringIdAdded.clear();
+			bibsProcessedLongIdRemoved.clear();
+			bibsProcessedStringIdRemoved.clear();
+			bibsYet2ArriveLongIdAdded.clear();
+			bibsYet2ArriveStringIdAdded.clear();
+			bibsYet2ArriveLongIdRemoved.clear();
+			bibsYet2ArriveStringIdRemoved.clear();
+			
 			previouslyHeldManifestationIds.forEach(new TLongProcedure() {
 				public boolean execute(long recordId) {
 					LOG.debug("previouslyHeldManifestationId: "+recordId+"");
@@ -174,6 +203,8 @@ public class TransformationService extends SolrTransformationService {
 	
 	@Override
 	public List<OutputRecord> process(InputRecord record) {
+		addErrorToInput(record, 12, RecordMessage.WARN);
+		addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
 		LOG.debug("getHarvestedOaiIdentifier(): "+((Record)record).getHarvestedOaiIdentifier());
 		LOG.debug("getOaiIdentifier(): "+((Record)record).getOaiIdentifier());
 		LOG.debug("getId(): "+((Record)record).getId());
@@ -301,6 +332,8 @@ public class TransformationService extends SolrTransformationService {
 						
 						if (holdingsRecords != null) {
 							for (OutputRecord r : holdingsRecords) {
+								addErrorToOutput(r, 16, RecordMessage.INFO);
+								addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
 								if (status ==  Record.HELD) {
 									for (Long mid : manifestationIds) {
 										heldHoldings.add(new long[] {r.getId(), mid});								

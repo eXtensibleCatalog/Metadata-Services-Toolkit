@@ -422,4 +422,7 @@ public class TestRepository extends BaseService implements Repository {
 		r.setOaiXmlEl(pr.getOaiXmlEl());
 		addRecord(r);
 	}
+	
+
+	public void processComplete() {}
 }

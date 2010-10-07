@@ -102,8 +102,10 @@ public class SolrIndexService extends GenericMetadataService  {
 		}
 		if (r.getMessages() != null) {
 			for (RecordMessage m : r.getMessages()) {
+				/*
 				doc.addField(RecordService.FIELD_ERROR,
-						m.getServiceId() + "-" + m.getMessageCode() + ":" + getServicesService().getError(m.getServiceId(), m.getMessageCode()));
+						m.getServiceId() + "-" + m.getCode() + ":" + getServicesService().getError(m.getServiceId(), m.getCode()));
+				*/
 			}
 		}
 		

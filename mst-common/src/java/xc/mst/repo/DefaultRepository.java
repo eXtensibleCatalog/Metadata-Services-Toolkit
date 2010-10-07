@@ -253,5 +253,9 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void activateRecord(long recordId) {
 		recordsToActivate.add(recordId);		
 	}
+	
+	public void processComplete() {
+		getRepositoryDAO().createIndiciesIfNecessary(name);
+	}
 
 }

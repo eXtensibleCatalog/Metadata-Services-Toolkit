@@ -32,6 +32,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -61,6 +62,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected ApplicationContext applicationContext = null;
 	protected MetadataServiceDAO metadataServiceDAO = null;
 	protected List<ProcessingDirective> processingDirectives = null;
+	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
 	protected int warningCount = 0;
 	protected int errorCount = 0;
 	protected int errorCountPerCommit = 0;
@@ -438,6 +440,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected void endBatch(boolean resetTimer) {
 		if (getRepository() != null) {
 			getRepository().endBatch();
+			LOG.debug("getMessageDAO().persistMessages(messages2insert);");
+			LOG.debug("messages2insert.size(): "+messages2insert.size());
+			getMessageDAO().persistMessages(messages2insert);
+			messages2insert.clear();
 		}
 		if (resetTimer) {
 			TimingLogger.reset();
@@ -555,6 +561,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			running.release();
 		}
 		endBatch();
+		getRepository().processComplete();
 	}
 	
 	protected void injectKnownSuccessorsIds(Record in) {
@@ -575,5 +582,75 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	public MSTConfiguration getConfig() {
 		return config;
 	}
+	
+	protected void addErrorToOutput(OutputRecord record, int code, char level) {
+		addErrorToOutput(record, code, level, null);
+	}
+	
+	protected void addErrorToOutput(OutputRecord record, int code, char level, String detail) {
+		Record r = (Record)record;
+		RecordMessage rm = new RecordMessage();
+		getMessageDAO().injectId(rm);
+		rm.setServiceId(getService().getId());
+		rm.setInputRecord(false);
+		rm.setCode(code);
+		rm.setLevel(level);
+		rm.setDetail(detail);
+		rm.setRecord(r);
+		
+		messages2insert.add(rm);
+	}
+	
+	protected void addErrorToInput(InputRecord record, int code, char level) {
+		addErrorToInput(record, code, level, null);
+	}
+	
+	protected void addErrorToInput(InputRecord record, int code, 
+			char level, String detail) {
+		Record r = (Record)record;
+		RecordMessage rm = new RecordMessage();
+		getMessageDAO().injectId(rm);
+		rm.setServiceId(getService().getId());
+		rm.setInputRecord(true);
+		rm.setCode(code);
+		rm.setLevel(level);
+		rm.setDetail(detail);
+		rm.setRecord(r);
+
+		messages2insert.add(rm);
+	}
+	
+	/*
+	public String getMessage(int errorCode, String detail) {
+		
+	}
+	
+	public String getMessage(int errorCode) {
+		 
+    	String errorMessage = null;
+
+    	try {
+    		Service service = getServiceById(serviceId);
+    		PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+service.getName()+
+				"/META-INF/classes/xc/mst/services/custom.properties");
+			String[] errorCodes = props.getStringArray("error.code");
+			String[] errorText = props.getStringArray("error.text");
+
+			for (int i=0; i<errorCodes.length; i++) {
+				if (errorCodes[i].equalsIgnoreCase(errorCode)) {
+					errorMessage =  errorText[i];
+					break;
+				}
+			}
+    	} catch (ConfigurationException ce) {
+    		LOG.error("Exception occured when reading properties file");
+    	} catch (DatabaseConfigException dce) {
+    		LOG.error("Exception occured when accessing database with provided parameters");
+    	}
+		
+		return errorMessage;
+		
+	}
+	*/
 
 }

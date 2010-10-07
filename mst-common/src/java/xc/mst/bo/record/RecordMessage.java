@@ -8,104 +8,61 @@
   */
 package xc.mst.bo.record;
 
-import xc.mst.bo.provider.Provider;
 
 /**
  * Represents the messages attached to a record
  * 
  * @author Sharmila Ranganathan
+ * @author Benjamin D. Anderson
  *
  */
 public class RecordMessage {
 	
-	private long id;
-	private Provider repository;
+	// BDA: I can't imagine we need 5 levels, so let's keep it to 3.
+	//public static final char TRACE = 'T';
+	//public static final char LOG = 'L';
+	public static final char INFO = 'I';
+	public static final char WARN = 'W';
+	public static final char ERROR = 'E';
 	
-	private Record record;
-	
-	private boolean isInputRecord;
-	
-	private String messageCode;
-	
-	private String messageLevel;
-	
-	private int serviceId;
-	
-	private String detailedMessage;
-	
-	private String message;
-	
-	public RecordMessage(int serviceId, String messageCode, String messageLevel, String detailedMessage) {
-		this.serviceId = serviceId;
-		this.messageCode = messageCode;
-		this.messageLevel = messageLevel;
-		this.detailedMessage = detailedMessage;
-	}
+	protected long id;
+	protected boolean isInputRecord;
+	protected int code;
+	protected char level;
+	protected String detail;
+	protected Record record;
+	protected int serviceId;
 
-	public RecordMessage(String message) {
-		this.message = message;
+	//BDA: this can't just be set to whatever because it is linked to the servicec config file.
+	//     It is only set as a convenience by the MST.
+	protected String message;
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
-	public RecordMessage(int serviceId, String messageCode, String messageLevel) {
-		this.serviceId = serviceId;
-		this.messageCode = messageCode;
-		this.messageLevel = messageLevel;
-	}
-
-	public Provider getRepository() {
-		return repository;
-	}
-
-	public void setRepository(Provider repository) {
-		this.repository = repository;
-	}
-
-	public Record getRecord() {
-		return record;
-	}
-
-	public void setRecord(Record record) {
-		this.record = record;
-	}
-
 	public boolean isInputRecord() {
 		return isInputRecord;
 	}
-
 	public void setInputRecord(boolean isInputRecord) {
 		this.isInputRecord = isInputRecord;
 	}
 
-	public String getMessageCode() {
-		return messageCode;
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
 	}
 
-	public void setMessageCode(String messageCode) {
-		this.messageCode = messageCode;
+	public char getLevel() {
+		return level;
 	}
-
-	public String getMessageLevel() {
-		return messageLevel;
-	}
-
-	public void setMessageLevel(String messageLevel) {
-		this.messageLevel = messageLevel;
-	}
-
-	public int getServiceId() {
-		return serviceId;
-	}
-
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public String getDetailedMessage() {
-		return detailedMessage;
-	}
-
-	public void setDetailedMessage(String detailedMessage) {
-		this.detailedMessage = detailedMessage;
+	public void setLevel(char level) {
+		this.level = level;
 	}
 
 	public String getMessage() {
@@ -115,28 +72,41 @@ public class RecordMessage {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	
+	public Record getRecord() {
+		return record;
+	}
+	public void setRecord(Record record) {
+		this.record = record;
+	}
+
+	public int getServiceId() {
+		return serviceId;
+	}
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
+	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("messageCode=" + messageCode);
-		buffer.append(" messageLevel=" + messageLevel);
-		buffer.append(" service=" + serviceId);
+		StringBuilder buffer = new StringBuilder();
+		buffer.append(super.toString());
+		buffer.append(" id=" + id);
+		buffer.append(" code=" + code);
+		buffer.append(" level=" + level);
+		buffer.append(" serviceId=" + serviceId);
 		buffer.append(" message=" + message);
-		buffer.append(" detailedMessage=" + detailedMessage);
-		
-
+		buffer.append(" detailed=" + detail);
 		return buffer.toString();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 }
