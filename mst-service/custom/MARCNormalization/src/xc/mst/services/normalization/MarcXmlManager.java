@@ -20,6 +20,7 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.constants.Constants;
 import xc.mst.utils.TimingLogger;
 
@@ -39,7 +40,8 @@ public class MarcXmlManager {
 	protected static Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
 	protected Element marcXml = null;
-	
+	protected InputRecord inputRecord = null;
+
 	protected static boolean useXpath = false;
 
 	/**
@@ -246,6 +248,14 @@ public class MarcXmlManager {
 	 * @return the MARC XML's leader
 	 */
 	public String getLeader() { return leader; }
+	
+	public InputRecord getInputRecord() {
+		return inputRecord;
+	}
+
+	public void setInputRecord(InputRecord inputRecord) {
+		this.inputRecord = inputRecord;
+	}
 
 	/**
 	 * The value of the 001 field

@@ -16,10 +16,6 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
 	private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
 	
-	protected String getServiceName() {
-		return "MARCNormalization";
-	}
-	
 	protected String getRepoName() {
 		return "test_repo";
 	}

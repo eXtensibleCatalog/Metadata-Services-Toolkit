@@ -13,7 +13,7 @@ public class MetadataServiceSpecificTest extends BaseTest {
 	protected void go() {
 		try {
 			startup();
-			boolean skipMstInstall = "TRUE".equals(System.getenv("service.name").toUpperCase()); 
+			boolean skipMstInstall = "TRUE".equals(System.getenv("skip.mst.install").toUpperCase()); 
 			if (!skipMstInstall) {
 				try {
 					getRepositoryDAO().deleteSchema(getServiceName());

@@ -626,7 +626,7 @@ public class RepositoryDAO extends BaseDAO {
 			"where r.record_id=? "+
 				"and r.record_id = x.record_id " + 
 				"and r.record_id = u.record_id " +
-			"group by u.record_id";
+			"group by r.record_id";
 		Record r = null;
 		try {
 			r = this.jdbcTemplate.queryForObject(sql, 
@@ -718,8 +718,8 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" group by u.record_id "+
-				" order by u.record_id "+
+				" group by r.record_id "+
+				" order by r.record_id "+
 				" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 
 		Object obj[] = params.toArray();
@@ -759,7 +759,7 @@ public class RepositoryDAO extends BaseDAO {
 					" and r.record_id = u.record_id " +
 					" and (u.date_updated > ? or ? is null) "+
 					" and u.date_updated <= ?  " +
-					" group by u.record_id "
+					" group by r.record_id "
 					);
 					
 		if (inputFormat != null) {
@@ -829,8 +829,8 @@ public class RepositoryDAO extends BaseDAO {
 					" and rs.set_id = ? ");
 			params.add(inputSet.getId());
 		}
-		sb.append(" group by u.record_id ");
-		sb.append(" order by u.record_id ");
+		sb.append(" group by r.record_id ");
+		sb.append(" order by r.record_id ");
 
 		Object obj[] = params.toArray();
 		
@@ -870,8 +870,8 @@ public class RepositoryDAO extends BaseDAO {
 						" and r.record_id <= ? "+
 						" and (u.date_updated > ? or ? is null) "+
 						" and u.date_updated <= ? "+
-						" group by u.record_id "+
-						" order by u.record_id "+
+						" group by r.record_id "+
+						" order by r.record_id "+
 						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
 			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
@@ -1158,7 +1158,7 @@ public class RepositoryDAO extends BaseDAO {
 				 for (Map<String, Object> row : rows) {
 					 String indexName = (String)row.get("Key_name");
 					 LOG.debug("indexName: "+indexName);
-					 if ("idx_links_from_record_id".equals(indexName)) {
+					 if (("idx_"+name+"_to_record_id").equals(indexName)) {
 						 createIndiciesOnRecordLinks = false;
 						 break;
 					 }

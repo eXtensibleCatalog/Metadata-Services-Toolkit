@@ -583,11 +583,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		return config;
 	}
 	
-	protected void addErrorToOutput(OutputRecord record, int code, char level) {
-		addErrorToOutput(record, code, level, null);
+	protected void addMessage(OutputRecord record, int code, char level) {
+		addMessage(record, code, level, null);
 	}
 	
-	protected void addErrorToOutput(OutputRecord record, int code, char level, String detail) {
+	protected void addMessage(OutputRecord record, int code, char level, String detail) {
 		Record r = (Record)record;
 		RecordMessage rm = new RecordMessage();
 		getMessageDAO().injectId(rm);
@@ -601,11 +601,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		messages2insert.add(rm);
 	}
 	
-	protected void addErrorToInput(InputRecord record, int code, char level) {
-		addErrorToInput(record, code, level, null);
+	protected void addMessage(InputRecord record, int code, char level) {
+		addMessage(record, code, level, null);
 	}
 	
-	protected void addErrorToInput(InputRecord record, int code, 
+	protected void addMessage(InputRecord record, int code, 
 			char level, String detail) {
 		Record r = (Record)record;
 		RecordMessage rm = new RecordMessage();
@@ -619,38 +619,5 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 		messages2insert.add(rm);
 	}
-	
-	/*
-	public String getMessage(int errorCode, String detail) {
-		
-	}
-	
-	public String getMessage(int errorCode) {
-		 
-    	String errorMessage = null;
-
-    	try {
-    		Service service = getServiceById(serviceId);
-    		PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+service.getName()+
-				"/META-INF/classes/xc/mst/services/custom.properties");
-			String[] errorCodes = props.getStringArray("error.code");
-			String[] errorText = props.getStringArray("error.text");
-
-			for (int i=0; i<errorCodes.length; i++) {
-				if (errorCodes[i].equalsIgnoreCase(errorCode)) {
-					errorMessage =  errorText[i];
-					break;
-				}
-			}
-    	} catch (ConfigurationException ce) {
-    		LOG.error("Exception occured when reading properties file");
-    	} catch (DatabaseConfigException dce) {
-    		LOG.error("Exception occured when accessing database with provided parameters");
-    	}
-		
-		return errorMessage;
-		
-	}
-	*/
 
 }

@@ -203,8 +203,8 @@ public class TransformationService extends SolrTransformationService {
 	
 	@Override
 	public List<OutputRecord> process(InputRecord record) {
-		addErrorToInput(record, 12, RecordMessage.WARN);
-		addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
+		//addErrorToInput(record, 12, RecordMessage.WARN);
+		//addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
 		LOG.debug("getHarvestedOaiIdentifier(): "+((Record)record).getHarvestedOaiIdentifier());
 		LOG.debug("getOaiIdentifier(): "+((Record)record).getOaiIdentifier());
 		LOG.debug("getId(): "+((Record)record).getId());
@@ -332,8 +332,8 @@ public class TransformationService extends SolrTransformationService {
 						
 						if (holdingsRecords != null) {
 							for (OutputRecord r : holdingsRecords) {
-								addErrorToOutput(r, 16, RecordMessage.INFO);
-								addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
+								//addErrorToOutput(r, 16, RecordMessage.INFO);
+								//addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
 								if (status ==  Record.HELD) {
 									for (Long mid : manifestationIds) {
 										heldHoldings.add(new long[] {r.getId(), mid});								

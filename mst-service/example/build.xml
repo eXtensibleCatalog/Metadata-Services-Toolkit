@@ -274,7 +274,13 @@
 		<property name="skip.mst.install" value="" />
 	</target>
 
-	<target name="install-mst">
+	<target name="install.dependent.service" if="${dependent.service}" >
+		<!--
+		<copy
+		-->
+	</target>
+
+	<target name="install-mst" depends="install.dependent.service">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
@@ -282,19 +288,6 @@
 				input="${build.mst-instance.dir}/sql/create_database_script.sql">
 			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
 		</exec>
-		<!--
-		<sql classpathref="classpath.mst"
-				driver="com.mysql.jdbc.Driver"
-				url="${DatabaseUrl}"
-				userid="${DatabaseUsername}"
-				password="${DatabasePassword}">
-			<path>
-				<fileset dir="${build.mst-instance.dir}/sql">
-					<include name="create_database_script.sql"/>
-				</fileset>
-			</path>
-		</sql>
-		-->
 	</target>
 
 	<target name="unzip-base-tests">
@@ -314,22 +307,6 @@
 
 	<target name="test" depends="install-mst, compile.test, test.nodep" />
 	<target name="test.nodep" depends="init.test, init.skip.mst.install, unzip-base-tests, compile.test.nodep">
-		<!--
-		<taskdef name="testng" classpathref="classpath.mst"
-			classname="org.testng.TestNGAntTask" />
-
-		<testng classpathref="classpath.test.run" outputdir="${build.test}"
-				workingDir="${build.dir}">
-			<env key="service.name" value="${normalized.service.name}"/>
-			<env key="service.test" value="${test}"/>
-			<jvmarg value="-server" />
-			<jvmarg value="-Xms700M" />
-			<jvmarg value="-Xmx700M" />
-			<jvmarg value="-Xms3000M" />
-			<jvmarg value="-Xmx3000M" />
-			<classfileset dir="${build.test.classes}" includes="**/*${test}*.class"/>
-		</testng>
-		-->
 		<java classpathref="classpath.test.run" 
 				classname="xc.mst.services.test.MetadataServiceSpecificTest"
 				fork="true" 
@@ -341,9 +318,9 @@
 			<!--
 			<jvmarg value="-Xms700M" />
 			<jvmarg value="-Xmx700M" />
+			-->
 			<jvmarg value="-Xms3000M" />
 			<jvmarg value="-Xmx3000M" />
-			-->
 		</java>
 	</target>
 
