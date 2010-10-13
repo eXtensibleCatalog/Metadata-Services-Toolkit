@@ -54,6 +54,7 @@ import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
+import xc.mst.manager.record.MessageService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.FormatService;
@@ -119,7 +120,9 @@ public class BaseService {
 	}
 	
 	public Util getUtil() {
-		return util;
+		// BDA - was having problems because Repository is sometimes created by Spring, sometimes
+		//       by RepositoryDAO.  This is not purist, but who cares right now.
+		return Util.getUtil();
 	}
 	public void setUtil(Util util) {
 		this.util = util;
@@ -460,5 +463,8 @@ public class BaseService {
 	}
 	public RepositoryService getRepositoryService() {
 		return (RepositoryService)config.getBean("RepositoryService");
+	}
+	public MessageService getMessageService() {
+		return (MessageService)config.getBean("MessageService");
 	}
 }

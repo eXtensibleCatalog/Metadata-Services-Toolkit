@@ -1110,7 +1110,7 @@ public class NormalizationService extends GenericMetadataService {
 			}
 			else if(field008offset22 != ' ' && (field008offset22 != 'a' && field008offset22 != 'b' && field008offset22 != 'c' && field008offset22 != 'd' && field008offset22 != 'e' && field008offset22 != 'f' && field008offset22 != 'g' && field008offset22 != 'j'&& field008offset22 != '|' && field008offset22 != '#')) {
 				addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO);
-				addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO, "Invalid value in Control Field 008 offset 22: " + field008offset22);
+				//addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO, "Invalid value in Control Field 008 offset 22: " + field008offset22);
 			}
 
 			if(LOG.isDebugEnabled())
@@ -1317,17 +1317,17 @@ public class NormalizationService extends GenericMetadataService {
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b")) {
 					bSubfield = subfield;
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO, 
-					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
+					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO, 
+							"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
 				}
 
 				// Initialize the subfield9 if we found the $9
 				if(subfield.getAttribute("code").getValue().equals("9")) {
 					subfield9 = subfield;
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, 
-					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
+					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, 
+							"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 				}
 					
 			} // end loop over 035 subfields

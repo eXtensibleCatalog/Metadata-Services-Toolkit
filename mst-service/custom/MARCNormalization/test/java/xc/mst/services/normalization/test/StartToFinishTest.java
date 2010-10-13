@@ -26,27 +26,23 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
-	protected String getServiceName() {
-		return "MARCNormalization";
-	}
-	
-	protected String getRepoName() {
+	public String getRepoName() {
 		return "test_repo";
 	}
 	
-	protected String getProviderUrl() {
+	public String getProviderUrl() {
 		return "http://128.151.244.132:8080/OAIToolkit_testDataset_size10/oai-request.do";
 	}
 	
-	protected Format getIncomingFormat() throws Exception {
+	public Format getIncomingFormat() throws Exception {
 		return getMarcXmlFormat();
 	}
 
-	protected Format getHarvestOutFormat() throws Exception {
+	public Format getHarvestOutFormat() throws Exception {
 		return getMarcXmlFormat();
 	}
 	
-	protected void finalTest() {
+	public void finalTest() {
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
         TLongHashSet predecessors = new TLongHashSet();
@@ -64,7 +60,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	/**
 	 * To test harvest out functionality
 	 */
-	protected void testHarvestOut() {
+	public void testHarvestOut() {
 		try {
 			int numberOfRecords = 0;
 	

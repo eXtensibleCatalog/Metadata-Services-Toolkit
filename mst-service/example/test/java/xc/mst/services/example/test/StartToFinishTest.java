@@ -26,23 +26,19 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 	
-	protected String getServiceName() {
-		return "example";
-	}
-	
-	protected String getRepoName() {
+	public String getRepoName() {
 		return "test_repo";
 	}
 	
-	protected String getProviderUrl() {
+	public String getProviderUrl() {
 		return "http://geolib.geo.auth.gr/digeo/index.php/index/oai";
 	}
 	
-	protected Format getIncomingFormat() throws Exception {
+	public Format getIncomingFormat() throws Exception {
 		return getDCFormat();
 	}
 	
-	protected Format getHarvestOutFormat() throws Exception {
+	public Format getHarvestOutFormat() throws Exception {
 		return getDCFormat();
 	}
 	
@@ -76,7 +72,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		assert formatNames.contains("rfc1807") : "The format rfc1807 was expected but not found.";
 	}
 	
-	protected void finalTest() throws Exception {
+	public void finalTest() throws Exception {
 		boolean useAsserts = true;
 		Record r = getRepositoryService().getRecord(1999);
 		if (useAsserts)
@@ -168,7 +164,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	/**
 	 * To test harvest out functionality
 	 */
-	protected void testHarvestOut() {
+	public void testHarvestOut() {
 		
 		int numberOfRecords = 0;
 

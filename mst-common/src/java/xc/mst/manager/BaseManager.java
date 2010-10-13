@@ -23,6 +23,7 @@ import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
+import xc.mst.manager.record.MessageService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.FormatService;
@@ -63,7 +64,8 @@ public class BaseManager extends BaseService {
 	protected MSTSolrService MSTSolrService = null;
 	protected HttpService httpService = null;
 	protected RepositoryService repositoryService = null;
-
+	protected MessageService messageService = null;
+	
 	public EmailConfigService getEmailConfigService() {
 		return emailConfigService;
 	}
@@ -220,5 +222,12 @@ public class BaseManager extends BaseService {
 	}
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
-	}	
+	}
+	
+	public MessageService getMessageService() {
+		return messageService;
+	}
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
+	}
 }

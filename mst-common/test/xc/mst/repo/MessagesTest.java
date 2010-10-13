@@ -14,8 +14,8 @@ public class MessagesTest extends BaseTest {
 	@Test
 	public void test() {
 		List<Record> records = new ArrayList<Record>();
-		for (int i=0; i<20; i++) {
-			Record r = getRepositoryDAO().getRecord("marctoxctransformation", i);
+		for (int i=0; i<100; i++) {
+			Record r = getRepositoryDAO().getRecord("test_repo", i);
 			if (r != null) {
 				records.add(r);
 			}
@@ -27,7 +27,7 @@ public class MessagesTest extends BaseTest {
 		
 		LOG.debug("records.size(): "+records.size());
 		
-		getMessageDAO().injectIntoRecords(records);
+		getMessageDAO().injectMessages(records);
 		
 		for (Record r : records) {
 			for (RecordMessage rm : r.getMessages()) {

@@ -9,7 +9,6 @@
 
 package xc.mst.repo;
 
-import gnu.trove.TLongArrayList;
 import gnu.trove.TLongHashSet;
 
 import java.util.ArrayList;
@@ -195,7 +194,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 	
 	public List<Record> getRecordsWSets(Date from, Date until, Long startingId) {
-		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
+		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
+		for (Record r : recs) {
+			getMessageService().injectMessageMessage(r);
+		}
+		return recs;
 	}
 	
 	public void injectSuccessors(Record r) {

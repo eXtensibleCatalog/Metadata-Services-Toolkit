@@ -561,7 +561,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			running.release();
 		}
 		endBatch();
-		getRepository().processComplete();
+		if (getRepository() != null)
+			getRepository().processComplete();
 	}
 	
 	protected void injectKnownSuccessorsIds(Record in) {
@@ -618,6 +619,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		rm.setRecord(r);
 
 		messages2insert.add(rm);
+	}
+	
+	public String getMessage(int code) {
+		return config.getProperty("error."+code+".text");
 	}
 
 }

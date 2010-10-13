@@ -8,6 +8,8 @@
   */
 package xc.mst.test;
 
+import java.util.Date;
+
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -16,6 +18,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.testng.annotations.BeforeSuite;
 
 import xc.mst.common.test.BaseTest;
+import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataService;
@@ -57,6 +60,39 @@ public class BaseMetadataServiceTest extends BaseTest {
 	
 	@Override
 	public void shutdown() {
+	}
+	
+	public void waitUntilFinished() {
+		int timesNotRunning = 0;
+		while (true) {
+			LOG.debug("checking to see if finished");
+			try {
+				Thread.sleep(1000);
+				Date lastModified = getRepositoryService().getLastModified();
+				LOG.debug("lastModified :"+lastModified);
+				if (lastModified != null && lastModified.after(new Date())) {
+					LOG.debug("Future dated!");
+					continue;
+				}
+				if (getScheduler().getRunningJob() != null) {
+					LOG.debug("scheduler.getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
+					LOG.debug("scheduler.getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
+				}
+				if (getScheduler().getRunningJob() == null || 
+						Status.RUNNING != getScheduler().getRunningJob().getJobStatus()) {
+					timesNotRunning++;
+				} else {
+					timesNotRunning = 0;
+				}
+				if (timesNotRunning > 7) {
+					break;
+				}
+				LOG.debug("timeNotRunning: "+timesNotRunning);
+			} catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+			
+		}
 	}
 	
 }

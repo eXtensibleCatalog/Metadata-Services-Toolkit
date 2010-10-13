@@ -415,7 +415,11 @@ text-decoration:underline;
 								<div class="redError">
 								<c:if test="${record.messages != '[]'}">
 									Error:
-									<c:forEach var="error" items="${record.messages}" varStatus="status"><c:if test="${status.count > 1}">, </c:if>${error.serviceId}-${error.messageCode}:${error.message} [${error.detailedMessage}]</c:forEach>
+									<c:forEach var="error" items="${record.messages}" varStatus="status">
+										<c:if test="${status.count > 1}">, </c:if>
+										${error.serviceId}-${error.code}:${error.message}<c:if test="${error.detail != null}">[${error.detail}]</c:if> 
+										
+									</c:forEach>
 									<br>
 								</c:if>
 								</div>

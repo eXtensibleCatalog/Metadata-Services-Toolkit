@@ -82,7 +82,18 @@
 			<c:if test="${record.updatedAt != null}">Updated at: ${record.updatedAt}<br></c:if>
 			OAI datestamp: ${record.oaiDatestamp}<br>
 			OAI identifier: ${record.oaiIdentifier}<br>
-			OAI header: ${record.oaiHeader}<br>
+			<%--
+			OAI header: ${record.oaiHeader}<br>  --%>
+			<c:if test="${record.messages != '[]'}">
+				messages:
+				<c:forEach var="m" items="${record.messages}" varStatus="status">
+					<div class="redError">${m.code}: ${m.message}
+					<c:if test="${m.detail != null}">
+						${m.detail}
+					</c:if>
+					</div>
+				</c:forEach>
+			</c:if>
 			<c:url var="viewPredecessorRecord" value="browseRecords.action">
 				  <c:param name="query" value=""/>
 				  <c:param name="addFacetName" value="successor"/>

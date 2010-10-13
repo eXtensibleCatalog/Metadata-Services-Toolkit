@@ -3,7 +3,6 @@ package xc.mst.dao.record;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -20,7 +19,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.BaseDAO;
-import xc.mst.repo.RepositoryDAO;
 import xc.mst.utils.TimingLogger;
 
 public class MessageDAO extends BaseDAO {
@@ -118,15 +116,15 @@ public class MessageDAO extends BaseDAO {
         TimingLogger.stop(MESSAGE_DETAILS_TABLE+".insert");
 	}
 	
-	public void injectIntoRecords(List<Record> records) { 
+	public void injectMessages(List<Record> records) { 
 		long lowestRecordId = records.get(0).getId();
 		long highestRecordId = records.get(records.size()-1).getId();
 		String sql = 
 			" select m.record_id, m.rec_in_out, m.msg_code, m.msg_level, m.service_id, d.detail "+
 			" from "+MESSAGES_TABLE+" as m "+
 				" left outer join "+MESSAGE_DETAILS_TABLE+" as d on (m.record_message_id = d.record_message_id) "+
-			" where m.record_message_id >= ? "+
-				" and m.record_message_id <= ? "+
+			" where m.record_id >= ? "+
+				" and m.record_id <= ? "+
 			" order by m.record_id ";
 		
 		Iterator<Record> recordIt = records.iterator();
@@ -143,6 +141,21 @@ public class MessageDAO extends BaseDAO {
 		}
 	}
 	
+	public void injectMessages(Record r) {
+		String sql = 
+			" select m.record_id, m.rec_in_out, m.msg_code, m.msg_level, m.service_id, d.detail "+
+			" from "+MESSAGES_TABLE+" as m "+
+				" left outer join "+MESSAGE_DETAILS_TABLE+" as d on (m.record_message_id = d.record_message_id) "+
+			" where m.record_id = ? ";
+
+		List<RecordMessage> messages = this.jdbcTemplate.query(
+				sql, new Object[] {r.getId()}, new MessageMapper());
+		
+		for (RecordMessage rm : messages) {
+			r.addMessage(rm);
+		}
+	}
+	
 	private static final class MessageMapper implements RowMapper<RecordMessage> {
 	    public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
 	    	RecordMessage rm = new RecordMessage();
@@ -153,7 +166,7 @@ public class MessageDAO extends BaseDAO {
 	    	rm.setCode(rs.getInt("m.msg_code"));
 	    	rm.setLevel(rs.getString("m.msg_level").charAt(0));
 	    	rm.setServiceId(rs.getInt("m.service_id"));
-	    	rm.setDetail("d.detail");
+	    	rm.setDetail(rs.getString("d.detail"));
 	    	return rm;
 	    }
 	}

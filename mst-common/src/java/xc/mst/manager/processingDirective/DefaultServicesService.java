@@ -281,7 +281,7 @@ public class DefaultServicesService extends BaseService
     		String version = props.getString("service.version");
     		if (!name.equals(getUtil().normalizeName(props.getString("service.name")))) {
     			LOG.error("name: "+name);
-    			LOG.error("props.getString(service.name): "+getUtil().normalizeName("service.name"));
+    			LOG.error("props.getString(service.name): "+getUtil().normalizeName(props.getString("service.name")));
     			throw new RuntimeException("service folder name must match the name in the properties file.");
     		}
     		

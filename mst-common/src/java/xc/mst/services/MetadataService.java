@@ -47,6 +47,7 @@ public interface MetadataService {
 	public Service getService();
 	public void setService(Service service);
 	public String getServiceName();
+	public String getMessage(int code);
 	
 	// leftover methods that I think can be eventually deleted
 	public void runService(int serviceId, int outputSetId);

@@ -61,6 +61,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	public List<OutputRecord> process(InputRecord ri) {
 		TimingLogger.add(incomingRepository.getName(), ri.getId());
 		Record r = (Record)ri;
+		LOG.debug("indexing record.getId(): "+r.getId());
 		if (r.getId() % 1000 == 0) {
 			LOG.debug("indexing record.getId(): "+r.getId());
 		}
@@ -102,10 +103,14 @@ public class SolrIndexService extends GenericMetadataService  {
 		}
 		if (r.getMessages() != null) {
 			for (RecordMessage m : r.getMessages()) {
-				/*
-				doc.addField(RecordService.FIELD_ERROR,
-						m.getServiceId() + "-" + m.getCode() + ":" + getServicesService().getError(m.getServiceId(), m.getCode()));
-				*/
+				try {
+					LOG.debug("m: "+m);
+					doc.addField(RecordService.FIELD_ERROR,
+							m.getServiceId() + "-" + m.getCode() + ":" + 
+							m.getMessage());
+				} catch (Throwable t) {
+					LOG.error("continuing, but logging", t);
+				}
 			}
 		}
 		

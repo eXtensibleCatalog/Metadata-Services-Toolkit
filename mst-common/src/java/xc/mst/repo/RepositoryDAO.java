@@ -889,15 +889,6 @@ public class RepositoryDAO extends BaseDAO {
 						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
 				LOG.debug("recordsWSets.size() "+recordsWSets.size());
 				
-				StringBuilder sbMessages = new StringBuilder();
-				sbMessages.append(
-						" select "+RECORD_MESSAGES_TABLE_COLUMNS+
-						" from "+getTableName(name, RECORD_MESSAGES_TABLE)+" rm, "+
-							getTableName(name, RECORDS_TABLE)+" r "+
-						" where r.record_id = rm.record_id " +
-						" and r.record_id = ?");
-
-				
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWSets) {
@@ -919,12 +910,12 @@ public class RepositoryDAO extends BaseDAO {
 					
 					currentRecord.setMessages(messages);
 					*/
-					
 			
 				}
 			} catch (EmptyResultDataAccessException e) {
 				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
 			}
+			getMessageDAO().injectMessages(records);
 			LOG.debug("records.size(): "+records.size());
 		}
 
