@@ -34,8 +34,8 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		return "http://128.151.244.132:8080/OAIToolkit_testDataset_size10/oai-request.do";
 	}
 	
-	public Format getIncomingFormat() throws Exception {
-		return getMarcXmlFormat();
+	public Format[] getIncomingFormats() throws Exception {
+		return new Format[] {getMarcXmlFormat()};
 	}
 
 	public Format getHarvestOutFormat() throws Exception {

@@ -24,9 +24,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.WorkerThread;
-import xc.mst.services.MetadataService;
-import xc.mst.services.MetadataServiceManager;
 import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
@@ -46,10 +43,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	/** XML response of harvest out */
 	protected String harvestOutResponse = null;
 	
-	protected long getNumberOfRecordsToHarvest() {return 100000;}
+	protected long getNumberOfRecordsToHarvest() {return 50;}
 	protected abstract String getRepoName();
 	protected abstract String getProviderUrl();
-	protected abstract Format getIncomingFormat() throws Exception;
+	protected abstract Format[] getIncomingFormats() throws Exception;
 	protected void testProvider() throws Exception {}
 	protected abstract void finalTest() throws Exception;
 	
@@ -110,6 +107,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		}
 		return f;
 	}
+	
+	protected String[] getPriorServices() {
+		return new String[] {};
+	}
 
 	@Test
 	public void startToFinish() throws Exception  {
@@ -161,8 +162,15 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		} catch (Throwable t) {
 		}
 		try {
-			getRepositoryDAO().deleteSchema(getServiceName());
+			// This is now being done in MetadataServiceSpecificTest
+			//getRepositoryDAO().deleteSchema(getServiceName());
 		} catch (Throwable t) {
+		}
+		for (String ps : getPriorServices()) {
+			try {
+				getRepositoryDAO().deleteSchema(ps);
+			} catch (Throwable t) {
+			}	
 		}
 	}
 	
@@ -186,36 +194,67 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void installService() throws Exception {
-		getServicesService().addNewService(getServiceName());
+		for (String ps : getPriorServices()) {
+			getServicesService().addNewService(ps);
+		}
+		// This is now being done in MetadataServiceSpecificTest
+		//getServicesService().addNewService(getServiceName());
 	}
-
-	public void configureProcessingRules() throws Exception {
-		Set s = new Set();
-		s.setDisplayName(getRepoName());
-		s.setSetSpec(getRepoName());
-		s.setIsProviderSet(false);
-		s.setIsRecordSet(true);
-		getSetDAO().insert(s);
+	
+	protected void createProcessingRule(Service srcService, String fromRepo, String serviceName) throws Exception {
+		if (getSetDAO().getBySetSpec(fromRepo) == null) {
+			Set s = new Set();
+			s.setDisplayName(fromRepo);
+			s.setSetSpec(fromRepo);
+			s.setIsProviderSet(false);
+			s.setIsRecordSet(true);
+			getSetDAO().insert(s);	
+		}
 		
-		s = new Set();
-		s.setDisplayName(getServiceName()+"-out");
-		s.setSetSpec(getServiceName()+"-out");
-		s.setIsProviderSet(false);
-		s.setIsRecordSet(true);
-		getSetDAO().insert(s);
+		Set s = getSetDAO().getBySetSpec(serviceName); 
+		if (s == null) {
+			s = new Set();
+			s.setDisplayName(serviceName);
+			s.setSetSpec(serviceName);
+			s.setIsProviderSet(false);
+			s.setIsRecordSet(true);
+			getSetDAO().insert(s);
+		}
 		
-		Service service = getServicesService().getServiceByName(getServiceName());
+		Service service = getServicesService().getServiceByName(serviceName);
 		ProcessingDirective pd = new ProcessingDirective();
 		pd.setService(service);
-		pd.setSourceProvider(provider);
+		if (srcService != null)
+			pd.setSourceService(srcService);
+		else
+			pd.setSourceProvider(provider);
 		List<Format> formats = new ArrayList<Format>();
-		formats.add(getIncomingFormat());
+		for (Format f : getIncomingFormats()) {
+			formats.add(f);			
+		}
 		pd.setTriggeringFormats(formats);
 		List<Set> sets = new ArrayList<Set>();
-		sets.add(getSetDAO().getBySetSpec(getRepoName()));
+		sets.add(getSetDAO().getBySetSpec(fromRepo));
 		pd.setTriggeringSets(sets);
 		pd.setOutputSet(s);
 		getProcessingDirectiveDAO().insert(pd);
+	}
+
+	public void configureProcessingRules() throws Exception {
+		List<String> allServices2Run = new ArrayList<String>();
+		for (String s : getPriorServices()) {
+			allServices2Run.add(s);
+		}
+		allServices2Run.add(getServiceName());
+		
+		for (int i=0; i < allServices2Run.size(); i++) {
+			if (i > 0) {
+				createProcessingRule(getServicesService().getServiceByName(allServices2Run.get(i-1)), 
+						allServices2Run.get(i-1), allServices2Run.get(i));
+			} else {
+				createProcessingRule(null, provider.getName(), allServices2Run.get(i));	
+			}
+		}
 	}
 	
 	public void createHarvestSchedule() throws Exception {
@@ -224,7 +263,9 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         schedule.setScheduleName("Test Schedule Name");
         schedule.setDayOfWeek(nowCal.get(Calendar.DAY_OF_WEEK));
 
-        schedule.addFormat(getIncomingFormat());
+        for (Format f : getIncomingFormats()) {
+        	schedule.addFormat(f);	
+        }
         
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);
@@ -241,54 +282,6 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		HarvestSchedule schedule = getScheduleService().getScheduleById(1);
 		schedule.setMinute(nowCal.get(Calendar.MINUTE));
 		getScheduleService().updateSchedule(schedule);
-	}
-	
-	public void indexHarvestedRecords() {
-		try {
-			List<Provider> providers = getProviderDAO().getAll();
-			if (providers != null) {
-				for (Provider p : providers) {
-					Repository repo = getRepositoryService().getRepository(p);
-					WorkerThread runningJob = new WorkerThread();
-					MetadataServiceManager msm = new MetadataServiceManager();
-					runningJob.setWorkDelegate(msm);
-					MetadataService solrIndexService = (MetadataService)MSTConfiguration.getInstance().getBean("SolrIndexService");
-					Service s = new Service();
-					s.setName(p.getName()+"-solr-indexer");
-					solrIndexService.setService(s);
-					msm.setMetadataService(solrIndexService);
-					msm.setIncomingRepository(repo);
-					repo.setProvider(p);
-					runningJob.run();
-				}
-			}
-		} catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
-	}
-	
-	public void indexServicedRecords() {
-		try {
-			List<Service> services = getServicesService().getAllServices();
-			if (services != null) {
-				for (Service s : services) {
-					Repository repo = s.getMetadataService().getRepository();
-					WorkerThread runningJob = new WorkerThread();
-					MetadataServiceManager msm = new MetadataServiceManager();
-					runningJob.setWorkDelegate(msm);
-					MetadataService solrIndexService = (MetadataService)MSTConfiguration.getInstance().getBean("SolrIndexService");
-					Service s2 = new Service();
-					s2.setName(s.getName()+"-solr-indexer");
-					solrIndexService.setService(s2);
-					msm.setMetadataService(solrIndexService);
-					msm.setIncomingRepository(repo);
-					repo.setService(s2);
-					runningJob.run();
-				}
-			}
-		} catch (Throwable t) {
-			throw new RuntimeException(t);
-		}
 	}
 
 	/**

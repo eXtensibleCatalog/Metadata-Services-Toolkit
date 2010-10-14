@@ -160,7 +160,10 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	// TODO: you need to check the cache as well
 	public Record getRecord(long id) {	
-		return getRepositoryDAO().getRecord(name, id);
+		Record r = getRepositoryDAO().getRecord(name, id);
+		if (r != null)
+			r.setSets(getRepositoryDAO().getSets(name, id));
+		return r;
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {

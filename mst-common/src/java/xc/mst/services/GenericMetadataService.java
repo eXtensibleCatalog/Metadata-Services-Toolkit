@@ -512,7 +512,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							getRepositoryDAO().injectId(rout2);
 						}
 						injectKnownPredecessors(in, rout2);
-						
+						if (outputSet != null) {
+							rout2.addSet(outputSet);
+						}
 						getRepository().addRecord(rout2);
 					}
 				}

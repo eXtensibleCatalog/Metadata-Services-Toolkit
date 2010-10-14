@@ -34,8 +34,9 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		return "http://geolib.geo.auth.gr/digeo/index.php/index/oai";
 	}
 	
-	public Format getIncomingFormat() throws Exception {
-		return getDCFormat();
+	@Override
+	public Format[] getIncomingFormats() throws Exception {
+		return new Format[] {getDCFormat()};
 	}
 	
 	public Format getHarvestOutFormat() throws Exception {

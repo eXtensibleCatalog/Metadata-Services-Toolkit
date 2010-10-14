@@ -207,7 +207,7 @@ public class Scheduler extends BaseService implements Runnable {
 									//Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
 									Job job = new Job();
 									job.setService(pd.getService());
-									job.setOutputSetId(0);
+									job.setOutputSetId(pd.getOutputSet().getId());
 									job.setJobType(Constants.THREAD_SERVICE);
 									job.setOrder(getJobService().getMaxOrder() + 1);
 									job.setProcessingDirective(pd);
@@ -261,10 +261,12 @@ public class Scheduler extends BaseService implements Runnable {
 								incomingRepo = 
 									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
-								incomingRepo = jobToStart.getProcessingDirective().getSourceService().getMetadataService().getRepository();
+								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
+								incomingRepo = s2.getMetadataService().getRepository();
 							} else {
 								throw new RuntimeException("error");
 							}
+							LOG.debug("incomingRepo.getName(): "+incomingRepo.getName());
 							msm.setIncomingRepository(incomingRepo);
 							msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
 							msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
@@ -293,6 +295,7 @@ public class Scheduler extends BaseService implements Runnable {
 						}
 
 						if (runningJob != null) {
+							LOG.debug("runningJob.start()");
 							runningJob.start();
 						}
 					}
@@ -316,6 +319,9 @@ public class Scheduler extends BaseService implements Runnable {
 	}
 	
 	public void kill() {
+		if (runningJob != null) {
+			runningJob.cancel();
+		}
 		killed = true;
 	}
 

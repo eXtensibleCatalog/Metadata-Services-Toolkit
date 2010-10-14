@@ -845,6 +845,22 @@ public class RepositoryDAO extends BaseDAO {
 		return recordCount;
 	}
 	
+	public List<Set> getSets(String repoName, long recordId) {
+		List<Set> sets = new ArrayList<Set>();
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
+				" select s.set_spec, s.display_name "+
+				" from sets s, "+getTableName(repoName, RECORDS_SETS_TABLE)+" rs"+
+				" where s.set_id = rs.set_id "+
+				" and rs.record_id = ?", recordId);
+		for (Map<String, Object> row : rows) {
+			Set s = new Set();
+			s.setSetSpec((String)row.get("set_spec"));
+			s.setDisplayName((String)row.get("display_name"));
+			sets.add(s);
+		}
+		return sets;
+	}
+	
 	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {

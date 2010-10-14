@@ -2,7 +2,7 @@ export TOMCAT_HOME=$(cat local.properties 2> /dev/null | grep tomcat.dir 2> /dev
 export TOMCAT_HOME=$(cygpath $TOMCAT_HOME)
 export MYSQL_USER=root
 export MYSQL_DIR=
-export MST_INSTANCE=$(cat local.properties 2> /dev/null | grep mst.root.dir 2> /dev/null | sed 's/^.*=//' 2> /dev/null)
+export MST_INSTANCE=$(cat local.properties 2> /dev/null | grep mst.root.dir 2> /dev/null | grep -v '^#' | sed 's/^.*=//' 2> /dev/null)
 export MST_INSTANCE=$MST_INSTANCE/MST-instances/MetadataServicesToolkit
 export MST_INSTANCE=$(cygpath $MST_INSTANCE)
 export BASE_DIR="${HOME}"

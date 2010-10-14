@@ -274,13 +274,16 @@
 		<property name="skip.mst.install" value="" />
 	</target>
 
-	<target name="install.dependent.service" if="${dependent.service}" >
-		<!--
-		<copy
-		-->
+	<target name="install.dependent.service">
+		<echo>../${dependent.service}/build</echo>
+		<unzip dest="${build.mst-services.dir}">
+			<fileset dir="../${dependent.service}/build">
+				<include name="*.zip"/>
+			</fileset>
+		</unzip>
 	</target>
 
-	<target name="install-mst" depends="install.dependent.service">
+	<target name="install-mst">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
@@ -305,7 +308,7 @@
 		</delete>
 	</target>
 
-	<target name="test" depends="install-mst, compile.test, test.nodep" />
+	<target name="test" depends="install-mst, install.dependent.service, compile.test, test.nodep" />
 	<target name="test.nodep" depends="init.test, init.skip.mst.install, unzip-base-tests, compile.test.nodep">
 		<java classpathref="classpath.test.run" 
 				classname="xc.mst.services.test.MetadataServiceSpecificTest"
@@ -318,9 +321,9 @@
 			<!--
 			<jvmarg value="-Xms700M" />
 			<jvmarg value="-Xmx700M" />
-			-->
 			<jvmarg value="-Xms3000M" />
 			<jvmarg value="-Xmx3000M" />
+			-->
 		</java>
 	</target>
 
@@ -334,7 +337,7 @@
 		</java>
 	</target>
 
-	<target name="start2finishtest" depends="install-mst, compile.test" >
+	<target name="start2finishtest">
 		<property name="test" value="StartToFinishTest" />
 		<ant target="test" inheritAll="true" />
 	</target>

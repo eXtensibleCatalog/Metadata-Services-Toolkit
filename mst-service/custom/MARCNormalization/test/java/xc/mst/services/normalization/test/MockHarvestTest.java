@@ -28,8 +28,9 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 		return "randys-30";
 	}
 	
-	public Format getIncomingFormat() throws Exception {
-		return getMarcXmlFormat();
+	@Override
+	public Format[] getIncomingFormats() throws Exception {
+		return new Format[] {getMarcXmlFormat()};
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
