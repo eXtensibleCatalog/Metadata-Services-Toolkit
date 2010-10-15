@@ -96,6 +96,7 @@ public class WorkerThread extends Thread {
 	}
 
 	public String getJobName() {
+		waitForSetupCompletion();
 		if (this.workDelegate != null) {
 			return this.workDelegate.getName();
 		} else {

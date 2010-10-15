@@ -478,7 +478,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
+		boolean atLeastOneRecordProcessed = false;
 		while (records != null && records.size() > 0 && !stopped) {
+			atLeastOneRecordProcessed = true;
 			if (paused) {
 				previouslyPaused = true;
 				running.release();
@@ -526,32 +528,14 @@ public abstract class GenericMetadataService extends SolrMetadataService
 //				repo.addRecord(in);
 			}
 
-			records = getRecords(repo, sh, inputFormat, inputSet);
-			if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
-				LOG.debug("sh.getId(): "+sh.getId());
-				getServiceDAO().persist(sh);
-	
-				// Set number of input and output records.
-				LOG.debug("service: "+service);
-				LOG.debug("records: "+records);
-				service.setInputRecordCount(service.getInputRecordCount() + records.size());
-				service.setOutputRecordCount(getRepository().getSize());
-				
-				// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
-				// TODO : Should # of harvest out records available include deleted records too? 
-				service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
-
-				try {
-					getServiceDAO().update(service);
-				} catch(DataException de) {
-					LOG.error("Exception occured while updating the service", de);
-				}
-			}
-			
-			getRecordLoops++;
 			if (getRecordLoops % 10 == 0 && !(getRepository() instanceof TestRepository)) {
 				endBatch();
 			}
+			updateService(records, sh);
+			
+			records = getRecords(repo, sh, inputFormat, inputSet);
+			getRecordLoops++;
+
 		}
 		//  TODO not inserting errors on input record.
 //		repo.endBatch();
@@ -562,9 +546,38 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		if (!previouslyPaused) {
 			running.release();
 		}
-		endBatch();
-		if (getRepository() != null)
-			getRepository().processComplete();
+		updateService(records, sh);
+		if (atLeastOneRecordProcessed) {
+			endBatch();
+			if (getRepository() != null)
+				getRepository().processComplete();
+		}
+	}
+	
+	protected void updateService(List<Record> records, ServiceHarvest sh) {
+		if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
+			LOG.debug("sh.getId(): "+sh.getId());
+			getServiceDAO().persist(sh);
+
+			// Set number of input and output records.
+			LOG.debug("service.getName(): "+service.getName());
+			LOG.debug("records.size(): "+records.size());
+			LOG.debug("service.getInputRecordCount(): "+service.getInputRecordCount());
+			LOG.debug("records.size(): "+records.size());
+			LOG.debug("getRepository().getSize(): "+getRepository().getSize());
+			service.setInputRecordCount(service.getInputRecordCount() + records.size());
+			service.setOutputRecordCount(getRepository().getSize());
+			
+			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
+			// TODO : Should # of harvest out records available include deleted records too? 
+			service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
+
+			try {
+				getServiceDAO().update(service);
+			} catch(DataException de) {
+				LOG.error("Exception occured while updating the service", de);
+			}
+		}
 	}
 	
 	protected void injectKnownSuccessorsIds(Record in) {
