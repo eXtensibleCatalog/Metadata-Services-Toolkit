@@ -159,6 +159,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 			List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql);
 			if (results != null) {
 				for (Map<String, Object> row : results) {
+					TimingLogger.add(tableName, 0);
 					if (objArr[i] instanceof TLongLongHashMap) {
 						((TLongLongHashMap)objArr[i]).put((Long)row.get("bib_001"), (Long)row.get("record_id"));
 					} else if (objArr[i] instanceof Map) {

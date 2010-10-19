@@ -56,7 +56,7 @@ public class Scheduler extends BaseService implements Runnable {
 	protected Job previousJob = null;
 
 	public void init() {
-		LOG.error("init");
+		LOG.info("init");
 		new Thread(this).start();
 	}
 	
@@ -65,6 +65,7 @@ public class Scheduler extends BaseService implements Runnable {
 	}
 	
 	public void run() {
+		LOG.info("Scheduler.run");
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
 		
@@ -84,14 +85,14 @@ public class Scheduler extends BaseService implements Runnable {
 		} catch (DataException de) {
 			throw new RuntimeException(de);
 		}
-		
+
+		boolean solrWorkerThreadStarted = false;
 		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
 			LOG.info("solr.index.whenIdle is true");
 			solrWorkerThread = new WorkerThread();
 			LOG.debug("solrWorkerThread: "+solrWorkerThread);
 			SolrWorkDelegate solrWd = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
 			solrWorkerThread.setWorkDelegate(solrWd);
-			solrWorkerThread.start();
 		} else {
 			LOG.info("solr.index.whenIdle is false");
 		}
@@ -218,10 +219,17 @@ public class Scheduler extends BaseService implements Runnable {
 							}
 						}
 					}
+					
 					Job jobToStart = getJobService().getNextJobToExecute();
+					LOG.debug("jobToStart: "+jobToStart);
 					if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
 						LOG.debug("solrWorkerThead.proceed");
-						solrWorkerThread.proceed();
+						if (!solrWorkerThreadStarted) {
+							solrWorkerThreadStarted = true;
+							solrWorkerThread.start();
+						} else {
+							solrWorkerThread.proceed();	
+						}
 						runningJob = solrWorkerThread;
 						runningJob.type = Constants.SOLR_INDEXER;
 					}
@@ -230,7 +238,7 @@ public class Scheduler extends BaseService implements Runnable {
 					//LOG.debug("jobToStart: "+jobToStart);
 					// If there was a service job in the waiting queue, start it.  Otherwise break from the loop
 					if(jobToStart != null) {
-						if (solrWorkerThread != null) {
+						if (solrWorkerThread != null && solrWorkerThreadStarted) {
 							solrWorkerThread.pause();
 						}
 						runningJob = null;

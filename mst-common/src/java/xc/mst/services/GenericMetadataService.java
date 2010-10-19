@@ -451,11 +451,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		LOG.debug("getClass(): "+getClass());
-		LOG.debug("inputFormat: "+inputFormat);
-		LOG.debug("inputSet: "+inputSet);
-		LOG.debug("outputSet: "+outputSet);
-		LOG.debug(getClass().getName()+".process("+repo.getName()+", "+
+		LOG.info("getClass(): "+getClass());
+		LOG.info("inputFormat: "+inputFormat);
+		LOG.info("inputSet: "+inputSet);
+		LOG.info("outputSet: "+outputSet);
+		LOG.info(getClass().getName()+".process("+repo.getName()+", "+
 				(inputFormat==null?"null":inputFormat.getName())+", "+
 				(inputSet==null?"null":inputSet.getDisplayName())+", "+
 				(outputSet==null?"null":outputSet.getDisplayName())+")");
@@ -521,6 +521,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 				}
 				sh.setHighestId(in.getId());
+				getServiceDAO().persist(sh);
 				processedRecordCount++;
 				
 				//  TODO not inserting errors on input record.

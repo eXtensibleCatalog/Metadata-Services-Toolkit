@@ -116,7 +116,8 @@ public class MessageDAO extends BaseDAO {
         TimingLogger.stop(MESSAGE_DETAILS_TABLE+".insert");
 	}
 	
-	public void injectMessages(List<Record> records) { 
+	public void injectMessages(List<Record> records) {
+		TimingLogger.start("injectMessages");
 		long lowestRecordId = records.get(0).getId();
 		long highestRecordId = records.get(records.size()-1).getId();
 		String sql = 
@@ -139,6 +140,7 @@ public class MessageDAO extends BaseDAO {
 			rm.setRecord(currentRecord);
 			currentRecord.addMessage(rm);
 		}
+		TimingLogger.stop("injectMessages");
 	}
 	
 	public void injectMessages(Record r) {

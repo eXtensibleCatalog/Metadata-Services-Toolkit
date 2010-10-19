@@ -23,10 +23,10 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
-import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -69,15 +69,27 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 	protected List<long[]> heldHoldings = new ArrayList<long[]>();
+	protected Format xcFormat = null; 
 	
 	@Override
 	public void init() {
 		super.init();
+		// Initialize the XC format
+		try  {
+			xcFormat = getFormatService().getFormatByName("xc");
+		} catch (DatabaseConfigException e) {
+			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+		}
 	}
 	
 	@Override
 	public void setup() {
+		LOG.info("TransformationService.setup");
+		TimingLogger.outputMemory();
+		TimingLogger.start("getTransformationDAO().loadBibMaps");
 		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+		TimingLogger.stop("getTransformationDAO().loadBibMaps");
+		TimingLogger.reset();
 	}
 	
 	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
@@ -174,9 +186,9 @@ public class TransformationService extends SolrTransformationService {
 							return true;
 						}
 					});
-			TimingLogger.stop("TransformationDAO.non-generic");
-			super.endBatch(false);
 			TimingLogger.start("TransformationDAO.non-generic");
+			super.endBatch(false);
+			TimingLogger.stop("TransformationDAO.non-generic");
 			heldHoldings.clear();
 			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
 			previouslyHeldManifestationIds.clear();
@@ -350,6 +362,9 @@ public class TransformationService extends SolrTransformationService {
 				//update service accordingly w/ new record counts
 			}
 			TimingLogger.add("output records", results.size());
+			for (OutputRecord or : results) {
+				or.setFormat(xcFormat);
+			}
 			return results;
 		} catch (Throwable t) {
 			LOG.error("", t);

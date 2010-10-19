@@ -45,6 +45,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.service.Service;
+import xc.mst.cache.DynMap;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
 import xc.mst.utils.MSTConfiguration;
@@ -254,7 +255,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected boolean commitIfNecessary(String name, boolean force) {
 		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
-		int batchSize = Integer.MAX_VALUE;
+		int batchSize = 10000;
 		if (recordsToAdd != null) {
 			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
 		}
@@ -513,14 +514,30 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	public void populateHarvestCache(String name, TObjectLongHashMap harvestCache) {
-		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS));
-		for (Map<String, Object> row : rowList) {
-			Long recordId = (Long)row.get("record_id");
-			String oaiId = (String)row.get("oai_id");
-			oaiId = getUtil().getNonRedundantOaiId(oaiId);
-			harvestCache.put(oaiId, recordId);
+	protected List<Map<String, Object>> getHarvestCache(String name, int page) {
+		TimingLogger.start("getHarvestCache");
+		int recordsAtOnce = 250000;
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+				"select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS)+
+				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		TimingLogger.stop("getHarvestCache");
+		return rowList;
+	}
+	
+	public void populateHarvestCache(String name, DynMap harvestCache) {
+		TimingLogger.start("populateHarvestCache");
+		int page = 0;
+		List<Map<String, Object>> rowList = getHarvestCache(name, page);
+		while (rowList != null && rowList.size() > 0) {
+			for (Map<String, Object> row : rowList) {
+				Long recordId = (Long)row.get("record_id");
+				String oaiId = (String)row.get("oai_id");
+				oaiId = getUtil().getNonRedundantOaiId(oaiId);
+				harvestCache.put(oaiId, recordId);
+			}
+			rowList = getHarvestCache(name, ++page);
 		}
+		TimingLogger.stop("populateHarvestCache");
 	}
 	
     private final static class RecPredBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
@@ -677,9 +694,13 @@ public class RepositoryDAO extends BaseDAO {
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
 				" x.xml, "+ " max(u.date_updated) as date_updated " +
-				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
-					getTableName(name, RECORDS_XML_TABLE)+" x, " +
-					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+				" from "+getTableName(name, RECORDS_TABLE)+" r ");
+		if (startingId != null && inputFormat != null) {
+			sb.append("IGNORE index (idx_"+name+"_records_format_id) " );
+		}
+		sb.append(", "+
+				getTableName(name, RECORDS_XML_TABLE)+" x, " +
+				getTableName(name, RECORD_UPDATES_TABLE)+" u ");
 		if (inputSet != null) {
 			sb.append(
 				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
@@ -726,6 +747,14 @@ public class RepositoryDAO extends BaseDAO {
 		
 		List<Record> records = null;
 		try {
+			/*
+			LOG.error(sb.toString());
+			LOG.error("startingId: "+startingId);
+			LOG.error("from: "+from);
+			LOG.error("until: "+until);
+			LOG.error("inputSet: "+inputSet);
+			LOG.error("inputFormat: "+inputFormat);
+			*/
 			records = this.jdbcTemplate.query(sb.toString(), obj, 
 					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE, RECORD_UPDATES_TABLE}, this));
 		} catch (EmptyResultDataAccessException e) {
@@ -866,6 +895,7 @@ public class RepositoryDAO extends BaseDAO {
 		if (until == null) {
 			until = new Date();
 		}
+		
 		List<Record> records = getRecords(name, from, until, startingId, null, null);
 		if (records != null && records.size() > 0) {
 			Long highestId = records.get(records.size()-1).getId();
@@ -901,9 +931,12 @@ public class RepositoryDAO extends BaseDAO {
 			
 			List<Record> recordsWSets = null;
 			try {
+				LOG.error("records_w_sets_query");
+				TimingLogger.start("records_w_sets_query");
 				recordsWSets = this.jdbcTemplate.query(sb.toString(), obj, 
 						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
 				LOG.debug("recordsWSets.size() "+recordsWSets.size());
+				TimingLogger.stop("records_w_sets_query");
 				
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
@@ -938,13 +971,33 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
+	protected List<Map<String, Object>> getPredecessors(String name, int page) {
+		TimingLogger.start("getPredecessors");
+		int recordsAtOnce = 250000;
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+				" select record_id, pred_record_id "+
+				" from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+
+				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		TimingLogger.stop("getPredecessors");
+		return rowList;
+	}
+	
 	public void populatePredecessors(String name, TLongHashSet predecessors) {
-		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList("select record_id, pred_record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE));
-		for (Map<String, Object> row : rowList) {
-			//Long succId = (Long)row.get("record_id");
-			Long predId = (Long)row.get("pred_record_id");
-			predecessors.add(predId);
+		TimingLogger.outputMemory();
+		TimingLogger.start("populatePredecessors");
+		int page = 0;
+		List<Map<String, Object>> rowList = getPredecessors(name, page);
+		while (rowList != null && rowList.size() > 0) {
+			for (Map<String, Object> row : rowList) {
+				TimingLogger.add("pred_record", 0);
+				//Long succId = (Long)row.get("record_id");
+				Long predId = (Long)row.get("pred_record_id");
+				predecessors.add(predId);
+			}
+			rowList = getPredecessors(name, ++page);
 		}
+		TimingLogger.stop("populatePredecessors");
+		TimingLogger.reset();
 	}
 	
 

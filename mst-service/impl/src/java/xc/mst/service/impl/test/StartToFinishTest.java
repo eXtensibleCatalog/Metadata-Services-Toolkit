@@ -94,6 +94,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	protected Format getHtmlFormat() throws Exception {
 		return getFormat(new String[] {"html", "http://www.w3.org/TR/REC-html40", "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"});
 	}
+	
+	protected Format getXCFormat() throws Exception {
+		return getFormat(new String[] {"xc", "http://www.extensiblecatalog.info/Elements", "http://www.extensiblecatalog.info/Elements"});
+	}
 
 	protected Format getFormat(String[] arr) throws Exception {
 		Format f = getFormatDAO().getByName(arr[0]);
@@ -117,19 +121,19 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		printClassPath();
 		
 		dropOldSchemas();
-		LOG.debug("after dropOldSchemas");
+		LOG.info("after dropOldSchemas");
 		installProvider();
-		LOG.debug("after installProvider");
+		LOG.info("after installProvider");
 		installService();
-		LOG.debug("after installService");
+		LOG.info("after installService");
 
 		configureProcessingRules();
-		LOG.debug("after configureProcessingRules");
+		LOG.info("after configureProcessingRules");
 		createHarvestSchedule();
-		LOG.debug("after createHarvestSchedule");
+		LOG.info("after createHarvestSchedule");
 
 		waitUntilFinished();
-		LOG.debug("after waitUntilFinished");
+		LOG.info("after waitUntilFinished");
 		
 		finalTest();
 		/*
@@ -175,6 +179,9 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void installProvider() throws Exception {
+		if (getProvider() != null) {
+			return;
+		}
 		System.setProperty("source.encoding", "UTF-8");
 		   
 		provider = new Provider();
@@ -195,6 +202,9 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	
 	public void installService() throws Exception {
 		for (String ps : getPriorServices()) {
+			if (getServicesService().getServiceByName(ps) != null) {
+				continue;
+			}
 			getServicesService().addNewService(ps);
 		}
 		// This is now being done in MetadataServiceSpecificTest
@@ -257,6 +267,17 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		}
 	}
 	
+	protected Provider getProvider() {
+		try {
+			if (provider == null) {
+				provider = getProviderDAO().getByName(getRepoName());
+			}
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+		return provider;
+	}
+	
 	public void createHarvestSchedule() throws Exception {
 		HarvestSchedule schedule = new HarvestSchedule();
 		Calendar nowCal = Calendar.getInstance();
@@ -270,7 +291,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);
         schedule.setMinute(nowCal.get(Calendar.MINUTE));
-        schedule.setProvider(provider);
+        schedule.setProvider(getProvider());
         schedule.setRecurrence("Daily");
         schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
 

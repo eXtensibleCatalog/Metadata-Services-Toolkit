@@ -59,7 +59,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	}
 	
 	public List<OutputRecord> process(InputRecord ri) {
-		TimingLogger.add(incomingRepository.getName(), ri.getId());
+		TimingLogger.add(incomingRepository.getName(), 0);
 		Record r = (Record)ri;
 		LOG.debug("indexing record.getId(): "+r.getId());
 		if (r.getId() % 1000 == 0) {
@@ -68,7 +68,7 @@ public class SolrIndexService extends GenericMetadataService  {
 		SolrInputDocument doc = new SolrInputDocument();
 		doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
 		r.setMode(Record.STRING_MODE);
-		doc.addField(RecordService.FIELD_OAI_XML, r.getOaiXml());
+		//doc.addField(RecordService.FIELD_OAI_XML, r.getOaiXml());
 		doc.addField(RecordService.FIELD_ALL, r.getOaiXml());
 		if (r.getFormat() != null) {
 			doc.addField(RecordService.FIELD_FORMAT_ID, r.getFormat().getId());

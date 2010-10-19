@@ -8,8 +8,6 @@
   */
 package xc.mst.harvester;
 
-import gnu.trove.TObjectLongHashMap;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -34,6 +32,7 @@ import xc.mst.bo.harvest.HarvestScheduleStep;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
+import xc.mst.cache.DynMap;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
@@ -61,7 +60,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
 	}
 	//        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
-	protected TObjectLongHashMap harvestCache = new TObjectLongHashMap();
+	protected DynMap oaiIdCache = new DynMap();
 	
 	protected HarvestSchedule harvestSchedule = null;
 	protected List<HarvestScheduleStep> harvestScheduleSteps = null;
@@ -137,7 +136,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	public void setup() {
 		try {
 			hssFirstTime = true;
-			harvestCache.clear();
+			oaiIdCache.clear();
 			// BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
 			// list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
 			// there's really no other way to tell. 
@@ -152,7 +151,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			totalRecords = 0;
 			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
-			getRepositoryDAO().populateHarvestCache(repo.getName(), harvestCache);
+			TimingLogger.outputMemory();
+			getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
+			TimingLogger.reset();
 			repo.beginBatch();
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
@@ -491,10 +492,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				// BDA: tell me why I care? SR : To keep count of number of new records added and number of updated records.
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
-				Long recordId = harvestCache.get(nonRedundantId);
+				Long recordId = oaiIdCache.getLong(nonRedundantId);
 				if (recordId == 0) {
 					getRepositoryDAO().injectId(record);
-					harvestCache.put(nonRedundantId, record.getId());
+					oaiIdCache.put(nonRedundantId, record.getId());
 					numberOfNewRecords++;
 				} else {
 					record.setId(recordId);
