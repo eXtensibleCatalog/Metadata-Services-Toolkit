@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:116</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>13863cam a2200301Ia 4500</marc:leader>
+        <marc:controlfield tag="001">3494560</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20070710083753.0</marc:controlfield>
+        <marc:controlfield tag="008">060922s2006    njua          001 0 eng d</marc:controlfield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0764525476</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">9780764525476</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)71517906</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">3494560</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">JRZ</marc:subfield>
+          <marc:subfield code="c">JRZ</marc:subfield>
+          <marc:subfield code="d">BAKER</marc:subfield>
+          <marc:subfield code="d">YDXCP</marc:subfield>
+          <marc:subfield code="d">OCLCQ</marc:subfield>
+          <marc:subfield code="d">FVC</marc:subfield>
+          <marc:subfield code="d">VP@</marc:subfield>
+          <marc:subfield code="d">BTCTA</marc:subfield>
+          <marc:subfield code="d">LMR</marc:subfield>
+          <marc:subfield code="d">RNM</marc:subfield>
+          <marc:subfield code="d">OrLoB-B</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">[Ref 20] RNMS</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="096" ind1=" " ind2=" ">
+          <marc:subfield code="a">WM 203.5 S559u 2006</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Shore, Stephen M.,</marc:subfield>
+          <marc:subfield code="d">1961-</marc:subfield>
+          <marc:subfield code="4">aut</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Understanding autism for dummies /</marc:subfield>
+          <marc:subfield code="c">by Stephen M. Shore and Linda G. Rastelli.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Hoboken, NJ :</marc:subfield>
+          <marc:subfield code="b">Wiley,</marc:subfield>
+          <marc:subfield code="c">2006.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xviii, 365 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">24 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="0" ind2="0">
+          <marc:subfield code="g">Part I.</marc:subfield>
+          <marc:subfield code="t">Understanding Autism -- </marc:subfield>
+          <marc:subfield code="g">Part II.</marc:subfield>
+          <marc:subfield code="t">Addressing Physical Needs -- </marc:subfield>
+          <marc:subfield code="g">Part III.</marc:subfield>
+          <marc:subfield code="t">Enhancing Learning and Social Skills -- </marc:subfield>
+          <marc:subfield code="g">Part IV.</marc:subfield>
+          <marc:subfield code="t">Living with Autism as an Adult -- </marc:subfield>
+          <marc:subfield code="g">Part V.</marc:subfield>
+          <marc:subfield code="t">The Part of Tens -- </marc:subfield>
+          <marc:subfield code="g">Part I.</marc:subfield>
+          <marc:subfield code="t">Understanding Autism -- </marc:subfield>
+          <marc:subfield code="g">Chapter 1.</marc:subfield>
+          <marc:subfield code="t">Autism: The Big Picture -- </marc:subfield>
+          <marc:subfield code="t">What We Know - and Don't Know - about Autism -- </marc:subfield>
+          <marc:subfield code="t">Making the Diagnosis: Learning Your ASDs -- </marc:subfield>
+          <marc:subfield code="t">Understanding the diagnostic criteria -- </marc:subfield>
+          <marc:subfield code="t">Seeing the signs: Autism symptoms -- </marc:subfield>
+          <marc:subfield code="t">Understanding the Far-Reaching Impact of Autism -- </marc:subfield>
+          <marc:subfield code="t">How autism can affect the diagnosed individual -- </marc:subfield>
+          <marc:subfield code="t">How autism can affect families, schools, and communities -- </marc:subfield>
+          <marc:subfield code="t">How autism can affect caregivers -- </marc:subfield>
+          <marc:subfield code="t">Navigating the Sea of Interventions -- </marc:subfield>
+          <marc:subfield code="t">Using behavioral, developmental, and other educationally based interventions -- </marc:subfield>
+          <marc:subfield code="t">Implementing occupational and speech-language therapies -- </marc:subfield>
+          <marc:subfield code="t">Medicating symptoms that can accompany autism -- </marc:subfield>
+          <marc:subfield code="t">Applying biomedical and natural interventions -- </marc:subfield>
+          <marc:subfield code="t">If You Think You (Or People You Care for) Have Undiagnosed Autism -- </marc:subfield>
+          <marc:subfield code="g">Chapter 2.</marc:subfield>
+          <marc:subfield code="t">From Classification to Treatment: Scanning the Autism Spectrum -- </marc:subfield>
+          <marc:subfield code="t">Surveying the Colors of Autism -- </marc:subfield>
+          <marc:subfield code="t">Severe (or "classic") autism -- </marc:subfield>
+          <marc:subfield code="t">PDD and PDD-NOS -- </marc:subfield>
+          <marc:subfield code="t">Asperger Syndrome -- </marc:subfield>
+          <marc:subfield code="t">Considering Conditions That Resemble Autism -- </marc:subfield>
+          <marc:subfield code="t">Childhood Disintegrative Disorder -- </marc:subfield>
+          <marc:subfield code="t">Attention Deficit/Hyperactivity Disorder -- </marc:subfield>
+          <marc:subfield code="t">Other possible diagnoses -- </marc:subfield>
+          <marc:subfield code="t">Understanding Why Early Treatment Matters More than Classification -- </marc:subfield>
+          <marc:subfield code="t">Attempting early identification and intervention -- </marc:subfield>
+          <marc:subfield code="t">Getting good medical care -- </marc:subfield>
+          <marc:subfield code="t">Enrolling in effective early programs -- </marc:subfield>
+          <marc:subfield code="g">Chapter 3.</marc:subfield>
+          <marc:subfield code="t">Causes, Clusters, and Clues: Where Does Autism Come From? -- </marc:subfield>
+          <marc:subfield code="t">Considering the Rise in Diagnoses -- </marc:subfield>
+          <marc:subfield code="t">Exploring the Genetic Link -- </marc:subfield>
+          <marc:subfield code="t">Familial patterns -- </marc:subfield>
+          <marc:subfield code="t">Brain size and structure -- </marc:subfield>
+          <marc:subfield code="t">The brain-gut connection -- </marc:subfield>
+          <marc:subfield code="t">The testosterone link -- </marc:subfield>
+          <marc:subfield code="t">Examining Biomedical Theories -- </marc:subfield>
+          <marc:subfield code="t">What do allergies have to do with it? -- </marc:subfield>
+          <marc:subfield code="t">Heavy-metal poisoning hypotheses -- </marc:subfield>
+          <marc:subfield code="t">Autoimmune or virus-induced theories of causation -- </marc:subfield>
+          <marc:subfield code="t">The Backlash Against the Cure -- </marc:subfield>
+          <marc:subfield code="g">Chapter 4.</marc:subfield>
+          <marc:subfield code="t">Getting a Diagnosis -- </marc:subfield>
+          <marc:subfield code="t">Tracking Your Child's Medical History -- </marc:subfield>
+          <marc:subfield code="t">Broaching the Possibility of Autism with a Doctor -- </marc:subfield>
+          <marc:subfield code="t">Preparing for the consultation -- </marc:subfield>
+          <marc:subfield code="t">Requesting a referral -- </marc:subfield>
+          <marc:subfield code="t">Consulting a Specialist -- </marc:subfield>
+          <marc:subfield code="t">Contacting a qualified specialist -- </marc:subfield>
+          <marc:subfield code="t">Sharing information -- </marc:subfield>
+          <marc:subfield code="t">Embarking on the assessment process -- </marc:subfield>
+          <marc:subfield code="t">Diagnosing related conditions -- </marc:subfield>
+          <marc:subfield code="t">Dealing with the Impact of the Diagnosis -- </marc:subfield>
+          <marc:subfield code="t">Coming to terms emotionally -- </marc:subfield>
+          <marc:subfield code="t">Taking action -- </marc:subfield>
+          <marc:subfield code="t">Avoiding scams -- </marc:subfield>
+          <marc:subfield code="g">Chapter 5.</marc:subfield>
+          <marc:subfield code="t">Asperger Syndrome and Autism -- </marc:subfield>
+          <marc:subfield code="t">Discovering Where Asperger Syndrome Sits on the Autism Spectrum -- </marc:subfield>
+          <marc:subfield code="t">Examining common characteristics of Asperger's -- </marc:subfield>
+          <marc:subfield code="t">Diagnosing Asperger Syndrome -- </marc:subfield>
+          <marc:subfield code="t">Examining typical nondiagnostic personality traits of Asperger Syndrome -- </marc:subfield>
+          <marc:subfield code="t">Helping People with Asperger Syndrome Socialize -- </marc:subfield>
+          <marc:subfield code="t">Finding the hidden curriculum -- </marc:subfield>
+          <marc:subfield code="t">Handling idioms and figures of speech -- </marc:subfield>
+          <marc:subfield code="t">Dealing with the Emotions Triggered by Asperger Syndrome -- </marc:subfield>
+          <marc:subfield code="t">Avoiding the rage cycle -- </marc:subfield>
+          <marc:subfield code="t">Working through frustration -- </marc:subfield>
+          <marc:subfield code="t">Using emotion thermometers to gauge emotional states -- </marc:subfield>
+          <marc:subfield code="t">Recognizing Bullying and Its Emotional Repercussions -- </marc:subfield>
+          <marc:subfield code="t">Signs of bullying -- </marc:subfield>
+          <marc:subfield code="t">Taming the bullies -- </marc:subfield>
+          <marc:subfield code="t">Transitioning to Adulthood -- </marc:subfield>
+          <marc:subfield code="g">Part II.</marc:subfield>
+          <marc:subfield code="t">Addressing Physical Needs -- </marc:subfield>
+          <marc:subfield code="g">Chapter 6.</marc:subfield>
+          <marc:subfield code="t">Injecting Yourself with Knowledge about Autism Medication -- </marc:subfield>
+          <marc:subfield code="t">Considering Drug Therapy -- </marc:subfield>
+          <marc:subfield code="t">Looking at how medication can realistically help -- </marc:subfield>
+          <marc:subfield code="t">Educating yourself and pursuing drug therapy -- </marc:subfield>
+          <marc:subfield code="t">Using medication wisely -- </marc:subfield>
+          <marc:subfield code="t">Identifying Helpful Medications -- </marc:subfield>
+          <marc:subfield code="t">Beginning the process with a qualified doctor -- </marc:subfield>
+          <marc:subfield code="t">Selective Serotonin Reuptake Inhibitors (SSRIs) -- </marc:subfield>
+          <marc:subfield code="t">Atypical antipsychotic drugs -- </marc:subfield>
+          <marc:subfield code="t">Tricyclic drugs -- </marc:subfield>
+          <marc:subfield code="t">Antiepileptics (also known as anticonvulsants) -- </marc:subfield>
+          <marc:subfield code="t">Medications for challenging behaviors in severely affected people with autism -- </marc:subfield>
+          <marc:subfield code="t">Maximizing Safety When Vaccinating Your Child -- </marc:subfield>
+          <marc:subfield code="t">Considering your child's medical history -- </marc:subfield>
+          <marc:subfield code="t">Looking at an alternate vaccination schedule -- </marc:subfield>
+          <marc:subfield code="g">Chapter 7.</marc:subfield>
+          <marc:subfield code="t">Improving Immunity and Boosting Biochemistry -- </marc:subfield>
+          <marc:subfield code="t">Taking a Look at the Balancing Act of the Immune System -- </marc:subfield>
+          <marc:subfield code="t">Exposing the Relationship between Autism and Immune Abnormalities -- </marc:subfield>
+          <marc:subfield code="t">Analyzing immune measurements in the blood -- </marc:subfield>
+          <marc:subfield code="t">Exploring gut problems -- </marc:subfield>
+          <marc:subfield code="t">Studying brain tissue -- </marc:subfield>
+          <marc:subfield code="t">Improving Immunity -- </marc:subfield>
+          <marc:subfield code="t">Focusing on first-line fundamentals -- </marc:subfield>
+          <marc:subfield code="t">Seeking out second-line strategies -- </marc:subfield>
+          <marc:subfield code="t">Tackling third-line therapies -- </marc:subfield>
+          <marc:subfield code="t">Biochemistry Begets Behavior: A New Way of Thinking -- </marc:subfield>
+          <marc:subfield code="t">Shedding light on the broken pathways -- </marc:subfield>
+          <marc:subfield code="t">Maximizing metabolism -- </marc:subfield>
+          <marc:subfield code="t">Getting the Lead (and Mercury) Out -- </marc:subfield>
+          <marc:subfield code="t">Why the autistic child? -- </marc:subfield>
+          <marc:subfield code="t">Testing for toxicity -- </marc:subfield>
+          <marc:subfield code="t">Chelating -- </marc:subfield>
+          <marc:subfield code="g">Chapter 8.</marc:subfield>
+          <marc:subfield code="t">Optimizing Nutrition -- </marc:subfield>
+          <marc:subfield code="t">Tempering Your Expectations -- </marc:subfield>
+          <marc:subfield code="t">Considering Your Dietary Intervention Options -- </marc:subfield>
+          <marc:subfield code="t">Cleaning up your child's diet -- </marc:subfield>
+          <marc:subfield code="t">Going wheat and dairy free -- </marc:subfield>
+          <marc:subfield code="t">Supplementing your child's diet -- </marc:subfield>
+          <marc:subfield code="t">Implementing Your Plan -- </marc:subfield>
+          <marc:subfield code="t">Keeping a food and symptom diary -- </marc:subfield>
+          <marc:subfield code="t">Involving professionals -- </marc:subfield>
+          <marc:subfield code="t">Easing the transition -- </marc:subfield>
+          <marc:subfield code="t">Experimenting with specialized diets -- </marc:subfield>
+          <marc:subfield code="t">Eating on the road -- </marc:subfield>
+          <marc:subfield code="g">Part III.</marc:subfield>
+          <marc:subfield code="t">Enhancing Learning and Social Skills -- </marc:subfield>
+          <marc:subfield code="g">Chapter 9.</marc:subfield>
+          <marc:subfield code="t">Choosing an Appropriate Behavioral, Developmental, or Educational Intervention -- </marc:subfield>
+          <marc:subfield code="t">Understanding What to Look for in the Alphabet Soup of Approaches -- </marc:subfield>
+          <marc:subfield code="t">Actions and behaviors that lead to success in all interventions -- </marc:subfield>
+          <marc:subfield code="t">Keys to success in educational interventions -- </marc:subfield>
+          <marc:subfield code="t">Exploring Popular Intervention Approaches -- </marc:subfield>
+          <marc:subfield code="t">Applied Behavioral Analysis (ABA) -- </marc:subfield>
+          <marc:subfield code="t">Daily Life Therapy (DLT) -- </marc:subfield>
+          <marc:subfield code="t">Developmental Individual Difference Relation-Based Intervention (DIR) -- </marc:subfield>
+          <marc:subfield code="t">Miller Method -- </marc:subfield>
+          <marc:subfield code="t">Relationship Development Intervention (RDI) -- </marc:subfield>
+          <marc:subfield code="t">Treatment and Education of Autistic and Communication Handicapped Children (TEACCH) -- </marc:subfield>
+          <marc:subfield code="t">Social Communication Emotional Regulation Transactional Support Model (SCERTS) -- </marc:subfield>
+          <marc:subfield code="t">Deciding Which Method Is Best for Your Child -- </marc:subfield>
+          <marc:subfield code="t">Financing the At-Home Program of Your Choice -- </marc:subfield>
+          <marc:subfield code="t">Exploring your at-home options -- </marc:subfield>
+          <marc:subfield code="t">Obtaining government assistance -- </marc:subfield>
+          <marc:subfield code="g">Chapter 10.</marc:subfield>
+          <marc:subfield code="t">Dealing with Learning and Sensory Differences -- </marc:subfield>
+          <marc:subfield code="t">Autistic Learning: Transferring Skills and Providing Structure -- </marc:subfield>
+          <marc:subfield code="t">Thinking conceptually and transferring concepts -- </marc:subfield>
+          <marc:subfield code="t">Incorporating routine into daily life -- </marc:subfield>
+          <marc:subfield code="t">Bridging the Communication Gap -- </marc:subfield>
+          <marc:subfield code="t">Developing sign language as a communication bridge -- </marc:subfield>
+          <marc:subfield code="t">Working toward functional communication -- </marc:subfield>
+          <marc:subfield code="t">Using assistive communication technology -- </marc:subfield>
+          <marc:subfield code="t">Enjoying music therapy -- </marc:subfield>
+          <marc:subfield code="t">"Retraining" the Brain through Neurotherapy -- </marc:subfield>
+          <marc:subfield code="t">Examining and implementing neurotherapy -- </marc:subfield>
+          <marc:subfield code="t">Reviewing a neurotherapy study -- </marc:subfield>
+          <marc:subfield code="t">Making Sense of Sensory Confusion -- </marc:subfield>
+          <marc:subfield code="t">Observing sensory integration challenges -- </marc:subfield>
+          <marc:subfield code="t">Using hippotherapy -- </marc:subfield>
+          <marc:subfield code="t">Working with speech-language pathologists -- </marc:subfield>
+          <marc:subfield code="t">Seeing through Irlen-branded lenses -- </marc:subfield>
+          <marc:subfield code="t">Handling Your Child's Sensory Issues -- </marc:subfield>
+          <marc:subfield code="t">The supermarket test -- </marc:subfield>
+          <marc:subfield code="t">The eyes have it -- </marc:subfield>
+          <marc:subfield code="t">The auditory-processing blues -- </marc:subfield>
+          <marc:subfield code="t">Socially unacceptable stimming -- </marc:subfield>
+          <marc:subfield code="t">Dealing with the most severe behaviors -- </marc:subfield>
+          <marc:subfield code="g">Chapter 11.</marc:subfield>
+          <marc:subfield code="t">Finding a Learning Environment That Fits Your Child's Needs -- </marc:subfield>
+          <marc:subfield code="t">Inclusion: To Be or Not to Be? -- </marc:subfield>
+          <marc:subfield code="t">Recognizing an Effective Classroom -- </marc:subfield>
+          <marc:subfield code="t">Maintaining routine and predictability -- </marc:subfield>
+          <marc:subfield code="t">Learning through all the senses -- </marc:subfield>
+          <marc:subfield code="t">Evaluating the room itself -- </marc:subfield>
+          <marc:subfield code="t">Observing a Good Teacher -- </marc:subfield>
+          <marc:subfield code="t">Characteristics to look for in an educator -- </marc:subfield>
+          <marc:subfield code="t">Warning flags to avoid in an educator -- </marc:subfield>
+          <marc:subfield code="t">Developing Effective Accommodations -- </marc:subfield>
+          <marc:subfield code="t">Accommodations in action -- </marc:subfield>
+          <marc:subfield code="t">Addressing the fairness of accommodations -- </marc:subfield>
+          <marc:subfield code="t">Considering educational techniques for promoting inclusion -- </marc:subfield>
+          <marc:subfield code="t">Weighing Your Options when the Public School System Falls Short -- </marc:subfield>
+          <marc:subfield code="t">Exploring the world of home schooling -- </marc:subfield>
+          <marc:subfield code="t">Considering other educational options -- </marc:subfield>
+          <marc:subfield code="t">Understanding and Reducing Challenging Behaviors -- </marc:subfield>
+          <marc:subfield code="t">Getting to the core of the behavior -- </marc:subfield>
+          <marc:subfield code="t">Performing a Functional Behavioral Assessment (FBA) -- </marc:subfield>
+          <marc:subfield code="g">Chapter 12.</marc:subfield>
+          <marc:subfield code="t">Legally Speaking: Making the Most of Your Child's Education -- </marc:subfield>
+          <marc:subfield code="t">Navigating the Legal and Education Systems -- </marc:subfield>
+          <marc:subfield code="t">Understanding what the law allows -- </marc:subfield>
+          <marc:subfield code="t">Keeping track of changes in the law -- </marc:subfield>
+          <marc:subfield code="t">Staying Involved with Your Child's Education -- </marc:subfield>
+          <marc:subfield code="t">Working within the system --</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="505" ind1="8" ind2="0">
+          <marc:subfield code="t">Supporting your child at home -- </marc:subfield>
+          <marc:subfield code="t">Acting Early with an Individualized Family Service Plan (IFSP) -- </marc:subfield>
+          <marc:subfield code="t">Specifying Special: Entering the Public School System -- </marc:subfield>
+          <marc:subfield code="t">Initiating an evaluation to establish eligibility -- </marc:subfield>
+          <marc:subfield code="t">Implementing an Individualized Education Program (IEP) -- </marc:subfield>
+          <marc:subfield code="t">Assessing Your Child's Progress -- </marc:subfield>
+          <marc:subfield code="t">Flexing Your Educational Rights When You Need To -- </marc:subfield>
+          <marc:subfield code="g">Chapter 13.</marc:subfield>
+          <marc:subfield code="t">Fostering Healthy Relationships -- </marc:subfield>
+          <marc:subfield code="t">Recognizing the Social Challenges an Autistic Child Faces -- </marc:subfield>
+          <marc:subfield code="t">Understanding social norms -- </marc:subfield>
+          <marc:subfield code="t">Conversing and cooperating -- </marc:subfield>
+          <marc:subfield code="t">Supporting a child when verbal communication is minimal or nonexistent -- </marc:subfield>
+          <marc:subfield code="t">All in the Family -- </marc:subfield>
+          <marc:subfield code="t">Talking about autism with your kids -- </marc:subfield>
+          <marc:subfield code="t">Considering the challenges siblings face -- </marc:subfield>
+          <marc:subfield code="t">Including extended family -- </marc:subfield>
+          <marc:subfield code="t">Encouraging Your Child to Form Friendships -- </marc:subfield>
+          <marc:subfield code="t">Staging an emotional rescue -- </marc:subfield>
+          <marc:subfield code="t">Creating social stories and calling on Power Cards -- </marc:subfield>
+          <marc:subfield code="t">Making conversation -- </marc:subfield>
+          <marc:subfield code="t">Sparking interactive play -- </marc:subfield>
+          <marc:subfield code="t">Respecting differences -- </marc:subfield>
+          <marc:subfield code="g">Part IV.</marc:subfield>
+          <marc:subfield code="t">Living With Autism as an Adult -- </marc:subfield>
+          <marc:subfield code="g">Chapter 14.</marc:subfield>
+          <marc:subfield code="t">For Adults with Autism: Living Well after K-12 -- </marc:subfield>
+          <marc:subfield code="t">Discovering How to Live Interdependently -- </marc:subfield>
+          <marc:subfield code="t">Managing your daily life -- </marc:subfield>
+          <marc:subfield code="t">Deciding where to live -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Preparing your dependent to succeed from day one -- </marc:subfield>
+          <marc:subfield code="t">Out of the High-School Daze: Pursuing Higher Education -- </marc:subfield>
+          <marc:subfield code="t">Evaluating your educational options -- </marc:subfield>
+          <marc:subfield code="t">Getting the accommodations you need for higher education -- </marc:subfield>
+          <marc:subfield code="t">Practicing self-advocacy and disclosure -- </marc:subfield>
+          <marc:subfield code="t">Easing into higher education -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Helping your dependent realize his/her higher-education dreams -- </marc:subfield>
+          <marc:subfield code="t">Time to Nurture Your Bank Account: Finding (and Keeping) Employment -- </marc:subfield>
+          <marc:subfield code="t">Matching your skills and desires with job opportunities -- </marc:subfield>
+          <marc:subfield code="t">Working with a job coach -- </marc:subfield>
+          <marc:subfield code="t">Applying for and obtaining a position -- </marc:subfield>
+          <marc:subfield code="t">Maintaining your job -- </marc:subfield>
+          <marc:subfield code="t">Gracefully exiting your position -- </marc:subfield>
+          <marc:subfield code="t">Considering self-employment -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Helping a dependent find employment -- </marc:subfield>
+          <marc:subfield code="t">An Advocate Off the Ol' Block: Getting Involved with Your Community -- </marc:subfield>
+          <marc:subfield code="t">Becoming a part of your community -- </marc:subfield>
+          <marc:subfield code="t">Looking within the autism community -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Encouraging an adult with autism to get involved -- </marc:subfield>
+          <marc:subfield code="g">Chapter 15.</marc:subfield>
+          <marc:subfield code="t">For Adults with Autism: Fostering Friendships and Romantic Relationships -- </marc:subfield>
+          <marc:subfield code="t">Developing Friendly Relationships -- </marc:subfield>
+          <marc:subfield code="t">Understanding the circle of relationships -- </marc:subfield>
+          <marc:subfield code="t">Making first contact -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Helping your dependent establish friendships -- </marc:subfield>
+          <marc:subfield code="t">Recognizing (And Overcoming) the Challenges of Dating -- </marc:subfield>
+          <marc:subfield code="t">Asking for a date -- </marc:subfield>
+          <marc:subfield code="t">Behaving appropriately during the date -- </marc:subfield>
+          <marc:subfield code="t">Opting for full or no disclosure -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Moving on to dating -- </marc:subfield>
+          <marc:subfield code="t">Taking It to the Next Level with Sexual Behavior -- </marc:subfield>
+          <marc:subfield code="t">The most important part of boyfriend or girlfriend is "friend" -- </marc:subfield>
+          <marc:subfield code="t">Engaging in sexual activity -- </marc:subfield>
+          <marc:subfield code="t">For caregivers: Exploring sex education for people with autism -- </marc:subfield>
+          <marc:subfield code="g">Chapter 16.</marc:subfield>
+          <marc:subfield code="t">Special-Needs Planning for the Future -- </marc:subfield>
+          <marc:subfield code="t">Avoiding Common Financial Mistakes -- </marc:subfield>
+          <marc:subfield code="t">Putting Plan to Paper: Getting Started -- </marc:subfield>
+          <marc:subfield code="t">Taking account of your child's prognosis -- </marc:subfield>
+          <marc:subfield code="t">Keeping eligibility for government services in mind -- </marc:subfield>
+          <marc:subfield code="t">Sizing up your estate -- </marc:subfield>
+          <marc:subfield code="t">Considering living arrangements and guardianship -- </marc:subfield>
+          <marc:subfield code="t">Involving an Attorney and/or Financial Planner -- </marc:subfield>
+          <marc:subfield code="t">Writing Your Will -- </marc:subfield>
+          <marc:subfield code="t">Setting up a special-needs trust -- </marc:subfield>
+          <marc:subfield code="t">Giving a morally obligated gift -- </marc:subfield>
+          <marc:subfield code="t">Designating guardianship -- </marc:subfield>
+          <marc:subfield code="g">Part V.</marc:subfield>
+          <marc:subfield code="t">The Part of Tens -- </marc:subfield>
+          <marc:subfield code="g">Chapter 17.</marc:subfield>
+          <marc:subfield code="t">Ten Tactful Responses to Challenging Questions or Comments -- </marc:subfield>
+          <marc:subfield code="t">"What Special Talent Does He Have?" -- </marc:subfield>
+          <marc:subfield code="t">"Why Can't You Control Your Kid?" -- </marc:subfield>
+          <marc:subfield code="t">"Asperger Snausperger. He Looks Fine. He Just Needs a Better Attitude" -- </marc:subfield>
+          <marc:subfield code="t">"Who Did He Inherit It From?" -- </marc:subfield>
+          <marc:subfield code="t">"Why Should Your Child Get Special Treatment?" -- </marc:subfield>
+          <marc:subfield code="t">"Are You Kidnapping That Child?" -- </marc:subfield>
+          <marc:subfield code="t">The "Bad-Parent" Look -- </marc:subfield>
+          <marc:subfield code="t">"Is She Still in Her Own World?" -- </marc:subfield>
+          <marc:subfield code="t">"They Grow Out of It, Don't They?" -- </marc:subfield>
+          <marc:subfield code="t">"But She Doesn't Look Autistic..." -- </marc:subfield>
+          <marc:subfield code="g">Chapter 18.</marc:subfield>
+          <marc:subfield code="t">Ten Things to Do after a Diagnosis -- </marc:subfield>
+          <marc:subfield code="t">Learn and Read as Much as Possible -- </marc:subfield>
+          <marc:subfield code="t">Network with Other Families -- </marc:subfield>
+          <marc:subfield code="t">Test, Test, Test -- </marc:subfield>
+          <marc:subfield code="t">Investigate Sources of Financial Aid -- </marc:subfield>
+          <marc:subfield code="t">Consider Major Lifestyle Changes -- </marc:subfield>
+          <marc:subfield code="t">Set Up an Educational/Behavioral Program in Your Home -- </marc:subfield>
+          <marc:subfield code="t">Begin Therapies -- </marc:subfield>
+          <marc:subfield code="t">Address Your Child's Diet and Nutrition -- </marc:subfield>
+          <marc:subfield code="t">Don't Give Up -- </marc:subfield>
+          <marc:subfield code="t">Get Out and Relax -- </marc:subfield>
+          <marc:subfield code="g">Appendix.</marc:subfield>
+          <marc:subfield code="t">Where to Go for More Help -- </marc:subfield>
+          <marc:subfield code="t">Finding Other Helpful Texts -- </marc:subfield>
+          <marc:subfield code="t">Specializing in autism spectrum disorders -- </marc:subfield>
+          <marc:subfield code="t">Special-education publishers -- </marc:subfield>
+          <marc:subfield code="t">Research journals and magazines -- </marc:subfield>
+          <marc:subfield code="t">Surfing Informative Sites on the Web -- </marc:subfield>
+          <marc:subfield code="t">Connecting with advocacy organizations -- </marc:subfield>
+          <marc:subfield code="t">Perusing general-information sites -- </marc:subfield>
+          <marc:subfield code="t">Having some fun -- </marc:subfield>
+          <marc:subfield code="t">Gaining insight from people with an ASD -- </marc:subfield>
+          <marc:subfield code="t">Chatting about autism -- </marc:subfield>
+          <marc:subfield code="t">Exploring listserves -- </marc:subfield>
+          <marc:subfield code="t">Accessing World-Wide Autism Organizations and Resources.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Autism in children</marc:subfield>
+          <marc:subfield code="v">Popular works.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Autistic Disorder</marc:subfield>
+          <marc:subfield code="v">Popular Works.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Rastelli, Linda G.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">C0</marc:subfield>
+          <marc:subfield code="b">RNM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)3494560</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="947" ind1=" " ind2=" ">
+          <marc:subfield code="a">0764525476</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="947" ind1=" " ind2=" ">
+          <marc:subfield code="a">9780764525476</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="0" ind2="0">
+          <marc:subfield code="a">Understanding autism for dummies /</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Autism in children</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="2">
+          <marc:subfield code="a">Autistic Disorder</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Popular works.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="2">
+          <marc:subfield code="v">Popular Works.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>
