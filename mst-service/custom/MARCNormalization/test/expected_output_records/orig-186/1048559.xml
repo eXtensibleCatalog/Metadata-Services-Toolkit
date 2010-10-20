@@ -1,0 +1,181 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/4</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:4</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01633cjm a2200481 a 45 A</marc:leader>
+      <marc:controlfield tag="001">1048559</marc:controlfield>
+      <marc:controlfield tag="005">20010323200114.0</marc:controlfield>
+      <marc:controlfield tag="007">sd fsngnn   ed</marc:controlfield>
+      <marc:controlfield tag="008">910718p19901979nyumun   hi         N/A d</marc:controlfield>
+      <marc:datafield tag="028" ind1="0" ind2="2">
+        <marc:subfield code="a">425 018-2</marc:subfield>
+        <marc:subfield code="b">London</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="033" ind1="1" ind2=" ">
+        <marc:subfield code="a">197909--</marc:subfield>
+        <marc:subfield code="a">197910</marc:subfield>
+        <marc:subfield code="b">6494</marc:subfield>
+        <marc:subfield code="c">V4</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)24094664</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">00994967</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">YQR</marc:subfield>
+        <marc:subfield code="c">YQR</marc:subfield>
+        <marc:subfield code="d">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="041" ind1="1" ind2=" ">
+        <marc:subfield code="g">eng</marc:subfield>
+        <marc:subfield code="h">und</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="047" ind1=" " ind2=" ">
+        <marc:subfield code="a">be</marc:subfield>
+        <marc:subfield code="a">su</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RESP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">CD</marc:subfield>
+        <marc:subfield code="a">1618</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">CD 1618</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="100" ind1="1" ind2=" ">
+        <marc:subfield code="a">Stravinsky, Igor,</marc:subfield>
+        <marc:subfield code="d">1882-1971.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="1" ind2="0">
+        <marc:subfield code="a">Zhar-ptit︠s︡a</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="1" ind2="4">
+        <marc:subfield code="a">The firebird /</marc:subfield>
+        <marc:subfield code="c">Stravinsky. Two portraits / Bartók</marc:subfield>
+        <marc:subfield code="h">[sound recording]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">New York, N.Y. :</marc:subfield>
+        <marc:subfield code="b">London,</marc:subfield>
+        <marc:subfield code="c">p1990.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">1 sound disc (57 min., 23 sec.) :</marc:subfield>
+        <marc:subfield code="b">digital, stereo. ;</marc:subfield>
+        <marc:subfield code="c">4 3/4 in.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Jubilee</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Eds. recorded: B. Schott's Söhne (1st work) ; Boosey &amp; Hawkes (2nd work).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Compact disc.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Digital recording (1st work); analog recording (2nd work).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Durations: 46:00 ; 12:00.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Translation of program notes by Marie-Cécile Barras inserted in container.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="511" ind1="0" ind2=" ">
+        <marc:subfield code="a">Wiener Philharmoniker ; Christoph von Dohnányi, conductor.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="518" ind1=" " ind2=" ">
+        <marc:subfield code="a">Recorded at the Sofiensaal, Vienna, Sept./Oct. 1979.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Ballets.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Suites (Orchestra)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Dohnányi, Christoph von.</marc:subfield>
+        <marc:subfield code="4">cnd.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Bartók, Béla,</marc:subfield>
+        <marc:subfield code="d">1881-1945.</marc:subfield>
+        <marc:subfield code="t">Portrék.</marc:subfield>
+        <marc:subfield code="8">1\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="710" ind1="2" ind2=" ">
+        <marc:subfield code="a">Wiener Philharmoniker.</marc:subfield>
+        <marc:subfield code="4">prf.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">Two portraits.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">2 portraits.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Jubilee.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">950805</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Recrd</marc:subfield>
+        <marc:subfield code="m">SRECRD</marc:subfield>
+        <marc:subfield code="s">CD 1618</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="b">39087012069953</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Musical sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound disk</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)1048559</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Bartók, Béla,</marc:subfield>
+        <marc:subfield code="d">1881-1945.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">1\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Firebird /</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

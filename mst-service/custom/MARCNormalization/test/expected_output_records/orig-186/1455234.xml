@@ -1,0 +1,35 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/36</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:36</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00386cx  a22001333  4500</marc:leader>
+      <marc:controlfield tag="001">1455234</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">1338185</marc:controlfield>
+      <marc:controlfield tag="005">20060905163250.0</marc:controlfield>
+      <marc:controlfield tag="008">9612090p    0   4001au   0000000</marc:controlfield>
+      <marc:datafield tag="852" ind1="8" ind2=" ">
+        <marc:subfield code="b">NewsMicro</marc:subfield>
+        <marc:subfield code="h">FILM .Una191 reel 468-469</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1="3" ind2="0">
+        <marc:subfield code="a">Vol. 1, no. 1 (Apr. 1829)-v. 3, no. 4 (July 1831).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 1 (Apr. 1829-Mar. 1830) = reel 468</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 2-3 (Apr. 1830-July 1831) = reel 469</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>
