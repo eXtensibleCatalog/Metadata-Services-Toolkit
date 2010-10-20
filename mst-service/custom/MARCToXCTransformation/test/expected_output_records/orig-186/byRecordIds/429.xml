@@ -1,0 +1,29 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/429</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:134</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/429">
+        <xc:recordID type="LCCN">34005267</xc:recordID>
+        <xc:recordID type="OCoLC">5719070</xc:recordID>
+        <xc:recordID type="NRU">393842</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>text and tables by Marie E. Kopp, PH. D.; prepared under the supervision of a scientific advisory committee; with a foreword by Adolf Meyer, M.D.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Birth control in practice; analysis of ten thousand case histories of the Birth Control Clinical Research Bureau;</dcterms:title>
+        <rdvocab:placeOfProduction>New York,</rdvocab:placeOfProduction>
+        <dcterms:publisher>R.M. McBride &amp; Company,</dcterms:publisher>
+        <dcterms:issued>1934.</dcterms:issued>
+        <dcterms:extent>xxvi, 2  ., 31-290 p.</dcterms:extent>
+        <rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/431</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

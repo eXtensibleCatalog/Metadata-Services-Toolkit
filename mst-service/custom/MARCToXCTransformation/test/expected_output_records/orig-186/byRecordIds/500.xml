@@ -1,0 +1,30 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/500</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:168</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/500">
+        <xc:recordID type="LCCN">36022325</xc:recordID>
+        <xc:recordID type="OCoLC">958956</xc:recordID>
+        <xc:recordID type="NRU">824214</xc:recordID>
+        <dcterms:title>A tale of two cities.</dcterms:title>
+        <dcterms:alternative>Tale of two cities.</dcterms:alternative>
+        <rdvocab:placeOfProduction>New York,</rdvocab:placeOfProduction>
+        <dcterms:publisher>The Modern Library</dcterms:publisher>
+        <dcterms:issued>[194-?]</dcterms:issued>
+        <dcterms:extent>x, 397 p.</dcterms:extent>
+        <rdvocab:dimensions>19 cm.</rdvocab:dimensions>
+        <dcterms:isPartOf>Modern library of the world's best books ; 189</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/502</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

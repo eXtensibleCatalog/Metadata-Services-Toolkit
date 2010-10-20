@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10071">
+		<xc:titleOfExpression>Depth to bedrock in Wisconsin.</xc:titleOfExpression>
+		<rdvocab:scale>Scale 1:1,000,000; 1 in. equals approx. 16 miles.</rdvocab:scale>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>Cotter, R. D. (Ralph D.), 1929-</xc:contributor>
+		<xc:contributor>University of Wisconsin--Madison. Cartographic Laboratory.</xc:contributor>
+		<xc:contributor>Geological Survey (U.S.)</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10070</xc:workExpressed></xc:entity>
+</xc:frbr>

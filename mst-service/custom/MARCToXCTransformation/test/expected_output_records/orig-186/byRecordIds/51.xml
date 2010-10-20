@@ -1,0 +1,34 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/51</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:12</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/51">
+        <rdvocab:plateNumber>U.E. 2547</rdvocab:plateNumber>
+        <rdvocab:publisherNumber>2547</rdvocab:publisherNumber>
+        <xc:recordID type="OCoLC">12845705</xc:recordID>
+        <xc:recordID type="NRU">1188184</xc:recordID>
+        <dcterms:title>Fünf Gesänge für eine tiefe Singstimme und Klavier.</dcterms:title>
+        <rdvocab:placeOfProduction>Wien :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Universal-Edition,</dcterms:publisher>
+        <dcterms:issued>c1909.</dcterms:issued>
+        <dcterms:extent>score (15 p.) ;</dcterms:extent>
+        <rdvocab:dimensions>31 cm.</rdvocab:dimensions>
+        <dcterms:description>For low voice and piano.</dcterms:description>
+        <dcterms:description>Publisher's no.: Universal-Edition No. 2547.</dcterms:description>
+        <dcterms:description>Words from the Thousand and one nights (1st song); by Edith Ronsperger (2nd-5th songs).</dcterms:description>
+        <dcterms:tableOfContents>Ich frag' nach dir jedwede Morgensonne -- Dies aber kann mein Sehnen nimmer fassen -- Die Dunkelheit sinkt schwer wie Blei -- Sie sind so schön, die milden, sonnenreichen -- Einst gibt ein Tag mir alles Glück zu eigen.</dcterms:tableOfContents>
+        <dcterms:description>Sibley Music Library copy bound with Schreker, Acht Lieder, op. 7 (1906); Zwei Gesänge, op. 2 (190-); Fünf Lieder, op. 4 (190-); Zwei Lieder, op. 5 (190-).</dcterms:description>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/53</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,42 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/314</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:89</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/314">
+        <xc:titleOfExpression>On the waterfront</xc:titleOfExpression>
+        <dcterms:version>Special ed.</dcterms:version>
+        <rdvocab:artisticAndOrTechnicalCredits>Photographer, Boris Kaufman ; editor, Gene Milford ; music, Leonard Bernstein.</rdvocab:artisticAndOrTechnicalCredits>
+        <rdvocab:performerNarratorAndOrPresenter>Marlon Brando, Karl Malden, Lee J. Cobb, Rod Steiger, Pat Henning, Leif Erickson, James Westerfield, Eva Marie Saint.</rdvocab:performerNarratorAndOrPresenter>
+        <dcterms:requires>DVD, Dolby digital; full screen presentation.</dcterms:requires>
+        <rdvocab:awards>Academy Award for Best Picture, 1954.</rdvocab:awards>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <dcterms:language>French</dcterms:language>
+        <rdarole:director>Kazan, Elia.</rdarole:director>
+        <xc:contributor>Spiegel, Sam.</xc:contributor>
+        <xc:contributor>Schulberg, Budd.</xc:contributor>
+        <xc:contributor>Brando, Marlon.</xc:contributor>
+        <xc:contributor>Malden, Karl.</xc:contributor>
+        <xc:contributor>Cobb, Lee J., 1911-1976.</xc:contributor>
+        <xc:contributor>Steiger, Rod, 1925-2002.</xc:contributor>
+        <xc:contributor>Henning, Pat, 1911-1973.</xc:contributor>
+        <xc:contributor>Erickson, Leif, 1911-1986.</xc:contributor>
+        <xc:contributor>Westerfield, James, 1913-1971.</xc:contributor>
+        <xc:contributor>Saint, Eva Marie, 1924-</xc:contributor>
+        <xc:contributor>Kaufman, Boris.</xc:contributor>
+        <xc:contributor>Milford, Gene.</xc:contributor>
+        <xc:contributor>Bernstein, Leonard, 1918-1990.</xc:contributor>
+        <xc:contributor>Columbia Pictures Corporation.</xc:contributor>
+        <xc:contributor>Columbia TriStar Home Entertainment (Firm)</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/313</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

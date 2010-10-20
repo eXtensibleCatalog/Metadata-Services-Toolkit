@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10409">
+		<xc:recordID type="OCoLC">213487976</xc:recordID>
+		<xc:recordID type="NRU">3810683</xc:recordID>
+		<xc:identifier type="GPOItem">0619-M-03</xc:identifier>
+		<xc:identifier type="SuDoc">I 19.81:T 62/2004/33110-E 5-E 8</xc:identifier>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>produced by the United States Geological Survey ; revision by USDA Forest Service.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>[Tonto National Forest and other adjacent Forest Service areas] : 7.5  minute series (topographic /</dcterms:title>
+		<dcterms:alternative>Tonto National Forest, 7.5 minute series (topographic)</dcterms:alternative>
+		<dcterms:alternative>Sevenmile Mountains quadrangle,  Arizona--Gila Co.</dcterms:alternative>
+		<dcterms:alternative>Chrome Butte quadrangle,  Arizona--Gila Co.</dcterms:alternative>
+		<dcterms:alternative>Rockinstraw Mountain quadrangle,  Arizona--Gila Co.</dcterms:alternative>
+		<dcterms:alternative>Salt River Peak quadrangle,  Arizona--Gila Co.</dcterms:alternative>
+		<rdvocab:editionStatement>Rev. 2004.</rdvocab:editionStatement>
+		<rdvocab:placeOfProduction>[Reston, Va] :</rdvocab:placeOfProduction>
+		<dcterms:publisher>U.S. Dept. ot the Interior, U.S. Geological Survey,</dcterms:publisher>
+		<dcterms:issued>2007.</dcterms:issued>
+		<dcterms:extent>4 maps :</dcterms:extent>
+		<xc:otherPhysicalDetails>col. ;</xc:otherPhysicalDetails>
+		<rdvocab:dimensions>58 x 48 cm.</rdvocab:dimensions>
+		<dcterms:description>Relief shown by contours and spot heights.</dcterms:description>
+		<dcterms:description>Forest Service quadrangles are prepared by Forest Service cartographers at USGS for the use of National Forest Service Systems land managers and then distributed by USGS.</dcterms:description>
+		<dcterms:description>Areas outside the National Forest Systems lands may not have been revised.</dcterms:description>
+		<dcterms:description>Includes quadrangle location map and index to adjoining quadrangles on each sheet.</dcterms:description>
+		<dcterms:tableOfContents>33110-E 5. Sevenmile Mountains--E 6. Chrome Butte--E 7. Rockinstraw Mountain--E 8. Salt River Peak.</dcterms:tableOfContents>
+		<xc:typeLeader06>Cartographic material</xc:typeLeader06>
+		<xc:type007>Map</xc:type007>
+		<xc:typeSMD>Map</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10408</xc:expressionManifested></xc:entity>
+</xc:frbr>

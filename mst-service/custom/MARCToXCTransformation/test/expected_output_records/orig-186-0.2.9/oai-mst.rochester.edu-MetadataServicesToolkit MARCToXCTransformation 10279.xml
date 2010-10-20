@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10279">
+		<rdarole:performer>Coltrane, John, 1926-1967.</rdarole:performer>
+		<xc:titleOfExpression>Coltrane for lovers</xc:titleOfExpression>
+		<rdvocab:artisticAndOrTechnicalCredits>Compiled and produced by Richard Seidel ; production managed by Bryan Koniarz ; production and research coordinated by Carlos Kase ; original recordings produced by Bob Thiele.</rdvocab:artisticAndOrTechnicalCredits>
+		<rdvocab:performerNarratorAndOrPresenter>John Coltrane, tenor saxophone, with, variously: McCoy Tyner, Duke Elllington, piano ; Jimmy Garrison, Aaron Bell, Reggie Workman, bass ; Elvin Jones, Roy Haynes, Sam Woodyard, drums ; Johnny Hartman, vocals.</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded 1961-1963, by Rudy Van Gelder at Van Gelder Recording Studio, Englewood Cliffs, N.J.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<rdarole:performer>Tyner, McCoy.</rdarole:performer>
+		<rdarole:performer>Ellington, Duke, 1899-1974.</rdarole:performer>
+		<rdarole:performer>Garrison, Jimmy.</rdarole:performer>
+		<rdarole:performer>Bell, Aaron, 1922-2003</rdarole:performer>
+		<rdarole:performer>Workman, Reggie.</rdarole:performer>
+		<rdarole:performer>Jones, Elvin.</rdarole:performer>
+		<rdarole:performer>Haynes, Roy.</rdarole:performer>
+		<rdarole:performer>Woodyard, Sam, 1925-1988</rdarole:performer>
+		<rdarole:performer>Hartman, Johnny.</rdarole:performer>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10278</xc:workExpressed></xc:entity>
+</xc:frbr>

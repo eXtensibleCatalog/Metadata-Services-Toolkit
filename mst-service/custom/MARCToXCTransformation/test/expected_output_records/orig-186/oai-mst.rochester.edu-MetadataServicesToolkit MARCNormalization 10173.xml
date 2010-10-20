@@ -1,0 +1,71 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/518</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:174</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/518">
+        <dcterms:subject xsi:type="dcterms:LCC">M452</dcterms:subject>
+        <rdarole:composer>Martinn, J., 1775-1836.</rdarole:composer>
+        <rdvocab:titleOfWork>Quartets, strings, op. 1</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">String quartets-Parts.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">String quartets</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Parts.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/519</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:174</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/519">
+        <xc:titleOfExpression>Quartets, strings, op. 1</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/518</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/517</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:174</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/517">
+        <rdvocab:plateNumber>364</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">18864725</xc:recordID>
+        <xc:recordID type="NRU">891566</xc:recordID>
+        <dcterms:title>Trois quatuors pour deux violons, alto et basse, oeuvre 1.</dcterms:title>
+        <rdvocab:placeOfProduction>Paris,</rdvocab:placeOfProduction>
+        <dcterms:publisher>Pleyel</dcterms:publisher>
+        <dcterms:issued>[ca. 1798]</dcterms:issued>
+        <dcterms:extent>4 parts.</dcterms:extent>
+        <rdvocab:dimensions>34 cm.</rdvocab:dimensions>
+        <dcterms:description>Engraved.</dcterms:description>
+        <dcterms:description>Sibley Music Library accession no.: 567611.</dcterms:description>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/519</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

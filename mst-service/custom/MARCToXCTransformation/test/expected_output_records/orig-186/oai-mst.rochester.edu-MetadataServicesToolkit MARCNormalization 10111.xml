@@ -1,0 +1,100 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/369</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:112</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/369">
+        <dcterms:subject xsi:type="dcterms:LCC">HF5410</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">658</dcterms:subject>
+        <rdvocab:titleOfWork>Services marketing quarterly (Online)</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Marketing-Periodicals.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Service industries-Periodicals.</xc:subject>
+        <dcterms:replaces dcterms:ISSN="0748-4623">Journal of professional services marketing</dcterms:replaces>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Marketing</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Service industries</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/370</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:112</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/370">
+        <xc:titleOfExpression>Services marketing quarterly (Online)</xc:titleOfExpression>
+        <dcterms:HasFormat dcterms:ISSN="1533-2977">Services marketing quarterly (Online)</dcterms:HasFormat>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>ProQuest Information and Learning Company.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/369</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/368</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:112</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/368">
+        <xc:recordID type="LCCN">2001212542</xc:recordID>
+        <xc:identifier type="ISSN">1533-2969</xc:identifier>
+        <xc:recordID type="WaSeSS">ssj16563</xc:recordID>
+        <xc:recordID type="NRU">3407379</xc:recordID>
+        <dcterms:alternative>Serv. mark. q.</dcterms:alternative>
+        <dcterms:alternative>Services marketing quarterly</dcterms:alternative>
+        <dcterms:title>Services marketing quarterly</dcterms:title>
+        <rdvocab:placeOfProduction>Binghamton, N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Haworth Press, Inc.,</dcterms:publisher>
+        <dcterms:issued>2001-</dcterms:issued>
+        <rdvocab:frequency>Quarterly</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Vol. 22, no. 1 (2001)-</rdvocab:numberingOfSerials>
+        <dcterms:description>Title from cover.</dcterms:description>
+        <dcterms:identifier>Internet Full text. http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=SERVMARQU</dcterms:identifier>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:typeLeader06>Computer file</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Electronic resource</xc:type007>
+        <xc:typeSMD>Remote</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/370</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/371</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:112</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/371">
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/368</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

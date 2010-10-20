@@ -1,0 +1,38 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/265</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:71</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/265">
+        <xc:recordID type="LCCN">sn 87042357</xc:recordID>
+        <xc:recordID type="OCoLC">7537123</xc:recordID>
+        <xc:recordID type="NRU">2257790</xc:recordID>
+        <xc:identifier type="GPOItem">0133-A-10</xc:identifier>
+        <xc:identifier type="GPOItem">0133-A-10 (online)</xc:identifier>
+        <xc:identifier type="SuDoc">C 3.204:</xc:identifier>
+        <xc:identifier type="SuDoc">C 3.204/3-12:</xc:identifier>
+        <dcterms:title>County business patterns, Georgia.</dcterms:title>
+        <rdvocab:placeOfProduction>Washington, D.C. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>U.S. Dept. of Commerce, Bureau of the Census :</dcterms:publisher>
+        <dcterms:publisher>For sale by the Supt. of Docs., U.S. G.P.O.,</dcterms:publisher>
+        <dcterms:extent>v. :</dcterms:extent>
+        <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+        <rdvocab:frequency>Annual</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Began with 1964.</rdvocab:numberingOfSerials>
+        <dcterms:description>Description based on: 1979.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Electronic resource</xc:type007>
+        <xc:typeSMD>Remote</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1964-</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/267</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

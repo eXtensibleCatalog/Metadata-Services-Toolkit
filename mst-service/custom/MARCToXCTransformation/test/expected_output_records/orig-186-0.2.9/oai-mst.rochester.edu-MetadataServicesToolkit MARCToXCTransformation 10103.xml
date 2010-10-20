@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10103">
+		<xc:location>NewsMicro</xc:location>
+		<xc:callNumber>FILM .Una191 reel 747-748, 1720-1726, 1936</xc:callNumber>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Vol. 3, no. 1 (Jan. 1843)-</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 3-8 (Jan. 1843-Oct. 1848) = reel 747</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 9-10 (Jan. 1849-Dec. 1850) = reel 748</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 11-15 (Jan. 1851-Dec. 1855) = reel 1720</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 18-23 (nsv 2-7) (July 1, 1858-June 27, 1861) = reel 1721</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v.  29-34 (nsv 13-18) (Jan. 2, 1864-Dec. 29, 1866) = reel 1722</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 35-36 (nsv19-20) (Jan. 5-Dec. 28, 1867) = reel 1723</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 39, 41-42 (July 4, 1868-Dec. 30, 1871) = reel 1936</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 43 (Jan. 6-Dec. 28, 1872) = reel 1723</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 44-45 (Jan. 4, 1873-Dec. 26, 1874) = reel 1724</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 46-47 (Jan. 2, 1875-Dec. 30, 1876) = reel 1725</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">v. 48 (Jan. 6-Dec. 29, 1877) = reel 1726</xc:textualHoldings>
+		<xc:recordID type="NRU">1469520</xc:recordID>
+		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10096</xc:manifestationHeld>
+	</xc:entity>
+</xc:frbr>

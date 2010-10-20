@@ -1,0 +1,103 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/376</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/376">
+        <dcterms:subject xsi:type="dcterms:DDC">782.1</dcterms:subject>
+        <rdvocab:titleOfWork>Best of the 3 tenors</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Songs (High voice) with orchestra.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Vocal trios with orchestra.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Musicals-Excerpts, Arranged.</xc:subject>
+        <xc:type type="local">Classical Music.</xc:type>
+        <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Musicals</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
+        <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/377</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/377">
+        <xc:titleOfExpression>Best of the 3 tenors</xc:titleOfExpression>
+        <rdvocab:performerNarratorAndOrPresenter>José Carreras, Plácido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</rdvocab:performerNarratorAndOrPresenter>
+        <rdvocab:placeAndDateOfCapture>Recorded live in Rome (July 7, 1990), Los Angeles (July 16, 1994), and Paris (July 10, 1998).</rdvocab:placeAndDateOfCapture>
+        <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+        <dcterms:language>Italian</dcterms:language>
+        <rdarole:performer>Carreras, José.</rdarole:performer>
+        <rdarole:performer>Domingo, Plácido, 1941-</rdarole:performer>
+        <rdarole:performer>Pavarotti, Luciano.</rdarole:performer>
+        <xc:contributor>Levine, James, 1943-</xc:contributor>
+        <rdarole:performer>Mehta, Zubin.</rdarole:performer>
+        <rdarole:performer>Rudas, Tibor.</rdarole:performer>
+        <xc:contributor>Schifrin, Lalo.</xc:contributor>
+        <rdarole:performer>Teatro dell'opera (Rome, Italy). Orchestra.</rdarole:performer>
+        <xc:contributor>Los Angeles Philharmonic Orchestra.</xc:contributor>
+        <xc:contributor>Orchestre de Paris.</xc:contributor>
+        <rdarole:performer>Maggio musicale fiorentino. Orchestra.</rdarole:performer>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/376</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/375</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:114</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/375">
+        <xc:recordID type="LCCN">2003583369</xc:recordID>
+        <xc:identifier type="UPC">028946699928</xc:identifier>
+        <xc:identifier type="SoundNr">289 466 999-2</xc:identifier>
+        <xc:recordID type="OCoLC">50126222</xc:recordID>
+        <xc:recordID type="NRU">3472288</xc:recordID>
+        <dcterms:title>The best of the 3 tenors</dcterms:title>
+        <dcterms:alternative>Best of the three tenors</dcterms:alternative>
+        <dcterms:alternative>Tibor Rudas presents the best of the 3 tenors</dcterms:alternative>
+        <dcterms:alternative>Greatest trios</dcterms:alternative>
+        <rdvocab:placeOfProduction>London :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Decca,</dcterms:publisher>
+        <dcterms:issued>p2002.</dcterms:issued>
+        <dcterms:extent>1 sound disc (64 min.) :</dcterms:extent>
+        <rdvocab:soundCharacteristics>digital, stereo. ;</rdvocab:soundCharacteristics>
+        <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+        <dcterms:description>Opera and musical excerpts and songs.</dcterms:description>
+        <dcterms:description>Lalo Schifrin arranged and orchestrated the medleys for the concerts in Los Angeles and Paris.</dcterms:description>
+        <dcterms:description>"Greatest moments from the Rome, Los Angeles and Paris concerts"--Container.</dcterms:description>
+        <dcterms:description>Compact disc.</dcterms:description>
+        <dcterms:description>Program notes in English, French, German, Italian, and Spanish ([24] p. : col. ill.) inserted in container.</dcterms:description>
+        <dcterms:tableOfContents>'O sole mio -- Funiculì, funiculà -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna è mobile.</dcterms:tableOfContents>
+        <dcterms:description>Sung in English, French, German, Italian or and Spanish.</dcterms:description>
+        <dcterms:description>Art/Music copy: Gift of Sara Dougherty in memory of David Dougherty.</dcterms:description>
+        <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+        <xc:type007>Sound recording</xc:type007>
+        <xc:typeSMD>Sound disk</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/377</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

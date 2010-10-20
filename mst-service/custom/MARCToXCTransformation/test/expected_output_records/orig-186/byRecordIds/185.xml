@@ -1,0 +1,30 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/185</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:48</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/185">
+        <dcterms:subject xsi:type="dcterms:LCC">HC800.A1</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">330.96/005</dcterms:subject>
+        <rdvocab:titleOfWork>African development report.</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Economic conditions-1960--Periodicals.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Economic policy-Periodicals.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Commerce-Periodicals.</xc:spatial>
+        <dcterms:relation>African development report. Executive summary -1995</dcterms:relation>
+        <dcterms:relation>African development report. Summary 1996-</dcterms:relation>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">1960-</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">Economic conditions</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Economic policy</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Commerce</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,32 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/466</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:152</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/466">
+        <xc:recordID type="OCoLC">10208729</xc:recordID>
+        <xc:recordID type="NRU">500167</xc:recordID>
+        <dcterms:title>The New England Conservatory of Music bulletin.</dcterms:title>
+        <dcterms:alternative>Bulletin</dcterms:alternative>
+        <dcterms:alternative>Conservatory bulletin</dcterms:alternative>
+        <rdvocab:placeOfProduction>Boston :</rdvocab:placeOfProduction>
+        <dcterms:publisher>New England Conservatory of Music,</dcterms:publisher>
+        <dcterms:issued>1919-</dcterms:issued>
+        <dcterms:extent>v. ;</dcterms:extent>
+        <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+        <rdvocab:frequency>Monthly</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Vol. 1, no. 1 (Feb. 1919)-</rdvocab:numberingOfSerials>
+        <dcterms:description>Title from caption.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/468</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

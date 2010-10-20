@@ -1,0 +1,23 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="held">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/290</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:79</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/290">
+        <xc:location>NewsNewspr</xc:location>
+        <xc:callNumber>FILM .N57</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">Sept.14,1857-</xc:textualHoldings>
+        <xc:recordID type="NRU">2483966</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/289</xc:manifestationHeld>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/126</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

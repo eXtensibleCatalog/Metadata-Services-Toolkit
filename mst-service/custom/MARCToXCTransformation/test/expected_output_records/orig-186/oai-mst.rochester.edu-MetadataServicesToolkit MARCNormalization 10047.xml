@@ -1,0 +1,87 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/185</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:48</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/185">
+        <dcterms:subject xsi:type="dcterms:LCC">HC800.A1</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">330.96/005</dcterms:subject>
+        <rdvocab:titleOfWork>African development report.</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Economic conditions-1960--Periodicals.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Economic policy-Periodicals.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa-Commerce-Periodicals.</xc:spatial>
+        <dcterms:relation>African development report. Executive summary -1995</dcterms:relation>
+        <dcterms:relation>African development report. Summary 1996-</dcterms:relation>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">1960-</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">Economic conditions</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Economic policy</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Commerce</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/186</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:48</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/186">
+        <xc:titleOfExpression>African development report.</xc:titleOfExpression>
+        <dcterms:relation>Has supplement: African development report. Executive summary,    -1995; African development report. Summary, 1996-</dcterms:relation>
+        <dcterms:relation>Issues for &lt;1999-&gt; published for the Bank also by Economica in a French edition.</dcterms:relation>
+        <dcterms:relation>Rapport sur le développement en Afrique</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>African Development Bank.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/185</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/184</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:48</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/184">
+        <xc:recordID type="LCCN">94643540</xc:recordID>
+        <xc:recordID type="OCoLC">22211635</xc:recordID>
+        <xc:recordID type="NRU">1595758</xc:recordID>
+        <dcterms:title>African development report.</dcterms:title>
+        <rdvocab:placeOfProduction>[Abidjan, Ivory Coast] :</rdvocab:placeOfProduction>
+        <dcterms:publisher>African Development Bank,</dcterms:publisher>
+        <dcterms:issued>[1989?-</dcterms:issued>
+        <dcterms:extent>v. ;</dcterms:extent>
+        <rdvocab:dimensions>30 cm.</rdvocab:dimensions>
+        <rdvocab:frequency>Annual</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>1989-</rdvocab:numberingOfSerials>
+        <dcterms:description>Published: Oxford : Oxford University Press for the African Development Bank, &lt;1997-1999&gt;</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1989-</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/186</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

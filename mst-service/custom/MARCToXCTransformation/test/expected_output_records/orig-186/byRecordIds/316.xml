@@ -1,0 +1,24 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/316</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:90</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/316">
+        <dcterms:subject xsi:type="dcterms:DDC">791.45/75</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">PN1992.8.C55</dcterms:subject>
+        <rdvocab:titleOfWork>Seinfeld. Seasons 1 &amp; 2</rdvocab:titleOfWork>
+        <dcterms:abstract>Jerry is a very succesful stand-up comedian, mainly because of the people around him who offer an endless supply of great material. His best friend, George, is a balding, whiny kind of guy, who craves the kind of success Jerry has but is never willing to do what it takes to get it. Jerry's neighbor Kramer often barges into his apartment and imposes onto his life. Jerry's former girlfriend, Elaine, comes back into his life, and the four form a friendship together. They focus more on mundane conversations and situations that can be found during everyday life in New York.</dcterms:abstract>
+        <dcterms:audience>MPAA rating: Not rated.</dcterms:audience>
+        <xc:type xsi:type="dcterms:LCSH">Video recordings for the hearing impaired.</xc:type>
+        <xc:type type="migfg">Comedy.</xc:type>
+        <dcterms:audience>General</dcterms:audience>
+        <xc:relation>Seinfeld (Television program)</xc:relation>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

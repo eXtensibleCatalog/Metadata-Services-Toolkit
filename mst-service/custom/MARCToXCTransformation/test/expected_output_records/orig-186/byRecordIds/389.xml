@@ -1,0 +1,25 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/389</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:119</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/389">
+        <dcterms:subject xsi:type="dcterms:DDC">947.086</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">DK510.32</dcterms:subject>
+        <rdvocab:titleOfWork>Encyclopedia of contemporary Russian culture /</rdvocab:titleOfWork>
+        <xc:spatial xsi:type="dcterms:LCSH">Russia (Federation)-Civilization-Encyclopedias.</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Soviet Union-Civilization-Encyclopedias.</xc:spatial>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Civilization</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">Russia (Federation)</xc:spatial>
+        <xc:spatial xsi:type="dcterms:LCSH">Soviet Union</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Encyclopedias.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

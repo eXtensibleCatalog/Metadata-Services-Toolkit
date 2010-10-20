@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10264">
+		<xc:recordID type="OCoLC">10566490</xc:recordID>
+		<xc:recordID type="NRU">2393459</xc:recordID>
+		<dcterms:title>The Atlas &amp; argus</dcterms:title>
+		<dcterms:alternative>Daily atlas &amp; argus</dcterms:alternative>
+		<dcterms:alternative>Daily Atlas and Argus</dcterms:alternative>
+		<dcterms:alternative>Atlas and argus</dcterms:alternative>
+		<rdvocab:placeOfProduction>Albany, N.Y. :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Comstock &amp; Cassidy,</dcterms:publisher>
+		<dcterms:issued>1856-1865.</dcterms:issued>
+		<dcterms:extent>10 v.</dcterms:extent>
+		<rdvocab:frequency>Daily (except Sun.)</rdvocab:frequency>
+		<rdvocab:numberingOfSerials>Vol. 31, no. 9253 (Feb. 18, 1856)-v. 40, no. 12216 (May 13, 1865).</rdvocab:numberingOfSerials>
+		<dcterms:description>Published as: Atlas and Argus, &lt;1859-1863&gt;.</dcterms:description>
+		<dcterms:description>"And" appears within title ornament in small type, &lt;1859-1863&gt;.</dcterms:description>
+		<dcterms:description>"Democratic."</dcterms:description>
+		<dcterms:description>Also issued in semiweekly and weekly editions with the same title.</dcterms:description>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<xc:type007>Microform</xc:type007>
+		<xc:typeSMD>Microfilm reel</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+		<dcterms:issued>1856-1865</dcterms:issued>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10263</xc:expressionManifested></xc:entity>
+</xc:frbr>

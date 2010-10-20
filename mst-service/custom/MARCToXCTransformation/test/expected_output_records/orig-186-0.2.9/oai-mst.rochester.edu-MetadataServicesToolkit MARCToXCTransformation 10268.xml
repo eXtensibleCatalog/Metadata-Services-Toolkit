@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10268">
+		<rdvocab:titleOfWork>Blues music sampler</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">Blues (Music)-Periodicals.</xc:subject>
+		<xc:type type="local">Jazz/Blues/American Folk Music.</xc:type>
+		<dcterms:relation dcterms:ISSN="1091-7543">Blues revue</dcterms:relation>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Blues (Music)</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type></xc:entity>
+</xc:frbr>

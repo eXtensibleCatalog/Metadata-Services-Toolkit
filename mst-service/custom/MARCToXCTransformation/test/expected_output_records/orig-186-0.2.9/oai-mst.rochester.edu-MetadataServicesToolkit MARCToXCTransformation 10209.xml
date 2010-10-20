@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10209">
+		<rdarole:author>United States. Office of Management and Budget.</rdarole:author>
+		<rdvocab:titleOfWork>Budget of the United States Government (Document edition)</rdvocab:titleOfWork>
+		<xc:relation>Supplements accompany some issues.</xc:relation>
+		<xc:subject xsi:type="dcterms:LCSH">Budget-United States-Periodicals.</xc:subject>
+		<dcterms:replaces>United States. Bureau of the Budget. Budget of the United States Government</dcterms:replaces>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Budget</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Periodicals.</xc:subject>
+		<xc:spacial xsi:type="dcterms:LCSH">United States</xc:spacial></xc:entity>
+</xc:frbr>

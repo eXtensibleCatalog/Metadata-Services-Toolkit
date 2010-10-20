@@ -1,0 +1,39 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/261</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:69</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/261">
+        <xc:recordID type="OCoLC">17639275</xc:recordID>
+        <xc:recordID type="NRU">2183193</xc:recordID>
+        <xc:identifier type="GPOItem">619-G-11</xc:identifier>
+        <xc:identifier type="SuDoc">I 19.113:MF-2008-B</xc:identifier>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Department of the Interior, U.S. Geological Survey ; by Vito F. Nuccio and Ronald C. Johnson ; prepared in cooperation with the Utah Geological and Mineral Survey and the Colorado Geological Survey.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Surface vitrinite-reflectance map of the Uinta, Piceance, and Eagle Basins area, Utah and Colorado /</dcterms:title>
+        <rdvocab:placeOfProduction>Reston, Va. :</rdvocab:placeOfProduction>
+        <rdvocab:placeOfProduction>Denver, CO :</rdvocab:placeOfProduction>
+        <dcterms:publisher>The Survey ;</dcterms:publisher>
+        <dcterms:publisher>For sale by Branch of Distribution,</dcterms:publisher>
+        <dcterms:issued>1988.</dcterms:issued>
+        <dcterms:extent>1 map ;</dcterms:extent>
+        <rdvocab:dimensions>70 x 120 cm., on sheet 86 x 127 cm., folded in envelope 30 x 24 cm. +</rdvocab:dimensions>
+        <dcterms:hasPart>1 pamphlet (21 p. ; 28 cm.)</dcterms:hasPart>
+        <dcterms:description>Relief shown by contours and spot heights.</dcterms:description>
+        <dcterms:description>Includes index map.</dcterms:description>
+        <dcterms:description>Pamphlet includes bibliography, p. 2.</dcterms:description>
+        <dcterms:isPartOf>Miscellaneous field studies ; map MF-2008-B.</dcterms:isPartOf>
+        <dcterms:isPartOf>Folio of the Uinta and Piceance basin area.</dcterms:isPartOf>
+        <xc:typeLeader06>Cartographic material</xc:typeLeader06>
+        <xc:type007>Map</xc:type007>
+        <xc:typeSMD>Map</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/263</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

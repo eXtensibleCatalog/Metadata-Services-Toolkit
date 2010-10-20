@@ -1,0 +1,87 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/278</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/278">
+        <rdvocab:titleOfWork>Stephane Grappelli</rdvocab:titleOfWork>
+        <dcterms:abstract>Stéphane Grappelli tells his own story of a 77-year career. Contains all known film footage of Django Reinhardt including 7 minutes of the Hot Club Quintet of France.</dcterms:abstract>
+        <xc:subject xsi:type="dcterms:LCSH">Grappelli, Stéphane.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Jazz musicians-France-Biography.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Violinists-France-Biography.</xc:subject>
+        <dcterms:audience>Adult</dcterms:audience>
+        <xc:subject xsi:type="dcterms:LCSH">Jazz musicians</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Violinists</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">France</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Biography.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/279</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/279">
+        <xc:titleOfExpression>Stephane Grappelli</xc:titleOfExpression>
+        <dcterms:requires>DVD, Dolby digital stereo.</dcterms:requires>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Balmer, Paul.</xc:contributor>
+        <rdarole:performer>Grappelli, Stéphane.</rdarole:performer>
+        <xc:contributor>Reinhardt, Django, 1910-1953.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/278</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/277</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:75</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/277">
+        <xc:identifier type="UPC">2012066206651</xc:identifier>
+        <xc:identifier type="VideoNr">MoE 001</xc:identifier>
+        <xc:recordID type="OCoLC">53213246</xc:recordID>
+        <xc:recordID type="NRU">2406566</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>directed, written and presented by Paul Balmer ; produced by Judy Caine.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Stephane Grappelli a life in the jazz century /</dcterms:title>
+        <dcterms:alternative>Life in the jazz century</dcterms:alternative>
+        <rdvocab:placeOfProduction>[London] :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Music on Earth,</dcterms:publisher>
+        <dcterms:issued>c2002.</dcterms:issued>
+        <dcterms:extent>2 videodiscs (128 min.) :</dcterms:extent>
+        <xc:otherPhysicalDetails>sd., col. and b&amp;w ;</xc:otherPhysicalDetails>
+        <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+        <dcterms:description>Title from container.</dcterms:description>
+        <dcterms:description>DVD bonus features include: 11 bonus chapters; 7 rare music archive clips; story-teller's chronicle; promo; alternative commentary; research notes; bibliography/discography; key websites; programmable audio CD; timeline; stills photo montage; Montmartre map.</dcterms:description>
+        <dcterms:description>In English with optional English subtitles.</dcterms:description>
+        <xc:typeLeader06>Projected medium</xc:typeLeader06>
+        <xc:type007>Video recording</xc:type007>
+        <xc:typeSMD>Videodisc</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/279</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

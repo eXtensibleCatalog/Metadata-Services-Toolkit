@@ -1,0 +1,32 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/373</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:113</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/373">
+        <dcterms:subject xsi:type="dcterms:LCC">E840</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">327.73009/045</dcterms:subject>
+        <rdvocab:titleOfWork>Dealing with dictators :</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Dictators-Case studies.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Intelligence service-United States-History-20th century-Case studies.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Totalitarianism-Case studies.</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States-Foreign relations-1945-1989-Case studies.</xc:spatial>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:temporal xsi:type="dcterms:LCSH">1945-1989</xc:temporal>
+        <xc:temporal xsi:type="dcterms:LCSH">20th century</xc:temporal>
+        <xc:subject xsi:type="dcterms:LCSH">Dictators</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Intelligence service</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Totalitarianism</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Foreign relations</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Case studies.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

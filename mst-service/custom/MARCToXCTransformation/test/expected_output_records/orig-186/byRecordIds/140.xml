@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/140</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:46</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/140">
+        <xc:titleOfExpression>Real calypso.</xc:titleOfExpression>
+        <rdvocab:performerNarratorAndOrPresenter>Sung by various performers.</rdvocab:performerNarratorAndOrPresenter>
+        <rdvocab:placeAndDateOfCapture>Recorded in Trinidad, 1927-46.</rdvocab:placeAndDateOfCapture>
+        <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Charters, Samuel Barclay.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/139</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,24 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/506</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:170</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/506">
+        <dcterms:subject xsi:type="dcterms:LCC">D16.15</dcterms:subject>
+        <rdarole:author>Osborne, Peter, 1958-</rdarole:author>
+        <rdvocab:titleOfWork>Politics of time :</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">History-Periodization.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History-Philosophy.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Periodization.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Philosophy.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

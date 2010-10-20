@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10406">
+		<xc:recordID type="LCCN">2007040883</xc:recordID>
+		<xc:identifier type="bnb">GBA819756</xc:identifier>
+		<xc:identifier type="Uk">014524531</xc:identifier>
+		<xc:identifier type="YBP">40015320738</xc:identifier>
+		<xc:recordID type="OCoLC">174112674</xc:recordID>
+		<xc:recordID type="NRU">3795970</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>edited by Gilles Kepel and Jean-Pierre Milelli ; translated by Pascale Ghazaleh.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>Al Qaeda in its own words /</dcterms:title>
+		<rdvocab:placeOfProduction>Cambridge, Mass. :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Belknap Press of Harvard University Press,</dcterms:publisher>
+		<dcterms:issued>2008.</dcterms:issued>
+		<dcterms:extent>xiv, 363 p. ;</dcterms:extent>
+		<rdvocab:dimensions>22 cm.</rdvocab:dimensions>
+		<dcterms:description>Translated from the French.</dcterms:description>
+		<dcterms:description>Includes bibliographical references and index.</dcterms:description>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<dcterms:identifier type="ISBN">9780674028043</dcterms:identifier>
+		<dcterms:identifier type="ISBN">067402804X</dcterms:identifier>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10405</xc:expressionManifested></xc:entity>
+</xc:frbr>

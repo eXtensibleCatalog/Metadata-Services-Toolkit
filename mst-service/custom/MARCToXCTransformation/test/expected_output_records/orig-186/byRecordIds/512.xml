@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/512</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:172</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/512">
+        <dcterms:subject xsi:type="dcterms:LCC">M557.E76</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">M557</dcterms:subject>
+        <rdarole:composer>Etler, Alvin, 1913-1973.</rdarole:composer>
+        <rdvocab:titleOfWork>Quintets, trumpets, horn, trombone, tuba</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Brass quintets (Horn, trombone, trumpets (2), tuba)-Scores and parts.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Brass quintets (Horn, trombone, trumpets (2), tuba)</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Scores and parts.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

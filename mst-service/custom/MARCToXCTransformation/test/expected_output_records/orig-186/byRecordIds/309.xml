@@ -1,0 +1,35 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/309</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:88</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/309">
+        <xc:identifier type="VideoNr">EDVD 6501</xc:identifier>
+        <xc:recordID type="OCoLC">51300396</xc:recordID>
+        <xc:recordID type="NRU">2637764</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Selznick International Pictures ; directed by Victor Fleming ; screenplay by Sidney Howard ; producer, David O. Selznick.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Gone with the wind</dcterms:title>
+        <rdvocab:placeOfProduction>[Taipei, Taiwan] :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Evervision,</dcterms:publisher>
+        <dcterms:issued>[2000?]</dcterms:issued>
+        <dcterms:extent>1 videodisc (232 min.) :</dcterms:extent>
+        <xc:otherPhysicalDetails>sd., col. ;</xc:otherPhysicalDetails>
+        <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+        <xc:isPartOf>The best movie collection</xc:isPartOf>
+        <dcterms:description>Originally produced as a motion picture in 1939.</dcterms:description>
+        <dcterms:description>Based on the novel by Margaret Mitchell.</dcterms:description>
+        <dcterms:description>In English ; with optional subtitles in English, Chinese, Indonisian.</dcterms:description>
+        <xc:typeLeader06>Projected medium</xc:typeLeader06>
+        <xc:type007>Video recording</xc:type007>
+        <xc:typeSMD>Videodisc</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/311</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

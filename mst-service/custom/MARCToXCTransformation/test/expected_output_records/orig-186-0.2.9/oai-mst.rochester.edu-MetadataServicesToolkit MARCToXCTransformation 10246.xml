@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10246">
+		<dcterms:subject xsi:type="dcterms:LCC">MT6</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">781/.05</dcterms:subject>
+		<rdvocab:titleOfWork>Indiana theory review.</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">Music theory-Periodicals.</xc:subject>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Music theory</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type></xc:entity>
+</xc:frbr>

@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/285</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:77</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/285">
+        <rdarole:performer>Hu, Yih-Mei.</rdarole:performer>
+        <xc:titleOfExpression>Yih-Mei Hu, piano</xc:titleOfExpression>
+        <rdvocab:performerNarratorAndOrPresenter>Yih-Mei Hu, piano ; Amber Shay, piano (last work).</rdvocab:performerNarratorAndOrPresenter>
+        <rdvocab:placeAndDateOfCapture>Recorded in Kilbourn Hall, September 16, 2002.</rdvocab:placeAndDateOfCapture>
+        <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+        <xc:contributor>Shay, Amber.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/284</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

@@ -1,0 +1,22 @@
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/11</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:4</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/11">
+        <xc:titleOfExpression>Zhar-ptit︠s︡a</xc:titleOfExpression>
+        <rdvocab:performerNarratorAndOrPresenter>Wiener Philharmoniker ; Christoph von Dohnányi, conductor.</rdvocab:performerNarratorAndOrPresenter>
+        <rdvocab:placeAndDateOfCapture>Recorded at the Sofiensaal, Vienna, Sept./Oct. 1979.</rdvocab:placeAndDateOfCapture>
+        <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+        <rdarole:performer>Dohnányi, Christoph von.</rdarole:performer>
+        <rdarole:performer>Wiener Philharmoniker.</rdarole:performer>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/10</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>

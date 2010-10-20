@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10518">
+		<xc:location>SibCollWks</xc:location>
+		<xc:callNumber>M3 .M214</xc:callNumber>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Bd. 1-5, 5 (1989), 5 (2002), 6, 6 (1998), 7-9, 9 (1990), 10, 11a, 12</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Bd. 13 t. 1, 2a high, 2a low, 2b, 3-5</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Bd. 14 t. 1-4</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Additional copies available for:</xc:textualHoldings>
+		<xc:textualHoldings type="Basic Bibliographic Unit">Bd. 5, 6, 7, 9, 13/2a high</xc:textualHoldings>
+		<xc:recordID type="NRU">945818</xc:recordID>
+		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10495</xc:manifestationHeld>
+	</xc:entity>
+</xc:frbr>
