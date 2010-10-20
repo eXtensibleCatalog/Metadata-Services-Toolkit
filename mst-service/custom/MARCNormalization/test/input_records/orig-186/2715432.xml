@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:90</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>04026cgm a2200589Ka 45e0</marc:leader>
+        <marc:controlfield tag="001">2715432</marc:controlfield>
+        <marc:controlfield tag="005">20060119134905.0</marc:controlfield>
+        <marc:controlfield tag="007">vd cvaizs</marc:controlfield>
+        <marc:controlfield tag="008">040811p20041990cau437 g          vleng d</marc:controlfield>
+        <marc:datafield tag="028" ind1="4" ind2="0">
+          <marc:subfield code="a">05341</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm56133006</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">2715432</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">TEFMT</marc:subfield>
+          <marc:subfield code="c">TEFMT</marc:subfield>
+          <marc:subfield code="d">TEF</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">1404957464</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="1" ind2=" ">
+          <marc:subfield code="a">043396053410</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="037" ind1=" " ind2=" ">
+          <marc:subfield code="b">Midwest Tapes</marc:subfield>
+          <marc:subfield code="n">http://www.midwesttapes.com</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="1" ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="a">fre</marc:subfield>
+          <marc:subfield code="a">spa</marc:subfield>
+          <marc:subfield code="b">eng</marc:subfield>
+          <marc:subfield code="b">fre</marc:subfield>
+          <marc:subfield code="b">por</marc:subfield>
+          <marc:subfield code="b">spa</marc:subfield>
+          <marc:subfield code="h">eng</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="4">
+          <marc:subfield code="a">791.45/75</marc:subfield>
+          <marc:subfield code="2">22</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">PN1992.8.C55</marc:subfield>
+          <marc:subfield code="b">S45 2004</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Seinfeld.</marc:subfield>
+          <marc:subfield code="n">Seasons 1 &amp; 2</marc:subfield>
+          <marc:subfield code="h">[videorecording] /</marc:subfield>
+          <marc:subfield code="c">Castle Rock Entertainment ; West-Shapiro ; producers, Tom Cherones, Larry David ; written by Larry David &amp; Jerry Seinfeld ; director, Tom Cherones.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Culver City, CA :</marc:subfield>
+          <marc:subfield code="b">Columbia TriStar Home Entertainment,</marc:subfield>
+          <marc:subfield code="c">2004.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">4 videodiscs (437 min.) :</marc:subfield>
+          <marc:subfield code="b">sd., col. ;</marc:subfield>
+          <marc:subfield code="c">4 3/4 in.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="538" ind1=" " ind2=" ">
+          <marc:subfield code="a">DVD, region 1, full screen (1.33:1) presentation; Dolby Digital stereo, remastered in high-definition.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="546" ind1=" " ind2=" ">
+          <marc:subfield code="a">Closed captioned.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="1" ind2=" ">
+          <marc:subfield code="a">Jerry Seinfeld, Julia Louis-Dreyfus, Michael Richards, Jason Alexander, Richard Fancy, Len Lesser.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="508" ind1=" " ind2=" ">
+          <marc:subfield code="a">Directors of photography, Robert Berry, Jerry D. Good ; editors, Janet Ashikaga ... [et al.] ; music, Jonathan Wolff ; costume designer, Charmaine Simmons ; production designer, Thomas Azzari.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Originally broadcast on television during the 1990-1992 seasons.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Contains all 18 episodes from season one and two.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">On box: Volume 1.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">English, dubbed French or dubbed Spanish dialogue, French, Portuguese or Spanish subtitles.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="521" ind1="8" ind2=" ">
+          <marc:subfield code="a">MPAA rating: Not rated.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="520" ind1=" " ind2=" ">
+          <marc:subfield code="a">Jerry is a very succesful stand-up comedian, mainly because of the people around him who offer an endless supply of great material. His best friend, George, is a balding, whiny kind of guy, who craves the kind of success Jerry has but is never willing to do what it takes to get it. Jerry's neighbor Kramer often barges into his apartment and imposes onto his life. Jerry's former girlfriend, Elaine, comes back into his life, and the four form a friendship together. They focus more on mundane conversations and situations that can be found during everyday life in New York.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Special features: approximately 13 hours of exclusive special features from the creative talents behind the show, including all-new interviews with Jerry Seinfeld, Larry David, Julia Louis-Dreyfus, Michael Richards, Jason Alexander; "How it began": An hour-long look at how Jerry Seinfeld and Larry David first came up with the idea for the show; "Notes about nothing": Behind-the-scenes scoop and production notes; "Inside look": The cast and creators talk about what was happening behind the scenes of certain episodes; "In the vault": Saved from the cutting room floor ... ; "Not that there's anything wrong with that": Never-before-seen outtakes and bloopers; "Yada, yada, yada": Creator and cast audio commentaries; "Master of his domain": See Jerry Seinfeld in exclusive, never-before-seen stand-up comedy footage; "Sponsored by Vandelay Industries: Original NBC promotional ads and trailers; Featuring the original (1-2 minutes longer) NBC network versions, not seen since their original broadcast runs.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="655" ind1=" " ind2="0">
+          <marc:subfield code="a">Video recordings for the hearing impaired.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="655" ind1=" " ind2="7">
+          <marc:subfield code="a">Comedy.</marc:subfield>
+          <marc:subfield code="2">migfg</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Cherones, Tom.</marc:subfield>
+          <marc:subfield code="4">pro</marc:subfield>
+          <marc:subfield code="4">drt</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">David, Larry.</marc:subfield>
+          <marc:subfield code="4">pro</marc:subfield>
+          <marc:subfield code="4">aus</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Seinfeld, Jerry.</marc:subfield>
+          <marc:subfield code="4">aus</marc:subfield>
+          <marc:subfield code="4">act</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Louis-Dreyfus, Julia.</marc:subfield>
+          <marc:subfield code="4">act</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Richards, Michael,</marc:subfield>
+          <marc:subfield code="d">1950 July 14-</marc:subfield>
+          <marc:subfield code="4">act</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Alexander, Jason,</marc:subfield>
+          <marc:subfield code="d">1959-</marc:subfield>
+          <marc:subfield code="4">act</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Fancy, Richard.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Berry, Robert.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Good, Jerry D.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Wolff, Jonathan,</marc:subfield>
+          <marc:subfield code="d">1958-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Castle Rock Entertainment (Firm)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">West-Shapiro.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Columbia TriStar Home Entertainment (Firm)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="730" ind1="0" ind2=" ">
+          <marc:subfield code="a">Seinfeld (Television program)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">E0</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">MARS</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

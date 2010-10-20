@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:100</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01041cam a2200325 a 45 0</marc:leader>
+        <marc:controlfield tag="001">2944145</marc:controlfield>
+        <marc:controlfield tag="005">20070912092135.0</marc:controlfield>
+        <marc:controlfield tag="008">050511s2005    enkb   e b    000 1 eng  </marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm60512859</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">2944145</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">UKM</marc:subfield>
+          <marc:subfield code="c">UKM</marc:subfield>
+          <marc:subfield code="d">BWKUK</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="015" ind1=" " ind2=" ">
+          <marc:subfield code="a">GBA544116</marc:subfield>
+          <marc:subfield code="2">bnb</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="016" ind1="7" ind2=" ">
+          <marc:subfield code="a">013205789</marc:subfield>
+          <marc:subfield code="2">Uk</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0713998334 (hbk.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="1" ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="h">rus</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1=" " ind2="4">
+          <marc:subfield code="a">PG3366</marc:subfield>
+          <marc:subfield code="b">.V6 2005</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="4">
+          <marc:subfield code="a">891.733</marc:subfield>
+          <marc:subfield code="2">22</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Tolstoy, Leo,</marc:subfield>
+          <marc:subfield code="c">graf,</marc:subfield>
+          <marc:subfield code="d">1828-1910.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">War and peace /</marc:subfield>
+          <marc:subfield code="c">Leo Tolstoy ; a new translation by Anthony Briggs ; with an afterword by Orlando Figes.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">London ;</marc:subfield>
+          <marc:subfield code="a">New York :</marc:subfield>
+          <marc:subfield code="b">Penguin,</marc:subfield>
+          <marc:subfield code="c">2005.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1392 p. :</marc:subfield>
+          <marc:subfield code="b">maps ;</marc:subfield>
+          <marc:subfield code="c">21 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references (p. [1359]-1371).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="546" ind1=" " ind2=" ">
+          <marc:subfield code="a">Translated from the Russian.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Russia</marc:subfield>
+          <marc:subfield code="x">History</marc:subfield>
+          <marc:subfield code="y">Alexander I, 1801-1825</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">Russia</marc:subfield>
+          <marc:subfield code="x">Social conditions</marc:subfield>
+          <marc:subfield code="y">1801-1917</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Briggs, A. D. P.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Figes, Orlando.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">C0</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">MARS</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:175</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01569cam a22003370  45 A</marc:leader>
+        <marc:controlfield tag="001">896124</marc:controlfield>
+        <marc:controlfield tag="005">20080722155457.0</marc:controlfield>
+        <marc:controlfield tag="008">881026s1988    dcua     b    101 0 eng d</marc:controlfield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0932101178 (pbk.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocm</marc:subfield>
+          <marc:subfield code="a">18671731</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00838110</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">PMC</marc:subfield>
+          <marc:subfield code="c">PMC</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="0" ind2=" ">
+          <marc:subfield code="a">engfre</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRC</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">RM950</marc:subfield>
+          <marc:subfield code="b">.I57 1988</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">RM950 .I57 1988</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="111" ind1="2" ind2=" ">
+          <marc:subfield code="a">International Conference of the Association for the Advancement of Rehabilitation Technology</marc:subfield>
+          <marc:subfield code="n">(3rd :</marc:subfield>
+          <marc:subfield code="d">1988 :</marc:subfield>
+          <marc:subfield code="c">Montre&#x301;al, Que&#x301;bec)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Proceedings :</marc:subfield>
+          <marc:subfield code="b">International Conference of the Association for the Advancement of Rehabilitation Technology, choice for all = Compte rendu : Confe&#x301;rence internationale pour le de&#x301;veloppement de la technologie en re&#x301;adaptation, choix pour tous : ICAART 88, Montre&#x301;al, Palais des Congre&#x300;s, 25-30, June-juin 1988.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Washington, D.C. :</marc:subfield>
+          <marc:subfield code="b">RESNA, Association for the Advancement of Rehabilitation Technology,</marc:subfield>
+          <marc:subfield code="c">1988.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xviii, 681 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">28 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="546" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text in English and French.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">"La re&#x301;adaptation, une priorite&#x301; a&#x300; la Re&#x301;gie de l'assurance automobile du Que&#x301;bec."</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographies and index.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Rehabilitation technology</marc:subfield>
+          <marc:subfield code="x">Congresses.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">RESNA, Association for the Advancement of Rehabilitation Technology.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Re&#x301;gie de l'assurance automobile du Que&#x301;bec.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="740" ind1="0" ind2=" ">
+          <marc:subfield code="a">Choice for all.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="740" ind1="0" ind2=" ">
+          <marc:subfield code="a">Choix pour tous.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="910" ind1=" " ind2=" ">
+          <marc:subfield code="a">950805</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Cstack</marc:subfield>
+          <marc:subfield code="m">SCIMON</marc:subfield>
+          <marc:subfield code="s">RM950 .I57 1988</marc:subfield>
+          <marc:subfield code="b">39087010831560</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>
