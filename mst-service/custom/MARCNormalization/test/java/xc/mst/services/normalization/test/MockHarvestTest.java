@@ -16,15 +16,11 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
 	private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
 	
-	protected String getServiceName() {
-		return "MARCNormalization";
-	}
-	
-	protected String getRepoName() {
+	public String getRepoName() {
 		return "test_repo";
 	}
 	
-	protected String getProviderUrl() {
+	public String getProviderUrl() {
 		return "file://"+INPUT_FOLDER+"/"+getFolder();
 	}
 	
@@ -32,20 +28,21 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 		return "randys-30";
 	}
 	
-	protected Format getIncomingFormat() throws Exception {
-		return getMarcXmlFormat();
+	@Override
+	public Format[] getIncomingFormats() throws Exception {
+		return new Format[] {getMarcXmlFormat()};
 	}
 
-	protected Format getHarvestOutFormat() throws Exception {
+	public Format getHarvestOutFormat() throws Exception {
 		return getMarcXmlFormat();
 	}
 
 	@Override
-	protected void finalTest() throws Exception {
+	public void finalTest() throws Exception {
 	}
 	
 	@Override
-	protected void testHarvestOut() {
+	public void testHarvestOut() {
 	}
 
 }

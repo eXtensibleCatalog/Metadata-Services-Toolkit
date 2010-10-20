@@ -296,26 +296,30 @@ public abstract class ServiceDAO extends BaseDAO
 	
 	@SuppressWarnings("unchecked")
 	public ServiceHarvest getServiceHarvest(Format format, xc.mst.bo.provider.Set set, String repoName, Service service) {
-		Integer formatId = null;
-		if (format != null) {
-			formatId = format.getId();
-		}
-		Integer setId = null;
-		if (set != null) {
-			setId = set.getId();
-		}
-		Integer serviceId = null;
-		if (service != null) {
-			serviceId = service.getId();
-		}
+		List params = new ArrayList();
 		
-		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
+		StringBuilder sb = new StringBuilder(
 				"from xc.mst.bo.service.ServiceHarvest as sh "+
-				"where (sh.format.id = ? or (sh.format.id is null and ? is null)) and "+
-					"(sh.set.id = ? or (sh.set.id is null and ? is null)) and "+
-					"sh.repoName = ? and "+
-					"sh.service.id = ? "+
-					"", formatId, formatId, setId, setId, repoName, serviceId);
+				"where sh.service.id = ? "+
+					"and sh.repoName = ? "
+				);		
+		params.add(service.getId());
+		params.add(repoName);
+		if (format != null) {
+			sb.append("and sh.format.id = ? ");
+			params.add(format.getId());
+		} else {
+			sb.append("and sh.format is null ");
+		}
+		if (set != null) {
+			params.add(set.getId());
+			sb.append("and sh.set.id = ? ");
+		} else {
+			sb.append("and sh.set is null ");
+		}
+		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
+				sb.toString(), params.toArray());
+		log.error("shs: "+shs);
 		if (shs == null || shs.size() == 0) {
 			return null;
 		} else if (shs.size() == 1) {

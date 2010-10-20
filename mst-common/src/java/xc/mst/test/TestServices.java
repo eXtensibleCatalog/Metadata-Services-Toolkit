@@ -144,7 +144,7 @@ public class TestServices
 			Record record = new Record();
 
 			record.setOaiXml(readUnicodeFile(currentRecord));
-			record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
+			//record.setOaiIdentifier(currentRecord.getName().substring(0, currentRecord.getName().lastIndexOf('.')).replaceAll(" ", "/").replaceAll("-", ":"));
 			record.setFormat(formatDao.getById(3));  // For Normalization & transformation
 			record.setProvider(providerDao.getById(1));
 			record.addInputForService(serviceDao.getById(serviceId));
@@ -180,6 +180,7 @@ public class TestServices
 			record.addInputForService(serviceDao.getById(serviceId));
 			System.out.println("currentRecord.getName()="+ currentRecord.getName());
 			
+			/*
 			if (currentRecord.getName().equals("1.xml")) {
 				record.setType("XC-Work");
 				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10000");
@@ -214,6 +215,7 @@ public class TestServices
 				record.setOaiIdentifier("oai:mst.rochester.edu:MST/MARCToXCTransformation/10006");
 				record.addUpLink("oai:mst.rochester.edu:MST/MARCToXCTransformation/10005");
 			}
+			*/
 //			record.setDeleted(true);
 			
 			

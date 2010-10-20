@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import xc.mst.dao.harvest.HarvestDAO;
@@ -34,6 +35,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
@@ -64,6 +66,7 @@ public class BaseDAO {
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 	protected HibernateTemplate hibernateTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
+	protected SimpleJdbcTemplate simpleJdbcTemplate = null;
 	
 	protected Util util = null;
 	
@@ -180,6 +183,7 @@ public class BaseDAO {
 		this.dataSource = dataSource;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+		this.simpleJdbcTemplate = new SimpleJdbcTemplate(jdbcTemplate);
 	}
 	
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -282,5 +286,8 @@ public class BaseDAO {
 	}
 	public RecordDAO getRecordDAO() {
 		return (RecordDAO)config.getBean("DBRecordDAO");
+	}
+	public MessageDAO getMessageDAO() {
+		return (MessageDAO)config.getBean("MessageDAO");
 	}
 }

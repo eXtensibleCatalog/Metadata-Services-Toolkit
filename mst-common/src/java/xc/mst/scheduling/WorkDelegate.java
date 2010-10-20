@@ -28,7 +28,7 @@ public interface WorkDelegate {
 	
 	public int getRecordsProcessed();
 
-	public int getTotalRecords();
+	public long getTotalRecords();
 	
 	public WorkerThread getWorkerThread();
 	public void setWorkerThread(WorkerThread wt);

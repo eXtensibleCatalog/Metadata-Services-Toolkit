@@ -43,7 +43,7 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		if (bean instanceof BaseDAO) {
 			try {
-				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("MetadataServiceDataSource"));	
+				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("MetadataServiceDataSource"));
 			} catch (NoSuchBeanDefinitionException nsbde) {
 				((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
 			}
@@ -81,9 +81,17 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 				try {
 					m = serviceSetters.get(s);
 					o = this.applicationContext.getBean(s);
+					try {
+						o = this.applicationContext.getBean("Generic"+s);
+						LOG.debug("using Generic"+s+" for "+bean.getClass()+"."+m.getName());
+					} catch (Throwable t) {
+					}
 					m.invoke(bean, o);
 				} catch (Throwable t) {
 					LOG.error(bean.getClass()+"."+m.getName());
+					if (o != null) {
+						LOG.error("o: "+o);
+					}
 					LOG.error("", t);
 				}
 			}

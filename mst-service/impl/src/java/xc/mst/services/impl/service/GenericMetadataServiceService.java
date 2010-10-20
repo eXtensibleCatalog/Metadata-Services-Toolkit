@@ -9,18 +9,12 @@
 package xc.mst.services.impl.service;
 
 import xc.mst.manager.BaseService;
-import xc.mst.services.impl.dao.GenericMetadataDAO;
+import xc.mst.services.MetadataService;
 
 public class GenericMetadataServiceService extends BaseService {
-	
-	protected GenericMetadataDAO genericMetadataDAO = null;
 
-	public GenericMetadataDAO getGenericMetadataDAO() {
-		return genericMetadataDAO;
-	}
-
-	public void setGenericMetadataDAO(GenericMetadataDAO genericMetadataDAO) {
-		this.genericMetadataDAO = genericMetadataDAO;
+	public MetadataService getMetadataService() {
+		return (MetadataService)config.getBean("MetadataService");
 	}
 
 }

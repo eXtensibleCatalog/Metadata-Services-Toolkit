@@ -18,7 +18,7 @@ import org.jdom.Namespace;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
-import xc.mst.services.impl.GenericMetadataService;
+import xc.mst.services.GenericMetadataService;
 import xc.mst.services.dc2xc.service.FooService;
 
 public class DCTransformationService extends GenericMetadataService {

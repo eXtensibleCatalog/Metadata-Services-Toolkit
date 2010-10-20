@@ -30,10 +30,12 @@ public class RepositoryTest extends BaseTest {
 	
 	protected String repoName = "r1";
 	protected long lastRecordId = 0;
+	protected Repository repo = null;
 	
 	@BeforeClass
 	public void setup() {
 		LOG.debug("setup()");
+		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
 		repoName = "r1";
 		repo.setName(repoName);
 	}
@@ -48,8 +50,8 @@ public class RepositoryTest extends BaseTest {
 
 	public void install() {
 		try {
-			repositoryDAO.deleteSchema(repoName);
-			repositoryDAO.createSchema(repoName);
+			getRepositoryDAO().deleteSchema(repoName);
+			getRepositoryDAO().createSchema(repoName);
 			repo.installOrUpdateIfNecessary(null, MSTConfiguration.getInstance().getProperty("version"));
 			
 			Format f = new Format();
@@ -67,7 +69,7 @@ public class RepositoryTest extends BaseTest {
 			List<Record> records = new ArrayList<Record>();
 			Format f = getFormatDAO().getById(1);
 			Set set = getSetDAO().getById(1);
-			RecordIfc previousRecord = recordService.createRecord();
+			RecordIfc previousRecord = getRecordService().createRecord();
 			Service s = new Service();
 			s.setId(1);
 			for (int i=0; i<10; i++) {

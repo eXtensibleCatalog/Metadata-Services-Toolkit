@@ -69,7 +69,7 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		return solrIndexService.getProcessedRecordCount();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return solrIndexService.getTotalRecordCount();
 	}
 
@@ -114,7 +114,7 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		}
 		if (this.workerThread.getJobStatus().equals(Status.RUNNING)) {
 			this.workerThread.setJobStatus(Status.IDLE);
-			try {Thread.sleep(3000);} catch (Throwable t) {}
+			try {Thread.sleep(10000);} catch (Throwable t) {}
 			if (this.workerThread.getJobStatus().equals(Status.IDLE)) {
 				this.workerThread.setJobStatus(Status.RUNNING);
 			}

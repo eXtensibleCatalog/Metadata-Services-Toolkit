@@ -17,11 +17,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.constants.Constants;
+import xc.mst.utils.TimingLogger;
 
 
 /**
@@ -39,6 +40,9 @@ public class MarcXmlManager {
 	protected static Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
 	protected Element marcXml = null;
+	protected InputRecord inputRecord = null;
+
+	protected static boolean useXpath = false;
 
 	/**
 	 * A set of linking tags currently existing on the MARC XML record
@@ -56,6 +60,7 @@ public class MarcXmlManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public MarcXmlManager(Element marcXml, String organizationCode) {
+		TimingLogger.start("MarcXmlManager()");
 		this.marcXml = marcXml;
 
 		this.organizationCode = organizationCode;
@@ -78,9 +83,24 @@ public class MarcXmlManager {
 			// Use XPATH to get a list of all linking fields currently
 			// in the MARC XML records.  These are the values of the $8
 			// subfield of any datafield
-			XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']");
-			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
-			List<Element> elements = xpath.selectNodes(marcXml);
+			List<Element> elements = null;
+			TimingLogger.start("MarcXmlManager.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']");
+				xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
+				elements = xpath.selectNodes(marcXml);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("subfield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if ("8".equals(e.getAttributeValue("code"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("MarcXmlManager.xpath");
+			TimingLogger.stop("xpath");
 
 			// Add all existing linking fields to the set of
 			// initial linking fields
@@ -88,10 +108,11 @@ public class MarcXmlManager {
 				if(!usedLinkingFields.contains(element.getText()))
 					usedLinkingFields.add(element.getText());
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred while getting the current linking fields on the MARC XML record.", e);
 		}
+		TimingLogger.stop("MarcXmlManager()");
 
 	} // end constructor
 
@@ -227,6 +248,14 @@ public class MarcXmlManager {
 	 * @return the MARC XML's leader
 	 */
 	public String getLeader() { return leader; }
+	
+	public InputRecord getInputRecord() {
+		return inputRecord;
+	}
+
+	public void setInputRecord(InputRecord inputRecord) {
+		this.inputRecord = inputRecord;
+	}
 
 	/**
 	 * The value of the 001 field
@@ -705,21 +734,53 @@ public class MarcXmlManager {
 	 */
 	public boolean doesSubfieldExist(String tag, String subfield)
 	{
+		TimingLogger.start("doesSubFieldExist:709");
 		if(log.isDebugEnabled())
 			log.debug("Checking if tag " + tag + " contains subfield $" + subfield + ".");
 
 		// Check if the subfield exists for the passed tag
 		try
 		{
-			// Use XPATH to get a list of all subfields of the passed tag with the passed subfield value.
-			// Return true iff this list is not empty
-			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + tag + "']/marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
-			return !xpath.selectNodes(marcXml).isEmpty();
+			boolean ret = false;
+			if (useXpath) {
+				TimingLogger.start("doesSubFieldExist.xpath");
+				TimingLogger.start("xpath");
+				// Use XPATH to get a list of all subfields of the passed tag with the passed subfield value.
+				// Return true iff this list is not empty
+				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + tag + "']/marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace("marc", "http://www.loc.gov/MARC21/slim");
+				List nodes = xpath.selectNodes(marcXml);
+				ret = !nodes.isEmpty();
+				TimingLogger.stop("doesSubFieldExist.xpath");
+				TimingLogger.stop("xpath");
+			} else {
+				TimingLogger.start("doesSubFieldExist.noxpath");
+				TimingLogger.start("noxpath");
+				for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if (tag.equals(e.getAttributeValue("tag"))) {
+						for (Object o2 : e.getChildren("subfield", marcXml.getNamespace())) {
+							Element e2 = (Element)o2;
+							if (subfield.equals(e2.getAttributeValue("code"))) {
+								ret = true;
+								break;
+							}
+						}
+						if (ret) {
+							break;
+						}
+					}
+				}
+				TimingLogger.stop("doesSubFieldExist.noxpath");
+				TimingLogger.stop("noxpath");
+			}
+			TimingLogger.stop("doesSubFieldExist:709");
+			return ret;
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred while checking if tag " + tag + " contains subfield $" + subfield + ".", e);
+			TimingLogger.stop("doesSubFieldExist:709");
 			return false;
 		}
 	}
@@ -730,16 +791,17 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	private void initializeMarcControlFields()
 	{
+		TimingLogger.start("initializeMarcControlFields");
 		if(log.isDebugEnabled())
 			log.debug("Initializing MARC XML control fields.");
 
 		// Get the control fields
 		List<Element> controlFields = marcXml.getChildren("controlfield", marcNamespace);
-
 		// Iterate over the fields and find the 001, 003, 007, and 008 control fields.
 		// Initialize their cached values as we find them.
 		for(Element controlField : controlFields)
 		{
+			TimingLogger.start("initializeMarcControlFields.for");
 			// Initialize the 001 field if we found it
 			if(controlField.getAttribute("tag").getValue().equals("001"))
 			{
@@ -784,7 +846,9 @@ public class MarcXmlManager {
 				if(log.isDebugEnabled())
 					log.debug("Found the value of the control field 008 to be " + field008 + ".");
 			} // end if (008 found)
+			TimingLogger.stop("initializeMarcControlFields.for");
 		} // end loop over control fields
+		TimingLogger.stop("initializeMarcControlFields");
 	} // end method initializeMarcControlFields
 
 	/**
@@ -793,15 +857,17 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	private void initializeMarcDataFields()
 	{
+		TimingLogger.start("initializeMarcDataFields");
 		if(log.isDebugEnabled())
 			log.debug("Initializing MARC XML data fields.");
 
 		// Get the data fields
 		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
-
+		
 		// Iterate over the fields and find the one with the correct tag
 		for(Element field : fields)
 		{
+			TimingLogger.start("initializeMarcDataFields.for");
 			String tag  = field.getAttributeValue("tag");
 
 			// If the tag is "880", treat it like the tag from its $6 subfield
@@ -1017,7 +1083,9 @@ public class MarcXmlManager {
 				// Add the 945 $l subfields
 				field945subfieldLs.addAll(subfields);
 			} // end if (945 found)
+			TimingLogger.stop("initializeMarcDataFields.for");
 		} // end loop over data fields
+		TimingLogger.stop("initializeMarcDataFields");
 	} // end method initializeMarcDataFields
 
 	/**
@@ -1042,6 +1110,7 @@ public class MarcXmlManager {
 	 */
 	public void addMarcXmlField(String tag, String subfieldAValue, String linkingField)
 	{
+		TimingLogger.start("addMarcXmlField");
 		if(log.isDebugEnabled())
 			log.debug("Adding a new datafield to the MARC XML record with tag " + tag + " and value " + subfieldAValue + (linkingField == null ? "." : " with linking field " + linkingField + "."));
 
@@ -1102,6 +1171,8 @@ public class MarcXmlManager {
 		// If we just added a 243 element, cache the new element
 		else if(tag.equals("243"))
 			field243element.add(newFieldElement);
+		
+		TimingLogger.stop("addMarcXmlField");
 	} // end method addMarcXmlField
 
 	/**
@@ -1135,11 +1206,15 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2, boolean skipAPrefix)
 	{
+		TimingLogger.start("copyMarcXmlField");
+		
 		if(log.isDebugEnabled())
 			log.debug("Copying the MARC XML tag " + copyFromTag + " subfields " + subfieldsToCopy + " into the MARC XML tag " + copyToTag);
 
 		// Get the data fields
+		TimingLogger.start("copyMarcXmlField.getChildren");
 		List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
+		TimingLogger.stop("copyMarcXmlField.getChildren");
 
 		// The copied field with the correct tag
 		Element newField = null;
@@ -1207,6 +1282,8 @@ public class MarcXmlManager {
 		// If we created a new 240 tag as a result of the copy, save it
 		if(copyToTag.equals("240") && field240element.size() == 0)
 			field240element.add(newField);
+		
+		TimingLogger.stop("copyMarcXmlField");
 	} // end method copyMarcXmlField
 
 	/**
@@ -1224,6 +1301,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void splitField(List<String> targetFields, String copyIntoField, String requiredSubfields)
 	{
+		TimingLogger.start("splitField");
 		if(log.isDebugEnabled())
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before " + requiredSubfields);
 
@@ -1312,6 +1390,8 @@ public class MarcXmlManager {
 		// Add all the new elements
 		for(Element addMe : newFields)
 			marcXml.addContent(addMe).addContent("\n\n");
+		
+		TimingLogger.stop("splitField");
 	}
 
 	/**
@@ -1326,6 +1406,8 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void splitField(List<String> targetFields, String copyIntoField, char copyOnlySubfield)
 	{
+		TimingLogger.start("splitField");
+		
 		if(log.isDebugEnabled())
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfield " + copyOnlySubfield);
 
@@ -1401,6 +1483,8 @@ public class MarcXmlManager {
 		// Add all the new elements
 		for(Element addMe : newFields)
 			marcXml.addContent(addMe).addContent("\n\n");
+		
+		TimingLogger.stop("splitField");
 	}
 
 	/**
@@ -1415,6 +1499,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void seperateNames(List<String> targetFields, String copyIntoField)
 	{
+		TimingLogger.start("seperateNames");
 		if(log.isDebugEnabled())
 			log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before the $t.");
 
@@ -1521,6 +1606,8 @@ public class MarcXmlManager {
 		// Add all the new elements
 		for(Element addMe : newFields)
 			marcXml.addContent(addMe).addContent("\n\n");
+		
+		TimingLogger.stop("seperateNames");
 	}
 
 	/**
@@ -1534,6 +1621,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void deduplicateMarcXmlField(String tag)
 	{
+		TimingLogger.start("deduplicateMarcXmlField");
 		LOG.debug("deduping tag: "+tag);
 		// A list of values we've currently seen on target fields
 		HashSet<String> currentValues = new HashSet<String>();
@@ -1586,6 +1674,8 @@ public class MarcXmlManager {
 		// Remove the fields we found to be duplicates
 		for(Element removeMe : toRemove)
 			marcXml.removeContent(removeMe);
+		
+		TimingLogger.stop("deduplicateMarcXmlField");
 	} // end method deduplicateMarcXmlField
 
 	/**
@@ -1599,6 +1689,8 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void deduplicateMarcXml959Field()
 	{
+		TimingLogger.start("deduplicateMarcXml959Field");
+		
 		// A Map from the values we've currently seen on target fields
 		// to the 959 Element which contained them.
 		HashMap<String, Element> currentValuesTo959 = new HashMap<String, Element>();
@@ -1666,6 +1758,8 @@ public class MarcXmlManager {
 		// Remove the fields we found to be duplicates
 		for(Element removeMe : toRemove)
 			marcXml.removeContent(removeMe);
+		
+		TimingLogger.stop("deduplicateMarcXml959Field");
 	} // end method deduplicateMarcXmlField
 
 	/**
@@ -1695,6 +1789,8 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, String oldValue)
 	{
+		TimingLogger.start("setMarcXmlSubfield");
+		
 		if(log.isDebugEnabled())
 			log.debug("Setting " + targetField + " $" + targetSubfield + " to " + value + (oldValue == null ? "." : " where the old value was " + oldValue + "."));
 
@@ -1753,6 +1849,8 @@ public class MarcXmlManager {
 			newSubfield.setText(value);
 			addSubfieldToMe.addContent("\t").addContent(newSubfield).addContent("\n\t");
 		} // end if (the value wasn't set)
+		
+		TimingLogger.stop("setMarcXmlSubfield");
 	} // end method setMarcXmlSubfield
 
 	/**
@@ -1768,6 +1866,8 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, int n)
 	{
+		TimingLogger.start("setMarcXmlSubfield2");
+		
 		if(log.isDebugEnabled())
 			log.debug("Setting " + targetField + " $" + targetSubfield + " to " + value + " where the index is " + n + ".");
 
@@ -1812,6 +1912,8 @@ public class MarcXmlManager {
 
 			addSubfieldToMe.addContent("\t").addContent(newSubfield).addContent("\n\t");
 		} // end if (the value wasn't set)
+		
+		TimingLogger.stop("setMarcXmlSubfield2");
 	} // end method setMarcXmlSubfield
 
 	/**
@@ -1824,23 +1926,43 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public List<Element> getSubfieldsOfField(Element datafield, char subfield)
 	{
+		TimingLogger.start("getSubfieldsOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + subfield + " of the passed datafield.");
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace(marcNamespace);
-
-			// Get the subfields.
-			return xpath.selectNodes(datafield);
+			List nodes = null;
+			TimingLogger.start("xpath");
+			TimingLogger.start("getSubfieldsOfField.xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace(marcNamespace);
+				// Get the subfields.
+				nodes = xpath.selectNodes(datafield);
+			} else {
+				nodes = new ArrayList<Element>();
+				for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
+					Element e = (Element)o;
+					if ((subfield+"").equals(e.getAttributeValue("code"))) {
+						nodes.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("xpath");
+			TimingLogger.stop("getSubfieldsOfField.xpath");
+			TimingLogger.stop("getSubfieldsOfField");
+			return nodes;
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
+			TimingLogger.stop("getSubfieldsOfField");
 			return new ArrayList<Element>();
 		}
+		
+		
 	}
 
 	/**
@@ -1853,6 +1975,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public List<String> getSubfieldValuesOfField(Element datafield, char subfield)
 	{
+		TimingLogger.start("getSubfieldValuesOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + subfield + " of the passed datafield.");
 
@@ -1861,12 +1984,30 @@ public class MarcXmlManager {
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace(marcNamespace);
+			List<Element> elements = null;
 
-			// Get the subfields.
-			List<Element> elements = xpath.selectNodes(datafield);
+			TimingLogger.start("getSubfieldValuesOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace(marcNamespace);
+
+				// Get the subfields.
+				elements = xpath.selectNodes(datafield);
+			} else {
+				elements = new ArrayList<Element>();
+				List children = datafield.getChildren("subfield", datafield.getNamespace());
+				for (Object o : children) {
+					Element e = (Element)o;
+					if ((subfield+"").equals(e.getAttributeValue("code"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getSubfieldValuesOfField.xpath");
+			TimingLogger.stop("xpath");
+
 
 			// Return the empty list if there were no matching subfields
 			if(elements.size() == 0)
@@ -1874,6 +2015,7 @@ public class MarcXmlManager {
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a $" + subfield + " subfield.");
 
+				TimingLogger.stop("getSubfieldValuesOfField");
 				return results;
 			}
 			else
@@ -1891,12 +2033,14 @@ public class MarcXmlManager {
 					results.add(value);
 				}
 
+				TimingLogger.stop("getSubfieldValuesOfField");
 				return results;
 			}
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
+			TimingLogger.stop("getSubfieldValuesOfField");
 			return results;
 		}
 	}
@@ -1911,40 +2055,57 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public String getIndicatorOfField(Element datafield, String indicator)
 	{
+		TimingLogger.start("getIndicatorOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the ind" + indicator + " of the passed datafield.");
 
 		try
 		{
-			// An XPATH expression to get the requested indicator
-			XPath xpath = XPath.newInstance("@ind" + indicator);
-			xpath.addNamespace(marcNamespace);
+			Attribute ind = null;
+			TimingLogger.start("getIndicatorOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested indicator
+				XPath xpath = XPath.newInstance("@ind" + indicator);
+				xpath.addNamespace(marcNamespace);
 
-			// Get the subfields.
-			List<Attribute> attributes = xpath.selectNodes(datafield);
-
+				// Get the subfields.
+				List<Attribute> attributes = xpath.selectNodes(datafield);
+				
+				if (attributes != null && attributes.size() > 0) {
+					ind = attributes.get(0);
+				}
+			} else {
+				ind = datafield.getAttribute("ind"+indicator);
+			}
+			TimingLogger.stop("getIndicatorOfField.xpath");
+			TimingLogger.stop("xpath");
+			
 			// Return the empty list if there were no matching subfields
-			if(attributes.size() == 0)
+			if(ind == null)
 			{
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a ind" + indicator + ".");
 
+				TimingLogger.stop("getIndicatorOfField");
 				return null;
 			}
 			else
 			{
 				// The value of the requested control field
-				String value = attributes.get(0).getValue();
+				String value = ind.getValue();
 
 				if(log.isDebugEnabled())
 					log.debug("Found a ind" + indicator + " with a value of " + value + ".");
 
+				TimingLogger.stop("getIndicatorOfField");
 				return value;
 			}
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the ind" + indicator + " of the passed datafield.", e);
+			TimingLogger.stop("getIndicatorOfField");
 			return null;
 		}
 	}
@@ -1958,30 +2119,48 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public List<Element> getDataFields(String targetField)
 	{
+		TimingLogger.start("getDataFields");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + targetField + " fields.");
 
 		try
 		{
-			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
-			xpath.addNamespace(marcNamespace);
+			List<Element> potentialResults = null;
+			TimingLogger.start("getDataFields.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested control field
+				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + targetField + "']");
+				xpath.addNamespace(marcNamespace);
+				
+				potentialResults = xpath.selectNodes(marcXml);			
+			} else {
+				potentialResults = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if (targetField.equals(e.getAttributeValue("tag"))) {
+						potentialResults.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getDataFields.xpath");
+			TimingLogger.stop("xpath");
 
 			// Get the data fields.  If the target field was not a 9xx field we can return the entire
 			// list, otherwise we need to filter out those results with the wrong organization code.
 			if(!targetField.startsWith("9"))
 			{
-				List<Element> results = xpath.selectNodes(marcXml);
+				List<Element> results = potentialResults;
 
 				// Get the 880 fields that match the requested tag
 				if(tagTo880s.containsKey(targetField))
 					results.addAll(tagTo880s.get(targetField));
 
+				TimingLogger.stop("getDataFields");
 				return results;
 			}
 			else
 			{
-				List<Element> potentialResults = xpath.selectNodes(marcXml);
 				ArrayList<Element> results = new ArrayList<Element>();
 
 				// Get the 880 fields that match the requested tag
@@ -1992,12 +2171,14 @@ public class MarcXmlManager {
 					if(getSubfieldOfField(potentialResult, '5').contains(this.organizationCode))
 						results.add(potentialResult);
 
+				TimingLogger.stop("getDataFields");
 				return results;
 			}
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the " + targetField + " fields.", e);
+			TimingLogger.stop("getDataFields");
 			return new ArrayList<Element>();
 		}
 	}
@@ -2012,6 +2193,7 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public static List<String> getSubfieldOfField(Element datafield, char subfield)
 	{
+		TimingLogger.start("getSubfieldOfField");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + subfield + " of the passed datafield.");
 
@@ -2020,12 +2202,27 @@ public class MarcXmlManager {
 
 		try
 		{
-			// An XPATH expression to get the requested subfields
-			XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
-			xpath.addNamespace(marcNamespace);
+			List<Element> elements = null;
+			TimingLogger.start("getSubfieldOfField.xpath");
+			TimingLogger.start("xpath");
+			if (useXpath) {
+				// An XPATH expression to get the requested subfields
+				XPath xpath = XPath.newInstance("marc:subfield[@code='" + subfield + "']");
+				xpath.addNamespace(marcNamespace);
 
-			// Get the subfields.
-			List<Element> elements = xpath.selectNodes(datafield);
+				// Get the subfields.
+				elements = xpath.selectNodes(datafield);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
+					Element e = (Element)o;
+					if ((subfield+"").equals(e.getAttributeValue("code"))) {
+						elements.add(e);
+					}
+				}				
+			}
+			TimingLogger.stop("getSubfieldOfField.xpath");
+			TimingLogger.stop("xpath");
 
 			// Return the empty list if there were no matching subfields
 			if(elements.size() == 0)
@@ -2033,6 +2230,7 @@ public class MarcXmlManager {
 				if(log.isDebugEnabled())
 					log.debug("The passed datafield did not have a $" + subfield + " subfield.");
 
+				TimingLogger.stop("getSubfieldOfField");
 				return results;
 			}
 			else
@@ -2050,12 +2248,14 @@ public class MarcXmlManager {
 					results.add(value);
 				}
 
+				TimingLogger.stop("getSubfieldOfField");
 				return results;
 			}
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
+			TimingLogger.stop("getSubfieldOfField");
 			return results;
 		}
 	}
@@ -2068,23 +2268,48 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public List<Element> getLinkingFieldsParents()
 	{
+		TimingLogger.start("getLinkingFieldsParents");
 		if(log.isDebugEnabled())
 			log.debug("Getting the linking fields.");
 
 		try
 		{
-			// An XPATH expression to get the linking field
-			XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']/..");
-			xpath.addNamespace(marcNamespace);
+			TimingLogger.start("getLinkingFieldsParents.xpath");
+			TimingLogger.start("xpath");
+			List<Element> results = null;
+			if (useXpath) {
+				// An XPATH expression to get the linking field
+				TimingLogger.start("getLinkingFieldsParents.XPath.newInstance");
+				XPath xpath = XPath.newInstance(".//marc:subfield[@code='8']/..");
+				xpath.addNamespace(marcNamespace);
+				TimingLogger.stop("getLinkingFieldsParents.XPath.newInstance");
 
-			// Get the linking fields.
-			List<Element> results = xpath.selectNodes(marcXml);
-
+				// Get the linking fields.
+				TimingLogger.start("getLinkingFieldsParents.selectNodes");
+				results = xpath.selectNodes(marcXml);
+				TimingLogger.stop("getLinkingFieldsParents.selectNodes");
+			} else {
+				results = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					for (Object o2 : e.getChildren("subfield", e.getNamespace())) {
+						Element e2 = (Element)o2;
+						if ("8".equals(e2.getAttributeValue("code"))) {
+							results.add(e);
+							break;
+						}
+					}
+				}
+			}
+			TimingLogger.stop("getLinkingFieldsParents.xpath");
+			TimingLogger.stop("xpath");
+			TimingLogger.stop("getLinkingFieldsParents");
 			return results;
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the linking fields.", e);
+			TimingLogger.stop("getLinkingFieldsParents");
 			return new ArrayList<Element>();
 		}
 	}
@@ -2097,17 +2322,33 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public void removeControlField(String targetField)
 	{
+		TimingLogger.start("removeControlField");
 		try
 		{
 			if(log.isDebugEnabled())
 				log.debug("Removing the control field " + targetField);
 
-			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
-			xpath.addNamespace(marcNamespace);
+			TimingLogger.start("removeControlField.xpath");
+			TimingLogger.start("xpath");
+			List<Element> elements = null;
+			if (useXpath) {
+				// An XPATH expression to get the requested control field
+				XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
+				xpath.addNamespace(marcNamespace);
 
-			// Get the control field.  There should not be more than one Element in this list.
-			List<Element> elements = xpath.selectNodes(marcXml);
+				// Get the control field.  There should not be more than one Element in this list.
+				elements = xpath.selectNodes(marcXml);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("controlfield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if (targetField.equals(e.getAttributeValue("tag"))) {
+						elements.add(e);
+					}
+				}	
+			}
+			TimingLogger.stop("removeControlField.xpath");
+			TimingLogger.stop("xpath");
 
 			if(elements.size() == 0)
 			{
@@ -2134,10 +2375,11 @@ public class MarcXmlManager {
 					log.debug("Removed the " + targetField + " control field.");
 			}
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting control field " + targetField);
 		}
+		TimingLogger.stop("removeControlField");
 	}
 	
 	/**
@@ -2149,20 +2391,37 @@ public class MarcXmlManager {
 	@SuppressWarnings("unchecked")
 	public List<Element> getField945()
 	{
+		TimingLogger.start("getField945");
 		if(log.isDebugEnabled())
 			log.debug("Getting the " + 945 + " fields.");
 
 		try
 		{
-			// An XPATH expression to get the requested control field
-			XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
-			xpath.addNamespace(marcNamespace);
+			TimingLogger.start("getField945.xpath");
+			List<Element> elements = null;
+			if (useXpath) {
+				// An XPATH expression to get the requested control field
+				XPath xpath = XPath.newInstance(".//marc:datafield[@tag='" + 945 + "']");
+				xpath.addNamespace(marcNamespace);
 
-			return xpath.selectNodes(marcXml);
+				elements = xpath.selectNodes(marcXml);
+			} else {
+				elements = new ArrayList<Element>();
+				for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
+					Element e = (Element)o;
+					if ("945".equals(e.getAttributeValue("tag"))) {
+						elements.add(e);
+					}
+				}
+			}
+			TimingLogger.stop("getField945.xpath");
+			TimingLogger.stop("getField945");
+			return elements;
 		}
-		catch(JDOMException e)
+		catch(Throwable e)
 		{
 			log.error("An error occurred getting the " + 945 + " fields.", e);
+			TimingLogger.stop("getField945");
 			return new ArrayList<Element>();
 		}
 	}
@@ -2173,8 +2432,10 @@ public class MarcXmlManager {
 //		Element entityElement = ((Element)(children.get(0)));
 //		entityElement.getChildren().remove(element);
 		
+		TimingLogger.start("remove945");
 		// Remove the control field
 		marcXml.removeContent(element);
+		TimingLogger.stop("remove945");
 		
 	}
 	

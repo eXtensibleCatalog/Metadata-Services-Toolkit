@@ -15,11 +15,11 @@ public class PerfTest extends StartToFinishTest {
 	
 	private static final Logger LOG = Logger.getLogger(PerfTest.class);
 	
-	protected String getRepoName() {
+	public String getRepoName() {
 		return "135_5M";
 	}
 	
-	protected String getProviderUrl() {
+	public String getProviderUrl() {
 		//return "http://128.151.244.132:8080/OAIToolkit_ver0.6.4/oai-request.do";
 		//return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
 		return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
@@ -49,6 +49,6 @@ public class PerfTest extends StartToFinishTest {
 		finalTest();
 	}
 	
-	protected void finalTest() {
+	public void finalTest() {
 	}
 }

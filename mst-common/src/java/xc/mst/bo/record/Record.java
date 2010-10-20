@@ -22,9 +22,9 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
+import xc.mst.manager.record.RecordService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -38,6 +38,9 @@ public class Record implements InputRecord, OutputRecord {
 	
 	public static final String STRING_MODE = "Record.STRING_MODE";
 	public static final String JDOM_MODE = "Record.JDOM_MODE";
+	public static final String MODE_NOT_SET = "Record.MODE_NOT_SET";
+	
+	public static final String UNCHANGED = "Record.UNCHANGED";
 	
 	public static final char ACTIVE = 'A';
 	public static final char HELD = 'H';
@@ -61,19 +64,6 @@ public class Record implements InputRecord, OutputRecord {
 	protected long id = -1;
 	
 	protected List<InputRecord> predecessors = new ArrayList<InputRecord>();
-
-	/**
-	 * The record's type
-	 */
-	protected String type = null;
-	
-	/**
-	 * This is not used by the Record class, but classes extending it
-	 * which represent the individual FRBR levels can use this to
-	 * indicate the ID assigned by the aggregation service for that
-	 * particular element.
-	 */
-	protected long frbrLevelId = -1;
 
 	/**
 	 * The time when the record was created
@@ -133,6 +123,7 @@ public class Record implements InputRecord, OutputRecord {
 
 	/**
 	 * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate  the other FRBR elements to which they are linked.
+	 * BDA - 2010-09-10 - unless I'm missing something, these aren't actually used anywhere.
 	 */
 	protected List<String> upLinks = new ArrayList<String>();
 
@@ -219,9 +210,7 @@ public class Record implements InputRecord, OutputRecord {
 						TimingLogger.start("getJDomDocument()");
 						org.jdom.Document d = xmlHelper.getJDomDocument(this.oaiXml);
 						TimingLogger.stop("getJDomDocument()");
-						TimingLogger.start("detachRootElement()");
 						this.oaiXmlEl = d.detachRootElement();
-						TimingLogger.stop("detachRootElement()");
 					} catch (Throwable t) {
 						LOG.error("this.oaiXml.getBytes()");
 						LOG.error("", t);
@@ -247,7 +236,7 @@ public class Record implements InputRecord, OutputRecord {
 	}
 	
 	public Element getOaiXmlEl() {
-		if (!this.mode.equals(JDOM_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
@@ -255,15 +244,17 @@ public class Record implements InputRecord, OutputRecord {
 		if (this.oaiXmlEl != null) {
 			this.oaiXmlEl.detach();
 		}
+		this.mode = JDOM_MODE;
 		return this.oaiXmlEl;
 	}
 
 	public void setOaiXmlEl(Element oaiXmlEl) {
-		if (!this.mode.equals(JDOM_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to JDOM_MODE.  You must explicitly "+
 					"call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
 		}
+		this.mode = JDOM_MODE;
 		this.oaiXmlEl = oaiXmlEl;
 	}
 	
@@ -297,26 +288,6 @@ public class Record implements InputRecord, OutputRecord {
 	{
 		this.id = id;
 	} // end method setRecordId(long)
-
-	/**
-	 * Gets the ID assigned by the aggregation service for the FRBR level element
-	 *
-	 * @return The ID assigned by the aggregation service for the FRBR level element
-	 */
-	public long getFrbrLevelId()
-	{
-		return frbrLevelId;
-	} // end method getFrbrLevelId()
-
-	/**
-	 * Sets the ID assigned by the aggregation service for the FRBR level element
-	 *
-	 * @param frbrLevelId The new ID assigned by the aggregation service for the FRBR level element
-	 */
-	public void setFrbrLevelId(long frbrLevelId)
-	{
-		this.frbrLevelId = frbrLevelId;
-	} // end method setFrbrLevelId(long)
 
 	/**
 	 * Gets the time when the record was created
@@ -448,29 +419,15 @@ public class Record implements InputRecord, OutputRecord {
 	} // end method setHarvest(Harvest)
 
 	public String getOaiIdentifier() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("oai:");
-		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
-		sb.append(":");
-		String name = null;
-		if (getProvider() != null) {
-			name = getProvider().getName();
-		}
-		if (getService() != null) {
-			name = getService().getName();
-		}
-		name = new Util().normalizeName(name);
-		sb.append(name);
-		sb.append("/");
-		sb.append(getId());
-		return sb.toString();
+		return getOaiIdentifier(getId());
+	}
+	
+	protected String getOaiIdentifier(long id) {
+		return ((RecordService)MSTConfiguration.getInstance().getBean("RecordService")).getOaiIdentifier(
+				id, getProvider(), getService());
 	}
 
 	public void setHarvestedOaiIdentifier(String oaiIdentifier) {
-		this.oaiIdentifier = oaiIdentifier;
-	}
-	
-	public void setOaiIdentifier(String oaiIdentifier) {
 		this.oaiIdentifier = oaiIdentifier;
 	}
 	
@@ -523,11 +480,12 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public String getOaiXml()
 	{
-		if (!this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to STRING_MODE.  You must explicitly "+
 					"call Record.setMode(STRING_MODE) before calling this method.");
 		}
+		this.mode = STRING_MODE;
 		return oaiXml;
 	}
 
@@ -538,11 +496,12 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void setOaiXml(String oaiXml)
 	{
-		if (!this.mode.equals(STRING_MODE)) {
+		if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
 			throw new RuntimeException(
 					"This record is not set to STRING_MODE.  You must explicitly "+
 					"call Record.setMode(STRING_MODE) before calling this method.");
 		}
+		this.mode = STRING_MODE;
 		this.oaiXml = oaiXml;
 	}
 
@@ -814,7 +773,7 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public void addMessage(RecordMessage message)
 	{
-		LOG.debug("Record.addMessage() called");
+		LOG.debug("Record.addMessage() called on record.id:"+getId());
 		if(!messages.contains(message))
 			messages.add(message);
 	} // end method addMessage(RecordMessage)
@@ -953,7 +912,6 @@ public class Record implements InputRecord, OutputRecord {
 		}
 		buffer.append(" updatedAt=" + updatedAt);
 		buffer.append(" sets=" + sets);
-		buffer.append(" frbrLevelId=" + frbrLevelId);
 		if (harvest != null) 
 		{
 			buffer.append(" ScheduleId=" + harvest.getHarvestSchedule().getId());
@@ -1029,14 +987,6 @@ public class Record implements InputRecord, OutputRecord {
 	
 	public List<InputRecord> getPredecessors() {
 		return predecessors;
-	}
-	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 	
 	public static void setIndexedObjectType(String indexedObjectType) {

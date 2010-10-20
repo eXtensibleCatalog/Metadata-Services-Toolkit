@@ -25,17 +25,21 @@ public class RepositoryService extends BaseService {
 	public List<Repository> getAll() {
 		try {
 			List<Repository> repos = getRepositoryDAO().getAll();
+			List<Repository> repos4real = new ArrayList<Repository>();
 			for (int i=0; i<repos.size(); i++) {
 				Repository r = repos.get(i);
 				if (r.getService() != null) {
 					r = getServicesService().getServiceById(r.getService().getId()).getMetadataService().getRepository();
+					if (r != null)
+						repos4real.add(r);
 				} else if (r.getProvider() != null) {
 					r = getRepository(r.getProvider());
+					if (r != null)
+						repos4real.add(r);
 				}
-				repos.add(i, r);
-				repos.remove(i+1);
 			}
-			return repos;
+			LOG.debug("repos4real: "+repos4real);
+			return repos4real;
 		} catch (Throwable t) {
 			util.throwIt(t);
 			return null;
@@ -68,6 +72,7 @@ public class RepositoryService extends BaseService {
 				if (rec != null) {
 					injectSuccessors(rec);
 					injectPredecessors(rec);
+					getMessageService().injectMessages(rec);
 					if (r.getService() != null) {
 						rec.setService(r.getService());
 					} else if (r.getProvider() != null) {

@@ -19,7 +19,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.Text;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
@@ -264,6 +263,7 @@ public class XcRecordSplitter
 
 		try
 		{
+			/*
 			work.setXcWorkId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_WORK));
 
 			workElement.setAttribute("workID", Long.toString(work.getXcWorkId()), XC_NAMESPACE);
@@ -272,6 +272,7 @@ public class XcRecordSplitter
                                                             .addContent(((Element)workElement.clone()))
                                                             .addContent("\n\t")));
 			work.setOaiIdentifier("aggWork:" + work.getXcWorkId());
+			*/
 
 			// Add an up link from each expression to this work
 			for(Expression expression : expressions)
@@ -327,6 +328,7 @@ public class XcRecordSplitter
 		expression.setFormat(xcSchemaFormat);
 		expression.setService(service); // Mark the Expression as being from no service since it shouldn't be output
 
+		/*
 		expression.setXcExpressionId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_EXPRESSION));
 
 		expressionElement.setAttribute("expressionID", Long.toString(expression.getXcExpressionId()), XC_NAMESPACE);
@@ -335,6 +337,7 @@ public class XcRecordSplitter
 													   			  .addContent(((Element)expressionElement.clone()))
 													   			  .addContent("\n\t")));
 		expression.setOaiIdentifier("aggExpression:" + expression.getXcExpressionId());
+		 */
 
 		// Add an up link from each manifestation to this expression
 		for(Manifestation manifestation : manifestations)
@@ -371,6 +374,7 @@ public class XcRecordSplitter
 
 		try
 		{
+			/*
 			manifestation.setXcManifestationId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_MANIFESTATION));
 
 			manifestationElement.setAttribute("manifestationID", Long.toString(manifestation.getXcManifestationId()), XC_NAMESPACE);
@@ -379,6 +383,7 @@ public class XcRecordSplitter
                     									  			 .addContent(((Element)manifestationElement.clone()))
                     									  			 .addContent("\n\t")));
 			manifestation.setOaiIdentifier("aggManifestation:" + manifestation.getXcManifestationId());
+			*/
 
 			// Add an up link from each holdings to this manifestation
 			for(Holdings holding : holdings)
@@ -440,6 +445,7 @@ public class XcRecordSplitter
 
 		try
 		{
+			/*
 			holdings.setXcHoldingsId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_HOLDINGS));
 
 			holdingsElement.setAttribute("holdingsID", Long.toString(holdings.getXcHoldingsId()), XC_NAMESPACE);
@@ -448,6 +454,7 @@ public class XcRecordSplitter
                     								 			.addContent(((Element)holdingsElement.clone()))
                     								 			.addContent("\n\t")));
 			holdings.setOaiIdentifier("aggHoldings:" + holdings.getXcHoldingsId());
+			*/
 
 			// Add an up link from each item to this holdings
 			for(Item item : items)
@@ -527,6 +534,7 @@ public class XcRecordSplitter
 
 		try
 		{
+			/*
 			item.setXcItemId(frbrLevelIdDao.getNextXcIdForFrbrElement(XcIdentifierForFrbrElementDAO.ELEMENT_ID_ITEM));
 
 			itemElement.setAttribute("itemID", Long.toString(item.getXcItemId()), XC_NAMESPACE);
@@ -535,6 +543,7 @@ public class XcRecordSplitter
 					                                         .addContent(((Element)itemElement.clone()))
 					                                         .addContent("\n\t")));
 			item.setOaiIdentifier("aggItem:" + item.getXcItemId());
+			*/
 
 			// An XPATH expression to get the holdingsExemplified elements
 			XPath xpath = XPath.newInstance("./xc:holdingsExemplified");

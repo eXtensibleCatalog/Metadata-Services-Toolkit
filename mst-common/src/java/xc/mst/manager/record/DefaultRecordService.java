@@ -45,7 +45,9 @@ import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.manager.IndexException;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.Records;
 import xc.mst.utils.index.SolrIndexManager;
@@ -801,7 +803,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
+		//record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
 			record.setOaiDatestamp((Date)doc.getFieldValue(FIELD_OAI_DATESTAMP));
@@ -839,7 +841,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the fields on the record Object and return it
 		record.setId(Long.parseLong((String)doc.getFieldValue(FIELD_RECORD_ID)));
-		record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
+		//record.setFrbrLevelId(Long.parseLong((String)doc.getFieldValue(FIELD_FRBR_LEVEL_ID)));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
 		record.setFormat(getFormatDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_FORMAT_ID))));
 		if (doc.getFieldValue(FIELD_OAI_DATESTAMP) != null) {
@@ -855,7 +857,7 @@ public class DefaultRecordService extends RecordService
 
 		
 		if (doc.getFieldValue(FIELD_RECORD_TYPE) != null) {
-			record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
+			//record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
 		}
 
 		Collection<Object> sets = doc.getFieldValues(FIELD_SET_SPEC);
@@ -865,8 +867,9 @@ public class DefaultRecordService extends RecordService
 
 		Collection<Object> errors = doc.getFieldValues(FIELD_ERROR);
 		if(errors != null)
-			for(Object error : errors)
-				record.addMessage(new RecordMessage((String)error));
+			for(Object error : errors) {
+				//record.addMessage(new RecordMessage((String)error));
+			}
 		
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null) {
@@ -983,6 +986,7 @@ public class DefaultRecordService extends RecordService
 
 		// Set the appropriate fields on it.
 		doc.addField(FIELD_RECORD_ID, Long.toString(record.getId()));
+		/*
 		if (record.getType() != null) {
 			doc.addField(FIELD_RECORD_TYPE, record.getType());
 			TimingLogger.add("SOLR-"+FIELD_RECORD_TYPE, record.getType().length());
@@ -990,6 +994,7 @@ public class DefaultRecordService extends RecordService
 		
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
 		TimingLogger.add("SOLR-"+FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()).length());
+		*/
 		
 		if (record.getCreatedAt() != null) {
 			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
@@ -1108,11 +1113,13 @@ public class DefaultRecordService extends RecordService
 			TimingLogger.add("SOLR-"+FIELD_TRAIT, trait.length());
 		}
 
+		/*
 		for(RecordMessage error : record.getMessages()) {
 			String message = error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage();
 			doc.addField(FIELD_ERROR, message);
 			TimingLogger.add("SOLR-"+FIELD_ERROR, message.length());
 		}
+		*/
 
 		StringBuffer all = new StringBuffer();
 		if (record.getFormat() != null) {
@@ -1139,7 +1146,7 @@ public class DefaultRecordService extends RecordService
 		
 		for(RecordMessage error : record.getMessages())
 		{
-			all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
+			//all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
 		
@@ -1331,12 +1338,49 @@ public class DefaultRecordService extends RecordService
 			r.setMode(Record.JDOM_MODE);
 		}
 		if (!r.getDeleted()) {
-			Element metadataEl = new Element("metadata", namespace);
-			recordEl.addContent(metadataEl);
-			metadataEl.addContent(r.getOaiXmlEl());
+			boolean noContent = false;
+			if (r.getMode().equals(Record.STRING_MODE) && StringUtils.isEmpty(r.getOaiXml())) {
+				noContent = true;;
+			}
+			if (r.getMode().equals(Record.JDOM_MODE) && r.getOaiXmlEl() == null) {
+				noContent = true;
+			}
+			if (!noContent) {
+				r.setMode(Record.JDOM_MODE);
+				Element metadataEl = new Element("metadata", namespace);
+				recordEl.addContent(metadataEl);
+				metadataEl.addContent(r.getOaiXmlEl());
+			}
 		}
 		LOG.debug("r: "+r);
 		return recordEl;
+	}
+	
+	public String getOaiIdentifier(long id, Provider p) {
+		return getOaiIdentifier(id, p, null);
+	}
+	
+	public String getOaiIdentifier(long id, Service s) {
+		return getOaiIdentifier(id, null, s);
+	}
+	
+	public String getOaiIdentifier(long id, Provider p, Service s) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("oai:");
+		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
+		sb.append(":");
+		String name = null;
+		if (p != null) {
+			name = p.getName();
+		}
+		if (s != null) {
+			name = s.getName();
+		}
+		name = new Util().normalizeName(name);
+		sb.append(name);
+		sb.append("/");
+		sb.append(id);
+		return sb.toString();
 	}
 	
 }

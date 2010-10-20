@@ -99,7 +99,10 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		return false;
 	}
 
-	public void setup() {}
+	public void setup() {
+		metadataService.setup();
+	}
+	
 	public void finish() {
 		metadataService.finish();
 	}
@@ -116,7 +119,7 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		return metadataService.getProcessedRecordCount();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return metadataService.getTotalRecordCount();
 	}
 

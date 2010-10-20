@@ -657,6 +657,10 @@ public abstract class RecordService extends BaseService
 	
 	public abstract Element createJDomElement(Record r);
 	public abstract Element createJDomElement(Record r, String namespace);
+	
+	public abstract String getOaiIdentifier(long id, Provider p);
+	public abstract String getOaiIdentifier(long id, Service s);
+	public abstract String getOaiIdentifier(long id, Provider p, Service s);
 
 	/**
 	 * Validates the fields on the passed Record Object

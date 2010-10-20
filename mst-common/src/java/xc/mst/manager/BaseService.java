@@ -25,6 +25,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
@@ -53,6 +54,7 @@ import xc.mst.manager.record.HoldingsService;
 import xc.mst.manager.record.ItemService;
 import xc.mst.manager.record.MSTSolrService;
 import xc.mst.manager.record.ManifestationService;
+import xc.mst.manager.record.MessageService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.FormatService;
@@ -107,6 +109,7 @@ public class BaseService {
 	protected UserGroupUtilDAO userGroupUtilDAO = null;
 	protected RecordDAO recordDAO = null;
 	protected RepositoryDAO repositoryDAO = null;
+	protected MessageDAO messageDAO = null;
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
@@ -117,7 +120,9 @@ public class BaseService {
 	}
 	
 	public Util getUtil() {
-		return util;
+		// BDA - was having problems because Repository is sometimes created by Spring, sometimes
+		//       by RepositoryDAO.  This is not purist, but who cares right now.
+		return Util.getUtil();
 	}
 	public void setUtil(Util util) {
 		this.util = util;
@@ -379,6 +384,13 @@ public class BaseService {
 	public void setRepositoryDAO(RepositoryDAO repositoryDAO) {
 		this.repositoryDAO = repositoryDAO;
 	}
+	public MessageDAO getMessageDAO() {
+		return messageDAO;
+	}
+
+	public void setMessageDAO(MessageDAO messageDAO) {
+		this.messageDAO = messageDAO;
+	}
 
 	public EmailConfigService getEmailConfigService() {
 		return (EmailConfigService)config.getBean("EmailConfigService");
@@ -451,5 +463,8 @@ public class BaseService {
 	}
 	public RepositoryService getRepositoryService() {
 		return (RepositoryService)config.getBean("RepositoryService");
+	}
+	public MessageService getMessageService() {
+		return (MessageService)config.getBean("MessageService");
 	}
 }

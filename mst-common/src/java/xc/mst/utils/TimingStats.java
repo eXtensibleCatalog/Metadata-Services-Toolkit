@@ -31,6 +31,7 @@ public class TimingStats {
 	protected Map<String, Long> namedLastTimes = new TreeMap<String, Long>();
 	protected Map<String, Long> namedBeginTimes = new TreeMap<String, Long>();
 	protected long lastReset = System.currentTimeMillis();
+	protected long memUsedAtLastReset = 0;
 	
 	public void log(String message) {
 		log(null, message, false);
@@ -111,7 +112,7 @@ public class TimingStats {
 			long tnow = System.currentTimeMillis();
 			namedLastTimes.put(name, tnow);
 			if (!indentation.containsKey(name)) {
-				indentation.put(name, currentIndent);	
+				indentation.put(name, currentIndent);
 			}
 			currentIndent++;
 		}
@@ -140,6 +141,7 @@ public class TimingStats {
 	
 	public void add(String name, long val) {
 		if (!manualShutOff) {
+			indentation.put(name, currentIndent);
 			Timer timer = (Timer)namedTimers.get(name);
 			if (timer == null) {
 				timer = new Timer();
@@ -170,8 +172,10 @@ public class TimingStats {
 			if (timer.numTimes.get() != 0) {
 				double avg = (0.+timer.totalTime.get())/timer.numTimes.get();
 				avgTime = String.format("%.2f", avg);
-				avgTime = StringUtils.leftPad(avgTime, 12);
+			} else {
+				avgTime = "n/a";
 			}
+			avgTime = StringUtils.leftPad(avgTime, 12);
 			String longestTime = StringUtils.leftPad(timer.longestTime+"", 9);
 			String num = StringUtils.leftPad(timer.numTimes+"", 7);
 			sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+"    num:"+num+"   "+name);
@@ -179,21 +183,55 @@ public class TimingStats {
 		}
 	}
 	
-	public void reset() {
-		LOG.debug("reset()");
-		LOG.debug("***");
-		reset(true);
+	public void outputMemory() {
+		outputMemory(true);
+	}
+	
+	public void outputMemory(boolean runGC) {
+		if (runGC) {
+			System.gc();
+		}
 		Runtime r = Runtime.getRuntime();
 		long maxMem = r.maxMemory()/1048576;
 		long totalMem = r.totalMemory()/1048576;
 		
 		long freeBytes = r.freeMemory();
 		long freeMem = freeBytes/1048576;
+		
+		long usedMem = totalMem-freeMem;
+		long memIncrease = usedMem - memUsedAtLastReset;
+		memUsedAtLastReset = usedMem;
+		
 		LOG.debug("");
-		LOG.debug("Free  memory: " + Long.toString(freeMem) + "MB.");
-		LOG.debug("Total memory: " + Long.toString(totalMem) + "MB.");
-		LOG.debug("Max'm memory: " + Long.toString(maxMem) + "MB.");
-		LOG.debug("***");
+		LOG.debug("Free  memory: " + StringUtils.leftPad(freeMem+"", 7) + " MB.");
+		LOG.debug("Used  memory: " + StringUtils.leftPad(usedMem+"", 7) + " MB.");
+		LOG.debug("Increaed  by: " + StringUtils.leftPad(memIncrease+"", 7) + " MB.");
+		LOG.debug("Total memory: " + StringUtils.leftPad(totalMem+"", 7) + " MB.");
+		LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem+"", 7) + " MB.");
+	}
+	
+	public void forceReset() {
+		resetIfNecessary(true);
+	}
+	
+	public void reset() {
+		resetIfNecessary(false);
+	}
+	
+	public void resetIfNecessary(boolean force) {
+		if ((namedTimers != null && namedTimers.size() > 0)) {
+			TimingLogger.start("System.gc");
+			System.gc();
+			TimingLogger.stop("System.gc");
+			LOG.debug("");
+			LOG.debug("*********************************");
+			LOG.debug("reset()");
+			reset(true);
+			currentIndent = 0;
+			outputMemory(false);
+			LOG.debug("*********************************");
+			LOG.debug("");
+		}
 	}
 	
 	public void reset(boolean includeDefault) {

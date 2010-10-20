@@ -101,5 +101,13 @@ public class TimingLogger {
 			ts.reset(name);
 		}
 	}
+	
+	public static void outputMemory() {
+		if (TimingStats.LOG.isDebugEnabled()) {
+			//TimingStats ts = (TimingStats)timingStats.get();
+			ts.outputMemory();
+		}
+	}
+	
 
 }

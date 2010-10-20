@@ -150,15 +150,16 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			StringBuilder sb = new StringBuilder();
 			for (int i=0; i<records.size(); i++) {
 				Record r2 = records.get(i);
+				sb.append("record_id:");
 				sb.append(r2.getId()+"");
 				if (i < records.size()-1) {
 					sb.append(" OR ");
 				}
 			}
-			value = sb.toString();
+			solrQuery.addFilterQuery(sb.toString());
+		} else {
+			solrQuery.addFilterQuery(name + ":\"" + value.replaceAll(":", "\\\\:") + "\"");
 		}
-		solrQuery.addFilterQuery(name + ":\"" + value.replaceAll(":", "\\\\:") + "\"");
-
 	}
 	
 	/**

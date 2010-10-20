@@ -17,7 +17,6 @@ import java.util.List;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 
@@ -82,5 +81,13 @@ public interface Repository {
 	public void setService(Service s);
 	
 	public void populatePredecessors(TLongHashSet predecessors);
+	
+	public void addLink(long fromRecordId, long toRecordId);
+	
+	public void activateRecord(long recordId);
+	
+	public List<Long> getLinkedRecordIds(Long toRecordId);
+	
+	public void processComplete();
 
 }

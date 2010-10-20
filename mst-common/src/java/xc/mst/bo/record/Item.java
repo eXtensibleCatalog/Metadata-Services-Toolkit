@@ -41,26 +41,6 @@ public class Item extends Record
 	} // end method getIndexedObjectType()
 
 	/**
-	 * Sets the item's XC item ID
-	 *
-	 * @param newItemId The item's new XC item ID
-	 */
-	public void setXcItemId(long newItemId)
-	{
-		frbrLevelId = newItemId;
-	} // end method setXcItemId(long)
-
-	/**
-	 * Gets the item's XC item ID
-	 *
-	 * @return The item's XC item ID
-	 */
-	public long getXcItemId()
-	{
-		return frbrLevelId;
-	} // end method getXcItemId()
-
-	/**
 	 * Adds an holdingsExemplified trait to the item
 	 *
 	 * @param type The type attribute of the holdingsExemplified element
@@ -152,13 +132,11 @@ public class Item extends Record
 		item.setDeleted(record.getDeleted());
 		item.setMessages(record.getMessages());
 		item.setFormat(record.getFormat());
-		item.setFrbrLevelId(record.getFrbrLevelId());
 		item.setHarvest(record.getHarvest());
 		item.setId(record.getId());
 		item.setInputForServices(record.getInputForServices());
 		item.setOaiDatestamp(record.getOaiDatestamp());
 		item.setOaiHeader(record.getOaiHeader());
-		item.setOaiIdentifier(record.getOaiIdentifier());
 		item.setOaiXml(record.getOaiXml());
 		item.setProcessedByServices(record.getProcessedByServices());
 		item.setProcessedFrom(record.getProcessedFrom());

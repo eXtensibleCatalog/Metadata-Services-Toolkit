@@ -57,6 +57,7 @@
 	<servlet>
 		<servlet-name>DevAdminServlet</servlet-name>
 		<servlet-class>xc.mst.servlet.DevAdminServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
 	</servlet>
 	
 	<servlet>

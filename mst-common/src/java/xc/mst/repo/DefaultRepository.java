@@ -10,7 +10,6 @@
 package xc.mst.repo;
 
 import gnu.trove.TLongHashSet;
-import gnu.trove.TLongObjectHashMap;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +26,6 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
@@ -35,7 +33,14 @@ import xc.mst.manager.BaseService;
 public class DefaultRepository extends BaseService implements Repository {
 	
 	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
-	Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
+	
+	// This is meant only to be a cache of what is not yet in the DB.  This will not
+	// keep all pred-succs in memory.
+	protected Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
+	
+	protected List<long[]> uplinks = new ArrayList<long[]>();
+	
+	protected TLongHashSet recordsToActivate = new TLongHashSet();
 	
 	protected String name = null;
 	
@@ -96,7 +101,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public void setName(String name) {
-		this.name = name.toLowerCase().replaceAll(" ", "_");
+		this.name = getUtil().normalizeName(name);
 	}
 	
 	public int getSize() {
@@ -114,7 +119,9 @@ public class DefaultRepository extends BaseService implements Repository {
 				succIds.add(record.getId());
 			}
 		}
-		getRepositoryDAO().addRecord(name, record);
+		if (getRepositoryDAO().addRecord(name, record)) {
+			predSuccMap.clear();	
+		}
 	}
 	
 	public void addRecords(List<Record> records) {
@@ -128,6 +135,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void endBatch() {
 		getRepositoryDAO().endBatch(name);
 		predSuccMap.clear();
+		getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
+		uplinks.clear();
+		getRepositoryDAO().activateRecords(name, recordsToActivate);
+		recordsToActivate.clear();
 	}
 
 	public List<Long> getPredecessorIds(Record r) {
@@ -149,7 +160,10 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	// TODO: you need to check the cache as well
 	public Record getRecord(long id) {	
-		return getRepositoryDAO().getRecord(name, id);
+		Record r = getRepositoryDAO().getRecord(name, id);
+		if (r != null)
+			r.setSets(getRepositoryDAO().getSets(name, id));
+		return r;
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
@@ -166,7 +180,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
 		long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet);
-
+		LOG.debug("recordCount:"+recordCount);
 		return recordCount;
 	}
 	
@@ -183,7 +197,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 	
 	public List<Record> getRecordsWSets(Date from, Date until, Long startingId) {
-		return getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
+		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
+		for (Record r : recs) {
+			getMessageService().injectMessageMessage(r);
+		}
+		return recs;
 	}
 	
 	public void injectSuccessors(Record r) {
@@ -224,6 +242,26 @@ public class DefaultRepository extends BaseService implements Repository {
 	    	}
 	    	lm = getLastModified();
 	    }
+	}
+	
+	public void deleteAllData() {
+		getRepositoryDAO().deleteAllData(this.name);
+	}
+
+	public void addLink(long fromRecordId, long toRecordId) {
+		uplinks.add(new long[] {fromRecordId, toRecordId});
+	}
+
+	public List<Long> getLinkedRecordIds(Long toRecordId) {
+		return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
+	}
+
+	public void activateRecord(long recordId) {
+		recordsToActivate.add(recordId);		
+	}
+	
+	public void processComplete() {
+		getRepositoryDAO().createIndiciesIfNecessary(name);
 	}
 
 }

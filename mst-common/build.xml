@@ -30,6 +30,10 @@
 		<delete dir="${mc.build.dir}" />
 	</target>
 
+	<target name="mc.clean.classes">
+		<delete dir="${mc.build.classes}" />
+	</target>
+
 	<target name="mc.help">
 		<echo>
 			mst-common help
@@ -65,13 +69,16 @@
 	<target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
 
 	<target name="mc.compile.nodep" depends="mc.init">
-		<javac srcdir="${mc.src.java}"
+		<javac 
 			includeantruntime="false"
 			destdir="${mc.build.classes}"
 			classpathref="mc.classpath.compile"
 			debug="on"
 			deprecation="on"
-			debuglevel="lines,vars,source"/>
+			debuglevel="lines,vars,source">
+			<src path="${mc.src.java}" />
+			<src path="${mc.test.dir}" />
+		</javac>
 	</target>
 
 	<target name="mc.copy-resources" depends="mc.compile, mc.copy-resources.nodep" />
@@ -156,7 +163,7 @@
 		</javadoc>
 	</target>
 
-	<target name="mc.install-mst">
+	<target name="mc.install-mst" depends="mc.init">
 		<delete dir="${mc.build.mst-instances.dir}" />
 		<unzip src="${mc.build.lib}/MST-instances-${mi.version}.jar"
 			dest="${mc.build.dir}" />
@@ -166,31 +173,15 @@
 				<include name="**/install.properties" />
 			</fileset>
 		</copy>
-		<sql classpathref="mc.classpath.compile"
-				driver="com.mysql.jdbc.Driver"
-				url="${DatabaseUrl}"
-				userid="${DatabaseUsername}"
-				password="${DatabasePassword}">
-			<path>
-				<fileset dir="${mc.build.mst-instance.dir}/sql">
-					<include name="create_database_script.sql"/>
-				</fileset>
-			</path>
-		</sql>
+		<exec executable="${mysql.home}/bin/mysql" 
+				input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
+			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
+		</exec>
 	</target>
 
 	<target name="mc.test" depends="mc.install-mst, mc.test.nodep" />
 	<target name="mc.test.nodep" depends="mc.compile.test, mc.init.test">
 		<property name="abs.build.dir" location="${mc.build.dir}" />
-		<exec executable="${ant.executable}">
-			<arg value="-Dtest=${test}" />
-			<arg value="mc.test.internal" />
-			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
-		</exec>
-	</target>
-
-	<target name="mc.test.internal">
 		<path id="mc.classpath.test.run">
 			<fileset dir="${mc.build.lib}">
 				<include name="*.jar" />
@@ -202,6 +193,8 @@
 			classname="org.testng.TestNGAntTask" />
 
 		<testng classpathref="mc.classpath.test.run" outputdir="${mc.build.test}">
+			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
+			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
 			<classfileset dir="${mc.build.test.classes}" includes="**/${test}*.class"/>
 		</testng>
 	</target>

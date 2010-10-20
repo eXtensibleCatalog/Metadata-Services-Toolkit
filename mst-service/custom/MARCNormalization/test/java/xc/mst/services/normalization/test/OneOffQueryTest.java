@@ -29,7 +29,7 @@ public class OneOffQueryTest extends BaseTest {
 	
 	@Test
 	public void XmlTest() {
-		String str = util.slurp(new File("393842.xml"));
+		String str = getUtil().slurp(new File("393842.xml"));
 		
 		XmlHelper x = new XmlHelper();
 		

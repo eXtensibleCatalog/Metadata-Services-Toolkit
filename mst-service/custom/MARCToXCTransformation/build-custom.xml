@@ -9,7 +9,7 @@
 <project name="example-service" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<target name="copy-custom-libs" depends="init">
-		<copy todir="${build.zip.lib}">
+		<move todir="${build.zip.lib}">
 			<fileset dir="${build.lib}">
 				<exclude name="**/*.jar" />
 				<!--
@@ -18,7 +18,7 @@
 				<include name="" />
 				-->
 			</fileset>
-		</copy>
+		</move>
 	</target>
 
 </project>

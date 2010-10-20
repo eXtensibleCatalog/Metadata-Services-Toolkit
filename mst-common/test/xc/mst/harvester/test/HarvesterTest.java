@@ -47,15 +47,15 @@ public class HarvesterTest extends BaseTest
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl("http://geolib.geo.auth.gr/digeo/index.php/index/oai");
 		provider.setCreatedAt(new java.util.Date());
-		providerService.insertProvider(provider);
-		validateRepository.validate(provider.getId());
+		getProviderService().insertProvider(provider);
+		getValidateRepository().validate(provider.getId());
 		
-		repositoryDAO.createRepository(provider);
+		getRepositoryDAO().createRepository(provider);
 		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 		
 		// Make sure we got the correct sets for the repository
-		assert setDAO.getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + setDAO.getSetsForProvider(provider.getId()).size() + " sets.";
+		assert getSetDAO().getSetsForProvider(provider.getId()).size() == 5 : "Expected 5 sets, but found " + getSetDAO().getSetsForProvider(provider.getId()).size() + " sets.";
 
 		// TODO:  Make the following test for sets work without encoding problems.
 		
@@ -71,7 +71,7 @@ public class HarvesterTest extends BaseTest
 		//assert setNames.contains("\u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1") : "The set \u00ce\u2022\u00cf\u2026\u00cf\ufffd\u00ce\u00b5\u00cf\u201e\u00ce\u00ae\u00cf\ufffd\u00ce\u00b9\u00ce\u00b1 was expected but not found.";
 		
 		// Make sure we got the correct formats for the repository
-		List<Format> formats = formatDAO.getFormatsForProvider(provider.getId());
+		List<Format> formats = getFormatDAO().getFormatsForProvider(provider.getId());
 		java.util.Set<String> formatNames = new HashSet<String>();
 		for(Format format : formats)
 			formatNames.add(format.getName());
@@ -85,7 +85,7 @@ public class HarvesterTest extends BaseTest
         schedule.setScheduleName("Test Schedule Name");
         schedule.setDayOfWeek(1);
 
-        schedule.addFormat(formatDAO.getByName("oai_dc"));
+        schedule.addFormat(getFormatDAO().getByName("oai_dc"));
         
         schedule.setHour(5);
         schedule.setId(111);
@@ -94,7 +94,7 @@ public class HarvesterTest extends BaseTest
         schedule.setRecurrence("Daily");
         schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
 
-        scheduleService.insertSchedule(schedule);
+        getScheduleService().insertSchedule(schedule);
         
 		WorkerThread runningJob = new WorkerThread();
 		HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");

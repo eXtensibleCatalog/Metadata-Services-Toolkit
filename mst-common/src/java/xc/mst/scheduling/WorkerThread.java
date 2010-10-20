@@ -96,6 +96,7 @@ public class WorkerThread extends Thread {
 	}
 
 	public String getJobName() {
+		waitForSetupCompletion();
 		if (this.workDelegate != null) {
 			return this.workDelegate.getName();
 		} else {
@@ -107,7 +108,7 @@ public class WorkerThread extends Thread {
 		return this.workDelegate.getRecordsProcessed();
 	}
 
-	public int getTotalRecords() {
+	public long getTotalRecords() {
 		return this.workDelegate.getTotalRecords();
 	}
 

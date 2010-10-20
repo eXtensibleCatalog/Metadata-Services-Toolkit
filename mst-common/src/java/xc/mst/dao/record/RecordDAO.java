@@ -241,7 +241,6 @@ public class RecordDAO extends BaseDAO {
 				String id2 = rs.getString("r.identifier_2");
 				String id = "oai:library.rochester.edu:"+id1+":"+id2;
 				r.setId(rs.getLong("r.id"));
-				r.setOaiIdentifier(id);
 				r.setUpdatedAt(rs.getDate("r.datestamp"));
 				
 				records.add(r);

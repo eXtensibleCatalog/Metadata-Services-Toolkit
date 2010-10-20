@@ -121,7 +121,7 @@
 			basedir="${ms.build.classes}" />
 	</target>
 
-	<target name="ms.deploy" depends="ms.jar.nodep">
+	<target name="ms.deploy" depends="ms.jar.nodep, ms.publish">
 		<copy todir="${ms.example}/build/lib" enablemultiplemappings="true">
 			<fileset dir="${ms.build.dir}">
 				<include name="${ms.project-name}-${ms.version}.jar" />
@@ -140,8 +140,8 @@
 		</copy-to-custom-services>
 	</target>
 
-	<target name="ms.publish" depends="ms.jar, ms.resolve">
-		<ivy:publish resolver="local" pubrevision="${ms.version}" overwrite="true">
+	<target name="ms.publish" depends="ms.jar.nodep, ms.resolve">
+		<ivy:publish resolver="local" update="true" pubdate="now" pubrevision="${ms.version}" overwrite="true">
 			<artifacts pattern="${ms.build.dir}/${ms.project-name}-${ms.version}.[ext]" />
 		</ivy:publish>
 	</target>

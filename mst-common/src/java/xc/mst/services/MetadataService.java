@@ -38,6 +38,7 @@ public interface MetadataService {
 	 * @param inputSet
 	 * @param outputSet
 	 */
+	public void setup();
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet);
 	public void pause();
 	public void resume();
@@ -46,6 +47,7 @@ public interface MetadataService {
 	public Service getService();
 	public void setService(Service service);
 	public String getServiceName();
+	public String getMessage(int code);
 	
 	// leftover methods that I think can be eventually deleted
 	public void runService(int serviceId, int outputSetId);
@@ -55,7 +57,7 @@ public interface MetadataService {
 	public void setPaused(boolean isPaused);
 	public Status getServiceStatus();
 	public int getProcessedRecordCount();
-	public int getTotalRecordCount();
+	public long getTotalRecordCount();
 	public List<String> getUnprocessedErrorRecordIdentifiers();
 	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
 

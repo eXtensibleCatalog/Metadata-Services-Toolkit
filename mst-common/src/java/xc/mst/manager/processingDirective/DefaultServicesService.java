@@ -32,7 +32,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.processing.Job;
@@ -273,14 +272,16 @@ public class DefaultServicesService extends BaseService
     	
     	try
     	{
-    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+name+
+    		props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+getUtil().normalizeName(name)+
     				"/META-INF/classes/xc/mst/services/custom.properties");
 
     		String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
     		// The version of the service, which must appear in the second line of the configuration file
     		String version = props.getString("service.version");
-    		if (!name.equals(props.getString("service.name"))) {
+    		if (!name.equals(getUtil().normalizeName(props.getString("service.name")))) {
+    			LOG.error("name: "+name);
+    			LOG.error("props.getString(service.name): "+getUtil().normalizeName(props.getString("service.name")));
     			throw new RuntimeException("service folder name must match the name in the properties file.");
     		}
     		
@@ -712,36 +713,4 @@ public class DefaultServicesService extends BaseService
     	return availableServices;
     }
 
-	/**
-	 * Get error text for given error code
-	 * 
-	 * @param errorCode Error code
-	 * @return Corresponding error text
-	 */
-	public String getError(int serviceId, String errorCode) {
-		 
-    	String errorMessage = null;
-
-    	try {
-    		Service service = getServiceById(serviceId);
-    		PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath()+"/services/"+service.getName()+
-				"/META-INF/classes/xc/mst/services/custom.properties");
-			String[] errorCodes = props.getStringArray("error.code");
-			String[] errorText = props.getStringArray("error.text");
-
-			for (int i=0; i<errorCodes.length; i++) {
-				if (errorCodes[i].equalsIgnoreCase(errorCode)) {
-					errorMessage =  errorText[i];
-					break;
-				}
-			}
-    	} catch (ConfigurationException ce) {
-    		LOG.error("Exception occured when reading properties file");
-    	} catch (DatabaseConfigException dce) {
-    		LOG.error("Exception occured when accessing database with provided parameters");
-    	}
-		
-		return errorMessage;
-		
-	}
 }

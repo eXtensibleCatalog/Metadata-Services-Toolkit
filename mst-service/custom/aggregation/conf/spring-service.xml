@@ -32,7 +32,8 @@
 
 	<bean id="MetadataServiceDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${DatabaseUrl}/${service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<!--  normalized.service.name is a normalized version of service.name - see MSTConfiguration.java -->
+		<property name="url" value="${DatabaseUrl}/${normalized.service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />
@@ -58,6 +59,11 @@
 		<context:include-filter type="custom" expression="xc.mst.spring.ServiceTypeFilter" />
 	</context:component-scan>
 	
+	<context:component-scan base-package="xc.mst"
+			use-default-filters="false">
+		<context:include-filter type="custom" expression="xc.mst.spring.TestTypeFilter" />
+	</context:component-scan>
+	
 	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
 
 	<import resource="spring-service-custom.xml"/>
@@ -65,5 +71,6 @@
 	<bean id="Service" class="${service.classname}">
 		<property name="repository" ref="Repository" />
 	</bean>
+	<alias name="Service" alias="MetadataService" />
 		
 </beans>

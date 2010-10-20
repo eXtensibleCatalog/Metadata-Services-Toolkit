@@ -41,26 +41,6 @@ public class Manifestation extends Record
 	} // end method getIndexedObjectType()
 
 	/**
-	 * Sets the manifestation's XC manifestation ID
-	 *
-	 * @param newManifestationId The manifestation's new XC manifestation ID
-	 */
-	public void setXcManifestationId(long newManifestationId)
-	{
-		frbrLevelId = newManifestationId;
-	} // end method setXcManifestationId(long)
-
-	/**
-	 * Gets the manifestation's XC manifestation ID
-	 *
-	 * @return The manifestation's XC manifestation ID
-	 */
-	public long getXcManifestationId()
-	{
-		return frbrLevelId;
-	} // end method getXcManifestationId()
-
-	/**
 	 * Adds a recordID trait to the manifestation
 	 *
 	 * @param type The type of the recordID to add
@@ -152,13 +132,11 @@ public class Manifestation extends Record
 		manifestation.setDeleted(record.getDeleted());
 		manifestation.setMessages(record.getMessages());
 		manifestation.setFormat(record.getFormat());
-		manifestation.setFrbrLevelId(record.getFrbrLevelId());
 		manifestation.setHarvest(record.getHarvest());
 		manifestation.setId(record.getId());
 		manifestation.setInputForServices(record.getInputForServices());
 		manifestation.setOaiDatestamp(record.getOaiDatestamp());
 		manifestation.setOaiHeader(record.getOaiHeader());
-		manifestation.setOaiIdentifier(record.getOaiIdentifier());
 		manifestation.setOaiXml(record.getOaiXml());
 		manifestation.setProcessedByServices(record.getProcessedByServices());
 		manifestation.setProcessedFrom(record.getProcessedFrom());

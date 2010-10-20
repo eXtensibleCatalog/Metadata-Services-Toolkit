@@ -19,9 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 
 public class DevAdminServlet extends HttpServlet {
+	
+	private static final Logger LOG = Logger.getLogger(DevAdminServlet.class);
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
@@ -40,6 +45,14 @@ public class DevAdminServlet extends HttpServlet {
 			}
 			pw.println("</table>");
 		}
+	}
+	
+	@Override
+	public void destroy() {
+		LOG.debug("destroy()");
+		Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
+		scheduler.kill();
+		LOG.debug("scheduler.killed");
 	}
 
 }

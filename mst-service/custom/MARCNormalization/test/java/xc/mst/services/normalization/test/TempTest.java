@@ -16,8 +16,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.testng.annotations.Test;
 
-import xc.mst.service.impl.test.BaseMetadataServiceTest;
-import xc.mst.service.impl.test.TestRepository;
+import xc.mst.repo.TestRepository;
+import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.XmlHelper;
 
 public class TempTest extends BaseMetadataServiceTest {

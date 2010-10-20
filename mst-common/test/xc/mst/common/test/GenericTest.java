@@ -51,7 +51,7 @@ public class GenericTest extends BaseTest {
 		
 		try {
 			
-			String str = util.slurp(new File("docs/393842.xml"));
+			String str = getUtil().slurp(new File("docs/393842.xml"));
 			
 			XmlHelper x = new XmlHelper();
 			for (int i=0; i<1000; i++) {

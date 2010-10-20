@@ -46,26 +46,6 @@ public class Work extends Record
 	} // end method getIndexedObjectType()
 
 	/**
-	 * Sets the work's XC work ID
-	 *
-	 * @param newWorkId The work's new XC work ID
-	 */
-	public void setXcWorkId(long newWorkId)
-	{
-		frbrLevelId = newWorkId;
-	} // end method setXcWorkId(long)
-
-	/**
-	 * Gets the work's XC work ID
-	 *
-	 * @return The work's XC work ID
-	 */
-	public long getXcWorkId()
-	{
-		return frbrLevelId;
-	} // end method getXcWorkId()
-
-	/**
 	 * Gets whether or not the work has been processed
 	 *
 	 * @return True if the work has been processed, false otherwise
@@ -157,13 +137,11 @@ public class Work extends Record
 		work.setDeleted(record.getDeleted());
 		work.setMessages(record.getMessages());
 		work.setFormat(record.getFormat());
-		work.setFrbrLevelId(record.getFrbrLevelId());
 		work.setHarvest(record.getHarvest());
 		work.setId(record.getId());
 		work.setInputForServices(record.getInputForServices());
 		work.setOaiDatestamp(record.getOaiDatestamp());
 		work.setOaiHeader(record.getOaiHeader());
-		work.setOaiIdentifier(record.getOaiIdentifier());
 		work.setOaiXml(record.getOaiXml());
 		work.setProcessedByServices(record.getProcessedByServices());
 		work.setProcessedFrom(record.getProcessedFrom());

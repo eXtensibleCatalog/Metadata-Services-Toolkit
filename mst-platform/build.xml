@@ -14,7 +14,6 @@
 
 	<path id="webapp.path">
 		<fileset dir="${mp.build.webapp}">
-			<exclude name="**/testng*.jar"/>
 			<exclude name="**/jsp-api*.jar"/>
 			<exclude name="**/servlet-api*.jar"/>
 		</fileset>
