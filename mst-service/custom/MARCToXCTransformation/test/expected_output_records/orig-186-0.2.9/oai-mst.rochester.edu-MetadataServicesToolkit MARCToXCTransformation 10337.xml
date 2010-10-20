@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10337">
-		<xc:titleOfExpression>Directory of published proceedings</xc:titleOfExpression>
-		<dcterms:requires>Mode of access: World Wide Web.</dcterms:requires>
-		<dcterms:relation>Supersedes the print publications: Directory of published proceedings. Series SEMT, Science/engineering/medicine/technology; Directory of published proceedings. Series SSH, Social sciences/humanities; Directory of published proceedings. Series MLS, Medical/life sciences; and Directory of published proceedings. Series PCE, Pollution control/ecology.</dcterms:relation>
-		<dcterms:language>English</dcterms:language>
-		<xc:contributor>InterDok Corp.</xc:contributor>
-		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10336</xc:workExpressed></xc:entity>
-</xc:frbr>
