@@ -444,6 +444,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			LOG.debug("messages2insert.size(): "+messages2insert.size());
 			getMessageDAO().persistMessages(messages2insert);
 			messages2insert.clear();
+			
+			try {
+				getServiceDAO().update(service);
+			} catch(DataException de) {
+				LOG.error("Exception occured while updating the service", de);
+			}
 		}
 		if (resetTimer) {
 			TimingLogger.reset();
@@ -451,15 +457,16 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		LOG.info("getClass(): "+getClass());
-		LOG.info("inputFormat: "+inputFormat);
-		LOG.info("inputSet: "+inputSet);
-		LOG.info("outputSet: "+outputSet);
-		LOG.info(getClass().getName()+".process("+repo.getName()+", "+
-				(inputFormat==null?"null":inputFormat.getName())+", "+
-				(inputSet==null?"null":inputSet.getDisplayName())+", "+
-				(outputSet==null?"null":outputSet.getDisplayName())+")");
-
+		if (!(this instanceof SolrIndexService)) {
+			LOG.info("getClass(): "+getClass());
+			LOG.info("inputFormat: "+inputFormat);
+			LOG.info("inputSet: "+inputSet);
+			LOG.info("outputSet: "+outputSet);
+			LOG.info(getClass().getName()+".process("+repo.getName()+", "+
+					(inputFormat==null?"null":inputFormat.getName())+", "+
+					(inputSet==null?"null":inputSet.getDisplayName())+", "+
+					(outputSet==null?"null":outputSet.getDisplayName())+")");
+		}
 		running.acquireUninterruptibly();
 		if (getRepository() != null) {
 			predecessors.clear();
@@ -522,7 +529,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				sh.setHighestId(in.getId());
 				getServiceDAO().persist(sh);
-				processedRecordCount++;
+				if (getRepository() == null || 
+						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
+					processedRecordCount++;
+				}
 				
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
@@ -572,12 +582,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
 			// TODO : Should # of harvest out records available include deleted records too? 
 			service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
-
-			try {
-				getServiceDAO().update(service);
-			} catch(DataException de) {
-				LOG.error("Exception occured while updating the service", de);
-			}
 		}
 	}
 	

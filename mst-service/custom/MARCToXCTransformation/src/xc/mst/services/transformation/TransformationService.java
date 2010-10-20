@@ -27,6 +27,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
@@ -364,6 +365,9 @@ public class TransformationService extends SolrTransformationService {
 			TimingLogger.add("output records", results.size());
 			for (OutputRecord or : results) {
 				or.setFormat(xcFormat);
+			}
+			if (results.size() != 1) {
+				addMessage(record, 108, RecordMessage.ERROR);
 			}
 			return results;
 		} catch (Throwable t) {

@@ -167,6 +167,9 @@ public class NormalizationService extends GenericMetadataService {
 				TimingLogger.stop("processRecord");
 			}
 			
+			if (results.size() != 1) {
+				addMessage(recordIn, 108, RecordMessage.ERROR);
+			}
 			return results;
 		} catch (Throwable t) {
 			getUtil().throwIt(t);

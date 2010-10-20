@@ -91,7 +91,8 @@
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
 			<path refid="webapp.path" />
-		 </jar>
+		</jar>
+		<copy todir="${mst-instances}/MST-instances" file="${mp.build.dir}/${mp.project-name}.war" />
 	</target>
 
 	<!--
