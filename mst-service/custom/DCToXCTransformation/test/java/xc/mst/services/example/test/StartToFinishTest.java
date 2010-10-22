@@ -14,15 +14,11 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	protected String getRepoName() {
-		return "test_repo";
+		return "nates_repo";
 	}
 	
 	protected String getProviderUrl() {
-		return "http://geolib.geo.auth.gr/digeo/index.php/index/oai";
-	}
-	
-	protected Format getIncomingFormat() throws Exception {
-		return getDCFormat();
+		return "http://urresearch.rochester.edu/oai2.action";
 	}
 	
 	protected Format getHarvestOutFormat() throws Exception {

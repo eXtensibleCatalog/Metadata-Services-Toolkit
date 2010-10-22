@@ -34,8 +34,10 @@ public class DCTransformationService extends GenericMetadataService {
 	/**
 	 * The namespace for Dubline Core
 	 */
-	protected static Namespace dcterms_ns = Namespace.getNamespace("dcterms", "http://purl.org/dc/terms/");
-	protected static Namespace dc_ns = Namespace.getNamespace("dc", "http://purl.org/dc/elements/1.1/");
+	protected static Namespace[] dcNamespaces = new Namespace[] {
+		Namespace.getNamespace("dcterms", "http://purl.org/dc/terms/"),
+		Namespace.getNamespace("dc", "http://purl.org/dc/elements/1.1/")
+	};
 	
 	protected XmlHelper xmlHelper = new XmlHelper();
 
@@ -129,10 +131,14 @@ public class DCTransformationService extends GenericMetadataService {
 					// Get element
 					String element = keyItrtr.next();
 
-					// Get the data fields
-					List<Element> fields = metadataEl.getChildren(element, dcterms_ns);
-					if ( fields.isEmpty() ) 
-						fields = metadataEl.getChildren(element, dc_ns);
+					List<Element> fields = null;
+					for (Namespace ns : dcNamespaces) {
+						// Get the data fields
+						fields = metadataEl.getChildren(element, ns);
+						if (!fields.isEmpty()) {
+							continue;
+						}
+					}
 
 					// Set the data fields
 					dcValues.put(element, fields);
@@ -140,6 +146,8 @@ public class DCTransformationService extends GenericMetadataService {
 
 				// Format is different or record is empty
 				if (dcValues.size() == 0 || !isValidate ) {
+					LOG.debug("dcValues: "+dcValues);
+					LOG.debug("isValidate: "+isValidate);
 					addMessage(processMe, 101, RecordMessage.ERROR);
 					return results;
 				}
@@ -177,7 +185,7 @@ public class DCTransformationService extends GenericMetadataService {
 
 	private boolean checkMetadataFormat(String format) {
 		boolean isValidate = false;
-		if (format.equals("oai_dc") || format.equals("dcterms")) {
+		if (format.equals("oai_dc") || format.equals("dcterms") || format.equals("dc")) {
 			isValidate = true;
 		} else {
 			LOG.debug("Format error :" + format);
