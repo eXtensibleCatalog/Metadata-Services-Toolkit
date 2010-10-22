@@ -832,6 +832,7 @@ public class RepositoryDAO extends BaseDAO {
 			until = new Date();
 		}
 		StringBuilder sb = new StringBuilder();
+		// Takashi's version had select count(*) - not sure why I'm not doing that here. 
 		sb.append(
 				" select u.record_id " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
@@ -1184,7 +1185,7 @@ public class RepositoryDAO extends BaseDAO {
 			 for (Map<String, Object> row : rows) {
 				 String indexName = (String)row.get("Key_name");
 				 LOG.debug("indexName: "+indexName);
-				 if ("idx_marcnormalization_records_status".equals(indexName)) {
+				 if (("idx_"+name+"_records_status").equals(indexName)) {
 					 genericRepoIndexExists = true;
 					 break;
 				 }
