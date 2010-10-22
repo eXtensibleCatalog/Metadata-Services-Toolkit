@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.services.transformation.service;
+package xc.mst.services.impl.service.transformation;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -21,15 +21,14 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
+import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.service.GenericMetadataServiceService;
-import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
-import xc.mst.services.transformation.bo.AggregateXCRecord;
-import xc.mst.services.transformation.dao.TransformationDAO;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -41,16 +40,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 
 	private static final Logger LOG = Logger.getLogger(XCRecordService.class);
 	protected XmlHelper xmlHelper = new XmlHelper();
-	
-	TransformationDAO transformationDAO = null;
-	
-	public TransformationDAO getTransformationDAO() {
-		return transformationDAO;
-	}
-
-	public void setTransformationDAO(TransformationDAO transformationDAO) {
-		this.transformationDAO = transformationDAO;
-	}
 
 	public String getType(Record r) {
 		r.setMode(Record.JDOM_MODE);

@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.services.transformation;
+package xc.mst.constants;
 
 /**
  * This class defines several constants as public static final variables

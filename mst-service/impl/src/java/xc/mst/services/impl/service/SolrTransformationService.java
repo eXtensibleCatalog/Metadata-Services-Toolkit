@@ -7,7 +7,7 @@
   *
   */
  
-package xc.mst.services.transformation;
+package xc.mst.services.impl.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,16 +19,13 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import xc.mst.bo.record.AggregateXCRecord;
+import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.bo.record.marc.Subfield;
 import xc.mst.constants.Constants;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.ServiceValidationException;
-import xc.mst.services.transformation.TransformationServiceConstants.FrbrLevel;
-import xc.mst.services.transformation.bo.AggregateXCRecord;
-import xc.mst.services.transformation.bo.SaxMarcXmlRecord;
-import xc.mst.services.transformation.dao.TransformationDAO;
-import xc.mst.services.transformation.service.XCRecordService;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -42,20 +39,6 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected final static Logger LOG = Logger.getLogger(SolrTransformationService.class);
 
 	protected Namespace marcNamespace = Namespace.getNamespace("marc", "http://www.loc.gov/MARC21/slim");
-	
-	protected XCRecordService XCRecordService = null;
-	
-	public XCRecordService getXCRecordService() {
-		return XCRecordService;
-	}
-
-	public void setXCRecordService(XCRecordService xCRecordService) {
-		XCRecordService = xCRecordService;
-	}
-	
-	public TransformationDAO getTransformationDAO() {
-		return getXCRecordService().getTransformationDAO();
-	}
 
 	protected XmlHelper xmlHelper = new XmlHelper();
 	

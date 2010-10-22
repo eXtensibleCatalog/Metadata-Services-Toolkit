@@ -24,14 +24,16 @@ import javax.xml.transform.TransformerException;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.services.transformation.bo.AggregateXCRecord;
-import xc.mst.services.transformation.bo.SaxMarcXmlRecord;
+import xc.mst.services.impl.service.SolrTransformationService;
+import xc.mst.services.transformation.dao.TransformationDAO;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
@@ -69,8 +71,18 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 	protected List<long[]> heldHoldings = new ArrayList<long[]>();
-	protected Format xcFormat = null; 
+	protected Format xcFormat = null;
 	
+	protected TransformationDAO transformationDAO = null;
+	
+	public void setTransformationDAO(TransformationDAO transformationDAO) {
+		this.transformationDAO = transformationDAO;
+	}
+	
+	public TransformationDAO getTransformationDAO() {
+		return this.transformationDAO;
+	}
+
 	@Override
 	public void init() {
 		super.init();
