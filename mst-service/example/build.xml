@@ -274,7 +274,7 @@
 		<property name="skip.mst.install" value="" />
 	</target>
 
-	<target name="install.dependent.service">
+	<target name="install.dependent.service" if="${dependent.service}">
 		<echo>../${dependent.service}/build</echo>
 		<unzip dest="${build.mst-services.dir}">
 			<fileset dir="../${dependent.service}/build">

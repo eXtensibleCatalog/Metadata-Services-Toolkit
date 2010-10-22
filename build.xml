@@ -15,7 +15,7 @@
 			<echo>
 				subdir: @{subdir}
 			</echo>
-			<copy todir="${ms.custom}" enablemultiplemappings="true">
+			<copy todir="${ms.custom}" enablemultiplemappings="true" overwrite="true">
 				<macro-file-set />
 				<scriptmapper language="javascript">
 				  self.addMappedName("MARCNormalization/@{subdir}/"+source);

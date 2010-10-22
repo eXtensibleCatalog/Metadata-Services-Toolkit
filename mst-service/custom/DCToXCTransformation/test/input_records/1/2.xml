@@ -1,15 +1,21 @@
-<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<records xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
   <record>
     <header>
-      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+      <identifier>oai:epubs.cclrc.ac.uk:2</identifier>
     </header>
     <metadata>
-      <foo xmlns="foo:bar">french fries</foo>
+      <dcterms xmlns="http://dublincore.org/documents/dcmi-terms/">
+        <dc:identifier>oai:epubs.cclrc.ac.uk:9801</dc:identifier>
+        <dc:title>Journal of Chemical Crystallography</dc:title>
+        <dcterms:alternative>J Chem Cryst</dcterms:alternative>
+        <dcterms:alternative>J Chem Crystalogr</dcterms:alternative>
+        <dcterms:alternative>Journal of Chemical Crystallography</dcterms:alternative>
+      </dcterms>
     </metadata>
   </record>
   <record>
     <header status="deleted">
-      <identifier>oai:mst.rochester.edu:bib:2</identifier>
+      <identifier>oai:epubs.cclrc.ac.uk:2</identifier>
     </header>
   </record>
 </records>

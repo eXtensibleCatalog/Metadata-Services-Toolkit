@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.services.transformation.bo;
+package xc.mst.bo.record;
 
 import java.util.ArrayList;
 import java.util.HashMap;

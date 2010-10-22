@@ -1,18 +1,35 @@
-<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<records xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
   <record>
     <header>
-      <identifier>oai:mst.rochester.edu:bib:1</identifier>
+      <identifier>oai:epubs.cclrc.ac.uk:bib:1</identifier>
     </header>
     <metadata>
-      <foo xmlns="foo:bar">pb&amp;j</foo>
+      <dcterms xmlns="http://dublincore.org/documents/dcmi-terms/">
+        <dc:identifier>oai:epubs.cclrc.ac.uk:1</dc:identifier>
+        <dc:title>Journal of Chemical Crystallography</dc:title>
+        <dcterms:alternative>J Chem Cryst</dcterms:alternative>
+        <dcterms:alternative>J Chem Crystalogr</dcterms:alternative>
+        <dcterms:alternative>Journal of Chemical Crystallography</dcterms:alternative>
+      </dcterms>
     </metadata>
   </record>
   <record>
     <header>
-      <identifier>oai:mst.rochester.edu:bib:1</identifier>
+      <identifier>oai:epubs.cclrc.ac.uk:bib:1</identifier>
     </header>
     <metadata>
-      <foo xmlns="foo:bar">pb&amp;j 2</foo>
+      <dcterms xmlns="http://dublincore.org/documents/dcmi-terms/">
+        <dc:identifier>oai:epubs.cclrc.ac.uk:1</dc:identifier>
+        <dc:title>Journal of Geomagnetism and Geoelectricity</dc:title>
+        <dcterms:alternative>J Geomag Geoelectr</dcterms:alternative>
+        <dcterms:alternative>Journal Of Geomagnetism And Geoelectricity</dcterms:alternative>
+        <dcterms:alternative>Journal of Geomagnetism and Geoelectricity</dcterms:alternative>
+      </dcterms>
     </metadata>
+  </record>
+  <record>
+    <header status="deleted">
+      <identifier>oai:epubs.cclrc.ac.uk:bib:1</identifier>
+    </header>
   </record>
 </records>
