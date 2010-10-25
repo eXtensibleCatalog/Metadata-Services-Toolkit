@@ -321,6 +321,7 @@
 				dir="${build.dir}" >
 			<env key="service.name" value="${normalized.service.name}"/>
 			<env key="service.test" value="${test}"/>
+			<env key="test.folder" value="${test.folder}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
 			<jvmarg value="-server" />
 			<!--

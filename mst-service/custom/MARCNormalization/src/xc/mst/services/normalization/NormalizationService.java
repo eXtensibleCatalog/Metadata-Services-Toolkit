@@ -912,7 +912,7 @@ public class NormalizationService extends GenericMetadataService {
 		String field008 = marcXml.getField008();
 
 		// If 008 offset 06 is not 'c', 'd', or 'k' we don't need to do anything.
-		if(field008 == null || (field008.charAt(6) != 'c' && field008.charAt(6) != 'd' && field008.charAt(6) != 'k'))
+		if(field008 == null || field008.length() < 7 || (field008.charAt(6) != 'c' && field008.charAt(6) != 'd' && field008.charAt(6) != 'k'))
 		{
 			if(LOG.isDebugEnabled())
 				LOG.debug("008 offset 6 was not 'c', 'd' or 'k' so we will not add a field with the date range.");
@@ -1098,7 +1098,7 @@ public class NormalizationService extends GenericMetadataService {
 			String field008 = marcXml.getField008();
 
 			// The character at offset 22 of the 008 field
-			char field008offset22 = (field008 != null ? field008.charAt(22) : ' ');
+			char field008offset22 = (field008 != null && field008.length() >= 23 ? field008.charAt(22) : ' ');
 
 			// Pull the audience mapping from the configuration file based on the 008 offset 22 value.
 			String audience = audienceFrom008Properties.getProperty(""+field008offset22, null);
@@ -1162,7 +1162,7 @@ public class NormalizationService extends GenericMetadataService {
 		String field008 = marcXml.getField008();
 
 		// If the 008 offset 24, 25, 26, or 27 is 'm', add a 502 tag with the value "Thesis."
-		if(field008 != null && field008.substring(24, 28).contains("m"))
+		if(field008 != null && field008.length() >= 29 && field008.substring(24, 28).contains("m"))
 		{
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding 502 field with the value \"Thesis.\"");

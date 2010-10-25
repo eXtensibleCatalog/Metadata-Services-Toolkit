@@ -39,7 +39,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 		try {
 			//String serviceClassName = System.getenv("TEST_SERVICE_CLASS_NAME");
 			String serviceName = MSTConfiguration.getInstance().getProperty("service.name");
-			String inFolderStr = System.getenv("MST_SERVICE_TEST_FOLDER");
+			String inFolderStr = System.getenv("test.folder");
 			LOG.debug("folderStr: "+inFolderStr);
 			LOG.debug("serviceName: "+serviceName);
 			

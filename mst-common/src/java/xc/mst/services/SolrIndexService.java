@@ -69,7 +69,7 @@ public class SolrIndexService extends GenericMetadataService  {
 		doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
 		r.setMode(Record.STRING_MODE);
 		//doc.addField(RecordService.FIELD_OAI_XML, r.getOaiXml());
-		doc.addField(RecordService.FIELD_ALL, r.getOaiXml());
+		doc.addField(RecordService.FIELD_ALL, r.getId()+" "+r.getOaiXml());
 		if (r.getFormat() != null) {
 			doc.addField(RecordService.FIELD_FORMAT_ID, r.getFormat().getId());
 			doc.addField("format_name", r.getFormat().getName());
