@@ -38,6 +38,11 @@
 		<delete dir="${ms.build.dir}" />
 	</target>
 
+	<target name="ms.clean.classes">
+		<delete dir="${ms.build.classes}" />
+		<delete dir="${ms.build.test.classes}" />
+	</target>
+
 	<target name="ms.help">
 		<echo>
 			mst-common help

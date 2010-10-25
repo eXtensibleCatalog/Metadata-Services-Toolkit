@@ -28,6 +28,7 @@ import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;

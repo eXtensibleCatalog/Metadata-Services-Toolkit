@@ -493,7 +493,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
 				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
 				Long recordId = oaiIdCache.getLong(nonRedundantId);
-				if (recordId == 0) {
+				if (recordId == null || recordId == 0) {
 					getRepositoryDAO().injectId(record);
 					oaiIdCache.put(nonRedundantId, record.getId());
 					numberOfNewRecords++;

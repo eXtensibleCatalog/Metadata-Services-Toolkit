@@ -33,6 +33,10 @@
 		<delete file="${tomcat.dir}/webapps/${mp.project-name}.war" />
 	</target>
 
+	<target name="mp.clean.classes">
+		<delete dir="${mp.build.classes}" />
+	</target>
+
 	<target name="mp.help">
 		<echo>
 			mp help

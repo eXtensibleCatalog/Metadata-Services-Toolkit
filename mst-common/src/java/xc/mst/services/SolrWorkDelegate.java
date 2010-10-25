@@ -98,7 +98,9 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 			if (providers != null) {
 				for (Provider p : providers) {
 					Repository repo = getRepositoryService().getRepository(p);
-					solrIndexService.process(repo, null, null, null);
+					if (repo.ready4harvest()) {
+						solrIndexService.process(repo, null, null, null);
+					}
 				}
 			}
 
@@ -106,7 +108,9 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 			if (services != null) {
 				for (Service s : services) {
 					Repository repo = s.getMetadataService().getRepository();
-					solrIndexService.process(repo, null, null, null);
+					if (repo.ready4harvest()) {
+						solrIndexService.process(repo, null, null, null);
+					}
 				}
 			}
 		} catch (Throwable t) {
