@@ -26,7 +26,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
-		return getXCFormat();
+		return getMarcXmlFormat();
 	}
 	
 	public void finalTest() {

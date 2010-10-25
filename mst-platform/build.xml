@@ -33,6 +33,10 @@
 		<delete file="${tomcat.dir}/webapps/${mp.project-name}.war" />
 	</target>
 
+	<target name="mp.clean.classes">
+		<delete dir="${mp.build.classes}" />
+	</target>
+
 	<target name="mp.help">
 		<echo>
 			mp help
@@ -91,7 +95,8 @@
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
 			<path refid="webapp.path" />
-		 </jar>
+		</jar>
+		<copy todir="${mst-instances}/MST-instances" file="${mp.build.dir}/${mp.project-name}.war" />
 	</target>
 
 	<!--

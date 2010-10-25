@@ -425,4 +425,8 @@ public class TestRepository extends BaseService implements Repository {
 	
 
 	public void processComplete() {}
+	
+	public boolean ready4harvest() {
+		return true;
+	}
 }

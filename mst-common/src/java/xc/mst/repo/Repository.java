@@ -89,5 +89,7 @@ public interface Repository {
 	public List<Long> getLinkedRecordIds(Long toRecordId);
 	
 	public void processComplete();
+	
+	public boolean ready4harvest();
 
 }

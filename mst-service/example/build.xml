@@ -34,7 +34,7 @@
 	</target>
 
 	<target name="check.skip.download">
-		<available property="skip.download" file="${ivy.dir}" />
+		<available property="skip.download" file="${ivy.jar}" />
 	</target>
 
 	<target name="ivy.download" unless="skip.download" depends="init, check.skip.download">
@@ -137,6 +137,11 @@
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="clean.classes">
+		<delete dir="${build.classes}" />
+		<delete dir="${build.test.classes}" />
 	</target>
 
 	<target name="help">
@@ -266,15 +271,15 @@
 			debuglevel="lines,vars,source"/>
 	</target>
 
-	<target name="init.test" unless="${test}">
+	<target name="init.test" unless="test">
 		<property name="test" value="" />
 	</target>
 
-	<target name="init.skip.mst.install" unless="${skip.mst.install}">
+	<target name="init.skip.mst.install" unless="skip.mst.install">
 		<property name="skip.mst.install" value="" />
 	</target>
 
-	<target name="install.dependent.service" if="${dependent.service}">
+	<target name="install.dependent.service" if="dependent.service">
 		<echo>../${dependent.service}/build</echo>
 		<unzip dest="${build.mst-services.dir}">
 			<fileset dir="../${dependent.service}/build">
@@ -316,6 +321,7 @@
 				dir="${build.dir}" >
 			<env key="service.name" value="${normalized.service.name}"/>
 			<env key="service.test" value="${test}"/>
+			<env key="test.folder" value="${test.folder}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
 			<jvmarg value="-server" />
 			<!--

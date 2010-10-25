@@ -12,7 +12,6 @@ package xc.mst.repo;
 import gnu.trove.TLongArrayList;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongIterator;
-import gnu.trove.TObjectLongHashMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -741,7 +740,7 @@ public class RepositoryDAO extends BaseDAO {
 		sb.append(
 				" group by r.record_id "+
 				" order by r.record_id "+
-				" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
+				" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000));
 
 		Object obj[] = params.toArray();
 		
@@ -811,7 +810,7 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" order by u.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 1000));
+				" order by u.record_id limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 5000));
 
 		Object obj[] = params.toArray();
 		
@@ -832,6 +831,7 @@ public class RepositoryDAO extends BaseDAO {
 			until = new Date();
 		}
 		StringBuilder sb = new StringBuilder();
+		// Takashi's version had select count(*) - not sure why I'm not doing that here. 
 		sb.append(
 				" select u.record_id " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
@@ -918,7 +918,7 @@ public class RepositoryDAO extends BaseDAO {
 						" and u.date_updated <= ? "+
 						" group by r.record_id "+
 						" order by r.record_id "+
-						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000));
+						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000));
 			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
@@ -1184,7 +1184,7 @@ public class RepositoryDAO extends BaseDAO {
 			 for (Map<String, Object> row : rows) {
 				 String indexName = (String)row.get("Key_name");
 				 LOG.debug("indexName: "+indexName);
-				 if ("idx_marcnormalization_records_status".equals(indexName)) {
+				 if (("idx_"+name+"_records_status").equals(indexName)) {
 					 genericRepoIndexExists = true;
 					 break;
 				 }
@@ -1280,5 +1280,25 @@ public class RepositoryDAO extends BaseDAO {
 		 }
 		 TimingLogger.stop("createIndiciesIfNecessary."+name);
 		 TimingLogger.reset();
+	}
+	
+	public boolean ready4harvest(String name) {
+		 boolean genericRepoIndexExists = false;
+		 try {
+			 List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
+			 if (rows != null) {
+				 for (Map<String, Object> row : rows) {
+					 String indexName = (String)row.get("Key_name");
+					 LOG.debug("indexName: "+indexName);
+					 if (("idx_"+name+"_records_status").equals(indexName)) {
+						 genericRepoIndexExists = true;
+						 break;
+					 }
+				 }
+			 }
+		 } catch (Throwable t) {
+			 //do nothing
+		 }
+		 return genericRepoIndexExists;
 	}
 }

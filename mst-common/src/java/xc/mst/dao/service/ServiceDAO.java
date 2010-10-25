@@ -319,7 +319,6 @@ public abstract class ServiceDAO extends BaseDAO
 		}
 		List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
 				sb.toString(), params.toArray());
-		log.error("shs: "+shs);
 		if (shs == null || shs.size() == 0) {
 			return null;
 		} else if (shs.size() == 1) {

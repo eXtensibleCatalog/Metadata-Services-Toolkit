@@ -812,7 +812,8 @@ CREATE TABLE record_messages (
   msg_level          char(1)      not null,
   service_id         int(11)      not null,
 
-  PRIMARY KEY (record_message_id)
+  PRIMARY KEY (record_message_id),
+  INDEX idx_record_messages_record_id (record_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 drop table if exists record_message_details;
