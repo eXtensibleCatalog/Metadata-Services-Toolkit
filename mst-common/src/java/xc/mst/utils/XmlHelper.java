@@ -128,8 +128,11 @@ public class XmlHelper {
 			byte[] bytes = str.getBytes("UTF-8");
 			TimingLogger.stop("str.getBytes");
 			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+			TimingLogger.start("getDomBuilder()");
+			DocumentBuilder db = getDocumentBuilder();
+			TimingLogger.stop("getDomBuilder()");
 			TimingLogger.start("xerces");
-			Document doc = getDocumentBuilder().parse(bais);
+			Document doc = db.parse(bais);
 			TimingLogger.stop("xerces");
 			TimingLogger.start("jdom");
 			org.jdom.Document d = getDomBuilder().build(doc);

@@ -5,7 +5,10 @@ export REMOTE_BOX_NAME=128.151.244.170
 export REMOTE_BASE_DIR="~/0.3.0"
 export BASE_DIR="/xc/mst"
 export MYSQL_DIR=/usr/local/mysql/bin/
-export MST_INSTANCE=/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/build/MST-instances/MetadataServicesToolkit
+#export MST_INSTANCE=/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCToXCTransformation/build/MST-instances/MetadataServicesToolkit
+export MST_INSTANCE=$(cat local.properties 2> /dev/null | grep mst.root.dir 2> /dev/null | grep -v '^#' | sed 's/^.*=//' 2> /dev/null)
+#export MST_INSTANCE=/xc/mst/svn/branches/bens_perma_branch/mst-service/custom/MARCNormalization/build/MST-instances/MetadataServicesToolkit
+export MST_INSTANCE=${MST_INSTANCE}MST-instances/MetadataServicesToolkit
 export MEMORY=3000
 
 #export provider_name="137 - 175"

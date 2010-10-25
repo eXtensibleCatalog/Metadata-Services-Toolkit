@@ -45,7 +45,9 @@ public class SaxMarcXmlRecord implements ContentHandler {
 	public SaxMarcXmlRecord(String marcXml) {
 		try {
 			TimingLogger.start("sax");
+			TimingLogger.start("XMLReaderFactory.createXMLReader");
 			XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+			TimingLogger.stop("XMLReaderFactory.createXMLReader");
 			xmlReader.setContentHandler(this);
 			xmlReader.parse(new InputSource(new StringReader(marcXml)));
 		} catch (Throwable t) {

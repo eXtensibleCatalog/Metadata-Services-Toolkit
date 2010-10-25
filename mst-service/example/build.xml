@@ -324,12 +324,8 @@
 			<env key="test.folder" value="${test.folder}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
 			<jvmarg value="-server" />
-			<!--
-			<jvmarg value="-Xms700M" />
-			<jvmarg value="-Xmx700M" />
-			<jvmarg value="-Xms3000M" />
-			<jvmarg value="-Xmx3000M" />
-			-->
+			<jvmarg value="-Xms${test.memory}" />
+			<jvmarg value="-Xmx${test.memory}" />
 		</java>
 	</target>
 
