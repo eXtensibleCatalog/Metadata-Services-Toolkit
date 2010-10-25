@@ -151,7 +151,14 @@
 		</ivy:publish>
 	</target>
 
-	<target name="ms.copy-example">
+	<target name="init.log.suffix" unless="log.suffix">
+		<property name="log.suffix" value="prod" />
+	</target>
+
+	<target name="ms.copy-example" depends="init.log.suffix">
+		<copy overwrite="true" 
+			tofile="${ms.example}/conf/log4j.config.txt" 
+			file="${ms.example}/conf/log4j.config.txt.${log.suffix}" />
 		<copy-to-custom-services subdir="">
 			<macro-file-set>
 				<fileset dir="${ms.example}">
