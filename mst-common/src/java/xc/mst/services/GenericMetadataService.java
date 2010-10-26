@@ -41,7 +41,6 @@ import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
-import xc.mst.spring.TestTypeFilter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -91,10 +90,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	static {
 		LOG.debug("GenericMetadataService class loaded!!!");
-	}
-	
-	public void runTests() {
-		TestTypeFilter.runTests(this);
 	}
 	
 	public ApplicationContext getApplicationContext() {
@@ -528,7 +523,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 				}
 				sh.setHighestId(in.getId());
-				getServiceDAO().persist(sh);
 				if (getRepository() == null || 
 						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
 					processedRecordCount++;
@@ -539,10 +533,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 //				repo.addRecord(in);
 			}
 
-			if (getRecordLoops % 10 == 0 && !(getRepository() instanceof TestRepository)) {
+			if (getRecordLoops % 50 == 0 && !(getRepository() instanceof TestRepository)) {
 				endBatch();
+				getServiceDAO().persist(sh);
+				updateService(records, sh);
 			}
-			updateService(records, sh);
 			
 			records = getRecords(repo, sh, inputFormat, inputSet);
 			getRecordLoops++;

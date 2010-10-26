@@ -25,11 +25,21 @@ public class SaxMarcXmlRecord implements ContentHandler {
 	
 	private static final Logger LOG = Logger.getLogger(SaxMarcXmlRecord.class);
 	private static final List<Field> EMPTY_ARRAY_LIST = new ArrayList<Field>();
+	
+	private static XMLReader xmlReader = null;
 
 	private static final String LEADER = "leader";
 	private static final String CONTROL_FIELD = "controlfield";
 	private static final String DATA_FIELD = "datafield";
 	private static final String SUB_FIELD = "subfield";
+	
+	static {
+		try {
+			xmlReader = XMLReaderFactory.createXMLReader();
+		} catch (Throwable t) {
+			Util.getUtil().throwIt(t);
+		}
+	}
 	
 	protected boolean inTextValueField = false;
 	protected Field currentField = null;
@@ -45,9 +55,6 @@ public class SaxMarcXmlRecord implements ContentHandler {
 	public SaxMarcXmlRecord(String marcXml) {
 		try {
 			TimingLogger.start("sax");
-			TimingLogger.start("XMLReaderFactory.createXMLReader");
-			XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-			TimingLogger.stop("XMLReaderFactory.createXMLReader");
 			xmlReader.setContentHandler(this);
 			xmlReader.parse(new InputSource(new StringReader(marcXml)));
 		} catch (Throwable t) {

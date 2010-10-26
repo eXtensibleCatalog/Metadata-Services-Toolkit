@@ -122,4 +122,8 @@ public class SolrIndexService extends GenericMetadataService  {
 		return null;
 	}
 
+	public void runTests() {
+		//do nothing
+	}
+
 }

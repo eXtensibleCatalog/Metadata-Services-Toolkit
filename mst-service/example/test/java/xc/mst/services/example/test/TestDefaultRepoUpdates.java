@@ -8,7 +8,7 @@
   */
 package xc.mst.services.example.test;
 
-import xc.mst.test.BaseMetadataServiceTest;
+import xc.mst.service.impl.test.BaseMetadataServiceTest;
 
 public class TestDefaultRepoUpdates extends BaseMetadataServiceTest {
 	

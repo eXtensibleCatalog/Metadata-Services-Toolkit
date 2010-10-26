@@ -25,7 +25,6 @@ import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
 import xc.mst.services.GenericMetadataService;
-import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XmlHelper;
 

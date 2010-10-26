@@ -61,8 +61,8 @@ public class RepositoryDAO extends BaseDAO {
 	public final static String RECORD_PREDECESSORS_TABLE = "record_predecessors";
 	public final static String RECORD_OAI_IDS = "record_oai_ids";
 	public final static String REPOS_TABLE = "repos";
-	public final static String RECORD_MESSAGES_TABLE = "RECORD_MESSAGES";
 	public final static String RECORD_LINKS_TABLE = "record_links";
+	public final static String PROPERTIES = "properties";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -1300,5 +1300,24 @@ public class RepositoryDAO extends BaseDAO {
 			 //do nothing
 		 }
 		 return genericRepoIndexExists;
+	}
+	
+	public String getPersistentProperty(String name, String key) {
+		try {
+			return (String)this.jdbcTemplate.queryForObject(
+					" select value "+
+					" from "+getTableName(name, PROPERTIES)+
+					" where prop_key = ?", 
+					String.class,
+					key);
+		} catch (EmptyResultDataAccessException t) {
+			return null;
+		}
+	}
+
+	public void setPersistentProperty(String name, String key, String value) {
+		this.jdbcTemplate.update("insert into "+getTableName(name, PROPERTIES)+
+				" values (?, ?) on duplicate key update value=?",
+				key, value, value);
 	}
 }

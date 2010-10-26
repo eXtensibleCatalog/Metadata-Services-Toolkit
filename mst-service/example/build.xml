@@ -323,6 +323,7 @@
 			<env key="service.test" value="${test}"/>
 			<env key="test.folder" value="${test.folder}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
+			<env key="still.install.service" value="${still.install.service}"/>
 			<jvmarg value="-server" />
 			<jvmarg value="-Xms${test.memory}" />
 			<jvmarg value="-Xmx${test.memory}" />

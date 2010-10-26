@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 import xc.mst.bo.record.Record;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
-import xc.mst.test.BaseMetadataServiceTest;
+import xc.mst.service.impl.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
 public class CustomTest extends BaseMetadataServiceTest {

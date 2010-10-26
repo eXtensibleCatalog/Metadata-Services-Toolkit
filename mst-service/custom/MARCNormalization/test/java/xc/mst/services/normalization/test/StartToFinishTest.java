@@ -8,19 +8,9 @@
   */
 package xc.mst.services.normalization.test;
 
-import gnu.trove.TLongHashSet;
-
-import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.jdom.Element;
-import org.jdom.Namespace;
 
 import xc.mst.bo.provider.Format;
-import xc.mst.repo.Repository;
-import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.Util;
-import xc.mst.utils.XmlHelper;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -30,8 +20,14 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		return "test_repo";
 	}
 	
+	@Override
+	protected long getNumberOfRecordsToHarvest() {
+		//return Integer.MAX_VALUE;
+		return 250000;
+	}
+	
 	public String getProviderUrl() {
-		return "http://128.151.244.132:8080/OAIToolkit_testDataset_size10/oai-request.do";
+		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {
@@ -43,6 +39,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public void finalTest() {
+		/*
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
         TLongHashSet predecessors = new TLongHashSet();
@@ -55,12 +52,14 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		repo.populatePredecessors(predecessors);
 		LOG.debug(getServiceName()+".predecessors: "+predecessors);
 		LOG.debug(new Util().getString(predecessors));
+		*/
 	}
 
 	/**
 	 * To test harvest out functionality
 	 */
 	public void testHarvestOut() {
+		/*
 		try {
 			int numberOfRecords = 0;
 	
@@ -80,6 +79,6 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
-
+		*/
 	}
 }

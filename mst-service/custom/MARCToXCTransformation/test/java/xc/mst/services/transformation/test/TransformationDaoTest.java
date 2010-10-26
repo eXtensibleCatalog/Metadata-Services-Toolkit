@@ -15,9 +15,9 @@ import org.testng.annotations.Test;
 
 import xc.mst.bo.record.Record;
 import xc.mst.repo.RepositoryDAO;
+import xc.mst.service.impl.test.BaseMetadataServiceTest;
 import xc.mst.services.transformation.TransformationService;
 import xc.mst.services.transformation.dao.TransformationDAO;
-import xc.mst.test.BaseMetadataServiceTest;
 
 public class TransformationDaoTest extends BaseMetadataServiceTest {
 	

@@ -429,4 +429,22 @@ public class TestRepository extends BaseService implements Repository {
 	public boolean ready4harvest() {
 		return true;
 	}
+	
+	public int getPersistentPropertyAsInt(String key) {
+		//do nothing
+		return -1;
+	}
+
+	public void setPersistentPropertyAsInt(String key, int value) {
+		//do nothing
+	}
+	
+	public String getPersistentProperty(String key) {
+		//do nothing
+		return null;
+	}
+
+	public void setPersistentPropertyAsInt(String key, String value) {
+		//do nothing
+	}
 }

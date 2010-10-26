@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.test;
+package xc.mst.service.impl.test;
 
 import java.util.Date;
 
@@ -22,7 +22,6 @@ import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 import xc.mst.services.GenericMetadataService;
 import xc.mst.services.MetadataService;
-import xc.mst.spring.TestTypeFilter;
 
 public class BaseMetadataServiceTest extends BaseTest {
 	

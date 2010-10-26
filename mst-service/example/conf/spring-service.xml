@@ -61,7 +61,7 @@
 	
 	<context:component-scan base-package="xc.mst"
 			use-default-filters="false">
-		<context:include-filter type="custom" expression="xc.mst.spring.TestTypeFilter" />
+		<context:include-filter type="custom" expression="xc.mst.service.impl.test.TestTypeFilter" />
 	</context:component-scan>
 	
 	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>

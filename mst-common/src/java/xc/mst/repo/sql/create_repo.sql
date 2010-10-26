@@ -69,3 +69,9 @@ create table repo_name.record_predecessors (
 	*/
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+create table repo_name.properties (
+	prop_key     varchar(255)      not null,
+	value        varchar(255),
+
+	primary key(prop_key)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

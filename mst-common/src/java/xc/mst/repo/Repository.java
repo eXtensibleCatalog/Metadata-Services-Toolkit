@@ -91,5 +91,13 @@ public interface Repository {
 	public void processComplete();
 	
 	public boolean ready4harvest();
+	
+	public int getPersistentPropertyAsInt(String key);
+
+	public void setPersistentPropertyAsInt(String key, int value);
+	
+	public String getPersistentProperty(String key);
+
+	public void setPersistentPropertyAsInt(String key, String value);
 
 }

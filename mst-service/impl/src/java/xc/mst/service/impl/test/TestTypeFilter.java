@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   */
-package xc.mst.spring;
+package xc.mst.service.impl.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
 import xc.mst.services.MetadataService;
-import xc.mst.test.BaseMetadataServiceTest;
+import xc.mst.spring.MSTAutoBeanHelper;
 
 /**
  * 
@@ -71,8 +71,12 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			TestNG testng = new TestNG();
 			Set<Class> testClassesSet = new HashSet<Class>(testClasses);
 			for (Class c : testClassesSet) {
+				LOG.info("c: "+c);
 				boolean noSubClasses = true;
 				for (Class c2 : testClasses) {
+					LOG.info("c2: "+c2);
+					LOG.info("c.equals(c2): "+c.equals(c2));
+					LOG.info("c.isAssignableFrom(c2): "+c.isAssignableFrom(c2));
 					if (!c.equals(c2) && c.isAssignableFrom(c2)) {
 						noSubClasses = false;
 					}
@@ -81,7 +85,7 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 					testClasses.remove(c);
 				}
 			}
-			LOG.debug("testClasses: "+testClasses);
+			LOG.info("testClasses: "+testClasses);
 			testng.setTestClasses(testClasses.toArray(new Class[]{}));
 			testng.addListener(tla);
 			testng.run();

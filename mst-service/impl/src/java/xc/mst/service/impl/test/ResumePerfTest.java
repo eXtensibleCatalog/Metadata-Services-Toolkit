@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import xc.mst.repo.Repository;
-import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
 public class ResumePerfTest extends BaseMetadataServiceTest {

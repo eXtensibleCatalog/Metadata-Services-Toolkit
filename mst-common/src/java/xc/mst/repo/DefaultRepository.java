@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -267,5 +268,28 @@ public class DefaultRepository extends BaseService implements Repository {
 	public boolean ready4harvest() {
 		return getRepositoryDAO().ready4harvest(name);
 	}
+	
+	public int getPersistentPropertyAsInt(String key) {
+		String val = getRepositoryDAO().getPersistentProperty(name, key);
+		if (!StringUtils.isEmpty(val)) {
+			try {
+				return Integer.parseInt(val);
+			} catch (Throwable t) {
+				// do nothing
+			}	
+		}
+		return -1;
+	}
 
+	public void setPersistentPropertyAsInt(String key, int value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value+"");
+	}
+	
+	public String getPersistentProperty(String key) {
+		return getRepositoryDAO().getPersistentProperty(name, key);
+	}
+
+	public void setPersistentPropertyAsInt(String key, String value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value);
+	}
 }

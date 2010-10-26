@@ -24,7 +24,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.Repository;
-import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
 /**
