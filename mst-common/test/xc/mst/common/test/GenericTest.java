@@ -9,13 +9,16 @@
 
 package xc.mst.common.test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.jdom.Document;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -51,6 +54,43 @@ public class GenericTest extends BaseTest {
 		
 		try {
 			
+			Record r = getRepositoryDAO().getRecord("test_repo", 1000);
+			
+			//String testXml = getUtil().slurp(new File(MSTConfiguration.getUrlPath()+"/test.xml"));
+			String testXml = r.getOaiXml();
+			r.setMode(Record.JDOM_MODE);
+			Document doc = new XmlHelper().getJDomDocument(testXml);
+			String outXml = new XmlHelper().getString(doc.getRootElement());
+			System.out.println(outXml);
+			/*
+			InputStream istm = new ByteArrayInputStream("<yo>contains \\b</yo>".getBytes("UTF-8"));
+			Document doc = xmlHelper.getJDomDocument(istm);
+			
+			String containsB = new XmlHelper().getString(doc.getRootElement());
+			System.out.println("containsB: "+containsB);
+			
+			containsB = getJdbcTemplate().queryForObject("select prop_key from marctoxctransformation.properties", String.class);
+			LOG.debug("containsB: "+containsB);
+			System.out.println("containsB: "+containsB);
+			containsB = "contains \\b";
+			LOG.debug("containsB: "+containsB);
+			System.out.println("containsB: "+containsB);
+			*/
+			/*
+			String dbLoadFileStr = MSTConfiguration.getUrlPath()+"/db_load.in";
+			LOG.debug("1 dbLoadFileStr: "+dbLoadFileStr);
+			
+			dbLoadFileStr = dbLoadFileStr.replace('\\', '/');
+			LOG.debug("2 dbLoadFileStr: "+dbLoadFileStr);
+			
+			dbLoadFileStr = dbLoadFileStr.replaceAll("\\\\", "/");
+			LOG.debug("3 dbLoadFileStr: "+dbLoadFileStr);
+			
+			dbLoadFileStr = dbLoadFileStr.replaceAll("\\", "/");
+			LOG.debug("4 dbLoadFileStr: "+dbLoadFileStr);
+			*/
+			
+			/*
 			String str = getUtil().slurp(new File("docs/393842.xml"));
 			
 			XmlHelper x = new XmlHelper();
@@ -60,7 +100,7 @@ public class GenericTest extends BaseTest {
 				TimingLogger.stop("x");
 			}
 			TimingLogger.reset();
-			
+			*/
 			/*
 			JdbcTemplate jdbcTemplate = new JdbcTemplate((DataSource)getBean("DataSource"));
 			

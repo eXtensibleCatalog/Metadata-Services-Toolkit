@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
@@ -493,7 +494,7 @@ public class NormalizationService extends GenericMetadataService {
 		}
 
 		String field006 = marcXml.getField006();
-		if(field006 != null)
+		if(!StringUtils.isEmpty(field006))
 		{
 			// The character at offset 6 of the leader field
 			char field006_0 = field006.charAt(0);
@@ -1320,17 +1321,17 @@ public class NormalizationService extends GenericMetadataService {
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b")) {
 					bSubfield = subfield;
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO, 
-							"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
+					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO, 
+					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
 				}
 
 				// Initialize the subfield9 if we found the $9
 				if(subfield.getAttribute("code").getValue().equals("9")) {
 					subfield9 = subfield;
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, 
-							"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, 
+					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 				}
 					
 			} // end loop over 035 subfields

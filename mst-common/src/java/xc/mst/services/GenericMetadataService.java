@@ -527,52 +527,50 @@ public abstract class GenericMetadataService extends SolrMetadataService
 						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
 					processedRecordCount++;
 				}
+				updateService(records, out, sh);
 				
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
 //				repo.addRecord(in);
 			}
 
-			if (getRecordLoops % 50 == 0 && !(getRepository() instanceof TestRepository)) {
+			if (++getRecordLoops % 50 == 0 && !(getRepository() instanceof TestRepository)) {
 				endBatch();
 				getServiceDAO().persist(sh);
-				updateService(records, sh);
 			}
 			
 			records = getRecords(repo, sh, inputFormat, inputSet);
-			getRecordLoops++;
-
 		}
 		//  TODO not inserting errors on input record.
 //		repo.endBatch();
+
+		if (atLeastOneRecordProcessed) {
+			endBatch();
+		}
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);
 		}
-		if (!previouslyPaused) {
-			running.release();
-		}
-		updateService(records, sh);
 		if (atLeastOneRecordProcessed) {
-			endBatch();
 			if (getRepository() != null)
 				getRepository().processComplete();
 		}
+		if (!previouslyPaused) {
+			running.release();
+		}
 	}
 	
-	protected void updateService(List<Record> records, ServiceHarvest sh) {
+	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {
 		if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
-			LOG.debug("sh.getId(): "+sh.getId());
-			getServiceDAO().persist(sh);
-
 			// Set number of input and output records.
 			LOG.debug("service.getName(): "+service.getName());
-			LOG.debug("records.size(): "+records.size());
+			//LOG.debug("records.size(): "+inputRecords.size());
 			LOG.debug("service.getInputRecordCount(): "+service.getInputRecordCount());
-			LOG.debug("records.size(): "+records.size());
+			//LOG.debug("records.size(): "+inputRecords.size());
 			LOG.debug("getRepository().getSize(): "+getRepository().getSize());
-			service.setInputRecordCount(service.getInputRecordCount() + records.size());
-			service.setOutputRecordCount(getRepository().getSize());
+			service.setInputRecordCount(service.getInputRecordCount() + 1);
+			if (outputRecords != null)
+				service.setOutputRecordCount(service.getOutputRecordCount() + outputRecords.size());
 			
 			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
 			// TODO : Should # of harvest out records available include deleted records too? 

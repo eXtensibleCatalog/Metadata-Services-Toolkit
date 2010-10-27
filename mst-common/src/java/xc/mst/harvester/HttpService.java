@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 
 import xc.mst.manager.BaseService;
+import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
 public class HttpService extends BaseService {
@@ -60,7 +61,9 @@ public class HttpService extends BaseService {
 			getOaiResponse = new GetMethod(request);
 
 			// Execute the get method to get the Voyager "first" page
+			TimingLogger.start("http");
 			statusCode = client.executeMethod(getOaiResponse);
+			TimingLogger.stop("http");
 			
 			// If the get was successful (200 is the status code for success)
 	        if (statusCode == 200) {       

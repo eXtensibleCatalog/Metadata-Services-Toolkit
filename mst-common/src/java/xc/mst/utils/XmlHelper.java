@@ -130,7 +130,13 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(InputStream is) {
 		try {
-			return getSaxBuilder().build(is);
+			TimingLogger.start("getSaxBuilder");
+			SAXBuilder sb = getSaxBuilder();
+			TimingLogger.stop("getSaxBuilder");
+			TimingLogger.start("sax");
+			org.jdom.Document doc = sb.build(is);
+			TimingLogger.stop("sax");
+			return doc;
 		} catch (Throwable t) {
 			LOG.error("", t);
 			Util.getUtil().throwIt(t);

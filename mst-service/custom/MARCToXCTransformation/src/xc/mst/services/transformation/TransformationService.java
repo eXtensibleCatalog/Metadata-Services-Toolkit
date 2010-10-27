@@ -392,8 +392,8 @@ public class TransformationService extends SolrTransformationService {
 			for (OutputRecord or : results) {
 				or.setFormat(xcFormat);
 			}
-			if (results.size() != 1) {
-				addMessage(record, 108, RecordMessage.ERROR);
+			if (results.size() == 0) {
+				addMessage(record, 102, RecordMessage.ERROR);
 			}
 			return results;
 		} catch (Throwable t) {

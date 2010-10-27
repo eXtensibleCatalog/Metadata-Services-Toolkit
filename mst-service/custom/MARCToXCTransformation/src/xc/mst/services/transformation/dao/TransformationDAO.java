@@ -14,20 +14,28 @@ import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongLongProcedure;
 import gnu.trove.TLongProcedure;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -64,37 +72,76 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 				bibsYet2ArriveLongIdAdded, bibsYet2ArriveLongId_table,
 				bibsYet2ArriveStringIdAdded, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
-			if (objArr[i] == null) {
-				continue;
-			}
-			String tableName = (String)objArr[i+1];
-			final List<Object[]> params = new ArrayList<Object[]>();
-			if (objArr[i] instanceof TLongLongHashMap) {
-				TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
-				if (longKeyedMap != null && longKeyedMap.size() > 0) {
-					longKeyedMap.forEachEntry(new TLongLongProcedure() {
-						public boolean execute(long key, long value) {
-							params.add(new Object[] {key, value});
-							return true;
-						}
-					});		
+			try {
+				if (objArr[i] == null) {
+					continue;
 				}
-			} else if (objArr[i] instanceof Map) {
-				Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
-				if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
-					for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
-						params.add(new Object[] {me.getKey(), me.getValue()});
+				String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
+				final byte[] tabBytes = "\t".getBytes();
+				final byte[] newLineBytes = "\n".getBytes();
+				
+				File dbLoadFile = new File(dbLoadFileStr);
+				if (dbLoadFile.exists()) {
+					dbLoadFile.delete();
+				}
+				final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+				final MutableInt j = new MutableInt(0);
+				final String tableName = (String)objArr[i+1];
+				TimingLogger.start(tableName+".insert");
+				TimingLogger.start(tableName+".insert.create_infile");
+				final List<Object[]> params = new ArrayList<Object[]>();
+				if (objArr[i] instanceof TLongLongHashMap) {
+					TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
+					LOG.debug("insert: "+tableName+".size(): "+longKeyedMap.size());
+					if (longKeyedMap != null && longKeyedMap.size() > 0) {
+						longKeyedMap.forEachEntry(new TLongLongProcedure() {
+							public boolean execute(long key, long value) {
+								try {
+									if (j.intValue() > 0) {
+										LOG.debug("line break!!! j:"+j.intValue());
+										os.write(newLineBytes);
+									} else {
+										j.increment();
+									}
+									os.write(String.valueOf(key).getBytes());
+									os.write(tabBytes);
+									os.write(String.valueOf(value).getBytes());
+								} catch (Throwable t) {
+									getUtil().throwIt(t);
+								}
+								return true;
+							}
+						});		
+					}
+				} else if (objArr[i] instanceof Map) {
+					Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
+					LOG.debug("insert: "+tableName+".size(): "+stringKeyedMap.size());
+					if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
+						for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
+							if (j.intValue() > 0) {
+								os.write(newLineBytes);
+							} else {
+								j.increment();
+							}
+							os.write(me.getKey().getBytes());
+							os.write(tabBytes);
+							os.write(String.valueOf(me.getValue()).getBytes());
+						}
 					}
 				}
-			}
-			if (params.size() > 0) {
-				TimingLogger.start(tableName+".insert");
-				String sql =
-					"insert ignore into "+tableName+
-					" (bib_001, record_id) "+
-					"values (?,?) ;";
-		        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
-		        TimingLogger.stop(tableName+".insert");	
+	
+				os.close();
+				TimingLogger.stop(tableName+".insert.create_infile");
+				TimingLogger.start(tableName+".insert.load_infile");
+				this.jdbcTemplate.execute(
+						"load data infile '"+dbLoadFileStr+"' into table "+
+						tableName+
+						" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+						);
+				TimingLogger.stop(tableName+".insert.load_infile");
+				TimingLogger.stop(tableName+".insert");
+			} catch (Throwable t) {
+				getUtil().throwIt(t);
 			}
 		}
 		
@@ -111,6 +158,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 			final List<Object[]> params = new ArrayList<Object[]>();
 			if (objArr[i] instanceof TLongLongHashMap) {
 				TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
+				LOG.debug("delete: "+tableName+".size(): "+longKeyedMap.size());
 				if (longKeyedMap != null && longKeyedMap.size() > 0) {
 					longKeyedMap.forEachEntry(new TLongLongProcedure() {
 						public boolean execute(long key, long value) {
@@ -121,6 +169,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 				}
 			} else if (objArr[i] instanceof Map) {
 				Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
+				LOG.debug("delete: "+tableName+".size(): "+stringKeyedMap.size());
 				if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
 					for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
 						params.add(new Object[] {me.getKey(), me.getValue()});
