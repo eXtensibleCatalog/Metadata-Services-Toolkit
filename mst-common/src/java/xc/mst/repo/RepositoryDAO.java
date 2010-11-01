@@ -33,7 +33,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -481,8 +480,8 @@ public class RepositoryDAO extends BaseDAO {
 					byte[] startTimeBytes = sdf.format(new Date(startTime)).getBytes();
 					byte[] tabBytes = "\t".getBytes();
 					byte[] newLineBytes = "\n".getBytes();
-					byte[] nullBytes = "\u0000".getBytes();
-					byte[] bellBytes = "\u0007".getBytes();
+					byte[] nullBytes = "\u0000\n".getBytes();
+					byte[] bellBytes = "\u0000\t".getBytes();
 					
 					File dbLoadFile = new File(dbLoadFileStr);
 					if (dbLoadFile.exists()) {
@@ -513,7 +512,7 @@ public class RepositoryDAO extends BaseDAO {
 					TimingLogger.stop("RECORDS_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' into table "+
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 							getTableName(name, RECORDS_TABLE)+
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
@@ -543,15 +542,16 @@ public class RepositoryDAO extends BaseDAO {
 						os.write(String.valueOf(r.getId()).getBytes());
 						os.write(bellBytes);
 						r.setMode(Record.STRING_MODE);
-						os.write(String.valueOf(r.getOaiXml()).getBytes("UTF-8"));
+						if (r.getOaiXml() != null)
+							os.write(String.valueOf(r.getOaiXml()).getBytes("UTF-8"));
 					}
 					os.close();
 					TimingLogger.stop("RECORDS_XML_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_XML_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' into table "+
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 							getTableName(name, RECORDS_XML_TABLE)+
-							" character set utf8 fields terminated by '\\a' escaped by '' lines terminated by '\\0'"
+							" character set utf8 fields terminated by '\\0\\t' escaped by '' lines terminated by '\\0\\n'"
 							);
 					TimingLogger.stop("RECORDS_XML_TABLE.insert.load_infile");
 					TimingLogger.stop("RECORDS_XML_TABLE.insert");
@@ -579,7 +579,7 @@ public class RepositoryDAO extends BaseDAO {
 					TimingLogger.stop("RECORDS_SETS_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_SETS_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' into table "+
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 							getTableName(name, RECORDS_SETS_TABLE)+
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
@@ -609,7 +609,7 @@ public class RepositoryDAO extends BaseDAO {
 			        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_SETS_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' into table "+
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 							getTableName(name, RECORD_PREDECESSORS_TABLE)+
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
@@ -640,7 +640,7 @@ public class RepositoryDAO extends BaseDAO {
 					TimingLogger.start("RECORDS_OAI_IDS.insert.load_infile");
 					if (atLeastOne) {
 						this.jdbcTemplate.execute(
-								"load data infile '"+dbLoadFileStr+"' into table "+
+								"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 								getTableName(name, RECORD_OAI_IDS)+
 								" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 								);
@@ -672,7 +672,7 @@ public class RepositoryDAO extends BaseDAO {
 			        TimingLogger.stop("RECORD_UPDATES_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_UPDATES_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' into table "+
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 							getTableName(name, RECORD_UPDATES_TABLE)+
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);

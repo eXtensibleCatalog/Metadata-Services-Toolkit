@@ -527,7 +527,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
 					processedRecordCount++;
 				}
-				updateService(records, out, sh);
+				updateService(out, sh);
 				
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record

@@ -134,7 +134,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 				TimingLogger.stop(tableName+".insert.create_infile");
 				TimingLogger.start(tableName+".insert.load_infile");
 				this.jdbcTemplate.execute(
-						"load data infile '"+dbLoadFileStr+"' into table "+
+						"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 						tableName+
 						" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 						);

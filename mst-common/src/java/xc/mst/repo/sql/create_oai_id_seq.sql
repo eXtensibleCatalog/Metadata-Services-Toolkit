@@ -1,3 +1,4 @@
+SET GLOBAL log_bin_trust_function_creators = 1;
 drop table if exists oai_id_sequence;
 
 create table oai_id_sequence (

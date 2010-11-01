@@ -4,11 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -18,12 +16,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-
-import sun.misc.resources.Messages_de;
 
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
@@ -106,7 +100,7 @@ public class MessageDAO extends BaseDAO {
 			TimingLogger.stop("MESSAGES_TABLE.insert.create_infile");
 			TimingLogger.start("MESSAGES_TABLE.insert.load_infile");
 			this.jdbcTemplate.execute(
-					"load data infile '"+dbLoadFileStr+"' into table "+
+					"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 					MESSAGES_TABLE+
 					" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 					);
@@ -135,7 +129,7 @@ public class MessageDAO extends BaseDAO {
 			TimingLogger.stop("MESSAGES_DETAIL_TABLE.insert.create_infile");
 			TimingLogger.start("MESSAGES_DETAIL_TABLE.insert.load_infile");
 			this.jdbcTemplate.execute(
-					"load data infile '"+dbLoadFileStr+"' into table "+
+					"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
 					MESSAGE_DETAILS_TABLE+
 					" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 					);

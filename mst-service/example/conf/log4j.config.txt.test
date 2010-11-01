@@ -84,5 +84,5 @@ log4j.logger.httpclient.wire=INFO
 log4j.logger.org.hibernate=INFO
 log4j.logger.org.hibernate.SQL=TRACE
 log4j.logger.org.hibernate.type=TRACE
-log4j.logger.com.opensymphony.xwork2=INFO
+log4j.logger.com.opensymphony.xwork2=ERROR
 #log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR

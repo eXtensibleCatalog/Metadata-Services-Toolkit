@@ -78,6 +78,7 @@ public class SetupClasspath {
 	    	addURL(new URL(url));
 	    	
 	    	System.setProperty("mst.root.dir", rootDir);
+	    	System.setProperty("mst.instance.dir", dir);
 	    	
 	    	PropertyConfigurator.configure(rootDir+"MST-instances/"+dir+"/log4j.config.txt");
     	} catch (Throwable t) {
