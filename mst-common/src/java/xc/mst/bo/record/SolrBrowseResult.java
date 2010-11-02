@@ -95,9 +95,9 @@ public class SolrBrowseResult {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" query= "+query);
 		buffer.append(" totalNumberOfResults= "+totalNumberOfResults);
-		for(Record r : records) {
-			buffer.append(" Record id ="+r.getId());
-		}
+		//for(Record r : records) {
+		//	buffer.append(" Record id ="+r.getId());
+		//}
 		return buffer.toString();
 	}
 

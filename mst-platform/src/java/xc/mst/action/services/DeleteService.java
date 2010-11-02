@@ -111,7 +111,9 @@ public class DeleteService extends BaseActionSupport
     		service = getServicesService().getServiceById(serviceId);
     		
     		// Delete service
-   	    	getServicesService().deleteServiceAndRecordsByJob(service);
+    		getServicesService().deleteService(service);
+    		// BDA - I don't think we need to schedule this anymore - should be a quick operation.
+   	    	//getServicesService().deleteServiceAndRecordsByJob(service);
             return SUCCESS;
         }
         catch(DataException e)

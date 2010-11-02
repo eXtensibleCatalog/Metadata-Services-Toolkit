@@ -179,6 +179,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                     }
                     else
                     {
+                    	/*
                         if(sourceType.equalsIgnoreCase("provider"))
                         {
                             tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
@@ -187,6 +188,8 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                         {
                             tempSetList = tempProcDir.getSourceService().getOutputSets();
                         }
+                        */
+                    	tempSetList = null;
                         break;
                     }
                 }

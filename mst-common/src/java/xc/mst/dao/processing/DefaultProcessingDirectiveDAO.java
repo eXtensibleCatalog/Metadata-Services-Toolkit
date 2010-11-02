@@ -732,8 +732,10 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 				        processingDirective.setId(rs.getInt(1));
 
 				    // Add the correct input sets for the processing directive
-					for(Set set : processingDirective.getTriggeringSets())
-						getProcessingDirectiveInputSetUtilDAO().insert(processingDirective.getId(), set.getId());
+				    if (processingDirective.getTriggeringSets() != null) {
+						for(Set set : processingDirective.getTriggeringSets())
+							getProcessingDirectiveInputSetUtilDAO().insert(processingDirective.getId(), set.getId());
+				    }
 
 					// Add the correct input formats for the processing directive
 					for(Format format : processingDirective.getTriggeringFormats())
@@ -855,6 +857,13 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 
 			try
 			{
+				
+				this.jdbcTemplate.update("delete from processing_directives_to_input_formats where processing_directive_id=?", 
+						processingDirective.getId());
+				
+				this.jdbcTemplate.update("delete from processing_directives_to_input_sets where processing_directive_id=?", 
+						processingDirective.getId());
+				
 				// If the PreparedStatement to delete a service to output format was not defined, create it
 				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
 				{
