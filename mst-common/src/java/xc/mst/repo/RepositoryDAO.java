@@ -871,18 +871,22 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				" select "+RECORDS_TABLE_COLUMNS+
+				" select straight_join "+RECORDS_TABLE_COLUMNS+
 				" x.xml, "+ " max(u.date_updated) as date_updated " +
-				" from "+getTableName(name, RECORDS_TABLE)+" r ");
-		if (startingId != null && inputFormat != null) {
+				" from ");
+		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+		sb.append("IGNORE index (idx_"+name+"_record_updates_date_updated) ");
+		sb.append(", ");
+		sb.append(getTableName(name, RECORDS_TABLE)+" r ");
+		if (inputFormat != null) {
 			sb.append("IGNORE index (idx_"+name+"_records_format_id) " );
 		}
-		sb.append(", "+
-				getTableName(name, RECORDS_XML_TABLE)+" x, " +
-				getTableName(name, RECORD_UPDATES_TABLE)+" u ");
+		sb.append(", ");
+		sb.append(getTableName(name, RECORDS_XML_TABLE)+" x ");
+		
 		if (inputSet != null) {
 			sb.append(
-				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+name+"_records_set_set_id) ");
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id) ");
 		}
 		sb.append(
 				" where r.record_id = x.record_id " +
@@ -918,8 +922,8 @@ public class RepositoryDAO extends BaseDAO {
 			params.add(inputSet.getId());
 		}
 		sb.append(
-				" group by r.record_id "+
-				" order by r.record_id "+
+				" group by u.record_id "+
+				" order by u.record_id "+
 				" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000));
 
 		Object obj[] = params.toArray();
@@ -1081,24 +1085,20 @@ public class RepositoryDAO extends BaseDAO {
 			Long highestId = records.get(records.size()-1).getId();
 			StringBuilder sb = new StringBuilder();
 			sb.append(
-					" select "+RECORDS_TABLE_COLUMNS+
+					" select rs.record_id, "+
 						"s.set_id, "+
 						"s.set_spec, "+
 						"s.display_name "+
-					" from "+getTableName(name, RECORDS_TABLE)+" r, "+
-						getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
 						" sets s"+
-					" where r.record_id = u.record_id " +
-						" and rs.record_id = r.record_id "+
+					" where rs.record_id = u.record_id " +
 						" and rs.set_id = s.set_id "+
-						" and (r.record_id > ? or ? is null) "+
-						" and r.record_id <= ? "+
+						" and (rs.record_id > ? or ? is null) "+
+						" and rs.record_id <= ? "+
 						" and (u.date_updated > ? or ? is null) "+
 						" and u.date_updated <= ? "+
-						" group by r.record_id "+
-						" order by r.record_id "+
-						" limit " + MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000));
+						" order by rs.record_id ");
 			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
 			params.add(startingId);
 			params.add(startingId);
@@ -1114,7 +1114,7 @@ public class RepositoryDAO extends BaseDAO {
 				//LOG.error("records_w_sets_query");
 				TimingLogger.start("records_w_sets_query");
 				recordsWSets = this.jdbcTemplate.query(sb.toString(), obj, 
-						new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_SETS_TABLE}, this));
+						new RecordMapper(new String[]{RECORDS_SETS_TABLE}, this));
 				LOG.debug("recordsWSets.size() "+recordsWSets.size());
 				TimingLogger.stop("records_w_sets_query");
 				
@@ -1343,7 +1343,7 @@ public class RepositoryDAO extends BaseDAO {
 	        }
 	        
 	        if (tables.contains(RECORDS_SETS_TABLE)) {
-	        	r.setId(rs.getLong("r.record_id"));
+	        	r.setId(rs.getLong("rs.record_id"));
 	        	Set s = new Set();
 	        	s.setId(rs.getInt("s.set_id"));
 	        	s.setSetSpec(rs.getString("s.set_spec"));
@@ -1420,8 +1420,8 @@ public class RepositoryDAO extends BaseDAO {
 					 "alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
 					 
 					 "alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
-					 "create index idx_"+name+"_records_set_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
-					 "create index idx_"+name+"_records_set_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
+					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
+					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
 					 
 					 //"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
 					 "alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
@@ -1431,7 +1431,11 @@ public class RepositoryDAO extends BaseDAO {
 			 };
 			 for (String i2c : indicies2create) {
 				 TimingLogger.start(i2c.split(" ")[2]);
-				 this.jdbcTemplate.execute(i2c);
+				 try {
+					 this.jdbcTemplate.execute(i2c);
+				 } catch (Throwable t) {
+					 LOG.error("", t);
+				 }
 				 TimingLogger.stop(i2c.split(" ")[2]);
 			 }
 		 }

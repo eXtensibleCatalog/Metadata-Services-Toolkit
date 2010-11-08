@@ -1056,6 +1056,7 @@ public class DefaultServiceDAO extends ServiceDAO
 			try
 			{
 				this.jdbcTemplate.update("delete from service_harvests where service_id=?", service.getId());
+				this.jdbcTemplate.update("delete from service_harvests where repo_name=?", service.getMetadataService().getRepository().getName());
 				this.jdbcTemplate.update("delete from services_to_input_formats where service_id=?", service.getId());
 				this.jdbcTemplate.update("delete from services_to_output_formats where service_id=?", service.getId());
 				this.jdbcTemplate.update("delete from services_to_output_sets where service_id=?", service.getId());

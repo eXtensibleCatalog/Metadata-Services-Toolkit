@@ -814,9 +814,11 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 					getProcessingDirectiveInputSetUtilDAO().deleteInputSetsForProcessingDirective(processingDirective.getId());
 					getProcessingDirectiveInputFormatUtilDAO().deleteInputFormatsForProcessingDirective(processingDirective.getId());
 
-				    // Add the correct input sets for the processing directive
-					for(Set set : processingDirective.getTriggeringSets())
-						getProcessingDirectiveInputSetUtilDAO().insert(processingDirective.getId(), set.getId());
+					if (processingDirective.getTriggeringSets() != null) {
+					    // Add the correct input sets for the processing directive
+						for(Set set : processingDirective.getTriggeringSets())
+							getProcessingDirectiveInputSetUtilDAO().insert(processingDirective.getId(), set.getId());
+					}
 
 					// Add the correct input formats for the processing directive
 					for(Format format : processingDirective.getTriggeringFormats())

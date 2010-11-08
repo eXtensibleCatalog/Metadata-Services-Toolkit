@@ -94,7 +94,11 @@
 
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
-			<path refid="webapp.path" />
+			<fileset dir="${mp.build.webapp}">
+				<exclude name="**/jsp-api*.jar"/>
+				<exclude name="**/servlet-api*.jar"/>
+				<exclude name="**/env.properties"/>
+			</fileset>
 		</jar>
 		<copy todir="${mst-instances}/MST-instances" file="${mp.build.dir}/${mp.project-name}.war" />
 	</target>
