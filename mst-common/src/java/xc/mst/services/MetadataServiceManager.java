@@ -79,22 +79,24 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 	}
 
 	public boolean doSomeWork() {
-		if (triggeringFormats != null) {
-			for (Format f : triggeringFormats) {
-				if (triggeringSets != null && triggeringSets.size() > 0) {
-					for (Set s : triggeringSets) {
-						metadataService.process(incomingRepository, f, s, outputSet);
+		if (incomingRepository.ready4harvest()) {
+			if (triggeringFormats != null) {
+				for (Format f : triggeringFormats) {
+					if (triggeringSets != null && triggeringSets.size() > 0) {
+						for (Set s : triggeringSets) {
+							metadataService.process(incomingRepository, f, s, outputSet);
+						}
+					} else {
+						metadataService.process(incomingRepository, f, null, outputSet);	
 					}
-				} else {
-					metadataService.process(incomingRepository, f, null, outputSet);	
 				}
+			} else if (triggeringSets != null && triggeringSets.size() > 0) {
+				for (Set s : triggeringSets) {
+					metadataService.process(incomingRepository, null, s, outputSet);
+				}
+			} else {
+				metadataService.process(incomingRepository, null, null, outputSet);
 			}
-		} else if (triggeringSets != null && triggeringSets.size() > 0) {
-			for (Set s : triggeringSets) {
-				metadataService.process(incomingRepository, null, s, outputSet);
-			}
-		} else {
-			metadataService.process(incomingRepository, null, null, outputSet);
 		}
 		return false;
 	}

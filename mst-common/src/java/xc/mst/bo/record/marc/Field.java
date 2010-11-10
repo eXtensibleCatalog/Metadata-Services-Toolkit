@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Field {
+	
+	public static char NULL_CHAR = Character.MAX_HIGH_SURROGATE;
 
 	protected int tag = -1;
-	protected int ind1 = -1;
-	protected int ind2 = -1;
+	protected char ind1 = NULL_CHAR;
+	protected char ind2 = NULL_CHAR;
 	
 	protected String contents = null;
 	protected List<Subfield> subfields = null;
@@ -20,19 +22,19 @@ public class Field {
 		this.tag = tag;
 	}
 
-	public int getInd1() {
+	public char getInd1() {
 		return ind1;
 	}
 
-	public void setInd1(int ind1) {
+	public void setInd1(char ind1) {
 		this.ind1 = ind1;
 	}
 
-	public int getInd2() {
+	public char getInd2() {
 		return ind2;
 	}
 
-	public void setInd2(int ind2) {
+	public void setInd2(char ind2) {
 		this.ind2 = ind2;
 	}
 	

@@ -154,7 +154,9 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
 		try {
 			Job job = new Job();
 			job.setService(pd.getService());
-			job.setOutputSetId(pd.getOutputSet().getId());
+			if (pd.getOutputSet() != null) {
+				job.setOutputSetId(pd.getOutputSet().getId());
+			}
 			job.setJobType(Constants.THREAD_SERVICE);
 			job.setOrder(getJobService().getMaxOrder() + 1);
 			job.setProcessingDirective(pd);

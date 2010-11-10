@@ -178,14 +178,14 @@ public class SaxMarcXmlRecord implements ContentHandler {
 				String tag = atts.getValue("tag");
 				currentField.setTag(Integer.parseInt(tag));
 				
-				String ind1 = StringUtils.trimToNull(atts.getValue("ind1"));
-				if (ind1 != null) {
-					currentField.setInd1(Integer.parseInt(ind1));
+				String ind1 = atts.getValue("ind1");
+				if (ind1 != null && !ind1.equals("")) {
+					currentField.setInd1(ind1.charAt(0));
 				}
 				
-				String ind2 = StringUtils.trimToNull(atts.getValue("ind2"));
-				if (ind2 != null) {
-					currentField.setInd2(Integer.parseInt(ind2));
+				String ind2 = atts.getValue("ind2");
+				if (ind2 != null&& !ind2.equals("")) {
+					currentField.setInd2(ind2.charAt(0));
 				}
 			} else if (SUB_FIELD.equals(localName)) {
 				currentSubfield = new Subfield();
@@ -275,13 +275,13 @@ public class SaxMarcXmlRecord implements ContentHandler {
 		return ret;
 	}
 	
-	public static int getIndicatorOfField(Field datafield, int indicator) {
+	public static char getIndicatorOfField(Field datafield, int indicator) {
 		if (indicator == 1) {
 			return datafield.getInd1();
 		} else if (indicator == 2) {
 			return datafield.getInd2();
 		} else {
-			return -1;
+			return Field.NULL_CHAR;
 		}
 	}
 	
@@ -300,7 +300,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<String> get014s(int ind, char code) {
+	public List<String> get014s(char ind, char code) {
 		List<String> the014s = new ArrayList<String>();
 		
 		if (marcRecord.getDataFields() != null) {

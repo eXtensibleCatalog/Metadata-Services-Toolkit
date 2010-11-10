@@ -100,7 +100,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	}
 
 	protected void holdingsProcess014(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto) {
-		List<String> the014s = transformMe.get014s(1, 'a');
+		List<String> the014s = transformMe.get014s('1', 'a');
 		if (the014s != null && the014s.size() > 0) {
 			transformInto.getReferencedBibs().addAll(the014s);
 		}
@@ -176,13 +176,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process024(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 1st indicator to the type of the XC:identifier
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "ISRC"));
-		indicatorToType.put(1, new Attribute("type", "UPC"));
-		indicatorToType.put(2, new Attribute("type", "ISMN"));
-		indicatorToType.put(3, new Attribute("type", "IAN"));
-		indicatorToType.put(4, new Attribute("type", "SICI"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "ISRC"));
+		indicatorToType.put('1', new Attribute("type", "UPC"));
+		indicatorToType.put('2', new Attribute("type", "ISMN"));
+		indicatorToType.put('3', new Attribute("type", "IAN"));
+		indicatorToType.put('4', new Attribute("type", "SICI"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:identifier with a type based on the 1st indicator and a value based on the 024 $a values
 		return processFieldAttributeFromIndicator(transformMe, transformInto, 24, 'a', "identifier", AggregateXCRecord.XC_NAMESPACE, 1, indicatorToType, true, FrbrLevel.MANIFESTATION);
@@ -210,10 +210,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		{
 			// Get the $a and 1st indicator from the datafield
 			List<String> subfieldAs = SaxMarcXmlRecord.getSubfieldOfField(pn, 'a');
-			int ind1 = SaxMarcXmlRecord.getIndicatorOfField(pn, 1);
+			char ind1 = SaxMarcXmlRecord.getIndicatorOfField(pn, 1);
 
 			// If there was no $a subfield or 1st indicator, continue to the next 028 element
-			if(subfieldAs.size() <= 0 || ind1 == -1 )
+			if(subfieldAs.size() <= 0 || ind1 == Field.NULL_CHAR )
 				continue;
 
 			// Get the $a subfield.  This is a non-repeatable subfield, so there should only be one
@@ -223,25 +223,25 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			String name = null;
 			String type = null;
 			Namespace namespace = null;
-			if(ind1 == 0)
+			if(ind1 == '0')
 			{
 				name= "identifier";
 				type = "SoundNr";
 				namespace = AggregateXCRecord.XC_NAMESPACE;
 			}
-			else if(ind1 == 2)
+			else if(ind1 == '2')
 			{
 				name= "plateNumber";
 				type = null;
 				namespace = AggregateXCRecord.RDVOCAB_NAMESPACE;
 			}
-			else if(ind1 == 3)
+			else if(ind1 == '3')
 			{
 				name= "publisherNumber";
 				type = null;
 				namespace = AggregateXCRecord.RDVOCAB_NAMESPACE;
 			}
-			else if(ind1 == 4)
+			else if(ind1 == '4')
 			{
 				name= "identifier";
 				type = "VideoNr";
@@ -443,13 +443,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	{
 		
 		// Setup the map from the 1st indicator to the type of the XC:identifier
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(2, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(4, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(5, new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('2', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('4', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('5', new Attribute("type", "dcterms:LCC", AggregateXCRecord.XSI_NAMESPACE));
 
 		// Create an xc:identifier with a type based on the 1st indicator and a value based on the 024 $a values
 		return processFieldAttributeFromIndicator(transformMe, transformInto, 55, 'a', "subject", AggregateXCRecord.DCTERMS_NAMESPACE, 2, indicatorToType, false, FrbrLevel.WORK);
@@ -1024,7 +1024,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the required indicator
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 
 			// Setup the attribute list for the processed field
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -1052,7 +1052,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
 				// If the 2nd indicator is 1,
-				if(ind2 == 1)
+				if(ind2 == '1')
 				{
 					if(LOG.isDebugEnabled())
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level title based on the concatination of the 246's subfields' value, which is " + value);
@@ -1290,7 +1290,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		subfieldToAttribute.put('x', new Attribute("ISSN", "null", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isPartOf based on the 490 av values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 490, "av", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, 1, 0, subfieldToAttribute, FrbrLevel.MANIFESTATION);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 490, "av", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE, 1, '0', subfieldToAttribute, FrbrLevel.MANIFESTATION);
 	}
 
 	/**
@@ -1756,14 +1756,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process600(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 600 abcdefgklmnopqrstuvwxyz23 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 600, "abcdefgklmnopqrstuvwxyz23", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1780,14 +1780,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process610(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 610 abcdefgklmnopqrstuvwxyz23 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 610, "abcdefgklmnopqrstuvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1804,14 +1804,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process611(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 611 acdefgklnpqstvwxyz234 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 611, "acdefgklnpqstvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1828,14 +1828,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process630(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 630 adefgklmnoprstvwxyz234 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 630, "adefgklmnoprstvwxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1852,14 +1852,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process648(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:temporal with a type based on the 2nd indicator and a value based on the 648 avwxyz2 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 648, "avwxyz", "vxyz", "temporal", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1876,14 +1876,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process650(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject with a type based on the 2nd indicator and a value based on the 650 abcdevxyz234 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 650, "abcdevxyz234", "vxyz", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1900,14 +1900,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process651(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:spatial with a type based on the 2nd indicator and a value based on the 651 aevxyz234 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 651, "aevxyz234", "vxyz", "spatial", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1952,14 +1952,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process655(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:type with a type based on the 2nd indicator and a value based on the 655 abcvwyxz23 values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 655, "abcvwxyz3", "vxyz", "type", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -1985,7 +1985,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the $t, $8, and 2nd indicator since they determine how we should process the field
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 			List<String> linkingFields = SaxMarcXmlRecord.getSubfieldOfField(element, '8');
 			List<String> tFields = SaxMarcXmlRecord.getSubfieldOfField(element, 't');
 
@@ -2102,7 +2102,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			else
 			{ 
 				// See Word doc
-				if(ind2 == 2)
+				if(ind2 == '2')
 				{
 					// t's with 2nd ind as 2
 					
@@ -2250,7 +2250,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the $t, $8, and 2nd indicator since they determine how we should process the field
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 			List<String> linkingFields = SaxMarcXmlRecord.getSubfieldOfField(element, '8');
 			List<String> tFields = SaxMarcXmlRecord.getSubfieldOfField(element, 't');
 
@@ -2366,7 +2366,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			}
 			else
 			{
-				if(ind2 == 2)
+				if(ind2 == '2')
 				{
 					// The subfields to map to the title and creator respectively
 					String titleSubfields = "kmnoprst";
@@ -2510,7 +2510,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the $t, $8, and 2nd indicator since they determine how we should process the field
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 			List<String> linkingFields = SaxMarcXmlRecord.getSubfieldOfField(element, '8');
 			List<String> tFields = SaxMarcXmlRecord.getSubfieldOfField(element, 't');
 
@@ -2626,7 +2626,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			}
 			else
 			{
-				if(ind2 == 2)
+				if(ind2 == '2')
 				{
 					// The subfields to map to the title and creator respectively
 					String titleSubfields = "fkpst";
@@ -2784,11 +2784,11 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the $t, $8, and 2nd indicator since they determine how we should process the field
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 
 			List<String> linkingFields = SaxMarcXmlRecord.getSubfieldOfField(element, '8');
 			
-			if(ind2 == 2)
+			if(ind2 == '2')
 			{
 				// The subfields to map to the title and creator respectively
 				String titleOfWorkSubfields = "adgkmnoprst";
@@ -3125,7 +3125,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		subfieldToAttribute.put('z', new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:replaces based on the 780 agitxz values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 780, "agit", "replaces", AggregateXCRecord.DCTERMS_NAMESPACE, -1, -1, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 780, "agit", "replaces", AggregateXCRecord.DCTERMS_NAMESPACE, -1, Field.NULL_CHAR, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3148,7 +3148,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		subfieldToAttribute.put('z', new Attribute("ISBN", "null", AggregateXCRecord.DCTERMS_NAMESPACE));
 
 		// Create an dcterms:isReplacedBy based on the 785 agitxz values
-		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 785, "agit", "isReplacedBy", AggregateXCRecord.DCTERMS_NAMESPACE, -1, -1, subfieldToAttribute, FrbrLevel.WORK);
+		return processFieldReqIndicatorAttFromField(transformMe, transformInto, 785, "agit", "isReplacedBy", AggregateXCRecord.DCTERMS_NAMESPACE, -1, Field.NULL_CHAR, subfieldToAttribute, FrbrLevel.WORK);
 	}
 
 	/**
@@ -3313,7 +3313,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
 				// Subject Mappings
 				// If first indicator is 0, then map $h to work/dcterms:subject
-				if(	SaxMarcXmlRecord.getIndicatorOfField(element, 1) == 0 && subfieldCode == 'h') 
+				if(	SaxMarcXmlRecord.getIndicatorOfField(element, 1) == '0' && subfieldCode == 'h') 
 				{
 					boolean mapFlag = false;
 					
@@ -3343,7 +3343,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
 				}
 				// If first indicator is 1, then map $h to work/dcterms:subject
-				else if(SaxMarcXmlRecord.getIndicatorOfField(element, 1) == 1 && subfieldCode == 'h')
+				else if(SaxMarcXmlRecord.getIndicatorOfField(element, 1) == '1' && subfieldCode == 'h')
 				{
 					boolean mapFlag = false;
 					// Break if any characters (other than the first two) are numerals
@@ -3479,7 +3479,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the required indicator
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 
 			// Setup the attribute list for the processed field
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -3509,7 +3509,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 				// If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
 				// If 2nd indicator is 1, map to expression level dcterms:hasVersion
 				// If 2nd indicator is 2, map to expression level dc:relation
-				if(ind2 == -1 || ind2 == 0 || ind2 == 8)
+				if(ind2 == ' ' || ind2 == '0' || ind2 == '8')
 				{
 					if(LOG.isDebugEnabled())
 						LOG.debug("Adding a " + FrbrLevel.MANIFESTATION + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
@@ -3517,7 +3517,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 					// Create an dcterms:identifier based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					getXCRecordService().addElement(transformInto, "identifier", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.MANIFESTATION);
 				}
-				else if(ind2 == 1)
+				else if(ind2 == '1')
 				{
 					if(LOG.isDebugEnabled())
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
@@ -3525,7 +3525,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 					// Create a dcterms:hasVersion based on the 856 abcdfhijklmnopqrstuvwxyz23 values
 					getXCRecordService().addElement(transformInto, "hasVersion", value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE, attributes, FrbrLevel.EXPRESSION);
 				}
-				else if(ind2 == 2)
+				else if(ind2 == '2')
 				{
 					if(LOG.isDebugEnabled())
 						LOG.debug("Adding a " + FrbrLevel.EXPRESSION + " level alternative based on the concatination of the 856's subfields' value, which is " + value);
@@ -3949,14 +3949,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process963(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:temporal based on the 963 ay values
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 963, "ay", "", "temporal", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -3973,14 +3973,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process965(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:subject based on the 965 $a value
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 965, "ax", "", "subject", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -3997,14 +3997,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process967(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:spatial based on the 967 $a value
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 967, "az", "", "spatial", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -4021,14 +4021,14 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	protected AggregateXCRecord process969(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
 	{
 		// Setup the map from the 2nd indicator to the type of the xc:subject
-		HashMap<Integer, Attribute> indicatorToType = new HashMap<Integer, Attribute>();
-		indicatorToType.put(0, new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(1, new Attribute("type", "lcac"));
-		indicatorToType.put(2, new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
-		indicatorToType.put(3, new Attribute("type", "nal"));
-		indicatorToType.put(5, new Attribute("type", "cash"));
-		indicatorToType.put(6, new Attribute("type", "rvm"));
-		indicatorToType.put(7, new Attribute("type", "$2"));
+		HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
+		indicatorToType.put('0', new Attribute("type", "dcterms:LCSH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('1', new Attribute("type", "lcac"));
+		indicatorToType.put('2', new Attribute("type", "dcterms:MESH", AggregateXCRecord.XSI_NAMESPACE));
+		indicatorToType.put('3', new Attribute("type", "nal"));
+		indicatorToType.put('5', new Attribute("type", "cash"));
+		indicatorToType.put('6', new Attribute("type", "rvm"));
+		indicatorToType.put('7', new Attribute("type", "$2"));
 
 		// Create an xc:type based on the 969 $a value
 		return processFieldWithAuthorityAttributeFromIndicator(transformMe, transformInto, 969, "av", "", "type", AggregateXCRecord.XC_NAMESPACE, 2, indicatorToType, FrbrLevel.WORK);
@@ -4225,7 +4225,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the required indicator
-			int ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
+			char ind2 = SaxMarcXmlRecord.getIndicatorOfField(element, 2);
 
 			// Setup the attribute list for the processed field
 			ArrayList<Attribute> attributes = new ArrayList<Attribute>();
@@ -4253,7 +4253,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 				String value = builder.substring(0, builder.length()-1); // The value is everything except the last space
 
 				// If 2nd indicator is 0, blank, or 8, map to manifestation level dcterms:identifier
-				if(ind2 == -1 || ind2 == 0 || ind2 == 8)
+				if(ind2 == ' ' || ind2 == '0' || ind2 == '8')
 				{
 					if(LOG.isDebugEnabled())
 						LOG.debug("Adding a " + FrbrLevel.HOLDINGS + " level identifier based on the concatination of the 856's subfields' value, which is " + value);
@@ -4867,7 +4867,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	@SuppressWarnings("unchecked")
 	protected AggregateXCRecord processFieldWithAuthorityAttributeFromIndicator(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, 
 			int field, String targetSubfields, String subfieldsToDash, String elementName, Namespace elementNamespace, 
-			int targetIndicator, HashMap<Integer, Attribute> indicatorToValue, FrbrLevel level)
+			int targetIndicator, HashMap<Character, Attribute> indicatorToValue, FrbrLevel level)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Field> elements = transformMe.getDataFields(field);
@@ -4883,11 +4883,11 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		for(Field element : elements)
 		{
 			// Get the requested indicator
-			int indicator = SaxMarcXmlRecord.getIndicatorOfField(element, targetIndicator);
+			char indicator = SaxMarcXmlRecord.getIndicatorOfField(element, targetIndicator);
 			LOG.debug("indicator: "+indicator);
 			// If the requested subfield or indicator were not found, continue to the next element
 			// Also continue to the next element if there was no attribute value for the value of the indicator
-			if(indicator == -1 || !indicatorToValue.containsKey(indicator))
+			if(indicator == Field.NULL_CHAR || !indicatorToValue.containsKey(indicator))
 				continue;
 
 			// A StringBuilder to concat the values of all the subfields of the Element
@@ -5211,7 +5211,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * @param level The FRBR level of the element to create
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
-	protected AggregateXCRecord processFieldAttributeFromIndicator(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, int field, char subfield, String elementName, Namespace elementNamespace, int targetIndicator, HashMap<Integer, Attribute> indicatorToValue, boolean requireIndicator, FrbrLevel level)
+	protected AggregateXCRecord processFieldAttributeFromIndicator(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, int field, char subfield, String elementName, Namespace elementNamespace, int targetIndicator, HashMap<Character, Attribute> indicatorToValue, boolean requireIndicator, FrbrLevel level)
 	{
 		// Get the elements with the requested field
 		List<Field> elements = transformMe.getDataFields(field);
@@ -5225,11 +5225,11 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		{
 			// Get the target subfields and indicator from the datafield
 			List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(element, subfield);
-			int indicator = SaxMarcXmlRecord.getIndicatorOfField(element, targetIndicator);
+			char indicator = SaxMarcXmlRecord.getIndicatorOfField(element, targetIndicator);
 
 			// If the requested subfield or indicator were not found, continue to the next element
 			// Also continue to the next element if there was no attribute value for the value of the indicator
-			if(subfields.size() <= 0 || (requireIndicator && (indicator == -1 || !indicatorToValue.containsKey(indicator))))
+			if(subfields.size() <= 0 || (requireIndicator && (indicator == Field.NULL_CHAR || !indicatorToValue.containsKey(indicator))))
 				continue;
 
 			// Get the attribute value based on the indicator
@@ -5284,7 +5284,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	protected AggregateXCRecord processFieldReqIndicatorAttFromField(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, int field, String targetSubfields, String elementName, Namespace elementNamespace, int targetIndicator, int indicatorRequiredValue, HashMap<Character, Attribute> fieldToAttribute, FrbrLevel level)
+	protected AggregateXCRecord processFieldReqIndicatorAttFromField(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, int field, String targetSubfields, String elementName, Namespace elementNamespace, int targetIndicator, char indicatorRequiredValue, HashMap<Character, Attribute> fieldToAttribute, FrbrLevel level)
 	{
 		
 		// Get the elements with the requested field

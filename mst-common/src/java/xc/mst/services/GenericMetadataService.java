@@ -524,7 +524,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				sh.setHighestId(in.getId());
 				if (getRepository() == null || 
-						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
+						(in.getStatus() != Record.DELETED && 
+								(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
 					processedRecordCount++;
 				}
 				updateService(out, sh);

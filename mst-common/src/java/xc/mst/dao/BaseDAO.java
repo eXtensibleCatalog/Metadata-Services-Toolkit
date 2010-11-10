@@ -95,6 +95,7 @@ public class BaseDAO {
 		String sql = "drop database "+getUtil().normalizeName(name);
 		LOG.debug("executing: "+sql);
 		this.jdbcTemplate.execute(sql);
+		this.jdbcTemplate.execute("delete from repos where repo_name = '"+getUtil().normalizeName(name)+"'");
 	}
 	
 	public List<String> getSchemas() {

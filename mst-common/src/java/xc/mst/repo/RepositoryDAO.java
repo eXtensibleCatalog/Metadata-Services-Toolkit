@@ -772,6 +772,11 @@ public class RepositoryDAO extends BaseDAO {
 	
 	protected void createRepo(Repository repo) {
 		String name = repo.getName();
+		try {
+			deleteSchema(name);
+		} catch (Throwable t) {
+			// do nothing
+		}
 		createSchema(name);
 		Integer serviceId = null;
 		if (repo.getService() != null) {
@@ -863,19 +868,30 @@ public class RepositoryDAO extends BaseDAO {
 		return r;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		long t0 = System.currentTimeMillis();
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();
 		}
+		if (startingId == null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("select straight_join 1 ")
+				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+name+"_record_updates_date_updated) , ")
+				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
+				.append("where r.record_id = u.record_id  and (u.date_updated > ? or ? is null)  and u.date_updated <= ? limit 1");
+			List atleastone = this.jdbcTemplate.queryForList(sb.toString(), from, from, until);
+			if (atleastone == null || atleastone.size() == 0) {
+				return new ArrayList<Record>();
+			}
+		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select straight_join "+RECORDS_TABLE_COLUMNS+
 				" x.xml, "+ " max(u.date_updated) as date_updated " +
 				" from ");
-		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u ");
-		sb.append("IGNORE index (idx_"+name+"_record_updates_date_updated) ");
+		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+name+"_record_updates_record_id)");
 		sb.append(", ");
 		sb.append(getTableName(name, RECORDS_TABLE)+" r ");
 		if (inputFormat != null) {
@@ -1417,14 +1433,14 @@ public class RepositoryDAO extends BaseDAO {
 					 "create index idx_"+name+"_record_updates_date_updated on "+getTableName(name, RECORD_UPDATES_TABLE)+" (date_updated)",
 					 "create index idx_"+name+"_record_updates_record_id on "+getTableName(name, RECORD_UPDATES_TABLE)+" (record_id)",
 					 
-					 "alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
+					 //"alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
 					 
-					 "alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
+					 //"alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
 					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
 					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
 					 
 					 //"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
-					 "alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
+					 //"alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
 					 "create index idx_"+name+"_record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
 					 "create index idx_"+name+"_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
 
