@@ -54,8 +54,9 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
             {
             	boolean solrIndexRunning = false;
             	LOG.debug("getScheduler().getRunningJob(): "+getScheduler().getRunningJob());
-                if(getScheduler().getRunningJob()!=null && getScheduler().getRunningJob().getType() != null)
-                {
+                if(getScheduler().getRunningJob()!=null && 
+                		getScheduler().getRunningJob().getType() != null && 
+                		getScheduler().getRunningJob().getJobStatus() != null) {
                 	LOG.debug("getScheduler().getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
                 	LOG.debug("getScheduler().getRunningJob().getType(): "+getScheduler().getRunningJob().getType());
                 	

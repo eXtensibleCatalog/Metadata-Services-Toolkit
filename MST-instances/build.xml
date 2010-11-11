@@ -24,10 +24,26 @@
 		<ivy:resolve file="${mi.dir}/ivy.xml"/>
 	</target>
 
+	<target name="mi.jar" depends="mi.resolve">
+		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.jar">
+			<fileset dir="${mi.dir}">
+				<exclude name="${mst-instances}/**/*.war" />
+				<include name="${mst-instances}/**/*" />
+			</fileset>
+		</zip>
+	</target>
+
 	<target name="mi.zip" depends="mi.resolve">
-		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" 
-			basedir="${mi.dir}"
-			includes="${mst-instances}/**/*">
+		<exec outputProperty="svn.version" executable="${svn.home}/svnversion" />
+		<echo>${svn.version}</echo>
+		<replaceregexp file="${mi.dir}/${mst-instances}/MetadataServicesToolkit/install.properties"
+			match="svn.version:.*$"
+			replace="svn.version: ${svn.version}"
+			byline="true" />
+		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.zip">
+			<fileset dir="${mi.dir}">
+				<include name="${mst-instances}/**/*" />
+			</fileset>
 		</zip>
 	</target>
 
@@ -37,7 +53,7 @@
 		</ivy:publish>
 	</target>
 
-	<target name="mi.deploy" depends="mi.zip">
+	<target name="mi.deploy" depends="mi.jar">
 		<copy todir="${mc.build.lib}" 
 			file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
 		<copy todir="${mp.build.lib}" 

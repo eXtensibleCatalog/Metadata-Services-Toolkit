@@ -834,8 +834,8 @@ public class RepositoryDAO extends BaseDAO {
 					new RecordMapper(new String[]{RECORDS_TABLE, RECORDS_XML_TABLE, RECORD_UPDATES_TABLE}, this),
 					id);
 		} catch (EmptyResultDataAccessException e) {
-			LOG.info("record not found for id: "+id);
-			LOG.info("sql: "+sql);
+			//LOG.info("record not found for id: "+id);
+			//LOG.info("sql: "+sql);
 		}
 		
 		/*
