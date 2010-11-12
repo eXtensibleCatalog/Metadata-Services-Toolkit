@@ -69,9 +69,12 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		return r;
 	}
 	
-	
 	protected Format getDCFormat() throws Exception {
 		return getFormat(new String[] {"oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"});
+	}
+	
+	protected Format getDCTermsFormat() throws Exception {
+		return getFormat(new String[] {"dcterms", "http://dublincore.org/documents/dcmi-terms/", "http://dublincore.org/schemas/xmls/qdc/dcterms.xsd"});
 	}
 	
 	protected Format getOaiMarcFormat() throws Exception {

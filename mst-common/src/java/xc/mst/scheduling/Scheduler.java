@@ -208,7 +208,8 @@ public class Scheduler extends BaseService implements Runnable {
 									//Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
 									Job job = new Job();
 									job.setService(pd.getService());
-									job.setOutputSetId(pd.getOutputSet().getId());
+									if (pd.getOutputSet() != null)
+										job.setOutputSetId(pd.getOutputSet().getId());
 									job.setJobType(Constants.THREAD_SERVICE);
 									job.setOrder(getJobService().getMaxOrder() + 1);
 									job.setProcessingDirective(pd);

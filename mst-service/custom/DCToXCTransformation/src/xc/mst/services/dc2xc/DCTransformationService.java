@@ -35,7 +35,7 @@ public class DCTransformationService extends GenericMetadataService {
 	 * The namespace for Dubline Core
 	 */
 	protected static Namespace[] dcNamespaces = new Namespace[] {
-		Namespace.getNamespace("dcterms", "http://purl.org/dc/terms/"),
+		Namespace.getNamespace("dcterms", "http://purl.org/dc/terms"),
 		Namespace.getNamespace("dc", "http://purl.org/dc/elements/1.1/")
 	};
 	
@@ -131,12 +131,12 @@ public class DCTransformationService extends GenericMetadataService {
 					// Get element
 					String element = keyItrtr.next();
 
-					List<Element> fields = null;
+					List<Element> fields = new ArrayList<Element>();
 					for (Namespace ns : dcNamespaces) {
 						// Get the data fields
-						fields = metadataEl.getChildren(element, ns);
-						if (!fields.isEmpty()) {
-							continue;
+						List<Element> fieldsInner = metadataEl.getChildren(element, ns);
+						if (fieldsInner != null && fieldsInner.size() > 0) {
+							fields.addAll(fieldsInner);
 						}
 					}
 

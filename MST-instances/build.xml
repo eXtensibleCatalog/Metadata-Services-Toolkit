@@ -34,7 +34,6 @@
 	</target>
 
 	<target name="mi.zip" depends="mi.resolve">
-		<exec outputProperty="svn.version" executable="${svn.home}/svnversion" />
 		<echo>${svn.version}</echo>
 		<replaceregexp file="${mi.dir}/${mst-instances}/MetadataServicesToolkit/install.properties"
 			match="svn.version:.*$"
