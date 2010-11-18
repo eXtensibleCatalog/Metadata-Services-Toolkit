@@ -66,7 +66,7 @@ import xc.mst.utils.MSTConfiguration;
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
-public class BaseActionSupport extends ActionSupport {
+public class BaseActionSupport extends ActionSupport { 
 
 	public EmailConfigService getEmailConfigService() {
 		return (EmailConfigService)MSTConfiguration.getInstance().getBean("EmailConfigService");
