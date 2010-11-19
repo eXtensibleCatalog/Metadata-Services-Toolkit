@@ -34,6 +34,10 @@
 		<delete dir="${mc.build.classes}" />
 	</target>
 
+	<target name="mc.clean.lib">
+		<delete dir="${mc.build.lib}" />
+	</target>
+
 	<target name="mc.help">
 		<echo>
 			mst-common help

@@ -37,6 +37,10 @@
 		<delete dir="${mp.build.classes}" />
 	</target>
 
+	<target name="mp.clean.lib">
+		<delete dir="${mp.build.lib}" />
+	</target>
+
 	<target name="mp.help">
 		<echo>
 			mp help

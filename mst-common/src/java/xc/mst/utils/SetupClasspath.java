@@ -34,6 +34,8 @@ public class SetupClasspath {
     				rootDir = null;
     			}
     		}
+    		
+    		// BDA: install.properties doesn't really work and env.properties is only for development purposes
     		for (String fStr : new String[] {
     				"install.properties", "env.properties"}) {
 	    		if (rootDir == null) {
