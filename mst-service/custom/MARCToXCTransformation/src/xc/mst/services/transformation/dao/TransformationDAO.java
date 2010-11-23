@@ -34,6 +34,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.cache.DynMap;
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -190,6 +191,16 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 		
 	}
 	
+	protected List<Map<String, Object>> getBibMaps(String tableName, int page) {
+		TimingLogger.start("getBibMaps");
+		int recordsAtOnce = 250000;
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+				"select bib_001, record_id from "+tableName+
+				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		TimingLogger.stop("getBibMaps");
+		return rowList;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void loadBibMaps	(
 			TLongLongHashMap bibsProcessedLongId, 
@@ -204,17 +215,19 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 				bibsYet2ArriveStringId, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
 			String tableName = (String)objArr[i+1];
-			String sql = "select bib_001, record_id from " +tableName;
-			List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql);
-			if (results != null) {
-				for (Map<String, Object> row : results) {
+			
+			int page = 0;
+			List<Map<String, Object>> rowList = getBibMaps(tableName, page);
+			while (rowList != null && rowList.size() > 0) {
+				for (Map<String, Object> row : rowList) {
 					TimingLogger.add(tableName, 0);
 					if (objArr[i] instanceof TLongLongHashMap) {
 						((TLongLongHashMap)objArr[i]).put((Long)row.get("bib_001"), (Long)row.get("record_id"));
 					} else if (objArr[i] instanceof Map) {
 						((Map)objArr[i]).put((String)row.get("bib_001"), (Long)row.get("record_id"));
-					}		
+					}
 				}
+				rowList = getBibMaps(tableName, ++page);
 			}
 		}
 	}

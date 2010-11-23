@@ -34,8 +34,14 @@
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />
-		<property name="minIdle" value="5" />
+		<property name="minIdle" value="0" />
 		<property name="maxActive" value="5" />
+		<!-- 
+		<property name="validationQuery" value="select 1" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnReturn" value="true" />
+		 -->
 	</bean>
 	
 	<bean id="SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">

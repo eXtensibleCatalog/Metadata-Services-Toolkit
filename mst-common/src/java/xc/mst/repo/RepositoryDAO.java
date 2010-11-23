@@ -1456,7 +1456,9 @@ public class RepositoryDAO extends BaseDAO {
 			 }
 		 }
 		 if (createIndiciesOnRecordOaiIds) {
-			 // TODO: you might have to remove duplicates
+			 // you might have to remove duplicates...
+			 // or for now, just put the primary key back
+			 /*
 			 String[] indicies2create = new String[] {
 					 "alter table"+getTableName(name, RECORD_OAI_IDS)+" add primary key (record_id)"
 			 };
@@ -1465,6 +1467,7 @@ public class RepositoryDAO extends BaseDAO {
 				 this.jdbcTemplate.execute(i2c);
 				 TimingLogger.stop(i2c.split(" ")[2]);
 			 }
+			 */
 		 }
 		 if (createIndiciesOnRecordLinks) {
 			 // TODO: you might have to remove duplicates
