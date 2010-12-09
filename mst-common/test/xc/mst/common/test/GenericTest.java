@@ -12,6 +12,9 @@ package xc.mst.common.test;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +57,24 @@ public class GenericTest extends BaseTest {
 		
 		try {
 			
+			URLClassLoader sysloader = (URLClassLoader) getClass().getClassLoader();
+			Class sysclass = URLClassLoader.class;
+
+			try {
+				Method method = sysclass.getDeclaredMethod("addURL",  new Class[]{URL.class});
+				method.setAccessible(true);
+				method.invoke(sysloader, new Object[]{new URL("file://c")});
+			} catch (Throwable t) {
+				t.printStackTrace();
+				throw new RuntimeException("Error, could not add URL to system classloader");
+			}
+			
+			for (URL u2 : sysloader.getURLs()) {
+				System.out.println("u: "+u2);
+			}
+			
+			
+			/*
 			Record r = getRepositoryDAO().getRecord("test_repo", 1000);
 			
 			//String testXml = getUtil().slurp(new File(MSTConfiguration.getUrlPath()+"/test.xml"));
@@ -62,6 +83,7 @@ public class GenericTest extends BaseTest {
 			Document doc = new XmlHelper().getJDomDocument(testXml);
 			String outXml = new XmlHelper().getString(doc.getRootElement());
 			System.out.println(outXml);
+			*/
 			/*
 			InputStream istm = new ByteArrayInputStream("<yo>contains \\b</yo>".getBytes("UTF-8"));
 			Document doc = xmlHelper.getJDomDocument(istm);

@@ -12,6 +12,7 @@
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
       <marc:leader>04026cgm a2200589Ka 45e0</marc:leader>
       <marc:controlfield tag="001">2715432</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20060119134905.0</marc:controlfield>
       <marc:controlfield tag="007">vd cvaizs</marc:controlfield>
       <marc:controlfield tag="008">040811p20041990cau437 g          vleng d</marc:controlfield>
@@ -230,7 +231,6 @@
         <marc:subfield code="a">1404957464</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)2715432</marc:subfield>
       </marc:datafield>

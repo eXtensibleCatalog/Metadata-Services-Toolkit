@@ -1193,7 +1193,7 @@ public class MarcXmlManager {
 		newFieldElement.setText(value);
 		
 		// Add the new field to the end of the MARC XML if we didn't insert it already
-		marcXml.addContent(newFieldElement).addContent("\n\n");
+		marcXml.addContent(4, newFieldElement);
 
 	}
 	

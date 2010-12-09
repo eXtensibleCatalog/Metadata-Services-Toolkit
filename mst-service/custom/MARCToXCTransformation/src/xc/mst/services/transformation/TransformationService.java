@@ -397,7 +397,8 @@ public class TransformationService extends SolrTransformationService {
 			}
 			return results;
 		} catch (Throwable t) {
-			LOG.error("", t);
+			LOG.error("error processing record with id:"+((Record)record).getId(), t);
+			addMessage(record, 102, RecordMessage.ERROR);
 		}
 		return null;
 	}

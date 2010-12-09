@@ -12,6 +12,7 @@
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
       <marc:leader>02881cam a2200457 a 45&amp;#x2019;0</marc:leader>
       <marc:controlfield tag="001">3030852</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20070912100818.0</marc:controlfield>
       <marc:controlfield tag="008">051224s2005    onc      b    001 0 eng c</marc:controlfield>
       <marc:datafield tag="016" ind1=" " ind2=" ">
@@ -242,7 +243,6 @@
         <marc:subfield code="a">0802038247 </marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)3030852</marc:subfield>
       </marc:datafield>

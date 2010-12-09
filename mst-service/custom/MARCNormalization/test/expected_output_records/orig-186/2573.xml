@@ -12,6 +12,7 @@
     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
       <marc:leader>01499cas a2200457   4500</marc:leader>
       <marc:controlfield tag="001">2573</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:controlfield tag="005">20080723104820.0</marc:controlfield>
       <marc:controlfield tag="008">740327c19689999nyumr p       0   a0eng d</marc:controlfield>
       <marc:datafield tag="010" ind1=" " ind2=" ">
@@ -212,7 +213,6 @@
         <marc:subfield code="a">German</marc:subfield>
         <marc:subfield code="5">NRU</marc:subfield>
       </marc:datafield>
-      <marc:controlfield tag="003">NRU</marc:controlfield>
       <marc:datafield tag="035" ind1=" " ind2=" ">
         <marc:subfield code="a">(NRU)2573</marc:subfield>
       </marc:datafield>
