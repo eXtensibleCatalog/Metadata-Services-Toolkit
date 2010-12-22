@@ -177,11 +177,19 @@ public class DefaultRepository extends BaseService implements Repository {
 		}
 		return records;
 	}
-	
-	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet) {
+
+	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
 		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet);
+		long estimatedRecordsRemaining = getRepositoryDAO().getRecordCount(name, from, until, startingId, inputFormat, inputSet);
+		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
+		long recordCount = 0;
+		if (estimatedRecordsRemaining < 0 && (estimatedRecordsRemaining * -1) < completeListSizeThreshold) {
+			recordCount = offset + completeListSizeThreshold;
+		} else {
+			recordCount = offset + estimatedRecordsRemaining;
+		}
 		LOG.debug("recordCount:"+recordCount);
+		// if (recordCount + numAlreadyHarvested) < 
 		return recordCount;
 	}
 	

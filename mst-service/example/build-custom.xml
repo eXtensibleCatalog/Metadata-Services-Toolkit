@@ -11,6 +11,7 @@
 	<target name="copy-custom-libs" depends="init">
 		<move todir="${build.zip.lib}">
 			<fileset dir="${build.lib}">
+				<exclude name="**/*.jar" />
 				<!--
 				<include name="mst-service-impl*.jar" />
 				anything jars you've added in your ivy-custom.xml should be included in the zip

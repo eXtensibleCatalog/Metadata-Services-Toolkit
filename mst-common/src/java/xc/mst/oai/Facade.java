@@ -682,11 +682,17 @@ public class Facade extends BaseManager
 		// Total number of records satisfying the criteria. This is not the number of records loaded.
 		//long totalRecords =	service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
 		
-		// Get records from starting Id to record limit
-		if (getRecords) {
-			records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
- 		} else {
-			records = service.getMetadataService().getRepository().getRecordHeader(fromDate, untilDate, startingId, format, setObject);
+		// BDA TODO: first do a count
+		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
+		
+		if (totalCount != 0) {
+		
+			// Get records from starting Id to record limit
+			if (getRecords) {
+				records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
+	 		} else {
+				records = service.getMetadataService().getRepository().getRecordHeader(fromDate, untilDate, startingId, format, setObject);
+			}
 		}
 
 		// The XML for the OAI result
@@ -784,8 +790,15 @@ public class Facade extends BaseManager
 					{
 						if(getResumptionTokenDAO().update(resToken))
 						{
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken()
-									));
+							if (totalCount < 0) {
+								xml.append("<!-- completeListSize is an estimate -->");
+								totalCount = -1 * totalCount;
+							}
+							if (totalCount != 0) {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(), new String[] {"completeListSize", ""+totalCount}));	
+							} else {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken()));
+							}
 									//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
 
 							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + resToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
