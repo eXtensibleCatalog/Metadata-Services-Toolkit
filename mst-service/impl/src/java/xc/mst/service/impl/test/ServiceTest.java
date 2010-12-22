@@ -39,7 +39,7 @@ public class ServiceTest extends BaseTest {
 			MetadataService ms = s.getMetadataService();
 			LOG.debug("ms: "+ms);
 			Repository srepo = ms.getRepository();
-			getRepositoryDAO().dropTables(srepo.getName());
+			//getRepositoryDAO().dropTables(srepo.getName());
 			srepo.installOrUpdateIfNecessary(null, s.getVersion());
 			
 			Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");

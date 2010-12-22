@@ -183,7 +183,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected String getTableName(String repoName, String tableName) {
-		return " "+getUtil().normalizeName(repoName)+"."+tableName;
+		return " "+getUtil().getDBSchema(repoName)+"."+tableName;
 	}
 	
 	public int getSize(String name) {
@@ -666,7 +666,11 @@ public class RepositoryDAO extends BaseDAO {
 						}
 						os.write(String.valueOf(r.getId()).getBytes());
 						os.write(tabBytes);
-			        	os.write(updateTimeBytes);
+						if (r.getUpdatedAt() == null) {
+							os.write(updateTimeBytes);	
+						} else {
+							os.write(sdf.format(r.getUpdatedAt()).getBytes());		
+						}
 			        }
 			        os.close();
 			        TimingLogger.stop("RECORD_UPDATES_TABLE.insert.create_infile");
@@ -764,12 +768,6 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	public void dropTables(String name) {
-		for (String table : getTablesWithPrefix(getUtil().normalizeName(name))) {
-			this.jdbcTemplate.execute("drop table "+table);
-		}
-	}
-	
 	protected void createRepo(Repository repo) {
 		String name = repo.getName();
 		try {
@@ -804,8 +802,8 @@ public class RepositoryDAO extends BaseDAO {
 	protected void runSql(Repository repo, String sqlFile) {
 		String name = repo.getName();
 		String createTablesContents = getUtil().slurp(sqlFile);
-		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getUtil().normalizeName(name));
-		createTablesContents = createTablesContents.replaceAll("repo_name", getUtil().normalizeName(name));
+		createTablesContents = createTablesContents.replaceAll("REPO_NAME", getUtil().getDBSchema(name));
+		createTablesContents = createTablesContents.replaceAll("repo_name", getUtil().getDBSchema(name));
 		String[] tokens = createTablesContents.split(";");
 		for (String sql : tokens) {
 			if (StringUtils.isEmpty(StringUtils.trim(sql))) {
@@ -1025,7 +1023,9 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public long getRecordCount(String name, Date from, Date until, Format inputFormat, Set inputSet) {
+	public long getRecordCount(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
+		
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();

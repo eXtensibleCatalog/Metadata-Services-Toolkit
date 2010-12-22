@@ -37,6 +37,10 @@ public class Util {
 		return (Util)MSTConfiguration.getInstance().getBean("Util");
 	}
 	
+	public String getDBSchema(String name) {
+		return "xc_"+normalizeName(name);
+	}
+	
 	public String normalizeName(String name) {
 		if (name == null) {
 			return name;

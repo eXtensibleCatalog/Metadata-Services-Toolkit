@@ -334,8 +334,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 						
 						baseRequest = request;
 
-						//Date from = scheduleStep.getLastRan();
-						Date from = getRepositoryDAO().getLastModifiedOai(currentHarvest.getProvider().getName());
+						Date from = scheduleStep.getLastRan();
+						//Date from = getRepositoryDAO().getLastModifiedOai(currentHarvest.getProvider().getName());
 						//becuase from is inclusive
 						//from = new Date(from.getTime()+1000);
 						if (from != null && from.getTime() != 0) {
