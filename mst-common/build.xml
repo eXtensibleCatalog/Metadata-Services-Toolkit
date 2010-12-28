@@ -171,14 +171,12 @@
 		<delete dir="${mc.build.mst-instances.dir}" />
 		<unzip src="${mc.build.lib}/MST-instances-${mi.version}.jar"
 			dest="${mc.build.dir}" />
-		<!--
 		<copy todir="${mc.build.mst-instance.dir}" overwrite="true">
 			<fileset dir="${mc.test.dir}">
 				<include name="**/log4j.config.txt" />
 				<include name="**/install.properties" />
 			</fileset>
 		</copy>
-		-->
 		<exec executable="${mysql.home}/bin/mysql" 
 				input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
 			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />

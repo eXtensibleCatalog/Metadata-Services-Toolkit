@@ -1,7 +1,0 @@
-This is a dummy file to make sure the services folder gets unzipped.  It would otherwise be excluded if you followed these steps:
-
-1) open the file in winzip
-2) select all files (since winzip doesn't by default display empty folders, the services folder will be excluded)
-3) extract
-
-stupid windows, stupid winzip

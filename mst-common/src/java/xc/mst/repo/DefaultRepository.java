@@ -180,17 +180,20 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
 		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		long estimatedRecordsRemaining = getRepositoryDAO().getRecordCount(name, from, until, startingId, inputFormat, inputSet);
+		long estimatedRecordsRemaining = getRepositoryDAO().getRecordCount(name, from, until, startingId, inputFormat, inputSet, offset);
 		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
+		LOG.debug("completeListSizeThreshold: "+completeListSizeThreshold);
+		return estimatedRecordsRemaining;
+		/*
+		// This logic only makes sense if you're taking guesses
 		long recordCount = 0;
-		if (estimatedRecordsRemaining < 0 && (estimatedRecordsRemaining * -1) < completeListSizeThreshold) {
+		if (estimatedRecordsRemaining < -1 && (estimatedRecordsRemaining * -1) < completeListSizeThreshold) {
 			recordCount = offset + completeListSizeThreshold;
-		} else {
-			recordCount = offset + estimatedRecordsRemaining;
 		}
 		LOG.debug("recordCount:"+recordCount);
 		// if (recordCount + numAlreadyHarvested) < 
 		return recordCount;
+		*/
 	}
 	
 	

@@ -222,7 +222,8 @@ public class Scheduler extends BaseService implements Runnable {
 					}
 					
 					Job jobToStart = getJobService().getNextJobToExecute();
-					LOG.debug("jobToStart: "+jobToStart);
+					if (jobToStart != null)
+						LOG.debug("jobToStart: "+jobToStart);
 					if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
 						LOG.debug("solrWorkerThead.proceed");
 						if (!solrWorkerThreadStarted) {

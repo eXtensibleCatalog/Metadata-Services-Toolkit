@@ -291,10 +291,15 @@
 		</unzip>
 	</target>
 
-	<target name="install-mst">
+	<target name="install-mst" depends="unzip-mst, mst-sql" />
+
+	<target name="unzip-mst">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+	</target>
+
+	<target name="mst-sql">
 		<exec executable="${mysql.home}/bin/mysql" 
 				input="${build.mst-instance.dir}/sql/create_database_script.sql">
 			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />

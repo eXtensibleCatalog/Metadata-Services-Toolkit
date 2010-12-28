@@ -684,6 +684,7 @@ public class Facade extends BaseManager
 		
 		// BDA TODO: first do a count
 		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
+		log.debug("totalCount: "+totalCount);
 		
 		if (totalCount != 0) {
 		
@@ -776,6 +777,10 @@ public class Facade extends BaseManager
 			// If there are more results which need to be returned in a future call, set up a resumption token
 			if(hasMore)
 			{
+				if (totalCount < -1) {
+					xml.append("<!-- completeListSize is an estimate -->");
+					totalCount = -1 * totalCount;
+				}
 				// If there was already a resumption token, update it with the new offset
 				if(resToken != null)
 				{
@@ -790,11 +795,7 @@ public class Facade extends BaseManager
 					{
 						if(getResumptionTokenDAO().update(resToken))
 						{
-							if (totalCount < 0) {
-								xml.append("<!-- completeListSize is an estimate -->");
-								totalCount = -1 * totalCount;
-							}
-							if (totalCount != 0) {
+							if (totalCount > 0) {
 								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(), new String[] {"completeListSize", ""+totalCount}));	
 							} else {
 								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken()));
@@ -830,9 +831,14 @@ public class Facade extends BaseManager
 						{
 							newResToken.setToken(newResToken.getId() + "|" + (offset + returnedRecordsCount));
 							getResumptionTokenDAO().update(newResToken);
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken()
-										));
-										//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+							if (totalCount > 0) {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(), new String[] {"completeListSize", ""+totalCount}));
+							} else {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken()
+								));
+								//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+					
+							}
 
 							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 						}

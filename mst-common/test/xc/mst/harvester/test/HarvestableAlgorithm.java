@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Format;
@@ -22,11 +25,18 @@ import xc.mst.utils.XmlHelper;
 
 public class HarvestableAlgorithm extends BaseTest {
 	
+	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
+	protected static DateTimeFormatter UTC_FORMATTER = null;
+	static {
+		UTC_FORMATTER = ISODateTimeFormat.dateTime();
+		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
+	}
+	
 	// see here: http://code.google.com/p/xcmetadataservicestoolkit/wiki/ResumptionToken
 	
 	public static final String SERVICE_NAME = "example";
 	
-	public static final String REPO_NAME = "example";
+	public static final String REPO_NAME = "xc_example";
 	
 	public static final String TEST_SET_1 = "TEST_SET_1";
 	public static final String TEST_SET_2 = "TEST_SET_2";
@@ -34,13 +44,17 @@ public class HarvestableAlgorithm extends BaseTest {
 	public static final String TEST_FORMAT_1 = "TEST_FORMAT_1";
 	public static final String TEST_FORMAT_2 = "TEST_FORMAT_2";
 	
-	public static long DATE_1 = 0;                                 // 1970-01-01 00:00:00
-	public static long DATE_2 = 365 * 24 * 60 * 60 * 1000;         // 1971-01-01 00:00:00
-	public static long DATE_3 = 2 * 365 * 24 * 60 * 60 * 1000;     // 1972-01-01 00:00:00
+	//(5 * 36000000) - account for utc
+	public static long DATE_1 = (5 * 3600000) + 60000;                             // 1970-01-01 00:01:00
+	public static long DATE_2 = (5 * 3600000) + 365 * 24 * 60 * 60 * 1000;         // 1971-01-01 00:00:00
+	public static long DATE_3 = (5 * 3600000) + 2 * 365 * 24 * 60 * 60 * 1000;     // 1972-01-01 00:00:00
 	
 	public static int[][] dataSets = null;
 	public static Object[][] requestParams = null;
 	public static int[][] expectedResults = null;
+	
+	protected Service service = null;
+	protected int factor = 1000;
 	
 	static {
 		// using 1-based index to match the wiki page
@@ -96,6 +110,8 @@ public class HarvestableAlgorithm extends BaseTest {
 			if (fmt == null) {
 				fmt = new Format();
 				fmt.setName(str);
+				fmt.setNamespace("urn:bogus");
+				fmt.setSchemaLocation("http://www.bogus.com");
 				getFormatService().insertFormat(fmt);
 			}
 			return fmt;
@@ -105,30 +121,36 @@ public class HarvestableAlgorithm extends BaseTest {
 	}
 
 	protected void createDS(int numFmt1, int numFmt2, int numSet1, 
-			int numSet2, int numDt1, int numDt2, int updatesPerRec) {
-		getRepositoryDAO().createSchema(REPO_NAME, true);
+			int numSet2, int numDt1, int numDt2, int updatesPerRec) throws Throwable {
+		//getRepositoryDAO().createSchema(REPO_NAME, true);
+		getServicesService().addNewService(SERVICE_NAME);
+		service = getServicesService().getServiceByName(SERVICE_NAME);
 		List<Record> records = new ArrayList<Record>();
 		for (int j=0; j<updatesPerRec; j++) {
-			for (int i=0; i<10; i++) {
-				OutputRecord r =  new Record();		
-				if (i < numFmt1) {
+			for (int i=0; i<factor*10; i++) {
+				OutputRecord r =  new Record();
+				((Record)r).setId(i);
+				if (i < (numFmt1*factor)) {
 					r.setFormat(getFormat(TEST_FORMAT_1));
-				} else if (i < (numFmt1 + numFmt2)) {
+				} else if (i < ((numFmt1 + numFmt2)*factor)) {
 					r.setFormat(getFormat(TEST_FORMAT_2));
 				}
-				if (i < numSet1) {
+				if (i < (numSet1*factor)) {
 					r.addSet(getSet(TEST_SET_1));
-				} else if (i < (numSet1 + numSet2)) {
+				} else if (i < ((numSet1 + numSet2)*factor)) {
 					r.addSet(getSet(TEST_SET_2));
 				}
-				if (i < numDt1) {
+				if (i < (numDt1*factor)) {
 					((Record)r).setUpdatedAt(new Date(DATE_1 + (j*24*60*60*1000))); // add 1 day per j
-				} else if (i < (numDt1 + numDt2)) {
+				} else if (i < ((numDt1 + numDt2)*factor)) {
 					((Record)r).setUpdatedAt(new Date(DATE_2 + (j*24*60*60*1000))); // add 1 day per j
 				}
+				r.setMode(Record.STRING_MODE);
+				r.setOaiXml("<foo />");
 				records.add((Record)r);
 			}
-			getRepositoryDAO().addRecords(REPO_NAME, records);
+			getRepositoryDAO().addRecords(REPO_NAME, records, true);
+			getRepositoryDAO().createIndiciesIfNecessary(REPO_NAME);
 		}
 	}
 	
@@ -136,9 +158,6 @@ public class HarvestableAlgorithm extends BaseTest {
 	public void testAll() {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			getServicesService().addNewService(SERVICE_NAME);
-			
-			Service service = getServicesService().getServiceByName(SERVICE_NAME);
 			
 			for (int i=1; i<expectedResults.length; i++) {
 				int[] ds = dataSets[expectedResults[i][0]];
@@ -152,15 +171,18 @@ public class HarvestableAlgorithm extends BaseTest {
 				if (rp[1] != null) {
 					bean.setSet((String)rp[1]);
 				}
-				bean.setFrom(sdf.format(new Date(((Long)rp[2])-5000l)));
-				bean.setUntil(sdf.format(new Date(((Long)rp[2])+5000l)));
-	
+				if (rp[2] != null) {
+					bean.setFrom(UTC_FORMATTER.print(new Date(((Long)rp[2])-5000l).getTime()));
+					bean.setUntil(UTC_FORMATTER.print(new Date(((Long)rp[2])+5000l).getTime()));
+				}
+
 				bean.setServiceId(service.getId());
 	
 				Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
 				
 				String respXml = facade.execute(bean);
 				
+				LOG.debug("respXml: "+respXml);
 				Document respEl = new XmlHelper().getJDomDocument(respXml);
 				
 				Element oaiPmhEl = respEl.getRootElement();
@@ -172,9 +194,10 @@ public class HarvestableAlgorithm extends BaseTest {
 					completeListSize = Integer.parseInt(completeListSizeStr);
 				} catch (Throwable t) {
 					LOG.debug("completeListSize not found");
+					LOG.debug("", t);
 				}
 				
-				if (expectedResults[i][2] != completeListSize) {
+				if (completeListSize == null || (expectedResults[i][2]*factor) != completeListSize) {
 					LOG.error("i: "+i);
 					LOG.error("completeListSize: "+completeListSize);
 				}

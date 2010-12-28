@@ -17,6 +17,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -876,7 +877,7 @@ public class RepositoryDAO extends BaseDAO {
 		if (startingId == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("select straight_join 1 ")
-				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+name+"_record_updates_date_updated) , ")
+				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_date_updated) , ")
 				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
 				.append("where r.record_id = u.record_id  and (u.date_updated > ? or ? is null)  and u.date_updated <= ? limit 1");
 			List atleastone = this.jdbcTemplate.queryForList(sb.toString(), from, from, until);
@@ -889,18 +890,18 @@ public class RepositoryDAO extends BaseDAO {
 				" select straight_join "+RECORDS_TABLE_COLUMNS+
 				" x.xml, "+ " max(u.date_updated) as date_updated " +
 				" from ");
-		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+name+"_record_updates_record_id)");
+		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_record_id)");
 		sb.append(", ");
 		sb.append(getTableName(name, RECORDS_TABLE)+" r ");
 		if (inputFormat != null) {
-			sb.append("IGNORE index (idx_"+name+"_records_format_id) " );
+			sb.append("IGNORE index (idx_"+getUtil().getDBSchema(name)+"_records_format_id) " );
 		}
 		sb.append(", ");
 		sb.append(getTableName(name, RECORDS_XML_TABLE)+" x ");
 		
 		if (inputSet != null) {
 			sb.append(
-				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id) ");
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+getUtil().getDBSchema(name)+"_"+RECORDS_SETS_TABLE+"_set_id) ");
 		}
 		sb.append(
 				" where r.record_id = x.record_id " +
@@ -1023,55 +1024,244 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public long getRecordCount(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+	public long getRecordCount(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
+		LOG.debug("from: "+from);
+		LOG.debug("until: "+until);
+		LOG.debug("startingId: "+startingId);
+		LOG.debug("inputFormat: "+inputFormat);
+		LOG.debug("inputSet: "+inputSet);
+		
+		//http://code.google.com/p/xcmetadataservicestoolkit/wiki/ResumptionToken
+		int countMethod2use = 0;
+		
 		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
 		
-		List<Object> params = new ArrayList<Object>();
-		if (until == null) {
-			until = new Date();
-		}
-		StringBuilder sb = new StringBuilder();
-		// Takashi's version had select count(*) - not sure why I'm not doing that here. 
-		sb.append(
-				" select u.record_id " +
-				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
-					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
-		if (inputSet != null) {
-			sb.append(", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ");
-		}
-		sb.append(
-				" where  r.record_id = u.record_id " +
-					" and (u.date_updated > ? or ? is null) "+
-					" and u.date_updated <= ?  "
-					);
-		params.add(from);
-		params.add(from);
-		params.add(until);
-		if (inputFormat != null) {
-			sb.append(
-					" and r.format_id = ? ");
-			params.add(inputFormat.getId());
-		}
-		if (inputSet != null) {
-			sb.append(
-					" and r.record_id = rs.record_id " +
-					" and rs.set_id = ? ");
-			params.add(inputSet.getId());
-		}
-		sb.append(" group by r.record_id ");
-		sb.append(" order by r.record_id ");
-
-		Object obj[] = params.toArray();
+		int maxExplain = 1000;
 		
-		long recordCount = 0;
-		try {
-			LOG.debug("query for count: "+sb.toString());
-			recordCount = this.jdbcTemplate.queryForList(sb.toString(), obj).size();
-		} catch (EmptyResultDataAccessException e) {
-			LOG.info("no records found for from: "+from+" until: "+until + " format:" + inputFormat + " inputSet:" + inputSet);
+		if (countMethod2use == 0) {
+
+			boolean keepGoing = true;
+			List<Map<String,Object>> records = null;
+			BigInteger rows2examine = null;
+			
+			if (keepGoing) {
+				if (inputFormat != null) {
+					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ?";
+					records = this.jdbcTemplate.queryForList(
+							"explain "+sql, inputFormat.getId());
+					rows2examine = (BigInteger)records.get(0).get("rows");
+					LOG.debug("rows: "+rows2examine);
+					if (rows2examine.intValue() > maxExplain) {
+						keepGoing = false;
+					} else {
+						int exactCount = this.jdbcTemplate.queryForInt(
+								sql, inputFormat.getId());
+						if (exactCount != 0) {
+							keepGoing = false;
+						}		
+					}
+				}
+			}
+			
+			if (keepGoing) {
+				if (inputSet != null) {
+					String sql = "select count(*) from "+getTableName(name, RECORDS_SETS_TABLE)+" where set_id <> ?";
+					records = this.jdbcTemplate.queryForList(
+							"explain "+sql, inputSet.getId());
+					rows2examine = (BigInteger)records.get(0).get("rows");
+					LOG.debug("rows: "+rows2examine);
+					if (rows2examine.intValue() > maxExplain) {
+						keepGoing = false;
+					} else {
+						int exactCount = this.jdbcTemplate.queryForInt(
+								sql, inputSet.getId());
+						if (exactCount != 0) {
+							keepGoing = false;
+							
+						}
+					}
+				}
+			}
+			
+			if (keepGoing && (from != null || until != null)) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("select count(*) "+
+						"from "+getTableName(name, RECORD_UPDATES_TABLE)+" ");
+				List<Object> paramsList = new ArrayList<Object>();
+				boolean whereInserted = false;
+				if (from != null) {
+					whereInserted = true;
+					sb.append("where date_updated < ? ");
+					paramsList.add(from);
+				}
+				if (until != null) {
+					if (!whereInserted) {
+						sb.append("where ");
+					} else {
+						sb.append("or ");
+					}
+					sb.append("date_updated > ? ");
+					paramsList.add(until);
+				}
+				Object[] params = paramsList.toArray();
+				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
+				rows2examine = (BigInteger)records.get(0).get("rows");
+				LOG.debug("rows: "+rows2examine);
+				if (rows2examine.intValue() > maxExplain) {
+					keepGoing = false;
+				} else {
+					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);
+					if (exactCount != 0) {
+						keepGoing = false;
+					}
+				}
+			}
+
+			if (keepGoing) {
+				countMethod2use = 1;
+				return this.jdbcTemplate.queryForLong("select count(*) from "+getTableName(name, RECORDS_TABLE));
+			}
 		}
-		LOG.debug("records count: "+recordCount);
-		return recordCount;
+		if (countMethod2use == 0 ) {
+
+			boolean keepGoing = true;
+			List<Map<String,Object>> records = null;
+			BigInteger rows2examine = null;
+			
+			if (keepGoing) {
+				if (inputFormat != null) {
+					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id = ?";
+					records = this.jdbcTemplate.queryForList("explain "+sql, inputFormat.getId());
+					rows2examine = (BigInteger)records.get(0).get("rows");
+					LOG.debug("rows: "+rows2examine);
+					if (rows2examine.intValue() < maxExplain) {
+						int exactCount = this.jdbcTemplate.queryForInt(sql, inputFormat.getId());
+						if (exactCount == 0) {
+							countMethod2use = 2;
+							keepGoing = false;
+						}
+					}
+				}
+			}
+			
+			if (keepGoing) {
+				if (inputSet != null) {
+					String sql = "select count(*) from "+getTableName(name, RECORDS_SETS_TABLE)+" where set_id = ?"; 
+					records = this.jdbcTemplate.queryForList("explain "+sql, inputSet.getId());
+					rows2examine = (BigInteger)records.get(0).get("rows");
+					LOG.debug("rows: "+rows2examine);
+					if (rows2examine.intValue() < maxExplain) {
+						int exactCount = this.jdbcTemplate.queryForInt(sql, inputSet.getId());
+						if (exactCount == 0) {
+							countMethod2use = 2;
+							keepGoing = false;
+						}
+					}
+				}
+			}
+			
+			if (keepGoing && (from != null || until != null)) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("select count(*) "+
+						"from "+getTableName(name, RECORD_UPDATES_TABLE)+" ");
+				List<Object> paramsList = new ArrayList<Object>();
+				boolean whereInserted = false;
+				if (from != null) {
+					whereInserted = true;
+					sb.append("where date_updated >= ? ");
+					paramsList.add(from);
+				}
+				if (until != null) {
+					if (!whereInserted) {
+						sb.append("where ");
+					} else {
+						sb.append("and ");
+					}
+					sb.append("date_updated <= ? ");
+					paramsList.add(until);
+				}
+				Object[] params = paramsList.toArray();
+				
+				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
+				rows2examine = (BigInteger)records.get(0).get("rows");
+				LOG.debug("rows: "+rows2examine);
+				if (rows2examine.intValue() < maxExplain) {
+					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);
+					if (exactCount == 0) {
+						countMethod2use = 2;
+						keepGoing = false;
+					}
+				}
+			}
+			
+			if (!keepGoing) {
+				return 0l;
+			}
+		}
+		
+		if (countMethod2use == 0) {
+			List<Object> params = new ArrayList<Object>();
+			if (until == null) {
+				until = new Date();
+			}
+			StringBuilder sb = new StringBuilder();
+			String indexPrefix = getUtil().getDBSchema(name);
+			sb.append(
+					" select straight_join count(distinct u.record_id) " +
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u  force index (idx_"+indexPrefix+"_record_updates_date_updated), "+
+						getTableName(name, RECORDS_TABLE)+" r IGNORE index (idx_"+indexPrefix+"_records_format_id)");
+			
+			if (inputSet != null) {
+				sb.append(", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+indexPrefix+"_record_sets_set_id) ");
+			}
+			sb.append(
+					" where r.record_id = u.record_id " +
+						" and (r.record_id > ? or ? is null) "+
+						" and (u.date_updated >= ? or ? is null) "+
+						" and (u.date_updated <= ? or ? is null) "
+						);
+			params.add(startingId);
+			params.add(startingId);
+			params.add(from);
+			params.add(from);
+			params.add(until);
+			params.add(until);
+			if (inputFormat != null) {
+				sb.append(
+						" and r.format_id = ? ");
+				params.add(inputFormat.getId());
+			}
+			if (inputSet != null) {
+				sb.append(
+						" and r.record_id = rs.record_id " +
+						" and rs.set_id = ? ");
+				params.add(inputSet.getId());
+			}
+
+			Object obj[] = params.toArray();
+			
+			long recordCount = 0;
+
+			List<Map<String,Object>> records = null;
+			BigInteger rows2examine = null;
+			
+			records = this.jdbcTemplate.queryForList("explain "+sb.toString(), obj);
+			rows2examine = (BigInteger)records.get(0).get("rows");
+			LOG.debug("rows: "+rows2examine);
+			if (rows2examine.intValue() < completeListSizeThreshold) {
+				countMethod2use = 3;
+				recordCount = this.jdbcTemplate.queryForLong(sb.toString(), obj);
+				return recordCount + offset;
+			}
+		}
+		 
+		if (countMethod2use == 0) {
+			//TODO: take a guess
+			return -1l;
+		}
+		
+		return -1l;
+
 	}
 	
 	public List<Set> getSets(String repoName, long recordId) {
@@ -1373,6 +1563,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 
 	public void createIndiciesIfNecessary(String name) {
+		name = getUtil().getDBSchema(name);
 		 TimingLogger.start("createIndiciesIfNecessary."+name);
 		 List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
 		 boolean genericRepoIndexExists = false;
