@@ -473,9 +473,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				inputFormat, inputSet, repo.getName(), getService());
 		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
+		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 		if (getRepository() != null) {
-			getRepository().beginBatch();	
+			getRepository().beginBatch();
 		}
 
 		int getRecordLoops = 0;
@@ -540,6 +542,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				getServiceDAO().persist(sh);
 			}
 			
+			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+					sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 			records = getRecords(repo, sh, inputFormat, inputSet);
 		}
 		//  TODO not inserting errors on input record.

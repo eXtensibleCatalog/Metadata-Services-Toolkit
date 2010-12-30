@@ -41,11 +41,11 @@
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>
         <c:choose>
-            <c:when test="${nameLength<45}">
+            <c:when test="${nameLength<75}">
                 <xxx id="currentProcess">${currentProcess}</xxx>
             </c:when>
             <c:otherwise>
-                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,45)}...</xxx>
+                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,75)}...</xxx>
             </c:otherwise>
         </c:choose>
 </c:if>
@@ -54,8 +54,7 @@
 </c:if>
 </li>
 
-
-
+<%--
 <li style="float:right;"> 
 <c:choose>
     <c:when test="${currentProcess!=null}">
@@ -96,5 +95,6 @@
             <button style="width:60px;" id='abortButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
     </c:otherwise>
 </c:choose>
-
+ --%>
+ 
  </li>

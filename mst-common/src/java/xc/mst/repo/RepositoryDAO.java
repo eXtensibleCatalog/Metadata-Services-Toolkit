@@ -793,7 +793,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public void deleteRepo(String name) {
 		this.jdbcTemplate.update(
-				"delete from "+REPOS_TABLE+" where repo_name = ? "+getUtil().getDBSchema(name));
+				"delete from "+REPOS_TABLE+" where repo_name = ? ", getUtil().getDBSchema(name));
 		deleteSchema(getUtil().getDBSchema(name));
 	}
 	
