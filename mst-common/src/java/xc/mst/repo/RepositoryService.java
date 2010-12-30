@@ -125,15 +125,15 @@ public class RepositoryService extends BaseService {
 	public String save(String repositoryName, String repositoryURL, Provider provider, long numberOfRecordsToHarvest) {
         try {
         	boolean update = false;
-        	if (provider != null) {
+        	if (provider == null) {
+        		provider = new Provider();
+        	} else if (provider.getId() != -1) {
         		update = true;
         		provider = getProviderService().getProviderById(provider.getId());
-                if(provider==null) {
+                if(provider == null) {
                     getUserService().sendEmailErrorReport();
                     return "Error occurred while editing repository. An email has been sent to the administrator.";
                 }
-        	} else {
-        		provider = new Provider();
         	}
             
             provider.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);

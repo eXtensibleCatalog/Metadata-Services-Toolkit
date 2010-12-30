@@ -101,8 +101,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	protected int totalRecords = 0;
 
 	public void cancel() {running.lock(); running.unlock();}
-	public void finish() {repo.endBatch(); running.lock(); running.unlock(); repo.processComplete();}
-	public void pause()  {repo.endBatch(); running.lock(); running.unlock();}
+	public void finish() {running.lock(); repo.endBatch(); repo.processComplete(); running.unlock();}
+	public void pause()  {running.lock(); repo.endBatch(); running.unlock();}
 	public void resume() {}
 	
 	public String getName() {

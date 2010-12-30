@@ -16,6 +16,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import xc.mst.action.BaseActionSupport;
 import xc.mst.constants.Constants;
+import xc.mst.scheduling.WorkerThread;
 
 /**
  * This action class defines method which are used to abort, pause and resume service processes which are being run by the MST
@@ -46,12 +47,12 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
             if(getScheduler().getRunningJob()!=null)
             {
             	getScheduler().cancelRunningJob();
-                request.getSession().setAttribute("serviceBarDisplay", "abort");
+                WorkerThread.serviceBarDisplay = "abort";
             }
             else
             {
                 setDisplayText("Already_ended");
-                request.getSession().setAttribute("serviceBarDisplay", "abort");
+                WorkerThread.serviceBarDisplay = "abort";
             }
             
         }
@@ -74,13 +75,14 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
         {
             if(getScheduler().getRunningJob()!=null)
             {
+            	WorkerThread.serviceBarDisplay = "pausing";
             	getScheduler().pauseRunningJob();
-                request.getSession().setAttribute("serviceBarDisplay", "resume");
+            	WorkerThread.serviceBarDisplay = "resume";
             }
             else
             {
                 setDisplayText("Already_ended");
-                request.getSession().setAttribute("serviceBarDisplay", "abort");
+                WorkerThread.serviceBarDisplay = "abort";
             }
            
             
@@ -105,12 +107,12 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
             if(getScheduler().getRunningJob()!=null)
             {
             	getScheduler().resumePausedJob();
-                request.getSession().setAttribute("serviceBarDisplay", "pause");
+            	WorkerThread.serviceBarDisplay = "pause";
             }
             else
             {
                 setDisplayText("Already_ended");
-                request.getSession().setAttribute("serviceBarDisplay", "abort");
+                WorkerThread.serviceBarDisplay = "abort";
             }
            
         }

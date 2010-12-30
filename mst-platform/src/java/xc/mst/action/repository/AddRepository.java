@@ -10,18 +10,11 @@
 
 package xc.mst.action.repository;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.ValidateRepository;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * This method is for adding a new repository to the database.
@@ -61,12 +54,14 @@ public class AddRepository extends BaseActionSupport
      */
     public String addRepository()
     {
-    	String error = getRepositoryService().save(repositoryName, repositoryURL, null, numberOfRecordsToHarvest);
+    	Provider p = new Provider();
+    	String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
     	if (error != null) {
     		errorType = "error";
     		this.addFieldError("editRepository",error);
     		return INPUT;
     	} else {
+    		setRepositoryId(p.getId());
     		return SUCCESS;
     	}
 

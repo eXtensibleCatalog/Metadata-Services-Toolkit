@@ -17,6 +17,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import xc.mst.action.BaseActionSupport;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
+import xc.mst.scheduling.WorkerThread;
 
 /**
  * This class is used to return the latest status of the processes running in the MST
@@ -77,7 +78,11 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                        if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 	                        	currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
 	                        } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
-	                        	currentProcess = null;
+	                        	if (getScheduler().wasPausedManually()) {
+	                        		currentProcess = "Paused "+getScheduler().getRunningJob().getJobName();
+	                        	} else {
+	                        		currentProcess = null;
+	                        	}
 	                        } else {
 	                        	currentProcess = "Paused processing through " + getScheduler().getRunningJob().getJobName();
 	                        }
@@ -115,9 +120,9 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 }
                 else
                 {
-                    request.getSession().setAttribute("serviceBarDisplay", null);
+                    WorkerThread.serviceBarDisplay = null;
                 }
-                displayType = (String)request.getSession().getAttribute("serviceBarDisplay");
+                displayType = WorkerThread.serviceBarDisplay;
                 setDisplayType(displayType);
                 LOG.debug("solrIndexRunning: "+solrIndexRunning);
                 LOG.debug("consecutiveSolrIndexes: "+consecutiveSolrIndexes);

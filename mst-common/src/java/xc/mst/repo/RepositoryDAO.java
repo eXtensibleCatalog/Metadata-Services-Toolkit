@@ -791,6 +791,12 @@ public class RepositoryDAO extends BaseDAO {
 				name, serviceId, providerId);
 	}
 	
+	public void deleteRepo(String name) {
+		this.jdbcTemplate.update(
+				"delete from "+REPOS_TABLE+" where repo_name = ? "+getUtil().getDBSchema(name));
+		deleteSchema(getUtil().getDBSchema(name));
+	}
+	
 	public void createTables(Repository repo) {
 		runSql(repo, "xc/mst/repo/sql/create_repo.sql");
 		if (repo.getProvider() != null) {
@@ -1678,6 +1684,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public boolean ready4harvest(String name) {
 		 boolean genericRepoIndexExists = false;
+		 name = getUtil().getDBSchema(name);
 		 try {
 			 List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
 			 if (rows != null) {

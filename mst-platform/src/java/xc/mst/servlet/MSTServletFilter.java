@@ -42,7 +42,7 @@ public class MSTServletFilter implements Filter {
 		*/
 		try {
 			HttpServletRequest hsr = (HttpServletRequest)req; 
-			LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
+			//LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
 			if (hsr.getRequestURI().contains("/solr/")) {
 				if (hsr.getSession().getAttribute("user") == null) {
 					HttpServletResponse hresp = (HttpServletResponse)resp;

@@ -54,6 +54,7 @@ public class Scheduler extends BaseService implements Runnable {
 	
 	protected WorkerThread runningJob;
 	protected Job previousJob = null;
+	protected boolean pausedManually = false;
 
 	public void init() {
 		LOG.info("init");
@@ -230,7 +231,8 @@ public class Scheduler extends BaseService implements Runnable {
 							solrWorkerThreadStarted = true;
 							solrWorkerThread.start();
 						} else {
-							solrWorkerThread.proceed();	
+							if (!pausedManually)
+								solrWorkerThread.proceed();	
 						}
 						runningJob = solrWorkerThread;
 						runningJob.type = Constants.SOLR_INDEXER;
@@ -339,12 +341,21 @@ public class Scheduler extends BaseService implements Runnable {
 	public void cancelRunningJob(){
 		runningJob.cancel();
 	}
+	
+	public boolean wasPausedManually() {
+		return pausedManually;
+	}
+	public void setPausedManually(boolean _pausedManually) {
+		this.pausedManually = _pausedManually;
+	}
 
 	public void pauseRunningJob(){
+		pausedManually = true;
 		runningJob.pause();
 	}
 	
 	public void resumePausedJob(){
+		pausedManually = false;
 		runningJob.proceed();
 	}
 }

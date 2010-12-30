@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:set var="varPause" value="pause"/>
+<c:set var="varPausing" value="pausing"/>
 <c:set var="varResume" value="resume"/>
 <c:set var="varAbort" value="abort"/>
 
@@ -60,12 +61,15 @@
     <c:when test="${currentProcess!=null}">
         <c:choose>
             <c:when test="${displayType!=null}">
-
+					<c:if test="${displayType eq varPausing}">
+						<button id='resumeButton' disabled="disabled" class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
+                         <button style="display:none;width:60px" id='pauseButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
+                         <button id='abortButton' class='xc_button' style="width:60px;"  type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
+					</c:if>
                     <c:if test="${displayType eq varPause}">
                          <button style="display:none;width:60px" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
                          <button id='pauseButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
                          <button id='abortButton' class='xc_button' style="width:60px;"  type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-
                     </c:if>
                     <c:if test="${displayType eq varResume}">
                           <button id='resumeButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>

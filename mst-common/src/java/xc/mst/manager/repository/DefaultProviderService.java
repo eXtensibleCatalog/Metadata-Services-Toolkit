@@ -22,6 +22,8 @@ import xc.mst.manager.IndexException;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.HarvesterWorkerThread;
 import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
+import xc.mst.scheduling.WorkerThread;
+import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 
@@ -94,17 +96,18 @@ public class DefaultProviderService extends BaseService implements ProviderServi
         {
         	// Check if this repository is being harvested 
         	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
-        		HarvesterWorkerThread harvesterWorkerThread = (HarvesterWorkerThread)getScheduler().getRunningJob();
+        		WorkerThread harvesterWorkerThread = (WorkerThread)getScheduler().getRunningJob();
         		if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
         			getScheduler().cancelRunningJob();
         		}
         	}
         	
         	// Check if this repository is being processed by processing directive
-        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-        		ProcessingDirectiveWorkerThread processingDirectiveWorkerThread = (ProcessingDirectiveWorkerThread)getScheduler().getRunningJob();
-        		Provider sourceProvider = processingDirectiveWorkerThread.getProcessingDirective().getSourceProvider();
-        		if (sourceProvider != null && sourceProvider.getName().equals(provider.getName())) {
+        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_SERVICE)) {
+        		MetadataServiceManager msm = (MetadataServiceManager)getScheduler().getRunningJob().getWorkDelegate();
+        		Repository incomingRepo = msm.getIncomingRepository();
+        		
+        		if (incomingRepo != null && incomingRepo.getName().equals(provider.getName())) {
         			getScheduler().cancelRunningJob();
         		}
         	}
@@ -123,6 +126,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
 
     	// Delete provider
     	getProviderDAO().delete(provider);
+    	getRepositoryDAO().deleteRepo(provider.getName());
     }
 
     /**
