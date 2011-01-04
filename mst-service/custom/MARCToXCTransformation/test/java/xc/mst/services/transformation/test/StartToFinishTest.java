@@ -1,12 +1,20 @@
 package xc.mst.services.transformation.test;
 
 import org.apache.log4j.Logger;
+import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Format;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
+	
+	@Override
+	protected long getNumberOfRecordsToHarvest() {
+		//return Integer.MAX_VALUE;
+		//return 100000;
+		return 10000;
+	}
 	
 	public String getRepoName() {
 		return "test_repo";
@@ -19,6 +27,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	public String getProviderUrl() {
 		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
+		//return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {
@@ -26,7 +35,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
-		return getMarcXmlFormat();
+		return getXCFormat();
 	}
 	
 	public void finalTest() {
@@ -71,5 +80,14 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 			getUtil().throwIt(t);
 		}
 	*/
+	}
+	
+	@Test
+	public void startToFinish() throws Exception  {
+		super.startToFinish();
+		/*
+		createHarvestSchedule();
+		waitUntilFinished();
+		*/
 	}
 }

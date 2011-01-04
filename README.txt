@@ -1,5 +1,3 @@
-svn test...
-
 This file describes the steps to build the project.
 
 Prerequisites:

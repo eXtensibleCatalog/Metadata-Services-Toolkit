@@ -41,11 +41,11 @@
 <c:if test="${currentProcess!=null}">
         <c:set var="nameLength" value="${fn:length(currentProcess)}"/>
         <c:choose>
-            <c:when test="${nameLength<75}">
+            <c:when test="${nameLength<65}">
                 <xxx id="currentProcess">${currentProcess}</xxx>
             </c:when>
             <c:otherwise>
-                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,75)}...</xxx>
+                <xxx id="currentProcess" title="${currentProcess}">${fn:substring(currentProcess,0,65)}...</xxx>
             </c:otherwise>
         </c:choose>
 </c:if>
