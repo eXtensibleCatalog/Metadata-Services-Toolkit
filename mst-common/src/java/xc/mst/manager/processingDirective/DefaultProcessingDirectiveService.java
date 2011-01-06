@@ -98,7 +98,7 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
 				getServiceDAO().update(processingDirective.getService());
 			}
 			
-//			runProcessingDirective(processingDirective);
+			runProcessingDirective(processingDirective);
 		} catch (DataException e) {
 			log.error("Data Exception", e);
 		}
@@ -152,9 +152,15 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
     	
     	// Add job to database queue
 		try {
-			Job job = new Job(pd, Constants.THREAD_PROCESSING_DIRECTIVE);
-			job.setOrder(jobService.getMaxOrder() + 1); 
-			jobService.insertJob(job);
+			Job job = new Job();
+			job.setService(pd.getService());
+			if (pd.getOutputSet() != null) {
+				job.setOutputSetId(pd.getOutputSet().getId());
+			}
+			job.setJobType(Constants.THREAD_SERVICE);
+			job.setOrder(getJobService().getMaxOrder() + 1);
+			job.setProcessingDirective(pd);
+			getJobService().insertJob(job);	
 		} catch (DatabaseConfigException dce) {
 			log.error("DatabaseConfig exception occured when ading jobs to database", dce);
 		}

@@ -10,17 +10,12 @@
 
 package xc.mst.action.repository;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.ValidateRepository;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * This method is used to edit the details of a repository
@@ -91,153 +86,16 @@ public class EditRepository extends BaseActionSupport
      */
     public String editRepository()
     {
-        try
-        {
-            Provider provider = getProviderService().getProviderById(repositoryId);
-            provider.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);
-            if(provider==null)
-            {
-                errorType = "error";
-                getUserService().sendEmailErrorReport();
-                this.addFieldError("editRepository","Error occurred while editing repository. An email has been sent to the administrator.");
-                return INPUT;
-            }
-            provider.setName(getRepositoryName());
-            
-            boolean urlChanged = false;
-            if(provider.getOaiProviderUrl().equalsIgnoreCase(repositoryURL))
-            {
-                urlChanged = false;
-            }
-            else
-            {
-                urlChanged = true;
-
-            }
-            provider.setOaiProviderUrl(getRepositoryURL());
-
-            Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
-            Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
-            if(repositorySameName!=null||repositorySameURL!=null) //repository with the same details already exists
-            {
-
-                if(repositorySameName!=null) //repository with same name exists
-                {
-
-                    if(repositorySameName.getId()!=getRepositoryId()) //another repository with the same name exists
-                    {
-
-                         this.addFieldError("editRepositoryError", "Repository with Name '"+repositoryName+"' already exists");
-                         errorType = "error";                        
-                         return INPUT;
-                    }
-                    else
-                    {
-                        if(repositorySameURL!=null) //repository with same URL already exists
-                        {
-                            if(repositorySameURL.getId()!=getRepositoryId())
-                            {
-                                this.addFieldError("editRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
-                                errorType = "error";
-                               
-                                return INPUT;
-                            }
-                        }
-                        else
-                        {
-                            if(urlChanged) //perform revalidation because repository URL has been changed
-                            {
-
-                                provider.setIdentify(false);
-                                provider.setListFormats(false);
-                                provider.setListSets(false);
-                                provider.removeAllFormats();
-                                provider.removeAllSets();
-                                provider.setLastValidationDate(new Date());
-                                getProviderService().updateProvider(provider);
-                                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
-                                vr.validate(provider.getId());
-                            }
-                            else //just update Repository details without revalidation
-                            {
-                            	getProviderService().updateProvider(provider);
-                            }
-                        }
-                    	getProviderService().updateProvider(provider);
-                    	
-                        return SUCCESS;
-
-                    }
-                }
-                else //repository with same URL already exists
-                {
-
-                    if(repositorySameURL.getId()!=getRepositoryId()) //repository with same URL already existsand is not the repository whose details are being edited
-                    {
-
-                         this.addFieldError("editRepositoryError", "Repository with URL '"+repositoryURL+"' already exists");
-                         errorType = "error";
-                         return INPUT;
-                    }
-                    else
-                    {
-
-                        if(urlChanged) //repository URL has been changed and therefore revalidation has to be performed
-                        {
-
-                            provider.setIdentify(false);
-                            provider.setListFormats(false);
-                            provider.setListSets(false);
-                            provider.removeAllFormats();
-                            provider.removeAllSets();
-                            provider.setLastValidationDate(new Date());
-                            getProviderService().updateProvider(provider);
-                            ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
-                            vr.validate(provider.getId());
-                        }
-                        else
-                        {
-                        	getProviderService().updateProvider(provider);
-                        }
-                    	getProviderService().updateProvider(provider);
-
-                        return SUCCESS;
-                    }
-                }
-                
-
-            }
-            else //no reposiotry with the same details exists
-            {
-
-                if(urlChanged) //URL changed and therefore revalidation is performed
-                {
-
-                    provider.setIdentify(false);
-                    provider.setListFormats(false);
-                    provider.setListSets(false);
-                    provider.removeAllFormats();
-                    provider.removeAllSets();
-                    provider.setLastValidationDate(new Date());
-                    getProviderService().updateProvider(provider);
-                    ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
-                    vr.validate(provider.getId());
-                }
-                else
-                {
-                	getProviderService().updateProvider(provider);
-                }
-
-                return SUCCESS;
-            }
-        }
-        catch(DataException e)
-        {
-            log.error(e.getMessage(),e);
-            errorType = "error";
-            this.addFieldError("dbConfigError","Unable to access the database to get Repository information. There may be problem with database configuration.");
-            return INPUT;
-        }
+    	Provider p = new Provider();
+    	p.setId(repositoryId);
+    	String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
+    	if (error != null) {
+    		errorType = "error";
+    		this.addFieldError("editRepository",error);
+    		return INPUT;
+    	} else {
+    		return SUCCESS;
+    	}
     }
 
 	/**

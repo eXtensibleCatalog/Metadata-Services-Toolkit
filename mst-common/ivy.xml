@@ -55,7 +55,7 @@
             <artifact name="jstl" type="jar"/>
         </dependency>
         
-        <dependency org="org.apache.struts" name="struts2-core" rev="2.1.2" transitive="false">
+        <dependency org="org.apache.struts" name="struts2-core" rev="2.2.1" transitive="false">
             <artifact name="struts2-core" type="jar"/>
         </dependency>
        
@@ -72,12 +72,12 @@
             <artifact name="freemarker" type="jar"/>
         </dependency>
 
-        <dependency org="opensymphony" name="ognl" rev="2.6.11">
+        <dependency org="ognl" name="ognl" rev="3.0">
             <artifact name="ognl" type="jar"/>
         </dependency>
        
-        <dependency org="com.opensymphony" name="xwork" rev="2.1.1" transitive="false">
-            <artifact name="xwork" type="jar"/>
+        <dependency org="org.apache.struts.xwork" name="xwork-core" rev="2.2.1" transitive="false">
+            <artifact name="xwork-core" type="jar"/>
         </dependency>
         
         <dependency org="org.codehaus.castor" name="castor-xml" rev="1.3" transitive="false">

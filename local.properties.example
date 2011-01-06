@@ -2,6 +2,7 @@ tomcat.dir=C:/dev/java/tomcat_6.0
 mst.root.dir=c:/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/impl/build/
 dist.dir=../../dist/
 mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.1
+svn.home=c:/Program\ Files/CollabNet/Subversion\ Server
 
 ftp.server=
 ftp.userid=

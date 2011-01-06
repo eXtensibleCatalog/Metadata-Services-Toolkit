@@ -1,8 +1,12 @@
 package xc.mst.dao.record;
 
-import java.sql.PreparedStatement;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -10,15 +14,15 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.BaseDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 public class MessageDAO extends BaseDAO {
@@ -57,63 +61,83 @@ public class MessageDAO extends BaseDAO {
 	
 	@SuppressWarnings("unused")
 	public void persistMessages(final List<RecordMessage> messages) {
-		TimingLogger.start(MESSAGES_TABLE+".insert");
-		String sql = 
-			"insert into "+MESSAGES_TABLE+
-			" (record_message_id, service_id, rec_in_out, record_id, msg_code, msg_level ) "+
-			"values (          ?,          ?,          ?,         ?,        ?,         ? ) ";
-
-		int[] updateCounts = this.jdbcTemplate.execute(sql, new PreparedStatementCallback<int[]>() {
-			public int[] doInPreparedStatement(PreparedStatement ps)
-					throws SQLException, DataAccessException {
-				for (RecordMessage rm : messages) {
-	        		int i=1;
-	        		ps.setLong(i++, rm.getId());
-	        		ps.setLong(i++, rm.getServiceId());
-	        		if (rm.isInputRecord()) {
-	        			ps.setString(i++, "I");
-	        		} else {
-	        			ps.setString(i++, "O");
-	        		}
-	        		ps.setLong(i++, rm.getRecord().getId());
-	        		ps.setInt(i++, rm.getCode());
-	        		ps.setString(i++, rm.getLevel()+"");
-	        		ps.addBatch();
-	        	}
-				if (messages.size() > 0) {
-					return ps.executeBatch();
-				} else {
-					return null;
-				}
+		try {
+			String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
+			LOG.debug("dbLoadFileStr: "+dbLoadFileStr);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			byte[] tabBytes = "\t".getBytes();
+			byte[] newLineBytes = "\n".getBytes();
+			
+			File dbLoadFile = new File(dbLoadFileStr);
+			if (dbLoadFile.exists()) {
+				dbLoadFile.delete();
 			}
-		});
-		TimingLogger.stop(MESSAGES_TABLE+".insert");
-		TimingLogger.start(MESSAGE_DETAILS_TABLE+".insert");
-		sql = 
-			"insert into "+MESSAGE_DETAILS_TABLE+
-			" (record_message_id, detail ) "+
-			"values (          ?,      ? ) ";
-		updateCounts = this.jdbcTemplate.execute(sql, new PreparedStatementCallback<int[]>() {
-			public int[] doInPreparedStatement(PreparedStatement ps)
-					throws SQLException, DataAccessException {
-				boolean atLeastOneInsert = false;
-				for (RecordMessage rm : messages) {
-					if (rm.getDetail() != null) {
-						atLeastOneInsert = true;
-						int i=1;
-		        		ps.setLong(i++, rm.getId());
-		        		ps.setString(i++, rm.getDetail());
-		        		ps.addBatch();
+			OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+			int i=0;
+			TimingLogger.start("MESSAGES_TABLE.insert");
+			TimingLogger.start("MESSAGES_TABLE.insert.create_infile");
+			for (RecordMessage rm : messages) {
+				if (i++ > 0) {
+					os.write(newLineBytes);
+				}
+				os.write(String.valueOf(rm.getId()).getBytes());
+				os.write(tabBytes);
+				if (rm.isInputRecord()) {
+	    			os.write("I".getBytes());
+	    		} else {
+	    			os.write("O".getBytes());
+	    		}
+				os.write(tabBytes);
+				os.write(String.valueOf(rm.getRecord().getId()).getBytes());
+				os.write(tabBytes);
+				os.write(String.valueOf(rm.getCode()).getBytes());
+				os.write(tabBytes);
+				os.write(String.valueOf(rm.getLevel()).getBytes());
+				os.write(tabBytes);
+				os.write(String.valueOf(rm.getServiceId()).getBytes());
+	    	}
+			os.close();
+			TimingLogger.stop("MESSAGES_TABLE.insert.create_infile");
+			TimingLogger.start("MESSAGES_TABLE.insert.load_infile");
+			this.jdbcTemplate.execute(
+					"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
+					MESSAGES_TABLE+
+					" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+					);
+			TimingLogger.stop("MESSAGES_TABLE.insert.load_infile");
+			TimingLogger.stop("MESSAGES_TABLE.insert");
+			
+			dbLoadFile = new File(dbLoadFileStr);
+			if (dbLoadFile.exists()) {
+				dbLoadFile.delete();
+			}
+			os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+			i=0;
+			TimingLogger.start("MESSAGES_DETAIL_TABLE.insert");
+			TimingLogger.start("MESSAGES_DETAIL_TABLE.insert.create_infile");
+			for (RecordMessage rm : messages) {
+				if (!StringUtils.isEmpty(rm.getDetail())) {
+					if (i++ > 0) {
+						os.write(newLineBytes);
 					}
-	        	}
-				if (atLeastOneInsert) {
-					return ps.executeBatch();	
-				} else {
-					return null;
+					os.write(String.valueOf(rm.getId()).getBytes());
+					os.write(tabBytes);
+					os.write(rm.getDetail().getBytes());
 				}
-			}
-		});
-        TimingLogger.stop(MESSAGE_DETAILS_TABLE+".insert");
+	    	}
+			os.close();
+			TimingLogger.stop("MESSAGES_DETAIL_TABLE.insert.create_infile");
+			TimingLogger.start("MESSAGES_DETAIL_TABLE.insert.load_infile");
+			this.jdbcTemplate.execute(
+					"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
+					MESSAGE_DETAILS_TABLE+
+					" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+					);
+			TimingLogger.stop("MESSAGES_TABLE.insert.load_infile");
+			TimingLogger.stop("MESSAGES_TABLE.insert");
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
+		}
 	}
 	
 	public void injectMessages(List<Record> records) {

@@ -50,9 +50,10 @@ public interface Repository {
 	 * @param startingId starting record id to query from
 	 * @param inputFormat format of the record
 	 * @param inputSet Set of record
+	 * @param offset
 	 * @return
 	 */
-	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet);
+	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset);
 	
 	/**
 	 * Get record header information
@@ -91,5 +92,13 @@ public interface Repository {
 	public void processComplete();
 	
 	public boolean ready4harvest();
+	
+	public int getPersistentPropertyAsInt(String key);
+
+	public void setPersistentPropertyAsInt(String key, int value);
+	
+	public String getPersistentProperty(String key);
+
+	public void setPersistentPropertyAsInt(String key, String value);
 
 }

@@ -20,6 +20,9 @@ public class WorkerThread extends Thread {
 
 	private static final Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
 	
+    // yes, this is asinie, but less so then putting it in the http session (which is where it was).  
+    public static String serviceBarDisplay = null;
+	
 	protected String type = null;
 
 	protected Status status = null;
@@ -59,6 +62,7 @@ public class WorkerThread extends Thread {
 				LOG.debug("workDelegate.getName(): "+workDelegate.getName());
 				LOG.debug("status: "+status);
 				if (this.status == Status.RUNNING) {
+					serviceBarDisplay = "pause";
 					keepGoing = this.workDelegate.doSomeWork();
 				} else if (this.status == Status.CANCELED) {
 					keepGoing = false;
@@ -85,6 +89,7 @@ public class WorkerThread extends Thread {
 
 	public void pause() {
 		waitForSetupCompletion();
+		this.status = Status.PAUSING;
 		this.workDelegate.pause();
 		this.status = Status.PAUSED;
 	}

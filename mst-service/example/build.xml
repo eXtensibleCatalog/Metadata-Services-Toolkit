@@ -42,6 +42,9 @@
 		<!--  download Ivy from web site so that it can be used
 				even without any special installation -->
 		<echo message="Please wait this may take a few minutes - installing ivy..." />
+		<delete>
+			<fileset dir="${ivy.dir}" includes="*.jar"/>
+		</delete>
 		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
 			dest="${ivy.jar}" usetimestamp="true" />
 	</target>
@@ -288,10 +291,15 @@
 		</unzip>
 	</target>
 
-	<target name="install-mst">
+	<target name="install-mst" depends="unzip-mst, mst-sql" />
+
+	<target name="unzip-mst">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+	</target>
+
+	<target name="mst-sql">
 		<exec executable="${mysql.home}/bin/mysql" 
 				input="${build.mst-instance.dir}/sql/create_database_script.sql">
 			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
@@ -323,13 +331,10 @@
 			<env key="service.test" value="${test}"/>
 			<env key="test.folder" value="${test.folder}"/>
 			<env key="skip.mst.install" value="${skip.mst.install}"/>
+			<env key="still.install.service" value="${still.install.service}"/>
 			<jvmarg value="-server" />
-			<!--
-			<jvmarg value="-Xms700M" />
-			<jvmarg value="-Xmx700M" />
-			<jvmarg value="-Xms3000M" />
-			<jvmarg value="-Xmx3000M" />
-			-->
+			<jvmarg value="-Xms${test.memory}" />
+			<jvmarg value="-Xmx${test.memory}" />
 		</java>
 	</target>
 
@@ -346,6 +351,11 @@
 	<target name="start2finishtest">
 		<property name="test" value="StartToFinishTest" />
 		<ant target="test" inheritAll="true" />
+	</target>
+
+	<target name="start2finishtest.nodep">
+		<property name="test" value="StartToFinishTest" />
+		<ant target="test.nodep" inheritAll="true" />
 	</target>
 
 </project>

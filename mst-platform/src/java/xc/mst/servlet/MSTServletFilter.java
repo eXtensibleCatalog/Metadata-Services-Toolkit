@@ -16,6 +16,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -39,6 +41,19 @@ public class MSTServletFilter implements Filter {
 		sessionFactory.openSession();
 		*/
 		try {
+			HttpServletRequest hsr = (HttpServletRequest)req; 
+			//LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
+			if (hsr.getRequestURI().contains("/solr/")) {
+				if (hsr.getSession().getAttribute("user") == null) {
+					HttpServletResponse hresp = (HttpServletResponse)resp;
+					String uri = hsr.getRequestURI();
+					int idx0 = uri.indexOf("/solr/");
+					uri = uri.substring(0, idx0)+"/st/";
+					hresp.sendRedirect(uri);
+					
+					return;
+				}
+			}
 			req.setCharacterEncoding("UTF-8");
 			chain.doFilter(req, resp);
 		} catch (Throwable t) {

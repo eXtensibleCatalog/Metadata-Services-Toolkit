@@ -108,6 +108,9 @@
 
 		<copy tofile="local.properties" file="local.properties.example" />
 		<property file="${box}.properties"/>
+
+		<exec failifexecutionfails="false" outputProperty="svn.version" executable="${svn.home}/svnversion" />
+		<echo>svn.version: ${svn.version}</echo>
 		<!--
 		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
 		-->
@@ -160,7 +163,7 @@
 	</target>
 
 	<target name="check.skip.download">
-		<available property="skip.download" file="${ivy.dir}" />
+		<available property="skip.download" file="${ivy.jar}" />
 	</target>
 	
 	<target name="download-ivy" depends="check.skip.download" unless="skip.download">
@@ -168,6 +171,9 @@
 		<!--  download Ivy from web site so that it can be used
 				even without any special installation -->
 		<echo message="Please wait this may take a few minutes - installing ivy..." />
+		<delete>
+			<fileset dir="${ivy.dir}" includes="*.jar"/>
+		</delete>
 		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
 			dest="${ivy.jar}" usetimestamp="true" />
 	</target>

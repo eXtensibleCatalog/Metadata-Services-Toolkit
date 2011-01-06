@@ -10,7 +10,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	@Override
 	protected Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getDCFormat()};
+		return new Format[] {getDCTermsFormat()};
 	}
 	
 	protected String getRepoName() {

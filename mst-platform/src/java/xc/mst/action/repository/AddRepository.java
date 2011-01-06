@@ -10,18 +10,11 @@
 
 package xc.mst.action.repository;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
-import xc.mst.dao.DatabaseConfigException;
-import xc.mst.harvester.ValidateRepository;
-import xc.mst.utils.MSTConfiguration;
 
 /**
  * This method is for adding a new repository to the database.
@@ -61,61 +54,16 @@ public class AddRepository extends BaseActionSupport
      */
     public String addRepository()
     {
-        try
-        {
-
-            Provider pr = new Provider();
-
-            Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
-            Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
-            
-            if(repositorySameName!=null)
-            {
-
-               this.addFieldError("addRepositoryError", "A repository with the name '"+repositoryName+"' already exists.");
-               errorType = "error";
-               return INPUT;
-            }
-            else if(repositorySameURL!=null)
-            {
-               this.addFieldError("addRepositoryError", "A repository with the URL '"+repositoryURL+"' already exists");
-               errorType = "error";
-               return INPUT;
-            }
-            else
-            {
-               
-                pr.setName(getRepositoryName());
-                pr.setCreatedAt(new Date());
-                pr.setUpdatedAt( new Timestamp(new Date().getTime()));
-                pr.setLastValidationDate(new Date());
-                pr.setOaiProviderUrl(getRepositoryURL());
-                pr.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);
-
-                getProviderService().insertProvider(pr);
-
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
-                vr.validate(pr.getId());
-
-            }
-            setRepositoryId(pr.getId());
-            return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
-            errorType = "error";
-            this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
-            return INPUT;
-        }
-        catch(DataException e)
-        {
-            log.error(e.getMessage(),e);
-            this.addFieldError("addRepositoryError", "Error occurred while adding repository. An email has been sent to the administrator");
-            errorType = "error";
-            getUserService().sendEmailErrorReport();
-            return INPUT;
-        }
+    	Provider p = new Provider();
+    	String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
+    	if (error != null) {
+    		errorType = "error";
+    		this.addFieldError("editRepository",error);
+    		return INPUT;
+    	} else {
+    		setRepositoryId(p.getId());
+    		return SUCCESS;
+    	}
 
     }
 

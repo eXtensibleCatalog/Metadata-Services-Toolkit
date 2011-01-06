@@ -279,11 +279,14 @@ public class DefaultServicesService extends BaseService
 
     		// The version of the service, which must appear in the second line of the configuration file
     		String version = props.getString("service.version");
+    		/*
+    		 * BDA 2010-12-06: This check adds a level of difficult and doesn't provide any rewards?
     		if (!name.equals(getUtil().normalizeName(props.getString("service.name")))) {
     			LOG.error("name: "+name);
     			LOG.error("props.getString(service.name): "+getUtil().normalizeName(props.getString("service.name")));
     			throw new RuntimeException("service folder name must match the name in the properties file.");
     		}
+    		*/
     		
     		if(version == null || version.length() == 0)
     		{

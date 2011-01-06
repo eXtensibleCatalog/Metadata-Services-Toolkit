@@ -82,7 +82,7 @@ public class BaseDAO {
 	}
 	
 	public void createSchema(String name, boolean dropIfExists) {
-		name = getUtil().normalizeName(name);
+		name = getUtil().getDBSchema(name);
 		// this is potentially dangerous, but necessary for now
 		if (dropIfExists && schemasExists(name)) {
 			deleteSchema(name);
@@ -92,9 +92,10 @@ public class BaseDAO {
 	}
 	
 	public void deleteSchema(String name) {
-		String sql = "drop database "+getUtil().normalizeName(name);
+		String sql = "drop database "+getUtil().getDBSchema(name);
 		LOG.debug("executing: "+sql);
 		this.jdbcTemplate.execute(sql);
+		this.jdbcTemplate.execute("delete from repos where repo_name = '"+getUtil().getDBSchema(name)+"'");
 	}
 	
 	public List<String> getSchemas() {
@@ -290,4 +291,5 @@ public class BaseDAO {
 	public MessageDAO getMessageDAO() {
 		return (MessageDAO)config.getBean("MessageDAO");
 	}
+
 }

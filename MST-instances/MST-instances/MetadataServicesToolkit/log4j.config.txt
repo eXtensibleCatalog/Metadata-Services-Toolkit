@@ -13,20 +13,18 @@ log4j.logger.harvestOut=INFO, harvestOut
 log4j.logger.xc.mst.utils.TimingLogger=DEBUG, timing
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
-log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
 
 # Setup the Harvest In appender
 log4j.appender.harvestIn=org.apache.log4j.RollingFileAppender
-log4j.appender.harvestIn.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_HarvestIn_log.txt
+log4j.appender.harvestIn.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_HarvestIn_log.txt
 log4j.appender.harvestIn.MaxFileSize=100MB
-log4j.appender.harvestIn.Threshold=INFO
 log4j.appender.harvestIn.MaxBackupIndex=20
 log4j.appender.harvestIn.layout=org.apache.log4j.PatternLayout
 log4j.appender.harvestIn.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Validation appender
 log4j.appender.validation=org.apache.log4j.RollingFileAppender
-log4j.appender.validation.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_Validation_log.txt
+log4j.appender.validation.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_Validation_log.txt
 log4j.appender.validation.MaxFileSize=100MB
 log4j.appender.validation.Threshold=INFO
 log4j.appender.validation.MaxBackupIndex=10
@@ -35,7 +33,7 @@ log4j.appender.validation.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Processing appender
 log4j.appender.processing=org.apache.log4j.RollingFileAppender
-log4j.appender.processing.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_Processing_log.txt
+log4j.appender.processing.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_Processing_log.txt
 log4j.appender.processing.MaxFileSize=100MB
 log4j.appender.processing.Threshold=INFO
 log4j.appender.processing.MaxBackupIndex=20
@@ -44,7 +42,7 @@ log4j.appender.processing.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the Harvest Out appender
 log4j.appender.harvestOut=org.apache.log4j.RollingFileAppender
-log4j.appender.harvestOut.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_HarvestOut_log.txt
+log4j.appender.harvestOut.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_HarvestOut_log.txt
 log4j.appender.harvestOut.MaxFileSize=100MB
 log4j.appender.harvestOut.Threshold=INFO
 log4j.appender.harvestOut.MaxBackupIndex=20
@@ -52,7 +50,7 @@ log4j.appender.harvestOut.layout=org.apache.log4j.PatternLayout
 log4j.appender.harvestOut.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 log4j.appender.timing=org.apache.log4j.RollingFileAppender
-log4j.appender.timing.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_timing_log.txt
+log4j.appender.timing.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_timing_log.txt
 log4j.appender.timing.MaxFileSize=100MB
 log4j.appender.timing.MaxBackupIndex=20
 log4j.appender.timing.layout=org.apache.log4j.PatternLayout
@@ -64,13 +62,28 @@ log4j.rootLogger=INFO, file
 # Setup the appender named "file" to write to the file log.txt
 log4j.appender.file=org.apache.log4j.RollingFileAppender
 log4j.appender.file.MaxFileSize=100MB
-log4j.appender.file.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_General_log.txt
+log4j.appender.file.File=${mst.root.dir}/MST-instances/${mst.instance.dir}/logs/MST_General_log.txt
 
 # At most store 1 backup (older) log files 100MB each.
 # Backup log files will be stored as log.txt.1 - log.txt.10
-log4j.appender.file.MaxFileSize=5MB
+log4j.appender.file.MaxFileSize=100MB
 log4j.appender.file.MaxBackupIndex=30
 
 # Pattern to output the caller's file name and line number.
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
 log4j.appender.file.layout.ConversionPattern=%d{DATE} %C:%L %5p [%t] - %m%n
+
+log4j.logger.org.apache.commons.httpclient=INFO
+log4j.logger.org.apache.solr=WARN
+log4j.logger.org.apache.commons.httpclient.Wire=INFO
+log4j.logger.httpclient.wire=INFO
+log4j.logger.org.springframework=INFO
+log4j.logger.org.springframework.jdbc=INFO
+log4j.logger.org.apache.commons.httpclient=INFO
+log4j.logger.org.apache.commons.httpclient.Wire=INFO
+log4j.logger.httpclient.wire=INFO
+log4j.logger.org.hibernate=INFO
+log4j.logger.org.hibernate.SQL=INFO
+log4j.logger.org.hibernate.type=INFO
+log4j.logger.com.opensymphony.xwork2=ERROR
+#log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR

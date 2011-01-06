@@ -576,16 +576,6 @@ public class Facade extends BaseManager
 		if(log.isDebugEnabled())
 			log.debug("Entering handleRecordLists");
 
-		// Get the maximum number of records we should return at a time from the configuration file
-		// This value is different depending on whether we're returning the full records or just the identifiers
-		int recordLimit = (getRecords ? MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 1000) :
-			                            MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS, 1000));
-
-		// Get the maximum length of the results returned in bytes
-		// This value is different depending on whether we're returning the full records or just the identifiers
-		int maxLength = (getRecords ? MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS_LENGTH, 99999999) :
-			                          MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_IDENTIFIERS_LENGTH, 1000000));
-
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
 		Date fromDate = null;
 		if (!StringUtils.isEmpty(from)) {
@@ -690,13 +680,20 @@ public class Facade extends BaseManager
 		List<Record> records = new ArrayList<Record>();
 
 		// Total number of records satisfying the criteria. This is not the number of records loaded.
-		long totalRecords =	service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
+		//long totalRecords =	service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
 		
-		// Get records from starting Id to record limit
-		if (getRecords) {
-			records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
- 		} else {
-			records = service.getMetadataService().getRepository().getRecordHeader(fromDate, untilDate, startingId, format, setObject);
+		// BDA TODO: first do a count
+		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
+		log.debug("totalCount: "+totalCount);
+		
+		if (totalCount != 0) {
+		
+			// Get records from starting Id to record limit
+			if (getRecords) {
+				records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
+	 		} else {
+				records = service.getMetadataService().getRepository().getRecordHeader(fromDate, untilDate, startingId, format, setObject);
+			}
 		}
 
 		// The XML for the OAI result
@@ -705,6 +702,7 @@ public class Facade extends BaseManager
 		// If there were no records returned, set an error signifying that no records matched.
 		// Otherwise, append data for each returned record to the result and insert a resumption token
 		// to the database if needed
+		/*
 		if(totalRecords == 0)
 		{
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "There were no records which matched the parameters provided in the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
@@ -712,13 +710,16 @@ public class Facade extends BaseManager
 			xml.append(XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"}));
 		}
 		else
+		*/ if (true)
 		{
 			
 			// True if there are more results remaining than we can return at once
-			boolean hasMore = (totalRecords > (offset + recordLimit));
+			boolean hasMore = records.size() == MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000);
 
+			/*
 			if(log.isDebugEnabled())
 				log.debug("Returning results " + offset + " - " + offset + recordLimit + " " + (set == null ? "" : "of set " + set + " ") + " and format " + format.getId() + (from == null ? "" : "from " + from + " ") + (until == null ? "" : "until " + until) + ".");
+				*/
 
 			// The number of records returned
 			int returnedRecordsCount = 0;
@@ -759,6 +760,7 @@ public class Facade extends BaseManager
 				// Increment the counter for the number of records returned
 				returnedRecordsCount++;
 
+				/* BDA - Is this feature really worthwhile?
 				// If the length of the results exceeds the maximum allowed length,
 				// break from the loop
 				if(xml.length() >= maxLength)
@@ -769,11 +771,16 @@ public class Facade extends BaseManager
 					hasMore = true;
 					break;
 				}
+				*/
 			}
 
 			// If there are more results which need to be returned in a future call, set up a resumption token
 			if(hasMore)
 			{
+				if (totalCount < -1) {
+					xml.append("<!-- completeListSize is an estimate -->");
+					totalCount = -1 * totalCount;
+				}
 				// If there was already a resumption token, update it with the new offset
 				if(resToken != null)
 				{
@@ -788,10 +795,14 @@ public class Facade extends BaseManager
 					{
 						if(getResumptionTokenDAO().update(resToken))
 						{
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(),
-										new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+							if (totalCount > 0) {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(), new String[] {"completeListSize", ""+totalCount}));	
+							} else {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken()));
+							}
+									//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
 
-							LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + resToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
+							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + resToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 						}
 					}
 					catch(DataException e)
@@ -820,10 +831,16 @@ public class Facade extends BaseManager
 						{
 							newResToken.setToken(newResToken.getId() + "|" + (offset + returnedRecordsCount));
 							getResumptionTokenDAO().update(newResToken);
-							xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(),
-										new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+							if (totalCount > 0) {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(), new String[] {"completeListSize", ""+totalCount}));
+							} else {
+								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken()
+								));
+								//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+					
+							}
 
-							LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
+							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 						}
 					}
 					catch(DataException e)
@@ -840,11 +857,13 @@ public class Facade extends BaseManager
 				{
 					try
 					{
+						/*
 						xml.append(XMLUtil.xmlTag("resumptionToken", null,
 								new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
 
 						LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and a null resumptionToken in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
-
+						*/
+						
 						getResumptionTokenDAO().delete(resToken);
 					}
 					catch(DataException e)
@@ -852,8 +871,8 @@ public class Facade extends BaseManager
 						log.error("An error occurred while deleting the resumption token.", e);
 					}
 				}
-				else
-					LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and no resumptionToken in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
+				//else
+					//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and no resumptionToken in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 			}
 		}
 

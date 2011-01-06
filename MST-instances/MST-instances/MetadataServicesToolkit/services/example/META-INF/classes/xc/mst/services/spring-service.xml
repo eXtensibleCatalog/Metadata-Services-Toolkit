@@ -33,12 +33,18 @@
 	<bean id="MetadataServiceDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<!--  normalized.service.name is a normalized version of service.name - see MSTConfiguration.java -->
-		<property name="url" value="${DatabaseUrl}/${normalized.service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<property name="url" value="${DatabaseUrl}/xc_${normalized.service.name}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="${DatabaseUsername}"/>
 		<property name="password" value="${DatabasePassword}"/>
 		<property name="maxIdle" value="10" />
-		<property name="minIdle" value="5" />
+		<property name="minIdle" value="0" />
 		<property name="maxActive" value="5" />
+		<!--
+		<property name="validationQuery" value="select 1" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnReturn" value="true" />
+		 -->
 	</bean>
 	
 	<bean id="MetadataServiceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -61,7 +67,7 @@
 	
 	<context:component-scan base-package="xc.mst"
 			use-default-filters="false">
-		<context:include-filter type="custom" expression="xc.mst.spring.TestTypeFilter" />
+		<context:include-filter type="custom" expression="xc.mst.service.impl.test.TestTypeFilter" />
 	</context:component-scan>
 	
 	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>

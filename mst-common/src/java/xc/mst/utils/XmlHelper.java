@@ -27,9 +27,25 @@ import org.w3c.dom.Document;
 public class XmlHelper {
 	
 	private static final Logger LOG = Logger.getLogger(XmlHelper.class);
-	protected SAXBuilder saxBuilder = new SAXBuilder();
-	protected DOMBuilder domBuilder = new DOMBuilder();
-	protected DocumentBuilder docBuilder = null;
+	private static final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	
+	// BDA: These statics are an 11th hour hack.  It's fine for now since it's single threaded, 
+	// but should eventually be put in a pool 
+	protected static DocumentBuilder docBuilder = null;
+	protected static SAXBuilder saxBuilder = new SAXBuilder();
+	protected static DOMBuilder domBuilder = new DOMBuilder();
+	
+	static {
+		saxBuilder = new SAXBuilder();
+		domBuilder = new DOMBuilder();
+		try {
+			docBuilder = dbf.newDocumentBuilder();
+		} catch (Throwable t) {
+			LOG.error("", t);
+		}
+	}
+
+	
 	
 	//protected Format xmlFormat = null;
 	protected XMLOutputter xmlOutputterPretty = null;
@@ -53,7 +69,7 @@ public class XmlHelper {
 	protected DocumentBuilder getDocumentBuilder() {
 		if (docBuilder == null) {
 			try {
-				docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+				docBuilder = dbf.newDocumentBuilder();
 			} catch (Throwable t) {
 				LOG.error("", t);
 			}
@@ -114,7 +130,13 @@ public class XmlHelper {
 	
 	public org.jdom.Document getJDomDocument(InputStream is) {
 		try {
-			return getSaxBuilder().build(is);
+			TimingLogger.start("getSaxBuilder");
+			SAXBuilder sb = getSaxBuilder();
+			TimingLogger.stop("getSaxBuilder");
+			TimingLogger.start("sax");
+			org.jdom.Document doc = sb.build(is);
+			TimingLogger.stop("sax");
+			return doc;
 		} catch (Throwable t) {
 			LOG.error("", t);
 			Util.getUtil().throwIt(t);
@@ -128,8 +150,11 @@ public class XmlHelper {
 			byte[] bytes = str.getBytes("UTF-8");
 			TimingLogger.stop("str.getBytes");
 			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+			TimingLogger.start("getDomBuilder()");
+			DocumentBuilder db = getDocumentBuilder();
+			TimingLogger.stop("getDomBuilder()");
 			TimingLogger.start("xerces");
-			Document doc = getDocumentBuilder().parse(bais);
+			Document doc = db.parse(bais);
 			TimingLogger.stop("xerces");
 			TimingLogger.start("jdom");
 			org.jdom.Document d = getDomBuilder().build(doc);

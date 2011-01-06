@@ -18,7 +18,7 @@ import org.jdom.Namespace;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
-import xc.mst.services.GenericMetadataService;
+import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.service.FooService;
 
 public class ExampleMetadataService extends GenericMetadataService {

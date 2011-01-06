@@ -33,6 +33,7 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
+import xc.mst.repo.DefaultRepository;
 import xc.mst.services.impl.service.SolrTransformationService;
 import xc.mst.services.transformation.dao.TransformationDAO;
 import xc.mst.utils.TimingLogger;
@@ -76,6 +77,9 @@ public class TransformationService extends SolrTransformationService {
 	
 	protected TransformationDAO transformationDAO = null;
 	
+	protected int inputBibs = 0;
+	protected int inputHoldings = 0;
+	
 	public void setTransformationDAO(TransformationDAO transformationDAO) {
 		this.transformationDAO = transformationDAO;
 	}
@@ -103,6 +107,8 @@ public class TransformationService extends SolrTransformationService {
 		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 		TimingLogger.stop("getTransformationDAO().loadBibMaps");
 		TimingLogger.reset();
+		inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs");
+		inputHoldings = getRepository().getPersistentPropertyAsInt("inputHoldings");
 	}
 	
 	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
@@ -220,6 +226,9 @@ public class TransformationService extends SolrTransformationService {
 			
 			TimingLogger.stop("TransformationDAO.non-generic");
 			TimingLogger.stop("TransformationDAO.endBatch");
+			
+			getRepository().setPersistentPropertyAsInt("inputBibs", inputBibs);
+			getRepository().setPersistentPropertyAsInt("inputHoldings", inputHoldings);
 			TimingLogger.reset();
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
@@ -309,6 +318,11 @@ public class TransformationService extends SolrTransformationService {
 					}
 				} else {
 					inputRecordCount++;
+					if (isBib) {
+						inputBibs++;
+					} else if (isHolding) {
+						inputHoldings++;
+					}
 				}
 				if (isBib) {
 					String bib001 = originalRecord.getControlField(1);
@@ -378,12 +392,13 @@ public class TransformationService extends SolrTransformationService {
 			for (OutputRecord or : results) {
 				or.setFormat(xcFormat);
 			}
-			if (results.size() != 1) {
-				addMessage(record, 108, RecordMessage.ERROR);
+			if (results.size() == 0) {
+				addMessage(record, 102, RecordMessage.ERROR);
 			}
 			return results;
 		} catch (Throwable t) {
-			LOG.error("", t);
+			LOG.error("error processing record with id:"+((Record)record).getId(), t);
+			addMessage(record, 102, RecordMessage.ERROR);
 		}
 		return null;
 	}

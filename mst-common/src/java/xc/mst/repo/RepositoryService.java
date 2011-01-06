@@ -8,15 +8,21 @@
   */
 package xc.mst.repo;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
+import xc.mst.dao.DataException;
+import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 
 public class RepositoryService extends BaseService {
 	
@@ -114,6 +120,83 @@ public class RepositoryService extends BaseService {
 				}
 			}
 		}
+	}
+	
+	public String save(String repositoryName, String repositoryURL, Provider provider, long numberOfRecordsToHarvest) {
+        try {
+        	boolean update = false;
+        	if (provider == null) {
+        		provider = new Provider();
+        	} else if (provider.getId() != -1) {
+        		update = true;
+        		provider = getProviderService().getProviderById(provider.getId());
+                if(provider == null) {
+                    getUserService().sendEmailErrorReport();
+                    return "Error occurred while editing repository. An email has been sent to the administrator.";
+                }
+        	}
+            
+            provider.setNumberOfRecordsToHarvest(numberOfRecordsToHarvest);
+            provider.setName(repositoryName);
+            provider.setOaiProviderUrl(repositoryURL);
+            
+            boolean urlChanged = false;
+            if(update && provider.getOaiProviderUrl().equalsIgnoreCase(repositoryURL)) {
+                urlChanged = false;
+            } else {
+                urlChanged = true;
+            }
+
+            Provider repositorySameName = getProviderService().getProviderByName(repositoryName);
+            Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
+            
+            if (repositorySameName != null && repositorySameName.getId() != provider.getId()) {
+            	return "Repository with Name '"+repositoryName+"' already exists";
+            }
+            if (repositorySameURL != null && repositorySameURL.getId()!=provider.getId()) {
+            	return "Repository with URL '"+repositoryURL+"' already exists";
+            }
+            
+            Pattern p = Pattern.compile("[^A-Za-z0-9_ ]");
+            Matcher m = p.matcher(repositoryName);
+            if (m.find()) {
+            	LOG.debug("bad pattern found");
+            	return "Repository name may only contain letters, numbers, underscores, and spaces";
+            } else {
+            	LOG.debug("no bad pattern found");
+            }
+            if (repositoryName.length() > 25) {
+            	return "Repository name must be 25 characters or less";
+            }
+            
+            provider.setUpdatedAt( new Timestamp(new Date().getTime()));
+        	if (!update) {
+                provider.setCreatedAt(new Date());
+                getProviderService().insertProvider(provider);
+        	} else {
+                if (urlChanged) { //perform revalidation because repository URL has been changed
+                    provider.setIdentify(false);
+                    provider.setListFormats(false);
+                    provider.setListSets(false);
+                    provider.removeAllFormats();
+                    provider.removeAllSets();
+                }
+                getProviderService().updateProvider(provider);
+        	}
+        	if (!update || urlChanged) {
+        		provider.setLastValidationDate(new Date());
+        		ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+        		try {
+        			vr.validate(provider.getId());
+        		} catch (Throwable t) {
+        			return t.getMessage();
+        		}
+        	}
+        	return null;
+        } catch(DataException e) {
+            LOG.error(e.getMessage(),e);
+            return "Unable to access the database to get Repository information. There may be problem with database configuration.";
+        }
 	}
 
 }

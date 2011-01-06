@@ -34,6 +34,8 @@ public class SetupClasspath {
     				rootDir = null;
     			}
     		}
+    		
+    		// BDA: install.properties doesn't really work and env.properties is only for development purposes
     		for (String fStr : new String[] {
     				"install.properties", "env.properties"}) {
 	    		if (rootDir == null) {
@@ -78,6 +80,7 @@ public class SetupClasspath {
 	    	addURL(new URL(url));
 	    	
 	    	System.setProperty("mst.root.dir", rootDir);
+	    	System.setProperty("mst.instance.dir", dir);
 	    	
 	    	PropertyConfigurator.configure(rootDir+"MST-instances/"+dir+"/log4j.config.txt");
     	} catch (Throwable t) {

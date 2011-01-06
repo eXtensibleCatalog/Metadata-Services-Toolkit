@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -176,12 +177,23 @@ public class DefaultRepository extends BaseService implements Repository {
 		}
 		return records;
 	}
-	
-	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet) {
+
+	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
 		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet);
+		long estimatedRecordsRemaining = getRepositoryDAO().getRecordCount(name, from, until, startingId, inputFormat, inputSet, offset);
+		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
+		LOG.debug("completeListSizeThreshold: "+completeListSizeThreshold);
+		return estimatedRecordsRemaining;
+		/*
+		// This logic only makes sense if you're taking guesses
+		long recordCount = 0;
+		if (estimatedRecordsRemaining < -1 && (estimatedRecordsRemaining * -1) < completeListSizeThreshold) {
+			recordCount = offset + completeListSizeThreshold;
+		}
 		LOG.debug("recordCount:"+recordCount);
+		// if (recordCount + numAlreadyHarvested) < 
 		return recordCount;
+		*/
 	}
 	
 	
@@ -267,5 +279,28 @@ public class DefaultRepository extends BaseService implements Repository {
 	public boolean ready4harvest() {
 		return getRepositoryDAO().ready4harvest(name);
 	}
+	
+	public int getPersistentPropertyAsInt(String key) {
+		String val = getRepositoryDAO().getPersistentProperty(name, key);
+		if (!StringUtils.isEmpty(val)) {
+			try {
+				return Integer.parseInt(val);
+			} catch (Throwable t) {
+				// do nothing
+			}	
+		}
+		return -1;
+	}
 
+	public void setPersistentPropertyAsInt(String key, int value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value+"");
+	}
+	
+	public String getPersistentProperty(String key) {
+		return getRepositoryDAO().getPersistentProperty(name, key);
+	}
+
+	public void setPersistentPropertyAsInt(String key, String value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value);
+	}
 }

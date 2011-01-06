@@ -1193,7 +1193,7 @@ public class MarcXmlManager {
 		newFieldElement.setText(value);
 		
 		// Add the new field to the end of the MARC XML if we didn't insert it already
-		marcXml.addContent(newFieldElement).addContent("\n\n");
+		marcXml.addContent(4, newFieldElement);
 
 	}
 	
@@ -1261,8 +1261,11 @@ public class MarcXmlManager {
 							{
 								// Get the current text of the subfield
 								String currentText = subfieldOfNewfield.getText();
-
-								subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
+								
+								// This check is required for bad records (like the 245 of the UR voyager record #1493362
+								if (currentText.length() > skip+1) {
+									subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));	
+								}
 							} // end loop over the target field's subfields
 						}
 					}

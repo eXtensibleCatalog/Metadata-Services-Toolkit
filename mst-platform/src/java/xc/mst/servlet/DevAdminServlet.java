@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.manager.record.MSTSolrService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 
@@ -44,6 +45,10 @@ public class DevAdminServlet extends HttpServlet {
 				pw.println("</tr>");
 			}
 			pw.println("</table>");
+		} else if ("refreshSolr".equals(op)) {
+			((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrService")).refreshServer();
+		} else {
+			pw.println("add ?op=[props|refreshSolr] to the url");
 		}
 	}
 	

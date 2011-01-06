@@ -343,7 +343,7 @@ text-decoration:underline;
 					<div class="search_box_div">
 						<form name="browseRecordsForm" method="post" action="browseRecords.action">
 
-							<input type="text" id="search_text" name="query" value="${query}" size="40"/>&nbsp;&nbsp;&nbsp;
+							<input type="text" id="search_text" name="query" value="<c:out escapeXml="true" value="${query}" />" size="40"/>&nbsp;&nbsp;&nbsp;
 							<button class="xc_button" type="submit" name="save" >Search</button>
 							<br><input type="checkbox" id="search_xml" name="searchXML" value="true" 
 							<c:if test="${searchXML}">

@@ -12,12 +12,10 @@ import gnu.trove.TLongHashSet;
 import gnu.trove.TLongProcedure;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -35,6 +33,13 @@ public class Util {
 	
 	public static Util getUtil() {
 		return (Util)MSTConfiguration.getInstance().getBean("Util");
+	}
+	
+	public String getDBSchema(String name) {
+		if (!name.startsWith("xc_"))
+			return "xc_"+normalizeName(name);
+		else
+			return name;
 	}
 	
 	public String normalizeName(String name) {

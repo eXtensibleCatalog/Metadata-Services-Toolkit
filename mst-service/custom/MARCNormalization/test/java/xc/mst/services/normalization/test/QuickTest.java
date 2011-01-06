@@ -13,7 +13,7 @@ import gnu.trove.TLongHashSet;
 import org.testng.annotations.Test;
 
 import xc.mst.repo.Repository;
-import xc.mst.test.BaseMetadataServiceTest;
+import xc.mst.service.impl.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 

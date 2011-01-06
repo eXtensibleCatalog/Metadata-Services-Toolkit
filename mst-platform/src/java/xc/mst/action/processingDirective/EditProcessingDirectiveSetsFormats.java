@@ -403,11 +403,13 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
     				}
     				else
     				{
+    					/*
     					if(sourceType.equalsIgnoreCase("provider"))
     						tempSetList = temporaryProcessingDirective.getSourceProvider().getHarvestedRecordSets();
     					else
     						tempSetList = temporaryProcessingDirective.getSourceService().getOutputSets();
-    					
+    					*/
+    					tempSetList = null;
     					break;
     				}
     			}

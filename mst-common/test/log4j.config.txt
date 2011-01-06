@@ -13,7 +13,6 @@ log4j.logger.harvestOut=DEBUG, harvestOut
 log4j.logger.xc.mst.utils.TimingLogger=DEBUG, timing
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
-log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR
 
 # Setup the Harvest In appender
 log4j.appender.harvestIn=org.apache.log4j.RollingFileAppender
@@ -72,11 +71,13 @@ log4j.appender.file.MaxBackupIndex=30
 
 # Pattern to output the caller's file name and line number.
 log4j.appender.file.layout=org.apache.log4j.PatternLayout
-log4j.appender.file.layout.ConversionPattern=%d{DATE} %C:%L %5p [%t] - %m%n
-log4j.logger.org.springframework=INFO
-log4j.logger.org.springframework.jdbc=DEBUG
-log4j.logger.org.apache.commons.httpclient=INFO
-log4j.logger.org.apache.commons.httpclient.Wire=INFO
-log4j.logger.org.hibernate=INFO
-log4j.logger.org.hibernate.SQL=DEBUG
-log4j.logger.org.hibernate.type=TRACE
+log4j.appender.file.layout.ConversionPattern=%d{DATE} %c %C:%L %5p [%t] - %m%n
+
+log4j.logger.org=FATAL
+log4j.logger.com=FATAL
+log4j.logger.xc=FATAL
+log4j.logger.xc.mst.dao.log.DefaultLogDAO=FATAL
+log4j.logger.xc.mst.logging=ERROR
+log4j.logger.xc.mst.logging.DEBUG=DEBUG
+log4j.logger.xc.mst.logging.ERROR=ERROR
+#log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR

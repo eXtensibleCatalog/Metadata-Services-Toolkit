@@ -23,7 +23,7 @@ public class ResumePerfTest extends xc.mst.service.impl.test.ResumePerfTest {
 	@Override
 	@Test
 	public void resumePerfTest() {
-		//getJdbcTemplate().update("delete from MetadataServicesToolkit.service_harvests");
+		getJdbcTemplate().update("delete from MetadataServicesToolkit.service_harvests");
 		waitUntilFinished();
 		/*
 		LOG.info("getInputRepoName(): "+getInputRepoName());

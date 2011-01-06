@@ -834,6 +834,8 @@ insert into record_message_seq values (1);
 
 drop function if exists get_next_record_message_id;
 
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 delimiter //
 create function get_next_record_message_id(incr int)
 returns int

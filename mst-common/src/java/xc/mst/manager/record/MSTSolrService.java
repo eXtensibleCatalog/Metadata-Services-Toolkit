@@ -67,6 +67,11 @@ public class MSTSolrService extends BaseService {
 		server = createSolrServer();
 	}
 	
+	public void refreshServer() {
+		server = null;
+		server = createSolrServer();
+	}
+	
 	public SolrServer getServer() {
 		return server;
 	}

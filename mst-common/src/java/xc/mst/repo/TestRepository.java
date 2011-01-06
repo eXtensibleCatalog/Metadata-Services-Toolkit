@@ -344,7 +344,7 @@ public class TestRepository extends BaseService implements Repository {
 	 * @param inputSet
 	 * @return
 	 */
-	public long getRecordCount(Date from, Date until, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
+	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, xc.mst.bo.provider.Set inputSet, long offset) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -428,5 +428,23 @@ public class TestRepository extends BaseService implements Repository {
 	
 	public boolean ready4harvest() {
 		return true;
+	}
+	
+	public int getPersistentPropertyAsInt(String key) {
+		//do nothing
+		return -1;
+	}
+
+	public void setPersistentPropertyAsInt(String key, int value) {
+		//do nothing
+	}
+	
+	public String getPersistentProperty(String key) {
+		//do nothing
+		return null;
+	}
+
+	public void setPersistentPropertyAsInt(String key, String value) {
+		//do nothing
 	}
 }

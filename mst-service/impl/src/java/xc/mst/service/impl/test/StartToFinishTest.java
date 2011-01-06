@@ -24,7 +24,6 @@ import xc.mst.bo.service.Service;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.Repository;
-import xc.mst.test.BaseMetadataServiceTest;
 import xc.mst.utils.MSTConfiguration;
 
 /**
@@ -70,9 +69,12 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		return r;
 	}
 	
-	
 	protected Format getDCFormat() throws Exception {
 		return getFormat(new String[] {"oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"});
+	}
+	
+	protected Format getDCTermsFormat() throws Exception {
+		return getFormat(new String[] {"dcterms", "http://dublincore.org/documents/dcmi-terms/", "http://dublincore.org/schemas/xmls/qdc/dcterms.xsd"});
 	}
 	
 	protected Format getOaiMarcFormat() throws Exception {
@@ -279,14 +281,21 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void createHarvestSchedule() throws Exception {
+		createHarvestSchedule("Test Schedule Name", null);
+	}
+	
+	public void createHarvestSchedule(String name, Set s) throws Exception {
 		HarvestSchedule schedule = new HarvestSchedule();
 		Calendar nowCal = Calendar.getInstance();
-        schedule.setScheduleName("Test Schedule Name");
+        schedule.setScheduleName(name);
         schedule.setDayOfWeek(nowCal.get(Calendar.DAY_OF_WEEK));
 
         for (Format f : getIncomingFormats()) {
         	schedule.addFormat(f);	
         }
+        
+        if (s != null) 
+        	schedule.addSet(s);
         
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);

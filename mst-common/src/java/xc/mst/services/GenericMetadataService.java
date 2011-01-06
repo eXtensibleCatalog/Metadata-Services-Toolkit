@@ -36,12 +36,12 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
-import xc.mst.spring.TestTypeFilter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -91,10 +91,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	static {
 		LOG.debug("GenericMetadataService class loaded!!!");
-	}
-	
-	public void runTests() {
-		TestTypeFilter.runTests(this);
 	}
 	
 	public ApplicationContext getApplicationContext() {
@@ -457,6 +453,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		setStatus(Status.RUNNING);
 		if (!(this instanceof SolrIndexService)) {
 			LOG.info("getClass(): "+getClass());
 			LOG.info("inputFormat: "+inputFormat);
@@ -478,9 +475,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				inputFormat, inputSet, repo.getName(), getService());
 		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
+		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 		if (getRepository() != null) {
-			getRepository().beginBatch();	
+			getRepository().beginBatch();
 		}
 
 		int getRecordLoops = 0;
@@ -528,56 +527,57 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 				}
 				sh.setHighestId(in.getId());
-				getServiceDAO().persist(sh);
 				if (getRepository() == null || 
-						(in.getStatus() != Record.DELETED && in.getSuccessors() != null && in.getSuccessors().size() > 0)) {
+						(in.getStatus() != Record.DELETED && 
+								(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
 					processedRecordCount++;
 				}
+				updateService(out, sh);
 				
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
 //				repo.addRecord(in);
 			}
 
-			if (getRecordLoops % 10 == 0 && !(getRepository() instanceof TestRepository)) {
+			if (++getRecordLoops % 50 == 0 && !(getRepository() instanceof TestRepository)) {
 				endBatch();
+				getServiceDAO().persist(sh);
 			}
-			updateService(records, sh);
 			
+			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+					sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 			records = getRecords(repo, sh, inputFormat, inputSet);
-			getRecordLoops++;
-
 		}
 		//  TODO not inserting errors on input record.
 //		repo.endBatch();
+
+		if (atLeastOneRecordProcessed) {
+			endBatch();
+		}
 		if (!stopped) {
 			sh.setHighestId(null);
 			getServiceDAO().persist(sh);
 		}
-		if (!previouslyPaused) {
-			running.release();
-		}
-		updateService(records, sh);
 		if (atLeastOneRecordProcessed) {
-			endBatch();
 			if (getRepository() != null)
 				getRepository().processComplete();
 		}
+		if (!previouslyPaused) {
+			running.release();
+		}
 	}
 	
-	protected void updateService(List<Record> records, ServiceHarvest sh) {
+	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {
 		if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
-			LOG.debug("sh.getId(): "+sh.getId());
-			getServiceDAO().persist(sh);
-
 			// Set number of input and output records.
 			LOG.debug("service.getName(): "+service.getName());
-			LOG.debug("records.size(): "+records.size());
+			//LOG.debug("records.size(): "+inputRecords.size());
 			LOG.debug("service.getInputRecordCount(): "+service.getInputRecordCount());
-			LOG.debug("records.size(): "+records.size());
+			//LOG.debug("records.size(): "+inputRecords.size());
 			LOG.debug("getRepository().getSize(): "+getRepository().getSize());
-			service.setInputRecordCount(service.getInputRecordCount() + records.size());
-			service.setOutputRecordCount(getRepository().getSize());
+			service.setInputRecordCount(service.getInputRecordCount() + 1);
+			if (outputRecords != null)
+				service.setOutputRecordCount(service.getOutputRecordCount() + outputRecords.size());
 			
 			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
 			// TODO : Should # of harvest out records available include deleted records too? 

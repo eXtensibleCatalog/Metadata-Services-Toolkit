@@ -60,6 +60,8 @@ import xc.mst.manager.user.PermissionService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserGroupUtilService;
 import xc.mst.manager.user.UserService;
+import xc.mst.repo.RepositoryDAO;
+import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 
@@ -223,5 +225,11 @@ public class BaseActionSupport extends ActionSupport {
 	}
 	public RecordDAO getRecordDAO() {
 		return (RecordDAO)MSTConfiguration.getInstance().getBean("DBRecordDAO");
+	}
+	public RepositoryDAO getRepositoryDAO() {
+		return (RepositoryDAO)MSTConfiguration.getInstance().getBean("RepositoryDAO");
+	}
+	public RepositoryService getRepositoryService() {
+		return (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
 	}
 }
