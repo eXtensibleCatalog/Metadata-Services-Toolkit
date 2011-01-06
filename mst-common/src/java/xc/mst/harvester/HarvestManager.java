@@ -33,6 +33,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.Record;
 import xc.mst.cache.DynMap;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
@@ -345,7 +346,10 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 						}
 						
 						harvestSchedule.setRequest(baseRequest);
+						harvestSchedule.setStatus(Status.RUNNING);
 						getHarvestScheduleDAO().update(harvestSchedule, false);
+						currentHarvest.setRequest(request);
+						getHarvestDAO().update(currentHarvest);
 					} else {
 						try {
 							resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");
@@ -356,10 +360,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					}
 					
 					LogWriter.addInfo(schedule.getProvider().getLogFileName(), "The OAI request is " + request);
-					
-					// TODO: BDA - I doubt we need this.
-					//currentHarvest.setRequest(request);
-					//getHarvestDAO().update(currentHarvest);
 
 					if (log.isDebugEnabled()) {
 						log.debug("Sending the OAI request: " + request);
@@ -419,6 +419,14 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		if (harvestSchedule.getProvider().getNumberOfRecordsToHarvest() > 0 && 
 				harvestSchedule.getProvider().getNumberOfRecordsToHarvest() <= recordsProcessed) {
 			retVal = false;
+		}
+		if (!retVal) {
+			currentHarvest.setEndTime(new Date());
+			try {
+				getHarvestDAO().update(currentHarvest);
+			} catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
 		}
 		running.unlock();
 		return retVal;

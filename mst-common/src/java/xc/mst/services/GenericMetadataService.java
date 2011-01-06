@@ -36,6 +36,7 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.email.Emailer;
@@ -452,6 +453,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		setStatus(Status.RUNNING);
 		if (!(this instanceof SolrIndexService)) {
 			LOG.info("getClass(): "+getClass());
 			LOG.info("inputFormat: "+inputFormat);
