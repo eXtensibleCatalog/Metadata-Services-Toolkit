@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -40,6 +41,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.repo.RepositoryService;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.XmlHelper;
 
 /**
  * Browse records
@@ -342,53 +344,10 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
 			record = repositoryService.getRecord(recordId);
 			recordXML = record.getOaiXml();
-	
-			// Remove all formatting. Because some times only half XML is formatted, so lets remove formatting 
-			// and do it yourself.
-			recordXML = recordXML.replaceAll("\n", "");
-			recordXML = recordXML.replaceAll("\t", "");			
-			
-			// Now format it
-			StringBuffer formattedXML = new StringBuffer();
-			int xmlLength = recordXML.length();
-			int indentCount = 0;
-
-			
-			for (int i = 0; i < xmlLength; i++) {
-				if (recordXML.charAt(i) == '<') {
-					
-					// Format start tag < by adding new line
-					if (recordXML.charAt(i+1) != '/') {
-						formattedXML.append("\n");
-						for (int j = 3; j <= indentCount; j++ ) {
-							formattedXML.append("\t");
-						}
-						indentCount++;
-					} else if (i > 0 && recordXML.charAt(i-1) != '>') {
-						indentCount--;
-					} else if (i > 0 && recordXML.charAt(i-1) == '>') {
-						
-						formattedXML.append("\n");
-						indentCount--;
-						for (int j = 3; j <= indentCount; j++ ) {
-							formattedXML.append("\t");
-						}
-					}
-
-				} 
-				
-				if (recordXML.charAt(i) == '>') {
-					if (i > 0 && recordXML.charAt(i-1) == '/') {
-						indentCount--;
-					} 
-				}
-				formattedXML.append(recordXML.charAt(i));
+			if (recordXML != null) {
+				XmlHelper xh = new XmlHelper();
+				recordXML = StringEscapeUtils.escapeHtml(xh.getStringPretty(xh.getJDomDocument(recordXML).getRootElement()));
 			}
-			recordXML = formattedXML.toString();
-			
-			recordXML = recordXML.replaceAll("<", "&lt;");
-			recordXML = recordXML.replaceAll(">", "&gt;");
-			
 		}  catch (Throwable t) {
 			log.error("", t);
     		errorType = "error";

@@ -104,6 +104,7 @@ CREATE TABLE providers
   identify BOOLEAN NOT NULL DEFAULT true,
   listformats BOOLEAN NOT NULL DEFAULT true,
   listsets BOOLEAN NOT NULL DEFAULT true,
+  granularity VARCHAR(255),
   warnings INT(11) NOT NULL DEFAULT 0,
   errors INT(11) NOT NULL DEFAULT 0,
   records_added INT(11) NOT NULL DEFAULT 0,

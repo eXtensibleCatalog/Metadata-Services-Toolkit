@@ -157,8 +157,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		// Set parameters on the bean based on the OAI request's parameters
 		bean.setVerb("ListRecords");
 		bean.setMetadataPrefix(getHarvestOutFormat().getName());
-		bean.setFrom(harvestManager.printDate(harvestOutFrom));
-		bean.setUntil(harvestManager.printDate(harvestOutUntil));
+		bean.setFrom(harvestManager.printDateTime(harvestOutFrom));
+		bean.setUntil(harvestManager.printDateTime(harvestOutUntil));
 		
 		Service service = getServicesService().getServiceByName(getServiceName());
 		bean.setServiceId(service.getId());

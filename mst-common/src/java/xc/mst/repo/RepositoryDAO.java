@@ -1057,7 +1057,9 @@ public class RepositoryDAO extends BaseDAO {
 							"explain "+sql, inputFormat.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
 					LOG.debug("rows: "+rows2examine);
-					if (rows2examine.intValue() > maxExplain) {
+					if (rows2examine == null) {
+						return 0;
+					} else if (rows2examine.intValue() > maxExplain) {
 						keepGoing = false;
 					} else {
 						int exactCount = this.jdbcTemplate.queryForInt(
@@ -1076,7 +1078,9 @@ public class RepositoryDAO extends BaseDAO {
 							"explain "+sql, inputSet.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
 					LOG.debug("rows: "+rows2examine);
-					if (rows2examine.intValue() > maxExplain) {
+					if (rows2examine == null) {
+						return 0;
+					} else if (rows2examine.intValue() > maxExplain) {
 						keepGoing = false;
 					} else {
 						int exactCount = this.jdbcTemplate.queryForInt(
@@ -1113,7 +1117,9 @@ public class RepositoryDAO extends BaseDAO {
 				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
 				rows2examine = (BigInteger)records.get(0).get("rows");
 				LOG.debug("rows: "+rows2examine);
-				if (rows2examine.intValue() > maxExplain) {
+				if (rows2examine == null) {
+					return 0l;
+				} else if (rows2examine.intValue() > maxExplain) {
 					keepGoing = false;
 				} else {
 					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);

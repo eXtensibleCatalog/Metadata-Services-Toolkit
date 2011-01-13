@@ -144,7 +144,7 @@ public class Scheduler extends BaseService implements Runnable {
 			}
 			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
 				if (runningJob != null) {
-					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
+					//LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
 				}
 				//LOG.debug("previousJob: "+previousJob);
 				try {

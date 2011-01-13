@@ -21,8 +21,12 @@ import xc.mst.utils.MSTConfiguration;
  *
  * @author Eric Osisek
  */
-public class Provider
-{
+public class Provider {
+	
+	// http://www.openarchives.org/OAI/openarchivesprotocol.html#Identify
+	public static final String DAY_GRANULARITY = "YYYY-MM-DD";
+	public static final String SECOND_GRANULARITY = "YYYY-MM-DDThh:mm:ssZ";
+	
 	/** The provider's id */
 	private int id = -1;
 
@@ -100,6 +104,8 @@ public class Provider
 
 	/** Whether or not the provider's listSets response was valid	 */
 	private boolean listsets = false;
+	
+	protected String granularity = null;
 
 	/** A list of sets the provider supports	 */
 	private List<Set> sets = new ArrayList<Set>();
@@ -659,6 +665,14 @@ public class Provider
 		this.listsets = listsets;
 	} // end method setListSets(boolean)
 
+	public String getGranularity() {
+		return granularity;
+	}
+
+	public void setGranularity(String granularity) {
+		this.granularity = granularity;
+	}
+	
 	/**
 	 * Gets the sets belonging to the provider
 	 *

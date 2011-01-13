@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -176,6 +177,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_PROTOCOL_VERSION + ", " +
 				                                   COL_LAST_VALIDATION_DATE + ", " +
 				                                   COL_IDENTIFY + ", " +
+				                                   COL_GRANULARITY + ", "+
 				                                   COL_LISTFORMATS + ", " +
 				                                   COL_LISTSETS + ", " +
 				                                   COL_WARNINGS + ", " +
@@ -208,42 +210,47 @@ public class DefaultProviderDAO extends ProviderDAO
 					// The Object which will contain data on the provider
 					Provider provider = new Provider();
 
+					int i=1;
 					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setTitle(results.getString(6));
-					provider.setCreator(results.getString(7));
-					provider.setSubject(results.getString(8));
-					provider.setDescription(results.getString(9));
-					provider.setPublisher(results.getString(10));
-					provider.setContributors(results.getString(11));
-					provider.setDate(results.getDate(12));
-					provider.setType(results.getString(13));
-					provider.setFormat(results.getString(14));
-					provider.setIdentifier(results.getInt(15));
-					provider.setLanguage(results.getString(16));
-					provider.setRelation(results.getString(17));
-					provider.setCoverage(results.getString(18));
-					provider.setRights(results.getString(19));
-					provider.setService(results.getBoolean(20));
-					provider.setNextListSetsListFormats(results.getDate(21));
-					provider.setProtocolVersion(results.getString(22));
-					provider.setLastValidationDate(results.getDate(23));
-					provider.setIdentify(results.getBoolean(24));
-					provider.setListFormats(results.getBoolean(25));
-					provider.setListSets(results.getBoolean(26));
-					provider.setWarnings(results.getInt(27));
-					provider.setErrors(results.getInt(28));
-					provider.setRecordsAdded(results.getInt(29));
-					provider.setRecordsReplaced(results.getInt(30));
-					provider.setLastOaiRequest(results.getString(31));
-					provider.setLastHarvestEndTime(results.getDate(32));
-					provider.setLastLogReset(results.getDate(33));
-					provider.setLogFileName(results.getString(34));
-					provider.setNumberOfRecordsToHarvest(results.getLong(35));
+					provider.setId(results.getInt(i++));
+					provider.setCreatedAt(results.getDate(i++));
+					provider.setUpdatedAt(results.getTimestamp(i++));
+					provider.setName(results.getString(i++));
+					provider.setOaiProviderUrl(results.getString(i++));
+					provider.setTitle(results.getString(i++));
+					provider.setCreator(results.getString(i++));
+					provider.setSubject(results.getString(i++));
+					provider.setDescription(results.getString(i++));
+					provider.setPublisher(results.getString(i++));
+					provider.setContributors(results.getString(i++));
+					provider.setDate(results.getDate(i++));
+					provider.setType(results.getString(i++));
+					provider.setFormat(results.getString(i++));
+					provider.setIdentifier(results.getInt(i++));
+					provider.setLanguage(results.getString(i++));
+					provider.setRelation(results.getString(i++));
+					provider.setCoverage(results.getString(i++));
+					provider.setRights(results.getString(i++));
+					provider.setService(results.getBoolean(i++));
+					provider.setNextListSetsListFormats(results.getDate(i++));
+					provider.setProtocolVersion(results.getString(i++));
+					provider.setLastValidationDate(results.getDate(i++));
+					provider.setIdentify(results.getBoolean(i++));
+					provider.setGranularity(results.getString(i++));
+					provider.setListFormats(results.getBoolean(i++));
+					provider.setListSets(results.getBoolean(i++));
+					provider.setWarnings(results.getInt(i++));
+					provider.setErrors(results.getInt(i++));
+					provider.setRecordsAdded(results.getInt(i++));
+					provider.setRecordsReplaced(results.getInt(i++));
+					provider.setLastOaiRequest(results.getString(i++));
+					Timestamp ts = results.getTimestamp(i++);
+					if (ts != null) {
+						provider.setLastHarvestEndTime(new java.util.Date(ts.getTime()));
+					}
+					provider.setLastLogReset(results.getDate(i++));
+					provider.setLogFileName(results.getString(i++));
+					provider.setNumberOfRecordsToHarvest(results.getLong(i++));
 
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
@@ -331,6 +338,7 @@ public class DefaultProviderDAO extends ProviderDAO
 		                                   COL_PROTOCOL_VERSION + ", " +
 		                                   COL_LAST_VALIDATION_DATE + ", " +
 		                                   COL_IDENTIFY + ", " +
+		                                   COL_GRANULARITY + ", "+
 		                                   COL_LISTFORMATS + ", " +
 		                                   COL_LISTSETS + ", " +
 		                                   COL_WARNINGS + ", " +
@@ -362,42 +370,47 @@ public class DefaultProviderDAO extends ProviderDAO
 				// The Object which will contain data on the provider
 				Provider provider = new Provider();
 
+				int i=1;
 				// Set the fields on the provider
-				provider.setId(results.getInt(1));
-				provider.setCreatedAt(results.getDate(2));
-				provider.setUpdatedAt(results.getTimestamp(3));
-				provider.setName(results.getString(4));
-				provider.setOaiProviderUrl(results.getString(5));
-				provider.setTitle(results.getString(6));
-				provider.setCreator(results.getString(7));
-				provider.setSubject(results.getString(8));
-				provider.setDescription(results.getString(9));
-				provider.setPublisher(results.getString(10));
-				provider.setContributors(results.getString(11));
-				provider.setDate(results.getDate(12));
-				provider.setType(results.getString(13));
-				provider.setFormat(results.getString(14));
-				provider.setIdentifier(results.getInt(15));
-				provider.setLanguage(results.getString(16));
-				provider.setRelation(results.getString(17));
-				provider.setCoverage(results.getString(18));
-				provider.setRights(results.getString(19));
-				provider.setService(results.getBoolean(20));
-				provider.setNextListSetsListFormats(results.getDate(21));
-				provider.setProtocolVersion(results.getString(22));
-				provider.setLastValidationDate(results.getDate(23));
-				provider.setIdentify(results.getBoolean(24));
-				provider.setListFormats(results.getBoolean(25));
-				provider.setListSets(results.getBoolean(26));
-				provider.setWarnings(results.getInt(27));
-				provider.setErrors(results.getInt(28));
-				provider.setRecordsAdded(results.getInt(29));
-				provider.setRecordsReplaced(results.getInt(30));
-				provider.setLastOaiRequest(results.getString(31));
-				provider.setLastHarvestEndTime(results.getDate(32));
-				provider.setLastLogReset(results.getDate(33));
-				provider.setLogFileName(results.getString(34));
-				provider.setNumberOfRecordsToHarvest(results.getLong(35));
+				provider.setId(results.getInt(i++));
+				provider.setCreatedAt(results.getDate(i++));
+				provider.setUpdatedAt(results.getTimestamp(i++));
+				provider.setName(results.getString(i++));
+				provider.setOaiProviderUrl(results.getString(i++));
+				provider.setTitle(results.getString(i++));
+				provider.setCreator(results.getString(i++));
+				provider.setSubject(results.getString(i++));
+				provider.setDescription(results.getString(i++));
+				provider.setPublisher(results.getString(i++));
+				provider.setContributors(results.getString(i++));
+				provider.setDate(results.getDate(i++));
+				provider.setType(results.getString(i++));
+				provider.setFormat(results.getString(i++));
+				provider.setIdentifier(results.getInt(i++));
+				provider.setLanguage(results.getString(i++));
+				provider.setRelation(results.getString(i++));
+				provider.setCoverage(results.getString(i++));
+				provider.setRights(results.getString(i++));
+				provider.setService(results.getBoolean(i++));
+				provider.setNextListSetsListFormats(results.getDate(i++));
+				provider.setProtocolVersion(results.getString(i++));
+				provider.setLastValidationDate(results.getDate(i++));
+				provider.setIdentify(results.getBoolean(i++));
+				provider.setGranularity(results.getString(i++));
+				provider.setListFormats(results.getBoolean(i++));
+				provider.setListSets(results.getBoolean(i++));
+				provider.setWarnings(results.getInt(i++));
+				provider.setErrors(results.getInt(i++));
+				provider.setRecordsAdded(results.getInt(i++));
+				provider.setRecordsReplaced(results.getInt(i++));
+				provider.setLastOaiRequest(results.getString(i++));
+				Timestamp ts = results.getTimestamp(i++);
+				if (ts != null) {
+					provider.setLastHarvestEndTime(new java.util.Date(ts.getTime()));	
+				}
+				provider.setLastLogReset(results.getDate(i++));
+				provider.setLogFileName(results.getString(i++));
+				provider.setNumberOfRecordsToHarvest(results.getLong(i++));
 
 				provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
 
@@ -500,6 +513,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                   COL_PROTOCOL_VERSION + ", " +
 				                                   COL_LAST_VALIDATION_DATE + ", " +
 				                                   COL_IDENTIFY + ", " +
+				                                   COL_GRANULARITY + ", "+
 				                                   COL_LISTFORMATS + ", " +
 				                                   COL_LISTSETS + ", " +
 				                                   COL_WARNINGS + ", " +
@@ -537,42 +551,47 @@ public class DefaultProviderDAO extends ProviderDAO
 					// The Object which will contain data on the provider
 					Provider provider = new Provider();
 
+					int i=1;
 					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setTitle(results.getString(6));
-					provider.setCreator(results.getString(7));
-					provider.setSubject(results.getString(8));
-					provider.setDescription(results.getString(9));
-					provider.setPublisher(results.getString(10));
-					provider.setContributors(results.getString(11));
-					provider.setDate(results.getDate(12));
-					provider.setType(results.getString(13));
-					provider.setFormat(results.getString(14));
-					provider.setIdentifier(results.getInt(15));
-					provider.setLanguage(results.getString(16));
-					provider.setRelation(results.getString(17));
-					provider.setCoverage(results.getString(18));
-					provider.setRights(results.getString(19));
-					provider.setService(results.getBoolean(20));
-					provider.setNextListSetsListFormats(results.getDate(21));
-					provider.setProtocolVersion(results.getString(22));
-					provider.setLastValidationDate(results.getDate(23));
-					provider.setIdentify(results.getBoolean(24));
-					provider.setListFormats(results.getBoolean(25));
-					provider.setListSets(results.getBoolean(26));
-					provider.setWarnings(results.getInt(27));
-					provider.setErrors(results.getInt(28));
-					provider.setRecordsAdded(results.getInt(29));
-					provider.setRecordsReplaced(results.getInt(30));
-					provider.setLastOaiRequest(results.getString(31));
-					provider.setLastHarvestEndTime(results.getDate(32));
-					provider.setLastLogReset(results.getDate(33));
-					provider.setLogFileName(results.getString(34));
-					provider.setNumberOfRecordsToHarvest(results.getLong(35));
+					provider.setId(results.getInt(i++));
+					provider.setCreatedAt(results.getDate(i++));
+					provider.setUpdatedAt(results.getTimestamp(i++));
+					provider.setName(results.getString(i++));
+					provider.setOaiProviderUrl(results.getString(i++));
+					provider.setTitle(results.getString(i++));
+					provider.setCreator(results.getString(i++));
+					provider.setSubject(results.getString(i++));
+					provider.setDescription(results.getString(i++));
+					provider.setPublisher(results.getString(i++));
+					provider.setContributors(results.getString(i++));
+					provider.setDate(results.getDate(i++));
+					provider.setType(results.getString(i++));
+					provider.setFormat(results.getString(i++));
+					provider.setIdentifier(results.getInt(i++));
+					provider.setLanguage(results.getString(i++));
+					provider.setRelation(results.getString(i++));
+					provider.setCoverage(results.getString(i++));
+					provider.setRights(results.getString(i++));
+					provider.setService(results.getBoolean(i++));
+					provider.setNextListSetsListFormats(results.getDate(i++));
+					provider.setProtocolVersion(results.getString(i++));
+					provider.setLastValidationDate(results.getDate(i++));
+					provider.setIdentify(results.getBoolean(i++));
+					provider.setGranularity(results.getString(i++));
+					provider.setListFormats(results.getBoolean(i++));
+					provider.setListSets(results.getBoolean(i++));
+					provider.setWarnings(results.getInt(i++));
+					provider.setErrors(results.getInt(i++));
+					provider.setRecordsAdded(results.getInt(i++));
+					provider.setRecordsReplaced(results.getInt(i++));
+					provider.setLastOaiRequest(results.getString(i++));
+					Timestamp ts = results.getTimestamp(i++);
+					if (ts != null) {
+						provider.setLastHarvestEndTime(new java.util.Date(ts.getTime()));	
+					}
+					provider.setLastLogReset(results.getDate(i++));
+					provider.setLogFileName(results.getString(i++));
+					provider.setNumberOfRecordsToHarvest(results.getLong(i++));
 
 					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
@@ -651,6 +670,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					    				           COL_PROTOCOL_VERSION + ", " +
 					    				           COL_LAST_VALIDATION_DATE + ", " +
 					    				           COL_IDENTIFY + ", " +
+					    				           COL_GRANULARITY + ", "+
 					    				           COL_LISTFORMATS + ", " +
 					    				           COL_LISTSETS + ", " +
 					    				           COL_WARNINGS + ", " +
@@ -687,42 +707,47 @@ public class DefaultProviderDAO extends ProviderDAO
 					// The Object which will contain data on the provider
 					Provider provider = new Provider();
 
+					int i=1;
 					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setTitle(results.getString(6));
-					provider.setCreator(results.getString(7));
-					provider.setSubject(results.getString(8));
-					provider.setDescription(results.getString(9));
-					provider.setPublisher(results.getString(10));
-					provider.setContributors(results.getString(11));
-					provider.setDate(results.getDate(12));
-					provider.setType(results.getString(13));
-					provider.setFormat(results.getString(14));
-					provider.setIdentifier(results.getInt(15));
-					provider.setLanguage(results.getString(16));
-					provider.setRelation(results.getString(17));
-					provider.setCoverage(results.getString(18));
-					provider.setRights(results.getString(19));
-					provider.setService(results.getBoolean(20));
-					provider.setNextListSetsListFormats(results.getDate(21));
-					provider.setProtocolVersion(results.getString(22));
-					provider.setLastValidationDate(results.getDate(23));
-					provider.setIdentify(results.getBoolean(24));
-					provider.setListFormats(results.getBoolean(25));
-					provider.setListSets(results.getBoolean(26));
-					provider.setWarnings(results.getInt(27));
-					provider.setErrors(results.getInt(28));
-					provider.setRecordsAdded(results.getInt(29));
-					provider.setRecordsReplaced(results.getInt(30));
-					provider.setLastOaiRequest(results.getString(31));
-					provider.setLastHarvestEndTime(results.getDate(32));
-					provider.setLastLogReset(results.getDate(33));
-					provider.setLogFileName(results.getString(34));
-					provider.setNumberOfRecordsToHarvest(results.getLong(35));
+					provider.setId(results.getInt(i++));
+					provider.setCreatedAt(results.getDate(i++));
+					provider.setUpdatedAt(results.getTimestamp(i++));
+					provider.setName(results.getString(i++));
+					provider.setOaiProviderUrl(results.getString(i++));
+					provider.setTitle(results.getString(i++));
+					provider.setCreator(results.getString(i++));
+					provider.setSubject(results.getString(i++));
+					provider.setDescription(results.getString(i++));
+					provider.setPublisher(results.getString(i++));
+					provider.setContributors(results.getString(i++));
+					provider.setDate(results.getDate(i++));
+					provider.setType(results.getString(i++));
+					provider.setFormat(results.getString(i++));
+					provider.setIdentifier(results.getInt(i++));
+					provider.setLanguage(results.getString(i++));
+					provider.setRelation(results.getString(i++));
+					provider.setCoverage(results.getString(i++));
+					provider.setRights(results.getString(i++));
+					provider.setService(results.getBoolean(i++));
+					provider.setNextListSetsListFormats(results.getDate(i++));
+					provider.setProtocolVersion(results.getString(i++));
+					provider.setLastValidationDate(results.getDate(i++));
+					provider.setIdentify(results.getBoolean(i++));
+					provider.setGranularity(results.getString(i++));
+					provider.setListFormats(results.getBoolean(i++));
+					provider.setListSets(results.getBoolean(i++));
+					provider.setWarnings(results.getInt(i++));
+					provider.setErrors(results.getInt(i++));
+					provider.setRecordsAdded(results.getInt(i++));
+					provider.setRecordsReplaced(results.getInt(i++));
+					provider.setLastOaiRequest(results.getString(i++));
+					Timestamp ts = results.getTimestamp(i++);
+					if (ts != null) {
+						provider.setLastHarvestEndTime(new java.util.Date(ts.getTime()));	
+					}
+					provider.setLastLogReset(results.getDate(i++));
+					provider.setLogFileName(results.getString(i++));
+					provider.setNumberOfRecordsToHarvest(results.getLong(i++));
 
 					provider.setFormats(getFormatDAO().getFormatsForProvider(provider.getId()));
 					provider.setSets(getSetDAO().getSetsForProvider(provider.getId()));
@@ -802,6 +827,7 @@ public class DefaultProviderDAO extends ProviderDAO
 					    				           COL_PROTOCOL_VERSION + ", " +
 					    				           COL_LAST_VALIDATION_DATE + ", " +
 					    				           COL_IDENTIFY + ", " +
+					    				           COL_GRANULARITY + "," +
 					    				           COL_LISTFORMATS + ", " +
 					    				           COL_LISTSETS + ", " +
 					    				           COL_WARNINGS + ", " +
@@ -838,42 +864,47 @@ public class DefaultProviderDAO extends ProviderDAO
 					// The Object which will contain data on the provider
 					Provider provider = new Provider();
 
+					int i=1;
 					// Set the fields on the provider
-					provider.setId(results.getInt(1));
-					provider.setCreatedAt(results.getDate(2));
-					provider.setUpdatedAt(results.getTimestamp(3));
-					provider.setName(results.getString(4));
-					provider.setOaiProviderUrl(results.getString(5));
-					provider.setTitle(results.getString(6));
-					provider.setCreator(results.getString(7));
-					provider.setSubject(results.getString(8));
-					provider.setDescription(results.getString(9));
-					provider.setPublisher(results.getString(10));
-					provider.setContributors(results.getString(11));
-					provider.setDate(results.getDate(12));
-					provider.setType(results.getString(13));
-					provider.setFormat(results.getString(14));
-					provider.setIdentifier(results.getInt(15));
-					provider.setLanguage(results.getString(16));
-					provider.setRelation(results.getString(17));
-					provider.setCoverage(results.getString(18));
-					provider.setRights(results.getString(19));
-					provider.setService(results.getBoolean(20));
-					provider.setNextListSetsListFormats(results.getDate(21));
-					provider.setProtocolVersion(results.getString(22));
-					provider.setLastValidationDate(results.getDate(23));
-					provider.setIdentify(results.getBoolean(24));
-					provider.setListFormats(results.getBoolean(25));
-					provider.setListSets(results.getBoolean(26));
-					provider.setWarnings(results.getInt(27));
-					provider.setErrors(results.getInt(28));
-					provider.setRecordsAdded(results.getInt(29));
-					provider.setRecordsReplaced(results.getInt(30));
-					provider.setLastOaiRequest(results.getString(31));
-					provider.setLastHarvestEndTime(results.getDate(32));
-					provider.setLastLogReset(results.getDate(33));
-					provider.setLogFileName(results.getString(34));
-					provider.setNumberOfRecordsToHarvest(results.getLong(35));
+					provider.setId(results.getInt(i++));
+					provider.setCreatedAt(results.getDate(i++));
+					provider.setUpdatedAt(results.getTimestamp(i++));
+					provider.setName(results.getString(i++));
+					provider.setOaiProviderUrl(results.getString(i++));
+					provider.setTitle(results.getString(i++));
+					provider.setCreator(results.getString(i++));
+					provider.setSubject(results.getString(i++));
+					provider.setDescription(results.getString(i++));
+					provider.setPublisher(results.getString(i++));
+					provider.setContributors(results.getString(i++));
+					provider.setDate(results.getDate(i++));
+					provider.setType(results.getString(i++));
+					provider.setFormat(results.getString(i++));
+					provider.setIdentifier(results.getInt(i++));
+					provider.setLanguage(results.getString(i++));
+					provider.setRelation(results.getString(i++));
+					provider.setCoverage(results.getString(i++));
+					provider.setRights(results.getString(i++));
+					provider.setService(results.getBoolean(i++));
+					provider.setNextListSetsListFormats(results.getDate(i++));
+					provider.setProtocolVersion(results.getString(i++));
+					provider.setLastValidationDate(results.getDate(i++));
+					provider.setIdentify(results.getBoolean(i++));
+					provider.setGranularity(results.getString(i++));
+					provider.setListFormats(results.getBoolean(i++));
+					provider.setListSets(results.getBoolean(i++));
+					provider.setWarnings(results.getInt(i++));
+					provider.setErrors(results.getInt(i++));
+					provider.setRecordsAdded(results.getInt(i++));
+					provider.setRecordsReplaced(results.getInt(i++));
+					provider.setLastOaiRequest(results.getString(i++));
+					Timestamp ts = results.getTimestamp(i++);
+					if (ts != null) {
+						provider.setLastHarvestEndTime(new java.util.Date(ts.getTime()));	
+					}
+					provider.setLastLogReset(results.getDate(i++));
+					provider.setLogFileName(results.getString(i++));
+					provider.setNumberOfRecordsToHarvest(results.getLong(i++));
 
 					if(log.isDebugEnabled())
 						log.debug("Found the provider with ID " + providerId + " in the database.");
@@ -951,6 +982,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	            	    													COL_PROTOCOL_VERSION + ", " +
 	            	    													COL_LAST_VALIDATION_DATE + ", " +
 	            	    													COL_IDENTIFY + ", " +
+	            	    													COL_GRANULARITY + ", " +
 	            	    													COL_LISTFORMATS + ", " +
 	            	    													COL_LISTSETS + ", " +
 	            	    													COL_WARNINGS + ", " +
@@ -965,7 +997,7 @@ public class DefaultProviderDAO extends ProviderDAO
 	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?," +
 	            				              " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
 	            				              " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
-	            				              " ?, ?, ?, ?, ?)";
+	            				              " ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert provider\" PreparedStatement from the SQL " + insertSql);
@@ -975,41 +1007,44 @@ public class DefaultProviderDAO extends ProviderDAO
 					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
+				int i=1;
 				// Set the parameters on the insert statement
-				psInsert.setDate(1, provider.getCreatedAt());
-				psInsert.setTimestamp(2, provider.getUpdatedAt());
-				psInsert.setString(3, provider.getName());
-				psInsert.setString(4, provider.getOaiProviderUrl());
-				psInsert.setString(5, provider.getTitle());
-				psInsert.setString(6, provider.getCreator());
-				psInsert.setString(7, provider.getSubject());
-				psInsert.setString(8, provider.getDescription());
-				psInsert.setString(9, provider.getPublisher());
-				psInsert.setString(10, provider.getContributors());
-				psInsert.setDate(11, provider.getDate());
-				psInsert.setString(12, provider.getType());
-				psInsert.setString(13, provider.getFormat());
-				psInsert.setInt(14, provider.getIdentifier());
-				psInsert.setString(15, provider.getLanguage());
-				psInsert.setString(16, provider.getRelation());
-				psInsert.setString(17, provider.getCoverage());
-				psInsert.setString(18, provider.getRights());
-				psInsert.setBoolean(19, provider.getService());
-				psInsert.setDate(20, provider.getNextListSetsListFormats());
-				psInsert.setString(21, provider.getProtocolVersion());
-				psInsert.setDate(22, provider.getLastValidationDate());
-				psInsert.setBoolean(23, provider.getIdentify());
-				psInsert.setBoolean(24, provider.getListFormats());
-				psInsert.setBoolean(25, provider.getListSets());
-				psInsert.setInt(26, provider.getWarnings());
-				psInsert.setInt(27, provider.getErrors());
-				psInsert.setInt(28, provider.getRecordsAdded());
-				psInsert.setInt(29, provider.getRecordsReplaced());
-				psInsert.setString(30, provider.getLastOaiRequest());
-				psInsert.setDate(31, provider.getLastHarvestEndTime());
-				psInsert.setDate(32, provider.getLastLogReset());
-				psInsert.setString(33, provider.getLogFileName());
-				psInsert.setLong(34, provider.getNumberOfRecordsToHarvest());
+				psInsert.setDate(i++, provider.getCreatedAt());
+				psInsert.setTimestamp(i++, provider.getUpdatedAt());
+				psInsert.setString(i++, provider.getName());
+				psInsert.setString(i++, provider.getOaiProviderUrl());
+				psInsert.setString(i++, provider.getTitle());
+				psInsert.setString(i++, provider.getCreator());
+				psInsert.setString(i++, provider.getSubject());
+				psInsert.setString(i++, provider.getDescription());
+				psInsert.setString(i++, provider.getPublisher());
+				psInsert.setString(i++, provider.getContributors());
+				psInsert.setDate(i++, provider.getDate());
+				psInsert.setString(i++, provider.getType());
+				psInsert.setString(i++, provider.getFormat());
+				psInsert.setInt(i++, provider.getIdentifier());
+				psInsert.setString(i++, provider.getLanguage());
+				psInsert.setString(i++, provider.getRelation());
+				psInsert.setString(i++, provider.getCoverage());
+				psInsert.setString(i++, provider.getRights());
+				psInsert.setBoolean(i++, provider.getService());
+				psInsert.setDate(i++, provider.getNextListSetsListFormats());
+				psInsert.setString(i++, provider.getProtocolVersion());
+				psInsert.setDate(i++, provider.getLastValidationDate());
+				psInsert.setBoolean(i++, provider.getIdentify());
+				psInsert.setString(i++, provider.getGranularity());
+				psInsert.setBoolean(i++, provider.getListFormats());
+				psInsert.setBoolean(i++, provider.getListSets());
+				psInsert.setInt(i++, provider.getWarnings());
+				psInsert.setInt(i++, provider.getErrors());
+				psInsert.setInt(i++, provider.getRecordsAdded());
+				psInsert.setInt(i++, provider.getRecordsReplaced());
+				psInsert.setString(i++, provider.getLastOaiRequest());
+				psInsert.setTimestamp(i++, provider.getLastHarvestEndTime() == null ? null :
+					new Timestamp(provider.getLastHarvestEndTime().getTime()));
+				psInsert.setDate(i++, provider.getLastLogReset());
+				psInsert.setString(i++, provider.getLogFileName());
+				psInsert.setLong(i++, provider.getNumberOfRecordsToHarvest());
 
 				// Execute the insert statement and return the result
 				if(dbConnectionManager.executeUpdate(psInsert) > 0)
@@ -1117,6 +1152,7 @@ public class DefaultProviderDAO extends ProviderDAO
 				                                                          COL_PROTOCOL_VERSION + "=?, " +
 				                                                          COL_LAST_VALIDATION_DATE + "=?, " +
 				                                                          COL_IDENTIFY + "=?, " +
+				                                                          COL_GRANULARITY + "=?, " +
 				                                                          COL_LISTFORMATS + "=?, " +
 				                                                          COL_LISTSETS + "=?, " +
 				                                                          COL_WARNINGS + "=?, " +
@@ -1138,41 +1174,50 @@ public class DefaultProviderDAO extends ProviderDAO
 					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
 				} // end if(update PreparedStatement not defined)
 
+				int i=1;
 				// Set the parameters on the update statement
-				psUpdate.setDate(1, provider.getCreatedAt());
-				psUpdate.setString(2, provider.getName());
-				psUpdate.setString(3, provider.getOaiProviderUrl());
-				psUpdate.setString(4, provider.getTitle());
-				psUpdate.setString(5, provider.getCreator());
-				psUpdate.setString(6, provider.getSubject());
-				psUpdate.setString(7, provider.getDescription());
-				psUpdate.setString(8, provider.getPublisher());
-				psUpdate.setString(9, provider.getContributors());
-				psUpdate.setDate(10, provider.getDate());
-				psUpdate.setString(11, provider.getType());
-				psUpdate.setString(12, provider.getFormat());
-				psUpdate.setInt(13, provider.getIdentifier());
-				psUpdate.setString(14, provider.getLanguage());
-				psUpdate.setString(15, provider.getRelation());
-				psUpdate.setString(16, provider.getCoverage());
-				psUpdate.setString(17, provider.getRights());
-				psUpdate.setBoolean(18, provider.getService());
-				psUpdate.setDate(19, provider.getNextListSetsListFormats());
-				psUpdate.setString(20, provider.getProtocolVersion());
-				psUpdate.setDate(21, provider.getLastValidationDate());
-				psUpdate.setBoolean(22, provider.getIdentify());
-				psUpdate.setBoolean(23, provider.getListFormats());
-				psUpdate.setBoolean(24, provider.getListSets());
-				psUpdate.setInt(25, provider.getWarnings());
-				psUpdate.setInt(26, provider.getErrors());
-				psUpdate.setInt(27, provider.getRecordsAdded());
-				psUpdate.setInt(28, provider.getRecordsReplaced());
-				psUpdate.setString(29, provider.getLastOaiRequest());
-				psUpdate.setDate(30, provider.getLastHarvestEndTime());
-				psUpdate.setDate(31, provider.getLastLogReset());
-				psUpdate.setString(32, provider.getLogFileName());
-				psUpdate.setLong(33, provider.getNumberOfRecordsToHarvest());
-				psUpdate.setInt(34, provider.getId());
+				psUpdate.setDate(i++, provider.getCreatedAt());
+				psUpdate.setString(i++, provider.getName());
+				psUpdate.setString(i++, provider.getOaiProviderUrl());
+				psUpdate.setString(i++, provider.getTitle());
+				psUpdate.setString(i++, provider.getCreator());
+				psUpdate.setString(i++, provider.getSubject());
+				psUpdate.setString(i++, provider.getDescription());
+				psUpdate.setString(i++, provider.getPublisher());
+				psUpdate.setString(i++, provider.getContributors());
+				psUpdate.setDate(i++, provider.getDate());
+				psUpdate.setString(i++, provider.getType());
+				psUpdate.setString(i++, provider.getFormat());
+				psUpdate.setInt(i++, provider.getIdentifier());
+				psUpdate.setString(i++, provider.getLanguage());
+				psUpdate.setString(i++, provider.getRelation());
+				psUpdate.setString(i++, provider.getCoverage());
+				psUpdate.setString(i++, provider.getRights());
+				psUpdate.setBoolean(i++, provider.getService());
+				psUpdate.setDate(i++, provider.getNextListSetsListFormats());
+				psUpdate.setString(i++, provider.getProtocolVersion());
+				psUpdate.setDate(i++, provider.getLastValidationDate());
+				psUpdate.setBoolean(i++, provider.getIdentify());
+				psUpdate.setString(i++, provider.getGranularity());
+				psUpdate.setBoolean(i++, provider.getListFormats());
+				psUpdate.setBoolean(i++, provider.getListSets());
+				psUpdate.setInt(i++, provider.getWarnings());
+				psUpdate.setInt(i++, provider.getErrors());
+				psUpdate.setInt(i++, provider.getRecordsAdded());
+				psUpdate.setInt(i++, provider.getRecordsReplaced());
+				psUpdate.setString(i++, provider.getLastOaiRequest());
+				
+				// I've seen this elsewhere, but for some reason java.sql.Date doesn't put the time into
+				// the db.  This goes against the documentation.
+				// http://download.oracle.com/javase/6/docs/api/java/sql/Date.html
+				// http://dev.mysql.com/doc/refman/5.1/en/connector-j-reference-type-conversions.html
+				psUpdate.setTimestamp(i++, provider.getLastHarvestEndTime() == null ? null :
+					new Timestamp(provider.getLastHarvestEndTime().getTime()));
+				
+				psUpdate.setDate(i++, provider.getLastLogReset());
+				psUpdate.setString(i++, provider.getLogFileName());
+				psUpdate.setLong(i++, provider.getNumberOfRecordsToHarvest());
+				psUpdate.setInt(i++, provider.getId());
 
 				// Execute the update statement and return the result
 				// Execute the update statement and return the result

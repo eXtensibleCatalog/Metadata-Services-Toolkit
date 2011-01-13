@@ -21,6 +21,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import xc.mst.dao.harvest.HarvestDAO;
 import xc.mst.dao.harvest.HarvestScheduleDAO;
 import xc.mst.dao.processing.ProcessingDirectiveDAO;
 import xc.mst.dao.provider.FormatDAO;
@@ -171,6 +172,10 @@ public class BaseTest {
 	
 	protected HarvestScheduleDAO getHarvestScheduleDAO() {
 		return (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
+	}
+	
+	protected HarvestDAO getHarvestDAO() {
+		return (HarvestDAO)getBean("HarvestDAO");
 	}
 	
 	protected ProcessingDirectiveDAO getProcessingDirectiveDAO() {

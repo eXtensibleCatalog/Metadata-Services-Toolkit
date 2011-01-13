@@ -453,8 +453,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		setStatus(Status.RUNNING);
 		if (!(this instanceof SolrIndexService)) {
+			setStatus(Status.RUNNING);
 			LOG.info("getClass(): "+getClass());
 			LOG.info("inputFormat: "+inputFormat);
 			LOG.info("inputSet: "+inputSet);

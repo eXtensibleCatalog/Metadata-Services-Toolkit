@@ -38,10 +38,9 @@ import xc.mst.dao.service.ServiceDAO;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.DefaultRecordService;
 import xc.mst.manager.record.RecordService;
-import xc.mst.services.MetadataServiceFactory;
 import xc.mst.services.MetadataService;
+import xc.mst.services.MetadataServiceFactory;
 import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.index.RecordList;
 import xc.mst.utils.index.SolrIndexManager;
 
 public class TestServices
@@ -50,10 +49,12 @@ public class TestServices
 	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
 	 */
 	protected static ApplicationContext applicationContext = null;
+	protected static boolean IN_USE = false;
 
 	static
 	{
-		applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
+		if (IN_USE)
+			applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
 	}
 
 	private static File unprocessedRecordsDir = new File("C:\\NormalizationTestData\\input");
