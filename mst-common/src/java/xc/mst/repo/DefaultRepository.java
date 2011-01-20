@@ -78,7 +78,9 @@ public class DefaultRepository extends BaseService implements Repository {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
 					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
-					if (previousVersion == null && "0.3.0".equals(currentVersion)) {
+					if (previousVersion == null && 
+							currentVersion != null && 
+							currentVersion.startsWith("0.3.")) {
 						getRepositoryDAO().createTables(thisthis);
 					}
 				} catch (Throwable t) {

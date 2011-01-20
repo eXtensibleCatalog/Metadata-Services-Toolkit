@@ -94,7 +94,7 @@ public class Util {
 		try {
 			return slurp(new ClassPathResource(classpathResource, cl).getInputStream());
 		} catch (FileNotFoundException t) {
-			LOG.error(classpathResource+" does not exist");
+			LOG.debug(classpathResource+" does not exist");
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}

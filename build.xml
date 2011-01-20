@@ -162,6 +162,18 @@
 		</ftp>
 	</target>
 
+	<target name="ftp.ivy" depends="get.antlibs, javadoc, ftp.ivy.nodep"/>
+	<target name="ftp.ivy.nodep" depends="init, mi.resolve">
+		<ftp server="${ftp.server}"
+				userid="${ftp.userid}"
+				remotedir="/Ivy"
+				password="${ftp.password}"
+				binary="yes"
+				retriesAllowed="10">
+			<fileset dir="${ivy.home}/local"/>
+		</ftp>
+	</target>
+
 	<target name="check.skip.download">
 		<available property="skip.download" file="${ivy.jar}" />
 	</target>

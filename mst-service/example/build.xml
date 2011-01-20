@@ -251,7 +251,7 @@
 
 	<target name="zip-dev-env">
 		<zip destfile="${build.dir}/${normalized.service.name}-${service.version}-dev-env.zip">
-			<zipfileset  dir="." >
+			<zipfileset  dir="." prefix="${normalized.service.name}">
 				<exclude name="build" />
 				<exclude name="build/**/*" />
 				<exclude name="bin" />
