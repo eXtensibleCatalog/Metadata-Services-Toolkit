@@ -27,7 +27,7 @@ public class MessagesTest extends BaseTest {
 		
 		LOG.debug("records.size(): "+records.size());
 		
-		getMessageDAO().injectMessages(records);
+		//getMessageDAO().injectMessages(records);
 		
 		for (Record r : records) {
 			for (RecordMessage rm : r.getMessages()) {

@@ -49,10 +49,12 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.cache.DynMap;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -1309,7 +1311,7 @@ public class RepositoryDAO extends BaseDAO {
 						"s.display_name "+
 					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
-						" sets s"+
+						" sets s "+
 					" where rs.record_id = u.record_id " +
 						" and rs.set_id = s.set_id "+
 						" and (rs.record_id > ? or ? is null) "+
@@ -1343,26 +1345,59 @@ public class RepositoryDAO extends BaseDAO {
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
-					
-					/*
-					List<RecordMessage> messages = jdbcTemplate.query(sbMessages.toString(),
-							new Object[] {rws.getId()},
-							new RowMapper() {
-								public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-									RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-									msg.setId(rs.getLong(1));
-									return msg;
-								}
-					});
-					
-					currentRecord.setMessages(messages);
-					*/
 			
 				}
 			} catch (EmptyResultDataAccessException e) {
 				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
 			}
-			getMessageDAO().injectMessages(records);
+			
+			sb = new StringBuilder();
+			sb.append(
+					" select m.record_id, "+
+						"m.rec_in_out, "+
+						"m.msg_code, "+
+						"m.msg_level, "+
+						"m.service_id, "+
+						"md.detail "+
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u "+
+							" inner join ("+MessageDAO.MESSAGES_TABLE+" m) on (m.record_id=u.record_id) "+
+							" left outer join ("+MessageDAO.MESSAGE_DETAILS_TABLE+" md) on (m.record_message_id=md.record_message_id) "+
+					" where (u.record_id > ? or ? is null) "+
+						" and u.record_id <= ? "+
+						" and (u.date_updated > ? or ? is null) "+
+						" and u.date_updated <= ? "+
+						" order by u.record_id ");
+			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
+			params = new ArrayList<Object>();
+			params.add(startingId);
+			params.add(startingId);
+			params.add(highestId);
+			params.add(from);
+			params.add(from);
+			params.add(until);
+			
+			Object obj2[] = params.toArray();
+			
+			List<Record> recordsWMessages = null;
+			try {
+				//LOG.error("records_w_sets_query");
+				TimingLogger.start("records_w_messages_query");
+				recordsWMessages = this.jdbcTemplate.query(sb.toString(), obj2, 
+						new RecordMapper(new String[]{MessageDAO.MESSAGES_TABLE, MessageDAO.MESSAGE_DETAILS_TABLE}, this));
+				LOG.debug("recordsWMessages.size() "+recordsWMessages.size());
+				TimingLogger.stop("records_w_messages_query");
+				
+				int recIdx = 0;
+				Record currentRecord = records.get(recIdx);
+				for (Record rws : recordsWMessages) {
+					while (currentRecord.getId() != rws.getId()) {
+						currentRecord = records.get(++recIdx);
+					}
+					currentRecord.addMessage(rws.getMessages().get(0));
+				}
+			} catch (EmptyResultDataAccessException e) {
+				LOG.info("no recordsWMessages found for from: "+from+" until: "+until+" startingId: "+startingId);
+			}
 			LOG.debug("records.size(): "+records.size());
 		}
 
@@ -1569,6 +1604,23 @@ public class RepositoryDAO extends BaseDAO {
 	        	r.addSet(s);
 	        }
 	        if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
+	        }
+	        RecordMessage rm = null;
+	        if (tables.contains(MessageDAO.MESSAGES_TABLE)) {
+	        	r.setId(rs.getLong("m.record_id"));
+	        	String inOut = rs.getString("m.rec_in_out");
+	        	if (inOut != null) {
+	        		rm = new RecordMessage();
+	    	    	rm.setRecord(r);
+	    	    	rm.setInputRecord("O".equals(rs.getString("m.rec_in_out")));
+	    	    	rm.setCode(rs.getInt("m.msg_code"));
+	    	    	rm.setLevel(rs.getString("m.msg_level").charAt(0));
+	    	    	rm.setServiceId(rs.getInt("m.service_id"));
+	    	    	r.addMessage(rm);
+	        	}
+	        }
+	        if (rm != null && tables.contains(MessageDAO.MESSAGE_DETAILS_TABLE)) {
+    	    	rm.setDetail(rs.getString("md.detail"));	        	
 	        }
 	        return r;
 	    }        
