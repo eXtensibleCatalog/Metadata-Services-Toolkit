@@ -100,5 +100,7 @@ public interface Repository {
 	public String getPersistentProperty(String key);
 
 	public void setPersistentPropertyAsInt(String key, String value);
+	
+	public void injectHarvestInfo(Record r);
 
 }

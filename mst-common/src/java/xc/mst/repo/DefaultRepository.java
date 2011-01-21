@@ -305,4 +305,9 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setPersistentPropertyAsInt(String key, String value) {
 		getRepositoryDAO().setPersistentProperty(name, key, value);
 	}
+	
+	public void injectHarvestInfo(Record r) {
+		getRepositoryDAO().injectHarvestInfo(name, r);
+	}
+	
 }

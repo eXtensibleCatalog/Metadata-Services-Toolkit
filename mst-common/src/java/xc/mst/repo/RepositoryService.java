@@ -83,6 +83,7 @@ public class RepositoryService extends BaseService {
 						rec.setService(r.getService());
 					} else if (r.getProvider() != null) {
 						rec.setProvider(r.getProvider());
+						r.injectHarvestInfo(rec);
 					} else {
 						LOG.error("neither service or provider set on r.getName(): "+r.getName());
 					}

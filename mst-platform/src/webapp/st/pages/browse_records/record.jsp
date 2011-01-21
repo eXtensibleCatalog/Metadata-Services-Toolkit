@@ -81,7 +81,15 @@
 			<c:if test="${record.createdAt != null}">Created at: ${record.createdAt}<br></c:if>
 			<c:if test="${record.updatedAt != null}">Updated at: ${record.updatedAt}<br></c:if>
 			OAI datestamp: ${record.oaiDatestamp}<br>
-			OAI identifier: ${record.oaiIdentifier}<br>
+			<c:choose>
+				<c:when test="${record.harvestedOaiIdentifier != null}">
+					OAI identifier: ${record.harvestedOaiIdentifier}<br>
+				</c:when>
+				<c:otherwise>
+					OAI identifier: ${record.oaiIdentifier}<br>
+				</c:otherwise>
+			</c:choose>
+			
 			<%--
 			OAI header: ${record.oaiHeader}<br>  --%>
 			<c:if test="${record.messages != '[]'}">

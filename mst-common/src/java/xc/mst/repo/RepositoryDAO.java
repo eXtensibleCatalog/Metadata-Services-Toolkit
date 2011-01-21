@@ -138,7 +138,7 @@ public class RepositoryDAO extends BaseDAO {
 	public List<Repository> getAll() {
 		List<Repository> repos = 
 			this.jdbcTemplate.query(
-				"select r.repo_name, p.provider_id, p.name "+
+				"select r.repo_name, p.provider_id, p.name, p.oai_provider_url "+
 				"from repos r, providers p "+
 				"where p.provider_id = r.provider_id", new RepoMapper());
 		List<Repository> tempRepos =
@@ -844,35 +844,12 @@ public class RepositoryDAO extends BaseDAO {
 			//LOG.info("record not found for id: "+id);
 			//LOG.info("sql: "+sql);
 		}
-		
-		/*
-		// If record not null then get error message information
-		if (r != null) {
-			String messageSql = 
-				"select " + RECORD_MESSAGES_TABLE_COLUMNS +
-				"from "+getTableName(name, RECORD_MESSAGES_TABLE)+" rm " +
-				"where rm.record_id=? ";
-	
-			try {
-
-				List<RecordMessage> messages = jdbcTemplate.query(messageSql,
-						new Object[] {r.getId()},
-						new RowMapper<RecordMessage>() {
-							public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-								RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-								msg.setId(rs.getLong(1));
-								ServicesService servicesService = (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
-								msg.setMessage(servicesService.getError(msg.getServiceId(), msg.getMessageCode()));
-								return msg;
-							}
-				});
-				r.setMessages(messages);
-			} catch (EmptyResultDataAccessException e) {
-				LOG.info("Messages not found for record id: "+id);
-			}
-		}
-		*/
 		return r;
+	}
+	
+	public void injectHarvestInfo(String name, Record r) {
+		String sql = "select oai_id from "+getTableName(name, RECORD_OAI_IDS)+" where record_id = ?";
+		r.setHarvestedOaiIdentifier(this.jdbcTemplate.queryForObject(sql, String.class, (Long)r.getId()));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -1548,6 +1525,7 @@ public class RepositoryDAO extends BaseDAO {
 	        try {
 	        	Provider p = new Provider();
 	        	p.setName(rs.getString("p.name"));
+	        	p.setOaiProviderUrl(rs.getString("p.oai_provider_url"));
 	        	p.setId(rs.getInt("p.provider_id"));
 	        	r.setProvider(p);
 	        } catch (SQLException t) {

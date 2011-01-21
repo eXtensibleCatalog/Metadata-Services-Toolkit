@@ -10,5 +10,5 @@
 
 <div class="footer"/> 
 <div align="right">
-		MetadataServicesToolkit v 0.3.0 - svn.version:
+		MetadataServicesToolkit v @VERSION_INFO@
 </div>
