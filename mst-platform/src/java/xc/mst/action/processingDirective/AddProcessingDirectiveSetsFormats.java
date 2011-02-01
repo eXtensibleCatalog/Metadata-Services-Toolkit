@@ -102,6 +102,11 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
             	}
             	
                 tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
+                
+                if (tempProcDir.getSourceProvider().getSets() != null &&
+                		tempProcDir.getSourceProvider().getSets().size() > 0) {
+                	tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
+                }
             }
             else
             {

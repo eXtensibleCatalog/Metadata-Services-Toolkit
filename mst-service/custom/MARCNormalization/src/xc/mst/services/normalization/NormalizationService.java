@@ -403,7 +403,7 @@ public class NormalizationService extends GenericMetadataService {
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					logInfo("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return new ArrayList<OutputRecord>();
 				}
 				TimingLogger.add(setName, 0);

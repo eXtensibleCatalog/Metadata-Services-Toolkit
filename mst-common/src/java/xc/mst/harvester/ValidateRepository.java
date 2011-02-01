@@ -388,13 +388,13 @@ public class ValidateRepository extends HttpService {
 				String setSpec = setEl.getChildText("setSpec", root.getNamespace());
 				String setName = setEl.getChildText("setName", root.getNamespace());
 
-				Set set = getSetDAO().getBySetSpec(setSpec);
+				Set set = getSetDAO().getBySetSpec(provider.getName()+":"+setSpec);
 
 				if(set == null) {
 					set = new Set();
 
-					set.setDisplayName(setName);
-					set.setSetSpec(setSpec);
+					set.setDisplayName(provider.getName()+":"+setName);
+					set.setSetSpec(provider.getName()+":"+setSpec);
 
 					try {
 						getSetDAO().insertForProvider(set, providerId);

@@ -289,7 +289,7 @@ public class TransformationService extends SolrTransformationService {
 				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					isHolding = true;
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					logInfo("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return results;
 				}
 				

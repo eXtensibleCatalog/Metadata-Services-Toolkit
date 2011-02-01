@@ -293,7 +293,7 @@
 
 	<target name="install-mst" depends="unzip-mst, mst-sql" />
 
-	<target name="unzip-mst">
+	<target name="unzip-mst" depends="retrieve">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />

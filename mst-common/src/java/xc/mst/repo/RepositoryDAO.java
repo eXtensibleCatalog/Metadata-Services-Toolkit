@@ -1176,7 +1176,7 @@ public class RepositoryDAO extends BaseDAO {
 				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
 				rows2examine = (BigInteger)records.get(0).get("rows");
 				LOG.debug("rows: "+rows2examine);
-				if (rows2examine.intValue() < maxExplain) {
+				if (rows2examine != null && rows2examine.intValue() < maxExplain) {
 					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);
 					if (exactCount == 0) {
 						countMethod2use = 2;

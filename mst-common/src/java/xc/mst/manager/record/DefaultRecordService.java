@@ -1243,7 +1243,7 @@ public class DefaultRecordService extends RecordService
 							String currentSetSpec = setSpecAtLevel.toString();
 							
 							// If the set's already in the index, get it
-							Set set = getSetDAO().getBySetSpec(setSpecEl.getText());
+							Set set = getSetDAO().getBySetSpec(currentSetSpec);
 	
 							// Add the set if there wasn't already one in the database
 							if(set == null && provider != null) {

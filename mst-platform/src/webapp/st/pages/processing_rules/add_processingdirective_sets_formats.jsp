@@ -201,46 +201,32 @@
                        
                         <tr>
                             <td>
-                                <c:choose>
-                                    <c:when test="${empty setList}">
-                                         <div class="listBox" style="width:300px;">
-                                            <B>Sets</B> <br><br>
-                                            <I>No Sets to display</I><br><br>
-                                         </div>
-                                    </c:when>
-                                     <c:otherwise>
-                                         <div style="overflow:auto;width:300px;" align="left">  
-                                            <B>Sets</B> <br>
-                                            <select multiple size="10" id="setsSelected" name="setsSelected">
-                                                <option value="0"
-                                                    <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
-                                                         selected
-                                                    </c:if>
-                                                >All Sets</option>
-                                                <c:forEach var="set" items="${setList}" varStatus="setCount">
-                                                    <c:set var="flag" value="${false}"/>
-                                                      <c:forEach var="triggerSet" items="${temporaryProcessingDirective.triggeringSets}" varStatus="triggerSetCount">
-
-                                                            <c:if test="${set.id == triggerSet.id}">
-                                                                <c:set var="flag" value="${true}"/>
-
-                                                            </c:if>
-
-                                                    </c:forEach>
-                                                    <c:choose>
-                                                        <c:when test="${flag==true}">
-                                                             <option selected value="${set.id}">${set.displayName}(${set.setSpec})
-                                                        </c:when>
-                                                         <c:otherwise>
-                                                             <option value="${set.id}">${set.displayName}(${set.setSpec})
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                            </select>
-
-                                         </div>
-                                     </c:otherwise>
-                                 </c:choose>
+                                <div style="overflow:auto;width:300px;" align="left">  
+                                   <B>Sets</B> <br>
+                                   <select multiple size="10" id="setsSelected" name="setsSelected">
+                                       <option value="0"
+                                           <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
+                                                selected
+                                           </c:if>
+                                       >All Sets</option>
+                                       <c:forEach var="set" items="${setList}" varStatus="setCount">
+                                           <c:set var="flag" value="${false}"/>
+                                             <c:forEach var="triggerSet" items="${temporaryProcessingDirective.triggeringSets}" varStatus="triggerSetCount">
+                                                   <c:if test="${set.id == triggerSet.id}">
+                                                       <c:set var="flag" value="${true}"/>
+                                                   </c:if>
+                                           </c:forEach>
+                                           <c:choose>
+                                               <c:when test="${flag==true}">
+                                                    <option selected value="${set.id}">${set.displayName}(${set.setSpec})
+                                               </c:when>
+                                                <c:otherwise>
+                                                    <option value="${set.id}">${set.displayName}(${set.setSpec})
+                                               </c:otherwise>
+                                           </c:choose>
+                                       </c:forEach>
+                                   </select>
+                                </div>
                                 <c:if test="${!empty setList}">
                                     <div class="smallText">
                                         (CTRL click to select multiple sets)
@@ -248,7 +234,6 @@
                                 </c:if>
                             </td>
                         </tr>
-                        
                         <tr>
                             <td colspan="2">
                                 

@@ -54,7 +54,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 	 */
 	private static Logger log = Logger.getLogger("harvestIn");
 	
-	private static long THIRTY_SIX_HOURS = 1000*60*60*36; 
 	protected WorkerThread workerThread = null;
 	
 	protected static DateTimeFormatter UTC_SECOND_FORMATTER = null;
@@ -103,7 +102,6 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 
 	protected Emailer mailer = new Emailer();
 
-	protected boolean firstHarvest = false;
 	protected int recordsProcessed = 0;
 	protected int totalRecords = 0;
 
@@ -144,6 +142,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		
 		try {
 			hssFirstTime = true;
+			this.resumptionToken = null;
 			oaiIdCache.clear();
 			// BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
 			// list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
@@ -164,22 +163,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 			TimingLogger.reset();
 			repo.beginBatch();
 			
-			this.currentHarvest = null;
-			Harvest ph = getHarvestDAO().getLatestHarvestForSchedule(harvestSchedule.getId());
-			if (ph != null) {
-				if (ph.getEndTime() == null || ph.getProvider().getLastHarvestEndTime() == null ||
-						ph.getEndTime().getTime() > ph.getProvider().getLastHarvestEndTime().getTime()) {
-					this.currentHarvest = ph;
-					hssFirstTime = false;
-				}
-			}
-			if (this.currentHarvest == null) {
-				if (ph != null && ph.getEndTime() != null) {
-					startDate = new Date(ph.getEndTime().getTime());
-				} else {
-					startDate = new Date(THIRTY_SIX_HOURS);
-				}
-			}
+			this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);
+
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -282,26 +267,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					
 				
 				HarvestSchedule schedule = scheduleStep.getSchedule();
-				String baseURL = null;
-				
-				if (hssFirstTime) {
-					// Setup the harvest we're currently running
-					if (currentHarvest == null) {
-						currentHarvest = new Harvest();
-						currentHarvest.setStartTime(startDate);
-						//currentHarvest.setEndTime(new Date());
-						currentHarvest.setProvider(scheduleStep.getSchedule().getProvider());
-						currentHarvest.setHarvestSchedule(scheduleStep.getSchedule());
-						baseURL = currentHarvest.getProvider().getOaiProviderUrl();	
-						getHarvestDAO().insert(currentHarvest);
-						log.debug("repo.installOrUpdateIfNecessary()");
-						if (!baseURL.startsWith("file:"))
-							validate(scheduleStep);
-						firstHarvest = repo.getSize() == 0;
-					}
-					resumptionToken = null;
-				}
-				baseURL = currentHarvest.getProvider().getOaiProviderUrl();
+				String baseURL = currentHarvest.getProvider().getOaiProviderUrl();
 				
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
 				
@@ -353,6 +319,8 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 					// or use a known from or until parameter, set them here as well.
 					//if (hssFirstTime) {
 					if (resumptionToken == null) {
+						validate(scheduleStep);
+						
 						request += "?verb=" + verb;
 						request += "&metadataPrefix=" + metadataPrefix;
 
@@ -361,18 +329,16 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 						
 						baseRequest = request;
 
-						if (currentHarvest != null && 
-								currentHarvest.getStartTime() != null &&
-								currentHarvest.getStartTime().getTime() != THIRTY_SIX_HOURS) {
+						// both of these null checks are pointless at this time as I'll
+						// always be passing in a start and end date
+						if (currentHarvest.getStartTime() != null) {
 							if (Provider.DAY_GRANULARITY.equals(provider.getGranularity())) {
 								request += "&from="+printDate(currentHarvest.getStartTime());
 							} else if (Provider.SECOND_GRANULARITY.equals(provider.getGranularity())) {
 								request += "&from="+printDateTime(currentHarvest.getStartTime());
 							}	
 						}
-						if (currentHarvest != null && 
-								currentHarvest.getEndTime() != null &&
-								currentHarvest.getEndTime().getTime() != 0) {
+						if (currentHarvest.getEndTime() != null) {
 							if (Provider.DAY_GRANULARITY.equals(provider.getGranularity())) {
 								request += "&until="+printDate(currentHarvest.getEndTime());
 							} else if (Provider.SECOND_GRANULARITY.equals(provider.getGranularity())) {
@@ -487,7 +453,9 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
 		Element errorEl = root.getChild("error", root.getNamespace());
 		if (errorEl != null) {
 			String errorCode = errorEl.getAttributeValue("code");
-			throw new RuntimeException("errorCode: "+errorCode+" "+errorEl.getText());
+			log.info("errorCode: "+errorCode+" "+errorEl.getText());
+			return null;
+			//throw new RuntimeException("errorCode: "+errorCode+" "+errorEl.getText());
 		}
 
 		Element listRecordsEl = null;
@@ -538,11 +506,7 @@ public class HarvestManager extends BaseManager implements WorkDelegate {
             	record.setFormat(scheduleStep.getFormat());
 				record.setHarvest(currentHarvest);
 				record.setProvider(currentHarvest.getProvider());
-				
-				// If the provider has been harvested before, check whether or not this
-				// record already exists in the database
-				// BDA: tell me why I care? SR : To keep count of number of new records added and number of updated records.
-				//Record oldRecord = (firstHarvest ? null : recordService.getByOaiIdentifierAndProvider(oaiIdentifier, providerId));
+
 				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
 				Long recordId = oaiIdCache.getLong(nonRedundantId);
 				if (recordId == null || recordId == 0) {

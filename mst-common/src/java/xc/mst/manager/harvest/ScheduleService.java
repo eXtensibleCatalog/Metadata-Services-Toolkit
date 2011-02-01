@@ -107,4 +107,6 @@ public interface ScheduleService {
 	 * @throws DatabaseConfigException 
 	 */
 	public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule) throws DatabaseConfigException;
+	
+	public Harvest getHarvest(HarvestSchedule harvestSchedule);
 }

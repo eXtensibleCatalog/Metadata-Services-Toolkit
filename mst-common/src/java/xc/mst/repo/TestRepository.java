@@ -447,4 +447,7 @@ public class TestRepository extends BaseService implements Repository {
 	public void setPersistentPropertyAsInt(String key, String value) {
 		//do nothing
 	}
+
+	public void injectHarvestInfo(Record r) {}
+	
 }
