@@ -35,7 +35,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * 
  * @author Sharmila Ranganathan
  */
-public class ServiceReprocessWorkerThread extends WorkerThread 
+public class ServiceReprocessWorkerThread //extends WorkerThread 
 {
 	/**
 	 * A reference to the logger for this class
@@ -77,7 +77,6 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 	 */
 	private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
 	
-	@Override
 	public void run() 
 	{
 		try
@@ -176,25 +175,21 @@ public class ServiceReprocessWorkerThread extends WorkerThread
 		}
 	}
 
-	@Override
 	public void cancel() 
 	{
 		isCanceled = true;
 	}
 
-	@Override
 	public void pause() 
 	{
 		isPaused = true;
 	}
 
-	@Override
 	public void proceed() 
 	{
 		isPaused = false;
 	}
 
-	@Override
 	public String getJobName() 
 	{
 		return "Deleting old service records and preparing for service reprocess.";

@@ -27,18 +27,19 @@ public interface Repository {
 	
 	public int getSize();
 	
-	public void beginBatch();
-	
-	public void endBatch();
-	
 	public Date getLastModified();
 	
 	public int getNumRecords();
 	
 	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 
+	public void updateIncomingRecordCounts(String type, boolean update, boolean delete);
+	public void incrementUnexpectedProcessingErrors(String type);
+	
 	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
+	
+	public boolean commitIfNecessary(boolean force);
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	
@@ -93,13 +94,13 @@ public interface Repository {
 	
 	public boolean ready4harvest();
 	
-	public int getPersistentPropertyAsInt(String key);
-
-	public void setPersistentPropertyAsInt(String key, int value);
-	
+	public int getPersistentPropertyAsInt(String key, int def);
+	public long getPersistentPropertyAsLong(String key, long def);
 	public String getPersistentProperty(String key);
-
-	public void setPersistentPropertyAsInt(String key, String value);
+	
+	public void setPersistentProperty(String key, int value);
+	public void setPersistentProperty(String key, long value);
+	public void setPersistentProperty(String key, String value);
 	
 	public void injectHarvestInfo(Record r);
 

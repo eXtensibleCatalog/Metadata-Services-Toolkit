@@ -99,87 +99,86 @@ public class TestRepository extends BaseService implements Repository {
 		return 0;
 	}
 	
-	public void beginBatch() {
-		LOG.debug("beginBatch");
-	}
-	
-	public void endBatch() {
-		if (!inputFilesIterator.hasNext()) {
-			LOG.debug("endBatch");
-			File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
-			if (!outFolder.exists()) {
-				outFolder.mkdir();
-			} else {
-				for (String prevOutFile : outFolder.list()) {
-					LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
-					new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+	public boolean commitIfNecessary(boolean force) {
+		if (force) {
+			if (!inputFilesIterator.hasNext()) {
+				LOG.debug("endBatch");
+				File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
+				if (!outFolder.exists()) {
+					outFolder.mkdir();
+				} else {
+					for (String prevOutFile : outFolder.list()) {
+						LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
+						new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+					}
 				}
-			}
-			for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
-				String fileName = me.getKey();
-				List<Record> records = me.getValue();
-				if (records != null) {
-					File outFile = null;
-					PrintWriter pw = null;
-					try {
-						outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
-						LOG.debug("writing outFile: "+outFile);
-						pw = new PrintWriter(outFile, "UTF-8");
-						pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
-						for (Record r : records) {
-							LOG.debug("r.getService(): "+r.getService());
+				for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
+					String fileName = me.getKey();
+					List<Record> records = me.getValue();
+					if (records != null) {
+						File outFile = null;
+						PrintWriter pw = null;
+						try {
+							outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
+							LOG.debug("writing outFile: "+outFile);
+							pw = new PrintWriter(outFile, "UTF-8");
+							pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
+							for (Record r : records) {
+								LOG.debug("r.getService(): "+r.getService());
+								pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
+							}
+							pw.println("</records>");
+						} catch (Throwable t) {
+							LOG.error("file failed: "+fileName);
+							LOG.error("", t);
+						} finally {
+							try {
+								LOG.debug("closing file: "+fileName);
+								pw.close();
+							} catch (Throwable t) {
+								LOG.error("file close failed: "+fileName);
+								LOG.error("", t);
+							}
+						}
+					}
+				}
+				outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds");
+				if (!outFolder.exists()) {
+					outFolder.mkdir();
+				} else {
+					for (String prevOutFile : outFolder.list()) {
+						LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile);
+						new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile).delete();
+					}
+				}
+				repo.forEachValue(new TObjectProcedure() {
+					public boolean execute(Object obj) {
+						File outFile = null;
+						PrintWriter pw = null;
+						Record r = (Record)obj;
+						outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+r.getId()+".xml");
+						try {
+							LOG.debug("writing outFile: "+outFile);
+							pw = new PrintWriter(outFile, "UTF-8");
 							pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
-						}
-						pw.println("</records>");
-					} catch (Throwable t) {
-						LOG.error("file failed: "+fileName);
-						LOG.error("", t);
-					} finally {
-						try {
-							LOG.debug("closing file: "+fileName);
-							pw.close();
 						} catch (Throwable t) {
-							LOG.error("file close failed: "+fileName);
+							LOG.error("file failed: "+r.getId());
 							LOG.error("", t);
+						} finally {
+							try {
+								LOG.debug("closing file: "+outFile.getName());
+								pw.close();
+							} catch (Throwable t) {
+								LOG.error("file close failed: "+outFile.getName());
+								LOG.error("", t);
+							}
 						}
+						return true;
 					}
-				}
+				});
 			}
-			outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds");
-			if (!outFolder.exists()) {
-				outFolder.mkdir();
-			} else {
-				for (String prevOutFile : outFolder.list()) {
-					LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile);
-					new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile).delete();
-				}
-			}
-			repo.forEachValue(new TObjectProcedure() {
-				public boolean execute(Object obj) {
-					File outFile = null;
-					PrintWriter pw = null;
-					Record r = (Record)obj;
-					outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+r.getId()+".xml");
-					try {
-						LOG.debug("writing outFile: "+outFile);
-						pw = new PrintWriter(outFile, "UTF-8");
-						pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
-					} catch (Throwable t) {
-						LOG.error("file failed: "+r.getId());
-						LOG.error("", t);
-					} finally {
-						try {
-							LOG.debug("closing file: "+outFile.getName());
-							pw.close();
-						} catch (Throwable t) {
-							LOG.error("file close failed: "+outFile.getName());
-							LOG.error("", t);
-						}
-					}
-					return true;
-				}
-			});
 		}
+		return false;
 	}
 	
 	public void installOrUpdateIfNecessary() {
@@ -209,6 +208,8 @@ public class TestRepository extends BaseService implements Repository {
 		getOutputRecords().add(r);
 	}
 	
+	public void commitRecords() {}
+	
 	protected List<Record> getOutputRecords() {
 		List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
 		if (outputRecordsInFile == null) {
@@ -223,6 +224,9 @@ public class TestRepository extends BaseService implements Repository {
 			addRecord(r);
 		}
 	}
+	
+	public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {}
+	public void incrementUnexpectedProcessingErrors(String type) {}
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId, 
 			xc.mst.bo.provider.Format inputFormat,  xc.mst.bo.provider.Set inputSet) {
@@ -430,24 +434,14 @@ public class TestRepository extends BaseService implements Repository {
 		return true;
 	}
 	
-	public int getPersistentPropertyAsInt(String key) {
-		//do nothing
-		return -1;
-	}
-
-	public void setPersistentPropertyAsInt(String key, int value) {
-		//do nothing
-	}
-	
-	public String getPersistentProperty(String key) {
-		//do nothing
-		return null;
-	}
-
-	public void setPersistentPropertyAsInt(String key, String value) {
-		//do nothing
-	}
-
 	public void injectHarvestInfo(Record r) {}
+	
+	public String getPersistentProperty(String key) {return null;}
+	public int getPersistentPropertyAsInt(String key, int def) {return def;}
+	public long getPersistentPropertyAsLong(String key, long def) {return def;}
+	
+	public void setPersistentProperty(String key, int value) {}
+	public void setPersistentProperty(String key, long value) {}
+	public void setPersistentProperty(String key, String value) {}
 	
 }

@@ -92,27 +92,30 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                        	currentProcess = null;
 	                    } else {
 	                    	 if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                    		 if (getScheduler().getRunningJob().getRecordsProcessed() > 0 && getScheduler().getRunningJob().getTotalRecords() > 0) {
-	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessed() + 
-	                    			 " records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	                    		 if (getScheduler().getRunningJob().getRecordsProcessedThisRun() > 0 && 
+	                    				 getScheduler().getRunningJob().getRecords2ProcessThisRun() > 0) {
+	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
+	                    			 " records out of " + getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
 	                    			 " from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 } else {
-	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessed() + 
+	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
 	                    			 " records from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 }
 	                    	 } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
 	                    		 solrIndexRunning = true;
 	                    		 if (consecutiveSolrIndexes > 2) {
-		                        	 LOG.debug("getScheduler().getRunningJob().getRecordsProcessed(): "+getScheduler().getRunningJob().getRecordsProcessed());
-		                        	 LOG.debug("getScheduler().getRunningJob().getTotalRecords(): "+getScheduler().getRunningJob().getTotalRecords());
+		                        	 LOG.debug("getScheduler().getRunningJob().getRecordsProcessed(): "+
+		                        			 getScheduler().getRunningJob().getRecordsProcessedThisRun());
+		                        	 LOG.debug("getScheduler().getRunningJob().getTotalRecords(): "+
+		                        			 getScheduler().getRunningJob().getRecords2ProcessThisRun());
 		                        	 LOG.debug("getScheduler().getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
-	                    			 currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
-	 	                         		" records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	                    			 currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
+	 	                         		" records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
 	 	                         		" through " + getScheduler().getRunningJob().getJobName();
 	                    		 }
 	                         } else {
-	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessed() + 
-	                         	" records out of " + getScheduler().getRunningJob().getTotalRecords() + 
+	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
+	                         	" records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
 	                         	" through " + getScheduler().getRunningJob().getJobName();
 	                         }
 	                    }

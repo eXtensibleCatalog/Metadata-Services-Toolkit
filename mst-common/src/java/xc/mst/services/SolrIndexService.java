@@ -42,15 +42,18 @@ public class SolrIndexService extends GenericMetadataService  {
 	}
 	
 	@Override
-	protected void endBatch() {
-		try {
-			TimingLogger.start("commitIndex");
-			getSolrIndexManager().commitIndex();
-			TimingLogger.stop("commitIndex");
-		} catch (Throwable t) {
-			getUtil().throwIt(t);
+	protected boolean commitIfNecessary(boolean force) {
+		if (super.commitIfNecessary(force)) {
+			try {
+				TimingLogger.start("commitIndex");
+				getSolrIndexManager().commitIndex();
+				TimingLogger.stop("commitIndex");
+				return true;
+			} catch (Throwable t) {
+				getUtil().throwIt(t);
+			}	
 		}
-		super.endBatch();
+		return false;
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {

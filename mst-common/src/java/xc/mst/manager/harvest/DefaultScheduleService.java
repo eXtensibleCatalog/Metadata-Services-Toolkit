@@ -144,7 +144,7 @@ public class DefaultScheduleService extends BaseService implements ScheduleServi
 				}
 			}
 			Harvest h = new Harvest();	
-			if (ph.getEndTime() != null) {
+			if (ph != null && ph.getEndTime() != null) {
 				h.setStartTime(new Date(ph.getEndTime().getTime()));
 			} else {
 				h.setStartTime(new Date(THIRTY_SIX_HOURS));

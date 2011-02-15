@@ -20,7 +20,7 @@ import xc.mst.services.MetadataServiceFactory;
  *
  * @author Eric Osisek
  */
-public class ServiceWorkerThread extends WorkerThread
+public class ServiceWorkerThread //extends WorkerThread
 {
 	/**
 	 * A reference to the logger for this class

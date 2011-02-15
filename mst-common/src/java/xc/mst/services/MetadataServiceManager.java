@@ -12,27 +12,16 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.manager.BaseManager;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.WorkDelegate;
 import xc.mst.scheduling.WorkerThread;
 
-public class MetadataServiceManager extends BaseManager implements WorkDelegate {
+public class MetadataServiceManager extends WorkerThread {
 	
 	protected MetadataService metadataService = null;
 	protected Repository incomingRepository = null;
 	protected List<Format> triggeringFormats = null;
 	protected List<Set> triggeringSets = null;
 	protected Set outputSet = null;
-	protected WorkerThread workerThread = null;
-	
-	public WorkerThread getWorkerThread() {
-		return workerThread;
-	}
-
-	public void setWorkerThread(WorkerThread workerThread) {
-		this.workerThread = workerThread;
-	}
 
 	public Set getOutputSet() {
 		return outputSet;
@@ -58,8 +47,9 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		this.incomingRepository = incomingRepository;
 	}
 
-	public void cancel() {
+	public void cancelInner() {
 		metadataService.cancel();
+		super.cancelInner();
 	}
 	
 	public List<Format> getTriggeringFormats() {
@@ -87,7 +77,7 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 							metadataService.process(incomingRepository, f, s, outputSet);
 						}
 					} else {
-						metadataService.process(incomingRepository, f, null, outputSet);	
+						metadataService.process(incomingRepository, f, null, outputSet);
 					}
 				}
 			} else if (triggeringSets != null && triggeringSets.size() > 0) {
@@ -105,8 +95,9 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		metadataService.setup();
 	}
 	
-	public void finish() {
+	public void finishInner() {
 		metadataService.finish();
+		super.finishInner();
 	}
 
 	public String getDetailedStatus() {
@@ -117,20 +108,22 @@ public class MetadataServiceManager extends BaseManager implements WorkDelegate 
 		return metadataService.getService().getName();
 	}
 
-	public int getRecordsProcessed() {
+	public void pauseInner() {
+		metadataService.pause();
+		super.pauseInner();
+	}
+
+	public void proceedInner() {
+		metadataService.resume();
+		super.proceedInner();
+	}
+
+	public long getRecords2ProcessThisRun() {
 		return metadataService.getProcessedRecordCount();
 	}
 
-	public long getTotalRecords() {
+	public long getRecordsProcessedThisRun() {
 		return metadataService.getTotalRecordCount();
-	}
-
-	public void pause() {
-		metadataService.pause();
-	}
-
-	public void resume() {
-		metadataService.resume();
 	}
 
 }

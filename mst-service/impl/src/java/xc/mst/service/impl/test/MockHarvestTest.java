@@ -29,7 +29,6 @@ import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
@@ -64,9 +63,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 			
 			Date previousLastModified = null;
 			while (true) {
-				WorkerThread wt = new WorkerThread();
-				wt.setWorkDelegate(harvestManager);
-				wt.run();
+				Thread t = new Thread(harvestManager);
+				t.start();
 				LOG.debug("previousFileLastModified: "+previousLastModified);
 				LOG.debug("repo.getLastModified(): "+repo.getLastModified());
 				

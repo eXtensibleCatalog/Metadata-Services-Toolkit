@@ -193,15 +193,6 @@ public class RepositoryDAO extends BaseDAO {
 		return this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
 	}
 	
-	public void beginBatch() {
-		inBatch = true;
-	}
-	
-	public void endBatch(String name) {
-		addRecords(name, null, true);
-		inBatch = false;
-	}
-	
 	public long resetIdSequence(long id) {
 		this.nextId = -1;
 		this.nextIdInDB = -1;
@@ -231,32 +222,21 @@ public class RepositoryDAO extends BaseDAO {
 		addRecords(name, records, false);
 	}
 	
-	public boolean addRecord(String name, Record r) {
+	public void addRecord(String name, Record r) {
 		if (recordsToAdd == null) {
 			recordsToAdd = new ArrayList<Record>();
 		}
-
 		recordsToAdd.add(r);
-		return commitIfNecessary(name, false);
 	}
 	
 	public void addRecords(String name, List<Record> records, boolean force) {
-		if (inBatch) {
-			LOG.debug("** inBatch True");
-			if (recordsToAdd == null) {
-				LOG.debug("** recordsToAdd == null");
-				recordsToAdd = new ArrayList<Record>();
-			}
-			if (records != null) {
-				LOG.debug("** records != null");
-				recordsToAdd.addAll(records);
-			}
-			commitIfNecessary(name, force);
-		} else {
-			LOG.debug("** inBatch False");
-			beginBatch();
-			addRecords(name, records, force);
-			endBatch(name);
+		if (recordsToAdd == null) {
+			LOG.debug("** recordsToAdd == null");
+			recordsToAdd = new ArrayList<Record>();
+		}
+		if (records != null) {
+			LOG.debug("** records != null");
+			recordsToAdd.addAll(records);
 		}
 	}
 	
@@ -266,15 +246,15 @@ public class RepositoryDAO extends BaseDAO {
 		if (recordsToAdd != null) {
 			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
 		}
-		if (force || batchSize <= recordsToAdd.size()) {
+		if (recordsToAdd != null && (force || batchSize <= recordsToAdd.size())) {
 			//LOG.error("beluga commit!!!");
 			TimingLogger.start("commit to db");
 			final long startTime = System.currentTimeMillis();
 			if (ready4harvest(name)) {
 				String sql = 
 	    			"insert into "+getTableName(name, RECORDS_TABLE)+
-	    			" (record_id, oai_datestamp, status, format_id ) "+
-	    			"values (?,?,?,?) "+
+	    			" (record_id, oai_datestamp, type, status, format_id ) "+
+	    			"values (?,?,?,?,?) "+
 	    			"on duplicate key update "+
 	    				"status=?, "+
 	    				"format_id=?, "+
@@ -292,6 +272,11 @@ public class RepositoryDAO extends BaseDAO {
 		                        	ps.setTimestamp(i++, new Timestamp(startTime));	
 		                        } else {
 		                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+		                        }
+		                        if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+		                        	ps.setString(i++, r.getIndexedObjectType());
+		                        } else {
+		                        	ps.setString(i++, null);
 		                        }
 		                        for (int k=0; k<2; k++) {
 			                        ps.setString(i++, String.valueOf(r.getStatus()));
@@ -506,6 +491,10 @@ public class RepositoryDAO extends BaseDAO {
                         	os.write(sdf.format(r.getOaiDatestamp()).getBytes());
                         }
 						os.write(tabBytes);
+						if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+							os.write(r.getIndexedObjectType().substring(0,1).getBytes());
+						}
+						os.write(tabBytes);
 						os.write(String.valueOf(r.getStatus()).getBytes());
 						os.write(tabBytes);
 						if (r.getFormat() != null)
@@ -689,11 +678,13 @@ public class RepositoryDAO extends BaseDAO {
 				} catch (Throwable t) {
 					getUtil().throwIt(t);
 				}
-				
 			}
 	        
 			recordsToAdd = null;
 			TimingLogger.stop("commit to db");
+			if (force) {
+				inBatch = false;
+			}
 			return true;
 		} else {
 			return false;
@@ -1031,6 +1022,8 @@ public class RepositoryDAO extends BaseDAO {
 			
 			if (keepGoing) {
 				if (inputFormat != null) {
+					// could LIMIT accomplish the same thing as explain ?
+					// actually - I dont think so, because if the answer is zero - limit takes a looooong time
 					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ?";
 					records = this.jdbcTemplate.queryForList(
 							"explain "+sql, inputFormat.getId());

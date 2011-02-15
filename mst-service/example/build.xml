@@ -297,6 +297,7 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+		<ant target="retrieve" />
 	</target>
 
 	<target name="mst-sql">
