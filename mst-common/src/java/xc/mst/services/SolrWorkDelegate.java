@@ -111,11 +111,11 @@ public class SolrWorkDelegate extends WorkerThread {
 	}
 
 	public long getRecords2ProcessThisRun() {
-		return solrIndexService.getProcessedRecordCount();
+		return solrIndexService.getTotalRecordCount();
 	}
 	
 	public long getRecordsProcessedThisRun() {
-		return solrIndexService.getTotalRecordCount();
+		return solrIndexService.getProcessedRecordCount();
 	}
 
 }

@@ -95,7 +95,7 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 	                    		 if (getScheduler().getRunningJob().getRecordsProcessedThisRun() > 0 && 
 	                    				 getScheduler().getRunningJob().getRecords2ProcessThisRun() > 0) {
 	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
-	                    			 " records out of " + getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
+	                    			 " records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
 	                    			 " from repository " + getScheduler().getRunningJob().getJobName();
 	                    		 } else {
 	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 

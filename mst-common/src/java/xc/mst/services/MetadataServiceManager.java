@@ -119,11 +119,11 @@ public class MetadataServiceManager extends WorkerThread {
 	}
 
 	public long getRecords2ProcessThisRun() {
-		return metadataService.getProcessedRecordCount();
+		return metadataService.getTotalRecordCount();
 	}
 
 	public long getRecordsProcessedThisRun() {
-		return metadataService.getTotalRecordCount();
+		return metadataService.getProcessedRecordCount();
 	}
 
 }
