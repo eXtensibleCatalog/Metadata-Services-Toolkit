@@ -45,6 +45,8 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	
 	public static String rootDir;
 	
+	public static String serviceBeingLoaded = null;
+	
 	/** File separator according to OS. \ for windows  / for unix. */
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	
@@ -79,7 +81,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	@Override
 	protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
 		if ("normalized.service.name".equals(placeholder)) {
-			return getUtil().normalizeName(resolvePlaceholder("service.name", props, systemPropertiesMode));
+			return getUtil().normalizeName(serviceBeingLoaded);
 		}
 		String val = super.resolvePlaceholder(placeholder, props, systemPropertiesMode);
 		if ("service.name".equals(placeholder)) {

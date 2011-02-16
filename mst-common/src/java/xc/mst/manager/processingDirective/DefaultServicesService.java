@@ -176,6 +176,7 @@ public class DefaultServicesService extends BaseService
 				        		urls.add(url);
 				        		URL[] urlsArr = urls.toArray(new URL[]{});
 				        		URLClassLoader loader = new URLClassLoader(urlsArr, getClass().getClassLoader());
+				        		MSTConfiguration.serviceBeingLoaded = id;
 				        		ac = new ClassPathXmlApplicationContext();
 				        		ac.setClassLoader(loader);
 				        		ac.setConfigLocation("xc/mst/services/spring-service.xml");

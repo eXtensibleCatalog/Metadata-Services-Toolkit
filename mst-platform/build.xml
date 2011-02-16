@@ -106,6 +106,7 @@
 				<exclude name="**/jsp-api*.jar"/>
 				<exclude name="**/servlet-api*.jar"/>
 				<exclude name="**/MST-instance*.jar"/>
+				<exclude name="**/mst-instance*.jar"/>
 				<exclude name="**/env.properties"/>
 			</fileset>
 		</jar>
