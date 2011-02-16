@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -1744,10 +1745,90 @@ public class RepositoryDAO extends BaseDAO {
 			return null;
 		}
 	}
+	
+	public List<String[]> getAllPersistentProperties(String name) {
+		try {
+			List<String[]> props = new ArrayList<String[]>();
+			List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
+					"select prop_key, value from "+getTableName(name, PROPERTIES));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					props.add(new String[]{
+							(String)row.get("prop_key"),
+							(String)row.get("value")});
+				}
+			}
+			return props;
+		} catch (EmptyResultDataAccessException t) {
+			return null;
+		}
+	}
 
 	public void setPersistentProperty(String name, String key, String value) {
 		this.jdbcTemplate.update("insert into "+getTableName(name, PROPERTIES)+
 				" values (?, ?) on duplicate key update value=?",
 				key, value, value);
 	}
+	
+	public void updateOutgoingRecordCounts(String name) {
+		Map<String, long[]> countsByType = new HashMap<String, long[]>();
+		countsByType.put("total", new long[3]);
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
+				"select count(*) as count, type, status from "+getTableName(name, RECORDS_TABLE)+" group by type, status");
+
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				Long count = (Long)row.get("count");
+				String type = (String)row.get("type");
+				char status = ((String)row.get("status")).charAt(0);
+				
+				long[] counts4type = countsByType.get(type);
+				if (counts4type == null) {
+					counts4type = new long[3];
+					countsByType.put(type, counts4type);
+				}
+				if (status == Record.ACTIVE) {
+					countsByType.get("total")[0] += count;
+					counts4type[0] = count; 
+				} else if (status == Record.DELETED) {
+					countsByType.get("total")[2] += count;
+					counts4type[2] = count;
+				}
+			}
+		}
+		
+		rows = this.jdbcTemplate.queryForList(
+				" select count(*) as count, r.type as type "+
+				" from "+
+					getTableName(name, RECORD_UPDATES_TABLE)+" as u, "+
+					getTableName(name, RECORDS_TABLE)+" as r "+
+				" where u.record_id = r.record_id "+
+				" group by r.type"
+				);
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				Long count = (Long)row.get("count");
+				String type = (String)row.get("type");
+				
+				countsByType.get(type)[1] = count-countsByType.get(type)[0];
+				countsByType.get("total")[1] += count;
+			}
+			countsByType.get("total")[1] = countsByType.get("total")[1] - countsByType.get("total")[0]; 
+		}
+		
+		for (Map.Entry<String, long[]> counts4type : countsByType.entrySet()) {
+			String key = "RecordsCount";
+			if (counts4type.getKey() == null || counts4type.getKey().equals("")) {
+				continue;
+			}
+			if (!counts4type.getKey().equals("total")) {
+				key += "-"+counts4type.getKey();
+			}
+			setPersistentProperty(name, "outgoingActive"+key, ""+counts4type.getValue()[0]);
+			setPersistentProperty(name, "outgoingUpdated"+key, ""+counts4type.getValue()[1]);
+			setPersistentProperty(name, "outgoingDeleted"+key, ""+counts4type.getValue()[2]);
+		}
+	}
+	
 }

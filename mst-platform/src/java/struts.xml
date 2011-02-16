@@ -733,7 +733,15 @@
 	      	</interceptor-ref>
 			<result name="success">pages/browse_records/error_description.jsp</result>
 			<result name="input">pages/browse_records/error_description.jsp</result>
-		</action>		
+		</action>
+		
+		<action name="recordCounts" class="xc.mst.action.stats.RecordCounts" method="viewCounts">
+		 	<interceptor-ref name="default"/>
+		 	<interceptor-ref name="roles">
+	        	<param name="allowedRoles">Browse Records</param>
+	      	</interceptor-ref>
+			<result name="success">pages/stats/record_counts.jsp</result>
+		</action>	
 		
 		<!--  ************************************ -->
         <!--  Configuration actions          -->

@@ -341,6 +341,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	public void processComplete() {
 		getRepositoryDAO().createIndiciesIfNecessary(name);
+		getRepositoryDAO().updateOutgoingRecordCounts(name);
 	}
 	
 	public boolean ready4harvest() {
