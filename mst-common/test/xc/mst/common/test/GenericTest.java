@@ -32,6 +32,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.repo.DefaultRepository;
+import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
@@ -57,6 +58,24 @@ public class GenericTest extends BaseTest {
 		
 		try {
 			
+			int i=1;
+			
+			Repository r = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+			r.setName("135");
+			long t0 = System.currentTimeMillis();
+			for (; i<1000; i++) {
+				r.getRecord(i);
+			}
+			long t1 = System.currentTimeMillis();
+			System.out.println("first 1000: "+(t1-t0)/1000.);
+			t0 = System.currentTimeMillis();
+			for (; i<15000; i++) {
+				r.getRecord(i);
+			}
+			t1 = System.currentTimeMillis();
+			System.out.println("next 14000: "+(t1-t0)/14000.);
+			
+			/*
 			URLClassLoader sysloader = (URLClassLoader) getClass().getClassLoader();
 			Class sysclass = URLClassLoader.class;
 
@@ -72,6 +91,8 @@ public class GenericTest extends BaseTest {
 			for (URL u2 : sysloader.getURLs()) {
 				System.out.println("u: "+u2);
 			}
+			*/
+			
 			
 			
 			/*

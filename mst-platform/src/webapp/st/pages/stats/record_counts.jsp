@@ -18,7 +18,7 @@
 
 <html>
     <head>
-        <title>All Users</title>
+        <title>Record Counts</title>
         <c:import url="/st/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >

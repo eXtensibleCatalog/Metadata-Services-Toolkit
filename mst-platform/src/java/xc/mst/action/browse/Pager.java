@@ -9,7 +9,7 @@
 
 package xc.mst.action.browse;
 
-import com.opensymphony.xwork2.ActionSupport;
+import xc.mst.action.BaseActionSupport;
 
 /**
  * This is an abstract class for Pager.
@@ -20,7 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Sharmila Ranganathan
  *
  */
-public abstract class Pager extends ActionSupport {
+public abstract class Pager extends BaseActionSupport {
 
 	/** Eclipse generated Id */
 	private static final long serialVersionUID = -3953265958290535965L;

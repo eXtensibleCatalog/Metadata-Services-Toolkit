@@ -279,6 +279,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			
 			rowEnd = rowStart + numberOfResultsToShow;
 			
+			Record idExactMatch = null;
+			try {
+		    	long id = Long.parseLong(query);
+		    	idExactMatch = getRepositoryService().getRecord(id);
+		    } catch (Throwable t) {
+		    }
+			
 			// In initial page load, we are not going to show any records. Only facets will be shown
 			if (isInitialLoad) {
 				solrQuery.setStart(0);
@@ -286,9 +293,23 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			} else {
 				solrQuery.setStart(rowStart);
 				solrQuery.setRows(numberOfResultsToShow);
+				if (idExactMatch != null) {
+		    		if (rowStart < 2) {
+		    			solrQuery.setRows(numberOfResultsToShow-1);
+		    		} else {
+		    			solrQuery.setStart(rowStart-1);
+		    		}
+		    	}
 			}
 			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
-		    result = browseRecordService.search(solrQuery);   
+		    result = browseRecordService.search(solrQuery);
+		    
+	    	if (idExactMatch != null) {
+	    		if (rowStart < 2) {
+	    			result.getRecords().add(0, idExactMatch);
+	    		}
+	    		result.setTotalNumberOfResults(result.getTotalNumberOfResults()+1);
+	    	}
 		    
 		    if (log.isDebugEnabled()) {
 		    	log.debug("Search result::"+result);
