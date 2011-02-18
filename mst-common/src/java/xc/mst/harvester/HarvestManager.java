@@ -353,7 +353,7 @@ public class HarvestManager extends WorkerThread {
                 TimingLogger.stop("parseRecords");
                 
                 provider.setLastHarvestEndTime(new Date());
-                getProviderDAO().update(provider);
+                getProviderDAO().update(provider, false);
                 
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL);
 				// + ", " + recordsProcessed + " new records were returned by the OAI provider.");

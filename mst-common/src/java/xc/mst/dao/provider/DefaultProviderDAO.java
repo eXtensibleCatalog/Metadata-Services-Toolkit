@@ -1108,10 +1108,12 @@ public class DefaultProviderDAO extends ProviderDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end insert(Provider)
+	
+	public boolean update(Provider provider) throws DataException {
+		return update(provider, true);
+	}
 
-	@Override
-	public boolean update(Provider provider) throws DataException
-	{
+	public boolean update(Provider provider, boolean revalidate) throws DataException {
 		// Throw an exception if the connection is null.  This means the configuration file was bad.
 		if(dbConnectionManager.getDbConnection() == null)
 			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
@@ -1223,33 +1225,37 @@ public class DefaultProviderDAO extends ProviderDAO
 				// Execute the update statement and return the result
 				if(dbConnectionManager.executeUpdate(psUpdate) > 0)
 				{
-					// Remove the old permissions for the group
-					boolean success = getProviderFormatUtilDAO().deleteFormatsForProvider(provider.getId());
-
-					// Remove all sets from this provider that used to belong to it but no longer do
-				    for(Set set : getSetDAO().getSetsForProvider(provider.getId()))
-					    if(!provider.getSets().contains(set))
-					    	success = getSetDAO().removeFromProvider(set, provider.getId()) && success;
-
-				    // Add the correct sets for the provider
-				    for(Set set : provider.getSets())
-				    	success = (set.getId() <= 0 ? getSetDAO().insertForProvider(set, provider.getId()) : getSetDAO().addToProvider(set, provider.getId())) && success;
-
-				    // Add the permissions to the group
-				    for(Format format : provider.getFormats())
-				    	success = getProviderFormatUtilDAO().insert(provider.getId(), format.getId()) && success;
-
-				    if(success)
-				    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl());
-				    else
-				    {
-				    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to update the sets and formats it outputs");
-				    
-				    	logObj.setWarnings(logObj.getWarnings() + 1);
-				    	getLogDAO().update(logObj);
-				    }
-				    
-					return success;
+					if (revalidate) {
+						// Remove the old permissions for the group
+						boolean success = getProviderFormatUtilDAO().deleteFormatsForProvider(provider.getId());
+	
+						// Remove all sets from this provider that used to belong to it but no longer do
+					    for(Set set : getSetDAO().getSetsForProvider(provider.getId()))
+						    if(!provider.getSets().contains(set))
+						    	success = getSetDAO().removeFromProvider(set, provider.getId()) && success;
+	
+					    // Add the correct sets for the provider
+					    for(Set set : provider.getSets())
+					    	success = (set.getId() <= 0 ? getSetDAO().insertForProvider(set, provider.getId()) : getSetDAO().addToProvider(set, provider.getId())) && success;
+	
+					    // Add the permissions to the group
+					    for(Format format : provider.getFormats())
+					    	success = getProviderFormatUtilDAO().insert(provider.getId(), format.getId()) && success;
+	
+					    if(success)
+					    	LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl());
+					    else
+					    {
+					    	LogWriter.addWarning(logObj.getLogFileLocation(), "Updated the repository with the URL " + provider.getOaiProviderUrl() + ", but failed to update the sets and formats it outputs");
+					    
+					    	logObj.setWarnings(logObj.getWarnings() + 1);
+					    	getLogDAO().update(logObj);
+					    }
+					    
+						return success;
+					} else {
+						return true;
+					}
 				} // end if(update successful)
 				else
 				{

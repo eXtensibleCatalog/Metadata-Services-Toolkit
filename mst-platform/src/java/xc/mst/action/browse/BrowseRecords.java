@@ -31,7 +31,6 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
@@ -374,11 +373,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			
 			// Get service id
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
-			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
-			ErrorCode error = browseRecordService.getError(errorCode, service);
 
+			String fileName = service.getMetadataService().getConfig().getProperty("error."+errorCode+".descriptionFile");
 			// Get error code
-			FileInputStream fis = new FileInputStream(error.getErrorDescriptionFile());
+			FileInputStream fis = new FileInputStream(
+					MSTConfiguration.getInstance().getServicePath()+service.getName()+"/errors/"+fileName);
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			DataInputStream dis = new DataInputStream(bis);
 	  

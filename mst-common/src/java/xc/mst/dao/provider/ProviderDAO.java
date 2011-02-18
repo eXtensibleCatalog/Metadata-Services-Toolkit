@@ -342,6 +342,7 @@ public abstract class ProviderDAO extends BaseDAO
 	 * @throws DataException if the passed provider was not valid for updating
 	 */
 	public abstract boolean update(Provider provider) throws DataException;
+	public abstract boolean update(Provider provider, boolean revalidate) throws DataException;
 
 	/**
 	 * Deletes a provider from the database

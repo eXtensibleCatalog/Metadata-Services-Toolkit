@@ -489,6 +489,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			}
 			if (previouslyPaused) {
 				running.acquireUninterruptibly();
+				previouslyPaused = false;
 			}
 			if (++getRecordLoops % 100 == 0) {
 				TimingLogger.reset();

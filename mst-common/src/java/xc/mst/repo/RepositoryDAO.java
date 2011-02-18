@@ -275,7 +275,7 @@ public class RepositoryDAO extends BaseDAO {
 		                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
 		                        }
 		                        if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
-		                        	ps.setString(i++, r.getIndexedObjectType());
+		                        	ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
 		                        } else {
 		                        	ps.setString(i++, null);
 		                        }

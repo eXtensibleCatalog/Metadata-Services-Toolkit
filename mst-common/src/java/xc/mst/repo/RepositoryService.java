@@ -30,6 +30,7 @@ import xc.mst.utils.MSTConfiguration;
 public class RepositoryService extends BaseService {
 	
 	private final static Logger LOG = Logger.getLogger(RepositoryService.class);
+	public final static String FORMAT_INTEGRALS = "%,d";
 	
 	public List<Repository> getAll() {
 		try {
@@ -228,11 +229,11 @@ public class RepositoryService extends BaseService {
 							displayRows.put(key, displayRow);
 						}
 						if (dbRow[0].startsWith("incomingNewRecordsCount")) {
-							displayRow[1] = dbRow[1];
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("incomingUpdatedRecordsCount")) {
-							displayRow[2] = dbRow[1];
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("incomingDeletedRecordsCount")) {
-							displayRow[3] = dbRow[1];
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						}
 					}
 				}
@@ -273,13 +274,13 @@ public class RepositoryService extends BaseService {
 							displayRows.put(key, displayRow);
 						}
 						if (dbRow[0].startsWith("incomingNewRecordsCount")) {
-							displayRow[1] = dbRow[1];
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("incomingUpdatedRecordsCount")) {
-							displayRow[2] = dbRow[1];
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("incomingDeletedRecordsCount")) {
-							displayRow[3] = dbRow[1];
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("incomingProcessingErrorsCount")) {
-							displayRow[4] = dbRow[1];
+							displayRow[4] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						}
 					}
 				}
@@ -320,11 +321,11 @@ public class RepositoryService extends BaseService {
 							displayRows.put(key, displayRow);
 						}
 						if (dbRow[0].startsWith("outgoingActiveRecordsCount")) {
-							displayRow[1] = dbRow[1];
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("outgoingUpdatedRecordsCount")) {
-							displayRow[2] = dbRow[1];
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						} else if (dbRow[0].startsWith("outgoingDeletedRecordsCount")) {
-							displayRow[3] = dbRow[1];
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
 						}
 					}
 				}

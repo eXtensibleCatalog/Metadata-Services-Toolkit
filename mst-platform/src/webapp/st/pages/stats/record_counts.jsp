@@ -85,17 +85,25 @@
                 <table width="100%">
                 	<c:forEach var="r" items="${incomingHarvestRecords}" varStatus="st">
                 		<c:choose>
-                 		<c:when test="${st.first}">
-                 			<c:set var="style" value="font-weight: bold;" />
-                 		</c:when>
+	                 		<c:when test="${st.first}">
+	                 			<c:set var="style" value="font-weight: bold;" />
+	                 		</c:when>
            					<c:otherwise>
            						<c:set var="style" value="font-weight: normal;" />
            					</c:otherwise>
                 		</c:choose>
                 		<tr>
-                			<c:forEach var="c" items="${r}">
+                			<c:forEach var="c" items="${r}" varStatus="st2">
+	                			<c:choose>
+			                 		<c:when test="${st2.first}">
+			                 			<c:set var="style2" value="" />
+			                 		</c:when>
+		           					<c:otherwise>
+		           						<c:set var="style2" value="float: right;" />
+		           					</c:otherwise>
+		                		</c:choose>
                 				<td>
-                					<span style="${style}">${c}</span>
+                					<span style="${style}${style2}">${c}</span>
                 				</td>
                 			</c:forEach>
                 		</tr>
@@ -116,9 +124,17 @@
            					</c:otherwise>
                 		</c:choose>
                 		<tr>
-                			<c:forEach var="c" items="${r}">
+                			<c:forEach var="c" items="${r}" varStatus="st2">
+	                			<c:choose>
+			                 		<c:when test="${st2.first}">
+			                 			<c:set var="style2" value="" />
+			                 		</c:when>
+		           					<c:otherwise>
+		           						<c:set var="style2" value="float: right;" />
+		           					</c:otherwise>
+		                		</c:choose>
                 				<td>
-                					<span style="${style}">${c}</span>
+                					<span style="${style}${style2}">${c}</span>
                 				</td>
                 			</c:forEach>
                 		</tr>
@@ -139,9 +155,17 @@
            					</c:otherwise>
                 		</c:choose>
                 		<tr>
-                			<c:forEach var="c" items="${r}">
+                			<c:forEach var="c" items="${r}" varStatus="st2">
+	                			<c:choose>
+			                 		<c:when test="${st2.first}">
+			                 			<c:set var="style2" value="" />
+			                 		</c:when>
+		           					<c:otherwise>
+		           						<c:set var="style2" value="float: right;" />
+		           					</c:otherwise>
+		                		</c:choose>
                 				<td>
-                					<span style="${style}">${c}</span>
+                					<span style="${style}${style2}">${c}</span>
                 				</td>
                 			</c:forEach>
                 		</tr>
