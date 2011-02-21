@@ -94,17 +94,18 @@
 		<copy todir="${mp.build.webapp}">
 			<fileset dir="${mp.src.webapp}" />
 		</copy>
+		<replaceregexp file="${mp.build.webapp}/st/inc/footer.jsp"
+			match="MetadataServicesToolkit v .*$"
+			replace="MetadataServicesToolkit v ${mp.version} - svn.version: ${svn.version}"
+			byline="true" />
 	</target>
 
 	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
-		<replaceregexp file="${mp.build.webapp}/st/inc/footer.jsp"
-			match="svn.version:.*$"
-			replace="svn.version: ${svn.version}"
-			byline="true" />
 		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
 			<fileset dir="${mp.build.webapp}">
 				<exclude name="**/jsp-api*.jar"/>
 				<exclude name="**/servlet-api*.jar"/>
+				<exclude name="**/MST-instance*.jar"/>
 				<exclude name="**/mst-instance*.jar"/>
 				<exclude name="**/env.properties"/>
 			</fileset>

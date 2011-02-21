@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +50,12 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordIfc;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.cache.DynMap;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
+import xc.mst.dao.record.MessageDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -136,7 +139,7 @@ public class RepositoryDAO extends BaseDAO {
 	public List<Repository> getAll() {
 		List<Repository> repos = 
 			this.jdbcTemplate.query(
-				"select r.repo_name, p.provider_id, p.name "+
+				"select r.repo_name, p.provider_id, p.name, p.oai_provider_url "+
 				"from repos r, providers p "+
 				"where p.provider_id = r.provider_id", new RepoMapper());
 		List<Repository> tempRepos =
@@ -191,15 +194,6 @@ public class RepositoryDAO extends BaseDAO {
 		return this.jdbcTemplate.queryForInt("select count(*) from "+getTableName(name, RECORDS_TABLE));
 	}
 	
-	public void beginBatch() {
-		inBatch = true;
-	}
-	
-	public void endBatch(String name) {
-		addRecords(name, null, true);
-		inBatch = false;
-	}
-	
 	public long resetIdSequence(long id) {
 		this.nextId = -1;
 		this.nextIdInDB = -1;
@@ -229,32 +223,21 @@ public class RepositoryDAO extends BaseDAO {
 		addRecords(name, records, false);
 	}
 	
-	public boolean addRecord(String name, Record r) {
+	public void addRecord(String name, Record r) {
 		if (recordsToAdd == null) {
 			recordsToAdd = new ArrayList<Record>();
 		}
-
 		recordsToAdd.add(r);
-		return commitIfNecessary(name, false);
 	}
 	
 	public void addRecords(String name, List<Record> records, boolean force) {
-		if (inBatch) {
-			LOG.debug("** inBatch True");
-			if (recordsToAdd == null) {
-				LOG.debug("** recordsToAdd == null");
-				recordsToAdd = new ArrayList<Record>();
-			}
-			if (records != null) {
-				LOG.debug("** records != null");
-				recordsToAdd.addAll(records);
-			}
-			commitIfNecessary(name, force);
-		} else {
-			LOG.debug("** inBatch False");
-			beginBatch();
-			addRecords(name, records, force);
-			endBatch(name);
+		if (recordsToAdd == null) {
+			LOG.debug("** recordsToAdd == null");
+			recordsToAdd = new ArrayList<Record>();
+		}
+		if (records != null) {
+			LOG.debug("** records != null");
+			recordsToAdd.addAll(records);
 		}
 	}
 	
@@ -264,15 +247,15 @@ public class RepositoryDAO extends BaseDAO {
 		if (recordsToAdd != null) {
 			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
 		}
-		if (force || batchSize <= recordsToAdd.size()) {
+		if (recordsToAdd != null && (force || batchSize <= recordsToAdd.size())) {
 			//LOG.error("beluga commit!!!");
 			TimingLogger.start("commit to db");
 			final long startTime = System.currentTimeMillis();
 			if (ready4harvest(name)) {
 				String sql = 
 	    			"insert into "+getTableName(name, RECORDS_TABLE)+
-	    			" (record_id, oai_datestamp, status, format_id ) "+
-	    			"values (?,?,?,?) "+
+	    			" (record_id, oai_datestamp, type, status, format_id ) "+
+	    			"values (?,?,?,?,?) "+
 	    			"on duplicate key update "+
 	    				"status=?, "+
 	    				"format_id=?, "+
@@ -290,6 +273,11 @@ public class RepositoryDAO extends BaseDAO {
 		                        	ps.setTimestamp(i++, new Timestamp(startTime));	
 		                        } else {
 		                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+		                        }
+		                        if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+		                        	ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
+		                        } else {
+		                        	ps.setString(i++, null);
 		                        }
 		                        for (int k=0; k<2; k++) {
 			                        ps.setString(i++, String.valueOf(r.getStatus()));
@@ -504,6 +492,10 @@ public class RepositoryDAO extends BaseDAO {
                         	os.write(sdf.format(r.getOaiDatestamp()).getBytes());
                         }
 						os.write(tabBytes);
+						if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+							os.write(r.getIndexedObjectType().substring(0,1).getBytes());
+						}
+						os.write(tabBytes);
 						os.write(String.valueOf(r.getStatus()).getBytes());
 						os.write(tabBytes);
 						if (r.getFormat() != null)
@@ -687,11 +679,13 @@ public class RepositoryDAO extends BaseDAO {
 				} catch (Throwable t) {
 					getUtil().throwIt(t);
 				}
-				
 			}
 	        
 			recordsToAdd = null;
 			TimingLogger.stop("commit to db");
+			if (force) {
+				inBatch = false;
+			}
 			return true;
 		} else {
 			return false;
@@ -842,35 +836,12 @@ public class RepositoryDAO extends BaseDAO {
 			//LOG.info("record not found for id: "+id);
 			//LOG.info("sql: "+sql);
 		}
-		
-		/*
-		// If record not null then get error message information
-		if (r != null) {
-			String messageSql = 
-				"select " + RECORD_MESSAGES_TABLE_COLUMNS +
-				"from "+getTableName(name, RECORD_MESSAGES_TABLE)+" rm " +
-				"where rm.record_id=? ";
-	
-			try {
-
-				List<RecordMessage> messages = jdbcTemplate.query(messageSql,
-						new Object[] {r.getId()},
-						new RowMapper<RecordMessage>() {
-							public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-								RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-								msg.setId(rs.getLong(1));
-								ServicesService servicesService = (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
-								msg.setMessage(servicesService.getError(msg.getServiceId(), msg.getMessageCode()));
-								return msg;
-							}
-				});
-				r.setMessages(messages);
-			} catch (EmptyResultDataAccessException e) {
-				LOG.info("Messages not found for record id: "+id);
-			}
-		}
-		*/
 		return r;
+	}
+	
+	public void injectHarvestInfo(String name, Record r) {
+		String sql = "select oai_id from "+getTableName(name, RECORD_OAI_IDS)+" where record_id = ?";
+		r.setHarvestedOaiIdentifier(this.jdbcTemplate.queryForObject(sql, String.class, (Long)r.getId()));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -1052,12 +1023,16 @@ public class RepositoryDAO extends BaseDAO {
 			
 			if (keepGoing) {
 				if (inputFormat != null) {
+					// could LIMIT accomplish the same thing as explain ?
+					// actually - I dont think so, because if the answer is zero - limit takes a looooong time
 					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ?";
 					records = this.jdbcTemplate.queryForList(
 							"explain "+sql, inputFormat.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
 					LOG.debug("rows: "+rows2examine);
-					if (rows2examine.intValue() > maxExplain) {
+					if (rows2examine == null) {
+						return 0;
+					} else if (rows2examine.intValue() > maxExplain) {
 						keepGoing = false;
 					} else {
 						int exactCount = this.jdbcTemplate.queryForInt(
@@ -1076,7 +1051,9 @@ public class RepositoryDAO extends BaseDAO {
 							"explain "+sql, inputSet.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
 					LOG.debug("rows: "+rows2examine);
-					if (rows2examine.intValue() > maxExplain) {
+					if (rows2examine == null) {
+						return 0;
+					} else if (rows2examine.intValue() > maxExplain) {
 						keepGoing = false;
 					} else {
 						int exactCount = this.jdbcTemplate.queryForInt(
@@ -1113,7 +1090,9 @@ public class RepositoryDAO extends BaseDAO {
 				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
 				rows2examine = (BigInteger)records.get(0).get("rows");
 				LOG.debug("rows: "+rows2examine);
-				if (rows2examine.intValue() > maxExplain) {
+				if (rows2examine == null) {
+					return 0l;
+				} else if (rows2examine.intValue() > maxExplain) {
 					keepGoing = false;
 				} else {
 					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);
@@ -1191,7 +1170,7 @@ public class RepositoryDAO extends BaseDAO {
 				records = this.jdbcTemplate.queryForList("explain "+sb.toString(), params);
 				rows2examine = (BigInteger)records.get(0).get("rows");
 				LOG.debug("rows: "+rows2examine);
-				if (rows2examine.intValue() < maxExplain) {
+				if (rows2examine != null && rows2examine.intValue() < maxExplain) {
 					int exactCount = this.jdbcTemplate.queryForInt(sb.toString(), params);
 					if (exactCount == 0) {
 						countMethod2use = 2;
@@ -1303,7 +1282,7 @@ public class RepositoryDAO extends BaseDAO {
 						"s.display_name "+
 					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u, "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
-						" sets s"+
+						" sets s "+
 					" where rs.record_id = u.record_id " +
 						" and rs.set_id = s.set_id "+
 						" and (rs.record_id > ? or ? is null) "+
@@ -1337,26 +1316,59 @@ public class RepositoryDAO extends BaseDAO {
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
-					
-					/*
-					List<RecordMessage> messages = jdbcTemplate.query(sbMessages.toString(),
-							new Object[] {rws.getId()},
-							new RowMapper() {
-								public RecordMessage mapRow(ResultSet rs, int rowNum) throws SQLException {
-									RecordMessage msg = new RecordMessage(rs.getInt(6), rs.getString(4), rs.getString(5), rs.getString(7));
-									msg.setId(rs.getLong(1));
-									return msg;
-								}
-					});
-					
-					currentRecord.setMessages(messages);
-					*/
 			
 				}
 			} catch (EmptyResultDataAccessException e) {
 				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
 			}
-			getMessageDAO().injectMessages(records);
+			
+			sb = new StringBuilder();
+			sb.append(
+					" select m.record_id, "+
+						"m.rec_in_out, "+
+						"m.msg_code, "+
+						"m.msg_level, "+
+						"m.service_id, "+
+						"md.detail "+
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u "+
+							" inner join ("+MessageDAO.MESSAGES_TABLE+" m) on (m.record_id=u.record_id) "+
+							" left outer join ("+MessageDAO.MESSAGE_DETAILS_TABLE+" md) on (m.record_message_id=md.record_message_id) "+
+					" where (u.record_id > ? or ? is null) "+
+						" and u.record_id <= ? "+
+						" and (u.date_updated > ? or ? is null) "+
+						" and u.date_updated <= ? "+
+						" order by u.record_id ");
+			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
+			params = new ArrayList<Object>();
+			params.add(startingId);
+			params.add(startingId);
+			params.add(highestId);
+			params.add(from);
+			params.add(from);
+			params.add(until);
+			
+			Object obj2[] = params.toArray();
+			
+			List<Record> recordsWMessages = null;
+			try {
+				//LOG.error("records_w_sets_query");
+				TimingLogger.start("records_w_messages_query");
+				recordsWMessages = this.jdbcTemplate.query(sb.toString(), obj2, 
+						new RecordMapper(new String[]{MessageDAO.MESSAGES_TABLE, MessageDAO.MESSAGE_DETAILS_TABLE}, this));
+				LOG.debug("recordsWMessages.size() "+recordsWMessages.size());
+				TimingLogger.stop("records_w_messages_query");
+				
+				int recIdx = 0;
+				Record currentRecord = records.get(recIdx);
+				for (Record rws : recordsWMessages) {
+					while (currentRecord.getId() != rws.getId()) {
+						currentRecord = records.get(++recIdx);
+					}
+					currentRecord.addMessage(rws.getMessages().get(0));
+				}
+			} catch (EmptyResultDataAccessException e) {
+				LOG.info("no recordsWMessages found for from: "+from+" until: "+until+" startingId: "+startingId);
+			}
 			LOG.debug("records.size(): "+records.size());
 		}
 
@@ -1507,6 +1519,7 @@ public class RepositoryDAO extends BaseDAO {
 	        try {
 	        	Provider p = new Provider();
 	        	p.setName(rs.getString("p.name"));
+	        	p.setOaiProviderUrl(rs.getString("p.oai_provider_url"));
 	        	p.setId(rs.getInt("p.provider_id"));
 	        	r.setProvider(p);
 	        } catch (SQLException t) {
@@ -1563,6 +1576,23 @@ public class RepositoryDAO extends BaseDAO {
 	        	r.addSet(s);
 	        }
 	        if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
+	        }
+	        RecordMessage rm = null;
+	        if (tables.contains(MessageDAO.MESSAGES_TABLE)) {
+	        	r.setId(rs.getLong("m.record_id"));
+	        	String inOut = rs.getString("m.rec_in_out");
+	        	if (inOut != null) {
+	        		rm = new RecordMessage();
+	    	    	rm.setRecord(r);
+	    	    	rm.setInputRecord("O".equals(rs.getString("m.rec_in_out")));
+	    	    	rm.setCode(rs.getInt("m.msg_code"));
+	    	    	rm.setLevel(rs.getString("m.msg_level").charAt(0));
+	    	    	rm.setServiceId(rs.getInt("m.service_id"));
+	    	    	r.addMessage(rm);
+	        	}
+	        }
+	        if (rm != null && tables.contains(MessageDAO.MESSAGE_DETAILS_TABLE)) {
+    	    	rm.setDetail(rs.getString("md.detail"));	        	
 	        }
 	        return r;
 	    }        
@@ -1715,10 +1745,90 @@ public class RepositoryDAO extends BaseDAO {
 			return null;
 		}
 	}
+	
+	public List<String[]> getAllPersistentProperties(String name) {
+		try {
+			List<String[]> props = new ArrayList<String[]>();
+			List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
+					"select prop_key, value from "+getTableName(name, PROPERTIES));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					props.add(new String[]{
+							(String)row.get("prop_key"),
+							(String)row.get("value")});
+				}
+			}
+			return props;
+		} catch (EmptyResultDataAccessException t) {
+			return null;
+		}
+	}
 
 	public void setPersistentProperty(String name, String key, String value) {
 		this.jdbcTemplate.update("insert into "+getTableName(name, PROPERTIES)+
 				" values (?, ?) on duplicate key update value=?",
 				key, value, value);
 	}
+	
+	public void updateOutgoingRecordCounts(String name) {
+		Map<String, long[]> countsByType = new HashMap<String, long[]>();
+		countsByType.put("total", new long[3]);
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
+				"select count(*) as count, type, status from "+getTableName(name, RECORDS_TABLE)+" group by type, status");
+
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				Long count = (Long)row.get("count");
+				String type = (String)row.get("type");
+				char status = ((String)row.get("status")).charAt(0);
+				
+				long[] counts4type = countsByType.get(type);
+				if (counts4type == null) {
+					counts4type = new long[3];
+					countsByType.put(type, counts4type);
+				}
+				if (status == Record.ACTIVE) {
+					countsByType.get("total")[0] += count;
+					counts4type[0] = count; 
+				} else if (status == Record.DELETED) {
+					countsByType.get("total")[2] += count;
+					counts4type[2] = count;
+				}
+			}
+		}
+		
+		rows = this.jdbcTemplate.queryForList(
+				" select count(*) as count, r.type as type "+
+				" from "+
+					getTableName(name, RECORD_UPDATES_TABLE)+" as u, "+
+					getTableName(name, RECORDS_TABLE)+" as r "+
+				" where u.record_id = r.record_id "+
+				" group by r.type"
+				);
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				Long count = (Long)row.get("count");
+				String type = (String)row.get("type");
+				
+				countsByType.get(type)[1] = count-countsByType.get(type)[0];
+				countsByType.get("total")[1] += count;
+			}
+			countsByType.get("total")[1] = countsByType.get("total")[1] - countsByType.get("total")[0]; 
+		}
+		
+		for (Map.Entry<String, long[]> counts4type : countsByType.entrySet()) {
+			String key = "RecordsCount";
+			if (counts4type.getKey() == null || counts4type.getKey().equals("")) {
+				continue;
+			}
+			if (!counts4type.getKey().equals("total")) {
+				key += "-"+counts4type.getKey();
+			}
+			setPersistentProperty(name, "outgoingActive"+key, ""+counts4type.getValue()[0]);
+			setPersistentProperty(name, "outgoingUpdated"+key, ""+counts4type.getValue()[1]);
+			setPersistentProperty(name, "outgoingDeleted"+key, ""+counts4type.getValue()[2]);
+		}
+	}
+	
 }

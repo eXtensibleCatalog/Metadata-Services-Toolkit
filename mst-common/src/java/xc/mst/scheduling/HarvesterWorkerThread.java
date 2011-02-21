@@ -15,7 +15,7 @@ package xc.mst.scheduling;
  *
  * @author Eric Osisek
  */
-public class HarvesterWorkerThread extends WorkerThread {
+public class HarvesterWorkerThread { //extends WorkerThread {
 
 	/*
 	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);

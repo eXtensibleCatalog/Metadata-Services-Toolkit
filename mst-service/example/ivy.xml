@@ -11,7 +11,7 @@
 <ivy-module version="2.0">
     <info organisation="xc" module="mst-service-example"/>
     <dependencies>
-		<dependency org="xc" name="mst-service-impl" rev="${mst-common.version}" changing="true">
+		<dependency org="xc" name="mst-service-impl" rev="${mst-service-impl.version}" changing="true">
 			<!--
             <artifact name="jaxp-api" type="jar" url="http://code.google.com"/>
 			-->

@@ -38,4 +38,46 @@
     	</id>
     </class>
     
+    <class name="xc.mst.bo.harvest.Harvest" table="harvests">
+    	<id name="id" column="harvest_id">
+    		<generator class="native" />
+    	</id>
+    	<many-to-one name="harvestSchedule" column="harvest_schedule_id" class="xc.mst.bo.harvest.HarvestSchedule" />
+    	<many-to-one name="provider" column="provider_id" class="xc.mst.bo.provider.Provider" />
+    	<property name="startTime" column="start_time" />
+    	<property name="endTime" column="end_time" />
+    	<property name="request" column="request" />
+    	<property name="result" column="result" />
+    </class>
+
+    <class name="xc.mst.bo.harvest.HarvestSchedule" table="harvest_schedules">
+    	<id name="id" column="harvest_schedule_id">
+    		<generator class="native" />
+    	</id>
+    	<many-to-one name="provider" column="provider_id" class="xc.mst.bo.provider.Provider" />
+    	<property name="scheduleName" column="schedule_name" />
+    </class>
+    
+    <class name="xc.mst.bo.provider.Provider" table="providers">
+    	<id name="id" column="provider_id">
+    		<generator class="native" />
+    	</id>
+    	<property name="name" column="name" />
+    	<property name="createdAt" column="created_at" />
+    	<property name="updatedAt" column="updated_at" />
+    	<property name="oaiProviderUrl" column="oai_provider_url" />
+    	<property name="title" column="title" />
+    	<property name="creator" column="creator" />
+    	<property name="subject" column="subject" />
+    	<property name="description" column="description" />
+    	<property name="publisher" column="publisher" />
+    	<property name="contributors" column="contributors" />
+    	<property name="date" column="date" />
+    	<property name="type" column="type" />
+    	<property name="identifier" column="identifier" />
+    	<property name="logFileName" column="log_file_name" />
+    	<property name="granularity" column="granularity" />
+    	<property name="lastHarvestEndTime" column="last_harvest_end_time" type="timestamp" />
+    </class>
+    
 </hibernate-mapping>

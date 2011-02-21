@@ -65,5 +65,7 @@ public interface OutputRecord extends RecordIfc {
 	public void setStatus(char status);
 
 	public void addSet(Set set);
+	
+	public void setIndexedObjectType(String type);
 
 }

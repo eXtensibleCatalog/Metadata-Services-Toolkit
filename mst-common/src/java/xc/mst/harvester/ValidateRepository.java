@@ -36,16 +36,6 @@ public class ValidateRepository extends HttpService {
 	private static Logger LOG = Logger.getLogger("harvestIn");
 	
 	/**
-	 * Signifies that the OAI repository uses yyyy-mm-dd granularity in its timestamps
-	 */
-	public final static int GRANULARITY_DAY = 1;
-
-	/**
-	 * Signifies that the OAI repository uses yyyy-mm-ddthh:mm:ssz granularity in its timestamps
-	 */
-	public final static int GRANULARITY_SECOND = 2;
-	
-	/**
 	 * Signifies that the OAI repository does not track deleted records
 	 */
 	public final static int DELETED_RECORD_NO = 0;
@@ -67,7 +57,7 @@ public class ValidateRepository extends HttpService {
 	/**
 	 * The granularity of the OAI repository we're harvesting (either GRANULARITY_DAY or GRANULARITY_SECOND)
 	 */
-	private int granularity = -1;
+	private String granularity = null;
 
 	/**
 	 * The policy for tracking deleted records that the OAI repository uses (either DELETED_RECORD_NO, DELETED_RECORD_TRANSIENT, or DELETED_RECORD_PERSISTENT)
@@ -82,8 +72,6 @@ public class ValidateRepository extends HttpService {
 	 */
 	public void validate(int providerId) throws DatabaseConfigException {
 		this.providerId = providerId;
-
-		LOG.error("getProviderDAO(): "+getProviderDAO());
 		provider = getProviderDAO().getById(providerId);
 
 		if(provider == null)
@@ -97,6 +85,7 @@ public class ValidateRepository extends HttpService {
 		try {
 			checkIdentifyInfo();
 			provider.setIdentify(true);
+			provider.setGranularity(getGranularity());
 		} catch(Exception e) {
 			provider.setIdentify(false);
 			LOG.error("", e);
@@ -168,10 +157,10 @@ public class ValidateRepository extends HttpService {
 			String granText = granularityEl.getText().toLowerCase();
 	
 			if (granText.equals("yyyy-mm-dd")) {
-				granularity = GRANULARITY_DAY;
+				granularity = Provider.DAY_GRANULARITY;
 				LogWriter.addInfo(provider.getLogFileName(), "Found that the OAI provider supports DAY granularity.");
 			} else if (granText.equals("yyyy-mm-ddthh:mm:ssz")) {
-				granularity = GRANULARITY_SECOND;
+				granularity = Provider.SECOND_GRANULARITY;
 				LogWriter.addInfo(provider.getLogFileName(), "Found that the OAI provider supports SECOND granularity.");
 			} else {
 				String msg = "Invalid granularity:" + granText;
@@ -180,7 +169,7 @@ public class ValidateRepository extends HttpService {
 				throw new RuntimeException(msg);
 			}
 		} else {
-			granularity = GRANULARITY_DAY;
+			granularity = Provider.DAY_GRANULARITY;
 		}
 
 		Element deletedRecordEl = identifyEl.getChild("deletedRecord", root.getNamespace());
@@ -266,7 +255,7 @@ public class ValidateRepository extends HttpService {
 		return currentSets;
 	}
 
-	public int getGranularity() {
+	public String getGranularity() {
 		return granularity;
 	}
 
@@ -399,13 +388,13 @@ public class ValidateRepository extends HttpService {
 				String setSpec = setEl.getChildText("setSpec", root.getNamespace());
 				String setName = setEl.getChildText("setName", root.getNamespace());
 
-				Set set = getSetDAO().getBySetSpec(setSpec);
+				Set set = getSetDAO().getBySetSpec(provider.getName()+":"+setSpec);
 
 				if(set == null) {
 					set = new Set();
 
-					set.setDisplayName(setName);
-					set.setSetSpec(setSpec);
+					set.setDisplayName(provider.getName()+":"+setName);
+					set.setSetSpec(provider.getName()+":"+setSpec);
 
 					try {
 						getSetDAO().insertForProvider(set, providerId);

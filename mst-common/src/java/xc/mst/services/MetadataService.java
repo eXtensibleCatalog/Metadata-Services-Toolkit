@@ -16,6 +16,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
+import xc.mst.utils.MSTConfiguration;
 
 public interface MetadataService {
 
@@ -60,5 +61,5 @@ public interface MetadataService {
 	public long getTotalRecordCount();
 	public List<String> getUnprocessedErrorRecordIdentifiers();
 	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
-
+	public MSTConfiguration getConfig();
 }

@@ -104,7 +104,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
         	
         	// Check if this repository is being processed by processing directive
         	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_SERVICE)) {
-        		MetadataServiceManager msm = (MetadataServiceManager)getScheduler().getRunningJob().getWorkDelegate();
+        		MetadataServiceManager msm = (MetadataServiceManager)getScheduler().getRunningJob();
         		Repository incomingRepo = msm.getIncomingRepository();
         		
         		if (incomingRepo != null && incomingRepo.getName().equals(provider.getName())) {

@@ -10,6 +10,7 @@
 
 	<import file="build-custom.xml" />
 	<property file="custom.properties" />
+	<property file="dev.properties" />
     <scriptdef name="normalize" language="javascript">
         <attribute name="property"/>
         <attribute name="value"/>
@@ -18,6 +19,12 @@
     </scriptdef>
     <normalize property="normalized.service.name" value="${service.name}"/>
 	<property file="build.properties" />
+
+	<!--
+	<target name="init.default.properties" unless="dep.env">
+		<property name="dep.env" value="local" />
+	</target>
+	-->
 
 	<target name="echo.normalized.service.name"> 
 		<echo>normalized.service.name: ${normalized.service.name}</echo>
@@ -203,6 +210,14 @@
 
 	<target name="copy-resources" depends="copy-custom-libs, compile, copy-resources.nodep" />
 
+	<!--
+	<target name="concat-custom-local-props" if="">
+	</target>
+
+	<target name="just-copy-custom-props" unless="">
+	</target>
+	-->
+
 	<target name="copy-resources.nodep" depends="compile.nodep">
 		<copy todir="${build.classes}">
 			<fileset dir="${src.java}">
@@ -232,7 +247,7 @@
 		</copy>
 		<copy todir="${build.classes.services}" file="custom.properties" />
 		<copy tofile="${build.mst-instance.dir}/install.properties" 
-			file="custom.properties" overwrite="true"/>
+			file="dev.properties" overwrite="true"/>
 	</target>
 
 	<target name="jar" depends="copy-resources, jar.nodep" />
@@ -251,7 +266,7 @@
 
 	<target name="zip-dev-env">
 		<zip destfile="${build.dir}/${normalized.service.name}-${service.version}-dev-env.zip">
-			<zipfileset  dir="." >
+			<zipfileset  dir="." prefix="${normalized.service.name}">
 				<exclude name="build" />
 				<exclude name="build/**/*" />
 				<exclude name="bin" />
@@ -293,10 +308,15 @@
 
 	<target name="install-mst" depends="unzip-mst, mst-sql" />
 
-	<target name="unzip-mst">
+	<target name="unzip-mst" depends="retrieve">
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
+		<ant target="retrieve" />
+	</target>
+
+	<target name="mst-sql.test">
+		<echo>mysql.home: ${mysql.home}</echo>
 	</target>
 
 	<target name="mst-sql">

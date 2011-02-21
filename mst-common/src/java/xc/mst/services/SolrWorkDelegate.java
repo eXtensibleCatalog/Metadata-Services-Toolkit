@@ -16,16 +16,13 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
-import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.WorkDelegate;
 import xc.mst.scheduling.WorkerThread;
 
-public class SolrWorkDelegate extends BaseService implements WorkDelegate {
+public class SolrWorkDelegate extends WorkerThread {
 	
 	private static final Logger LOG = Logger.getLogger(SolrWorkDelegate.class);
 	
-	protected WorkerThread workerThread = null;
 	protected MetadataService solrIndexService = null;
 	//protected ReentrantLock lock = new ReentrantLock();
 	protected Semaphore lock = new Semaphore(1);
@@ -45,53 +42,34 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		LOG.debug("released");
 	}
 	
-	public void finish() {
+	public void finishInner() {
 		solrIndexService.finish();
+		super.finishInner();
 	}
 
 	public String getDetailedStatus() {
 		return null;
-	}
-	
-	public WorkerThread getWorkerThread() {
-		return workerThread;
-	}
-
-	public void setWorkerThread(WorkerThread workerThread) {
-		this.workerThread = workerThread;
 	}
 
 	public String getName() {
 		return solrIndexService.getService().getName();
 	}
 
-	public int getRecordsProcessed() {
-		return solrIndexService.getProcessedRecordCount();
-	}
-
-	public long getTotalRecords() {
-		return solrIndexService.getTotalRecordCount();
-	}
-
-	public void pause() {
+	public void pauseInner() {
 		solrIndexService.pause();
+		super.pauseInner();
 	}
 
-	public void resume() {
+	public void proceedInner() {
 		wait4availability();
-		//lock.lock();
-		//lock.unlock();
 		solrIndexService.resume();
-	}
-
-	public void cancel() {
-		// TODO Auto-generated method stub
+		super.proceedInner();
 	}
 
 	public boolean doSomeWork() {
-		this.workerThread.setJobStatus(Status.IDLE);
+		setJobStatus(Status.IDLE);
 		wait4availability();
-		this.workerThread.setJobStatus(Status.RUNNING);
+		setJobStatus(Status.RUNNING);
 		LOG.debug("doSomeWork");
 		try {
 			List<Provider> providers = getProviderDAO().getAll();
@@ -103,7 +81,6 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 					}
 				}
 			}
-
 			List<Service> services = getServicesService().getAllServices();
 			if (services != null) {
 				for (Service s : services) {
@@ -116,11 +93,11 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		} catch (Throwable t) {
 			LOG.error("", t);
 		}
-		if (this.workerThread.getJobStatus().equals(Status.RUNNING)) {
-			this.workerThread.setJobStatus(Status.IDLE);
+		if (getJobStatus().equals(Status.RUNNING)) {
+			setJobStatus(Status.IDLE);
 			try {Thread.sleep(10000);} catch (Throwable t) {}
-			if (this.workerThread.getJobStatus().equals(Status.IDLE)) {
-				this.workerThread.setJobStatus(Status.RUNNING);
+			if (getJobStatus().equals(Status.IDLE)) {
+				setJobStatus(Status.RUNNING);
 			}
 		}
 		return true;
@@ -131,6 +108,14 @@ public class SolrWorkDelegate extends BaseService implements WorkDelegate {
 		lock.acquireUninterruptibly();
 		lock.release();
 		LOG.debug("released");
+	}
+
+	public long getRecords2ProcessThisRun() {
+		return solrIndexService.getTotalRecordCount();
+	}
+	
+	public long getRecordsProcessedThisRun() {
+		return solrIndexService.getProcessedRecordCount();
 	}
 
 }

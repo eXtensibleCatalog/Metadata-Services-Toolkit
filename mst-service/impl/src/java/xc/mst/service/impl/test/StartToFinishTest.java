@@ -214,7 +214,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	protected void createProcessingRule(Service srcService, String fromRepo, String serviceName) throws Exception {
-		if (getSetDAO().getBySetSpec(fromRepo) == null) {
+		if (fromRepo != null && getSetDAO().getBySetSpec(fromRepo) == null) {
 			Set s = new Set();
 			s.setDisplayName(fromRepo);
 			s.setSetSpec(fromRepo);
@@ -245,9 +245,11 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 			formats.add(f);			
 		}
 		pd.setTriggeringFormats(formats);
-		List<Set> sets = new ArrayList<Set>();
-		sets.add(getSetDAO().getBySetSpec(fromRepo));
-		pd.setTriggeringSets(sets);
+		if (fromRepo != null) {
+			List<Set> sets = new ArrayList<Set>();
+			sets.add(getSetDAO().getBySetSpec(fromRepo));
+			pd.setTriggeringSets(sets);
+		}
 		pd.setOutputSet(s);
 		getProcessingDirectiveDAO().insert(pd);
 	}
@@ -264,7 +266,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 				createProcessingRule(getServicesService().getServiceByName(allServices2Run.get(i-1)), 
 						allServices2Run.get(i-1), allServices2Run.get(i));
 			} else {
-				createProcessingRule(null, provider.getName(), allServices2Run.get(i));	
+				createProcessingRule(null, null, allServices2Run.get(i));	
 			}
 		}
 	}

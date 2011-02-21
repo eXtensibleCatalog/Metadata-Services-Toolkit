@@ -96,10 +96,8 @@ public class HarvesterTest extends BaseTest
 
         getScheduleService().insertSchedule(schedule);
         
-		WorkerThread runningJob = new WorkerThread();
-		HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
-		hm.setHarvestSchedule(schedule);
-		runningJob.setWorkDelegate(hm);
+		HarvestManager runningJob = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+		runningJob.setHarvestSchedule(schedule);
         runningJob.run();
         
         

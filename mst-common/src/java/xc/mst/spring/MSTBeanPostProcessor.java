@@ -114,7 +114,11 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 					o = this.applicationContext.getBean(s);
 					m.invoke(bean, o);
 				} catch (Throwable t) {
-					LOG.error(t.getMessage()+" error calling "+bean.getClass()+"."+m.getName());
+					// I'm filter this one out because it happens everytime the app loads and is
+					// confusing users
+					if (m.getName() != null && !m.getName().equals("setMetadataService")) {
+						LOG.error(t.getMessage()+" error calling "+bean.getClass()+"."+m.getName());
+					}
 				}
 			}	
 		}

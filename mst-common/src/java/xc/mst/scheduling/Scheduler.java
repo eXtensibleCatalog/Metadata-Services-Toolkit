@@ -53,6 +53,7 @@ public class Scheduler extends BaseService implements Runnable {
 	protected boolean killed = false;
 	
 	protected WorkerThread runningJob;
+	protected Thread runningThread;
 	protected Job previousJob = null;
 	protected boolean pausedManually = false;
 
@@ -69,6 +70,7 @@ public class Scheduler extends BaseService implements Runnable {
 		LOG.info("Scheduler.run");
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
+		Thread solrThread = null;
 		
 		try {
 			for (Service s : getServiceDAO().getAll()) {
@@ -90,10 +92,9 @@ public class Scheduler extends BaseService implements Runnable {
 		boolean solrWorkerThreadStarted = false;
 		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
 			LOG.info("solr.index.whenIdle is true");
-			solrWorkerThread = new WorkerThread();
+			solrWorkerThread = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
+			solrThread = new Thread(solrWorkerThread);
 			LOG.debug("solrWorkerThread: "+solrWorkerThread);
-			SolrWorkDelegate solrWd = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
-			solrWorkerThread.setWorkDelegate(solrWd);
 		} else {
 			LOG.info("solr.index.whenIdle is false");
 		}
@@ -139,12 +140,13 @@ public class Scheduler extends BaseService implements Runnable {
 
 			//LOG.debug("runningJob: "+runningJob);
 			if (runningJob != null) {
-				//LOG.debug("runningJob.isAlive(): "+runningJob.isAlive());
+				LOG.debug("runningJob: "+runningJob);
+				LOG.debug("runningJob.getType(): "+runningJob.getType());
 				//LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
 			}
-			if (runningJob == null || !runningJob.isAlive() || runningJob == solrWorkerThread) {
+			if (runningJob == null || !runningThread.isAlive() || runningJob == solrWorkerThread) {
 				if (runningJob != null) {
-					LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
+					//LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
 				}
 				//LOG.debug("previousJob: "+previousJob);
 				try {
@@ -229,13 +231,14 @@ public class Scheduler extends BaseService implements Runnable {
 						LOG.debug("solrWorkerThead.proceed");
 						if (!solrWorkerThreadStarted) {
 							solrWorkerThreadStarted = true;
-							solrWorkerThread.start();
+							solrThread.start();
 						} else {
 							if (!pausedManually)
 								solrWorkerThread.proceed();	
 						}
 						runningJob = solrWorkerThread;
 						runningJob.type = Constants.SOLR_INDEXER;
+						runningThread = solrThread;
 					}
 					previousJob = jobToStart;
 
@@ -246,25 +249,18 @@ public class Scheduler extends BaseService implements Runnable {
 							solrWorkerThread.pause();
 						}
 						runningJob = null;
+						runningThread = null;
 						TimingLogger.reset();
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
 						
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-							runningJob = new WorkerThread();
 							HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 							hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
-							runningJob.setWorkDelegate(hm);
+							runningJob = hm;
 							runningJob.type = Constants.THREAD_REPOSITORY;
-							/*
-							HarvesterWorkerThread harvestThread = new HarvesterWorkerThread();
-							harvestThread.setHarvestScheduleId(jobToStart.getHarvestSchedule().getId());
-							harvestThread.start();
-							runningJob = harvestThread;
-							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
-							runningJob = new WorkerThread();
 							MetadataServiceManager msm = new MetadataServiceManager();
-							runningJob.setWorkDelegate(msm);
+							runningJob = msm;
 							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
 							msm.setMetadataService(s.getMetadataService());
 							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
@@ -299,16 +295,19 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob = serviceReprocessWorkerThread;
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+							/*
 							DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
 							deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
 							deleteServiceWorkerThread.start();
 							runningJob = deleteServiceWorkerThread;
 							runningJob.type = Constants.THREAD_DELETE_SERVICE;
+							*/
 						}
 
 						if (runningJob != null) {
 							LOG.debug("runningJob.start()");
-							runningJob.start();
+							runningThread = new Thread(runningJob);
+							runningThread.start();
 						}
 					}
 				} catch(DataException de) {

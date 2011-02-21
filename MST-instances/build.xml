@@ -24,6 +24,12 @@
 		<ivy:resolve file="${mi.dir}/ivy.xml"/>
 	</target>
 
+	<target name="mi.publish" depends="mi.zip">
+		<ivy:publish resolver="local" pubrevision="${mi.version}" overwrite="true" update="true" forcedeliver="true">
+			<artifacts pattern="${mi.build.dir}/${mst-instances}-${mi.version}.[ext]" />
+		</ivy:publish>
+	</target>
+
 	<target name="mi.jar" depends="mi.resolve">
 		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.jar">
 			<fileset dir="${mi.dir}">
@@ -33,7 +39,7 @@
 		</zip>
 	</target>
 
-	<target name="mi.zip" depends="mi.resolve">
+	<target name="mi.zip" depends="mi.jar">
 		<echo>${svn.version}</echo>
 		<replaceregexp file="${mi.dir}/${mst-instances}/MetadataServicesToolkit/install.properties"
 			match="svn.version:.*$"
@@ -46,10 +52,10 @@
 		</zip>
 	</target>
 
-	<target name="mi.publish" depends="mi.zip">
-		<ivy:publish resolver="local" pubrevision="${mi.version}" overwrite="true" update="true" forcedeliver="true">
-			<artifacts pattern="${mi.build.dir}/${mst-instances}-${mi.version}.[ext]" />
-		</ivy:publish>
+	<target name="mi.refetch-example">
+		<delete dir="${mi.service.dir}/example"/>
+		<property file="mst-service/example/custom.properties" />
+		<unzip src="mst-service/example/build/example-${service.version}.zip" dest="${mi.service.dir}" />
 	</target>
 
 	<target name="mi.deploy" depends="mi.jar">

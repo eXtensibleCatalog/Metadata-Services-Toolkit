@@ -103,7 +103,6 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 		List<Long> holdingIds = new ArrayList<Long>();
 		int numRecords=10;
 		long manId = 555L;
-		getRepository().beginBatch();
 		for (int i=0 ; i<numRecords; i++) {
 			Record r = new Record();
 			r.setId(getRepositoryDAO().getNextId());
@@ -111,7 +110,7 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 			getRepository().addRecord(r);
 			holdingIds.add(r.getId());
 		}
-		getRepository().endBatch();
+		getRepository().commitIfNecessary(true);
 		List<long[]> links = new ArrayList<long[]>();
 		
 		getRepositoryDAO().persistLinkedRecordIds(getServiceName(), links);

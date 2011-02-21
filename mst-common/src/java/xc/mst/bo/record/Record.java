@@ -56,7 +56,7 @@ public class Record implements InputRecord, OutputRecord {
 	/**
 	 * The type of indexed Object this is
 	 */
-	public static String indexedObjectType = "record";
+	public String indexedObjectType = null;
 
 	/**
 	 * The record's ID
@@ -266,7 +266,7 @@ public class Record implements InputRecord, OutputRecord {
 	 */
 	public String getIndexedObjectType()
 	{
-		return Record.indexedObjectType;
+		return indexedObjectType;
 	} // end method getIndexedObjectType()
 
 	/**
@@ -989,8 +989,8 @@ public class Record implements InputRecord, OutputRecord {
 		return predecessors;
 	}
 	
-	public static void setIndexedObjectType(String indexedObjectType) {
-		Record.indexedObjectType = indexedObjectType;
+	public void setIndexedObjectType(String indexedObjectType) {
+		this.indexedObjectType = indexedObjectType;
 	}
 	
 	public char getStatus() {

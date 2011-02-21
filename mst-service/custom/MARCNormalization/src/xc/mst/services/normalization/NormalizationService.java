@@ -209,8 +209,11 @@ public class NormalizationService extends GenericMetadataService {
 			char leader06 = normalizedXml.getLeader().charAt(6);
 			
 			// Run these steps only if the record is a bibliographic record
+			String type = null;
 			if("abcdefghijkmnoprt".contains(""+leader06))
 			{
+				type = "bib";
+				((Record)record).setIndexedObjectType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
 					normalizedXml = removeOcolc003(normalizedXml);
 
@@ -324,6 +327,8 @@ public class NormalizationService extends GenericMetadataService {
 			// Run these steps only if the record is a holding record
 			if("uvxy".contains(""+leader06))
 			{
+				type = "hold";
+				((Record)record).setIndexedObjectType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
 					normalizedXml = holdingsLocationName(normalizedXml);
 
@@ -362,6 +367,7 @@ public class NormalizationService extends GenericMetadataService {
 				
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
+				oldNormalizedRecord.setIndexedObjectType(type);
 				results.add(oldNormalizedRecord);
 
 				return results;
@@ -403,7 +409,7 @@ public class NormalizationService extends GenericMetadataService {
 					setName = "MARCXML Authority Records";
 					setDescription = "A set of all MARCXML Authority records in the repository.";
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					logInfo("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return new ArrayList<OutputRecord>();
 				}
 				TimingLogger.add(setName, 0);
@@ -424,6 +430,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Add the record to the list of records resulting from processing the
 				// incoming record
+				normalizedRecord.setIndexedObjectType(type);
 				results.add(normalizedRecord);
 				if(LOG.isDebugEnabled())
 					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());

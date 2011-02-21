@@ -16,7 +16,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
 import xc.mst.bo.harvest.Harvest;
+import xc.mst.bo.provider.Provider;
 import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -454,73 +458,48 @@ public class DefaultHarvestDAO extends HarvestDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getHarvestsForSchedule(int)
-
-	@Override
-	public Timestamp getLatestHarvestEndTimeForSchedule(int harvestScheduleId) throws DatabaseConfigException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		synchronized(psGetLatestHarvestEndTimeLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Get latest harvest end time with  harvest schedule ID " + harvestScheduleId);
 	
-			// The ResultSet from the SQL query
-			ResultSet results = null;
-			
-			Timestamp endTime = null;
-	
-			try
-			{
-				// Create the PreparedStatement to get latest harvest end time for a given harvest schedule if it hasn't already been defined
-				if(psGetLatestHarvestEndTime == null || dbConnectionManager.isClosed(psGetLatestHarvestEndTime))
-				{
-					// SQL to get the rows
-					String selectSql = "SELECT " + "MAX("  + COL_END_TIME + ") " +
-	                                   "FROM " + HARVESTS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
-	
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get latest harvest end time by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);
-	
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetLatestHarvestEndTime = dbConnectionManager.prepareStatement(selectSql, psGetLatestHarvestEndTime);
-				} // end if(get by harvest schedule ID PreparedStatement not defined)
-	
-				// Set the parameters on the PreparedStatement
-				psGetLatestHarvestEndTime.setInt(1, harvestScheduleId);
-	
-				// Get the result of the SELECT statement
-	
-				// Execute the query
-				results = dbConnectionManager.executeQuery(psGetLatestHarvestEndTime);
-				results.next();
-				endTime = results.getTimestamp(1);
-	
-				if(log.isDebugEnabled())
-					log.debug("Found harvests end time " + endTime);
-	
-				return endTime;
-			} // end try(get results)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the harvest latest end time with harvest schedule ID " + harvestScheduleId, e);
-	
-				return endTime;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return getLatestHarvestEndTimeForSchedule(harvestScheduleId);
+	public Harvest getLatestHarvestForSchedule(final int harvestScheduleId) throws DatabaseConfigException {
+		return this.hibernateTemplate.execute(new HibernateCallback<Harvest>() {
+			public Harvest doInHibernate(Session s) {
+				Harvest h = (Harvest)s.createSQLQuery(
+						"select {h.*} " +
+						"from harvests h "+
+						"where h.harvest_schedule_id = :harvestScheduleId "+
+						"order by harvest_id desc "+
+						"limit 1")
+			    .addEntity("h", Harvest.class)
+			    .setInteger("harvestScheduleId", harvestScheduleId)
+			    .uniqueResult();
+				if (h != null) {
+					h.getProvider().getName();
+					h.getHarvestSchedule().getScheduleName();
+				}
+				log.debug("h: "+h);
+				return h;
 			}
-			finally
-			{
-				dbConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getHarvestsForSchedule(int)
+		});
+	}
+
+	public Timestamp getLatestHarvestEndTimeForSchedule(final int harvestScheduleId) {
+		return this.hibernateTemplate.execute(new HibernateCallback<Timestamp>() {
+			public Timestamp doInHibernate(Session s) {
+				Provider p = (Provider)s.createSQLQuery(
+						"select {p.*} " +
+						"from providers p, harvest_schedules hs "+
+						"where p.provider_id = hs.provider_id " +
+						" and hs.harvest_schedule_id = :harvestScheduleId ")
+			    .addEntity("p", Provider.class)
+			    .setInteger("harvestScheduleId", harvestScheduleId)
+			    .uniqueResult();
+				if (p.getLastHarvestEndTime() != null) {
+					return new Timestamp(p.getLastHarvestEndTime().getTime());
+				} else {
+					return null;
+				}
+			}
+		});
+	}
 
 	@Override
 	public boolean insert(Harvest harvest) throws DataException

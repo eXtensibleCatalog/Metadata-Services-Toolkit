@@ -1224,7 +1224,7 @@ public class DefaultRecordService extends RecordService
 					if (setSpec != null) {
 						setSpec += ":";
 					}
-					setSpec += setSpecEl.getText(); 
+					setSpec += setSpecEl.getText();
 
 					// Split the set into its components
 					String[] setSpecLevels = setSpec.split(":");
@@ -1249,7 +1249,7 @@ public class DefaultRecordService extends RecordService
 							if(set == null && provider != null) {
 								set = new Set();
 								set.setSetSpec(currentSetSpec);
-								set.setDisplayName(currentSetSpec);
+								set.setDisplayName(set.getDisplayName());
 								set.setIsProviderSet(false);
 								set.setIsRecordSet(true);
 								TimingLogger.start("setDao.insertForProvider");

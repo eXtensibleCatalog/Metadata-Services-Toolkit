@@ -42,6 +42,9 @@ public class DefaultRepository extends BaseService implements Repository {
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
+
+	// All of the following counts are reset each time a batch of records is persisted
+	protected Map<String, long[]> incomingRecordCountsByType = null;
 	
 	protected String name = null;
 	
@@ -78,7 +81,9 @@ public class DefaultRepository extends BaseService implements Repository {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
 					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
-					if (previousVersion == null && "0.3.0".equals(currentVersion)) {
+					if (previousVersion == null && 
+							currentVersion != null && 
+							currentVersion.startsWith("0.3.")) {
 						getRepositoryDAO().createTables(thisthis);
 					}
 				} catch (Throwable t) {
@@ -108,7 +113,46 @@ public class DefaultRepository extends BaseService implements Repository {
 	public int getSize() {
 		return getRepositoryDAO().getSize(name);
 	}
+	
+	protected long[] getRecordCounts(String type) {
+		if (incomingRecordCountsByType == null) {
+			incomingRecordCountsByType = new HashMap<String, long[]>();
+		}
+		long[] counts = incomingRecordCountsByType.get(type);
+		if (counts == null) {
+			counts = new long[4];
+			incomingRecordCountsByType.put(type, counts);
+		}
+		return counts;
+	}
 
+	public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {
+		long newRecordsCount = 0;
+		long updatedRecordsCount = 0;
+		long deletedRecordsCount = 0;
+		if (delete) {
+			deletedRecordsCount = 1;
+			if (update) {
+				newRecordsCount = -1;
+			}
+		} else {
+			if (update) {
+				updatedRecordsCount = 1;
+			} else {
+				newRecordsCount = 1;
+			}
+		}
+		long[] counts = getRecordCounts(type);
+		counts[0] += newRecordsCount;
+		counts[1] += updatedRecordsCount;
+		counts[2] += deletedRecordsCount;
+	}
+	
+	public void incrementUnexpectedProcessingErrors(String type) {
+		long[] counts = getRecordCounts(type);
+		counts[3]++;
+	}
+	
 	public void addRecord(Record record) {
 		if (record.getPredecessors() != null) {
 			for (InputRecord ir : record.getPredecessors()) {
@@ -120,26 +164,49 @@ public class DefaultRepository extends BaseService implements Repository {
 				succIds.add(record.getId());
 			}
 		}
-		if (getRepositoryDAO().addRecord(name, record)) {
-			predSuccMap.clear();	
-		}
+		getRepositoryDAO().addRecord(name, record);
 	}
 	
 	public void addRecords(List<Record> records) {
 		getRepositoryDAO().addRecords(name, records);
 	}
-	
-	public void beginBatch() {
-		getRepositoryDAO().beginBatch();
-	}
-	
-	public void endBatch() {
-		getRepositoryDAO().endBatch(name);
-		predSuccMap.clear();
-		getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
-		uplinks.clear();
-		getRepositoryDAO().activateRecords(name, recordsToActivate);
-		recordsToActivate.clear();
+
+	public boolean commitIfNecessary(boolean force) {
+		if (getRepositoryDAO().commitIfNecessary(name, force)) {
+			predSuccMap.clear();
+			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
+			uplinks.clear();
+			getRepositoryDAO().activateRecords(name, recordsToActivate);
+			recordsToActivate.clear();
+			
+			for (Map.Entry<String, long[]> me : this.incomingRecordCountsByType.entrySet()) {
+				String type = me.getKey();
+				int i=0;
+				for (long c : me.getValue()) {
+					String key = null;
+					if (i == 0) {
+						key = "incomingNewRecordsCount";
+					} else if (i == 1) {
+						key = "incomingUpdatedRecordsCount";
+					} else if (i == 2) {
+						key = "incomingDeletedRecordsCount";
+					} else if (i == 3) {
+						key = "incomingProcessingErrorsCount";
+					}
+					if (type != null) {
+						String key2 = key+"-"+type;
+						setPersistentProperty(key2, getPersistentPropertyAsLong(key2, 0l)+c);
+					} else {
+						setPersistentProperty(key, getPersistentPropertyAsLong(key, 0l)+c);
+					}
+					i++;
+				}
+			}
+			this.incomingRecordCountsByType = null;
+			return true;
+		} else {
+			return force;
+		}
 	}
 
 	public List<Long> getPredecessorIds(Record r) {
@@ -274,13 +341,14 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	public void processComplete() {
 		getRepositoryDAO().createIndiciesIfNecessary(name);
+		getRepositoryDAO().updateOutgoingRecordCounts(name);
 	}
 	
 	public boolean ready4harvest() {
 		return getRepositoryDAO().ready4harvest(name);
 	}
 	
-	public int getPersistentPropertyAsInt(String key) {
+	public int getPersistentPropertyAsInt(String key, int def) {
 		String val = getRepositoryDAO().getPersistentProperty(name, key);
 		if (!StringUtils.isEmpty(val)) {
 			try {
@@ -289,18 +357,39 @@ public class DefaultRepository extends BaseService implements Repository {
 				// do nothing
 			}	
 		}
-		return -1;
+		return def;
 	}
-
-	public void setPersistentPropertyAsInt(String key, int value) {
-		getRepositoryDAO().setPersistentProperty(name, key, value+"");
+	
+	public long getPersistentPropertyAsLong(String key, long def) {
+		String val = getRepositoryDAO().getPersistentProperty(name, key);
+		if (!StringUtils.isEmpty(val)) {
+			try {
+				return Long.parseLong(val);
+			} catch (Throwable t) {
+				// do nothing
+			}	
+		}
+		return def;
 	}
 	
 	public String getPersistentProperty(String key) {
 		return getRepositoryDAO().getPersistentProperty(name, key);
 	}
 
-	public void setPersistentPropertyAsInt(String key, String value) {
+	public void setPersistentProperty(String key, int value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value+"");
+	}
+	
+	public void setPersistentProperty(String key, long value) {
+		getRepositoryDAO().setPersistentProperty(name, key, value+"");
+	}
+	
+	public void setPersistentProperty(String key, String value) {
 		getRepositoryDAO().setPersistentProperty(name, key, value);
 	}
+	
+	public void injectHarvestInfo(Record r) {
+		getRepositoryDAO().injectHarvestInfo(name, r);
+	}
+	
 }

@@ -574,7 +574,7 @@ public abstract class RecordService extends BaseService
 			log.debug("Deleting the record with ID " + record.getId());
 
 		String deleteQuery = FIELD_RECORD_ID + ":" + Long.toString(record.getId()) + "  AND "
-		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + Record.indexedObjectType;
+		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + record.indexedObjectType;
 
 		// Delete all records with the matching record ID
 		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");

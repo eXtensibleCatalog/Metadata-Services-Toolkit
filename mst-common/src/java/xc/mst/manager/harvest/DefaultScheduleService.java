@@ -10,6 +10,7 @@
 package xc.mst.manager.harvest;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import xc.mst.bo.harvest.Harvest;
@@ -26,6 +27,8 @@ import xc.mst.manager.BaseService;
  *
  */
 public class DefaultScheduleService extends BaseService implements ScheduleService {
+	
+	private static long THIRTY_SIX_HOURS = 1000*60*60*36; 
 
 	/**
 	 * Get schedule having the specified schedule id
@@ -130,4 +133,30 @@ public class DefaultScheduleService extends BaseService implements ScheduleServi
     {
         return harvestDAO.getLatestHarvestEndTimeForSchedule(harvestSchedule.getId());
     }
+	
+	public Harvest getHarvest(HarvestSchedule harvestSchedule) {
+		try {
+			Harvest ph = getHarvestDAO().getLatestHarvestForSchedule(harvestSchedule.getId());
+			if (ph != null) {
+				if (ph.getEndTime() == null || ph.getProvider().getLastHarvestEndTime() == null ||
+						ph.getEndTime().getTime() > ph.getProvider().getLastHarvestEndTime().getTime()) {
+					return ph;
+				}
+			}
+			Harvest h = new Harvest();	
+			if (ph != null && ph.getEndTime() != null) {
+				h.setStartTime(new Date(ph.getEndTime().getTime()));
+			} else {
+				h.setStartTime(new Date(THIRTY_SIX_HOURS));
+			}
+			h.setEndTime(new Date());
+			h.setProvider(harvestSchedule.getProvider());
+			h.setHarvestSchedule(harvestSchedule);
+			getHarvestDAO().insert(h);
+			return h;
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
+			return null;
+		}
+	}
 }

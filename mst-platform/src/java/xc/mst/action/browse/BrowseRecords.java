@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -30,7 +31,6 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SolrBrowseResult;
-import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
@@ -40,6 +40,7 @@ import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.repo.RepositoryService;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.XmlHelper;
 
 /**
  * Browse records
@@ -278,6 +279,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			
 			rowEnd = rowStart + numberOfResultsToShow;
 			
+			Record idExactMatch = null;
+			try {
+		    	long id = Long.parseLong(query);
+		    	idExactMatch = getRepositoryService().getRecord(id);
+		    } catch (Throwable t) {
+		    }
+			
 			// In initial page load, we are not going to show any records. Only facets will be shown
 			if (isInitialLoad) {
 				solrQuery.setStart(0);
@@ -285,9 +293,23 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			} else {
 				solrQuery.setStart(rowStart);
 				solrQuery.setRows(numberOfResultsToShow);
+				if (idExactMatch != null) {
+		    		if (rowStart < 2) {
+		    			solrQuery.setRows(numberOfResultsToShow-1);
+		    		} else {
+		    			solrQuery.setStart(rowStart-1);
+		    		}
+		    	}
 			}
 			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
-		    result = browseRecordService.search(solrQuery);   
+		    result = browseRecordService.search(solrQuery);
+		    
+	    	if (idExactMatch != null) {
+	    		if (rowStart < 2) {
+	    			result.getRecords().add(0, idExactMatch);
+	    		}
+	    		result.setTotalNumberOfResults(result.getTotalNumberOfResults()+1);
+	    	}
 		    
 		    if (log.isDebugEnabled()) {
 		    	log.debug("Search result::"+result);
@@ -342,53 +364,10 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
 			record = repositoryService.getRecord(recordId);
 			recordXML = record.getOaiXml();
-	
-			// Remove all formatting. Because some times only half XML is formatted, so lets remove formatting 
-			// and do it yourself.
-			recordXML = recordXML.replaceAll("\n", "");
-			recordXML = recordXML.replaceAll("\t", "");			
-			
-			// Now format it
-			StringBuffer formattedXML = new StringBuffer();
-			int xmlLength = recordXML.length();
-			int indentCount = 0;
-
-			
-			for (int i = 0; i < xmlLength; i++) {
-				if (recordXML.charAt(i) == '<') {
-					
-					// Format start tag < by adding new line
-					if (recordXML.charAt(i+1) != '/') {
-						formattedXML.append("\n");
-						for (int j = 3; j <= indentCount; j++ ) {
-							formattedXML.append("\t");
-						}
-						indentCount++;
-					} else if (i > 0 && recordXML.charAt(i-1) != '>') {
-						indentCount--;
-					} else if (i > 0 && recordXML.charAt(i-1) == '>') {
-						
-						formattedXML.append("\n");
-						indentCount--;
-						for (int j = 3; j <= indentCount; j++ ) {
-							formattedXML.append("\t");
-						}
-					}
-
-				} 
-				
-				if (recordXML.charAt(i) == '>') {
-					if (i > 0 && recordXML.charAt(i-1) == '/') {
-						indentCount--;
-					} 
-				}
-				formattedXML.append(recordXML.charAt(i));
+			if (recordXML != null) {
+				XmlHelper xh = new XmlHelper();
+				recordXML = StringEscapeUtils.escapeHtml(xh.getStringPretty(xh.getJDomDocument(recordXML).getRootElement()));
 			}
-			recordXML = formattedXML.toString();
-			
-			recordXML = recordXML.replaceAll("<", "&lt;");
-			recordXML = recordXML.replaceAll(">", "&gt;");
-			
 		}  catch (Throwable t) {
 			log.error("", t);
     		errorType = "error";
@@ -415,11 +394,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 			
 			// Get service id
 			String errorCode = error.substring(indexOfHypen + 1, error.indexOf(":"));
-			BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
-			ErrorCode error = browseRecordService.getError(errorCode, service);
 
+			String fileName = service.getMetadataService().getConfig().getProperty("error."+errorCode+".descriptionFile");
 			// Get error code
-			FileInputStream fis = new FileInputStream(error.getErrorDescriptionFile());
+			FileInputStream fis = new FileInputStream(
+					MSTConfiguration.getInstance().getServicePath()+service.getName()+"/errors/"+fileName);
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			DataInputStream dis = new DataInputStream(bis);
 	  

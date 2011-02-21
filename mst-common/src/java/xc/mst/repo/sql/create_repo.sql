@@ -1,6 +1,7 @@
 create table repo_name.records (
 	record_id        int        NOT NULL,
 	oai_datestamp     datetime,
+	type             char(1),
 	status           char(1),
 	format_id        int,
 

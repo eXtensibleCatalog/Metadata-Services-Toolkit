@@ -36,6 +36,10 @@ import xc.mst.manager.user.UserService;
  */
 @Test(groups = { "baseTests" }, enabled = true)
 public class ScheduleServiceTest extends BaseTest {
+	
+	public void harvestTest1() {
+		getScheduleService();
+	}
 
  /**
   * Test creating schedule
@@ -44,9 +48,6 @@ public class ScheduleServiceTest extends BaseTest {
   */
  public void addScheduleTest() throws DataException
  {
-
-   	 // Initialize Solr, database, log before testing
-   	 TestHelper helper = TestHelper.getInstance();  
    	 
    	 ProviderService providerService = (ProviderService)getBean("ProviderService");
 

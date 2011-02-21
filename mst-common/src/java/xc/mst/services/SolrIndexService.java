@@ -24,6 +24,7 @@ import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 public class SolrIndexService extends GenericMetadataService  {
@@ -31,6 +32,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
 	
 	Repository incomingRepository = null;
+	protected int recordsProcessedSinceCommit;
 	
 	@Override
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
@@ -42,15 +44,20 @@ public class SolrIndexService extends GenericMetadataService  {
 	}
 	
 	@Override
-	protected void endBatch() {
-		try {
-			TimingLogger.start("commitIndex");
-			getSolrIndexManager().commitIndex();
-			TimingLogger.stop("commitIndex");
-		} catch (Throwable t) {
-			getUtil().throwIt(t);
+	protected boolean commitIfNecessary(boolean force) {
+		if (force || this.recordsProcessedSinceCommit >=
+				MSTConfiguration.getInstance().getPropertyAsInt("solr.records2commitAtOnce", 10000)) {
+			try {
+				TimingLogger.start("commitIndex");
+				getSolrIndexManager().commitIndex();
+				TimingLogger.stop("commitIndex");
+				recordsProcessedSinceCommit=0;
+				return true;
+			} catch (Throwable t) {
+				getUtil().throwIt(t);
+			}	
 		}
-		super.endBatch();
+		return false;
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
@@ -59,7 +66,8 @@ public class SolrIndexService extends GenericMetadataService  {
 	}
 	
 	public List<OutputRecord> process(InputRecord ri) {
-		if (ri.getStatus() == Record.DELETED) {
+		recordsProcessedSinceCommit++;
+		if (ri.getStatus() != Record.ACTIVE) {
 			TimingLogger.start("deleteByQuery");
 			getSolrIndexManager().deleteByQuery("record_id:"+ri.getId());
 			TimingLogger.stop("deleteByQuery");

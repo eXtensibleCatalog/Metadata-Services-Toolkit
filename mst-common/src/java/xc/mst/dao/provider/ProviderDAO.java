@@ -169,6 +169,8 @@ public abstract class ProviderDAO extends BaseDAO
 	 * The name of the identify column
 	 */
 	public final static String COL_IDENTIFY = "identify";
+	
+	public final static String COL_GRANULARITY = "granularity";
 
 	/**
 	 * The name of the service column
@@ -340,6 +342,7 @@ public abstract class ProviderDAO extends BaseDAO
 	 * @throws DataException if the passed provider was not valid for updating
 	 */
 	public abstract boolean update(Provider provider) throws DataException;
+	public abstract boolean update(Provider provider, boolean revalidate) throws DataException;
 
 	/**
 	 * Deletes a provider from the database
@@ -424,7 +427,12 @@ public abstract class ProviderDAO extends BaseDAO
 				errorMessage.append("The protocol_version field is invalid. ");
 			
 			if(provider.getLogFileName() != null && provider.getLogFileName().length() > 355)
-				errorMessage.append("The log file name is invalid. ");			
+				errorMessage.append("The log file name is invalid. ");		
+			
+			if(provider.getGranularity() != null && 
+					!Provider.DAY_GRANULARITY.equals(provider.getGranularity()) &&
+					!Provider.SECOND_GRANULARITY.equals(provider.getGranularity()))
+				errorMessage.append("Invalid granularity: "+provider.getGranularity());
 		} // end if(we should validate the non-ID fields)
 
 		// Log the error and throw the exception if any fields are invalid

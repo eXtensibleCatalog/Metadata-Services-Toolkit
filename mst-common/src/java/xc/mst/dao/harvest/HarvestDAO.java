@@ -121,6 +121,8 @@ public abstract class HarvestDAO extends BaseDAO
 	 * @throws DatabaseConfigException if there was a problem connecting to the database
 	 */
 	public abstract Timestamp getLatestHarvestEndTimeForSchedule(int harvestScheduleId) throws DatabaseConfigException;
+	
+	public abstract Harvest getLatestHarvestForSchedule(int harvestScheduleId) throws DatabaseConfigException;
 
 	/**
 	 * Inserts a harvest into the database

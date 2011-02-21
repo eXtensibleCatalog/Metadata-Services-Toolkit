@@ -11,7 +11,10 @@ package xc.mst.repo;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +30,7 @@ import xc.mst.utils.MSTConfiguration;
 public class RepositoryService extends BaseService {
 	
 	private final static Logger LOG = Logger.getLogger(RepositoryService.class);
+	public final static String FORMAT_INTEGRALS = "%,d";
 	
 	public List<Repository> getAll() {
 		try {
@@ -83,6 +87,7 @@ public class RepositoryService extends BaseService {
 						rec.setService(r.getService());
 					} else if (r.getProvider() != null) {
 						rec.setProvider(r.getProvider());
+						r.injectHarvestInfo(rec);
 					} else {
 						LOG.error("neither service or provider set on r.getName(): "+r.getName());
 					}
@@ -197,6 +202,139 @@ public class RepositoryService extends BaseService {
             LOG.error(e.getMessage(),e);
             return "Unable to access the database to get Repository information. There may be problem with database configuration.";
         }
+	}
+	
+	public List<String[]> getIncomingHarvestRecords() {
+		List<String[]> table = new ArrayList<String[]>();
+		table.add(new String[] {"harvest_name-set", "active records", "updates", "deleted records"});
+		List<Repository> repos = getAll();
+		for (Repository repo : repos) {
+			if (repo.ready4harvest() && repo.getProvider() != null) {
+				List<String[]> dbRows = getRepositoryDAO().getAllPersistentProperties(repo.getName());
+				Map<String, String[]> displayRows = new TreeMap<String, String[]>();
+				if (dbRows != null) {
+					for (String[] dbRow : dbRows) {
+						if (!dbRow[0].startsWith("incoming")) {
+							continue;
+						}
+						int idx0 = dbRow[0].indexOf("-");
+						String key = repo.getName();
+						if (idx0 > -1) {
+							key = dbRow[0].substring(idx0+1);
+						}
+						String[] displayRow = displayRows.get(key);
+						if (displayRow == null) {
+							displayRow = new String[4];
+							displayRow[0] = key;
+							displayRows.put(key, displayRow);
+						}
+						if (dbRow[0].startsWith("incomingNewRecordsCount")) {
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("incomingUpdatedRecordsCount")) {
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("incomingDeletedRecordsCount")) {
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						}
+					}
+				}
+				for (String[] displayRow : displayRows.values()) {
+					table.add(displayRow);
+				}
+			}
+		}
+		return table;
+	}
+	
+	public List<String[]> getIncomingServiceRecords() {
+		List<String[]> table = new ArrayList<String[]>();
+		table.add(new String[] {"service_name-type", "active records", "updates", "deleted records", "unknown errors"});
+		List<Repository> repos = getAll();
+		for (Repository repo : repos) {
+			if (repo.ready4harvest() && repo.getService() != null) {
+				List<String[]> dbRows = getRepositoryDAO().getAllPersistentProperties(repo.getName());
+				Map<String, String[]> displayRows = new TreeMap<String, String[]>();
+				if (dbRows != null) {
+					for (String[] dbRow : dbRows) {
+						if (!dbRow[0].startsWith("incoming")) {
+							continue;
+						}
+						int idx0 = dbRow[0].indexOf("-");
+						String key = "";
+						if (idx0 > -1) {
+							key = dbRow[0].substring(idx0+1);
+						}
+						String[] displayRow = displayRows.get(key);
+						if (displayRow == null) {
+							displayRow = new String[5];
+							if (!key.equals("")) {
+								displayRow[0] = repo.getName()+"-"+key;
+							} else {
+								displayRow[0] = repo.getName();
+							}
+							displayRows.put(key, displayRow);
+						}
+						if (dbRow[0].startsWith("incomingNewRecordsCount")) {
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("incomingUpdatedRecordsCount")) {
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("incomingDeletedRecordsCount")) {
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("incomingProcessingErrorsCount")) {
+							displayRow[4] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						}
+					}
+				}
+				for (String[] displayRow : displayRows.values()) {
+					table.add(displayRow);
+				}
+			}
+		}
+		return table;
+	}
+	
+	public List<String[]> getOutgoingServiceRecords() {
+		List<String[]> table = new ArrayList<String[]>();
+		table.add(new String[] {"service_name-type", "active records", "updates", "deleted records"});
+		List<Repository> repos = getAll();
+		for (Repository repo : repos) {
+			if (repo.ready4harvest() && repo.getService() != null) {
+				List<String[]> dbRows = getRepositoryDAO().getAllPersistentProperties(repo.getName());
+				Map<String, String[]> displayRows = new TreeMap<String, String[]>();
+				if (dbRows != null) {
+					for (String[] dbRow : dbRows) {
+						if (!dbRow[0].startsWith("outgoing")) {
+							continue;
+						}
+						int idx0 = dbRow[0].indexOf("-");
+						String key = "";
+						if (idx0 > -1) {
+							key = dbRow[0].substring(idx0+1);
+						}
+						String[] displayRow = displayRows.get(key);
+						if (displayRow == null) {
+							displayRow = new String[4];
+							if (!key.equals("")) {
+								displayRow[0] = repo.getName()+"-"+key;
+							} else {
+								displayRow[0] = repo.getName();
+							}
+							displayRows.put(key, displayRow);
+						}
+						if (dbRow[0].startsWith("outgoingActiveRecordsCount")) {
+							displayRow[1] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("outgoingUpdatedRecordsCount")) {
+							displayRow[2] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						} else if (dbRow[0].startsWith("outgoingDeletedRecordsCount")) {
+							displayRow[3] = String.format(FORMAT_INTEGRALS, Long.parseLong(dbRow[1]));
+						}
+					}
+				}
+				for (String[] displayRow : displayRows.values()) {
+					table.add(displayRow);
+				}
+			}
+		}
+		return table;
 	}
 
 }

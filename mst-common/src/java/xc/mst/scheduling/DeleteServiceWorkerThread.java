@@ -34,7 +34,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * 
  * @author Sharmila Ranganathan
  */
-public class DeleteServiceWorkerThread extends WorkerThread 
+public class DeleteServiceWorkerThread 
 {
 	/**
 	 * A reference to the logger for this class
@@ -81,7 +81,6 @@ public class DeleteServiceWorkerThread extends WorkerThread
 	 */
 	private static ServicesService serviceManager = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
 	
-	@Override
 	public void run() 
 	{
 		try
@@ -184,25 +183,21 @@ public class DeleteServiceWorkerThread extends WorkerThread
 		}
 	}
 
-	@Override
 	public void cancel() 
 	{
 		isCanceled = true;
 	}
 
-	@Override
 	public void pause() 
 	{
 		isPaused = true;
 	}
 
-	@Override
 	public void proceed() 
 	{
 		isPaused = false;
 	}
 
-	@Override
 	public String getJobName() 
 	{
 		return "Deleting service and its records";

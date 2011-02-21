@@ -172,9 +172,9 @@ public class SolrIndexManager extends BaseManager {
 			return false;
 		}
 		try {
-			LogWriter.addInfo(logObj.getLogFileLocation(), "Committing changes to the Solr index");
+			LogWriter.addDebug(logObj.getLogFileLocation(), "Committing changes to the Solr index");
 			getMSTSolrService().getServer().commit();
-			LogWriter.addInfo(logObj.getLogFileLocation(), "Commited changes to the Solr index");
+			LogWriter.addDebug(logObj.getLogFileLocation(), "Commited changes to the Solr index");
 		} catch (SolrServerException se) {
 			log.error("Solr server exception occured when commiting to the index. Check the path to solr folder.", se);
 			

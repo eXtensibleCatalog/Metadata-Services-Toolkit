@@ -32,8 +32,7 @@ import xc.mst.utils.index.SolrIndexManager;
  * 
  * @author Eric Osisek
  */
-public class ProcessingDirectiveWorkerThread extends WorkerThread 
-{
+public class ProcessingDirectiveWorkerThread { //extends WorkerThread 
 	/**
 	 * A reference to the logger for this class
 	 */
@@ -79,7 +78,6 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		processingDirective = newPd;
 	} // end method setProcessingDirective(ProcessingDirective)
 	
-	@Override
 	public void run() 
 	{
 		try
@@ -119,25 +117,21 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 		}
 	}
 
-	@Override
 	public void cancel() 
 	{
 		isCanceled = true;
 	}
 
-	@Override
 	public void pause() 
 	{
 		isPaused = true;
 	}
 
-	@Override
 	public void proceed() 
 	{
 		isPaused = false;
 	}
 
-	@Override
 	public String getJobName() 
 	{
 		return "Processing Directive";
@@ -156,7 +150,6 @@ public class ProcessingDirectiveWorkerThread extends WorkerThread
 	}
 	 */
 	
-	@Override
 	public String getType() 
 	{
 		return type;

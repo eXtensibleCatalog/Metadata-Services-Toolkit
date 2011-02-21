@@ -20,9 +20,11 @@
 				<scriptmapper language="javascript">
 				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
 				  self.addMappedName("MARCToXCTransformation/@{subdir}/"+source);
-				  self.addMappedName("aggregation/@{subdir}/"+source);
 				  self.addMappedName("DCToXCTransformation/@{subdir}/"+source);
 				</scriptmapper>
+				<!--
+				  self.addMappedName("aggregation/@{subdir}/"+source);
+				-->
 			</copy>
 		</sequential>
 	</macrodef>
@@ -43,9 +45,12 @@
 			<echo>
 				target: @{target}
 			</echo>
+			<!--
 			<ant dir="${mst-service}/custom/aggregation" target="@{target}" inheritAll="false" />
+			-->
 			<ant dir="${mst-service}/custom/MARCNormalization" target="@{target}" inheritAll="false" />
 			<ant dir="${mst-service}/custom/MARCToXCTransformation" target="@{target}" inheritAll="false" />
+			<ant dir="${mst-service}/custom/DCToXCTransformation" target="@{target}" inheritAll="false" />
 		</sequential>
 	</macrodef>
 
@@ -162,6 +167,18 @@
 		</ftp>
 	</target>
 
+	<target name="ftp.ivy" depends="get.antlibs, ftp.ivy.nodep"/>
+	<target name="ftp.ivy.nodep" depends="init, mi.resolve">
+		<ftp server="${ftp.server}"
+				userid="${ftp.userid}"
+				remotedir="/Ivy"
+				password="${ftp.password}"
+				binary="yes"
+				retriesAllowed="10">
+			<fileset dir="${ivy.home}/local"/>
+		</ftp>
+	</target>
+
 	<target name="check.skip.download">
 		<available property="skip.download" file="${ivy.jar}" />
 	</target>
@@ -194,7 +211,7 @@
 	</target>
 
 	<!-- Clean up the build -->
-	<target name="clean" depends="mc.clean,mp.clean,ms.clean">
+	<target name="clean" depends="mi.clean,mc.clean,mp.clean,ms.clean">
 		<delete dir="${build.dir}" />
 		<ant dir="${mst-service}/example" target="clean" inheritAll="false" />
 		<target-custom-services target="clean" />
@@ -226,6 +243,17 @@
 		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
 
 		<target-custom-services target="retrieve" />
+	</target>
+
+	<target name="package-all" depends="coordinated.retrieve">
+		<ant target="mp.war" />
+
+		<ant dir="${mst-service}/example" target="zip" inheritAll="false" />
+
+		<target-custom-services target="zip" />
+
+		<ant target="mi.refetch-example" />
+		<ant target="mi.publish" />
 	</target>
 
 	<!-- Create the distriubtion file -->

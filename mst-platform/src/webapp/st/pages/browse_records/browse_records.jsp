@@ -160,8 +160,9 @@ text-decoration:underline;
 												  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
 												  
 											 </c:url>
-
-											<a href="${facetFilter}">${fcount.name} (${fcount.count})</a>
+											<div style="text-indent: -25px; padding-left: 25px;">
+												<a href="${facetFilter}">${fcount.name} (${fcount.count})</a>
+											</div>
 											<c:if test="${facet.name == 'error'}">
 												<c:url var="viewError" value="viewErrorDescription.action">
 													  <c:param name="error" value="${fcount.name}"/>
@@ -174,9 +175,7 @@ text-decoration:underline;
 													  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
 												  </c:url>
 										   		&nbsp;<a href="${viewError}"><img src="${pageContext.request.contextPath}/st/page-resources/img/information.png"/></a>
-										   	</c:if>											
-											
-											<br/>
+										   	</c:if>
 									</c:if>
 								</c:forEach> 
 								</p>

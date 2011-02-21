@@ -33,7 +33,6 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
-import xc.mst.repo.DefaultRepository;
 import xc.mst.services.impl.service.SolrTransformationService;
 import xc.mst.services.transformation.dao.TransformationDAO;
 import xc.mst.utils.TimingLogger;
@@ -80,6 +79,10 @@ public class TransformationService extends SolrTransformationService {
 	protected int inputBibs = 0;
 	protected int inputHoldings = 0;
 	
+	protected int outputWorks = 0;
+	protected int outputExpressions = 0;
+	protected int outputManifestations = 0;
+	
 	public void setTransformationDAO(TransformationDAO transformationDAO) {
 		this.transformationDAO = transformationDAO;
 	}
@@ -107,8 +110,8 @@ public class TransformationService extends SolrTransformationService {
 		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
 		TimingLogger.stop("getTransformationDAO().loadBibMaps");
 		TimingLogger.reset();
-		inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs");
-		inputHoldings = getRepository().getPersistentPropertyAsInt("inputHoldings");
+		inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs", 0);
+		inputHoldings = getRepository().getPersistentPropertyAsInt("inputHoldings", 0);
 	}
 	
 	protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
@@ -169,7 +172,10 @@ public class TransformationService extends SolrTransformationService {
 	}
 	
 	@Override
-	protected void endBatch() {
+	protected boolean commitIfNecessary(boolean force) {
+		if (!force) {
+			return super.commitIfNecessary(force);
+		}
 		try {
 			TimingLogger.start("TransformationDAO.endBatch");
 
@@ -206,7 +212,7 @@ public class TransformationService extends SolrTransformationService {
 						}
 					});
 			TimingLogger.start("TransformationDAO.non-generic");
-			super.endBatch(false);
+			super.commitIfNecessary(true);
 			TimingLogger.stop("TransformationDAO.non-generic");
 			heldHoldings.clear();
 			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
@@ -227,12 +233,13 @@ public class TransformationService extends SolrTransformationService {
 			TimingLogger.stop("TransformationDAO.non-generic");
 			TimingLogger.stop("TransformationDAO.endBatch");
 			
-			getRepository().setPersistentPropertyAsInt("inputBibs", inputBibs);
-			getRepository().setPersistentPropertyAsInt("inputHoldings", inputHoldings);
+			getRepository().setPersistentProperty("inputBibs", inputBibs);
+			getRepository().setPersistentProperty("inputHoldings", inputHoldings);
 			TimingLogger.reset();
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
+		return true;
 	}
 	
 	@Override
@@ -252,7 +259,9 @@ public class TransformationService extends SolrTransformationService {
 						or.setStatus(Record.DELETED);
 						results.add(or);
 						Record r = getRepository().getRecord(or.getId());
-						if (AggregateXCRecord.MANIFESTATION.equals(getXCRecordService().getType(r))) {
+						String type = getXCRecordService().getType(r);
+						or.setIndexedObjectType(type);
+						if (AggregateXCRecord.MANIFESTATION.equals(type)) {
 							manifestationId = or.getId();
 						}
 					}
@@ -289,21 +298,24 @@ public class TransformationService extends SolrTransformationService {
 				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					isHolding = true;
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logError("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					logInfo("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return results;
 				}
 				
 				AggregateXCRecord ar = new AggregateXCRecord();
 				if (isBib) {
+					((Record)record).setIndexedObjectType("bib");
 					processBibliographicRecord(ar, originalRecord);
 				} else if (isHolding) {
 					processHoldingRecord(ar, originalRecord);
+					((Record)record).setIndexedObjectType("hold");
 				}
 				
 				if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
 					for (OutputRecord or : record.getSuccessors()) {
 						Record succ = getRepository().getRecord(or.getId());
 						String type = getXCRecordService().getType(succ);
+						or.setIndexedObjectType(type);
 						if (AggregateXCRecord.HOLDINGS.equals(type)) {
 							ar.getPreviousHoldingIds().add(or.getId());
 						} else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -390,6 +402,8 @@ public class TransformationService extends SolrTransformationService {
 			}
 			TimingLogger.add("output records", results.size());
 			for (OutputRecord or : results) {
+				String type = getXCRecordService().getType((Record)or);
+				or.setIndexedObjectType(type);
 				or.setFormat(xcFormat);
 			}
 			if (results.size() == 0) {

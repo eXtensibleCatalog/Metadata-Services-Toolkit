@@ -140,33 +140,6 @@ public class MessageDAO extends BaseDAO {
 		}
 	}
 	
-	public void injectMessages(List<Record> records) {
-		TimingLogger.start("injectMessages");
-		long lowestRecordId = records.get(0).getId();
-		long highestRecordId = records.get(records.size()-1).getId();
-		String sql = 
-			" select m.record_id, m.rec_in_out, m.msg_code, m.msg_level, m.service_id, d.detail "+
-			" from "+MESSAGES_TABLE+" as m "+
-				" left outer join "+MESSAGE_DETAILS_TABLE+" as d on (m.record_message_id = d.record_message_id) "+
-			" where m.record_id >= ? "+
-				" and m.record_id <= ? "+
-			" order by m.record_id ";
-		
-		Iterator<Record> recordIt = records.iterator();
-		Record currentRecord = recordIt.next();
-		List<RecordMessage> messages = this.jdbcTemplate.query(
-				sql, new Object[] {lowestRecordId, highestRecordId}, new MessageMapper());
-		
-		for (RecordMessage rm : messages) {
-			while (rm.getRecord().getId() != currentRecord.getId()) {
-				currentRecord = recordIt.next();
-			}
-			rm.setRecord(currentRecord);
-			currentRecord.addMessage(rm);
-		}
-		TimingLogger.stop("injectMessages");
-	}
-	
 	public void injectMessages(Record r) {
 		String sql = 
 			" select m.record_id, m.rec_in_out, m.msg_code, m.msg_level, m.service_id, d.detail "+

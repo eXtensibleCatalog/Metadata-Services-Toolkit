@@ -63,9 +63,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected MetadataServiceDAO metadataServiceDAO = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
-	protected int warningCount = 0;
-	protected int errorCount = 0;
-	protected int errorCountPerCommit = 0;
 	protected Emailer mailer = new Emailer();
 	
 	protected TLongHashSet predecessors = new TLongHashSet();
@@ -429,32 +426,28 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);	
 	}
 	
-	protected void endBatch() {
-		endBatch(true);
-	}
-	
-	protected void endBatch(boolean resetTimer) {
+	protected boolean commitIfNecessary(boolean force) {
 		if (getRepository() != null) {
-			getRepository().endBatch();
-			LOG.debug("getMessageDAO().persistMessages(messages2insert);");
-			LOG.debug("messages2insert.size(): "+messages2insert.size());
-			getMessageDAO().persistMessages(messages2insert);
-			messages2insert.clear();
-			
-			try {
-				getServiceDAO().update(service);
-			} catch(DataException de) {
-				LOG.error("Exception occured while updating the service", de);
+			if (getRepository().commitIfNecessary(force)) {
+				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
+				LOG.debug("messages2insert.size(): "+messages2insert.size());
+				getMessageDAO().persistMessages(messages2insert);
+				messages2insert.clear();
+				
+				try {
+					getServiceDAO().update(service);
+				} catch(DataException de) {
+					LOG.error("Exception occured while updating the service", de);
+				}
+				return true;
 			}
 		}
-		if (resetTimer) {
-			TimingLogger.reset();
-		}
+		return force;
 	}
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-		setStatus(Status.RUNNING);
 		if (!(this instanceof SolrIndexService)) {
+			setStatus(Status.RUNNING);
 			LOG.info("getClass(): "+getClass());
 			LOG.info("inputFormat: "+inputFormat);
 			LOG.info("inputSet: "+inputSet);
@@ -478,9 +471,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
 				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
-		if (getRepository() != null) {
-			getRepository().beginBatch();
-		}
 
 		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
@@ -499,17 +489,37 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			}
 			if (previouslyPaused) {
 				running.acquireUninterruptibly();
+				previouslyPaused = false;
 			}
-			
+			if (++getRecordLoops % 100 == 0) {
+				TimingLogger.reset();
+			}
 			for (Record in : records) {
 				// TODO: currently the injected records here only contain ids.
 				//       This is helpful enough if you simply want to overwrite the
 				//       the existing record.  Although I can't think of a reason
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
+				boolean update = false;
 				injectKnownSuccessorsIds(in);
+				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
+					update = true;
+				}
 				TimingLogger.start(getServiceName()+".process");
-				List<OutputRecord> out = process(in);
+				List<OutputRecord> out = null;
+				try {
+					out = process(in);
+				} catch (Throwable t) {
+					getRepository().incrementUnexpectedProcessingErrors(null);
+					LOG.error("error processing record w/ id: "+in.getId(), t);
+					continue;
+				}
+				if (getRepository() != null) {
+					if (in.getIndexedObjectType() != null) {
+						getRepository().updateIncomingRecordCounts(in.getIndexedObjectType(), update, in.getStatus() == Record.DELETED);
+					}
+					getRepository().updateIncomingRecordCounts(null, update, in.getStatus() == Record.DELETED);
+				}
 				TimingLogger.stop(getServiceName()+".process");
 				if (out != null) {
 					for (RecordIfc rout : out) {
@@ -538,9 +548,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				// Update the error message on incoming record
 //				repo.addRecord(in);
 			}
-
-			if (++getRecordLoops % 50 == 0 && !(getRepository() instanceof TestRepository)) {
-				endBatch();
+			
+			if (commitIfNecessary(false)) {
 				getServiceDAO().persist(sh);
 			}
 			
@@ -549,10 +558,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			records = getRecords(repo, sh, inputFormat, inputSet);
 		}
 		//  TODO not inserting errors on input record.
-//		repo.endBatch();
 
 		if (atLeastOneRecordProcessed) {
-			endBatch();
+			commitIfNecessary(true);
 		}
 		if (!stopped) {
 			sh.setHighestId(null);
