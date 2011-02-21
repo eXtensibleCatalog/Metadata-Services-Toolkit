@@ -236,7 +236,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else { 

@@ -640,7 +640,18 @@ public class DefaultServicesService extends BaseService
     public Service getServiceById(int serviceId) throws DatabaseConfigException
     {
         Service s = getServiceDAO().getById(serviceId);
-        injectMetadataService(s);
+        if (s != null) {
+	        injectMetadataService(s);
+	        List<Integer> setIds = getRepositoryDAO().getSetIds(s.getName());
+	        if (setIds != null) {
+		        for (Integer setId : setIds) {
+		        	xc.mst.bo.provider.Set set = getSetService().getSetById(setId);
+		        	if (!s.getOutputSets().contains(set)) {
+		        		s.getOutputSets().add(set);
+		        	}
+		        }
+	        }
+        }
         return s;
     }
 

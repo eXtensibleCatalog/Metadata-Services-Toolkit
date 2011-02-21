@@ -19,6 +19,7 @@ import java.util.SimpleTimeZone;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
+import org.jdom.Namespace;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -250,8 +251,9 @@ public class Facade extends BaseManager
 			service.setHarvestOutErrors(service.getHarvestOutErrors() + errorCount);
 			
 			// Increase number of harvests if this is the initial request for harvest
-			if((oaiRequest.getVerb().equalsIgnoreCase("ListRecords")) && (oaiRequest.getResumptionToken() == null || oaiRequest.getResumptionToken().trim().length() == 0) && (oaiRequest.getMetadataPrefix() != null || oaiRequest.getMetadataPrefix().trim().length() != 0))
-			{
+			if((oaiRequest.getVerb().equalsIgnoreCase("ListRecords")) && 
+					(oaiRequest.getResumptionToken() == null || oaiRequest.getResumptionToken().trim().length() == 0) && 
+					(oaiRequest.getMetadataPrefix() != null && oaiRequest.getMetadataPrefix().trim().length() != 0)) {
 				service.setNumberOfHarvests(service.getNumberOfHarvests() + 1);
 			}
 
@@ -285,26 +287,31 @@ public class Facade extends BaseManager
 		root.addContent(XMLUtil.xmlEl("baseURL", oaiRequest.getOaiRepoBaseURL()));
 		root.addContent(XMLUtil.xmlEl("protocolVersion", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_PROTOCOL_VERSION)));
 		root.addContent(XMLUtil.xmlEl("adminEmail", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_ADMIN_EMAIL)));
-		root.addContent(XMLUtil.xmlEl("deletedRecord", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
-		root.addContent(XMLUtil.xmlEl("granularity", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_GRANULARITY)));
-
+		
 		// Get the earliest record.  If it's not null, set the earliestDatestamp to it's datestamp.
 		// Otherwise, there were no records, and we will set it to the beginning of the epoch
 		Record earliest = recordService.getEarliest(oaiRequest.getServiceId());
 		root.addContent(XMLUtil.xmlEl("earliestDatestamp", (earliest != null ? new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(earliest.getOaiDatestamp()) : "1970-01-01T12:00:00Z")));
+		
+		root.addContent(XMLUtil.xmlEl("deletedRecord", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELETED_RECORD)));
+		root.addContent(XMLUtil.xmlEl("granularity", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_GRANULARITY)));
+
 
 		String[] compressions = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_COMPRESSION).split(";");
 		for(String compression : compressions)
 			root.addContent(XMLUtil.xmlEl("compression", compression));
 
 		// Create the description's oai-identifier element
-		Element oaiIdentifier = new Element("oai-identifier");
+		Namespace mstNS = Namespace.getNamespace("mst", "http://www.extensiblecatalog.org/xsd/mst/1.0");
+		Element oaiIdentifier = new Element("oai-identifier", mstNS);
 
 		// Add child elements to the oaiIdentifier element with useful information
-		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_SCHEME)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELIMITER)));
-		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", "oai:" + MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/1"));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("scheme", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_SCHEME), mstNS));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("repositoryIdentifier", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER), mstNS));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("delimiter", MSTConfiguration.getInstance().getProperty(Constants.CONFIG_OAI_REPO_DELIMITER), mstNS));
+		oaiIdentifier.addContent(XMLUtil.xmlEl("sampleIdentifier", 
+				"oai:" + MSTConfiguration.getInstance().getProperty(Constants.CONFIG_DOMAIN_NAME_IDENTIFIER) + ":" + 
+				MSTConfiguration.getInstanceName() + "/" + service.getName().replace(" ", "_") + "/1", mstNS));
 
 		// Add a description element with the oai-identifier element we just created
 		root.addContent(XMLUtil.xmlEl("description", null).addContent(oaiIdentifier));
@@ -687,13 +694,7 @@ public class Facade extends BaseManager
 		log.debug("totalCount: "+totalCount);
 		
 		if (totalCount != 0) {
-		
-			// Get records from starting Id to record limit
-			if (getRecords) {
-				records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
-	 		} else {
-				records = service.getMetadataService().getRepository().getRecordHeader(fromDate, untilDate, startingId, format, setObject);
-			}
+			records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
 		}
 
 		// The XML for the OAI result
@@ -745,11 +746,13 @@ public class Facade extends BaseManager
 					} else { // If not deleted append header as well as record XML
 						xml.append("<record>\n");
 						
-						xml.append(getHeader(record))
-						          .append("\n<metadata>\n")
-						          .append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
-						          .append("\n</metadata>\n")
-						          .append("\n</record>\n");
+						xml.append(getHeader(record));
+						if (getRecords) {
+							xml.append("\n<metadata>\n")
+								.append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
+								.append("\n</metadata>\n");
+						}
+						xml.append("\n</record>\n");
 					}
 				} else {
 			    	xml.append(getHeader(record).replaceAll("<\\?xml.*\\?>", "")).append("\n");

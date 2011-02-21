@@ -308,8 +308,10 @@ public class Constants
 	public static final String OAI_RESPONSE_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                                      "<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"\n" +
                                                      "                 xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                                                     "                 xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/\n" +
-                                                     "                                      http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n";
+                                                     "                 xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ " +
+                                                     "                                      http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\n"+
+                                                     "                 						http://www.extensiblecatalog.org/xsd/mst/1.0 " +
+                                                     "                                      http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd\">\n";
 
 	/**
 	 * The closing tag for the OAI response element

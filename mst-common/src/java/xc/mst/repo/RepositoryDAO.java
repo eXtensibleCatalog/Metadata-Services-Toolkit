@@ -1266,12 +1266,16 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
+		return getRecordsWSets(name, from, until, startingId, null, null);
+	}
+	
+	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();
 		}
 		
-		List<Record> records = getRecords(name, from, until, startingId, null, null);
+		List<Record> records = getRecords(name, from, until, startingId, inputFormat, inputSet);
 		if (records != null && records.size() > 0) {
 			Long highestId = records.get(records.size()-1).getId();
 			StringBuilder sb = new StringBuilder();
@@ -1831,4 +1835,10 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
+	public List<Integer> getSetIds(String name) {
+		//List<Integer> sets = new ArrayList<Integer>();
+		List<Integer> setIds = this.jdbcTemplate.queryForList(
+				"select set_id from "+getTableName(name, RECORDS_SETS_TABLE)+" group by set_id", Integer.class);
+		return setIds;
+	}
 }
