@@ -67,7 +67,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	public List<OutputRecord> process(InputRecord ri) {
 		recordsProcessedSinceCommit++;
-		if (ri.getStatus() == Record.DELETED) {
+		if (ri.getStatus() != Record.ACTIVE) {
 			TimingLogger.start("deleteByQuery");
 			getSolrIndexManager().deleteByQuery("record_id:"+ri.getId());
 			TimingLogger.stop("deleteByQuery");
