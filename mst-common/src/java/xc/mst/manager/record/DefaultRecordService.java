@@ -94,18 +94,6 @@ public class DefaultRecordService extends RecordService
 	public void injectNewId(Record r) {
 		getRepositoryDAO().injectId(r);
 	}
-
-	public Record createSuccessor(Record pred, Service s) {
-		Record succ = new Record();
-		succ.addPredecessor(pred);
-		succ.setService(s);
-		getRepositoryDAO().injectId(succ);
-		//LOG.debug("MSTConfiguration.getProperty(DomainNameIdentifier): "+config.getProperty("DomainNameIdentifier"));
-		//LOG.debug("s.getName(): "+s.getName());
-		//LOG.debug("succ.getId(): "+succ.getId());
-		//succ.setOaiIdentifier("oai:"+config.getProperty("DomainNameIdentifier")+":"+s.getName()+":"+succ.getId());
-		return succ;
-	}
 	
 	@Override
 	public List<Record> getAll() throws IndexException

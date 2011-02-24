@@ -1,0 +1,130 @@
+Index: mst-common/src/java/xc/mst/repo/DefaultRepository.java
+===================================================================
+--- mst-common/src/java/xc/mst/repo/DefaultRepository.java	(revision 1368)
++++ mst-common/src/java/xc/mst/repo/DefaultRepository.java	(working copy)
+@@ -9,6 +9,7 @@
+ 
+ package xc.mst.repo;
+ 
++import gnu.trove.TLongArrayList;
+ import gnu.trove.TLongHashSet;
+ 
+ import java.util.ArrayList;
+@@ -27,6 +28,7 @@
+ import xc.mst.bo.provider.Provider;
+ import xc.mst.bo.provider.Set;
+ import xc.mst.bo.record.InputRecord;
++import xc.mst.bo.record.OutputRecord;
+ import xc.mst.bo.record.Record;
+ import xc.mst.bo.service.Service;
+ import xc.mst.manager.BaseService;
+@@ -46,6 +48,8 @@
+ 	// All of the following counts are reset each time a batch of records is persisted
+ 	protected Map<String, long[]> incomingRecordCountsByType = null;
+ 	
++	protected TLongArrayList recordIdsOfMessages2delete = new TLongArrayList(); 
++	
+ 	protected String name = null;
+ 	
+ 	protected Provider provider = null;
+@@ -178,6 +182,8 @@
+ 			uplinks.clear();
+ 			getRepositoryDAO().activateRecords(name, recordsToActivate);
+ 			recordsToActivate.clear();
++			getRepositoryDAO().deleteMessages(name, recordIdsOfMessages2delete);
++			recordIdsOfMessages2delete.clear();
+ 			
+ 			for (Map.Entry<String, long[]> me : this.incomingRecordCountsByType.entrySet()) {
+ 				String type = me.getKey();
+@@ -392,4 +398,8 @@
+ 		getRepositoryDAO().injectHarvestInfo(name, r);
+ 	}
+ 	
++	public void deletePreviousMessage(OutputRecord r) {
++		recordIdsOfMessages2delete.add(r.getId());
++	}
++	
+ }
+\ No newline at end of file
+Index: mst-common/src/java/xc/mst/repo/Repository.java
+===================================================================
+--- mst-common/src/java/xc/mst/repo/Repository.java	(revision 1367)
++++ mst-common/src/java/xc/mst/repo/Repository.java	(working copy)
+@@ -17,6 +17,7 @@
+ import xc.mst.bo.provider.Format;
+ import xc.mst.bo.provider.Provider;
+ import xc.mst.bo.provider.Set;
++import xc.mst.bo.record.OutputRecord;
+ import xc.mst.bo.record.Record;
+ import xc.mst.bo.service.Service;
+ 
+@@ -103,5 +104,6 @@
+ 	public void setPersistentProperty(String key, String value);
+ 	
+ 	public void injectHarvestInfo(Record r);
++	public void deletePreviousMessage(OutputRecord r);
+ 
+ }
+Index: mst-common/src/java/xc/mst/repo/RepositoryDAO.java
+===================================================================
+--- mst-common/src/java/xc/mst/repo/RepositoryDAO.java	(revision 1374)
++++ mst-common/src/java/xc/mst/repo/RepositoryDAO.java	(working copy)
+@@ -1831,4 +1831,46 @@
+ 		}
+ 	}
+ 	
++	public void deleteMessages(String name, TLongArrayList recordIdsOfMessages2delete) {
++		TimingLogger.start("deletingPreviousMessages");
++		
++        int[] updateCounts = jdbcTemplate.batchUpdate(
++        		"delete from ,
++                new BatchPreparedStatementSetter() {
++                    public void setValues(PreparedStatement ps, int j) throws SQLException {
++                    	int i=1;
++                    	Record r = recordsToAdd.get(j);
++                        ps.setLong(i++, r.getId());
++                        if (r.getOaiDatestamp() == null) {
++                        	ps.setTimestamp(i++, new Timestamp(startTime));	
++                        } else {
++                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
++                        }
++                        if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
++                        	ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
++                        } else {
++                        	ps.setString(i++, null);
++                        }
++                        for (int k=0; k<2; k++) {
++	                        ps.setString(i++, String.valueOf(r.getStatus()));
++	                        if (r.getFormat() != null) {
++	                        	ps.setInt(i++, r.getFormat().getId());
++	                        } else { 
++	                        	ps.setObject(i++, null);
++	                        }
++                        }
++                        if (r.getOaiDatestamp() == null) {
++                        	ps.setTimestamp(i++, new Timestamp(startTime));	
++                        } else {
++                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
++                        }
++                    }
++
++                    public int getBatchSize() {
++                        return recordsToAdd.size();
++                    }
++                } );
++		TimingLogger.stop("deletingPreviousMessages");
++	}
++	
+ }
+Index: mst-common/src/java/xc/mst/services/GenericMetadataService.java
+===================================================================
+--- mst-common/src/java/xc/mst/services/GenericMetadataService.java	(revision 1374)
++++ mst-common/src/java/xc/mst/services/GenericMetadataService.java	(working copy)
+@@ -504,6 +504,7 @@
+ 				injectKnownSuccessorsIds(in);
+ 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
+ 					update = true;
++					// TODO: add id to a list that will delete previous messages
+ 				}
+ 				TimingLogger.start(getServiceName()+".process");
+ 				List<OutputRecord> out = null;

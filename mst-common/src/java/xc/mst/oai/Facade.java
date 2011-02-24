@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.SimpleTimeZone;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -737,7 +739,7 @@ public class Facade extends BaseManager
 				if(getRecords) {
 					
 					// For deleted record, just append the header
-					if (record.getDeleted()) {
+					if (Record.ACTIVE != record.getStatus()) {
 						String header = getHeader(record);
 						header = header.replaceAll("<header>", "<header status=\"deleted\">");
 						xml.append("<record>\n")
@@ -747,10 +749,16 @@ public class Facade extends BaseManager
 						xml.append("<record>\n");
 						
 						xml.append(getHeader(record));
-						if (getRecords) {
-							xml.append("\n<metadata>\n")
-								.append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
-								.append("\n</metadata>\n");
+						if (getRecords && !record.getDeleted()) {
+							if (record.getOaiXml() == null) {
+								log.error("record has no content!!!!");
+								log.error("record.getStatus(): "+record.getStatus());
+								log.error("record.getId(): "+record.getId());
+							} else {
+								xml.append("\n<metadata>\n")
+									.append(record.getOaiXml().replaceAll("<\\?xml.*\\?>", ""))
+									.append("\n</metadata>\n");
+							}
 						}
 						xml.append("\n</record>\n");
 					}
@@ -946,9 +954,15 @@ public class Facade extends BaseManager
 
 		// Get each set from the list of set IDs this record belongs to.  If the set is
 		// not null, add its setSpec to the header.
+		SortedSet<String> setSpecs = new TreeSet<String>();
+		
 		for(Set s : record.getSets())
 			if(s != null)
-				header.append("\t<setSpec>").append(s.getSetSpec()).append("</setSpec>\n");
+				setSpecs.add(s.getSetSpec());
+		
+		for (String setSpec : setSpecs) {
+			header.append("\t<setSpec>").append(setSpec).append("</setSpec>\n");
+		}
 
 		header.append("</header>");
 		

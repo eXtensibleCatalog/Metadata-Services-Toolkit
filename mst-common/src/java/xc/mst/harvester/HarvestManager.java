@@ -64,6 +64,8 @@ public class HarvestManager extends WorkerThread {
 	//        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
 	protected DynMap oaiIdCache = new DynMap();
 	
+	// The is public and static simply for the MockHarvestTest
+	public static String lastOaiRequest = null;
 	protected HarvestSchedule harvestSchedule = null;
 	protected List<HarvestScheduleStep> harvestScheduleSteps = null;
 	protected boolean hssFirstTime = true;
@@ -273,6 +275,7 @@ public class HarvestManager extends WorkerThread {
 						return false;
 					}
 					provider.setLastOaiRequest(file2harvest.getName());
+					lastOaiRequest = file2harvest.getName();
 				    doc = new XmlHelper().getJDomDocument(getUtil().slurp(file2harvest));
 				} else if (baseURL.startsWith("http:")) {
 					String verb = "ListRecords";

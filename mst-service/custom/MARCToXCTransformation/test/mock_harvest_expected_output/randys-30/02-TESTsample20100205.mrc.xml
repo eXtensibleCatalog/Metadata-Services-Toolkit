@@ -1,0 +1,1348 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-24T11:00:36Z</responseDate>
+  <request from="2011-02-24T16:00:13Z" metadataPrefix="xc" until="2011-02-24T16:00:36Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/31</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/31" type="manifestation">
+            <xc:recordID type="LCCN">41015235 //r974</xc:recordID>
+            <xc:identifier type="ISSN">0021-8723</xc:identifier>
+            <xc:recordID type="OCoLC">1754428</xc:recordID>
+            <xc:recordID type="NRU">2684</xc:recordID>
+            <dcterms:alternative>J. Am. hist. (Bloomingt. Indiana)</dcterms:alternative>
+            <dcterms:alternative>The Journal of American history (Bloomington, Ind.)</dcterms:alternative>
+            <dcterms:title>The Journal of American history.</dcterms:title>
+            <rdvocab:placeOfProduction>Bloomington, Ind. :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Mississippi Valley Historical Association,</dcterms:publisher>
+            <dcterms:issued>c1964-</dcterms:issued>
+            <dcterms:extent>v. ;</dcterms:extent>
+            <rdvocab:dimensions>26 cm.</rdvocab:dimensions>
+            <rdvocab:frequency>Quarterly</rdvocab:frequency>
+            <rdvocab:numberingOfSerials>Vol. 51, no. 1 (June 1964)-</rdvocab:numberingOfSerials>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+            <dcterms:issued>1964-</dcterms:issued>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/33</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/32</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/32" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">E171</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:LCC">F351.A1</dcterms:subject>
+            <rdvocab:titleOfWork>Journal of American history (Bloomington, Indiana)</rdvocab:titleOfWork>
+            <xc:spatial xsi:type="dcterms:LCSH">United States-History-Periodicals.</xc:spatial>
+            <dcterms:replaces dcterms:ISSN="0161-391X">Mississippi Valley historical review</dcterms:replaces>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">History</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Periodicals.</xc:subject>
+            <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/33</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/33" type="expression">
+            <xc:titleOfExpression>Journal of American history (Bloomington, Indiana)</xc:titleOfExpression>
+            <dcterms:isReferencedBy>Magazine index 1964-</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0006-7326">Book review digest</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0066-3786">Annual bibliography of English language and literature</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0024-8215">MLA international bibliography of books and articles on the modern languages and literatures (Complete edition)</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0524-0581">Book review index</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0037-7899">Social sciences &amp; humanities index</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy>International index</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0095-5981">Humanities index</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0145-5311">Recently published articles</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0163-3546">Reference sources</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0049-7835">Women studies abstracts</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0364-2887">Writings on American history</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0002-7065">America, history and life 1954-</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0363-2717">Historical abstracts. Part A. Modern history abstracts 1954-</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy dcterms:ISSN="0363-2725">Historical abstracts. Part B. Twentieth century abstracts 1954-</dcterms:isReferencedBy>
+            <dcterms:hasFormat>Scanned images of back issues also available via the World Wide Web.</dcterms:hasFormat>
+            <dcterms:description>Vols. for June 1964-Mar. 1965 published by the Mississippi Valley Historical Association; June 1965-&lt;June 1984&gt; by the Organization of American Historians.</dcterms:description>
+            <dcterms:HasFormat>Journal of American history (Bloomington, Ind. : Online)</dcterms:HasFormat>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:contributor>Organization of American Historians.</xc:contributor>
+            <xc:contributor>Mississippi Valley Historical Association.</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/32</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/35</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/35" type="manifestation">
+            <xc:recordID type="LCCN">35010016 //r767</xc:recordID>
+            <xc:recordID type="OCoLC">387805</xc:recordID>
+            <xc:recordID type="NRU">473905</xc:recordID>
+            <dcterms:title>The story of civilization.</dcterms:title>
+            <dcterms:alternative>Story of civilization.</dcterms:alternative>
+            <rdvocab:placeOfProduction>New York,</rdvocab:placeOfProduction>
+            <dcterms:publisher>Simon and Schuster,</dcterms:publisher>
+            <dcterms:issued>1935-67.</dcterms:issued>
+            <dcterms:extent>11 v.</dcterms:extent>
+            <rdvocab:dimensions>26 cm.</rdvocab:dimensions>
+            <dcterms:description>Vols. 7-10 by Will and Ariel Durant.</dcterms:description>
+            <dcterms:description>Includes bibliographies.</dcterms:description>
+            <dcterms:tableOfContents>1. Our oriental heritage; being a history of civilization in Egypt and the Near East to the death of Alexander, and in India, China and Japan from the beginning of our own day; with an introduction on the nature and foundations of civilization.--2. The life of Greece; being a history of Greek civilization from the beginnings, and of civilization in the Near East from the death of Alexander, to the Roman conquest; with an introduction on the prehistoric culture of Crete.--3. Caesar and Christ, a history of Roman civilization and of Christianity from their beginnings to A.D. 325.--4. The age of Faith; a history of medieval civilization (Christian, Islamic, and Judaic) from Constantine to Dante, A.D. 325-1300.--5. The Renaissance; a history of civilization in Italy from 1304-1576 A.D.--6. The Reformation.--7. The Age of Reason begins, 1558-1648.--8. The age of Louis XIV, 1648-1715.--9. The age of Voltaire; a history of civlization in Western Europe from 1715 to 1756, with special emphasis on the conflict between religion and philosophy.--10. Rousseau and revolution; a history of civilization in France, England, and Germany from 1756, and in the remainder of Europe from 1715 to 1789.--11. The age of Napoleon; a history of European civilization from 1789 to 1815.</dcterms:tableOfContents>
+            <dcterms:description>Rhees Vol. 3, copy 3: From the library of Chester F. Carlson and Dorris H. Carlson.</dcterms:description>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/37</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/36</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/36" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">CB53</dcterms:subject>
+            <rdarole:author>Durant, Will, 1885-1981.</rdarole:author>
+            <rdvocab:titleOfWork>Story of civilization.</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Civilization-History.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Civilization</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">History.</xc:subject>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/37</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/37" type="expression">
+            <xc:titleOfExpression>Story of civilization.</xc:titleOfExpression>
+            <rdvocab:illustrationContent>illus., maps, ports.</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:contributor>Durant, Ariel, joint author.</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/36</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/42</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/42" type="manifestation">
+            <xc:recordID type="OCoLC">20885504</xc:recordID>
+            <xc:recordID type="NRU">1340549</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>by a friend to the threshing floor of Ornan.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>The muzled ox, treading out the corn, and bellowing out his just complaint against his merciless masters, or, A loud cry from heaven against the crying sin of this nation, viz., the with-holding competent countenance and maintenance from gospel ministers, to the high dishonor of God, and the grief of all truly godly</dcterms:title>
+            <rdvocab:placeOfProduction>London :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Printed for W. Hope ...,</dcterms:publisher>
+            <dcterms:issued>1650.</dcterms:issued>
+            <dcterms:extent>[2], 37 p.</dcterms:extent>
+            <dcterms:description>"Wherein is laid down, first, the several causes, secondly, the sad consequences of this grand and gospel grievance, thirdly, solutions to all contrary cavils and scruples, fourthly, remedies for future prevention, fiftly, several motives to ministerial encouragement."</dcterms:description>
+            <dcterms:alternative>Muzled ox, treading out the corn, and bellowing out his just complaint against his merciless masters.</dcterms:alternative>
+            <dcterms:alternative>Loud cry from heaven against the crying sin of this nation.</dcterms:alternative>
+            <dcterms:isPartOf>Goldsmiths'-Kress library of economic literature ; no. 1190.</dcterms:isPartOf>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <xc:type007>Microform</xc:type007>
+            <xc:typeSMD>Microfilm reel</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/44</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/43</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/43" type="work">
+            <rdarole:author>Friend to the threshing floor of Ornan.</rdarole:author>
+            <rdvocab:titleOfWork>Muzled ox, treading out the corn, and bellowing out his just complaint against his merciless masters, or, A loud cry from heaven against the crying sin of this nation, viz., the with-holding competent countenance and maintenance from gospel ministers, to the high dishonor of God, and the grief of all truly godly</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Tithes-Great Britain-Early works to 1800.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Clergy-Great Britain-Salaries, etc.-Early works to 1800.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Tithes</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Clergy</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Early works to 1800.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Salaries, etc.</xc:subject>
+            <xc:spatial xsi:type="dcterms:LCSH">Great Britain</xc:spatial>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/44</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/44" type="expression">
+            <xc:titleOfExpression>Muzled ox, treading out the corn, and bellowing out his just complaint against his merciless masters, or, A loud cry from heaven against the crying sin of this nation, viz., the with-holding competent countenance and maintenance from gospel ministers, to the high dishonor of God, and the grief of all truly godly</xc:titleOfExpression>
+            <dcterms:isReferencedBy>Goldsmiths' Lib. cat., 1190.</dcterms:isReferencedBy>
+            <dcterms:isReferencedBy>Wing M3167.</dcterms:isReferencedBy>
+            <dcterms:hasFormat>Microfilm. New Haven, Conn. : Research Publications, [1974]. 1 microfilm reel ; 35 mm. (Goldsmiths'-Kress library of economic literature ; no. 1190).</dcterms:hasFormat>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/43</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/47</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/47" type="manifestation">
+            <xc:recordID type="LCCN">97049983</xc:recordID>
+            <xc:recordID type="OCoLC">37975665</xc:recordID>
+            <xc:recordID type="NRU">1644500</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>Joseph Gibaldi.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>MLA style manual and guide to scholarly publishing /</dcterms:title>
+            <dcterms:alternative>MLA style manual.</dcterms:alternative>
+            <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Modern Language Association of America,</dcterms:publisher>
+            <dcterms:issued>1998.</dcterms:issued>
+            <dcterms:extent>xxviii, 343 p. :</dcterms:extent>
+            <rdvocab:dimensions>25 cm.</rdvocab:dimensions>
+            <dcterms:description>Includes bibliographical references and index.</dcterms:description>
+            <dcterms:tableOfContents>Foreword / Herbert Lindenberger -- 1. Scholarly Publishing -- 2. Legal Issues in Scholarly Publishing / Arthur F. Abelman -- 3. Basics of Scholarly Writing -- 4. Preparation of Scholarly Manuscripts -- 5. Preparation of Theses and Dissertations -- 6. Documentation: Preparing the List of Works Cited -- 7. Documentation: Citing Sources in the Text -- 8. Abbreviations -- App. Other Systems of Documentation.</dcterms:tableOfContents>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">0873526996</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/49</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/48</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/48" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">PN147</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:DDC">808/.027</dcterms:subject>
+            <rdarole:author>Gibaldi, Joseph, 1942-</rdarole:author>
+            <rdvocab:titleOfWork>MLA style manual and guide to scholarly publishing /</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Authorship-Style manuals.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Humanities-Authorship-Handbooks, manuals, etc.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Scholarly publishing-Handbooks, manuals, etc.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Academic writing-Handbooks, manuals, etc.</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Authorship.</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Writing.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Authorship</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Humanities</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Scholarly publishing</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Academic writing</xc:subject>
+            <xc:type xsi:type="dcterms:LCSH">Style manuals.</xc:type>
+            <xc:type xsi:type="dcterms:LCSH">Handbooks, manuals, etc.</xc:type>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/49</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/49" type="expression">
+            <xc:titleOfExpression>MLA style manual and guide to scholarly publishing /</xc:titleOfExpression>
+            <rdvocab:illustrationContent>ill., music ;</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:contributor>Modern Language Association of America.</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/48</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/57</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/57" type="manifestation">
+            <xc:recordID type="LCCN">sn 98001332</xc:recordID>
+            <xc:identifier type="ISSN">1522-4724</xc:identifier>
+            <xc:recordID type="OCoLC">40198246</xc:recordID>
+            <xc:recordID type="NRU">1719090</xc:recordID>
+            <dcterms:title>Molecular cell biology research communications.</dcterms:title>
+            <dcterms:alternative>MCBRC</dcterms:alternative>
+            <dcterms:alternative>Molecular cell biology research notes</dcterms:alternative>
+            <rdvocab:placeOfProduction>San Diego, CA :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Academic Press,</dcterms:publisher>
+            <dcterms:issued>c1999-c2001.</dcterms:issued>
+            <dcterms:extent>4 v. :</dcterms:extent>
+            <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+            <rdvocab:frequency>Monthly</rdvocab:frequency>
+            <rdvocab:numberingOfSerials>Vol. 1, no. 1 (Apr. 1999)-v. 4, no. 6 (Nov. 2001).</rdvocab:numberingOfSerials>
+            <dcterms:description>"Part B of Biochemical and biophysical research communications."</dcterms:description>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+            <dcterms:issued>1999-2001</dcterms:issued>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/59</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/58</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/58" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">QH301</dcterms:subject>
+            <rdvocab:titleOfWork>Molecular cell biology research communications.</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Biochemistry-Periodicals.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Biophysics-Periodicals.</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Biochemistry-Periodicals.</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Biophysics-Periodicals.</xc:subject>
+            <dcterms:replaces dcterms:ISSN="0006-291X">Biochemical and biophysical research communications</dcterms:replaces>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Biochemistry</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Biophysics</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Biochemistry</xc:subject>
+            <xc:subject xsi:type="dcterms:MESH">Biophysics</xc:subject>
+            <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+            <xc:type xsi:type="dcterms:MESH">Periodicals.</xc:type>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/59</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/59" type="expression">
+            <xc:titleOfExpression>Molecular cell biology research communications.</xc:titleOfExpression>
+            <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+            <dcterms:hasFormat>Also available via the Internet (PDF format).</dcterms:hasFormat>
+            <dcterms:relation>Absorbed by: Archives of biochemistry and biophysics, Nov. 2001.</dcterms:relation>
+            <dcterms:HasFormat dcterms:ISSN="1522-4732">Molecular cell biology research communications (Online)</dcterms:HasFormat>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/58</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/62</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/62" type="manifestation">
+            <xc:recordID type="LCCN">87047879</xc:recordID>
+            <xc:recordID type="OCoLC">17507408</xc:recordID>
+            <xc:recordID type="NRU">2444475</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>Octavia E. Butler ; with an introduction by Robert Crossley.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>Kindred /</dcterms:title>
+            <rdvocab:placeOfProduction>Boston :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Beacon Press,</dcterms:publisher>
+            <dcterms:issued>c1988.</dcterms:issued>
+            <dcterms:extent>xxvii, 264 p. ;</dcterms:extent>
+            <rdvocab:dimensions>21 cm.</rdvocab:dimensions>
+            <dcterms:description>Includes bibliographical references (p. xxv-xxvii).</dcterms:description>
+            <dcterms:isPartOf>Black women writers series.</dcterms:isPartOf>
+            <dcterms:isPartOf>Bluestreak.</dcterms:isPartOf>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">0807083054</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/64</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/63</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/63" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">PS3552.U827</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:DDC">813/.54</dcterms:subject>
+            <rdarole:author>Butler, Octavia E.</rdarole:author>
+            <rdvocab:titleOfWork>Kindred /</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">African American women-Fiction.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Slaveholders-Fiction.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Time travel-Fiction.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Slavery-Fiction.</xc:subject>
+            <xc:spatial xsi:type="dcterms:LCSH">California-Fiction.</xc:spatial>
+            <xc:type type="gsafd">Science fiction.</xc:type>
+            <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">African American women</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Slaveholders</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Time travel</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Slavery</xc:subject>
+            <xc:spatial xsi:type="dcterms:LCSH">California</xc:spatial>
+            <xc:type xsi:type="dcterms:LCSH">Fiction.</xc:type>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/64</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/64" type="expression">
+            <xc:titleOfExpression>Kindred /</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/63</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/66</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/66" type="manifestation">
+            <xc:recordID type="LCCN">2006029540</xc:recordID>
+            <xc:identifier type="YBP">99815552400</xc:identifier>
+            <xc:recordID type="OCoLC">71350384</xc:recordID>
+            <xc:recordID type="NRU">3438149</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>edited by John C. Knapp ; foreword by Jimmy Carter.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>For the common good : the ethics of leadership in the 21st century /</dcterms:title>
+            <rdvocab:placeOfProduction>Westport, Conn. :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Praeger Publishers,</dcterms:publisher>
+            <dcterms:issued>2007.</dcterms:issued>
+            <dcterms:extent>xviii, 174 p. ;</dcterms:extent>
+            <rdvocab:dimensions>25 cm.</rdvocab:dimensions>
+            <dcterms:description>Includes bibliographical references (p. [151]-162) and index.</dcterms:description>
+            <dcterms:tableOfContents>Foreword / Jimmy Carter -- Introduction / John C. Knapp -- The new climate for leadership -- Scanning more distant horizons / Erik R. Peterson -- The three elements of good leadership in rapidly changing times / Lynn Barendsen and Howard Gardner -- Leadership, accountability, and the deficit of public trust / John C. Knapp -- Peter Drucker's light : illuminating the path for 21st-century leaders / Frances Hesselbein -- Leadership challenges in the global context -- Spilling sweat, not blood : leadership for a world without conflict / John Hume -- Lessons from Gandhi's leadership : wisdom for the new millennium / Arun Gandhi -- A better way : business leadership for the greater good / Ray C. Anderson -- Problems of hunger and the global response / E.T. York -- The promise of higher education -- Ethical leadership in a global society : (how) can universities lead? / Beheruz N. Sethna -- Cross-sector collaboration in the public interest / David J. Siegel and Michael J. Siegel -- Global ethical leadership and higher education: "being the change you wish to see" / Lawrence Edward Carter Sr. -- Notes -- Index.</dcterms:tableOfContents>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">0275992594</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/68</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/67</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/67" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">HM1261</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:DDC">174</dcterms:subject>
+            <rdvocab:titleOfWork>For the common good :</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Leadership-Moral and ethical aspects.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Leadership</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Moral and ethical aspects.</xc:subject>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/68</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/68" type="expression">
+            <xc:titleOfExpression>For the common good :</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:contributor>Knapp, John C.</xc:contributor>
+            <xc:contributor>Carter, Jimmy, 1924-</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/67</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/70</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/70" type="manifestation">
+            <xc:identifier type="SoundNr">SUR 1012</xc:identifier>
+            <xc:recordID type="OCoLC">56988393</xc:recordID>
+            <xc:recordID type="NRU">3458528</xc:recordID>
+            <dcterms:title>50 years of the Crouse Holtkamp</dcterms:title>
+            <rdvocab:placeOfProduction>[Syracuse, New York] :</rdvocab:placeOfProduction>
+            <dcterms:publisher>SUR,</dcterms:publisher>
+            <dcterms:issued>p2004.</dcterms:issued>
+            <dcterms:extent>1 sound disc :</dcterms:extent>
+            <rdvocab:soundCharacteristics>digital ;</rdvocab:soundCharacteristics>
+            <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+            <dcterms:description>Title from insert.</dcterms:description>
+            <dcterms:description>Compact disc.</dcterms:description>
+            <dcterms:description>Program and biographical notes in English with organ specificatiions ([12] p. : port.) in container.</dcterms:description>
+            <dcterms:tableOfContents>Prelude and fugue in E-flat major, BWV 552 (1739) (16:52) / Johann Sebastian Bach -- Récit de Tierce en taille (Livre d"ORgue, 1699) (5:13) / Nicolas de Grigny -- cantio sacra "warum betrübst du dich, mein Herz" (tabulatura Nova, Teil 1, 1624) Chorale in 12 verses (11:59) / Samuel Scheidt -- Improvisation in baroque style (Passacaglia) (1968) (10:47) / David N. Johnson -- Cortège et Litanie, op. 19, No. 2 (1921) (6:23) / Marcel Dupré -- Choral varié sur "Veni Creator", Op. 4 (1930) (5:02) / Maurice Duruflé -- Alléluias sereins d'une âme qui désire le ciel (L'Ascension, No. 11, 1933) (7:22) / Olivier messiaen -- Pièce héroïque (Trois Piéces, No. 3, 1878) (7:58) / César Franck.</dcterms:tableOfContents>
+            <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+            <xc:type007>Sound recording</xc:type007>
+            <xc:typeSMD>Sound disk</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/76</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/78</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/72</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/74</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/84</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/86</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/80</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/82</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/71</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/71" type="work">
+            <rdvocab:titleOfWork>50 years of the Crouse Holtkamp</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/72</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/72" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Tabulatura nova. Warum betrübst du dich, mein Herz. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/79</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/73</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/73" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Improvisation in baroque style. </rdvocab:titleOfWork>
+            <xc:creator>Johnson, David N. (David Nathaniel), 1922-1987.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/74</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/74" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Improvisation in baroque style. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/73</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/75</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/75" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Cortège et litanie. </rdvocab:titleOfWork>
+            <xc:creator>Dupré, Marcel, 1886-1971.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/76</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/76" type="expression">
+            <xc:titleOfExpression>50 years of the Crouse Holtkamp</xc:titleOfExpression>
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/71</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/77</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/77" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Livre d'orgue. Messe. Récit de tierce en taille. </rdvocab:titleOfWork>
+            <xc:creator>Grigny, Nicolas de, 1672-1703.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/78</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/78" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Livre d'orgue. Messe. Récit de tierce en taille. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/77</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/79</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/79" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Tabulatura nova. Warum betrübst du dich, mein Herz. </rdvocab:titleOfWork>
+            <xc:creator>Scheidt, Samuel, 1587-1654.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/80</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/80" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Ascension, organ. Alléluias sereins d'une âme qui désire le ciel. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/87</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/81</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/81" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Pièces, organ (1878). Pièce héroïque. </rdvocab:titleOfWork>
+            <xc:creator>Franck, César, 1822-1890.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/82</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/82" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Pièces, organ (1878). Pièce héroïque. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/81</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/83</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/84</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/84" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Cortège et litanie. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/75</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/85</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/85" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Prélude, adagio et choral varié sur le thème du Veni Creator. Choral varié. </rdvocab:titleOfWork>
+            <xc:creator>Duruflé, Maurice, 1902-1986.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/86</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/86" type="expression">
+            <rdvocab:performerNarratorAndOrPresenter>Performances by Arthur Poister, Will Headlee, Donald Sutherland, David N. Johnson, Katherine Pardee and Christopher Marks.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <rdarole:performer>Poister, Arthur, 1898-1980.</rdarole:performer>
+            <rdarole:performer>Headlee, Will.</rdarole:performer>
+            <rdarole:performer>Sutherland, Donald, 1939-</rdarole:performer>
+            <rdarole:performer>Johnson, David N. (David Nathaniel), 1922-1987.</rdarole:performer>
+            <rdarole:performer>Pardee, Katharine.</rdarole:performer>
+            <rdarole:performer>Marks, Christopher.</rdarole:performer>
+            <rdvocab:titleOfExpression>Prélude, adagio et choral varié sur le thème du Veni Creator. Choral varié. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/85</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/87</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/87" type="work">
+            <xc:subject xsi:type="dcterms:LCSH">Organ music.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Canons, fugues, etc.</xc:subject>
+            <xc:relation>Bach, Johann Sebastian, 1685-1750. Präludium und Fuge, organ BWV 552, E♭ major.</xc:relation>
+            <rdvocab:titleOfWork>Ascension, organ. Alléluias sereins d'une âme qui désire le ciel. </rdvocab:titleOfWork>
+            <xc:creator>Messiaen, Olivier, 1908-1992.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/88</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/90</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/90" type="manifestation">
+            <xc:recordID type="WaSeSS">ssib1544381</xc:recordID>
+            <xc:recordID type="NRU">4213611</xc:recordID>
+            <dcterms:title>Solid-State Circuits Conference, 2007. ASSCC '07. IEEE Asian</dcterms:title>
+            <rdvocab:placeOfProduction>[S.l.] :</rdvocab:placeOfProduction>
+            <dcterms:publisher>[s.n.]</dcterms:publisher>
+            <dcterms:description>Title from content provider.</dcterms:description>
+            <dcterms:identifier>Full text http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=JC_001544381&amp;T=marc</dcterms:identifier>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:typeLeader06>Computer file</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <xc:type007>Electronic resource</xc:type007>
+            <xc:typeSMD>Remote</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/92</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/117</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/91</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/91" type="work">
+            <rdvocab:titleOfWork>Solid-State Circuits Conference, 2007. ASSCC '07. IEEE Asian (Online)</rdvocab:titleOfWork>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/92</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/92" type="expression">
+            <xc:titleOfExpression>Solid-State Circuits Conference, 2007. ASSCC '07. IEEE Asian (Online)</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <xc:contributor>IEEE Xplore (Online service)</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/91</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/99</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/99" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>F351.A1 M67</xc:callNumber>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v.51 (1964)-</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 96, no. 1 (June 2009)</xc:textualHoldings>
+            <xc:recordID type="">4405</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/31</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/100</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/100" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>CB53 .D95s</xc:callNumber>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 1 &lt;4 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 2 &lt;2 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 3 &lt;3 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 4 &lt;2 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 5 &lt;2 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 6-9</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 10 &lt;2 copies&gt;</xc:textualHoldings>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 11</xc:textualHoldings>
+            <xc:recordID type="">531175</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/35</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/101</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/101" type="holdings">
+            <xc:location>ArtStack</xc:location>
+            <xc:callNumber>CB53 .D95s</xc:callNumber>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 2</xc:textualHoldings>
+            <xc:recordID type="">531176</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/35</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/102</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/102" type="holdings">
+            <xc:location>DivColl</xc:location>
+            <xc:callNumber>CB53 .D85</xc:callNumber>
+            <xc:recordID type="">531177</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/35</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/103</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/104</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/104" type="holdings">
+            <xc:location>DivReadRm</xc:location>
+            <xc:callNumber>PN147 .G444 1998</xc:callNumber>
+            <xc:recordID type="">1765409</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/105</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/105" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>PN147 .G444 1998</xc:callNumber>
+            <xc:recordID type="">1772405</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/106</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/106" type="holdings">
+            <xc:location>Robbins</xc:location>
+            <xc:callNumber>PN147 .G444 1998</xc:callNumber>
+            <xc:recordID type="">1772407</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/107</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/107" type="holdings">
+            <xc:location>SibRef</xc:location>
+            <xc:callNumber>PN147.G43 M6 1998</xc:callNumber>
+            <xc:recordID type="">1778556</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/108</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/108" type="holdings">
+            <xc:location>MinerRef5</xc:location>
+            <xc:callNumber>PN 147 G437 1998</xc:callNumber>
+            <xc:recordID type="">1779570</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/109</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/109" type="holdings">
+            <xc:location>RheesCompd</xc:location>
+            <xc:callNumber>PN147 .G444 1998</xc:callNumber>
+            <xc:recordID type="">1884704</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/110</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/110" type="holdings">
+            <xc:location>HighRef</xc:location>
+            <xc:callNumber>PN 147 G437 1998</xc:callNumber>
+            <xc:recordID type="">2775977</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/47</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/111</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/111" type="holdings">
+            <xc:location>CarlPer</xc:location>
+            <xc:callNumber>QH301 .M67</xc:callNumber>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v.1, no.1 (April 1999)-</xc:textualHoldings>
+            <xc:recordID type="">1845448</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/57</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/112</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/112" type="holdings">
+            <xc:location>MinerSer2</xc:location>
+            <xc:callNumber>Serial</xc:callNumber>
+            <xc:textualHoldings type="Basic Bibliographic Unit">v. 3 (2000)-v. 4 (2001)</xc:textualHoldings>
+            <xc:recordID type="">1886969</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/57</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/113</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/113" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>PS3552.U827 K5 1988</xc:callNumber>
+            <xc:recordID type="">2590841</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/66</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/114</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/114" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>HM1261 .F67 2007</xc:callNumber>
+            <xc:recordID type="">3629512</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/66</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/115</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/115" type="holdings">
+            <xc:location>SibRecrd</xc:location>
+            <xc:callNumber>CD 20,564</xc:callNumber>
+            <xc:recordID type="">3655186</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/70</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/116</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/116" type="work">
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <rdvocab:titleOfWork>Solid-State Circuits Conference, 2008. ASSCC '08. IEEE Asian (Online)</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/117</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/117" type="expression">
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <xc:contributor>IEEE Xplore (Online service)</xc:contributor>
+            <rdvocab:titleOfExpression>Solid-State Circuits Conference, 2008. ASSCC '08. IEEE Asian (Online)</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/116</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/118</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/118" type="holdings">
+            <xc:location>Internet</xc:location>
+            <dcterms:identifier>http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=JC_001544381&amp;T=marc Full text</dcterms:identifier>
+            <xc:recordID type="">4455189</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/90</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/119</identifier>
+        <datestamp>2011-02-24T16:00:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:marctoxctransformation/119" type="holdings">
+            <xc:location>RheesStack</xc:location>
+            <xc:callNumber>Test</xc:callNumber>
+            <xc:recordID type="">4547366</xc:recordID>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/42</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

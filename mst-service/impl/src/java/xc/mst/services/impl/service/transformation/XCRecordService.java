@@ -44,10 +44,14 @@ public class XCRecordService extends GenericMetadataServiceService {
 	public String getType(Record r) {
 		r.setMode(Record.JDOM_MODE);
 		Element el = r.getOaiXmlEl();
-		Element entityEl = el.getChild("entity", AggregateXCRecord.XC_NAMESPACE);
-		String type = entityEl.getAttributeValue("type");
+		if (el != null) {
+			Element entityEl = el.getChild("entity", AggregateXCRecord.XC_NAMESPACE);
+			if (entityEl != null) {
+				return entityEl.getAttributeValue("type");
+			}
+		}
 
-		return type;
+		return null;
 	}
 
 	/**

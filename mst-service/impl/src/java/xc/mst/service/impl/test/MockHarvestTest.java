@@ -9,7 +9,6 @@
 package xc.mst.service.impl.test;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,16 +19,10 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.testng.annotations.Test;
 
-import xc.mst.bo.harvest.HarvestSchedule;
-import xc.mst.bo.harvest.HarvestScheduleStep;
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
 import xc.mst.harvester.HarvestManager;
 import xc.mst.oai.Facade;
 import xc.mst.oai.OaiRequestBean;
-import xc.mst.repo.DefaultRepository;
-import xc.mst.repo.Repository;
-import xc.mst.services.GenericMetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
@@ -43,102 +36,50 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 	public static final String INPUT_FOLDER = "../test/mock_harvest_input";
 	public static final String ACTUAL_OUTPUT_FOLDER = "test/mock_harvest_actual_output";
 	
-	protected HarvestManager harvestManager = null;
 	protected Date harvestOutFrom = null;
 	protected Date harvestOutUntil = null;
 	protected XmlHelper xmlHelper = new XmlHelper();
-
-	@Test
-	public void startToFinish() throws Exception  {
-		try {
-			dropOldSchemas();
-			LOG.debug("after dropOldSchemas");
-			installProvider();
-			LOG.debug("after installProvider");
-			installService();
-			LOG.debug("after installService");
-
-			createHarvestSchedule();
-			LOG.debug("after createHarvestSchedule");
-			
-			Date previousLastModified = null;
-			while (true) {
-				Thread t = new Thread(harvestManager);
-				t.start();
-				LOG.debug("previousFileLastModified: "+previousLastModified);
-				LOG.debug("repo.getLastModified(): "+repo.getLastModified());
-				
-				if (previousLastModified != null && previousLastModified.equals(repo.getLastModified())) {
-					break;
-				} else {
-					previousLastModified = repo.getLastModified();
-				}
-				
-				Service s = getServicesService().getServiceByName(getServiceName());
-				GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
-				
-				if (repo instanceof DefaultRepository) {
-					((DefaultRepository)repo).sleepUntilReady();
-				}
-				
-				ms.process(repo, null, null, null);
-				
-				if (ms.getRepository() instanceof DefaultRepository) {
-					((DefaultRepository)ms.getRepository()).sleepUntilReady();
-				}
-				
-				harvestOutRecordsFromMST();
-			}
-				
-			finalTest();
-			
-			compareAgainstExpectedOutput();
-			
-		} catch (Throwable t) {
-			getUtil().throwIt(t);
-		}
-	}
 	
+	public MockHarvestTest() {
+		this.shouldValidateRepo = false;
+	}
+
 	public abstract String getFolder();
 	
-	public void installProvider() throws Exception {
-		provider = new Provider();
+	@Test
+	public void startToFinish() throws Exception  {
+		//HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 
-		provider.setName(getRepoName());
-		provider.setDescription("Repository used in TestNG tests");
-		provider.setOaiProviderUrl(getProviderUrl());
-		provider.setCreatedAt(new java.util.Date());
-		getProviderService().insertProvider(provider);
+		printClassPath();
 		
-		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
-        repo.setName(provider.getName());
-		repo.setProvider(provider);
+		dropOldSchemas();
+		LOG.info("after dropOldSchemas");
+		installProvider();
+		LOG.info("after installProvider");
+		installService();
+		LOG.info("after installService");
+
+		configureProcessingRules();
+		LOG.info("after configureProcessingRules");
+
+		Date previousLastModified = null;
+		while (true) {	
+			createHarvestSchedule();
+			waitUntilFinished();
+			if (previousLastModified != null && previousLastModified.equals(repo.getLastModified())) {
+				break;
+			} else {
+				previousLastModified = repo.getLastModified();
+			}
+			harvestOutRecordsFromMST();
+		}
+		finalTest();
+		compareAgainstExpectedOutput();
 	}
 	
-	public void createHarvestSchedule() throws Exception {
-		HarvestSchedule schedule = new HarvestSchedule();
-		Calendar nowCal = Calendar.getInstance();
-        schedule.setScheduleName("Test Schedule Name");
-        schedule.setDayOfWeek(nowCal.get(Calendar.DAY_OF_WEEK));
-
-        schedule.addFormat(null);
-        schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
-        schedule.setId(111);
-        schedule.setMinute(nowCal.get(Calendar.MINUTE));
-        schedule.setProvider(provider);
-        schedule.setRecurrence("Daily");
-        schedule.setStartDate(java.sql.Date.valueOf("2009-05-01"));
-		
-		harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
-		HarvestScheduleStep hss = new HarvestScheduleStep();
-		hss.setFormat(null);
-		hss.setSet(null);
-		hss.setSchedule(schedule);
-		schedule.addStep(hss);
-		harvestManager.setHarvestSchedule(schedule);
-	}
-	
+	@Override
 	public void harvestOutRecordsFromMST() throws Exception {
+		HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 		if (harvestOutUntil != null) {
 			harvestOutFrom = harvestOutUntil;
 		} else {
@@ -165,8 +106,9 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
 		
 		StringBuilder stringBuilder = new StringBuilder();
-		
-		LOG.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
+
+		LOG.debug("harvestManager: "+harvestManager);
+		LOG.debug("harvestManager.lastOaiRequest: "+harvestManager.lastOaiRequest);
 		stringBuilder.append(facade.execute(bean));
 		
 		harvestOutResponse = stringBuilder.toString();
@@ -179,7 +121,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		if (!outputFolder.exists()) {
 			outputFolder.mkdir();
 		}
-		Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/"+provider.getLastOaiRequest(), harvestOutResponse);
+		Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/"+
+				harvestManager.lastOaiRequest, harvestOutResponse);
 	}
 	
 	public void compareAgainstExpectedOutput() {

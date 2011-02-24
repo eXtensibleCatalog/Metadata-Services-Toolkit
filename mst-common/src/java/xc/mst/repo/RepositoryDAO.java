@@ -215,8 +215,10 @@ public class RepositoryDAO extends BaseDAO {
 			nextId = this.getNextOaiId.executeObject(Integer.class, idsAtOnce);
 			nextIdInDB = nextId + idsAtOnce;
 		}
+		long id = this.nextId;
+		this.nextId++;
 		oaiIdLock.unlock();
-		return this.nextId++;
+		return id;
 	}
 	
 	public void addRecords(String name, List<Record> records) {

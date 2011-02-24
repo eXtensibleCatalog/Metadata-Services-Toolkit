@@ -402,8 +402,10 @@ public class TransformationService extends SolrTransformationService {
 			}
 			TimingLogger.add("output records", results.size());
 			for (OutputRecord or : results) {
-				String type = getXCRecordService().getType((Record)or);
-				or.setIndexedObjectType(type);
+				if (!or.getDeleted()) {
+					String type = getXCRecordService().getType((Record)or);
+					or.setIndexedObjectType(type);
+				}
 				or.setFormat(xcFormat);
 			}
 			if (results.size() == 0) {

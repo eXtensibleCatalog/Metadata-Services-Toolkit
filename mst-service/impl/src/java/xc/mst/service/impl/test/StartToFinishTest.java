@@ -35,6 +35,7 @@ import xc.mst.utils.MSTConfiguration;
 public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
+	protected boolean shouldValidateRepo = false;
 	
 	protected Provider provider = null;
 	protected Repository repo = null;
@@ -138,22 +139,6 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		LOG.info("after waitUntilFinished");
 		
 		finalTest();
-		/*
-		indexHarvestedRecords();
-		LOG.debug("after indexHarvestedRecords");
-		indexServicedRecords();
-		LOG.debug("after indexServicedRecords");
-		
-		LOG.debug("after finalTest");
-
-				
-		Thread.sleep(60000);
-		createHarvestSchedule();
-		LOG.debug("after createHarvestSchedule");
-
-		waitUntilFinished();
-		LOG.debug("after waitUntilFinished");
-		*/
 		
 		harvestOutRecordsFromMST();
 		LOG.debug("after harvestOutRecordsFromMST");
@@ -194,7 +179,9 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		provider.setCreatedAt(new java.util.Date());
 		provider.setNumberOfRecordsToHarvest(getNumberOfRecordsToHarvest());
 		getProviderService().insertProvider(provider);
-		getValidateRepository().validate(provider.getId());
+		
+		if (shouldValidateRepo)
+			getValidateRepository().validate(provider.getId());
 		
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
