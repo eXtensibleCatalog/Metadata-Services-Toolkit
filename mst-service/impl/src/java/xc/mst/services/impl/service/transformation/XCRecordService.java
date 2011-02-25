@@ -645,12 +645,13 @@ public class XCRecordService extends GenericMetadataServiceService {
 		}) {
 			if (previousIds != null && previousIds.size() > 0) {
 				for (int i=0; i<previousIds.size(); i++) {
+					LOG.debug("deleting record with id: "+previousIds.get(i));
 					Record record2delete = new Record();
 					record2delete.setId(previousIds.get(i));
 					record2delete.setStatus(Record.DELETED);
 					records.add(record2delete);
 				}
-			}	
+			}
 		}
 		
 		return records;
@@ -684,7 +685,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		List<String> manifestationHeldOAIIds = new ArrayList<String>();
 		for(Element holdingsElement : ar.holdingsElements){
 			
-			long holdingId = getRepositoryDAO().getNextId();
+			long holdingId = getId(ar.getPreviousHoldingIds());
 			String holdingOaiId = getRecordService().getOaiIdentifier(
 					holdingId, getMetadataService().getService());
 			

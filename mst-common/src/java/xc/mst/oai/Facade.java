@@ -739,13 +739,13 @@ public class Facade extends BaseManager
 				if(getRecords) {
 					
 					// For deleted record, just append the header
-					if (Record.ACTIVE != record.getStatus()) {
+					if (Record.DELETED == record.getStatus()) {
 						String header = getHeader(record);
 						header = header.replaceAll("<header>", "<header status=\"deleted\">");
 						xml.append("<record>\n")
 				          .append(header)
 				          .append("\n</record>\n");
-					} else { // If not deleted append header as well as record XML
+					} else if (Record.ACTIVE == record.getStatus()) {
 						xml.append("<record>\n");
 						
 						xml.append(getHeader(record));

@@ -12,11 +12,13 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
+import org.jdom.Element;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.service.Service;
@@ -108,12 +110,35 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		LOG.debug("harvestManager: "+harvestManager);
-		LOG.debug("harvestManager.lastOaiRequest: "+harvestManager.lastOaiRequest);
+		LOG.debug("harvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
 		stringBuilder.append(facade.execute(bean));
 		
 		harvestOutResponse = stringBuilder.toString();
 		Document doc = xmlHelper.getJDomDocument(harvestOutResponse);
 		harvestOutResponse = xmlHelper.getStringPretty(doc.getRootElement());
+		
+		Element oaipmhEl = doc.getRootElement();
+		List records = oaipmhEl.getChild("ListRecords", oaipmhEl.getNamespace()).
+			getChildren("record", oaipmhEl.getNamespace());
+		
+		for (String folderStr : new String[] {
+				ACTUAL_OUTPUT_FOLDER+"/"+getFolder(),
+				ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/byRecordIds"}) {
+			File outFolder = new File(folderStr);
+			if (!outFolder.exists()) {
+				outFolder.mkdir();
+			}
+		}
+		
+		for (Object rObj : records) {
+			Element rEl = (Element)rObj;
+			String oaiId = rEl.getChild("header", oaipmhEl.getNamespace())
+				.getChildText("identifier", oaipmhEl.getNamespace());
+			int lastIndexOf = oaiId.lastIndexOf('/');
+			oaiId = oaiId.substring(lastIndexOf+1);
+			Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/byRecordIds/"+
+					oaiId+"-"+HarvestManager.lastOaiRequest, xmlHelper.getStringPretty(rEl));
+		}
 		
 		LOG.debug("XML response");
 		LOG.debug(harvestOutResponse);
@@ -122,7 +147,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 			outputFolder.mkdir();
 		}
 		Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/"+
-				harvestManager.lastOaiRequest, harvestOutResponse);
+				HarvestManager.lastOaiRequest, harvestOutResponse);
 	}
 	
 	public void compareAgainstExpectedOutput() {
@@ -149,6 +174,9 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 				}
 				for (String af : actualOutputFolder.list()) {
 					LOG.debug("af: "+af);
+					if (af.contains("byRecordIds")) {
+						continue;
+					}
 					if (expectedOutputFiles.contains(af)) {
 						expectedOutputFiles.remove(af);
 						if (new XmlHelper().diffXmlFiles(

@@ -31,6 +31,7 @@
 	</target>
 
 	<target name="init">
+		<delete dir="${build.test}" />
 		<mkdir dir="${build.test.classes}" />
 		<mkdir dir="${build.test.actual-output-records}" />
 		<mkdir dir="${build.test.mock-harvest-actual-output}" />
@@ -102,17 +103,10 @@
 		 <fileset dir="ivy" includes="*.jar" />
 	</path>
 
-	<path id="classpath.mst">
-		<fileset dir="${build.lib}">
-			<include name="*.jar" />
-			<exclude name="mst-service*" />
-		</fileset>
-	</path>
-
 	<path id="classpath.compile">
 		<fileset dir="${build.lib}">
-			<include name="*.jar" />
 			<exclude name="mst-service*" />
+			<include name="*.jar" />
 		</fileset>
 		<fileset dir="${build.zip.lib}">
 			<include name="*.jar" />
@@ -120,24 +114,15 @@
 	</path>
 
 	<path id="classpath.test.compile">
-		<fileset dir="${build.lib}">
-			<include name="*.jar" />
-			<exclude name="mst-service*" />
-		</fileset>
-		<fileset dir="${build.zip.lib}">
-			<include name="*.jar" />
-		</fileset>
+		<path refid="classpath.compile"/>
 		<pathelement path="${build.classes}" />
 	</path>
 
 	<path id="classpath.test.run">
 		<fileset dir="${build.lib}">
-			<include name="*.jar" />
 			<exclude name="mst-service*" />
+			<include name="*.jar" />
 		</fileset>
-		<!--
-		<pathelement path="${build.test.classes}" />
-		-->
 	</path>
 
 	<target name="echo.path">
@@ -171,19 +156,6 @@
 
 	<target name="retrieve" depends="ivy-report">
 		<ivy:retrieve sync="true" pattern="${build.lib}/[artifact]-[revision].[ext]"/>
-		<copy todir="${build.zip.lib}" overwrite="true">
-			<fileset dir="${build.lib}">
-				<include name="mst-service-impl*.jar" />
-				<!--
-				anything jars you've added in your ivy-custom.xml should be included in the zip
-				all the other jars are already loaded into the mst-platform
-				<include name="" />
-				-->
-			</fileset>
-		</copy>
-		<delete>
-			<fileset dir="${build.lib}" includes="mst-service*" />
-		</delete>
 	</target>
 
 	<target name="compile" depends="retrieve, compile.nodep"/>
@@ -194,30 +166,10 @@
 			debug="on"
 			deprecation="on"
 			debuglevel="lines,vars,source">
-			<!--
-			<classpath id="classpath.compile">
-				<fileset dir="${build.lib}">
-					<include name="*.jar" />
-					<exclude name="mst-service*" />
-				</fileset>
-				<fileset dir="${build.zip.lib}">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-			-->
 		</javac>
 	</target>
 
 	<target name="copy-resources" depends="copy-custom-libs, compile, copy-resources.nodep" />
-
-	<!--
-	<target name="concat-custom-local-props" if="">
-	</target>
-
-	<target name="just-copy-custom-props" unless="">
-	</target>
-	-->
-
 	<target name="copy-resources.nodep" depends="compile.nodep">
 		<copy todir="${build.classes}">
 			<fileset dir="${src.java}">
@@ -312,7 +264,17 @@
 		<delete dir="${build.mst-instances.dir}" />
 		<unzip src="${build.lib}/mst-instances-${mst-instances.version}.jar"
 			dest="${build.dir}" />
-		<ant target="retrieve" />
+		<ant target="init" />
+		<copy todir="${build.zip.lib}" overwrite="true">
+			<fileset dir="${build.lib}">
+				<include name="mst-service-impl*.jar" />
+				<!--
+				add any jars you've added in your ivy-custom.xml should be included in the zip
+				all the other jars are already loaded into the mst-platform
+				<include name="" />
+				-->
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="mst-sql.test">
@@ -356,16 +318,6 @@
 			<jvmarg value="-Xmx${test.memory}" />
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9001" />
-		</java>
-	</target>
-
-	<target name="test.internals" depends="install-mst, compile.test, test.internals.nodep" />
-	<target name="test.internals.nodep" depends="init.test, compile.test.nodep">
-		<java classpathref="classpath.test.run" 
-				classname="xc.mst.services.test.MetadataServiceSpecificTest"
-				fork="true" 
-				dir="${build.dir}" >
-			<env key="service.name" value="${normalized.service.name}"/>
 		</java>
 	</target>
 

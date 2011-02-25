@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -296,8 +297,10 @@ public class DefaultRepository extends BaseService implements Repository {
 			succIds = getRepositoryDAO().getSuccessorIds(name, r.getId());
 			predSuccMap.put(r.getId(), succIds);
 		}
-		if (succIds != null) {
-			for (Long succId : succIds) {
+		if (succIds != null && succIds.size() > 0) {
+			java.util.Set<Long> orderedSuccIds = new TreeSet<Long>();
+			orderedSuccIds.addAll(succIds);
+			for (Long succId : orderedSuccIds) {
 				Record or = new Record();
 				or.setId(succId);
 				r.getSuccessors().add(or);
