@@ -40,6 +40,7 @@ public interface Repository {
 	public void addRecords(List<Record> records);
 	
 	public boolean commitIfNecessary(boolean force);
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount);
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	

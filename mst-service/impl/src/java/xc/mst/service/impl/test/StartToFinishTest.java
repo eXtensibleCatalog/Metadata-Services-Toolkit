@@ -85,6 +85,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	protected Format getMarcXmlFormat() throws Exception {
 		return getFormat(new String[] {"marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
 	}
+	
+	protected Format getMarc21Format() throws Exception {
+		return getFormat(new String[] {"marc21", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
+	}
 
 	protected Format getRfc1807Format() throws Exception {
 		return getFormat(new String[] {"rfc1807", "http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1807.txt", "http://www.openarchives.org/OAI/1.1/rfc1807.xsd"});

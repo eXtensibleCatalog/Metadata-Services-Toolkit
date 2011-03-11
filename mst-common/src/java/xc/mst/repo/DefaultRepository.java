@@ -173,7 +173,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public boolean commitIfNecessary(boolean force) {
-		if (getRepositoryDAO().commitIfNecessary(name, force)) {
+		return commitIfNecessary(force, 0);
+	}
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
+		if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
 			predSuccMap.clear();
 			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
 			uplinks.clear();

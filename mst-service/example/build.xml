@@ -178,12 +178,9 @@
 		</copy>
 		<copy todir="${build.zip}">
 			<fileset dir=".">
-				<include name="errors/**/*" />
-			</fileset>
-		</copy>
-		<copy todir="${build.zip}">
-			<fileset dir=".">
 				<include name="sql/**/*.sql" />
+				<include name="xsl/*.xsl" />
+				<include name="errors/**/*" />
 			</fileset>
 		</copy>
 		<copy todir="${build.classes.services}">

@@ -32,6 +32,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.processing.Job;
@@ -99,6 +100,7 @@ public class DefaultServicesService extends BaseService
 	}
 
 	public void onApplicationEvent(ApplicationEvent event) {
+		LOG.info("ac-event: "+event);
 		/*
 		try {
 	        if (event instanceof ContextRefreshedEvent) {

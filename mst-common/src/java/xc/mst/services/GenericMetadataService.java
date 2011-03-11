@@ -426,9 +426,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);	
 	}
 	
-	protected boolean commitIfNecessary(boolean force) {
+	protected boolean commitIfNecessary(boolean force, long processedRecordCount) {
 		if (getRepository() != null) {
-			if (getRepository().commitIfNecessary(force)) {
+			if (getRepository().commitIfNecessary(force, processedRecordCount)) {
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
 				getMessageDAO().persistMessages(messages2insert);
@@ -549,7 +549,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 //				repo.addRecord(in);
 			}
 			
-			if (commitIfNecessary(false)) {
+			if (commitIfNecessary(false, processedRecordCount)) {
 				getServiceDAO().persist(sh);
 			}
 			
@@ -560,7 +560,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		//  TODO not inserting errors on input record.
 
 		if (atLeastOneRecordProcessed) {
-			commitIfNecessary(true);
+			commitIfNecessary(true, processedRecordCount);
 		}
 		if (!stopped) {
 			sh.setHighestId(null);

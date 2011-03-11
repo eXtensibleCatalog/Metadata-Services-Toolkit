@@ -245,7 +245,7 @@ public class HarvestManager extends WorkerThread {
 				if (baseURL.startsWith("file:")) {
 					File pwd = new File(".");
 					log.debug("pwd: "+pwd.getAbsolutePath());
-					pwd = new File("file://.");
+					pwd = new File(".");
 					log.debug("pwd: "+pwd.getAbsolutePath());
 					//pwd = new File(new URI("file://."));
 					//log.debug("pwd: "+pwd.getAbsolutePath());
@@ -257,16 +257,20 @@ public class HarvestManager extends WorkerThread {
 					log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
 					log.debug("provider: "+provider);
 					log.debug("provider.hashCode(): "+provider.hashCode());
-					for (File file : folder.listFiles()) {
-						log.debug("file.getName(): "+file.getName());
-						if (!file.getName().endsWith(".xml")) {
-							continue;
-						} else if (nextOne || provider.getLastOaiRequest() == null) {
+					if (folder.listFiles() != null) {
+						for (File file : folder.listFiles()) {
 							file2harvest = file;
-							break;
-						} else {
-							if (provider.getLastOaiRequest().equals(file.getName())) {
-								nextOne = true;
+							log.debug("file.getName(): "+file.getName());
+							log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
+							if (!file.getName().endsWith(".xml")) {
+								continue;
+							} else if (nextOne || provider.getLastOaiRequest() == null) {
+								file2harvest = file;
+								break;
+							} else {
+								if (provider.getLastOaiRequest().equals(file.getName())) {
+									nextOne = true;
+								}
 							}
 						}
 					}
@@ -393,7 +397,7 @@ public class HarvestManager extends WorkerThread {
 				retVal = false;
 			}
 		}
-		repo.commitIfNecessary(false);
+		repo.commitIfNecessary(false, recordsProcessedThisRun);
 		running.unlock();
 		return retVal;
 	}

@@ -65,15 +65,24 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		LOG.info("after configureProcessingRules");
 
 		String previousLastOaiRequest = HarvestManager.lastOaiRequest;
-		while (true) {	
+		while (true) {
+			LOG.debug("createHarvestSchedule()-1");
 			createHarvestSchedule();
+			LOG.debug("createHarvestSchedule()-2");
+			LOG.debug("waitUntilFinished()-1");
 			waitUntilFinished();
-			if (previousLastOaiRequest != null && previousLastOaiRequest.equals(repo.getLastModified())) {
+			LOG.debug("waitUntilFinished()-2");
+			LOG.debug("previousLastOaiRequest: "+previousLastOaiRequest);
+			LOG.debug("HarvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
+			if (HarvestManager.lastOaiRequest == null || (
+					previousLastOaiRequest != null && previousLastOaiRequest.equals(HarvestManager.lastOaiRequest))) {
 				break;
 			} else {
 				previousLastOaiRequest = HarvestManager.lastOaiRequest;
 			}
+			LOG.debug("createHarvestSchedule()-1");
 			harvestOutRecordsFromMST();
+			LOG.debug("createHarvestSchedule()-2");
 		}
 		finalTest();
 		compareAgainstExpectedOutput();

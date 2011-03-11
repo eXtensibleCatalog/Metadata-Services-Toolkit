@@ -59,9 +59,11 @@ public class RepositoryService extends BaseService {
 	public Date getLastModified() {
 		Date d = null;
 		for (Repository r : getAll()) {
-			Date d2 = getRepositoryDAO().getLastModified(r.getName());
-			if (d2 != null && (d == null || d2.after(d))) {
-				d = d2;
+			if (getRepositoryDAO().ready4harvest(r.getName())) {
+				Date d2 = getRepositoryDAO().getLastModified(r.getName());
+				if (d2 != null && (d == null || d2.after(d))) {
+					d = d2;
+				}
 			}
 		}
 		return d;

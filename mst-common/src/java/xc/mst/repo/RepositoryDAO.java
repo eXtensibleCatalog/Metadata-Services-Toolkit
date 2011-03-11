@@ -243,7 +243,7 @@ public class RepositoryDAO extends BaseDAO {
 		}
 	}
 	
-	protected boolean commitIfNecessary(String name, boolean force) {
+	protected boolean commitIfNecessary(String name, boolean force, long processedRecordsCount) {
 		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
 		int batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
 		if (recordsToAdd != null) {
@@ -463,6 +463,12 @@ public class RepositoryDAO extends BaseDAO {
 		        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
 		        LOG.debug(RECORD_UPDATES_TABLE+" committed: "+new Date());
 		        LOG.debug("updateTime: "+new Date(updateTime));
+		        
+		        LOG.debug("processedRecordsCount: "+processedRecordsCount);
+		        LOG.debug("db.numInserts2dropIndexes: "+MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0));
+		        if (processedRecordsCount > MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0)) {
+		        	dropIndicies(name);
+		        }
 			} else {
 				try {
 					String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
@@ -664,14 +670,14 @@ public class RepositoryDAO extends BaseDAO {
 						if (r.getUpdatedAt() == null) {
 							os.write(updateTimeBytes);	
 						} else {
-							os.write(sdf.format(r.getUpdatedAt()).getBytes());		
+							os.write(sdf.format(r.getUpdatedAt()).getBytes());
 						}
 			        }
 			        os.close();
 			        TimingLogger.stop("RECORD_UPDATES_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_UPDATES_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
-							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
+							"load data infile '"+dbLoadFileStr+"' into table "+
 							getTableName(name, RECORD_UPDATES_TABLE)+
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
@@ -858,7 +864,7 @@ public class RepositoryDAO extends BaseDAO {
 			sb.append("select straight_join 1 ")
 				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_date_updated) , ")
 				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
-				.append("where r.record_id = u.record_id  and (u.date_updated > ? or ? is null)  and u.date_updated <= ? limit 1");
+				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? limit 1");
 			List atleastone = this.jdbcTemplate.queryForList(sb.toString(), from, from, until);
 			if (atleastone == null || atleastone.size() == 0) {
 				return new ArrayList<Record>();
@@ -886,7 +892,7 @@ public class RepositoryDAO extends BaseDAO {
 				" where r.record_id = x.record_id " +
 					" and (r.record_id > ? or ? is null) "+
 					" and r.record_id = u.record_id " +
-					" and (u.date_updated > ? or ? is null) "+
+					" and (u.date_updated >= ? or ? is null) "+
 					" and u.date_updated <= ?  "
 					);
 		/*
@@ -963,7 +969,7 @@ public class RepositoryDAO extends BaseDAO {
 		sb.append(
 				" where  (r.record_id > ? or ? is null) "+
 					" and r.record_id = u.record_id " +
-					" and (u.date_updated > ? or ? is null) "+
+					" and (u.date_updated >= ? or ? is null) "+
 					" and u.date_updated <= ?  " +
 					" group by r.record_id "
 					);
@@ -1076,7 +1082,7 @@ public class RepositoryDAO extends BaseDAO {
 				boolean whereInserted = false;
 				if (from != null) {
 					whereInserted = true;
-					sb.append("where date_updated < ? ");
+					sb.append("where date_updated <= ? ");
 					paramsList.add(from);
 				}
 				if (until != null) {
@@ -1085,7 +1091,7 @@ public class RepositoryDAO extends BaseDAO {
 					} else {
 						sb.append("or ");
 					}
-					sb.append("date_updated > ? ");
+					sb.append("date_updated >= ? ");
 					paramsList.add(until);
 				}
 				Object[] params = paramsList.toArray();
@@ -1293,7 +1299,7 @@ public class RepositoryDAO extends BaseDAO {
 						" and rs.set_id = s.set_id "+
 						" and (rs.record_id > ? or ? is null) "+
 						" and rs.record_id <= ? "+
-						" and (u.date_updated > ? or ? is null) "+
+						" and (u.date_updated >= ? or ? is null) "+
 						" and u.date_updated <= ? "+
 						" order by rs.record_id ");
 			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
@@ -1341,7 +1347,7 @@ public class RepositoryDAO extends BaseDAO {
 							" left outer join ("+MessageDAO.MESSAGE_DETAILS_TABLE+" md) on (m.record_message_id=md.record_message_id) "+
 					" where (u.record_id > ? or ? is null) "+
 						" and u.record_id <= ? "+
-						" and (u.date_updated > ? or ? is null) "+
+						" and (u.date_updated >= ? or ? is null) "+
 						" and u.date_updated <= ? "+
 						" order by u.record_id ");
 			LOG.debug("name: "+name+" startingId: "+startingId+" highestId: "+highestId+" from:"+from+" until:"+until);
@@ -1603,140 +1609,191 @@ public class RepositoryDAO extends BaseDAO {
 	        return r;
 	    }        
 	}
+	
+	public void dropIndicies(String name) {
+		name = getUtil().getDBSchema(name);
+		TimingLogger.start("dropIndicies."+name);
+		String[] indicies2drop = new String[] {
+				"idx_"+name+"_"+RECORDS_TABLE+"_date_created", RECORDS_TABLE,
+				"idx_"+name+"_"+RECORDS_TABLE+"_status", RECORDS_TABLE,
+				"idx_"+name+"_"+RECORDS_TABLE+"_format_id", RECORDS_TABLE,
+				"idx_"+name+"_"+RECORD_UPDATES_TABLE+"_date_updated", RECORD_UPDATES_TABLE,
+				"idx_"+name+"_"+RECORD_UPDATES_TABLE+"_record_id", RECORD_UPDATES_TABLE,
+				"idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id", RECORDS_SETS_TABLE,
+				"idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id", RECORDS_SETS_TABLE,
+				"idx_"+name+"_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
+				"idx_"+name+"_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
+		};
+		for (int i=0; i<indicies2drop.length; i+=2) {
+			this.jdbcTemplate.execute("drop index "+indicies2drop[i]+" on "+getTableName(name, indicies2drop[i+1]));
+		}
+		java.util.Set<String> tables = new HashSet<String>();
+		List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show tables in "+name);
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				tables.add((String)row.values().iterator().next());
+			}
+		}
+		boolean dropIndiciesOnRecordLinks = false;
+		if (tables.contains(RECORD_LINKS_TABLE)) {
+			dropIndiciesOnRecordLinks = true;
+			rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORD_LINKS_TABLE));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					String indexName = (String)row.get("Key_name");
+					LOG.debug("indexName: "+indexName);
+					if (("idx_"+name+"_to_record_id").equals(indexName)) {
+						dropIndiciesOnRecordLinks = false;
+						break;
+					}
+				}
+			}	 
+		}
+		if (dropIndiciesOnRecordLinks) {
+			indicies2drop = new String[] {
+					"drop index idx_"+name+"_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE),
+					"drop index idx_"+name+"_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)
+			};
+			for (String index2drop : indicies2drop) {
+				execute(index2drop);
+			}
+		}
+		TimingLogger.stop("dropIndicies."+name);
+	}
 
 	public void createIndiciesIfNecessary(String name) {
 		name = getUtil().getDBSchema(name);
-		 TimingLogger.start("createIndiciesIfNecessary."+name);
-		 List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
-		 boolean genericRepoIndexExists = false;
-		 if (rows != null) {
-			 for (Map<String, Object> row : rows) {
-				 String indexName = (String)row.get("Key_name");
-				 LOG.debug("indexName: "+indexName);
-				 if (("idx_"+name+"_records_status").equals(indexName)) {
-					 genericRepoIndexExists = true;
-					 break;
-				 }
-			 }
-		 }
-		 java.util.Set<String> tables = new HashSet<String>();
-		 rows = this.jdbcTemplate.queryForList("show tables in "+name);
-		 if (rows != null) {
-			 for (Map<String, Object> row : rows) {
+		TimingLogger.start("createIndiciesIfNecessary."+name);
+		List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
+		boolean genericRepoIndexExists = false;
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
+				String indexName = (String)row.get("Key_name");
+				LOG.debug("indexName: "+indexName);
+				if (("idx_"+name+"_records_status").equals(indexName)) {
+					genericRepoIndexExists = true;
+					break;
+				}
+			}
+		}
+		java.util.Set<String> tables = new HashSet<String>();
+		rows = this.jdbcTemplate.queryForList("show tables in "+name);
+		if (rows != null) {
+			for (Map<String, Object> row : rows) {
 				tables.add((String)row.values().iterator().next());
-			 }
-		 }
-		 boolean createIndiciesOnRecordOaiIds = false;
-		 if (tables.contains(RECORD_OAI_IDS)) {
-			 createIndiciesOnRecordOaiIds = true;
-			 rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORD_OAI_IDS));
-			 if (rows != null) {
-				 for (Map<String, Object> row : rows) {
-					 String indexName = (String)row.get("Key_name");
-					 LOG.debug("indexName: "+indexName);
-					 createIndiciesOnRecordOaiIds = false;
-					 break;
-				 }
-			 }	 
-		 }
-		 boolean createIndiciesOnRecordLinks = false;
-		 if (tables.contains(RECORD_LINKS_TABLE)) {
-			 createIndiciesOnRecordLinks = true;
-			 rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORD_LINKS_TABLE));
-			 if (rows != null) {
-				 for (Map<String, Object> row : rows) {
-					 String indexName = (String)row.get("Key_name");
-					 LOG.debug("indexName: "+indexName);
-					 if (("idx_"+name+"_to_record_id").equals(indexName)) {
-						 createIndiciesOnRecordLinks = false;
-						 break;
-					 }
-				 }
-			 }	 
-		 }
+			}
+		}
+		boolean createIndiciesOnRecordOaiIds = false;
+		if (tables.contains(RECORD_OAI_IDS)) {
+			createIndiciesOnRecordOaiIds = true;
+			rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORD_OAI_IDS));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					String indexName = (String)row.get("Key_name");
+					LOG.debug("indexName: "+indexName);
+					createIndiciesOnRecordOaiIds = false;
+					break;
+				}
+			}	 
+		}
+		boolean createIndiciesOnRecordLinks = false;
+		if (tables.contains(RECORD_LINKS_TABLE)) {
+			createIndiciesOnRecordLinks = true;
+			rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORD_LINKS_TABLE));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					String indexName = (String)row.get("Key_name");
+					LOG.debug("indexName: "+indexName);
+					if (("idx_"+name+"_to_record_id").equals(indexName)) {
+						createIndiciesOnRecordLinks = false;
+						break;
+					}
+				}
+			}	 
+		}
 
-		 if (!genericRepoIndexExists) { 
-			 String[] indicies2create = new String[] {
-					 //"alter table"+getTableName(name, RECORDS_TABLE)+" add primary key (record_id)",
-					 "create index idx_"+name+"_records_date_created on "+getTableName(name, RECORDS_TABLE)+" (oai_datestamp)",
-					 "create index idx_"+name+"_records_status on "+getTableName(name, RECORDS_TABLE)+" (status)",
-					 "create index idx_"+name+"_records_format_id on "+getTableName(name, RECORDS_TABLE)+" (format_id)",
+		if (!genericRepoIndexExists) { 
+			String[] indicies2create = new String[] {
+					//"alter table"+getTableName(name, RECORDS_TABLE)+" add primary key (record_id)",
+					"create index idx_"+name+"_records_date_created on "+getTableName(name, RECORDS_TABLE)+" (oai_datestamp)",
+					"create index idx_"+name+"_records_status on "+getTableName(name, RECORDS_TABLE)+" (status)",
+					"create index idx_"+name+"_records_format_id on "+getTableName(name, RECORDS_TABLE)+" (format_id)",
 
-					 //"alter table "+getTableName(name, RECORD_UPDATES_TABLE)+" add primary key (id)",
-					 "create index idx_"+name+"_record_updates_date_updated on "+getTableName(name, RECORD_UPDATES_TABLE)+" (date_updated)",
-					 "create index idx_"+name+"_record_updates_record_id on "+getTableName(name, RECORD_UPDATES_TABLE)+" (record_id)",
+					//"alter table "+getTableName(name, RECORD_UPDATES_TABLE)+" add primary key (id)",
+					"create index idx_"+name+"_record_updates_date_updated on "+getTableName(name, RECORD_UPDATES_TABLE)+" (date_updated)",
+					"create index idx_"+name+"_record_updates_record_id on "+getTableName(name, RECORD_UPDATES_TABLE)+" (record_id)",
 					 
-					 //"alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
+					//"alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
 					 
-					 //"alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
-					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
-					 "create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
+					//"alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
+					"create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
+					"create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
 					 
-					 //"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
-					 //"alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
-					 "create index idx_"+name+"_record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
-					 "create index idx_"+name+"_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
+					//"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
+					//"alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
+					"create index idx_"+name+"_record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
+					"create index idx_"+name+"_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
 
-			 };
-			 for (String i2c : indicies2create) {
-				 TimingLogger.start(i2c.split(" ")[2]);
-				 try {
-					 this.jdbcTemplate.execute(i2c);
-				 } catch (Throwable t) {
-					 LOG.error("", t);
-				 }
-				 TimingLogger.stop(i2c.split(" ")[2]);
-			 }
-		 }
-		 if (createIndiciesOnRecordOaiIds) {
-			 // you might have to remove duplicates...
-			 // or for now, just put the primary key back
-			 /*
-			 String[] indicies2create = new String[] {
-					 "alter table"+getTableName(name, RECORD_OAI_IDS)+" add primary key (record_id)"
-			 };
-			 for (String i2c : indicies2create) {
-				 TimingLogger.start(i2c.split(" ")[2]);
-				 this.jdbcTemplate.execute(i2c);
-				 TimingLogger.stop(i2c.split(" ")[2]);
-			 }
-			 */
-		 }
-		 if (createIndiciesOnRecordLinks) {
-			 // TODO: you might have to remove duplicates
-			 String[] indicies2create = new String[] {
-					 "create index idx_"+name+"_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id)",
-					 "create index idx_"+name+"_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (to_record_id)"
-			 };
-			 for (String i2c : indicies2create) {
-				 TimingLogger.start(i2c.split(" ")[2]);
-				 this.jdbcTemplate.execute(i2c);
-				 TimingLogger.stop(i2c.split(" ")[2]);
-			 }
-		 }
-		 TimingLogger.stop("createIndiciesIfNecessary."+name);
-		 TimingLogger.reset();
+			};
+			for (String i2c : indicies2create) {
+				TimingLogger.start(i2c.split(" ")[2]);
+				try {
+					this.jdbcTemplate.execute(i2c);
+				} catch (Throwable t) {
+					LOG.error("", t);
+				}
+				TimingLogger.stop(i2c.split(" ")[2]);
+			}
+		}
+		if (createIndiciesOnRecordOaiIds) {
+			// you might have to remove duplicates...
+			// or for now, just put the primary key back
+			/*
+			String[] indicies2create = new String[] {
+					"alter table"+getTableName(name, RECORD_OAI_IDS)+" add primary key (record_id)"
+			};
+			for (String i2c : indicies2create) {
+				TimingLogger.start(i2c.split(" ")[2]);
+				this.jdbcTemplate.execute(i2c);
+				TimingLogger.stop(i2c.split(" ")[2]);
+			}
+			*/
+		}
+		if (createIndiciesOnRecordLinks) {
+			// TODO: you might have to remove duplicates
+			String[] indicies2create = new String[] {
+					"create index idx_"+name+"_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id)",
+					"create index idx_"+name+"_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (to_record_id)"
+			};
+			for (String i2c : indicies2create) {
+				TimingLogger.start(i2c.split(" ")[2]);
+				this.jdbcTemplate.execute(i2c);
+				TimingLogger.stop(i2c.split(" ")[2]);
+			}
+		}
+		TimingLogger.stop("createIndiciesIfNecessary."+name);
+		TimingLogger.reset();
 	}
 	
 	public boolean ready4harvest(String name) {
-		 boolean genericRepoIndexExists = false;
-		 name = getUtil().getDBSchema(name);
-		 try {
-			 List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
-			 if (rows != null) {
-				 for (Map<String, Object> row : rows) {
-					 String indexName = (String)row.get("Key_name");
-					 LOG.debug("indexName: "+indexName);
-					 if (("idx_"+name+"_records_status").equals(indexName)) {
-						 genericRepoIndexExists = true;
-						 break;
-					 }
-				 }
-			 }
-		 } catch (Throwable t) {
-			 //do nothing
-		 }
-		 return genericRepoIndexExists;
+		boolean genericRepoIndexExists = false;
+		name = getUtil().getDBSchema(name);
+		try {
+			List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show indexes from "+getTableName(name, RECORDS_TABLE));
+			if (rows != null) {
+				for (Map<String, Object> row : rows) {
+					String indexName = (String)row.get("Key_name");
+					LOG.debug("indexName: "+indexName);
+					if (("idx_"+name+"_records_status").equals(indexName)) {
+						genericRepoIndexExists = true;
+						break;
+					}
+				}
+			}
+		} catch (Throwable t) {
+			//do nothing
+		}
+		return genericRepoIndexExists;
 	}
 	
 	public String getPersistentProperty(String name, String key) {

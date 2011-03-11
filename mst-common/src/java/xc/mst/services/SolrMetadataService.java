@@ -597,6 +597,16 @@ public abstract class SolrMetadataService extends BaseManager {
 	}
 
 	/**
+	 * Logs a debug message in the service's log file
+	 *
+	 * @param message The message to log
+	 */
+	public final void logDebug(String message){
+		
+		LogWriter.addDebug(service.getServicesLogFileName(), message);
+	}
+	
+	/**
 	 * Logs an info message in the service's log file
 	 *
 	 * @param message The message to log

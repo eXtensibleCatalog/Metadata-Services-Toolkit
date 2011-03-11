@@ -69,7 +69,7 @@ public class BaseMetadataServiceTest extends BaseTest {
 				Thread.sleep(1000);
 				Date lastModified = getRepositoryService().getLastModified();
 				LOG.debug("lastModified :"+lastModified);
-				if (lastModified != null && lastModified.after(new Date())) {
+				if (lastModified == null || lastModified.after(new Date())) {
 					LOG.debug("Future dated!");
 					continue;
 				}

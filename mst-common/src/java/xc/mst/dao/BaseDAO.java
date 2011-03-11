@@ -72,6 +72,10 @@ public class BaseDAO {
 	
 	public void init() {}
 	
+	public void execute(String sql) {
+		this.jdbcTemplate.execute(sql);
+	}
+	
 	public void setConfig(MSTConfiguration config) {
 		this.config = config;
 	}

@@ -172,9 +172,9 @@ public class TransformationService extends SolrTransformationService {
 	}
 	
 	@Override
-	protected boolean commitIfNecessary(boolean force) {
+	protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
 		if (!force) {
-			return super.commitIfNecessary(force);
+			return super.commitIfNecessary(force, 0);
 		}
 		try {
 			TimingLogger.start("TransformationDAO.endBatch");
@@ -212,7 +212,7 @@ public class TransformationService extends SolrTransformationService {
 						}
 					});
 			TimingLogger.start("TransformationDAO.non-generic");
-			super.commitIfNecessary(true);
+			super.commitIfNecessary(true, 0);
 			TimingLogger.stop("TransformationDAO.non-generic");
 			heldHoldings.clear();
 			getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
@@ -298,7 +298,7 @@ public class TransformationService extends SolrTransformationService {
 				} else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
 					isHolding = true;
 				} else { // If leader 6th character is invalid, then log error and do not process that record.
-					logInfo("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+					logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
 					return results;
 				}
 				

@@ -9,6 +9,9 @@
 
 package xc.mst.oai;
 
+import java.io.FileInputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,8 +21,14 @@ import java.util.SimpleTimeZone;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.joda.time.format.DateTimeFormatter;
@@ -35,9 +44,11 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XMLUtil;
+import xc.mst.utils.XmlHelper;
 
 /**
  * A facade class to create the response to the different OAI verb requests
@@ -52,6 +63,10 @@ public class Facade extends BaseManager
 	private static Logger log = Logger.getLogger(Constants.LOGGER_HARVEST_OUT);
 	
 	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
+	protected static TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	
+	protected Transformer transformer = null;
+	protected XmlHelper xmlHelper = new XmlHelper();
 
 	/** The number of warnings in executing the current request	 */
 	private int warningCount = 0;
@@ -64,7 +79,6 @@ public class Facade extends BaseManager
 
 	/**
 	 * Returns response date element
-	 * 
 	 * @return response date element
 	 */
 	public String getResponseDate() {
@@ -173,11 +187,23 @@ public class Facade extends BaseManager
 	 */
 	public String execute(OaiRequestBean oaiRequest) throws DatabaseConfigException
 	{
+		
 		if(log.isDebugEnabled())
 			log.debug("Executing request for verb " + oaiRequest.getVerb() + ".");
 
 		// Get the service
 		service =getServicesService().getServiceById(oaiRequest.getServiceId());
+		String prefix = oaiRequest.getMetadataPrefix();
+		MetadataService ms = service.getMetadataService();
+		String xslFileName = ms.getConfig().getProperty("output.format."+prefix+".xsl");
+		if (xslFileName != null) {
+			xslFileName = MSTConfiguration.getInstance().getServicePath()+service.getName()+"/xsl/"+xslFileName;
+			try {
+				transformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+			} catch (Throwable t) {
+				log.error("", t);
+			}
+		}
 		
 		// If the verb was null, return a bad verb error
 		// Otherwise execute the correct funtionality, and
@@ -190,8 +216,7 @@ public class Facade extends BaseManager
 			if(oaiRequest.getVerb() == null) {
 				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request did not contain a verb.");
 				warningCount++;
-
-				return ErrorBuilder.badVerbError();
+				oaiVerbOutput = ErrorBuilder.badVerbError();
 			} else if(oaiRequest.getVerb().equalsIgnoreCase("Identify")) {
 				oaiVerbOutput = doIdentify(oaiRequest);
 			} else if(oaiRequest.getVerb().equalsIgnoreCase("ListSets")) {
@@ -204,6 +229,10 @@ public class Facade extends BaseManager
 				oaiVerbOutput = doListRecords(oaiRequest);
 			} else if(oaiRequest.getVerb().equalsIgnoreCase("GetRecord")) {
 				oaiVerbOutput = doGetRecord(oaiRequest);
+			} else {
+				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request did not contain a valid verb: "+oaiRequest.getVerb());
+				warningCount++;
+				oaiVerbOutput = ErrorBuilder.badVerbError(oaiRequest.getVerb());
 			}
 			
 			if (oaiVerbOutput != null) {
@@ -227,7 +256,28 @@ public class Facade extends BaseManager
 				// Append the footer
 				oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
 				
-				return oaiResponseElement.toString();
+				String response = oaiResponseElement.toString();
+				if (transformer != null) {
+					Document oaiDoc = xmlHelper.getJDomDocument(response);
+					Element oaiEl = oaiDoc.getRootElement();
+					Element listRecordsEl = oaiEl.getChild("ListRecords", oaiEl.getNamespace());
+					if (listRecordsEl != null) {
+						for (Object recordObj : listRecordsEl.getChildren("record", oaiEl.getNamespace())) {
+							Element recordEl = (Element)recordObj;
+							Element metadataEl = recordEl.getChild("metadata", oaiEl.getNamespace());
+							if (metadataEl != null) {
+								Element metadataContentEl = (Element)metadataEl.getChildren().get(0);
+								metadataEl.removeContent(metadataContentEl);
+								metadataEl.addContent(transformRecord(metadataContentEl));
+							}
+						}
+						response = xmlHelper.getString(oaiEl);
+					} else {
+						
+					}
+				}
+				
+				return response;
 			} else {
 				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI request contained an invalid verb: " + oaiRequest.getVerb() + ".");
 				warningCount++;
@@ -253,7 +303,7 @@ public class Facade extends BaseManager
 			service.setHarvestOutErrors(service.getHarvestOutErrors() + errorCount);
 			
 			// Increase number of harvests if this is the initial request for harvest
-			if((oaiRequest.getVerb().equalsIgnoreCase("ListRecords")) && 
+			if(oaiRequest.getVerb() != null && (oaiRequest.getVerb().equalsIgnoreCase("ListRecords")) && 
 					(oaiRequest.getResumptionToken() == null || oaiRequest.getResumptionToken().trim().length() == 0) && 
 					(oaiRequest.getMetadataPrefix() != null && oaiRequest.getMetadataPrefix().trim().length() != 0)) {
 				service.setNumberOfHarvests(service.getNumberOfHarvests() + 1);
@@ -359,10 +409,12 @@ public class Facade extends BaseManager
 				if(log.isDebugEnabled())
 					log.debug("Adding the format " + format.getName() + " as the format for the requested record with identifier " + oaiRequest.getIdentifier() + ".");
 
-				// Add the metadata prefix, schema, and namespace information to the ListMetadataFormats element
-				listMetadataFormats.addContent(XMLUtil.xmlEl("metadataFormat", null).addContent(XMLUtil.xmlEl("metadataPrefix", format.getName()))
-						                                                            .addContent(XMLUtil.xmlEl("schema", format.getSchemaLocation()))
-						                                                            .addContent(XMLUtil.xmlEl("metadataNamespace", format.getNamespace())));
+				for (Format f : getAllFormats(format) ) {
+					//Add the metadata prefix, schema, and namespace information to the ListMetadataFormats element
+					listMetadataFormats.addContent(XMLUtil.xmlEl("metadataFormat", null).addContent(XMLUtil.xmlEl("metadataPrefix", f.getName()))
+							                                                            .addContent(XMLUtil.xmlEl("schema", f.getSchemaLocation()))
+							                                                            .addContent(XMLUtil.xmlEl("metadataNamespace", f.getNamespace())));
+				}
 			}
 			else // The record didn't exist so the format could not be found.  Log the problem and return an error
 			{
@@ -456,8 +508,40 @@ public class Facade extends BaseManager
 
 		// Get the XML for the identifiers
 		// The last parameter is true to query for just the identifiers and not the full records
-		return handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), oaiRequest.getMetadataPrefix(), oaiRequest.getSet(), oaiRequest.getResumptionToken(), false);
+		return handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), 
+				getPersistedMetadataPrefix(oaiRequest.getMetadataPrefix()), 
+				oaiRequest.getSet(), oaiRequest.getResumptionToken(), false);
 		
+	}
+	
+	public String getPersistedMetadataPrefix(String mp) {
+		MetadataService ms = service.getMetadataService();
+		String origFormat = ms.getConfig().getProperty("output.format."+mp+".orig-format");
+		if (origFormat != null) {
+			return origFormat;
+		} else {
+			return mp;
+		}
+	}
+	
+	public List<Format> getAllFormats(Format f) {
+		List<Format> allFormats = new ArrayList<Format>();
+		try {
+			allFormats.add(f);
+			MetadataService ms = service.getMetadataService();
+			for (String fPref : ms.getConfig().getPropertyAsList("output.format.name")) {
+				if (!fPref.equals(f.getName())) {
+					String origFormat = ms.getConfig().getProperty(
+							"output.format."+fPref+".orig-format");
+					if (f.getName().equals(origFormat)) {
+						allFormats.add(getFormatDAO().getByName(fPref));
+					}
+				}
+			}
+		} catch (Throwable t) {
+			log.error("", t);
+		}
+		return allFormats;
 	}
 
 	/**
@@ -480,10 +564,11 @@ public class Facade extends BaseManager
 			return ErrorBuilder.badArgumentError("Missing metadataPrefix parameter");
 			
 		}
-
 		// Get the XML for the full records
 		// The last parameter is true to query for the full records and not just the identifiers
-		return  handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), oaiRequest.getMetadataPrefix(), oaiRequest.getSet(), oaiRequest.getResumptionToken(), true);
+		return  handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), 
+				getPersistedMetadataPrefix(oaiRequest.getMetadataPrefix()),
+				oaiRequest.getSet(), oaiRequest.getResumptionToken(), true);
 		
 	}
 
@@ -531,33 +616,44 @@ public class Facade extends BaseManager
 			warningCount++;
 
 			return XMLUtil.xmlTag("error", Constants.ERROR_ID_DOES_NOT_EXIST, new String[]{"code", "idDoesNotExist"});
-		}
-		else
-		{
+		} else {
 			// If the format didn't exist or didn't match the metadataPrefix,
 			// the XML should be an error explaining this.
 			// Otherwise it should be the XML for the OAI record
-			if(record.getFormat() == null || !record.getFormat().getName().equals(oaiRequest.getMetadataPrefix()))
-			{
+			boolean bogusMetadataFormat = true;
+			if (record.getFormat() != null) {
+				for (Format f : getAllFormats(record.getFormat())) {
+					if (f.getName().equals(oaiRequest.getMetadataPrefix())) {
+						bogusMetadataFormat = false;
+						break;
+					}
+				}
+			}
+			
+			if(bogusMetadataFormat) {
 				log.warn("The record with OAI identifier " + oaiRequest.getIdentifier() + " did not match the metadataPrefix " + oaiRequest.getMetadataPrefix() + ".");
 
 				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The record with the OAI Identifier " + oaiRequest.getIdentifier() + " did not match the metadata format " + oaiRequest.getMetadataPrefix() + ".");
 				warningCount++;
 
 				return XMLUtil.xmlTag("error", Constants.ERROR_CANNOT_DISSEMINATE_FORMAT, new String[]{"code", "cannotDisseminateFormat"});
-			}
-			else
-			{
+			} else {
 				if(log.isDebugEnabled())
 					log.debug("Setting the record with OAI identifier " + oaiRequest.getIdentifier() + " on the XML parameter of the form.");
 
 				LogWriter.addInfo(service.getHarvestOutLogFileName(), "Found the record with the OAI Identifier " + oaiRequest.getIdentifier() + ".");
 				
+				record.setMode(Record.JDOM_MODE);
+				Element recordContentEl = record.getOaiXmlEl();
+				if (transformer != null) {
+					recordContentEl = transformRecord(recordContentEl);
+				}
+				
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append("<record>")
 							.append(getHeader(record))
 							.append("<metadata>")
-							.append(record.getOaiXml())
+							.append(xmlHelper.getStringRaw(recordContentEl))
 							.append("</metadata>")
 							.append("</record>");
 
@@ -584,15 +680,27 @@ public class Facade extends BaseManager
 	{
 		if(log.isDebugEnabled())
 			log.debug("Entering handleRecordLists");
+		
+		if (from != null && until != null && from.length() != until.length()) {
+			return ErrorBuilder.badArgumentError("From and until have different levels of granularity.");
+		}
 
 		// The from and until dates.  They will be null if the passed Strings could not be parsed
 		Date fromDate = null;
 		if (!StringUtils.isEmpty(from)) {
-			fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
+			try {
+				fromDate = new Date(UTC_PARSER.parseDateTime(from).getMillis());
+			} catch (IllegalArgumentException iae) {
+				return ErrorBuilder.badArgumentError("from: "+from);
+			}
 		}
 		Date untilDate = null;
 		if (!StringUtils.isEmpty(until)) {
-			untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
+			try {
+				untilDate = new Date(UTC_PARSER.parseDateTime(until).getMillis());
+			} catch (IllegalArgumentException iae) {
+				return ErrorBuilder.badArgumentError("until: "+until);
+			}
 		}
 		
 		// Starting record id 
@@ -705,17 +813,11 @@ public class Facade extends BaseManager
 		// If there were no records returned, set an error signifying that no records matched.
 		// Otherwise, append data for each returned record to the result and insert a resumption token
 		// to the database if needed
-		/*
-		if(totalRecords == 0)
-		{
+		if (records == null || records.size() == 0) {
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "There were no records which matched the parameters provided in the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 
 			xml.append(XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"}));
-		}
-		else
-		*/ if (true)
-		{
-			
+		} else {
 			// True if there are more results remaining than we can return at once
 			boolean hasMore = records.size() == MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000);
 
@@ -968,5 +1070,18 @@ public class Facade extends BaseManager
 		
 		return header.toString();
 
+	}
+	
+	public Element transformRecord(Element orig) {
+		try {
+			String metadataContentStr = xmlHelper.getString(orig);
+			StringWriter sw = new StringWriter();
+			transformer.transform(new StreamSource(new StringReader(metadataContentStr)), new StreamResult(sw));
+			metadataContentStr = sw.getBuffer().toString();
+			return (Element)xmlHelper.getJDomDocument(metadataContentStr).getRootElement().detach();
+		} catch (Throwable t) {
+			log.error("", t);
+			return orig;
+		}
 	}
 }
