@@ -98,7 +98,9 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 					log.info("key: (normalized.)service.name val: "+getUtil().normalizeName(pval));	
 				} else {
 					properties.put(keyStr, pval);
-					log.info("key: "+key+" val: "+pval);
+					if (!key.toString().contains("Password")) {
+						log.info("key: "+key+" val: "+pval);
+					}
 				}
 			}
 			init2();

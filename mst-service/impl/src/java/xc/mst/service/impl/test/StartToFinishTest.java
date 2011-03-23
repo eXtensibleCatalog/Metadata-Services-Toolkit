@@ -274,10 +274,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void createHarvestSchedule() throws Exception {
-		createHarvestSchedule("Test Schedule Name", null);
+		createHarvestSchedule("Test Schedule");
 	}
 	
-	public void createHarvestSchedule(String name, Set s) throws Exception {
+	public void createHarvestSchedule(String name) throws Exception {
 		HarvestSchedule schedule = new HarvestSchedule();
 		Calendar nowCal = Calendar.getInstance();
         schedule.setScheduleName(name);
@@ -287,8 +287,19 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         	schedule.addFormat(f);	
         }
         
-        if (s != null) 
+        LOG.debug("getSetSpec(): "+getSetSpec());
+        if (getSetSpec() != null) {
+        	Set s = getSetService().getSetBySetSpec(getSetSpec());
+        	if (s == null) {
+        		s = new Set();
+        		s.setSetSpec(getSetSpec());
+        		s.setDisplayName(getSetSpec());
+        		getSetService().insertSet(s);
+        	}
+        	s = getSetService().getSetBySetSpec(getSetSpec());
+        	LOG.debug("s: "+s);
         	schedule.addSet(s);
+        }
         
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);

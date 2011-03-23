@@ -32,6 +32,10 @@ public class BaseMetadataServiceTest extends BaseTest {
 		return getUtil().normalizeName(System.getenv("service.name"));
 	}
 	
+	protected String getSetSpec() {
+		return null;
+	}
+	
 	protected MetadataService getMetadataService() {
 		return TestTypeFilter.metadataService;
 	}
@@ -66,7 +70,9 @@ public class BaseMetadataServiceTest extends BaseTest {
 		while (true) {
 			LOG.debug("checking to see if finished");
 			try {
+				LOG.debug("start sleeping");
 				Thread.sleep(1000);
+				LOG.debug("done sleeping");
 				Date lastModified = getRepositoryService().getLastModified();
 				LOG.debug("lastModified :"+lastModified);
 				if (lastModified == null || lastModified.after(new Date())) {

@@ -73,8 +73,6 @@ public class HarvestManager extends WorkerThread {
 	protected Harvest currentHarvest = null;
 	protected Date startDate = null;
 	protected String resumptionToken = null;
-	protected int numErrorsToTolerate = 0;
-	protected int numErrorsTolerated = 0;
 	protected int requestsSent4Step = 0;
 	
 	protected long recordsProcessedThisRun = 0l;
@@ -125,7 +123,6 @@ public class HarvestManager extends WorkerThread {
 				harvestScheduleSteps = harvestSchedule.getSteps();
 			}
 			harvestScheduleStepIndex = 0;
-			numErrorsTolerated = Integer.parseInt(config.getProperty("harvester.numErrorsToTolerate", "0"));
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 			TimingLogger.outputMemory();
 			getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
@@ -140,17 +137,14 @@ public class HarvestManager extends WorkerThread {
 	
 	public void logError(Throwable t) {
 		try {
-			log.error("", t);
+			log.error(t.getMessage(), t);
 			Provider provider = currentHarvest.getProvider();
 			provider.setErrors(provider.getErrors()+1);
 			getProviderDAO().update(provider);
 		} catch (DataException de) {
 			throw new RuntimeException(de);
 		}
-		numErrorsTolerated++;
-		if (numErrorsTolerated > numErrorsToTolerate) {
-			throw new RuntimeException("numErrorsToTolerate exceeded", t);
-		}
+		getUtil().throwIt(t);
 	}
 	
 	public void validate(HarvestScheduleStep scheduleStep) throws DataException {
@@ -299,8 +293,11 @@ public class HarvestManager extends WorkerThread {
 						request += "?verb=" + verb;
 						request += "&metadataPrefix=" + metadataPrefix;
 
-						if (setSpec != null && setSpec.length() > 0)
-							request += "&set=" + setSpec;
+						if (setSpec != null && setSpec.length() > 0) {
+							//strip off the first part of the setSpec because it's the reponame
+							int idx0 = setSpec.indexOf(':');
+							request += "&set=" + setSpec.substring(idx0+1);
+						}
 						
 						baseRequest = request;
 

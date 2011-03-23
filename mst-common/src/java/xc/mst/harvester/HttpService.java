@@ -9,6 +9,7 @@
 package xc.mst.harvester;
 
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -44,53 +45,68 @@ public class HttpService extends BaseService {
 	}
 
 	public Document sendRequest(String request) throws HttpException {
-		if(LOG.isDebugEnabled())
-			LOG.debug("Sending the OAI request: " + request);
-
-		Document doc = null;
+		int numErrors2Tolerate = config.getPropertyAsInt("harvester.numErrorsToTolerate", 3);
+		int numErrorsTolerated = 0;
 		
-		GetMethod getOaiResponse = null;
-		InputStream istm = null;
-		Throwable t = null;
-		
-		try {
-			int statusCode = 0; // The status code in the HTTP response
-			
-			long startOaiRequest = System.currentTimeMillis();
+		while (true) {
+			if(LOG.isDebugEnabled())
+				LOG.debug("Sending the OAI request: " + request);
 
-			getOaiResponse = new GetMethod(request);
-
-			// Execute the get method to get the Voyager "first" page
-			TimingLogger.start("http");
-			statusCode = client.executeMethod(getOaiResponse);
-			TimingLogger.stop("http");
+			Document doc = null;
+			InputStream istm = null;
 			
-			// If the get was successful (200 is the status code for success)
-	        if (statusCode == 200) {       
-	        	istm = getOaiResponse.getResponseBodyAsStream();
-				long finishOaiRequest = System.currentTimeMillis();
-	            LOG.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
-				doc = xmlHelper.getJDomDocument(istm);
-	        } else {
-				throw new RuntimeException("The HTTP status code was " + statusCode);
-	        }
-		} catch (Throwable t2) {
-			t = t2;
-		} finally {
-			if (istm != null) {
-				try {
-					istm.close();
-				} catch (Throwable t2) {
-					LOG.error("could not close connection.", t2);
+			try {
+				int statusCode = 0; // The status code in the HTTP response
+				long startOaiRequest = System.currentTimeMillis();
+				GetMethod getOaiRequest = new GetMethod(URLEncoder.encode(request, "UTF-8"));
+
+				// Execute the get method to get the Voyager "first" page
+				TimingLogger.start("http");
+				statusCode = client.executeMethod(getOaiRequest);
+				TimingLogger.stop("http");
+				
+				// If the get was successful (200 is the status code for success)
+		        if (statusCode == 200) {       
+		        	istm = getOaiRequest.getResponseBodyAsStream();
+					long finishOaiRequest = System.currentTimeMillis();
+		            LOG.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
+					doc = xmlHelper.getJDomDocument(istm);
+		        } else {
+					LOG.error("statusCode: "+statusCode);
+					LOG.error("response: "+getOaiRequest.getResponseBodyAsString());
+		        	if (statusCode == 503) {
+		        		try {
+			        		int retryAfter = Integer.parseInt(getOaiRequest.getResponseHeader("Retry-after").getValue());
+			        		LOG.info("Retry-after: "+retryAfter);
+			        		if (retryAfter > 0 && retryAfter < 
+			        				config.getPropertyAsInt("harvestProvider.maxWaitForRetryAfter", 60)) {
+			        			LOG.info("sleeping");
+			        			Thread.sleep(retryAfter * 1000);
+			        		}
+		        		} catch (Throwable t) {
+		        			//do nothing
+		        		}
+		        	}
+		        }
+			} catch (Throwable t) {
+				LOG.error("", t);
+			} finally {
+				if (istm != null) {
+					try {
+						istm.close();
+					} catch (Throwable t2) {
+						LOG.error("could not close connection.", t2);
+					}
 				}
 			}
+			if (doc != null) {
+				return doc;
+			}
+			if (numErrors2Tolerate == ++numErrorsTolerated) {
+				LOG.error("numErrors2Tolerate: "+numErrors2Tolerate+" numErrorsTolerated:"+numErrorsTolerated);
+				break;
+			}
 		}
-		if (t != null) {
-        	String msg = "Error getting the HTML document for the request: "+request;
-			LOG.error(msg, t);
-			throw new HttpException(msg);
-		}
-		return doc;
+		throw new HttpException("did not receive a successful response for request: "+request);
 	}
-
 }

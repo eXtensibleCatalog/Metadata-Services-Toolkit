@@ -110,15 +110,15 @@ public class MySqlConnectionManager
 	    	return dbConnection;
 	    } catch (SQLException e) {
 	    	log.warn("username: "+MSTConfiguration.getInstance().getProperty("DatabaseUsername"));
-	    	log.warn("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
+	    	log.debug("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
 	    } catch(UnsatisfiedLinkError e) {
 	    	log.warn("username: "+MSTConfiguration.getInstance().getProperty("DatabaseUsername"));
-	    	log.warn("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
+	    	log.debug("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
 	    	log.warn("Could not connect to the database specified in the configuration file.", e);
 	    } catch(Exception e) {
 	    	log.warn("username: "+MSTConfiguration.getInstance().getProperty("DatabaseUsername"));
-	    	log.warn("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
+	    	log.debug("password: "+MSTConfiguration.getInstance().getProperty("DatabasePassword"));
             log.error("An Exception occurred while connecting to the database.", e);
         }
 	    
