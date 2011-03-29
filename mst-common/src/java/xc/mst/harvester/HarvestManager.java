@@ -296,7 +296,7 @@ public class HarvestManager extends WorkerThread {
 						if (setSpec != null && setSpec.length() > 0) {
 							//strip off the first part of the setSpec because it's the reponame
 							int idx0 = setSpec.indexOf(':');
-							request += "&set=" + setSpec.substring(idx0+1);
+							request += "&set=" + URLEncoder.encode(setSpec.substring(idx0+1), "UTF-8");
 						}
 						
 						baseRequest = request;

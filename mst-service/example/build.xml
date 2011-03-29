@@ -156,6 +156,16 @@
 
 	<target name="retrieve" depends="ivy-report">
 		<ivy:retrieve sync="true" pattern="${build.lib}/[artifact]-[revision].[ext]"/>
+		<copy todir="${build.zip.lib}" overwrite="true">
+			<fileset dir="${build.lib}">
+				<include name="mst-service-impl*.jar" />
+				<!--
+				add any jars you've added in your ivy-custom.xml should be included in the zip
+				all the other jars are already loaded into the mst-platform
+				<include name="" />
+				-->
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="compile" depends="retrieve, compile.nodep"/>

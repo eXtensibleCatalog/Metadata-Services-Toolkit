@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.SimpleHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
@@ -33,7 +34,7 @@ public class HttpService extends BaseService {
 	protected HttpClient client = null;
 
 	public void init() {
-		client = new HttpClient(new MultiThreadedHttpConnectionManager());
+		client = new HttpClient(new SimpleHttpConnectionManager());
 		LOG.debug("client: "+client);
 		LOG.debug("client.getParams(): "+client.getParams());
 		client.getParams().setParameter("http.socket.timeout", 
@@ -58,7 +59,8 @@ public class HttpService extends BaseService {
 			try {
 				int statusCode = 0; // The status code in the HTTP response
 				long startOaiRequest = System.currentTimeMillis();
-				GetMethod getOaiRequest = new GetMethod(URLEncoder.encode(request, "UTF-8"));
+				
+				GetMethod getOaiRequest = new GetMethod(request);
 
 				// Execute the get method to get the Voyager "first" page
 				TimingLogger.start("http");
@@ -89,6 +91,7 @@ public class HttpService extends BaseService {
 		        	}
 		        }
 			} catch (Throwable t) {
+				LOG.debug("request: "+request);
 				LOG.error("", t);
 			} finally {
 				if (istm != null) {

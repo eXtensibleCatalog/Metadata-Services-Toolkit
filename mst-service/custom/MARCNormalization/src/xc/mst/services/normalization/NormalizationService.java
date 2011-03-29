@@ -103,7 +103,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
 	 * The output format (marcxml) for records processed from this service
 	 */
-	protected Format marcxmlFormat = null;
+	protected Format marc21 = null;
 	
 	/**
 	 * A list of errors to add to the record currently being processed
@@ -123,7 +123,7 @@ public class NormalizationService extends GenericMetadataService {
 	public void init() {
 		// Initialize the XC format
 		try  {
-			marcxmlFormat = getFormatService().getFormatByName("marcxml");
+			marc21 = getFormatService().getFormatByName("marc21");
 			loadConfiguration(getUtil().slurp("service.xccfg", getClass().getClassLoader()));
 		} catch (DatabaseConfigException e) {
 			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
@@ -152,7 +152,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Handle reprocessing of successors
 				for(OutputRecord successor : successors){
 					successor.setStatus(Record.DELETED);
-					successor.setFormat(marcxmlFormat);
+					successor.setFormat(marc21);
 					results.add(successor);
 				}
 				TimingLogger.stop("processRecord.getDeleted");
@@ -357,7 +357,7 @@ public class NormalizationService extends GenericMetadataService {
 				// (there should only be one)
 				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
 				oldNormalizedRecord.setMode(Record.JDOM_MODE);
-				oldNormalizedRecord.setFormat(marcxmlFormat);
+				oldNormalizedRecord.setFormat(marc21);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
@@ -382,7 +382,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Create the normalized record
 				OutputRecord normalizedRecord = getRecordService().createRecord();
 				normalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
-				normalizedRecord.setFormat(marcxmlFormat);
+				normalizedRecord.setFormat(marc21);
 
 				// Add errors
 				normalizedRecord.setMessages(outputRecordErrors);
