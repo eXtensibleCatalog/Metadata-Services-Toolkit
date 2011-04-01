@@ -275,6 +275,7 @@ public class MySqlConnectionManager
 		}
 		catch(SQLException e)
 		{
+			log.error("", e);
 			// Possibly the connection timed out. Hence try a reconnect to DB.
 			//If reconnect fails then don't re executed query
 			resetConnection();

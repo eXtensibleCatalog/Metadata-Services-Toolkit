@@ -199,7 +199,11 @@
 		<testng classpathref="mc.classpath.test.run" outputdir="${mc.build.test}">
 			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
 			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-			<classfileset dir="${mc.build.test.classes}" includes="**/${test}*.class"/>
+			<jvmarg value="-Xms${test.memory}" />
+			<jvmarg value="-Xmx${test.memory}" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9001" />
+			<classfileset dir="${mc.build.test.classes}" includes="**/*${test}*.class"/>
 		</testng>
 	</target>
 
