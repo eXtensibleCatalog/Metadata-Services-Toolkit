@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -172,7 +173,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public boolean commitIfNecessary(boolean force) {
-		if (getRepositoryDAO().commitIfNecessary(name, force)) {
+		return commitIfNecessary(force, 0);
+	}
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
+		if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
 			predSuccMap.clear();
 			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
 			uplinks.clear();
@@ -236,7 +240,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet);
+		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else { 
@@ -296,8 +300,10 @@ public class DefaultRepository extends BaseService implements Repository {
 			succIds = getRepositoryDAO().getSuccessorIds(name, r.getId());
 			predSuccMap.put(r.getId(), succIds);
 		}
-		if (succIds != null) {
-			for (Long succId : succIds) {
+		if (succIds != null && succIds.size() > 0) {
+			java.util.Set<Long> orderedSuccIds = new TreeSet<Long>();
+			orderedSuccIds.addAll(succIds);
+			for (Long succId : orderedSuccIds) {
 				Record or = new Record();
 				or.setId(succId);
 				r.getSuccessors().add(or);
@@ -312,14 +318,20 @@ public class DefaultRepository extends BaseService implements Repository {
 	 *  will not pick up all the records that were just inserted.
 	 */
 	public void sleepUntilReady() {
-		Date lm = getLastModified();
-	    while (lm != null && new Date().before(lm)) {
+		boolean keepSleeping = true;
+		boolean repoCreated = false;
+		Date lm = null;
+		while (keepSleeping) {
+			repoCreated = ready4harvest();
+			if (repoCreated) {
+				lm = getLastModified();
+			    keepSleeping = (lm != null && new Date().before(lm));	
+			}
 	    	try {
 	    		Thread.sleep(500);
 	    	} catch (Throwable t) {
 	    		getUtil().throwIt(t);
 	    	}
-	    	lm = getLastModified();
 	    }
 	}
 	

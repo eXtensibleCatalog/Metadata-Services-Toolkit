@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="mst" uri="mst-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!--  document type -->
 <c:import url="/st/inc/doctype-frag.jsp"/>
@@ -71,12 +72,19 @@
 		<div id="bd">
 		
 		<div class="record_metadata">
-			<c:if test="${record.provider != null}">Repository:  ${record.provider.name}<br>Repository URL:  ${record.provider.oaiProviderUrl}<br></c:if>
+			<c:if test="${record.provider != null}">
+				Repository:  ${record.provider.name}<br>
+				Repository URL:
+					<a href="${record.provider.oaiProviderUrl}?verb=GetRecord&identifier=${record.harvestedOaiIdentifier}&metadataPrefix=${record.format.name}">
+						${record.provider.oaiProviderUrl}
+					</a>
+				<br />
+			</c:if>
 			<c:if test="${record.service != null}">Service:  ${record.service.name}<br></c:if> 
-			<c:if test="${record.harvest != null}">Harvest:  ${record.harvestScheduleName}<br></c:if>			
+			<c:if test="${record.harvest != null}">Harvest:  ${record.harvestScheduleName}<br></c:if>
 			Schema:  ${record.format.name}<br>
 			Sets:
-			<c:forEach var="set" items="${record.sets}" varStatus="status"><c:if test="${status.count > 1}">,&nbsp;</c:if>${set.displayName}</c:forEach>
+			<c:forEach var="set" items="${record.sets}" varStatus="status"><c:if test="${status.count > 1 && fn:length(set.displayName)==0}">,&nbsp;</c:if>${set.displayName}</c:forEach>
 			<br>
 			<c:if test="${record.createdAt != null}">Created at: ${record.createdAt}<br></c:if>
 			<c:if test="${record.updatedAt != null}">Updated at: ${record.updatedAt}<br></c:if>

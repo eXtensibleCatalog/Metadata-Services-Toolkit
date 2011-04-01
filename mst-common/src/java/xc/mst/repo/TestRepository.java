@@ -99,6 +99,9 @@ public class TestRepository extends BaseService implements Repository {
 		return 0;
 	}
 	
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
+		return commitIfNecessary(force);
+	}
 	public boolean commitIfNecessary(boolean force) {
 		if (force) {
 			if (!inputFilesIterator.hasNext()) {

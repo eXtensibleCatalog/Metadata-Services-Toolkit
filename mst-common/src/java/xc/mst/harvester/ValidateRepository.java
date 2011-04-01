@@ -392,11 +392,12 @@ public class ValidateRepository extends HttpService {
 
 				if(set == null) {
 					set = new Set();
-
+					set.setIsProviderSet(true);
 					set.setDisplayName(provider.getName()+":"+setName);
 					set.setSetSpec(provider.getName()+":"+setSpec);
 
 					try {
+						LOG.debug("providerId: "+providerId);
 						getSetDAO().insertForProvider(set, providerId);
 					} catch(DataException e) {
 						LOG.error("A data exception occurred while inserting a new Set.", e);

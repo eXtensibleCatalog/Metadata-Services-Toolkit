@@ -44,7 +44,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	}
 	
 	@Override
-	protected boolean commitIfNecessary(boolean force) {
+	protected boolean commitIfNecessary(boolean force, long processedRecords) {
 		if (force || this.recordsProcessedSinceCommit >=
 				MSTConfiguration.getInstance().getPropertyAsInt("solr.records2commitAtOnce", 10000)) {
 			try {

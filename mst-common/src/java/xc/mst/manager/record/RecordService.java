@@ -208,7 +208,6 @@ public abstract class RecordService extends BaseService
 
 	public abstract OutputRecord createRecord();
 	public abstract void injectNewId(Record r);
-	public abstract Record createSuccessor(Record record, Service s);
 	
 	/**
 	 * Gets all records from the index

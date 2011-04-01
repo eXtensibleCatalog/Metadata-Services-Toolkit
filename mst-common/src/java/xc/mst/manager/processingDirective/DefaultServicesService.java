@@ -32,6 +32,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.processing.Job;
@@ -99,6 +100,7 @@ public class DefaultServicesService extends BaseService
 	}
 
 	public void onApplicationEvent(ApplicationEvent event) {
+		LOG.info("ac-event: "+event);
 		/*
 		try {
 	        if (event instanceof ContextRefreshedEvent) {
@@ -640,7 +642,18 @@ public class DefaultServicesService extends BaseService
     public Service getServiceById(int serviceId) throws DatabaseConfigException
     {
         Service s = getServiceDAO().getById(serviceId);
-        injectMetadataService(s);
+        if (s != null) {
+	        injectMetadataService(s);
+	        List<Integer> setIds = getRepositoryDAO().getSetIds(s.getName());
+	        if (setIds != null) {
+		        for (Integer setId : setIds) {
+		        	xc.mst.bo.provider.Set set = getSetService().getSetById(setId);
+		        	if (!s.getOutputSets().contains(set)) {
+		        		s.getOutputSets().add(set);
+		        	}
+		        }
+	        }
+        }
         return s;
     }
 

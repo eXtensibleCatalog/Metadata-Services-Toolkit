@@ -112,6 +112,13 @@ public class ViewRepository extends BaseActionSupport implements UserAware
               errorType = "error";
               execute();
           }
+          catch (Throwable t)
+          {
+              log.error(t.getMessage(), t);
+              this.addFieldError("validateRepositoryError", t.getMessage());
+              errorType = "error";
+              execute();
+          }
           return SUCCESS;
       }
 

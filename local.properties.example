@@ -7,3 +7,6 @@ svn.home=c:/Program\ Files/CollabNet/Subversion\ Server
 ftp.server=
 ftp.userid=
 ftp.password=
+
+DatabaseUsername=root
+DatabasePassword=root

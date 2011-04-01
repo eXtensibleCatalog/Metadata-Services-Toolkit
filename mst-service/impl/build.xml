@@ -161,6 +161,7 @@
 			<macro-file-set>
 				<fileset dir="${ms.example}">
 					<include name="conf/*" />
+					<include name="xsl/*" />
 					<include name="build.xml" />
 					<include name="build.properties" />
 					<include name="ivysettings.xml" />

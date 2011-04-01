@@ -824,6 +824,9 @@ public class DefaultSetDAO extends SetDAO
 					psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
 				} // end if(insert PreparedStatement not defined)
 
+				log.debug("inserting provider ("+
+						set.getDisplayName()+", "+set.getDescription()+", "+set.getSetSpec()+", "+set.getIsProviderSet()+", "+
+						set.getIsRecordSet()+", "+providerId);
 				// Set the parameters on the insert statement
 				psInsert.setString(1, set.getDisplayName());
 				psInsert.setString(2, set.getDescription());

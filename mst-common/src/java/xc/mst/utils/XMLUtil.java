@@ -276,9 +276,12 @@ public class XMLUtil {
 
 	public static Element xmlEl(String elName, String content, String[] attributes,
 			Namespace ns) {
-		Element el = new Element(elName);
-		if(ns != null)
-			el.addNamespaceDeclaration(ns);
+		Element el = null;
+		if(ns != null) {
+			el = new Element(elName, ns);
+		} else {
+			el = new Element(elName);
+		}
 		el.addContent(content);
 		if(attributes != null) {
 			for(int i=0; i<attributes.length; i+=2){

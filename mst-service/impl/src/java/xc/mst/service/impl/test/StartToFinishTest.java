@@ -35,6 +35,7 @@ import xc.mst.utils.MSTConfiguration;
 public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	
 	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
+	protected boolean shouldValidateRepo = false;
 	
 	protected Provider provider = null;
 	protected Repository repo = null;
@@ -83,6 +84,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 
 	protected Format getMarcXmlFormat() throws Exception {
 		return getFormat(new String[] {"marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
+	}
+	
+	protected Format getMarc21Format() throws Exception {
+		return getFormat(new String[] {"marc21", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
 	}
 
 	protected Format getRfc1807Format() throws Exception {
@@ -138,22 +143,6 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		LOG.info("after waitUntilFinished");
 		
 		finalTest();
-		/*
-		indexHarvestedRecords();
-		LOG.debug("after indexHarvestedRecords");
-		indexServicedRecords();
-		LOG.debug("after indexServicedRecords");
-		
-		LOG.debug("after finalTest");
-
-				
-		Thread.sleep(60000);
-		createHarvestSchedule();
-		LOG.debug("after createHarvestSchedule");
-
-		waitUntilFinished();
-		LOG.debug("after waitUntilFinished");
-		*/
 		
 		harvestOutRecordsFromMST();
 		LOG.debug("after harvestOutRecordsFromMST");
@@ -194,7 +183,9 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		provider.setCreatedAt(new java.util.Date());
 		provider.setNumberOfRecordsToHarvest(getNumberOfRecordsToHarvest());
 		getProviderService().insertProvider(provider);
-		getValidateRepository().validate(provider.getId());
+		
+		if (shouldValidateRepo)
+			getValidateRepository().validate(provider.getId());
 		
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
@@ -283,10 +274,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void createHarvestSchedule() throws Exception {
-		createHarvestSchedule("Test Schedule Name", null);
+		createHarvestSchedule("Test Schedule");
 	}
 	
-	public void createHarvestSchedule(String name, Set s) throws Exception {
+	public void createHarvestSchedule(String name) throws Exception {
 		HarvestSchedule schedule = new HarvestSchedule();
 		Calendar nowCal = Calendar.getInstance();
         schedule.setScheduleName(name);
@@ -296,8 +287,19 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         	schedule.addFormat(f);	
         }
         
-        if (s != null) 
+        LOG.debug("getSetSpec(): "+getSetSpec());
+        if (getSetSpec() != null) {
+        	Set s = getSetService().getSetBySetSpec(getSetSpec());
+        	if (s == null) {
+        		s = new Set();
+        		s.setSetSpec(getSetSpec());
+        		s.setDisplayName(getSetSpec());
+        		getSetService().insertSet(s);
+        	}
+        	s = getSetService().getSetBySetSpec(getSetSpec());
+        	LOG.debug("s: "+s);
         	schedule.addSet(s);
+        }
         
         schedule.setHour(nowCal.get(Calendar.HOUR_OF_DAY));
         schedule.setId(111);

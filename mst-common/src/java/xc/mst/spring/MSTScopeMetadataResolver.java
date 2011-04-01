@@ -19,6 +19,7 @@ import org.springframework.context.annotation.ScopeMetadataResolver;
 
 import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseService;
+import xc.mst.oai.Facade;
 import xc.mst.repo.Repository;
 
 public class MSTScopeMetadataResolver extends MSTAutoBeanHelper implements ScopeMetadataResolver {
@@ -32,6 +33,7 @@ public class MSTScopeMetadataResolver extends MSTAutoBeanHelper implements Scope
 	public MSTScopeMetadataResolver() {
 		prototypeScopes = new ArrayList<Class>();
 		prototypeScopes.add(Repository.class);
+		prototypeScopes.add(Facade.class);
 	}
 
 	@SuppressWarnings("unchecked")
