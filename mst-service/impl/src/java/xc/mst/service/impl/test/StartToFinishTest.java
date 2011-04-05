@@ -171,6 +171,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	
 	public void installProvider() throws Exception {
 		if (getProvider() != null) {
+			LOG.debug("provider already exists!!!");
 			return;
 		}
 		System.setProperty("source.encoding", "UTF-8");
@@ -178,6 +179,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		provider = new Provider();
 
 		provider.setName(getRepoName());
+		LOG.debug("getRepoName(): "+getRepoName());
 		provider.setDescription("Repository used in TestNG tests");
 		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());

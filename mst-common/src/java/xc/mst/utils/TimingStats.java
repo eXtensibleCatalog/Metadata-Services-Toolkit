@@ -235,32 +235,34 @@ public class TimingStats {
 	}
 	
 	public void reset(boolean includeDefault) {
-		if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
-			if (lastReset != 0) {
-				long timeSinceLastReset = System.currentTimeMillis()-lastReset;
-				lastReset = System.currentTimeMillis();
-				LOG.debug("timeSinceLastReset: "+timeSinceLastReset);
-			}
-			LOG.debug("namedTimers.size(): "+namedTimers.size());
-			LOG.debug("includeDefault: "+includeDefault);
-			OrderedMapIterator omi = namedTimers.orderedMapIterator(); 
-			while (omi.hasNext()) {
-				reset((String)omi.next());
-			}
-			/*
-			for (String key : namedTimers.keySet()) {
-				reset(key);
-			}
-			*/
-			namedTimers = new ListOrderedMap();
-			Long nullLastTime = namedLastTimes.get(DEFAULT);
-			namedLastTimes =  new TreeMap<String, Long>();
-			Long nullBeginTime = namedBeginTimes.get(DEFAULT);
-			namedBeginTimes =  new TreeMap<String, Long>();
-			if (!includeDefault) {
-				namedLastTimes.put(DEFAULT, nullLastTime);
-				namedBeginTimes.put(DEFAULT, nullBeginTime);
-			}
+		synchronized (this) {
+			if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
+				if (lastReset != 0) {
+					long timeSinceLastReset = System.currentTimeMillis()-lastReset;
+					lastReset = System.currentTimeMillis();
+					LOG.debug("timeSinceLastReset: "+timeSinceLastReset);
+				}
+				LOG.debug("namedTimers.size(): "+namedTimers.size());
+				LOG.debug("includeDefault: "+includeDefault);
+				OrderedMapIterator omi = namedTimers.orderedMapIterator(); 
+				while (omi.hasNext()) {
+					reset((String)omi.next());
+				}
+				/*
+				for (String key : namedTimers.keySet()) {
+					reset(key);
+				}
+				*/
+				namedTimers = new ListOrderedMap();
+				Long nullLastTime = namedLastTimes.get(DEFAULT);
+				namedLastTimes =  new TreeMap<String, Long>();
+				Long nullBeginTime = namedBeginTimes.get(DEFAULT);
+				namedBeginTimes =  new TreeMap<String, Long>();
+				if (!includeDefault) {
+					namedLastTimes.put(DEFAULT, nullLastTime);
+					namedBeginTimes.put(DEFAULT, nullBeginTime);
+				}
+			}			
 		}
 	}
 	

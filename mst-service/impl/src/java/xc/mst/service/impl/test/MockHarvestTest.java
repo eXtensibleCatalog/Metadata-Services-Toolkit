@@ -9,6 +9,7 @@
 package xc.mst.service.impl.test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -41,51 +43,100 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 	protected Date harvestOutFrom = null;
 	protected Date harvestOutUntil = null;
 	protected XmlHelper xmlHelper = new XmlHelper();
+	protected Map<String, String> testFailures = new HashMap<String, String>();
+	
+	public String getRepoName() {
+		return getUtil().normalizeName(getFolder());
+	}
 	
 	public MockHarvestTest() {
 		this.shouldValidateRepo = false;
 	}
+	
+	public String getProviderUrl() {
+		return "file://"+INPUT_FOLDER+"/"+getFolder();
+	}
 
-	public abstract String getFolder();
+	public List<String> getFolders() {
+		List<String> fileStrs = new ArrayList<String>();
+		String testFolder = System.getenv("test.folder");
+		if (StringUtils.isEmpty(testFolder)) {
+			for (File f : new File(INPUT_FOLDER).listFiles()) {
+				if (!f.getName().contains(".svn")) {
+					fileStrs.add(f.getName());
+				}
+			}
+		} else {
+			fileStrs.add(testFolder);
+		}
+		return fileStrs;
+	}
+	
+	protected String folderName = null;
+	protected final String getFolder() {
+		return folderName;
+	}
 	
 	@Test
 	public void startToFinish() throws Exception  {
-		//HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
-
-		printClassPath();
 		
-		dropOldSchemas();
-		LOG.info("after dropOldSchemas");
-		installProvider();
-		LOG.info("after installProvider");
-		installService();
-		LOG.info("after installService");
+		for (String folderStr : getFolders()) {
+			getRepositoryDAO().resetIdSequence(1);
+			this.provider = null;
+			this.folderName = folderStr;
 
-		configureProcessingRules();
-		LOG.info("after configureProcessingRules");
+			dropOldSchemas();
+			LOG.info("after dropOldSchemas");
 
-		String previousLastOaiRequest = HarvestManager.lastOaiRequest;
-		while (true) {
-			LOG.debug("createHarvestSchedule()-1");
-			createHarvestSchedule();
-			LOG.debug("createHarvestSchedule()-2");
-			LOG.debug("waitUntilFinished()-1");
-			waitUntilFinished();
-			LOG.debug("waitUntilFinished()-2");
-			LOG.debug("previousLastOaiRequest: "+previousLastOaiRequest);
-			LOG.debug("HarvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
-			if (HarvestManager.lastOaiRequest == null || (
-					previousLastOaiRequest != null && previousLastOaiRequest.equals(HarvestManager.lastOaiRequest))) {
-				break;
-			} else {
-				previousLastOaiRequest = HarvestManager.lastOaiRequest;
+			installService();
+			getServicesService().addNewService(getServiceName());
+			LOG.info("after installService");
+	
+			installProvider();
+			LOG.info("after installProvider");
+			LOG.debug("this.folderName: "+this.folderName);
+
+			configureProcessingRules();
+			LOG.info("after configureProcessingRules");
+
+			String previousLastOaiRequest = HarvestManager.lastOaiRequest;
+			while (true) {
+				LOG.debug("createHarvestSchedule()-1");
+				createHarvestSchedule();
+				LOG.debug("createHarvestSchedule()-2");
+				LOG.debug("waitUntilFinished()-1");
+				waitUntilFinished();
+				LOG.debug("waitUntilFinished()-2");
+				LOG.debug("previousLastOaiRequest: "+previousLastOaiRequest);
+				LOG.debug("HarvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
+				if (HarvestManager.lastOaiRequest == null || (
+						previousLastOaiRequest != null && previousLastOaiRequest.equals(HarvestManager.lastOaiRequest))) {
+					break;
+				} else {
+					previousLastOaiRequest = HarvestManager.lastOaiRequest;
+				}
+				LOG.debug("createHarvestSchedule()-1");
+				harvestOutRecordsFromMST();
+				LOG.debug("createHarvestSchedule()-2");
 			}
-			LOG.debug("createHarvestSchedule()-1");
-			harvestOutRecordsFromMST();
-			LOG.debug("createHarvestSchedule()-2");
+			finalTest();
+			compareAgainstExpectedOutput();
+			waitUntilFinished();
 		}
-		finalTest();
-		compareAgainstExpectedOutput();
+		
+		StringBuilder sb = new StringBuilder();
+		for (String key : testFailures.keySet()) {
+			String value = testFailures.get(key);
+			String s2 = "\n"+key+": "+value;
+
+			sb.append(s2);
+		}
+		
+		if (sb.length() > 0) {
+			LOG.error(sb.toString());
+			throw new RuntimeException(sb.toString());
+		}
+
 	}
 	
 	@Override
@@ -160,62 +211,42 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 	}
 	
 	public void compareAgainstExpectedOutput() {
-		Map<String, String> testFailures = new HashMap<String, String>();
-		File expectedOutputContainingFolder = new File(EXPECTED_OUTPUT_FOLDER);
-		String[] expectedOutputFolders = expectedOutputContainingFolder.list();
-		if (expectedOutputFolders != null) {
-			for (String folderStr : expectedOutputFolders) {
-				if (folderStr.contains(".svn")) {
+		String folderStr = getFolder();
+		
+		File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER+"/"+folderStr);
+		Set<String> expectedOutputFiles = new HashSet<String>();
+		if (expectedOutputFolder.list() != null) {
+			for (String ef : expectedOutputFolder.list()) {
+				if (ef.endsWith(".xml")) {
+					expectedOutputFiles.add(ef);
+				}
+			}
+			
+			File actualOutputFolder  = new File(ACTUAL_OUTPUT_FOLDER+"/"+folderStr);
+			if (!actualOutputFolder.exists()) {
+				testFailures.put(folderStr, "folder expected, but wasn't produced.");
+				return;
+			}
+			for (String af : actualOutputFolder.list()) {
+				LOG.debug("af: "+af);
+				if (af.contains("byRecordIds")) {
 					continue;
 				}
-				File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER+"/"+folderStr);
-				Set<String> expectedOutputFiles = new HashSet<String>();
-				for (String ef : expectedOutputFolder.list()) {
-					if (ef.endsWith(".xml")) {
-						expectedOutputFiles.add(ef);
+				if (expectedOutputFiles.contains(af)) {
+					expectedOutputFiles.remove(af);
+					if (new XmlHelper().diffXmlFiles(
+							ACTUAL_OUTPUT_FOLDER+"/"+folderStr+"/"+af, 
+							EXPECTED_OUTPUT_FOLDER+"/"+folderStr+"/"+af)) {
+						testFailures.put(folderStr+"/"+af, "files differ");
 					}
+				} else {
+					testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
 				}
-				
-				File actualOutputFolder  = new File(ACTUAL_OUTPUT_FOLDER+"/"+folderStr);
-				if (!actualOutputFolder.exists()) {
-					testFailures.put(folderStr, "folder expected, but wasn't produced.");
-					continue;
-				}
-				for (String af : actualOutputFolder.list()) {
-					LOG.debug("af: "+af);
-					if (af.contains("byRecordIds")) {
-						continue;
-					}
-					if (expectedOutputFiles.contains(af)) {
-						expectedOutputFiles.remove(af);
-						if (new XmlHelper().diffXmlFiles(
-								ACTUAL_OUTPUT_FOLDER+"/"+folderStr+"/"+af, 
-								EXPECTED_OUTPUT_FOLDER+"/"+folderStr+"/"+af)) {
-							testFailures.put(folderStr+"/"+af, "files differ");
-						}
-					} else {
-						testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
-					}
-				}
-				for (String ef : expectedOutputFiles) {
-					testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
-				}
-				
-				StringBuilder sb = new StringBuilder();
-				for (String key : testFailures.keySet()) {
-					String value = testFailures.get(key);
-					String s2 = "\n"+key+": "+value;
-
-					sb.append(s2);
-				}
-				
-				if (sb.length() > 0) {
-					LOG.error(sb.toString());
-					throw new RuntimeException(sb.toString());
-				}
-			}		
+			}
+			for (String ef : expectedOutputFiles) {
+				testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
+			}
 		}
-
 	}
 
 }

@@ -13,6 +13,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -252,8 +254,17 @@ public class HarvestManager extends WorkerThread {
 					log.debug("provider: "+provider);
 					log.debug("provider.hashCode(): "+provider.hashCode());
 					if (folder.listFiles() != null) {
+						if (provider.getLastOaiRequest() != null) {
+							List<String> fileNames = new ArrayList<String>();
+							for (File file : folder.listFiles()) {
+								fileNames.add(file.getName());
+							}
+							if (!fileNames.contains(provider.getLastOaiRequest())) {
+								provider.setLastOaiRequest(null);
+							}
+						}
+						
 						for (File file : folder.listFiles()) {
-							file2harvest = file;
 							log.debug("file.getName(): "+file.getName());
 							log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
 							if (!file.getName().endsWith(".xml")) {
