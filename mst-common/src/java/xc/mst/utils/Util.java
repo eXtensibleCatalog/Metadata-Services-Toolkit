@@ -46,7 +46,9 @@ public class Util {
 		if (name == null) {
 			return name;
 		} else {
-			return name.replaceAll(" ", "_").toLowerCase();
+			name = name.replaceAll(" ", "_").toLowerCase();
+			name = name.replaceAll("-", "_").toLowerCase();
+			return name;
 		}
 	}
 	
