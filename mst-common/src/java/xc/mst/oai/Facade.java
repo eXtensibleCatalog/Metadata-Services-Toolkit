@@ -60,6 +60,7 @@ import xc.mst.utils.XmlHelper;
 public class Facade extends BaseManager
 {
 	/** The logger object	 */
+	private static Logger LOG = Logger.getLogger(Facade.class);
 	private static Logger log = Logger.getLogger(Constants.LOGGER_HARVEST_OUT);
 	
 	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
@@ -712,74 +713,37 @@ public class Facade extends BaseManager
 
 		// If there was a resumption token, get it from the database
 		ResumptionToken resToken = null;
-		if(resumptionToken != null)
-		{
+		if(resumptionToken != null) {
 			if(log.isDebugEnabled())
 				log.debug("The request had a resumption token " + resumptionToken);
 
-			// Get the resumption token
-			resToken = getResumptionTokenDAO().getByToken(resumptionToken);
+			String[] rtSplit = resumptionToken.split("\\|");
+			// Set the values from the resumption token rather than keeping the ones parsed from the request
+			fromDate = getUtil().parseDateTime(rtSplit[0]);
+			untilDate = getUtil().parseDateTime(rtSplit[1]);
+			set = rtSplit[2];
+			metadataPrefix = rtSplit[3];
+			startingId = Long.parseLong(rtSplit[4]);
 
-			// Return an error if the resumption token could not be found
-			if(resToken == null)
+		}
+		
+		// Get the Set Object for the requested set
+		if(!StringUtils.isEmpty(set)) {
+			setObject = getSetDAO().getBySetSpec(set);
+
+			// If the set they asked for didn't exist, return an error
+			if(setObject == null)
 			{
-				log.warn("Could not find the resumption token with ID " + resumptionToken);
+				log.warn("The requested set could not be found.  set was " + set + ".");
 
-				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request contained an unrecognized resumption token \"" + resumptionToken + "\".");
+				LogWriter.addWarning(service.getHarvestOutLogFileName(), "The requested set \"" + set + "\" could not be found.");
 				warningCount++;
 
-				return ErrorBuilder.badResumptionTokenError();
-			}
-
-			// Set the values from the resumption token rather than keeping the ones parsed from the request
-			fromDate = resToken.getFrom();
-			untilDate = resToken.getUntil();
-			set = resToken.getSetSpec();
-			metadataPrefix = resToken.getMetadataFormat();
-			startingId = resToken.getStartingId();
-
-			// Get the format ID for the requested metadataPrefix
-			format = getFormatDAO().getByName(metadataPrefix);
-
-			// Get the Set Object for the requested set
-			if(set != null)
-			{
-				setObject = getSetDAO().getBySetSpec(set);
-
-				// If the set they asked for didn't exist, return an error
-				if(setObject == null)
-				{
-					log.warn("The requested set could not be found.  set was " + set + ".");
-
-					LogWriter.addWarning(service.getHarvestOutLogFileName(), "The requested set \"" + set + "\" could not be found.");
-					warningCount++;
-
-					return XMLUtil.xmlTag("error", Constants.ERROR_BAD_SET, new String[]{"code", "badArgument"});
-				}
+				return XMLUtil.xmlTag("error", Constants.ERROR_BAD_SET, new String[]{"code", "badArgument"});
 			}
 		}
-		else
-		{
-			format = getFormatDAO().getByName(metadataPrefix);
-
-			// Get the Set Object for the requested set
-			if(set != null)
-			{
-				setObject = getSetDAO().getBySetSpec(set);
-
-				// If the set they asked for didn't exist, return an error
-				if(setObject == null)
-				{
-					log.warn("The requested set could not be found.  set was " + set + ".");
-
-					LogWriter.addWarning(service.getHarvestOutLogFileName(), "The requested set \"" + set + "\" could not be found.");
-					warningCount++;
-
-					return XMLUtil.xmlTag("error", Constants.ERROR_BAD_SET, new String[]{"code", "badArgument"});
-				}
-			}
-		}
-
+		
+		format = getFormatDAO().getByName(metadataPrefix);
 		// Return an error if the format was null
 		if(format == null)
 		{

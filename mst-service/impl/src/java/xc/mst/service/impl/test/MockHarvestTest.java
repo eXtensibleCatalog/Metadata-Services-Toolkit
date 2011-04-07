@@ -119,10 +119,11 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 				harvestOutRecordsFromMST();
 				LOG.debug("createHarvestSchedule()-2");
 			}
-			finalTest();
 			compareAgainstExpectedOutput();
 			waitUntilFinished();
 		}
+		
+		finalTest();
 		
 		StringBuilder sb = new StringBuilder();
 		for (String key : testFailures.keySet()) {

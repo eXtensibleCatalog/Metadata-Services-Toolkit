@@ -8,6 +8,19 @@
   -->
 <project name="mc" default="mc.help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<target name="mc.help">
+		<echo>
+commands (mc.help)
+
+    mc.deploy
+        compiles src, creates jar, and pushes it to all other subprojects and tomcat
+
+    mc.test
+	    executes the testng tests.  It will run all tests unless you specify a test parameter.
+		eg: ant -Dtest=Generic mc.test
+		</echo>
+	</target>
+
 	<dirname property="mc.dir" file="${ant.file.mc}" />
 	
 	<property file="${mc.dir}/build.properties" />
@@ -38,7 +51,7 @@
 		<delete dir="${mc.build.lib}" />
 	</target>
 
-	<target name="mc.help">
+	<target name="mc.echo">
 		<echo>
 			mst-common help
 			mc.src.dir: ${mc.src.dir}

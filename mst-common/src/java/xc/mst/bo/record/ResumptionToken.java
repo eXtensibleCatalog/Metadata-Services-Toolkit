@@ -12,6 +12,10 @@ package xc.mst.bo.record;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.apache.commons.lang.xwork.StringUtils;
+
+import xc.mst.utils.Util;
+
 /**
  * Represents a resumption token
  *
@@ -19,6 +23,9 @@ import java.util.Date;
  */
 public class ResumptionToken
 {
+	
+	protected Util util = new Util();
+	
 	/**
 	 * The resumption token's ID
 	 */
@@ -180,11 +187,27 @@ public class ResumptionToken
 	} // end method setOffset(int)
 
 	public String getToken() {
-		return token;
+		StringBuilder sb = new StringBuilder();
+		if (this.from != null) {
+			sb.append(util.printDateTime(new Date(this.from.getTime())));
+		}
+		sb.append("|");
+		if (this.until != null) {
+			sb.append(util.printDateTime(new Date(this.until.getTime())));
+		}
+		sb.append("|");
+		if (!StringUtils.isEmpty(this.setSpec)) {
+			sb.append(this.setSpec);
+		}
+		sb.append("|");
+		sb.append(this.metadataFormat);
+		sb.append("|");
+		sb.append(this.startingId+"");
+		return sb.toString();
 	}
 
 	public void setToken(String token) {
-		this.token = token;
+		//this.token = token;
 	}
 
 	/**

@@ -1,9 +1,13 @@
 package xc.mst.services.transformation.test;
 
+import java.util.Calendar;
+
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -13,11 +17,11 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	protected long getNumberOfRecordsToHarvest() {
 		//return Integer.MAX_VALUE;
 		//return 100000;
-		return 10000;
+		return 1000;
 	}
 	
 	public String getRepoName() {
-		return "test_repo";
+		return "135";
 	}
 	
 	@Override
@@ -26,12 +30,12 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public String getProviderUrl() {
-		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
-		//return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
+		//return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
+		return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getMarcXmlFormat()};
+		return new Format[] {getMarc21Format()};
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
@@ -82,12 +86,19 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	*/
 	}
 	
+	/*
 	@Test
 	public void startToFinish() throws Exception  {
 		super.startToFinish();
-		/*
 		createHarvestSchedule();
 		waitUntilFinished();
-		*/
 	}
+	*/
+	
+	/*
+	@Override
+	public void createHarvestSchedule(String name, Set s) throws Exception {
+		//do nothing
+	}
+	*/
 }
