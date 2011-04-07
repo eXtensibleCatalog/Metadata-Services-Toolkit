@@ -9,33 +9,10 @@
 
 package xc.mst.common.test;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Date;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import org.apache.log4j.Logger;
-import org.jdom.Document;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
-import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.Record;
-import xc.mst.bo.service.Service;
-import xc.mst.bo.service.ServiceHarvest;
-import xc.mst.repo.DefaultRepository;
-import xc.mst.repo.Repository;
-import xc.mst.utils.MSTConfiguration;
-import xc.mst.utils.TimingLogger;
-import xc.mst.utils.XmlHelper;
 
 public class GenericTest extends BaseTest {
 	
@@ -57,7 +34,14 @@ public class GenericTest extends BaseTest {
 	public void goTest() {
 		
 		try {
+			String[] rtSplit = "|||xc|13360453".split("\\\\|");
 			
+			for (int i=0; i<rtSplit.length; i++) {
+				LOG.debug("i: "+i);
+				LOG.debug("rtSplit[i]: "+rtSplit[i]);
+			}
+			
+			/*
 			int i=1;
 			
 			Repository r = (Repository)MSTConfiguration.getInstance().getBean("Repository");
@@ -74,6 +58,7 @@ public class GenericTest extends BaseTest {
 			}
 			t1 = System.currentTimeMillis();
 			System.out.println("next 14000: "+(t1-t0)/14000.);
+			*/
 			
 			/*
 			URLClassLoader sysloader = (URLClassLoader) getClass().getClassLoader();

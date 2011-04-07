@@ -8,6 +8,35 @@
   -->
 <project name="example-service" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<target name="help">
+		<echo>
+commands
+
+    retrieve
+	    You only need to worry about calling this explicitly if you are also working on the
+        MST platform.  If you happen to update the mst-service-impl subproject and you wish
+        to push those changes here, then you need to run an ms.publish (in the mst-platform
+        dev environment) followed by this retrieve command.
+
+    zip
+        pacakges up the service for deployment into an mst.
+
+    start2finishtest
+       	runs the test (StartToFinishTest.java) for this particular service.  The purpose
+		of this test is to do an actual harvest and then run the service in an actual MST.
+
+		note: also make sure you've issued the zip command on dependent services.
+		      eg - before you execute start2finishtest for marctoxctransformation, make
+	               sure you've issued zip on marcnormalization.	      
+    
+    test
+	    runs all tests.  To limit the tests run, add the test param.
+        The 2 main tests (besides the above mentioned start2finishtest) are:
+            ant -Dtest=ProcessFile test
+            ant -Dtest=MockHarvest test
+		</echo>
+	</target>
+
 	<import file="build-custom.xml" />
 	<property file="custom.properties" />
 	<property file="dev.properties" />
@@ -137,12 +166,6 @@
 	<target name="clean.classes">
 		<delete dir="${build.classes}" />
 		<delete dir="${build.test.classes}" />
-	</target>
-
-	<target name="help">
-		<echo>
-			help
-		</echo>
 	</target>
 
 	<target name="resolve" depends="ivy.init">

@@ -13,6 +13,12 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		return new Format[] {getDCTermsFormat()};
 	}
 	
+	@Override
+	protected long getNumberOfRecordsToHarvest() {
+		//return Integer.MAX_VALUE;
+		return 1000;
+	}
+	
 	protected String getRepoName() {
 		return "nates_repo";
 	}

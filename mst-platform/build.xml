@@ -8,6 +8,15 @@
   -->
 <project name="mp" default="mp.help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<target name="mp.help">
+		<echo>
+commands (mp.help)
+
+    mp.deploy
+        compiles src, creates war, and pushes it to tomcat dir 
+		</echo>
+	</target>
+
 	<dirname property="mp.dir" file="${ant.file.mp}" />
 	
 	<property file="${mp.dir}/build.properties" />
@@ -39,12 +48,6 @@
 
 	<target name="mp.clean.lib">
 		<delete dir="${mp.build.lib}" />
-	</target>
-
-	<target name="mp.help">
-		<echo>
-			mp help
-		</echo>
 	</target>
 
 	<target name="mp.init" depends="init">

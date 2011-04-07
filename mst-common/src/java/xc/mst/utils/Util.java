@@ -20,14 +20,66 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.core.io.ClassPathResource;
 
 public class Util {
 	
 	public final static Logger LOG = Logger.getLogger(Util.class);
+	protected static DateTimeFormatter UTC_SECOND_FORMATTER = null;
+	protected static DateTimeFormatter UTC_DAY_FORMATTER = null;
+	static {
+		UTC_SECOND_FORMATTER = ISODateTimeFormat.dateTime();
+		UTC_SECOND_FORMATTER = UTC_SECOND_FORMATTER.withZone(DateTimeZone.UTC);
+		
+		UTC_DAY_FORMATTER = ISODateTimeFormat.date();
+		UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
+	}
+	public String printDateTime(Date d) {
+		try {
+			String s = UTC_SECOND_FORMATTER.print(d.getTime());
+			s = s.substring(0, s.length()-5)+"Z";
+			return s;
+		} catch (Throwable t) {
+			return null;
+		}
+	}
+	
+	public String printDate(Date d) {
+		try {
+			String s = UTC_DAY_FORMATTER.print(d.getTime());
+			return s;
+		} catch (Throwable t) {
+			return null;
+		}
+	}
+	
+	public Date parseDateTime(String s) {
+		try {
+			DateTime dt = UTC_SECOND_FORMATTER.parseDateTime(s);
+			Date d = dt.toDate();
+			return d;
+		} catch (Throwable t) {
+			return null;
+		}
+	}
+	
+	public Date parseDate(String s) {
+		try {
+			DateTime dt = UTC_DAY_FORMATTER.parseDateTime(s);
+			Date d = dt.toDate();
+			return d;
+		} catch (Throwable t) {
+			return null;
+		}
+	}
 	
 	protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
 	

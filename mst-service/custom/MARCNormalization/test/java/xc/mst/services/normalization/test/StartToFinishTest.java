@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Set;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -25,34 +24,26 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	@Override
 	protected long getNumberOfRecordsToHarvest() {
 		//return Integer.MAX_VALUE;
-		return 500;
+		return 1000;
 	}
+
+	/*
+	@Override
+	protected String getSetSpec() {
+		return getRepoName()+":publication:com_5Farchival";
+	}
+	*/
 	
 	public String getProviderUrl() {
-		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
+		return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getMarcXmlFormat()};
+		return new Format[] {getMarc21Format()};
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
-		return getMarcXmlFormat();
-	}
-	
-	@Test
-	public void startToFinish() throws Exception  {
-		dropOldSchemas();
-		installProvider();
-		
-		Set s = getSetService().getSetBySetSpec("bib");
-		createHarvestSchedule("hs1", s);
-		
-		waitUntilFinished();
-		s = getSetService().getSetBySetSpec("hold");
-		createHarvestSchedule("hs2", s);
-		
-		waitUntilFinished();		
+		return getMarc21Format();
 	}
 	
 	public void finalTest() {
@@ -63,4 +54,5 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	 */
 	public void testHarvestOut() {
 	}
+
 }
