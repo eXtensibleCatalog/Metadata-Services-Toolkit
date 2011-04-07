@@ -8,6 +8,30 @@
   -->
 <project name="MetadataServicesToolkit" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<target name="help">
+		<echo>
+commands
+
+    package-all
+        packages up all all subprojects for release.
+
+    ftp.ivy 
+        push jars to website so that others can get them
+		</echo>
+		<!--
+    javadocs 
+        creates javadocs locally.  You must push them to the website manually.
+		-->
+		<ant target="mc.help" />
+		<ant target="mp.help" />
+		<ant target="ms.help" />
+
+		<echo>
+note: help on the ant commands within particular service subprojects can be found 
+      by issuing an "ant help" command directly within those directories.
+		</echo>
+	</target>
+
 	<macrodef name="copy-to-custom-services">
 		<attribute name="subdir" />
 		<element name="macro-file-set" />
@@ -67,17 +91,11 @@
 	<import file="${mst-platform}/build.xml" />
 	<import file="${mst-service.impl}/build.xml" />
 
-	<target name="help">
+	<target name="echo">
 		<echo>
 			${ant.project.name} help
 			${src.dir}
 			${mc.src.dir}
-		</echo>
-	</target>
-
-	<target name="echo">
-		<echo>
-			${ant.project.name} help
 		</echo>
 	</target>
 

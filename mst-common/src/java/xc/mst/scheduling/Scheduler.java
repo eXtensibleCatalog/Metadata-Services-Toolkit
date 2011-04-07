@@ -295,13 +295,8 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob = serviceReprocessWorkerThread;
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-							/*
-							DeleteServiceWorkerThread deleteServiceWorkerThread = new DeleteServiceWorkerThread();
-							deleteServiceWorkerThread.setServiceId(jobToStart.getService().getId());
-							deleteServiceWorkerThread.start();
-							runningJob = deleteServiceWorkerThread;
-							runningJob.type = Constants.THREAD_DELETE_SERVICE;
-							*/
+							// John, this is probably where you want to kick off the thread.  Try and mimic
+							// the Constants.THREAD_SERVICE above
 						}
 
 						if (runningJob != null) {
