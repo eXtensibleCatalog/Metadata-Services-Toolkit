@@ -163,4 +163,9 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     {
         return getProviderDAO().getSorted(sort, columnSorted);
     }
+    
+    public void markProviderDeleted(Provider provider) {
+    	//TODO do some work here...somehow need to get at a service?  insert a job? as I tried to do in DefaultServicesService (wrong place?)
+    }
+
 }

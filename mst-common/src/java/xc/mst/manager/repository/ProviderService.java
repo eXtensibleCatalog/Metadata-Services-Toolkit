@@ -88,4 +88,7 @@ public interface ProviderService {
  * @throws DatabaseConfigException 
    */
     public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
+    
+    
+    public void markProviderDeleted(Provider provider);
 }

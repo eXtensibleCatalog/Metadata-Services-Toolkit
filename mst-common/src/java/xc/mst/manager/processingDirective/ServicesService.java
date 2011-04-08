@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -77,6 +78,11 @@ public interface ServicesService
      * @param service service to be deleted
      */
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
+
+    
+    public void markProviderDeleted(Provider provider) throws DataException;
+    //TODO eliminate one below I think
+    public void markRepositoryRecordsDeleted(Service service) throws DataException;
     
     /**
      * Updates the details of a Service
@@ -106,7 +112,7 @@ public interface ServicesService
     public Object getBean(String serviceName, String beanName);
 
     /**
-     * returns a list of soervices sorted by name
+     * returns a list of services sorted by name
      * 
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services

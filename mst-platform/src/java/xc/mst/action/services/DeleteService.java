@@ -113,6 +113,7 @@ public class DeleteService extends BaseActionSupport
     		// Delete service
     		getServicesService().deleteService(service);
     		// BDA - I don't think we need to schedule this anymore - should be a quick operation.
+    		// TODO ask Ben about the above comment as I thought Ben advocated scheduling this...
    	    	//getServicesService().deleteServiceAndRecordsByJob(service);
             return SUCCESS;
         }
@@ -123,8 +124,7 @@ public class DeleteService extends BaseActionSupport
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
-        }
-       
+        }       
     }
 
 

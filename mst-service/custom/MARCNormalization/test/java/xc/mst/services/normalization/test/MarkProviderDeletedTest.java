@@ -33,7 +33,8 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			assert hs != null : "there should be a harvestSchedule for the provider";
 
 			// - delete the provider - John, this method doesn't exist.  It's what you need to create.
-			//getProviderService().markProviderDeleted(this.provider);
+			// TODO
+			getProviderService().markProviderDeleted(this.provider);
 			
 			// - ensure there are no harvest schedules
 			hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
@@ -45,7 +46,9 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
 			// - create a new harvest schedule
-			createHarvestSchedule();
+			createHarvestSchedule();  //you'll end up with active records again...must be from beginning
+			
+			waitUntilFinished();
 
 			// - harvest from provider and norm service
 			//   - make sure all records are active again

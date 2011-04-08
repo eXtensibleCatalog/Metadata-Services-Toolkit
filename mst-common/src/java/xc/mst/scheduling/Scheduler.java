@@ -30,6 +30,7 @@ import xc.mst.manager.BaseService;
 import xc.mst.repo.DefaultRepository;
 import xc.mst.repo.Repository;
 import xc.mst.services.MetadataServiceManager;
+import xc.mst.services.RepositoryDeletionManager;
 import xc.mst.services.SolrWorkDelegate;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -295,8 +296,23 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob = serviceReprocessWorkerThread;
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+							// TODO
 							// John, this is probably where you want to kick off the thread.  Try and mimic
 							// the Constants.THREAD_SERVICE above
+							// TODO are there different types of things we might do here?  i.e. delete service vs. delete repository?
+							RepositoryDeletionManager rdm = new RepositoryDeletionManager();
+							runningJob = rdm;
+
+							Repository incomingRepo = null;
+							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
+								incomingRepo = 
+									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
+							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
+								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
+								incomingRepo = s2.getMetadataService().getRepository();
+							}							LOG.debug("incomingRepo.getName(): "+incomingRepo.getName());
+							rdm.setIncomingRepository(incomingRepo);
+							runningJob.type = Constants.THREAD_DELETE_SERVICE;
 						}
 
 						if (runningJob != null) {
