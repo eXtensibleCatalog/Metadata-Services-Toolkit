@@ -69,10 +69,6 @@ public class DeleteRepository extends BaseActionSupport
                 errorType = "error";
                 return SUCCESS;
             }
-//			Repository providerRepo = getRepositoryService().getRepository(provider);
-//			Service service = providerRepo.getService();   // TODO is the service there?  test
-//			// TODO need to schedule a job to mark the records 'delete'
-//			markRecordsForDeletion(service);
             markRecordsForDeletion(provider);
 
 			return SUCCESS;
@@ -84,54 +80,7 @@ public class DeleteRepository extends BaseActionSupport
             this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
             return INPUT;
         }
-/*
-        catch(IndexException ie)
-        {
-            log.error(ie.getMessage(),ie);
-            errorType = "error";
-            this.addFieldError("indexError","Error occurred while trying to mark repository records deleted. Email has been sent to administrator regarding the issue.");
-            getUserService().sendEmailErrorReport();
-            return INPUT;
-        }
- */     
- /*
-        catch(DataException de)
-        {
-            log.error(de.getMessage(), de);
-            this.addFieldError("viewRepositoryError", "Error occurred while trying to mark repository records deleted. An email has been sent to the administrator.");
-            getUserService().sendEmailErrorReport();
-            errorType = "error";
-            return INPUT;
-        }
-*/        
     }
-    
-    /**
-     * Delete repository and its harvested records
-     *  TODO remove this method - unused?
-     * 
-     */
-/*
-    public String deleteRepositoryAndRecords()
-    {
-        try
-        {
-            log.debug("DeleteRepository:deleteRepositoryAndRecords():Repository Id to be deleted : " + repositoryId);
-            Provider provider = getProviderService().getProviderById(repositoryId);
-            
-            // Delete provider
-   	    	getProviderService().deleteProvider(provider);
-            return SUCCESS;
-        }
-        catch(Exception e)
-        {
-            log.debug("", e);
-            this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
-            errorType = "error";
-            return INPUT;
-        }
-    }
-*/
 
 
     /**
@@ -141,19 +90,13 @@ public class DeleteRepository extends BaseActionSupport
     	if (log.isDebugEnabled()) {
     		log.debug("DeleteRepository:markRecordsForDeletion()");
     	}
-    	try {
-    		// schedule it
-   	    	getServicesService().markProviderDeleted(provider);
-            return SUCCESS;
-        }
-        catch(DataException e) {
-//            log.error("Exception occured while starting to mark repository records deleted " + ((service != null)?service.getName():""), e);
-            log.error("Exception occured while starting to mark repository records deleted ", e);
-            this.addFieldError("viewRepositoryError", "Error occured while starting to mark repository records deleted. Email has been sent to the administrator regarding the error.");
-            getUserService().sendEmailErrorReport();
-            errorType = "error";
-            return INPUT;
-        }
+		// schedule it
+
+    	// this one is the method called by Ben in the test code.
+    	// TODO must make sure the service attached to the provider is not NULL! (and set it properly now if necessary?)
+    	getProviderService().markProviderDeleted(provider);
+
+    	return SUCCESS;
     }
 
     

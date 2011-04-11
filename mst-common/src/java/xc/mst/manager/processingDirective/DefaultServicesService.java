@@ -38,6 +38,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -606,6 +607,27 @@ public class DefaultServicesService extends BaseService
      *
      * @param service service to be deleted
      */
+    public void markRepositoryRecordsDeleted(Service service) throws DataException
+    {
+    	try {
+    		//TODO refactor out a method
+			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() start of method");
+			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
+			JobService jobService = (JobService)config.getBean("JobService");
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);  // exception here:  either service or harvesting sched. or processing directive must be def.
+			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
+		} 
+    	catch (DatabaseConfigException dce) {
+			LOG.error("DatabaseConfig exception occured when adding jobs to database", dce);
+		}
+    }
+
+    /**
+     * Deletes a service and its records by scheduling a job
+     *
+     * @param service service to be deleted
+     */
     public void deleteServiceAndRecordsByJob(Service service) throws DataException
     {
     	service.setDeleted(true);
@@ -620,7 +642,7 @@ public class DefaultServicesService extends BaseService
 		}
     	
     }
-
+    
     /**
      * Updates the details related to a service
      *

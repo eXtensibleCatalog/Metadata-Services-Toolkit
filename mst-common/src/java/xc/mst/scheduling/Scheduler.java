@@ -310,7 +310,8 @@ public class Scheduler extends BaseService implements Runnable {
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
 								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
 								incomingRepo = s2.getMetadataService().getRepository();
-							}							LOG.debug("incomingRepo.getName(): "+incomingRepo.getName());
+							}							
+							LOG.debug("**** Scheduler.run() incomingRepo.getName(): "+ incomingRepo==null ? null:incomingRepo.getName());
 							rdm.setIncomingRepository(incomingRepo);
 							runningJob.type = Constants.THREAD_DELETE_SERVICE;
 						}

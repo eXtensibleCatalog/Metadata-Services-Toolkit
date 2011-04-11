@@ -80,8 +80,6 @@ public interface ServicesService
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
 
     
-    public void markProviderDeleted(Provider provider) throws DataException;
-    //TODO eliminate one below I think
     public void markRepositoryRecordsDeleted(Service service) throws DataException;
     
     /**

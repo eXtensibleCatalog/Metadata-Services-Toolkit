@@ -11,17 +11,18 @@ package xc.mst.manager.repository;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.HarvesterWorkerThread;
-import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.LogWriter;
@@ -165,7 +166,20 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     }
     
     public void markProviderDeleted(Provider provider) {
-    	//TODO do some work here...somehow need to get at a service?  insert a job? as I tried to do in DefaultServicesService (wrong place?)
-    }
+    	//TODO do some more work here...
+		Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
+		LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
+		final Repository providerRepo = getRepositoryService().getRepository(provider);
+LOG.error("DefaultProviderService.markProviderDeleted() repository="+providerRepo);
+		try {
+			Service service = providerRepo.getService();
+LOG.error("DefaultProviderService.markProviderDeleted() service="+service);
+			getServicesService().markRepositoryRecordsDeleted(service);
+		} catch (DataException e) {
+			// TODO what is appropriate for this exception?
+    		LOG.error("DataException while adding a service: ", e);
+		}
+		LOG.debug("DefaultProviderService.markProviderDeleted() end of method");
 
+    }
 }
