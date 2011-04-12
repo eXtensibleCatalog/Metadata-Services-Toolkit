@@ -90,10 +90,9 @@ public class DeleteRepository extends BaseActionSupport
     	if (log.isDebugEnabled()) {
     		log.debug("DeleteRepository:markRecordsForDeletion()");
     	}
-		// schedule it
 
-    	// this one is the method called by Ben in the test code.
-    	// TODO must make sure the service attached to the provider is not NULL! (and set it properly now if necessary?)
+    	// TODO make sure the service attached to the provider is not NULL! (or use another strategy)(&set it properly now if necessary?)
+		// schedule it
     	getProviderService().markProviderDeleted(provider);
 
     	return SUCCESS;

@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -34,6 +33,8 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 public class DefaultProviderService extends BaseService implements ProviderService{
+	
+	private static final Logger LOG = Logger.getLogger(DefaultProviderService.class);
 
     /**
      * Returns a provider by its name
@@ -90,6 +91,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      */
     public void deleteProvider(Provider provider) throws DataException, IndexException{
 
+    	//TODO pull out the two below to methods so I can use them elsewhere
     	// Delete schedule for this repository
     	
     	// Check if any harvest is running 
@@ -166,15 +168,19 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     }
     
     public void markProviderDeleted(Provider provider) {
-    	//TODO do some more work here...
-		Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
+		
 		LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
 		final Repository providerRepo = getRepositoryService().getRepository(provider);
+    	HarvestSchedule harvestSchedule = null;
+		try {
+			harvestSchedule = getScheduleService().getScheduleForProvider(provider);
+		} catch (DatabaseConfigException e1) {
+    		LOG.error("DataException while getting a harvestSchedule: ", e1);
+		}
+
 LOG.error("DefaultProviderService.markProviderDeleted() repository="+providerRepo);
 		try {
-			Service service = providerRepo.getService();
-LOG.error("DefaultProviderService.markProviderDeleted() service="+service);
-			getServicesService().markRepositoryRecordsDeleted(service);
+			getServicesService().markRepositoryRecordsDeleted(harvestSchedule);
 		} catch (DataException e) {
 			// TODO what is appropriate for this exception?
     		LOG.error("DataException while adding a service: ", e);

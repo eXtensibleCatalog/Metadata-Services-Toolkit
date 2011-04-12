@@ -32,13 +32,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.ErrorCode;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
@@ -607,20 +606,27 @@ public class DefaultServicesService extends BaseService
      *
      * @param service service to be deleted
      */
-    public void markRepositoryRecordsDeleted(Service service) throws DataException
+    public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException
     {
     	try {
     		//TODO refactor out a method
 			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() start of method");
-			Job job = new Job(service, 0, Constants.THREAD_DELETE_SERVICE);
+			
+			// assumption made here that to get to this point, you had a harvest schedule associated w/the harvest repository - OK?.
+			Job job = new Job(schedule, Constants.THREAD_MARK_PROVIDER_DELETED);
 			JobService jobService = (JobService)config.getBean("JobService");
 			job.setOrder(jobService.getMaxOrder() + 1); 
 			jobService.insertJob(job);  // exception here:  either service or harvesting sched. or processing directive must be def.
+			LOG.debug("@@@@@@@@@@@ just inserted job THREAD_MARK_PROVIDER_DELETED ###############");
 			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
 		} 
     	catch (DatabaseConfigException dce) {
 			LOG.error("DatabaseConfig exception occured when adding jobs to database", dce);
 		}
+//    	catch (Exception de) {
+    		//TODO this is for testing only -elim. when stable!
+//			LOG.error("SHOULD NOT BE HERE: Data exception occured when adding jobs to database", de);
+//    	}
     }
 
     /**

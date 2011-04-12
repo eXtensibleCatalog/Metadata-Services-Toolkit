@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
@@ -296,24 +297,23 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob = serviceReprocessWorkerThread;
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-							// TODO
 							// John, this is probably where you want to kick off the thread.  Try and mimic
 							// the Constants.THREAD_SERVICE above
-							// TODO are there different types of things we might do here?  i.e. delete service vs. delete repository?
+						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
+							// TODO
+							LOG.debug("**** Scheduler - THREAD_MARK_PROVIDER_DELETED!");
 							RepositoryDeletionManager rdm = new RepositoryDeletionManager();
 							runningJob = rdm;
 
 							Repository incomingRepo = null;
-							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
-								incomingRepo = 
-									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
-							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
-								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
-								incomingRepo = s2.getMetadataService().getRepository();
-							}							
+							// probably pointless, if it was null, you'd have had an exception on job insert...
+							if (jobToStart.getHarvestSchedule() != null) {
+								Provider provider = jobToStart.getHarvestSchedule().getProvider();
+								incomingRepo = getRepositoryService().getRepository(provider);
+							}
 							LOG.debug("**** Scheduler.run() incomingRepo.getName(): "+ incomingRepo==null ? null:incomingRepo.getName());
 							rdm.setIncomingRepository(incomingRepo);
-							runningJob.type = Constants.THREAD_DELETE_SERVICE;
+							runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
 						}
 
 						if (runningJob != null) {

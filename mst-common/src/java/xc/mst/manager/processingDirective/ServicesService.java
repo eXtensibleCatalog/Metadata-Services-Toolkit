@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import xc.mst.bo.provider.Provider;
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -80,7 +80,7 @@ public interface ServicesService
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
 
     
-    public void markRepositoryRecordsDeleted(Service service) throws DataException;
+    public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException;
     
     /**
      * Updates the details of a Service

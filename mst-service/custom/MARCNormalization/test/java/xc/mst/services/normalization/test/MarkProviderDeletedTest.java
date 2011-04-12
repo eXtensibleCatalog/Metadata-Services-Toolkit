@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.record.Record;
+import xc.mst.constants.Constants;
 import xc.mst.repo.Repository;
 
 public class MarkProviderDeletedTest extends MockHarvestTest {
 	
+	protected static final Logger LOG = Logger.getLogger(MarkProviderDeletedTest.class);
+
 	public List<String> getFolders() {
 		List<String> fileStrs = new ArrayList<String>();
 		fileStrs.add("demo_175");
@@ -22,6 +27,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			// - harvest records into MST and run them through norm service
 			
 			// - harvest from provider and norm service, making sure there are no deleteds
+			System.out.println("****START MarkProviderDeletedTest *****");
 			Repository providerRepo = getRepositoryService().getRepository(this.provider);
 			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);
 			
@@ -35,6 +41,8 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			// - delete the provider - John, this method doesn't exist.  It's what you need to create.
 			// TODO
 			getProviderService().markProviderDeleted(this.provider);
+//			wait(60000);
+			waitUntilFinished();
 			
 			// - ensure there are no harvest schedules
 			hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
@@ -42,7 +50,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			
 			// - harvest from provider and norm service
 			//   - make sure all records are deleted
-			ensureAllRecordsMatchStatus(providerRepo, Record.DELETED);
+			ensureAllRecordsMatchStatus(providerRepo, Record.DELETED);  //TODO failed here: java.lang.RuntimeException: record with id: 1 has status:A while expecting:D
 			ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
 			// - create a new harvest schedule
@@ -57,6 +65,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 			
 		} catch (Throwable t) {
+			LOG.error("Exception occured when running MarkProviderDeletedTest!", t);
 			getUtil().throwIt(t);
 		}
 	}

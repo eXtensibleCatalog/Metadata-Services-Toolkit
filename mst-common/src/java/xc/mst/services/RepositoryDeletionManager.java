@@ -14,7 +14,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.Record;
-import xc.mst.constants.Constants;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 
@@ -24,7 +23,7 @@ import xc.mst.scheduling.WorkerThread;
  */
 public class RepositoryDeletionManager extends WorkerThread {
 
-	private final static Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
+	private final static Logger LOG = Logger.getLogger(RepositoryDeletionManager.class);
 
 	protected int m_processedRecordCount = 0;
 	
@@ -53,8 +52,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return this.getName();
+		return "RepositoryDeletionManager-repos="+m_incomingRepository;
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +60,12 @@ public class RepositoryDeletionManager extends WorkerThread {
 	 */
 	@Override
 	public boolean doSomeWork() {
-		LOG.debug("RepositoryDeletionManager.doSomeWork() begin method "+getName());
+//		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method ");
+		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method "+getName());
+		//TODO investigate need for lock
+//		running.lock();
+		boolean retVal = true;
+
 		if (m_incomingRepository != null) {
 			List<Record> records = m_incomingRepository.getRecords(new Date(0), new Date(), 0l, /*getMarc21Format()*/ null, null);
 			for (Record r : records) {
@@ -72,8 +75,12 @@ public class RepositoryDeletionManager extends WorkerThread {
 			//TODO correct way to 'commit?' changes?  see DefaultRepository
 			m_incomingRepository.commitIfNecessary(true);  // TODO - or use (true, m_processedRecordCount)? - or ???
 		}
-		LOG.debug("RepositoryDeletionManager.doSomeWork() end of method");
-		return false;
+		else {
+			retVal = false;
+		}
+		LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed "+ m_processedRecordCount+ " records.");
+//		running.unlock();
+		return retVal;
 	}
 
 	/* (non-Javadoc)
