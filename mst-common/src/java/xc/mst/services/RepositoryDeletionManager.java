@@ -13,9 +13,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.record.Record;
+import xc.mst.dao.DataException;
+import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * @author JohnB
@@ -24,11 +28,10 @@ import xc.mst.scheduling.WorkerThread;
 public class RepositoryDeletionManager extends WorkerThread {
 
 	private final static Logger LOG = Logger.getLogger(RepositoryDeletionManager.class);
-
-	protected int m_processedRecordCount = 0;
+	private HarvestSchedule     m_harvestSchedule = null;
 	
-	// TODO can pull out an intermediate class that uses some of MetadataServiceManager as a refactoring exercise...
-	protected Repository m_incomingRepository = null;
+	protected int               m_processedRecordCount = 0;
+	protected Repository        m_incomingRepository = null;
 	
 	public Repository getIncomingRepository() {
 		return m_incomingRepository;
@@ -36,6 +39,14 @@ public class RepositoryDeletionManager extends WorkerThread {
 
 	public void setIncomingRepository(Repository incomingRepository) {
 		m_incomingRepository = incomingRepository;
+	}
+
+	public void setHarvestSchedule(HarvestSchedule s) {
+		m_harvestSchedule = s;
+	}
+
+	public HarvestSchedule getHarvestSchedule() {
+		return m_harvestSchedule;
 	}
 
 	/* (non-Javadoc)
@@ -55,32 +66,70 @@ public class RepositoryDeletionManager extends WorkerThread {
 		return "RepositoryDeletionManager-repos="+m_incomingRepository;
 	}
 
+	private boolean hasMoreRecords(Repository r, long id) {
+		return r.getRecords(new Date(0), new Date(), id, null, null).size() > 0;
+	}
+	
+	private List<Record> getMoreRecords(Repository r, long id) {
+		return r.getRecords(new Date(0), new Date(), id, null, null);
+	}
+
+	
 	/* (non-Javadoc)
 	 * @see xc.mst.scheduling.WorkerThread#doSomeWork()
 	 */
 	@Override
 	public boolean doSomeWork() {
-//		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method ");
 		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method "+getName());
-		//TODO investigate need for lock
-//		running.lock();
-		boolean retVal = true;
-
 		if (m_incomingRepository != null) {
-			List<Record> records = m_incomingRepository.getRecords(new Date(0), new Date(), 0l, /*getMarc21Format()*/ null, null);
-			for (Record r : records) {
-				r.setStatus(Record.DELETED);
-				m_processedRecordCount++;
+			long id = 0;
+			List<Record> records = null;
+			while ( hasMoreRecords(m_incomingRepository, id) ) {
+				records = getMoreRecords(m_incomingRepository, id);
+				if (records != null) {
+					for (Record r : records) {
+						r.setStatus(Record.DELETED);
+						m_incomingRepository.addRecord(r);
+						m_processedRecordCount++;
+						id = r.getId();
+					}
+				}
+				else {
+					LOG.debug("RepositoryDeletionManager.doSomeWork() unexpectedly, m_records = NULL!");
+				}
 			}
-			//TODO correct way to 'commit?' changes?  see DefaultRepository
-			m_incomingRepository.commitIfNecessary(true);  // TODO - or use (true, m_processedRecordCount)? - or ???
+			m_incomingRepository.commitIfNecessary(true);
+
+			// and now, since harvest schedule didn't seem to get auto-deleted, proceed to delete it...
+			// TODO is this appropriate?
+			deleteHarvestSchedule();
+			
+			LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed "+ m_processedRecordCount+ " records. lastID="+id);
 		}
 		else {
-			retVal = false;
+			LOG.debug("RepositoryDeletionManager.doSomeWork() end of method - no records to process, incomingRepository = NULL!");
 		}
-		LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed "+ m_processedRecordCount+ " records.");
-//		running.unlock();
-		return retVal;
+		return false;
+	}
+
+	private void deleteHarvestSchedule() {
+		try {
+			if (m_harvestSchedule != null) {
+				ScheduleService service = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
+				if (service != null) {
+					 service.deleteSchedule(m_harvestSchedule);  // NOTE: deleteSchedule status not propagated down
+					 LOG.debug("RepositoryDeletionManager.doSomeWork() deleted harvestSchedule");
+				}
+				else {
+					 LOG.error("NOTICE: Unable to delete harvestSchedule (NULL ScheduleService)!");
+				}
+			}
+			else {
+				 LOG.debug("NOTICE: harvestSchedule NULL!");
+			}
+		} catch (DataException e) {
+			LOG.error("ERROR: RepositoryDeletionManager.doSomeWork() exception deleting harvestSchedule",e);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -88,7 +137,6 @@ public class RepositoryDeletionManager extends WorkerThread {
 	 */
 	@Override
 	public String getDetailedStatus() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -97,7 +145,6 @@ public class RepositoryDeletionManager extends WorkerThread {
 	 */
 	@Override
 	public long getRecordsProcessedThisRun() {
-		// TODO Auto-generated method stub
 		return m_processedRecordCount;
 	}
 

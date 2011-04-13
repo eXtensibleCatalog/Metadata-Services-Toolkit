@@ -80,7 +80,12 @@ public interface ServicesService
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
 
     
-    public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException;
+    /**
+     * Harvest Repositories can NEVER be deleted, but the records contained in them can be marked deleted.
+     * 
+     * @param schedule provides allows for access to associated provider/repository
+     */
+public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException;
     
     /**
      * Updates the details of a Service

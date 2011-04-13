@@ -609,24 +609,18 @@ public class DefaultServicesService extends BaseService
     public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException
     {
     	try {
-    		//TODO refactor out a method
 			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() start of method");
 			
-			// assumption made here that to get to this point, you had a harvest schedule associated w/the harvest repository - OK?.
+			// assumption made here that to get to this point, you had a harvest schedule associated w/the harvest repository.
 			Job job = new Job(schedule, Constants.THREAD_MARK_PROVIDER_DELETED);
 			JobService jobService = (JobService)config.getBean("JobService");
 			job.setOrder(jobService.getMaxOrder() + 1); 
-			jobService.insertJob(job);  // exception here:  either service or harvesting sched. or processing directive must be def.
-			LOG.debug("@@@@@@@@@@@ just inserted job THREAD_MARK_PROVIDER_DELETED ###############");
+			jobService.insertJob(job);
 			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
 		} 
     	catch (DatabaseConfigException dce) {
 			LOG.error("DatabaseConfig exception occured when adding jobs to database", dce);
 		}
-//    	catch (Exception de) {
-    		//TODO this is for testing only -elim. when stable!
-//			LOG.error("SHOULD NOT BE HERE: Data exception occured when adding jobs to database", de);
-//    	}
     }
 
     /**

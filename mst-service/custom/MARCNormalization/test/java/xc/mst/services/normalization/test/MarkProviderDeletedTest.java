@@ -38,10 +38,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			HarvestSchedule hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
 			assert hs != null : "there should be a harvestSchedule for the provider";
 
-			// - delete the provider - John, this method doesn't exist.  It's what you need to create.
-			// TODO
 			getProviderService().markProviderDeleted(this.provider);
-//			wait(60000);
 			waitUntilFinished();
 			
 			// - ensure there are no harvest schedules
@@ -50,7 +47,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			
 			// - harvest from provider and norm service
 			//   - make sure all records are deleted
-			ensureAllRecordsMatchStatus(providerRepo, Record.DELETED);  //TODO failed here: java.lang.RuntimeException: record with id: 1 has status:A while expecting:D
+			ensureAllRecordsMatchStatus(providerRepo, Record.DELETED);
 			ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
 			// - create a new harvest schedule
@@ -61,7 +58,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			// - harvest from provider and norm service
 			//   - make sure all records are active again
 			//   - make sure the same ids are used
-			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);
+			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);   // fails here
 			ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 			
 		} catch (Throwable t) {
