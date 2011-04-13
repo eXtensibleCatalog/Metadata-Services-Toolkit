@@ -19,6 +19,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.repo.Repository;
@@ -77,7 +78,11 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      */
     public void insertProvider(Provider provider) throws DataException{
     	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-    	getProviderDAO().insert(provider);
+		ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+		
+		getProviderDAO().insert(provider);
+		validator.validate(provider.getId());
+    	
     	Repository r = getRepositoryDAO().createRepository(provider);
     	r.installOrUpdateIfNecessary(null, config.getProperty("version"));
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());

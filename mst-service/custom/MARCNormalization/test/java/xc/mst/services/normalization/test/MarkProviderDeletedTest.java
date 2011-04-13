@@ -11,7 +11,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.repo.Repository;
 
-public class MarkProviderDeletedTest extends MockHarvestTest {
+public class MarkProviderDeletedTest extends StartToFinishTest {
 	
 	protected static final Logger LOG = Logger.getLogger(MarkProviderDeletedTest.class);
 
@@ -19,6 +19,11 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 		List<String> fileStrs = new ArrayList<String>();
 		fileStrs.add("demo_175");
 		return fileStrs;
+	}
+	
+	@Override
+	public String getProviderUrl() {
+		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
 	}
 	
 	public void finalTest() {
