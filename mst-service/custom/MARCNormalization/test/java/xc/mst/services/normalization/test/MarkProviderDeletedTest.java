@@ -23,6 +23,7 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
 	
 	@Override
 	public String getProviderUrl() {
+		LOG.debug("**** getProviderUrl() SUBCLASS ");
 		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
 	}
 	
