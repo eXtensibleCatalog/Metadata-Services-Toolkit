@@ -21,11 +21,11 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
 		return fileStrs;
 	}
 	
-	@Override
-	public String getProviderUrl() {
-		LOG.debug("**** getProviderUrl() SUBCLASS ");
-		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
-	}
+//	@Override
+//	public String getProviderUrl() {
+//		LOG.debug("**** getProviderUrl() SUBCLASS ");
+//		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
+//	}
 	
 	public void finalTest() {
 		try {
@@ -58,13 +58,12 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
 
 			// - create a new harvest schedule
 			createHarvestSchedule();  //you'll end up with active records again...must be from beginning
-			
 			waitUntilFinished();
 
 			// - harvest from provider and norm service
 			//   - make sure all records are active again
 			//   - make sure the same ids are used
-			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);   // fails here
+			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);
 			ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 			
 		} catch (Throwable t) {

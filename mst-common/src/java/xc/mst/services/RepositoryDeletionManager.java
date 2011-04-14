@@ -54,8 +54,6 @@ public class RepositoryDeletionManager extends WorkerThread {
 	 */
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)
@@ -100,8 +98,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 			}
 			m_incomingRepository.commitIfNecessary(true);
 
-			// and now, since harvest schedule didn't seem to get auto-deleted, proceed to delete it...
-			// TODO is this appropriate?
+			// and now, since harvest schedule doesn't seem to get auto-deleted, proceed to delete it...
 			deleteHarvestSchedule();
 			
 			LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed "+ m_processedRecordCount+ " records. lastID="+id);
@@ -117,7 +114,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 			if (m_harvestSchedule != null) {
 				ScheduleService service = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
 				if (service != null) {
-					 service.deleteSchedule(m_harvestSchedule);  // NOTE: deleteSchedule status not propagated down
+					 service.deleteSchedule(m_harvestSchedule);
 					 LOG.debug("RepositoryDeletionManager.doSomeWork() deleted harvestSchedule");
 				}
 				else {
