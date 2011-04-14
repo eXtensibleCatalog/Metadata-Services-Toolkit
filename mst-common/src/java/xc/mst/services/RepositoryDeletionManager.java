@@ -49,52 +49,32 @@ public class RepositoryDeletionManager extends WorkerThread {
 		return m_harvestSchedule;
 	}
 
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#setup()
-	 */
 	@Override
 	public void setup() {
 	}
 
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#getName()
-	 */
 	@Override
 	public String getName() {
 		return "RepositoryDeletionManager-repos="+m_incomingRepository;
 	}
 
-	private boolean hasMoreRecords(Repository r, long id) {
-		return r.getRecords(new Date(0), new Date(), id, null, null).size() > 0;
-	}
-	
 	private List<Record> getMoreRecords(Repository r, long id) {
 		return r.getRecords(new Date(0), new Date(), id, null, null);
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#doSomeWork()
-	 */
-	@Override
 	public boolean doSomeWork() {
 		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method "+getName());
 		if (m_incomingRepository != null) {
 			long id = 0;
-			List<Record> records = null;
-			while ( hasMoreRecords(m_incomingRepository, id) ) {
+			List<Record> records = getMoreRecords(m_incomingRepository, id);
+			while ( records != null && records.size() > 0 ) {
+				for (Record r : records) {
+					r.setStatus(Record.DELETED);
+					m_incomingRepository.addRecord(r);
+					m_processedRecordCount++;
+					id = r.getId();
+				}
 				records = getMoreRecords(m_incomingRepository, id);
-				if (records != null) {
-					for (Record r : records) {
-						r.setStatus(Record.DELETED);
-						m_incomingRepository.addRecord(r);
-						m_processedRecordCount++;
-						id = r.getId();
-					}
-				}
-				else {
-					LOG.debug("RepositoryDeletionManager.doSomeWork() unexpectedly, m_records = NULL!");
-				}
 			}
 			m_incomingRepository.commitIfNecessary(true);
 
@@ -129,25 +109,16 @@ public class RepositoryDeletionManager extends WorkerThread {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#getDetailedStatus()
-	 */
 	@Override
 	public String getDetailedStatus() {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#getRecordsProcessedThisRun()
-	 */
 	@Override
 	public long getRecordsProcessedThisRun() {
 		return m_processedRecordCount;
 	}
 
-	/* (non-Javadoc)
-	 * @see xc.mst.scheduling.WorkerThread#getRecords2ProcessThisRun()
-	 */
 	@Override
 	public long getRecords2ProcessThisRun() {
 		return m_incomingRepository.getNumRecords();

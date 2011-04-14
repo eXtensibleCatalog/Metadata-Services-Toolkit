@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -78,14 +77,6 @@ public interface ServicesService
      * @param service service to be deleted
      */
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
-
-    
-    /**
-     * Harvest Repositories can NEVER be deleted, but the records contained in them can be marked deleted.
-     * 
-     * @param schedule provides allows for access to associated provider/repository
-     */
-public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException;
     
     /**
      * Updates the details of a Service
@@ -115,7 +106,7 @@ public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataEx
     public Object getBean(String serviceName, String beanName);
 
     /**
-     * returns a list of services sorted by name
+     * returns a list of soervices sorted by name
      * 
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services

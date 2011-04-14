@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
@@ -22,6 +23,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataServiceManager;
@@ -171,25 +173,26 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     {
         return getProviderDAO().getSorted(sort, columnSorted);
     }
-    
+
     public void markProviderDeleted(Provider provider) {
 		
 		LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
-		final Repository providerRepo = getRepositoryService().getRepository(provider);
-    	HarvestSchedule harvestSchedule = null;
+
+		HarvestSchedule harvestSchedule = null;
 		try {
 			harvestSchedule = getScheduleService().getScheduleForProvider(provider);
+
+			Job job = new Job(harvestSchedule, Constants.THREAD_MARK_PROVIDER_DELETED);
+			JobService jobService = getJobService();
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+
+			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
+
 		} catch (DatabaseConfigException e1) {
     		LOG.error("DataException while getting a harvestSchedule: ", e1);
 		}
 
-LOG.error("DefaultProviderService.markProviderDeleted() repository="+providerRepo);
-		try {
-			getServicesService().markRepositoryRecordsDeleted(harvestSchedule);
-		} catch (DataException e) {
-			// TODO what is appropriate for this exception?
-    		LOG.error("DataException while adding a service: ", e);
-		}
 		LOG.debug("DefaultProviderService.markProviderDeleted() end of method");
 
     }

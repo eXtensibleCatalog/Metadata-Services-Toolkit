@@ -32,9 +32,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
@@ -606,28 +606,6 @@ public class DefaultServicesService extends BaseService
      *
      * @param service service to be deleted
      */
-    public void markRepositoryRecordsDeleted(HarvestSchedule schedule) throws DataException
-    {
-    	try {
-			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() start of method");
-			
-			// assumption made here that to get to this point, you had a harvest schedule associated w/the harvest repository.
-			Job job = new Job(schedule, Constants.THREAD_MARK_PROVIDER_DELETED);
-			JobService jobService = (JobService)config.getBean("JobService");
-			job.setOrder(jobService.getMaxOrder() + 1); 
-			jobService.insertJob(job);
-			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
-		} 
-    	catch (DatabaseConfigException dce) {
-			LOG.error("DatabaseConfig exception occured when adding jobs to database", dce);
-		}
-    }
-
-    /**
-     * Deletes a service and its records by scheduling a job
-     *
-     * @param service service to be deleted
-     */
     public void deleteServiceAndRecordsByJob(Service service) throws DataException
     {
     	service.setDeleted(true);
@@ -642,7 +620,7 @@ public class DefaultServicesService extends BaseService
 		}
     	
     }
-    
+
     /**
      * Updates the details related to a service
      *
