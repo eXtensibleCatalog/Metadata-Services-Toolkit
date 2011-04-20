@@ -328,7 +328,7 @@
 		              
 		              <input type="hidden" name="repositoryId" value="${provider.id}"/>
 		              
-			          <p>Are you sure you want to delete the repository?</p>
+			          <p>Are you sure you want to mark the repository records deleted?</p>
 		          </form>
 		      </div>
 	      </div>
@@ -342,8 +342,10 @@
 		      		  <input type="hidden" name="repositoryId" value="${provider.id}"/>
 			          <div id="deleteRepositoryError" cssClass="errorMessage"></div>
 			          Repository ${provider.name} contains harvested data records.
-                      Deleting this repository will result in deletion of ${provider.recordsAdded} records as well as related harvest schedules, scheduled harvests, processing rules and the records harvested. 
+                      Deleting this repository will result in marking for deletion of ${provider.recordsAdded} records as well as related harvest schedules.
                       Are you sure you want to delete this repository?
+
+		      
 
 
 

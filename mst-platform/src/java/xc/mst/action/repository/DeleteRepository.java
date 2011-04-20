@@ -14,12 +14,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
-import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.IndexException;
-import xc.mst.repo.Repository;
 
 /**
  * This class is used to delete a repository from the database
@@ -82,6 +78,29 @@ public class DeleteRepository extends BaseActionSupport
         }
     }
 
+    /**
+     * Delete repository and its harvested records
+     * 
+     *
+     */
+    public String deleteRepositoryAndRecords()
+    {
+        try
+        {
+            log.debug("DeleteRepository:deleteRepositoryAndRecords():Repository Id to be deleted : " + repositoryId);
+            Provider provider = getProviderService().getProviderById(repositoryId);
+            
+            markRecordsForDeletion(provider);
+            return SUCCESS;
+        }
+        catch(Exception e)
+        {
+            log.debug("", e);
+            this.addFieldError("viewRepositoryError", "Repository cannot be marked deleted");
+            errorType = "error";
+            return INPUT;
+        }
+    }
 
     /**
      *
@@ -91,7 +110,6 @@ public class DeleteRepository extends BaseActionSupport
     		log.debug("DeleteRepository:markRecordsForDeletion()");
     	}
 
-    	// TODO make sure the service attached to the provider is not NULL! (or use another strategy)(&set it properly now if necessary?)
 		// schedule it
     	getProviderService().markProviderDeleted(provider);
 

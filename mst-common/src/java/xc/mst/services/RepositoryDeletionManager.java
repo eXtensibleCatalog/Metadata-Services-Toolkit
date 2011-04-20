@@ -20,6 +20,7 @@ import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 
 /**
  * @author JohnB
@@ -71,10 +72,17 @@ public class RepositoryDeletionManager extends WorkerThread {
 				for (Record r : records) {
 					r.setStatus(Record.DELETED);
 					m_incomingRepository.addRecord(r);
+					m_incomingRepository.commitIfNecessary(false);
 					m_processedRecordCount++;
 					id = r.getId();
 				}
+				// based on the local test result that the records come in batches of 1000, if this does not remain true
+				// may not ever get TimingLogger data
+				if (id % 5000 == 0) {
+					TimingLogger.reset();
+				}
 				records = getMoreRecords(m_incomingRepository, id);
+
 			}
 			m_incomingRepository.commitIfNecessary(true);
 
