@@ -88,6 +88,8 @@ public class Service
 	 */
 	private String logFileName = null;
 
+	private Date serviceLastModified = null;
+
 	/**
 	 * The number of warnings harvesting the service has generated
 	 */
@@ -427,6 +429,23 @@ public class Service
 	{
 		this.lastLogReset = (lastLogReset == null ? null : new Date(lastLogReset.getTime()));
 	} // end method setLastLogReset(Date)
+
+	/**
+	 * Sets the date when the service's was last updated
+	 */
+	public void setServicesServiceLastModified(java.util.Date lastModified)
+	{
+		this.serviceLastModified = (lastModified == null ? null : new Date(lastModified.getTime()));
+	}
+
+	/**
+	 * gets the date when the service was last modified
+	 */
+	public Date getServicesServiceLastModified()
+	{
+		return this.serviceLastModified;
+	}
+
 
 	/**
 	 * Gets the name of the log file for the service

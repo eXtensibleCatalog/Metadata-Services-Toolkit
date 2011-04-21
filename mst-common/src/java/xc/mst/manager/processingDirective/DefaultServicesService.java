@@ -18,6 +18,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.processing.Job;
@@ -310,6 +310,10 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
+    		//TODO test!
+			LOG.debug("****** DefaultServicesService.addNewService, about to setServicesServiceLastModified!");
+    		service.setServicesServiceLastModified(new Date());
+			LOG.debug("****** DefaultServicesService.addNewService, just setServicesServiceLastModified!");
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Status.NOT_RUNNING);
@@ -364,6 +368,7 @@ public class DefaultServicesService extends BaseService
     		}
 
     		// Insert the service
+    	 	LOG.debug("**** DefaultServicesService: addNewService");
     		getServiceDAO().insert(service);
     		
     		// TODO : Error need not be stored in db. This code can be removed. It is never read from db. 
@@ -456,6 +461,10 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
+    		//TODO is this right?  TEST!
+			LOG.debug("****** DefaultServicesService.updateService, about to setServicesServiceLastModified!");
+    		service.setServicesServiceLastModified(new Date());
+			LOG.debug("****** DefaultServicesService.updateService, just setServicesServiceLastModified!");
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.getInputFormats().clear();
@@ -574,7 +583,8 @@ public class DefaultServicesService extends BaseService
      */
     public void insertService(Service service) throws DataException
     {
-    	getServiceDAO().insert(service);
+ 	LOG.debug("**** DefaultServicesService: insertService");
+       	getServiceDAO().insert(service);
     }
 
     /**

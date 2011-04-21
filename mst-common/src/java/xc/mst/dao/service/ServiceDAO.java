@@ -88,6 +88,11 @@ public abstract class ServiceDAO extends BaseDAO
 	public final static String COL_LOG_FILE_NAME = "log_file_name";
 
 	/**
+	 * The name of the last log reset column
+	 */
+	public final static String COL_SERVICE_LAST_MODIFIED = "service_last_modifed";
+
+	/**
 	 * The name of the warnings column
 	 */
 	public final static String COL_HARVEST_OUT_WARNINGS = "harvest_out_warnings";
@@ -132,7 +137,6 @@ public abstract class ServiceDAO extends BaseDAO
 	 * Indicates service is deleted or not
 	 */
 	public final static String COL_DELETED = "is_deleted";
-		
 	
 	/**
 	 * A set of all columns which are valid for sorting
@@ -151,6 +155,7 @@ public abstract class ServiceDAO extends BaseDAO
 		sortableColumns.add(COL_OUTPUT_RECORD_COUNT);
 		sortableColumns.add(COL_LAST_LOG_RESET);
 		sortableColumns.add(COL_LOG_FILE_NAME);
+		sortableColumns.add(COL_SERVICE_LAST_MODIFIED);
 		sortableColumns.add(COL_HARVEST_OUT_WARNINGS);
 		sortableColumns.add(COL_HARVEST_OUT_ERRORS);
 		sortableColumns.add(COL_HARVEST_OUT_RECORDS_AVAILABLE);
@@ -292,6 +297,12 @@ public abstract class ServiceDAO extends BaseDAO
 		} else {
 			hibernateTemplate.persist(serviceHarvest);
 		}
+	}
+	//TODO may need a method now that is the opposite of persist(serviceHarvest) that deletes the serviceHarvest
+	// pending a check of whether a way to do this already exists.  (think there is: hibernateTemplate.delete(serviceHarvest)
+	public void delete(ServiceHarvest serviceHarvest) {
+		//TODO is this enough?
+		hibernateTemplate.delete(serviceHarvest);
 	}
 	
 	@SuppressWarnings("unchecked")

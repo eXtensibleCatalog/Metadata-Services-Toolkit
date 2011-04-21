@@ -21,7 +21,6 @@ import org.apache.commons.lang.StringUtils;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
-import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.dao.DBConnectionResetException;
@@ -153,6 +152,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -195,6 +195,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getDate(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -289,6 +290,7 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_OUTPUT_RECORD_COUNT + ", " +
 										   COL_LAST_LOG_RESET + ", " +
 										   COL_LOG_FILE_NAME + ", " +
+										   COL_SERVICE_LAST_MODIFIED + ", " +
 										   COL_HARVEST_OUT_WARNINGS + ", " +
 										   COL_HARVEST_OUT_ERRORS + ", " +
 										   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -331,6 +333,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setOutputRecordCount(results.getInt(i++));
 				service.setServicesLastLogReset(results.getDate(i++));
 				service.setServicesLogFileName(results.getString(i++));
+				service.setServicesServiceLastModified(results.getDate(i++));
 				service.setHarvestOutWarnings(results.getInt(i++));
 				service.setHarvestOutErrors(results.getInt(i++));
 				service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -416,6 +419,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -461,6 +465,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getDate(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -544,6 +549,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -589,6 +595,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getDate(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -663,6 +670,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -710,6 +718,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getDate(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -768,6 +777,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	{
 		// Check that the non-ID fields on the service are valid
 		validateFields(service, false, true);
+log.debug("*** about to insert the service!");
 
 		synchronized(psInsertLock)
 		{
@@ -783,6 +793,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
 					// SQL to insert the new row
+					//TODO debug
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
 	            	      													         COL_CLASS_NAME + ", " +
 	            	      													         COL_WARNINGS + ", " +
@@ -791,6 +802,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_OUTPUT_RECORD_COUNT + ", " +
 	            	      													         COL_LAST_LOG_RESET + ", " +
 	            	      													         COL_LOG_FILE_NAME + ", " +
+	            	      														     COL_SERVICE_LAST_MODIFIED + ", " +
 	            	      													         COL_HARVEST_OUT_WARNINGS + ", " +
 	            	      													         COL_HARVEST_OUT_ERRORS + ", " +
 	            	      													         COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -800,7 +812,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_STATUS + ", " +
 	            	      													         COL_VERSION + ", " +
 	            	      													         COL_DELETED + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert service\" PreparedStatemnt from the SQL " + insertSql);
@@ -819,8 +831,10 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setInt(i++, service.getServicesErrors());
 				psInsert.setInt(i++, service.getInputRecordCount());
 				psInsert.setInt(i++, service.getOutputRecordCount());
+				log.debug("*** insert into service - service_last_modified: "+service.getServicesServiceLastModified());
 				psInsert.setDate(i++, service.getServicesLastLogReset());
 				psInsert.setString(i++, service.getServicesLogFileName());
+				psInsert.setDate(i++, service.getServicesServiceLastModified());
 				psInsert.setInt(i++, service.getHarvestOutWarnings());
 				psInsert.setInt(i++, service.getHarvestOutErrors());
 				psInsert.setLong(i++, service.getHarvestOutRecordsAvailable());
@@ -936,6 +950,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_OUTPUT_RECORD_COUNT + "=?, " +
 				                                                          COL_LAST_LOG_RESET + "=?, " +
 				                                                          COL_LOG_FILE_NAME + "=?, " +
+     	      														      COL_SERVICE_LAST_MODIFIED + "=?, " +
 				                                                          COL_HARVEST_OUT_WARNINGS + "=?, " +
 				                                                          COL_HARVEST_OUT_ERRORS + "=?, " +
 				                                                          COL_HARVEST_OUT_RECORDS_AVAILABLE + "=?, " +
@@ -965,6 +980,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setInt(i++, service.getOutputRecordCount());
 				psUpdate.setDate(i++, service.getServicesLastLogReset());
 				psUpdate.setString(i++, service.getServicesLogFileName());
+				psUpdate.setDate(i++, service.getServicesServiceLastModified());
 				psUpdate.setInt(i++, service.getHarvestOutWarnings());
 				psUpdate.setInt(i++, service.getHarvestOutErrors());
 				psUpdate.setLong(i++, service.getHarvestOutRecordsAvailable());

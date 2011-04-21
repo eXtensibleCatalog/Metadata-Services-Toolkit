@@ -308,7 +308,6 @@ public class Scheduler extends BaseService implements Runnable {
 								Provider provider = jobToStart.getHarvestSchedule().getProvider();
 								incomingRepo = getRepositoryService().getRepository(provider);
 							}
-							LOG.debug("**** Scheduler.run() incomingRepo.getName(): "+ incomingRepo==null ? null:incomingRepo.getName());
 							rdm.setIncomingRepository(incomingRepo);
 							rdm.setHarvestSchedule(jobToStart.getHarvestSchedule());
 							runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
