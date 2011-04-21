@@ -11,17 +11,20 @@ package xc.mst.manager.repository;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.repo.Repository;
-import xc.mst.scheduling.HarvesterWorkerThread;
-import xc.mst.scheduling.ProcessingDirectiveWorkerThread;
 import xc.mst.scheduling.WorkerThread;
 import xc.mst.services.MetadataServiceManager;
 import xc.mst.utils.LogWriter;
@@ -33,6 +36,8 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 public class DefaultProviderService extends BaseService implements ProviderService{
+	
+	private static final Logger LOG = Logger.getLogger(DefaultProviderService.class);
 
     /**
      * Returns a provider by its name
@@ -75,7 +80,11 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      */
     public void insertProvider(Provider provider) throws DataException{
     	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-    	getProviderDAO().insert(provider);
+		ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+		
+		getProviderDAO().insert(provider);
+		validator.validate(provider.getId());
+    	
     	Repository r = getRepositoryDAO().createRepository(provider);
     	r.installOrUpdateIfNecessary(null, config.getProperty("version"));
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
@@ -89,6 +98,7 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      */
     public void deleteProvider(Provider provider) throws DataException, IndexException{
 
+    	//TODO pull out the two below to methods so I can use them elsewhere
     	// Delete schedule for this repository
     	
     	// Check if any harvest is running 
@@ -162,5 +172,28 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
         return getProviderDAO().getSorted(sort, columnSorted);
+    }
+
+    public void markProviderDeleted(Provider provider) {
+		
+		LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
+
+		HarvestSchedule harvestSchedule = null;
+		try {
+			harvestSchedule = getScheduleService().getScheduleForProvider(provider);
+
+			Job job = new Job(harvestSchedule, Constants.THREAD_MARK_PROVIDER_DELETED);
+			JobService jobService = getJobService();
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+
+			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
+
+		} catch (DatabaseConfigException e1) {
+    		LOG.error("DataException while getting a harvestSchedule: ", e1);
+		}
+
+		LOG.debug("DefaultProviderService.markProviderDeleted() end of method");
+
     }
 }

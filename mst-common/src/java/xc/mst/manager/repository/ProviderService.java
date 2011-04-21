@@ -88,4 +88,13 @@ public interface ProviderService {
  * @throws DatabaseConfigException 
    */
     public List<Provider> getAllProvidersSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
+    
+
+    /**
+     * Harvest Repositories can NEVER be deleted, but the records contained in them can be marked deleted.
+     * 
+     * @param provider - the provider whose records we will mark deleted
+     */
+    public void markProviderDeleted(Provider provider);
+
 }

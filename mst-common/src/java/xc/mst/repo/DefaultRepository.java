@@ -182,28 +182,30 @@ public class DefaultRepository extends BaseService implements Repository {
 			uplinks.clear();
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
 			recordsToActivate.clear();
-			
-			for (Map.Entry<String, long[]> me : this.incomingRecordCountsByType.entrySet()) {
-				String type = me.getKey();
-				int i=0;
-				for (long c : me.getValue()) {
-					String key = null;
-					if (i == 0) {
-						key = "incomingNewRecordsCount";
-					} else if (i == 1) {
-						key = "incomingUpdatedRecordsCount";
-					} else if (i == 2) {
-						key = "incomingDeletedRecordsCount";
-					} else if (i == 3) {
-						key = "incomingProcessingErrorsCount";
+
+			if (this.incomingRecordCountsByType != null) {
+				for (Map.Entry<String, long[]> me : this.incomingRecordCountsByType.entrySet()) {
+					String type = me.getKey();
+					int i=0;
+					for (long c : me.getValue()) {
+						String key = null;
+						if (i == 0) {
+							key = "incomingNewRecordsCount";
+						} else if (i == 1) {
+							key = "incomingUpdatedRecordsCount";
+						} else if (i == 2) {
+							key = "incomingDeletedRecordsCount";
+						} else if (i == 3) {
+							key = "incomingProcessingErrorsCount";
+						}
+						if (type != null) {
+							String key2 = key+"-"+type;
+							setPersistentProperty(key2, getPersistentPropertyAsLong(key2, 0l)+c);
+						} else {
+							setPersistentProperty(key, getPersistentPropertyAsLong(key, 0l)+c);
+						}
+						i++;
 					}
-					if (type != null) {
-						String key2 = key+"-"+type;
-						setPersistentProperty(key2, getPersistentPropertyAsLong(key2, 0l)+c);
-					} else {
-						setPersistentProperty(key, getPersistentPropertyAsLong(key, 0l)+c);
-					}
-					i++;
 				}
 			}
 			this.incomingRecordCountsByType = null;
