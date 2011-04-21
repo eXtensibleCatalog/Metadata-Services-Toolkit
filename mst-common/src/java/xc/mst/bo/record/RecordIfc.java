@@ -55,6 +55,13 @@ public interface RecordIfc {
 	 * @return One of Record.ACTIVE (A), Record.HELD (H), or Record.DELETED (D)
 	 */
 	public char getStatus();
+
+	/**
+	 * 
+	 * @return One of Record.ACTIVE (A), Record.HELD (H), or Record.DELETED (D)
+	 */
+	public char getPreviousStatus();
+	public void setPreviousStatus(char status);
 	
 	/**
 	 * @return Equivalent to getStatus() == Record.DELETED

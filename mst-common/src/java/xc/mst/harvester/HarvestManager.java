@@ -14,7 +14,6 @@ import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +33,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.cache.DynMap;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
@@ -131,7 +131,7 @@ public class HarvestManager extends WorkerThread {
 			TimingLogger.reset();
 			
 			this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);
-
+			this.incomingRecordCounts = new RecordCounts(this.currentHarvest.getEndTime(), RecordCounts.INCOMING);
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
 		}
@@ -405,7 +405,7 @@ public class HarvestManager extends WorkerThread {
 				retVal = false;
 			}
 		}
-		repo.commitIfNecessary(false, recordsProcessedThisRun);
+		repo.commitIfNecessary(false, recordsProcessedThisRun, this.incomingRecordCounts, null);
 		running.unlock();
 		return retVal;
 	}
@@ -479,19 +479,22 @@ public class HarvestManager extends WorkerThread {
 				Long recordId = oaiIdCache.getLong(nonRedundantId);
 				
 				boolean update = false;
+				char prevStatus = 0;
 				if (recordId == null || recordId == 0) {
 					getRepositoryDAO().injectId(record);
 					oaiIdCache.put(nonRedundantId, record.getId());
+					
 				} else {
 					update = true;
 					record.setId(recordId);
+					//TODO: prevStatus needs to have the actual previous status.  I just hardcoded ACTIVE for testing. 
+					prevStatus = Record.ACTIVE;
 				}
 				repo.addRecord(record);
 				for (Set s : record.getSets()) {
-					repo.updateIncomingRecordCounts(s.getSetSpec(), update, record.getStatus() == Record.DELETED);
+					incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
 				}
-				// not necessary because there is always a top level spec for the repo
-				//repo.updateIncomingRecordCounts(null, update, ...);
+				incomingRecordCounts.incr(null, record.getStatus(), prevStatus);
 			} catch (Exception e) {
 				log.error("An error occurred in insertion ", e);
 			}

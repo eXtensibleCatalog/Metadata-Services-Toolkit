@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -49,6 +50,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
@@ -72,6 +74,8 @@ public class RepositoryDAO extends BaseDAO {
 	public final static String REPOS_TABLE = "repos";
 	public final static String RECORD_LINKS_TABLE = "record_links";
 	public final static String PROPERTIES = "properties";
+	public final static String INCOMING_RECORD_COUNTS = "incoming_record_counts";
+	public final static String OUTGOING_RECORD_COUNTS = "outgoing_record_counts";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -205,10 +209,10 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void injectId(Record r) {
-		r.setId(getNextId());
+		r.setId(getNextIdAndIncr());
 	}
 	
-	public long getNextId() {
+	public long getNextIdAndIncr() {
 		oaiIdLock.lock();
 		if (nextId == nextIdInDB) {
 			int idsAtOnce = 1000;
@@ -219,6 +223,10 @@ public class RepositoryDAO extends BaseDAO {
 		this.nextId++;
 		oaiIdLock.unlock();
 		return id;
+	}
+	
+	public long getNextId() {
+		return this.nextId++;
 	}
 	
 	public void addRecords(String name, List<Record> records) {
@@ -1418,6 +1426,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 
 	public java.util.Set<Long> getSuccessorIds(String name, Long predId) {
+		TimingLogger.start("RepositoryDAO.getSuccessorIds");
 		java.util.Set<Long> succIds = new HashSet<Long>();
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
 				"select record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" where pred_record_id=?", predId);
@@ -1425,6 +1434,7 @@ public class RepositoryDAO extends BaseDAO {
 			Long succId = (Long)row.get("record_id");
 			succIds.add(succId);
 		}
+		TimingLogger.stop("RepositoryDAO.getSuccessorIds");
 		return succIds;
 	}
 	
@@ -1892,6 +1902,73 @@ public class RepositoryDAO extends BaseDAO {
 			setPersistentProperty(name, "outgoingUpdated"+key, ""+counts4type.getValue()[1]);
 			setPersistentProperty(name, "outgoingDeleted"+key, ""+counts4type.getValue()[2]);
 		}
+	}
+	
+	public void persistRecordCounts(String repoName, RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
+		if (incomingRecordCounts != null)
+			persistRecordCounts(repoName, incomingRecordCounts, INCOMING_RECORD_COUNTS);
+		if (outgoingRecordCounts != null)
+			persistRecordCounts(repoName, outgoingRecordCounts, OUTGOING_RECORD_COUNTS);
+	}
+	
+	protected void persistRecordCounts(String repoName, RecordCounts rc, String tableName) {
+		LOG.info(rc.toString());
+		Map<String, Map<String, AtomicInteger>> countsKeyedByType = rc.getCounts();
+		
+		for (String type : countsKeyedByType.keySet()) {
+			int loops = 1;
+			if (type == null) {
+				type = "total";
+				loops = 2;
+			}
+			// This loop is for the purpose of getting totals by harvest AND totals for all harvests
+			for (int i=0; i < loops; i++) {
+				Date d1 = rc.getHarvestStartDate();
+				if (i == 1) {
+					d1 = new Date(0);
+				}
+				this.jdbcTemplate.update(
+						"insert ignore into "+getTableName(repoName, tableName)+
+							"  (harvest_start_date, type_name) values (?, ?);", 
+						d1,
+						type);
+				
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				
+				StringBuilder sb = new StringBuilder();
+				sb.append(
+						"update "+getTableName(repoName, tableName) +" set ");
+				
+				Map<String, AtomicInteger> counts4Type = countsKeyedByType.get(type.equals("total") ? null : type);
+				for (String updateType : counts4Type.keySet()) {
+					sb.append(updateType);
+					sb.append(" = ");
+					sb.append(updateType);
+					sb.append(" + :");
+					sb.append(updateType);
+					sb.append(",");
+					paramMap.put(updateType, counts4Type.get(updateType).get());
+				}
+				
+				sb.deleteCharAt(sb.length()-1);
+				sb.append(" where harvest_start_date ");
+				if (i < 10) {
+				//if (i == 0) {
+					sb.append(" = :harvest_start_date ");
+					paramMap.put("harvest_start_date", d1);					
+				} else {
+					sb.append(" is null ");
+				}
+				sb.append(" and type_name = :type_name ");
+				paramMap.put("type_name", type);
+				
+				LOG.debug("paramMap!!!");
+				for (Map.Entry<String, Object> me : paramMap.entrySet()) {
+					LOG.debug(me.getKey()+": "+me.getValue());
+				}
+				this.namedParameterJdbcTemplate.update(sb.toString(), paramMap);
+			}
+		}		
 	}
 	
 	public List<Integer> getSetIds(String name) {

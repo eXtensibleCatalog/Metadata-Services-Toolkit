@@ -368,6 +368,7 @@ public class NormalizationService extends GenericMetadataService {
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
 				oldNormalizedRecord.setIndexedObjectType(type);
+				oldNormalizedRecord.setPreviousStatus(Record.ACTIVE);
 				results.add(oldNormalizedRecord);
 
 				return results;

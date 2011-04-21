@@ -173,7 +173,8 @@ public class Record implements InputRecord, OutputRecord {
 	protected int numberOfSuccessors;
 
 	protected char status = Record.ACTIVE;
-	
+	protected char prevStatus = 0;
+
 	public Record() {
 		super();
 	}
@@ -182,6 +183,7 @@ public class Record implements InputRecord, OutputRecord {
 		Record dupe = new Record();
 		dupe.createdAt = this.createdAt;
 		dupe.status = this.status;
+		dupe.prevStatus = this.prevStatus;
 		dupe.id = this.id;
 		dupe.oaiHeader = this.oaiHeader;
 		dupe.oaiIdentifier = this.oaiIdentifier;
@@ -999,5 +1001,13 @@ public class Record implements InputRecord, OutputRecord {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	
+	public char getPreviousStatus() {
+		return prevStatus;
+	}
+
+	public void setPreviousStatus(char prevStatus) {
+		this.prevStatus = prevStatus;
 	}
 }

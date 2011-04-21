@@ -29,6 +29,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 
@@ -43,9 +44,6 @@ public class DefaultRepository extends BaseService implements Repository {
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
-
-	// All of the following counts are reset each time a batch of records is persisted
-	protected Map<String, long[]> incomingRecordCountsByType = null;
 	
 	protected String name = null;
 	
@@ -115,45 +113,6 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getSize(name);
 	}
 	
-	protected long[] getRecordCounts(String type) {
-		if (incomingRecordCountsByType == null) {
-			incomingRecordCountsByType = new HashMap<String, long[]>();
-		}
-		long[] counts = incomingRecordCountsByType.get(type);
-		if (counts == null) {
-			counts = new long[4];
-			incomingRecordCountsByType.put(type, counts);
-		}
-		return counts;
-	}
-
-	public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {
-		long newRecordsCount = 0;
-		long updatedRecordsCount = 0;
-		long deletedRecordsCount = 0;
-		if (delete) {
-			deletedRecordsCount = 1;
-			if (update) {
-				newRecordsCount = -1;
-			}
-		} else {
-			if (update) {
-				updatedRecordsCount = 1;
-			} else {
-				newRecordsCount = 1;
-			}
-		}
-		long[] counts = getRecordCounts(type);
-		counts[0] += newRecordsCount;
-		counts[1] += updatedRecordsCount;
-		counts[2] += deletedRecordsCount;
-	}
-	
-	public void incrementUnexpectedProcessingErrors(String type) {
-		long[] counts = getRecordCounts(type);
-		counts[3]++;
-	}
-	
 	public void addRecord(Record record) {
 		if (record.getPredecessors() != null) {
 			for (InputRecord ir : record.getPredecessors()) {
@@ -176,6 +135,10 @@ public class DefaultRepository extends BaseService implements Repository {
 		return commitIfNecessary(force, 0);
 	}
 	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
+		return commitIfNecessary(force, processedRecordsCount, null, null);
+	}
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount, 
+			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
 		if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
 			predSuccMap.clear();
 			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
@@ -183,30 +146,11 @@ public class DefaultRepository extends BaseService implements Repository {
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
 			recordsToActivate.clear();
 			
-			for (Map.Entry<String, long[]> me : this.incomingRecordCountsByType.entrySet()) {
-				String type = me.getKey();
-				int i=0;
-				for (long c : me.getValue()) {
-					String key = null;
-					if (i == 0) {
-						key = "incomingNewRecordsCount";
-					} else if (i == 1) {
-						key = "incomingUpdatedRecordsCount";
-					} else if (i == 2) {
-						key = "incomingDeletedRecordsCount";
-					} else if (i == 3) {
-						key = "incomingProcessingErrorsCount";
-					}
-					if (type != null) {
-						String key2 = key+"-"+type;
-						setPersistentProperty(key2, getPersistentPropertyAsLong(key2, 0l)+c);
-					} else {
-						setPersistentProperty(key, getPersistentPropertyAsLong(key, 0l)+c);
-					}
-					i++;
-				}
-			}
-			this.incomingRecordCountsByType = null;
+			getRepositoryDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
+			if (incomingRecordCounts != null)
+				incomingRecordCounts.clear();
+			if (outgoingRecordCounts != null)
+				outgoingRecordCounts.clear();
 			return true;
 		} else {
 			return force;

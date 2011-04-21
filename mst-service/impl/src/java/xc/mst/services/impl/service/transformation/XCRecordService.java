@@ -406,7 +406,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
-	public List<OutputRecord> getSplitXCRecordXML(Repository repo, AggregateXCRecord ar, Long manifestationId) 
+	public List<OutputRecord> getSplitXCRecordXML(Repository repo, AggregateXCRecord ar, Long manifestationId, long nextNewId) 
 			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<Long> expressionIds = new ArrayList<Long>();
@@ -429,7 +429,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 		tempXcWorkElement.setAttribute(new Attribute("id",workOaiID));
 		ar.xcRootElement.addContent(tempXcWorkElement);
 		Element rootElement = (Element)ar.xcRootElement.clone();
-		records.add(createRecord(ar, workId, rootElement, null));
+		Record r = createRecord(ar, workId, rootElement, null);
+		if (r.getId() < nextNewId) {
+			r.setPreviousStatus(Record.ACTIVE);
+		}
+		records.add(r);
 		ar.xcRootElement.removeContent();
 		
 		/*$$ EXPRESSION $$*/
@@ -448,7 +452,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 		rootElement = (Element)ar.xcRootElement.clone();
 		List<String> workElementOaiIDs = new ArrayList<String>();
 		workElementOaiIDs.add(workOaiID);
-		records.add(createRecord(ar, expressionId, rootElement, workElementOaiIDs));
+		r = createRecord(ar, expressionId, rootElement, workElementOaiIDs);
+		if (r.getId() < nextNewId) {
+			r.setPreviousStatus(Record.ACTIVE);
+		}
+		records.add(r);
 		ar.xcRootElement.removeContent();
 		
 		/*$$ LINKED WORK & EXPRESSION $$*/
@@ -509,7 +517,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 			LOG.debug("newWorkOaiID: "+newWorkOaiID);
 			newWorkElement.setAttribute(new Attribute("id", newWorkOaiID));
 			ar.xcRootElement.addContent(newWorkElement);
-			records.add(createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), null));
+			r = createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), null);
+			if (r.getId() < nextNewId) {
+				r.setPreviousStatus(Record.ACTIVE);
+			}
+			records.add(r);
 			ar.xcRootElement.removeContent();
 
 			// Expression
@@ -550,7 +562,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 			
 			List<String> workExpressedOaiIDs = new ArrayList<String>();
 			workExpressedOaiIDs.add(newWorkOaiID);
-			records.add(createRecord(ar, newExpressionId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs));
+			r = createRecord(ar, newExpressionId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs);
+			if (r.getId() < nextNewId) {
+				r.setPreviousStatus(Record.ACTIVE);
+			}
+			records.add(r);
 			ar.xcRootElement.removeContent();
 			
 			index++;
@@ -569,7 +585,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		if (manifestationId == null) {
 			manifestationId = ar.getPreviousManifestationId();
 			if (manifestationId == null) {
-				manifestationId = getRepositoryDAO().getNextId();
+				manifestationId = getRepositoryDAO().getNextIdAndIncr();
 			}
 		}
 		String manifestationOaiId = getRecordService().getOaiIdentifier(
@@ -587,7 +603,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 			ar.xcManifestationElement.addContent(linkExpression.detach());
 		}
 		ar.xcRootElement.addContent(ar.xcManifestationElement);
-		records.add(createRecord(ar, manifestationId, (Element)ar.xcRootElement.clone(), linkExpressionOAIIds));
+		
+		r = createRecord(ar, manifestationId, (Element)ar.xcRootElement.clone(), linkExpressionOAIIds);
+		if (r.getId() < nextNewId) {
+			r.setPreviousStatus(Record.ACTIVE);
+		}
+		records.add(r);
 		ar.xcRootElement.removeContent();
 
 		/*$$ HOLDINGS $$*/
@@ -608,7 +629,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 			linkManifestation.setText(manifestationHeld);
 			holdingsElement.addContent(linkManifestation.detach());
 			ar.xcRootElement.addContent(holdingsElement);
-			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
+			
+			r = createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds);
+			if (r.getId() < nextNewId) {
+				r.setPreviousStatus(Record.ACTIVE);
+			}
+			records.add(r);
 			
 			ar.xcRootElement.removeContent();
 		}
@@ -618,7 +644,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		if(ar.xcItemElement.getChildren().size() != 0)
 		{
 			//TODO - when items being being used - see the strategy above for getting ids
-			long itemId = getRepositoryDAO().getNextId();
+			long itemId = getRepositoryDAO().getNextIdAndIncr();
 			String itemOaiId = getRecordService().getOaiIdentifier(
 					itemId, getMetadataService().getService());
 			
@@ -633,7 +659,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 				ar.xcItemElement.addContent(linkExpression.detach());
 			}
 			ar.xcRootElement.addContent(ar.xcItemElement);
-			records.add(createRecord(ar, itemId, (Element)ar.xcRootElement.clone(), null));
+			r = createRecord(ar, itemId, (Element)ar.xcRootElement.clone(), null);
+			if (r.getId() < nextNewId) {
+				r.setPreviousStatus(Record.ACTIVE);
+			}
+			records.add(r);
 			ar.xcRootElement.removeContent();
 
 		}
@@ -668,7 +698,8 @@ public class XCRecordService extends GenericMetadataServiceService {
 	public List<OutputRecord> getSplitXCRecordXMLForHoldingRecord(
 			Repository repo,
 			AggregateXCRecord ar,
-			List<Long> manifestationIds) 
+			List<Long> manifestationIds,
+			long nextNewId) 
 				throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 
 		List<OutputRecord> records = new ArrayList<OutputRecord>();
@@ -705,7 +736,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 			}
 			
 			ar.xcRootElement.addContent(holdingsElement);
-			records.add(createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds));
+			Record r = createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds);
+			if (r.getId() < nextNewId) {
+				r.setPreviousStatus(Record.ACTIVE);
+			}
+			records.add(r);
 			ar.xcRootElement.removeContent();
 		}
 
@@ -719,7 +754,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 			previousIds.remove(0);
 		}
 		if (recordId == null) {
-			recordId = getRepositoryDAO().getNextId();
+			recordId = getRepositoryDAO().getNextIdAndIncr();
 		}
 		return recordId;
 	}
@@ -744,7 +779,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 		xcRecord.setOaiXmlEl(oaiXmlEl);
 		xcRecord.setFormat(ar.xcFormat);
 		
-		// BDA - I don't think these uplinks are actually being used.  I'll leave them for now.
+		// TODO BDA - I don't think these uplinks are actually being used.  I'll leave them for now.
 		if (upLinks != null) {
 			for (String upLink: upLinks) {
 				xcRecord.addUpLink(upLink);
