@@ -131,7 +131,6 @@
                                         <td>Associated Repository URL </td>
                                         <td>Status</td>
                                         <td>View Log</td>
-                                        <td>Delete</td>
                                     </tr>
                                 </thead>
                            
@@ -182,17 +181,11 @@
 	                                                    <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
 	                                                    <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
 	                                                </td>
-	                                                <td>
-                                                		<button style="width:60px" class="xc_button" onclick="javascript:YAHOO.xc.mst.services.listServices.deleteService(${service.id})" type="button" name="delete">Delete</button>
-                                                	</td>
                                                 </c:if>
                                                 <c:if test="${service.deleted}">
 												<td width="175px">
                                                     	<button style="width:70px" class="xc_button_disabled" disabled type="button" name="Service">Service</button> &nbsp;
                                                     	<button style="width:85px" class="xc_button_disabled" disabled type="button" name="HarvestOut">Harvest Out</button>
-                                                	</td>
-                                                	<td>                                                
-                                                		<button style="width:60px" class="xc_button_disabled" disabled  type="button" name="delete">Delete</button>
                                                 	</td>
                                                 </c:if>
                                             </tr>
