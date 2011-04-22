@@ -15,9 +15,7 @@ import org.apache.log4j.Logger;
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.provider.Provider;
 import xc.mst.constants.Constants;
-import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
-import xc.mst.manager.IndexException;
 
 /**
  * This class is used to delete a repository from the database
@@ -55,26 +53,21 @@ public class DeleteRepository extends BaseActionSupport
     {
         try
         {
-            log.debug("DeleteRepository:execute():Repository Id to be deleted : " + repositoryId);
+        	log.debug("******* DeleteRepository in execute()!");
+            log.debug("DeleteRepository:execute():Repository Id whose records shall be marked deleted : " + repositoryId);
             Provider provider = getProviderService().getProviderById(repositoryId);
 
             if(provider==null)
             {
-                this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
+                this.addFieldError("viewRepositoryError", 
+                	"Error occurred while trying to mark repository records deleted. An email has been sent to the administrator");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
-            
-            // Delete provider only if it is not harvested.
-            if (provider.getLastHarvestEndTime() != null) {
-                message = "Repository has harvested data.";
-                deleted = false;
-            } else {
-    	    	getProviderService().deleteProvider(provider);
-            	deleted = true;
-            }
-            return SUCCESS;
+            markRecordsForDeletion(provider);
+
+			return SUCCESS;
         }
         catch(DatabaseConfigException dce)
         {
@@ -83,27 +76,12 @@ public class DeleteRepository extends BaseActionSupport
             this.addFieldError("dbConfigError","Unable to access the database. There may be a problem with database configuration.");
             return INPUT;
         }
-        catch(IndexException ie)
-        {
-            log.error(ie.getMessage(),ie);
-            errorType = "error";
-            this.addFieldError("indexError","Error occurred while deleting the repository and index. Email has been sent to administrator regarding the issue.");
-            getUserService().sendEmailErrorReport();
-            return INPUT;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(), de);
-            this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator.");
-            getUserService().sendEmailErrorReport();
-            errorType = "error";
-            return INPUT;
-        }
     }
-    
+
     /**
      * Delete repository and its harvested records
      * 
+     *
      */
     public String deleteRepositoryAndRecords()
     {
@@ -112,18 +90,32 @@ public class DeleteRepository extends BaseActionSupport
             log.debug("DeleteRepository:deleteRepositoryAndRecords():Repository Id to be deleted : " + repositoryId);
             Provider provider = getProviderService().getProviderById(repositoryId);
             
-            // Delete provider
-   	    	getProviderService().deleteProvider(provider);
+            markRecordsForDeletion(provider);
             return SUCCESS;
         }
         catch(Exception e)
         {
             log.debug("", e);
-            this.addFieldError("viewRepositoryError", "Repository cannot be deleted");
+            this.addFieldError("viewRepositoryError", "Repository cannot be marked deleted");
             errorType = "error";
             return INPUT;
         }
     }
+
+    /**
+     *
+     */
+    private String markRecordsForDeletion(Provider provider) {
+    	if (log.isDebugEnabled()) {
+    		log.debug("DeleteRepository:markRecordsForDeletion()");
+    	}
+
+		// schedule it
+    	getProviderService().markProviderDeleted(provider);
+
+    	return SUCCESS;
+    }
+
     
 	/**
      * Returns error type
@@ -157,6 +149,7 @@ public class DeleteRepository extends BaseActionSupport
 	 * 
 	 * @return Returns true if repository deleted, else false
 	 */
+	//TODO junk this possibly
 	public boolean isDeleted() {
 		return deleted;
 	}

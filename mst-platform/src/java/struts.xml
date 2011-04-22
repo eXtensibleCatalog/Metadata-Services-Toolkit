@@ -335,24 +335,6 @@
 			<result name="success" type="redirect">listServices.action</result>
             <result name="input">pages/services/add_service.jsp</result>
 		</action>
-        
-        <action name="deleteService" class="xc.mst.action.services.DeleteService">
-        	<interceptor-ref name="editStack"/>
-        	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">Services</param>
-	      	</interceptor-ref>
-            <result name="success">pages/services/service_delete_confirmation.jsp</result>
-            <result name="input">listServices.action</result>
-        </action>
-
-        <action name="deleteServiceRecords" class="xc.mst.action.services.DeleteService" method="deleteServiceAndRecords">
-        	<interceptor-ref name="editStack"/>
-        	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">Services</param>
-	      	</interceptor-ref>
-            <result name="success" type="redirect">listServices.action</result>
-        </action>
-
 
         <action name="viewEditService" class="xc.mst.action.services.EditService">
         	<interceptor-ref name="default"/>

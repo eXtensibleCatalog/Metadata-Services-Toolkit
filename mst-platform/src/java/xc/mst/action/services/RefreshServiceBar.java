@@ -61,6 +61,7 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 	LOG.debug("getScheduler().getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
                 	LOG.debug("getScheduler().getRunningJob().getType(): "+getScheduler().getRunningJob().getType());
                 	
+                	//TODO what to do in the case of THREAD_MARK_PROVIDER_DELETED?
                 	if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
                 			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
                 			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {

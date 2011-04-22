@@ -121,6 +121,7 @@ public class Job {
 		sb.append(" Processing directive="+processingDirective);
 		sb.append(" harvestSchedule="+harvestSchedule);
 		sb.append(" order="+order+"]");
+		sb.append(" jobType="+jobType+"]");
 		
 		return sb.toString();
 		

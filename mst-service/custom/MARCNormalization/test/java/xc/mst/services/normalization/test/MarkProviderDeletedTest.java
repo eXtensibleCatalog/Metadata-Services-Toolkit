@@ -4,17 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.record.Record;
+import xc.mst.constants.Constants;
 import xc.mst.repo.Repository;
 
-public class MarkProviderDeletedTest extends MockHarvestTest {
+public class MarkProviderDeletedTest extends StartToFinishTest {
 	
+	protected static final Logger LOG = Logger.getLogger(MarkProviderDeletedTest.class);
+
 	public List<String> getFolders() {
 		List<String> fileStrs = new ArrayList<String>();
 		fileStrs.add("demo_175");
 		return fileStrs;
 	}
+	
+//	@Override
+//	public String getProviderUrl() {
+//		LOG.debug("**** getProviderUrl() SUBCLASS ");
+//		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
+//	}
 	
 	public void finalTest() {
 		try {
@@ -22,6 +33,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			// - harvest records into MST and run them through norm service
 			
 			// - harvest from provider and norm service, making sure there are no deleteds
+			System.out.println("****START MarkProviderDeletedTest *****");
 			Repository providerRepo = getRepositoryService().getRepository(this.provider);
 			ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);
 			
@@ -32,8 +44,8 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			HarvestSchedule hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
 			assert hs != null : "there should be a harvestSchedule for the provider";
 
-			// - delete the provider - John, this method doesn't exist.  It's what you need to create.
-			//getProviderService().markProviderDeleted(this.provider);
+			getProviderService().markProviderDeleted(this.provider);
+			waitUntilFinished();
 			
 			// - ensure there are no harvest schedules
 			hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
@@ -45,7 +57,8 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
 			// - create a new harvest schedule
-			createHarvestSchedule();
+			createHarvestSchedule();  //you'll end up with active records again...must be from beginning
+			waitUntilFinished();
 
 			// - harvest from provider and norm service
 			//   - make sure all records are active again
@@ -54,6 +67,7 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 			
 		} catch (Throwable t) {
+			LOG.error("Exception occured when running MarkProviderDeletedTest!", t);
 			getUtil().throwIt(t);
 		}
 	}

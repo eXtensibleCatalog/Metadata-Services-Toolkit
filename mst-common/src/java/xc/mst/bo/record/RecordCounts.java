@@ -126,12 +126,14 @@ public class RecordCounts {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("\n\n");
 		sb.append(incomingOutgoing);
-		sb.append(" ");
+		sb.append("\n");
 		for (String type : counts.keySet()) {
 			Map<String, AtomicInteger> counts4Type = counts.get(type);
+			sb.append("type: "+type+"\n");
 			for (String updateType : counts4Type.keySet()) {
-				sb.append(updateType+": "+counts4Type.get(updateType));
+				sb.append(updateType+": "+counts4Type.get(updateType)+" ");
 			}
 		}	
 		
