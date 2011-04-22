@@ -90,7 +90,7 @@ public abstract class ServiceDAO extends BaseDAO
 	/**
 	 * The name of the last log reset column
 	 */
-	public final static String COL_SERVICE_LAST_MODIFIED = "service_last_modifed";
+	public final static String COL_SERVICE_LAST_MODIFIED = "service_last_modified";
 
 	/**
 	 * The name of the warnings column

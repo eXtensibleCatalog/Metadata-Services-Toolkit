@@ -10,6 +10,7 @@
 package xc.mst.bo.service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class Service
 	 */
 	private String logFileName = null;
 
-	private Date serviceLastModified = null;
+	private Timestamp serviceLastModified = null;
 
 	/**
 	 * The number of warnings harvesting the service has generated
@@ -433,15 +434,15 @@ public class Service
 	/**
 	 * Sets the date when the service's was last updated
 	 */
-	public void setServicesServiceLastModified(java.util.Date lastModified)
+	public void setServicesServiceLastModified(java.sql.Timestamp lastModified)
 	{
-		this.serviceLastModified = (lastModified == null ? null : new Date(lastModified.getTime()));
+		this.serviceLastModified = lastModified;
 	}
 
 	/**
 	 * gets the date when the service was last modified
 	 */
-	public Date getServicesServiceLastModified()
+	public Timestamp getServicesServiceLastModified()
 	{
 		return this.serviceLastModified;
 	}

@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -310,10 +311,11 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
-    		//TODO test!
-			LOG.debug("****** DefaultServicesService.addNewService, about to setServicesServiceLastModified!");
-    		service.setServicesServiceLastModified(new Date());
-			LOG.debug("****** DefaultServicesService.addNewService, just setServicesServiceLastModified!");
+    		//TODO the date you want to add needs to be based on a file scan of existing install to determine LATEST date!
+			long latest = getLatestServiceFileTime(name);
+		LOG.debug("* latest time returned on a file ="+latest+" date="+new Date(latest));
+    		service.setServicesServiceLastModified(new Timestamp(latest));
+		LOG.debug("****** DefaultServicesService.addNewService, just setServicesServiceLastModified!");
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Status.NOT_RUNNING);
@@ -368,7 +370,7 @@ public class DefaultServicesService extends BaseService
     		}
 
     		// Insert the service
-    	 	LOG.debug("**** DefaultServicesService: addNewService");
+     	LOG.debug("**** DefaultServicesService: addNewService");
     		getServiceDAO().insert(service);
     		
     		// TODO : Error need not be stored in db. This code can be removed. It is never read from db. 
@@ -461,10 +463,19 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
-    		//TODO is this right?  TEST!
-			LOG.debug("****** DefaultServicesService.updateService, about to setServicesServiceLastModified!");
-    		service.setServicesServiceLastModified(new Date());
-			LOG.debug("****** DefaultServicesService.updateService, just setServicesServiceLastModified!");
+    		//TODO is this right?
+    		// TODO shove in the correct Date, based on a file scan!
+    		// when is this called?  If time is updated, must delete service harvest history!
+    		// TODO reprocessingRequired - if user set it to no, but discover here that files were updated,
+    		//      do we force it to yes???
+			LOG.debug("**** DefaultServicesService.updateService, about to see if need to setServicesServiceLastModified!");
+			if (doesServiceFileTimeNeedUpdate(service)) {
+				long latest = getLatestServiceFileTime(name);
+		    	service.setServicesServiceLastModified(new Timestamp(latest));
+				LOG.debug("***** latest time returned on a file ="+latest+" date="+new Date(latest));
+				LOG.debug("***** DefaultServicesService.updateService, just setServicesServiceLastModified!");
+				//TODO now, we really SHOULD force reprocessing!  (set reprocessingRequired to true)
+			}
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.getInputFormats().clear();
@@ -559,14 +570,7 @@ public class DefaultServicesService extends BaseService
 
     		// Schedule a job to reprocess records through new service
     		if(reprocessingRequired)
-    		try {
-				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
-				JobService jobService = (JobService)config.getBean("JobService");
-				job.setOrder(jobService.getMaxOrder() + 1); 
-				jobService.insertJob(job);
-			} catch (DatabaseConfigException dce) {
-				LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
-			}
+				reprocessService(service);
     	}
     	catch(ConfigurationException e)
     	{
@@ -709,7 +713,7 @@ public class DefaultServicesService extends BaseService
     
     public Collection<String> getServicesAvailableForInstall() {
     	List<String> availableServices = new ArrayList<String>();
-    	File dir = new File(MSTConfiguration.getUrlPath() + "/services");
+    	File dir = getServiceDir();
     	File[] fileList = dir.listFiles();
     	
     	Set<String> allServices = new HashSet<String>();
@@ -740,4 +744,62 @@ public class DefaultServicesService extends BaseService
     	return availableServices;
     }
 
+	private static File getServiceDir() {
+		// this had a hard-coded '/' file separator in code before so leave it in for now.
+		File dir = new File(MSTConfiguration.getUrlPath() + "/services");
+		return dir;
+	}
+	
+	private static Collection<File> getAllServiceFiles(File file) {
+		Collection<File> all = new ArrayList<File>();     
+		all = addFilesRecursively(file, all);     
+		return all;
+	}
+	
+	private static Collection<File> addFilesRecursively(File file, Collection<File> all) {     
+		final File[] children = file.listFiles();     
+		if (children != null) {         
+			for (File child : children) {             
+				all.add(child);             
+				addFilesRecursively(child, all);         
+			}     
+		}
+		return all;
+	}
+	
+	public boolean doesServiceFileTimeNeedUpdate(Service service) {
+		final String name = service.getName();
+		final long currentLatest = service.getServicesServiceLastModified().getTime();
+		return getLatestServiceFileTime(name) > currentLatest;
+	}
+	
+	// want latest date of an actual file within service, disqualify directory timestamps as not being relevant.
+	private long getLatestServiceFileTime(String name) {
+		File dir = new File(getServiceDir(), name) ;
+		long latest = 0l;
+		final Collection<File> serviceFiles = getAllServiceFiles(dir);
+		for (File f : serviceFiles) {
+			if (!f.isDirectory() && f.lastModified() > latest) {
+				latest = f.lastModified();
+				LOG.debug("*** NEW Latest File found! Name="+f.getName()+ " Date="+new Date(latest));
+			}
+		}
+		return latest;
+	}
+	
+	private Timestamp getLatestServiceFileTimestamp(String name, long time) {
+		long latest = getLatestServiceFileTime(name);
+		return new Timestamp(latest);
+	}
+
+	public void reprocessService(Service service) {
+		try {
+			Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
+			JobService jobService = (JobService)config.getBean("JobService");
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+		} catch (DatabaseConfigException dce) {
+			LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+		}
+	}
 }

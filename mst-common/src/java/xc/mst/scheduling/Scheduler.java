@@ -73,7 +73,7 @@ public class Scheduler extends BaseService implements Runnable {
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
 		Thread solrThread = null;
-		
+
 		try {
 			for (Service s : getServiceDAO().getAll()) {
 				if (Status.RUNNING.equals(s.getStatus())) {
@@ -87,6 +87,17 @@ public class Scheduler extends BaseService implements Runnable {
 					getHarvestScheduleDAO().update(hs, false);
 				}
 			}
+			// Check whether service has been 'updated' with later file(s),
+			// if so delete service harvest history (reprocess)
+			final List<Service> servicesList = getServicesService().getAllServices();
+			for (Service s : servicesList) {
+				//TODO file check + if update made -> delete harvest history/reprocess
+				if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
+					LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
+					getServicesService().reprocessService(s);
+				}
+			}
+
 		} catch (DataException de) {
 			throw new RuntimeException(de);
 		}

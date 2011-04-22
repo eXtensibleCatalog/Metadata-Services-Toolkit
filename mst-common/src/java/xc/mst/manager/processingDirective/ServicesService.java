@@ -115,5 +115,12 @@ public interface ServicesService
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
     
     public Collection<String> getServicesAvailableForInstall();
+    
+    /**
+     * If file time needs update, it follows that the service must reprocess.
+     */
+    public boolean doesServiceFileTimeNeedUpdate(Service service);
+
+    public void reprocessService(Service service);
 
 }

@@ -430,7 +430,7 @@ CREATE TABLE services
   output_record_count INT(11) NOT NULL DEFAULT 0,
   last_log_reset DATETIME,
   log_file_name VARCHAR(255) NOT NULL,
-  service_last_modifed DATETIME,
+  service_last_modified TIMESTAMP NULL,
   harvest_out_warnings INT(11) NOT NULL DEFAULT 0,
   harvest_out_errors INT(11) NOT NULL DEFAULT 0,
   harvest_out_records_available BIGINT(11) NOT NULL DEFAULT 0,

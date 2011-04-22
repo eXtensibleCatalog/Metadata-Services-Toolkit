@@ -195,7 +195,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
-					service.setServicesServiceLastModified(results.getDate(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -333,7 +333,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setOutputRecordCount(results.getInt(i++));
 				service.setServicesLastLogReset(results.getDate(i++));
 				service.setServicesLogFileName(results.getString(i++));
-				service.setServicesServiceLastModified(results.getDate(i++));
+				service.setServicesServiceLastModified(results.getTimestamp(i++));
 				service.setHarvestOutWarnings(results.getInt(i++));
 				service.setHarvestOutErrors(results.getInt(i++));
 				service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -465,7 +465,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
-					service.setServicesServiceLastModified(results.getDate(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -595,7 +595,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
-					service.setServicesServiceLastModified(results.getDate(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -718,7 +718,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
-					service.setServicesServiceLastModified(results.getDate(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -831,10 +831,12 @@ log.debug("*** about to insert the service!");
 				psInsert.setInt(i++, service.getServicesErrors());
 				psInsert.setInt(i++, service.getInputRecordCount());
 				psInsert.setInt(i++, service.getOutputRecordCount());
-				log.debug("*** insert into service - service_last_modified: "+service.getServicesServiceLastModified());
 				psInsert.setDate(i++, service.getServicesLastLogReset());
 				psInsert.setString(i++, service.getServicesLogFileName());
-				psInsert.setDate(i++, service.getServicesServiceLastModified());
+				//when had kept this as a java.sql.Date, the hh:mm:ss was truncated to 00:00:00 so need to keep data
+				// as Timestamp, also that will be easier to do comparisons on.
+		log.debug("*** insert into service - service_last_modified: "+service.getServicesServiceLastModified());
+				psInsert.setTimestamp(i++, service.getServicesServiceLastModified());
 				psInsert.setInt(i++, service.getHarvestOutWarnings());
 				psInsert.setInt(i++, service.getHarvestOutErrors());
 				psInsert.setLong(i++, service.getHarvestOutRecordsAvailable());
@@ -980,7 +982,7 @@ log.debug("*** about to insert the service!");
 				psUpdate.setInt(i++, service.getOutputRecordCount());
 				psUpdate.setDate(i++, service.getServicesLastLogReset());
 				psUpdate.setString(i++, service.getServicesLogFileName());
-				psUpdate.setDate(i++, service.getServicesServiceLastModified());
+				psUpdate.setTimestamp(i++, service.getServicesServiceLastModified());
 				psUpdate.setInt(i++, service.getHarvestOutWarnings());
 				psUpdate.setInt(i++, service.getHarvestOutErrors());
 				psUpdate.setLong(i++, service.getHarvestOutRecordsAvailable());
