@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.management.RuntimeErrorException;
+
+import org.apache.log4j.Logger;
+
 public class RecordCounts {
+	
+	private static final Logger LOG = Logger.getLogger(RecordCounts.class);
 	
 	public static String INCOMING = "incoming";
 	public static String OUTGOING = "outgoing";
@@ -66,9 +72,16 @@ public class RecordCounts {
 		return ai;
 	}
 	
+	public void incr(String type, String col_1) {
+		if (col_1 == null) {
+			throw new RuntimeException("bogus");
+		}
+		getCount(getCountsByType(type), col_1).addAndGet(1);
+	}
+	
 	public void incr(String type, char newStatus, char prevStatus) {
 		String col_1 = null;
-		if (prevStatus == 0) {
+		if (prevStatus == 0 || prevStatus == Record.NULL) {
 			if (newStatus == Record.ACTIVE) {
 				col_1 = RecordCounts.NEW_ACTIVE;
 			} else if (newStatus == Record.HELD) {
@@ -85,8 +98,15 @@ public class RecordCounts {
 				col_1 = RecordCounts.UPDATE_DELETE;
 			}
 		}
-		getCount(getCountsByType(type), col_1).addAndGet(1);
-		if (prevStatus != 0) {
+		try {
+			incr(type, col_1);
+		} catch (RuntimeException re) {
+			LOG.error("type: "+type);
+			LOG.error("newStatus: "+newStatus);
+			LOG.error("prevStatus: "+prevStatus);
+			throw re;
+		}
+		if (prevStatus != 0 && prevStatus != Record.NULL) {
 			getCount(getCountsByType(type), newStatus+""+prevStatus).addAndGet(1);	
 		}
 	}

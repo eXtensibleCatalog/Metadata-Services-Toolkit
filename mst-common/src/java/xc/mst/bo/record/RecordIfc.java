@@ -70,4 +70,5 @@ public interface RecordIfc {
 	
 	public void setMessages(List<RecordMessage> errors);
 
+	public Record clone();
 }

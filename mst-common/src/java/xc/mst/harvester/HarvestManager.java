@@ -8,6 +8,8 @@
   */
 package xc.mst.harvester;
 
+import gnu.trove.TLongByteHashMap;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -65,6 +67,7 @@ public class HarvestManager extends WorkerThread {
 	}
 	//        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
 	protected DynMap oaiIdCache = new DynMap();
+	protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
 	
 	// The is public and static simply for the MockHarvestTest
 	public static String lastOaiRequest = null;
@@ -116,6 +119,7 @@ public class HarvestManager extends WorkerThread {
 			hssFirstTime = true;
 			this.resumptionToken = null;
 			oaiIdCache.clear();
+			previousStatuses.clear();
 			// BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
 			// list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
 			// there's really no other way to tell. 
@@ -128,6 +132,7 @@ public class HarvestManager extends WorkerThread {
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 			TimingLogger.outputMemory();
 			getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
+			getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses);
 			TimingLogger.reset();
 			
 			this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);
@@ -478,18 +483,18 @@ public class HarvestManager extends WorkerThread {
 				String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
 				Long recordId = oaiIdCache.getLong(nonRedundantId);
 				
-				boolean update = false;
 				char prevStatus = 0;
 				if (recordId == null || recordId == 0) {
 					getRepositoryDAO().injectId(record);
-					oaiIdCache.put(nonRedundantId, record.getId());
-					
 				} else {
-					update = true;
 					record.setId(recordId);
-					//TODO: prevStatus needs to have the actual previous status.  I just hardcoded ACTIVE for testing. 
-					prevStatus = Record.ACTIVE;
+					prevStatus = (char)previousStatuses.get(recordId);
+					log.debug("found prevStatus: "+prevStatus);
+					record.setPreviousStatus(prevStatus);
 				}
+				previousStatuses.put(record.getId(), (byte)record.getStatus());
+				oaiIdCache.put(nonRedundantId, record.getId());
+				
 				repo.addRecord(record);
 				for (Set s : record.getSets()) {
 					incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);

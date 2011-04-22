@@ -430,9 +430,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 		ar.xcRootElement.addContent(tempXcWorkElement);
 		Element rootElement = (Element)ar.xcRootElement.clone();
 		Record r = createRecord(ar, workId, rootElement, null);
-		if (r.getId() < nextNewId) {
-			r.setPreviousStatus(Record.ACTIVE);
-		}
 		records.add(r);
 		ar.xcRootElement.removeContent();
 		
@@ -453,9 +450,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 		List<String> workElementOaiIDs = new ArrayList<String>();
 		workElementOaiIDs.add(workOaiID);
 		r = createRecord(ar, expressionId, rootElement, workElementOaiIDs);
-		if (r.getId() < nextNewId) {
-			r.setPreviousStatus(Record.ACTIVE);
-		}
 		records.add(r);
 		ar.xcRootElement.removeContent();
 		
@@ -518,9 +512,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			newWorkElement.setAttribute(new Attribute("id", newWorkOaiID));
 			ar.xcRootElement.addContent(newWorkElement);
 			r = createRecord(ar, newWorkId, (Element)ar.xcRootElement.clone(), null);
-			if (r.getId() < nextNewId) {
-				r.setPreviousStatus(Record.ACTIVE);
-			}
 			records.add(r);
 			ar.xcRootElement.removeContent();
 
@@ -563,9 +554,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			List<String> workExpressedOaiIDs = new ArrayList<String>();
 			workExpressedOaiIDs.add(newWorkOaiID);
 			r = createRecord(ar, newExpressionId, (Element)ar.xcRootElement.clone(), workExpressedOaiIDs);
-			if (r.getId() < nextNewId) {
-				r.setPreviousStatus(Record.ACTIVE);
-			}
 			records.add(r);
 			ar.xcRootElement.removeContent();
 			
@@ -605,9 +593,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 		ar.xcRootElement.addContent(ar.xcManifestationElement);
 		
 		r = createRecord(ar, manifestationId, (Element)ar.xcRootElement.clone(), linkExpressionOAIIds);
-		if (r.getId() < nextNewId) {
-			r.setPreviousStatus(Record.ACTIVE);
-		}
 		records.add(r);
 		ar.xcRootElement.removeContent();
 
@@ -631,9 +616,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			ar.xcRootElement.addContent(holdingsElement);
 			
 			r = createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds);
-			if (r.getId() < nextNewId) {
-				r.setPreviousStatus(Record.ACTIVE);
-			}
 			records.add(r);
 			
 			ar.xcRootElement.removeContent();
@@ -660,9 +642,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			}
 			ar.xcRootElement.addContent(ar.xcItemElement);
 			r = createRecord(ar, itemId, (Element)ar.xcRootElement.clone(), null);
-			if (r.getId() < nextNewId) {
-				r.setPreviousStatus(Record.ACTIVE);
-			}
 			records.add(r);
 			ar.xcRootElement.removeContent();
 
@@ -737,9 +716,6 @@ public class XCRecordService extends GenericMetadataServiceService {
 			
 			ar.xcRootElement.addContent(holdingsElement);
 			Record r = createRecord(ar, holdingId, (Element)ar.xcRootElement.clone(), manifestationHeldOAIIds);
-			if (r.getId() < nextNewId) {
-				r.setPreviousStatus(Record.ACTIVE);
-			}
 			records.add(r);
 			ar.xcRootElement.removeContent();
 		}

@@ -3,6 +3,7 @@ create table repo_name.records (
 	oai_datestamp     datetime,
 	type             char(1),
 	status           char(1),
+	prev_status      char(1),
 	format_id        int,
 
 	PRIMARY KEY (record_id)
@@ -88,6 +89,8 @@ create table repo_name.incoming_record_counts (
 
 	upd_del_prev_act_cnt          int    not null default 0,
 	upd_del_prev_del_cnt          int    not null default 0,
+
+	unexpected_error_cnt          int    not null default 0,
 
 	primary key (incoming_record_count_id),
 	KEY idx_REPO_NAME_incoming_record_counts_type_name (type_name),

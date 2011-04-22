@@ -14,7 +14,6 @@ import gnu.trove.TLongHashSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -39,7 +38,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	
 	// This is meant only to be a cache of what is not yet in the DB.  This will not
 	// keep all pred-succs in memory.
-	protected Map<Long, java.util.Set<Long>> predSuccMap = new HashMap<Long, java.util.Set<Long>>();
+	protected Map<Long, java.util.Set<Record>> predSuccMap = new HashMap<Long, java.util.Set<Record>>();
 	
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
@@ -116,12 +115,12 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void addRecord(Record record) {
 		if (record.getPredecessors() != null) {
 			for (InputRecord ir : record.getPredecessors()) {
-				java.util.Set<Long> succIds = predSuccMap.get(ir.getId());
+				java.util.Set<Record> succIds = predSuccMap.get(ir.getId());
 				if (succIds == null) {
-					succIds = new HashSet<Long>();
+					succIds = new TreeSet<Record>();
 					predSuccMap.put(ir.getId(), succIds);
 				}
-				succIds.add(record.getId());
+				succIds.add(record);
 			}
 		}
 		getRepositoryDAO().addRecord(name, record);
@@ -239,18 +238,14 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 	
 	public void injectSuccessorIds(Record r) {
-		java.util.Set<Long> succIds = predSuccMap.get(r.getId());
+		java.util.Set<Record> succIds = predSuccMap.get(r.getId());
 		if (succIds == null) {
 			succIds = getRepositoryDAO().getSuccessorIds(name, r.getId());
 			predSuccMap.put(r.getId(), succIds);
 		}
 		if (succIds != null && succIds.size() > 0) {
-			java.util.Set<Long> orderedSuccIds = new TreeSet<Long>();
-			orderedSuccIds.addAll(succIds);
-			for (Long succId : orderedSuccIds) {
-				Record or = new Record();
-				or.setId(succId);
-				r.getSuccessors().add(or);
+			for (Record sr : succIds) {
+				r.getSuccessors().add(sr.clone());
 			}
 		}
 	}

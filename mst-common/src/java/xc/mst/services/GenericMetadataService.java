@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Semaphore;
@@ -523,36 +524,38 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       the existing record.  Although I can't think of a reason
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
-				boolean update = false;
 				injectKnownSuccessorsIds(in);
-				char prevStatus = 0;
+				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
-					update = true;
-					//TODO: prevStatus needs to have the actual previous status.  I just hardcoded ACTIVE for testing.
-					//      This is where you'll have to decide how to deem the previous incoming record as ACTIVE or DELETED.
-					//      I was thinking that if a record has any ACTIVE or HELD output, then it is ACTIVE.  
-					prevStatus = Record.ACTIVE;
+					for (OutputRecord or : in.getSuccessors()) {
+						origSuccessorMap.put(or.getId(), or.clone());
+					}
 				}
 				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = null;
 				try {
 					out = process(in);
 				} catch (Throwable t) {
-					// TODO still need to report unexpected errors
-					//getRepository().incrementUnexpectedProcessingErrors(null);
+					if (in.getIndexedObjectType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), "unexpected_error_cnt");	
+					}
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, "unexpected_error_cnt");
 					LOG.error("error processing record w/ id: "+in.getId(), t);
 					continue;
 				}
 				if (getRepository() != null) {
 					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), prevStatus);
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), in.getPreviousStatus());
 					}
-					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), prevStatus);
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
 				TimingLogger.stop(getServiceName()+".process");
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
+						if (origSuccessorMap.containsKey(rout2.getId())) {
+							rout2.setPreviousStatus(rout2.getStatus());
+						}
 						if (rout2.getIndexedObjectType() != null) {
 							getMetadataServiceManager().getOutgoingRecordCounts().incr(in.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
 						}
