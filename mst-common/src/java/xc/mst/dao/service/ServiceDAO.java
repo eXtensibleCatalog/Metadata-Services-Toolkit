@@ -240,6 +240,11 @@ public abstract class ServiceDAO extends BaseDAO
 	public abstract boolean delete(Service service) throws DataException;
 
 	/**
+	 * Delete records entirely out of service harvest.
+	 */
+	public abstract boolean deleteServiceHarvest(Service service) throws DataException;
+
+	/**
 	 * Validates the fields on the passed Service Object
 	 *
 	 * @param service The service to validate
@@ -297,12 +302,6 @@ public abstract class ServiceDAO extends BaseDAO
 		} else {
 			hibernateTemplate.persist(serviceHarvest);
 		}
-	}
-	//TODO may need a method now that is the opposite of persist(serviceHarvest) that deletes the serviceHarvest
-	// pending a check of whether a way to do this already exists.  (think there is: hibernateTemplate.delete(serviceHarvest)
-	public void delete(ServiceHarvest serviceHarvest) {
-		//TODO is this enough?
-		hibernateTemplate.delete(serviceHarvest);
 	}
 	
 	@SuppressWarnings("unchecked")

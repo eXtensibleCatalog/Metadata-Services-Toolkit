@@ -89,13 +89,34 @@ public class Scheduler extends BaseService implements Runnable {
 			}
 			// Check whether service has been 'updated' with later file(s),
 			// if so delete service harvest history (reprocess)
-			final List<Service> servicesList = getServicesService().getAllServices();
-			for (Service s : servicesList) {
-				//TODO file check + if update made -> delete harvest history/reprocess
-				if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
-					LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
-					getServicesService().reprocessService(s);
+			// NOTE / TODO service can't be running, right?  How do I ensure?  Did above code do it?
+			//
+			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {				
+				final List<Service> servicesList = getServicesService().getAllServices();
+				for (Service s : servicesList) {
+					//TODO file check + if update made -> delete harvest history/reprocess
+					if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
+						LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
+						getServicesService().updateServiceLastModifiedTime(s.getName(), s);
+						getServicesService().updateService(s);
+						// now must persist it
+						getServiceDAO().deleteServiceHarvest(s);
+						// then must reprocess
+		    			try {
+							Job job = new Job(s, 0, Constants.THREAD_SERVICE);
+							job.setOrder(getJobService().getMaxOrder() + 1); 
+							getJobService().insertJob(job);
+						} catch (DatabaseConfigException dce) {
+							LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+						}
+					}
+					else {
+						LOG.debug("*** No update found for service: "+s.getName()+ " Reprocessing NOT required! ***");
+					}
 				}
+			}
+			else {
+				LOG.debug("*** Checking for service updates is disabled! ***");
 			}
 
 		} catch (DataException de) {
@@ -300,15 +321,6 @@ public class Scheduler extends BaseService implements Runnable {
 							serviceThread.start();
 							runningJob = serviceThread;
 							*/
-						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
-							/*
-							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
-							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
-							serviceReprocessWorkerThread.start();
-							runningJob = serviceReprocessWorkerThread;
-							*/
-						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-							// not currently used
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
 							LOG.debug("**** Scheduler - THREAD_MARK_PROVIDER_DELETED!");
 							RepositoryDeletionManager rdm = new RepositoryDeletionManager();

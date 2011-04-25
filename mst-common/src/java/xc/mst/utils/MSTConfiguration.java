@@ -236,9 +236,17 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	}
 
 	public boolean isPerformanceTestingMode() {
+		return isBooleanPropertyTrue("PerformanceTestingMode");
+	}
+	
+	public boolean isCheckingForUpdatedServiceFiles() {
+		return isBooleanPropertyTrue("isCheckingForUpdatedServiceFiles");
+	}
+	
+	private boolean isBooleanPropertyTrue(String prop) {
 		try {
-			String ptMode = getProperty("PerformanceTestingMode");
-			if (ptMode != null && "true".equals(ptMode)) {
+			String mode = getProperty(prop);
+			if (mode != null && "true".equals(mode)) {
 				return true;
 			}
 		} catch (Throwable t) {

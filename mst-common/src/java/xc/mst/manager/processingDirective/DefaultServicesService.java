@@ -463,18 +463,10 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
-    		//TODO is this right?
-    		// TODO shove in the correct Date, based on a file scan!
-    		// when is this called?  If time is updated, must delete service harvest history!
-    		// TODO reprocessingRequired - if user set it to no, but discover here that files were updated,
-    		//      do we force it to yes???
 			LOG.debug("**** DefaultServicesService.updateService, about to see if need to setServicesServiceLastModified!");
 			if (doesServiceFileTimeNeedUpdate(service)) {
-				long latest = getLatestServiceFileTime(name);
-		    	service.setServicesServiceLastModified(new Timestamp(latest));
-				LOG.debug("***** latest time returned on a file ="+latest+" date="+new Date(latest));
-				LOG.debug("***** DefaultServicesService.updateService, just setServicesServiceLastModified!");
-				//TODO now, we really SHOULD force reprocessing!  (set reprocessingRequired to true)
+				updateServiceLastModifiedTime(name, service);
+				//TODO now, we really SHOULD force reprocessing!  (not just by set reprocessingRequired to true that does nada)
 			}
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
@@ -587,7 +579,6 @@ public class DefaultServicesService extends BaseService
      */
     public void insertService(Service service) throws DataException
     {
- 	LOG.debug("**** DefaultServicesService: insertService");
        	getServiceDAO().insert(service);
     }
 
@@ -767,12 +758,6 @@ public class DefaultServicesService extends BaseService
 		return all;
 	}
 	
-	public boolean doesServiceFileTimeNeedUpdate(Service service) {
-		final String name = service.getName();
-		final long currentLatest = service.getServicesServiceLastModified().getTime();
-		return getLatestServiceFileTime(name) > currentLatest;
-	}
-	
 	// want latest date of an actual file within service, disqualify directory timestamps as not being relevant.
 	private long getLatestServiceFileTime(String name) {
 		File dir = new File(getServiceDir(), name) ;
@@ -787,9 +772,17 @@ public class DefaultServicesService extends BaseService
 		return latest;
 	}
 	
-	private Timestamp getLatestServiceFileTimestamp(String name, long time) {
+	public boolean doesServiceFileTimeNeedUpdate(Service service) {
+		final String name = service.getName();
+		final long currentLatest = service.getServicesServiceLastModified().getTime();
+		return getLatestServiceFileTime(name) > currentLatest;
+	}
+
+	public void updateServiceLastModifiedTime(String name, Service service) {
 		long latest = getLatestServiceFileTime(name);
-		return new Timestamp(latest);
+		service.setServicesServiceLastModified(new Timestamp(latest));
+		LOG.debug("***** latest time returned on a file ="+latest+" date="+new Date(latest));
+		LOG.debug("***** DefaultServicesService.updateService, just setServicesServiceLastModified!");
 	}
 
 	public void reprocessService(Service service) {

@@ -120,6 +120,12 @@ public interface ServicesService
      * If file time needs update, it follows that the service must reprocess.
      */
     public boolean doesServiceFileTimeNeedUpdate(Service service);
+    
+    /**
+     * get the latest timestamp any of the services files has, persist this latest timestamp as part of the 
+     * service's permanent record.
+     */
+    public void updateServiceLastModifiedTime(String name, Service service);
 
     public void reprocessService(Service service);
 

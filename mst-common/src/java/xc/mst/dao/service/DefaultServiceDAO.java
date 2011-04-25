@@ -777,7 +777,6 @@ public class DefaultServiceDAO extends ServiceDAO
 	{
 		// Check that the non-ID fields on the service are valid
 		validateFields(service, false, true);
-log.debug("*** about to insert the service!");
 
 		synchronized(psInsertLock)
 		{
@@ -793,7 +792,6 @@ log.debug("*** about to insert the service!");
 				if(psInsert == null || dbConnectionManager.isClosed(psInsert))
 				{
 					// SQL to insert the new row
-					//TODO debug
 					String insertSql = "INSERT INTO " + SERVICES_TABLE_NAME + " (" + COL_SERVICE_NAME + ", " +
 	            	      													         COL_CLASS_NAME + ", " +
 	            	      													         COL_WARNINGS + ", " +
@@ -833,9 +831,6 @@ log.debug("*** about to insert the service!");
 				psInsert.setInt(i++, service.getOutputRecordCount());
 				psInsert.setDate(i++, service.getServicesLastLogReset());
 				psInsert.setString(i++, service.getServicesLogFileName());
-				//when had kept this as a java.sql.Date, the hh:mm:ss was truncated to 00:00:00 so need to keep data
-				// as Timestamp, also that will be easier to do comparisons on.
-		log.debug("*** insert into service - service_last_modified: "+service.getServicesServiceLastModified());
 				psInsert.setTimestamp(i++, service.getServicesServiceLastModified());
 				psInsert.setInt(i++, service.getHarvestOutWarnings());
 				psInsert.setInt(i++, service.getHarvestOutErrors());
@@ -1119,5 +1114,41 @@ log.debug("*** about to insert the service!");
 			}
 		}
 	}
+
+	@Override
+	public boolean deleteServiceHarvest(Service service) throws DataException
+	{
+		// Check that the ID field on the service are valid
+		validateFields(service, true, false);
+
+		synchronized(psDeleteLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Deleting the harvest records of the service with ID " + service.getId());
+
+//TODO clean up after determine this works!
+//			try
+//			{
+				this.jdbcTemplate.update("delete from service_harvests where service_id=?", service.getId());
+				return true;
+//			} // end try(delete the service)
+//			catch(SQLException e)
+//			{
+//				log.error("A SQLException occurred while deleting the service with ID " + service.getId(), e);
+
+//				LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
+				
+//				logObj.setErrors(logObj.getErrors() + 1);
+//				getLogDAO().update(logObj);
+		    	
+//				return false;
+//			} // end catch(SQLException)
+//			catch (DBConnectionResetException e){
+//				log.info("Re executing the query that failed ");
+//				return false;
+//			}
+		}
+	}	
+	
 	
 }
