@@ -14,6 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.manager.BaseManager;
@@ -25,6 +26,9 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	
 	protected ReentrantLock running = new ReentrantLock();
 	protected Repository repo = null;
+
+	protected RecordCounts incomingRecordCounts = null;
+	protected RecordCounts outgoingRecordCounts = null;
 
 	abstract public void setup();
 	abstract public String getName();
@@ -96,6 +100,20 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 		this.status = status;
 	}
 
+	public RecordCounts getIncomingRecordCounts() {
+		return incomingRecordCounts;
+	}
+	public void setIncomingRecordCounts(RecordCounts incomingRecordCounts) {
+		this.incomingRecordCounts = incomingRecordCounts;
+	}
+	
+	public RecordCounts getOutgoingRecordCounts() {
+		return outgoingRecordCounts;
+	}
+	public void setOutgoingRecordCounts(RecordCounts outgoingRecordCounts) {
+		this.outgoingRecordCounts = outgoingRecordCounts;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -121,7 +139,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	}
 	public void finishInner() {
 		if (repo != null) {
-			repo.commitIfNecessary(true);
+			repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
 			LOG.debug("before repo.processComplete");
 			repo.processComplete();
 			LOG.debug("after repo.processComplete");
@@ -138,7 +156,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	}
 	public void pauseInner() {
 		if (repo != null) {
-			repo.commitIfNecessary(true);
+			repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
 		}
 	}
 	

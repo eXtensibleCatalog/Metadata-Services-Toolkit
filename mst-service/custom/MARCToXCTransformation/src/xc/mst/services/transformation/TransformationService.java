@@ -336,6 +336,7 @@ public class TransformationService extends SolrTransformationService {
 						inputHoldings++;
 					}
 				}
+				long nextNewId = getRepositoryDAO().getNextId();
 				if (isBib) {
 					String bib001 = originalRecord.getControlField(1);
 					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
@@ -347,12 +348,12 @@ public class TransformationService extends SolrTransformationService {
 						if (ar.getPreviousManifestationId() != null) {
 							manifestationId = ar.getPreviousManifestationId();
 						} else {
-							manifestationId = getRepositoryDAO().getNextId();
+							manifestationId = getRepositoryDAO().getNextIdAndIncr();
 						}
 					}
 					addManifestationId4BibProcessed(bib001, manifestationId);
 					List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
-							getRepository(), ar, manifestationId);
+							getRepository(), ar, manifestationId, nextNewId);
 					if (bibRecords != null) {
 						results.addAll(bibRecords);
 					}
@@ -371,7 +372,7 @@ public class TransformationService extends SolrTransformationService {
 								manifestationId = getManifestationId4BibYet2Arrive(ref001);
 								status = Record.HELD;
 								if (manifestationId == null) {
-									manifestationId = getRepositoryDAO().getNextId();
+									manifestationId = getRepositoryDAO().getNextIdAndIncr();
 									addManifestationId4BibYet2Arrive(ref001, manifestationId);
 								}
 								manifestaionsIdsInWaiting.add(manifestationId);
@@ -379,7 +380,7 @@ public class TransformationService extends SolrTransformationService {
 							manifestationIds.add(manifestationId);
 						}
 						List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-								getRepository(), ar, manifestationIds);
+								getRepository(), ar, manifestationIds, nextNewId);
 						
 						if (holdingsRecords != null) {
 							for (OutputRecord r : holdingsRecords) {

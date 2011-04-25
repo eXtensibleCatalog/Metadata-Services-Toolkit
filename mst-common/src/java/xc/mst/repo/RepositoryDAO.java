@@ -10,6 +10,7 @@
 package xc.mst.repo;
 
 import gnu.trove.TLongArrayList;
+import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongIterator;
 
@@ -30,6 +31,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -49,6 +52,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
@@ -72,6 +76,8 @@ public class RepositoryDAO extends BaseDAO {
 	public final static String REPOS_TABLE = "repos";
 	public final static String RECORD_LINKS_TABLE = "record_links";
 	public final static String PROPERTIES = "properties";
+	public final static String INCOMING_RECORD_COUNTS = "incoming_record_counts";
+	public final static String OUTGOING_RECORD_COUNTS = "outgoing_record_counts";
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -83,7 +89,8 @@ public class RepositoryDAO extends BaseDAO {
 			"r.record_id, "+
 			"r.oai_datestamp, "+
 			"r.format_id, "+
-			"r.status, ";
+			"r.status, "+
+			"r.prev_status ";
 	
 	protected final static String RECORD_MESSAGES_TABLE_COLUMNS = 
 		"rm.record_message_id, "+
@@ -167,7 +174,7 @@ public class RepositoryDAO extends BaseDAO {
 	
 	public List<Record> getSuccessors(String name, long id) {
 		String sql = 
-			"select "+RECORDS_TABLE_COLUMNS+" x.xml "+
+			"select "+RECORDS_TABLE_COLUMNS+", x.xml "+
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
 				getTableName(name, RECORDS_XML_TABLE)+" x, "+
 				getTableName(name, RECORD_PREDECESSORS_TABLE)+" rp "+
@@ -205,10 +212,10 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public void injectId(Record r) {
-		r.setId(getNextId());
+		r.setId(getNextIdAndIncr());
 	}
 	
-	public long getNextId() {
+	public long getNextIdAndIncr() {
 		oaiIdLock.lock();
 		if (nextId == nextIdInDB) {
 			int idsAtOnce = 1000;
@@ -219,6 +226,10 @@ public class RepositoryDAO extends BaseDAO {
 		this.nextId++;
 		oaiIdLock.unlock();
 		return id;
+	}
+	
+	public long getNextId() {
+		return this.nextId++;
 	}
 	
 	public void addRecords(String name, List<Record> records) {
@@ -256,10 +267,11 @@ public class RepositoryDAO extends BaseDAO {
 			if (ready4harvest(name)) {
 				String sql = 
 	    			"insert into "+getTableName(name, RECORDS_TABLE)+
-	    			" (record_id, oai_datestamp, type, status, format_id ) "+
-	    			"values (?,?,?,?,?) "+
+	    			" (record_id, oai_datestamp, type, status, prev_status, format_id ) "+
+	    			"values (?,?,?,?,?,?) "+
 	    			"on duplicate key update "+
 	    				"status=?, "+
+	    				"prev_status=?, "+
 	    				"format_id=?, "+
 	    				"oai_datestamp=? "+
 	    			";";
@@ -283,6 +295,7 @@ public class RepositoryDAO extends BaseDAO {
 		                        }
 		                        for (int k=0; k<2; k++) {
 			                        ps.setString(i++, String.valueOf(r.getStatus()));
+			                        ps.setString(i++, String.valueOf(r.getPreviousStatus()));
 			                        if (r.getFormat() != null) {
 			                        	ps.setInt(i++, r.getFormat().getId());
 			                        } else { 
@@ -506,6 +519,8 @@ public class RepositoryDAO extends BaseDAO {
 						os.write(tabBytes);
 						os.write(String.valueOf(r.getStatus()).getBytes());
 						os.write(tabBytes);
+						os.write(String.valueOf(r.getPreviousStatus()).getBytes());
+						os.write(tabBytes);
 						if (r.getFormat() != null)
 							os.write(String.valueOf(r.getFormat().getId()).getBytes());
 					}
@@ -726,6 +741,31 @@ public class RepositoryDAO extends BaseDAO {
 		TimingLogger.stop("populateHarvestCache");
 	}
 	
+	protected List<Map<String, Object>> getPreviousStatuses(String name, int page) {
+		TimingLogger.start("getPreviousStatuses");
+		int recordsAtOnce = 250000;
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+				"select record_id, status from "+getTableName(name, RECORDS_TABLE)+
+				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		TimingLogger.stop("getPreviousStatuses");
+		return rowList;
+	}
+	
+	public void populatePreviousStatuses(String name, TLongByteHashMap previousStatuses) {
+		TimingLogger.start("populatePreviousStatuses");
+		int page = 0;
+		List<Map<String, Object>> rowList = getPreviousStatuses(name, page);
+		while (rowList != null && rowList.size() > 0) {
+			for (Map<String, Object> row : rowList) {
+				Integer recordId = (Integer)row.get("record_id");
+				char prevStatus = ((String)row.get("status")).charAt(0);
+				previousStatuses.put(recordId, (byte)prevStatus);
+			}
+			rowList = getPreviousStatuses(name, ++page);
+		}
+		TimingLogger.stop("populatePreviousStatuses");
+	}
+	
     private final static class RecPredBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
     	protected List<long[]> recPreds = null;
 		public RecPredBatchPreparedStatementSetter(List<long[]> recPreds) {
@@ -827,7 +867,7 @@ public class RepositoryDAO extends BaseDAO {
 	public Record getRecord(String name, long id) {
 		String sql = 
 			"select "+RECORDS_TABLE_COLUMNS+
-				"x.xml, "+ " max(u.date_updated) as date_updated " +
+				", x.xml, "+ " max(u.date_updated) as date_updated " +
 			"from "+getTableName(name, RECORDS_TABLE)+" r, "+
 				getTableName(name, RECORDS_XML_TABLE)+" x, "+
 				getTableName(name, RECORD_UPDATES_TABLE)+" u "+
@@ -873,7 +913,7 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select straight_join "+RECORDS_TABLE_COLUMNS+
-				" x.xml, "+ " max(u.date_updated) as date_updated " +
+					" , x.xml, "+ " max(u.date_updated) as date_updated " +
 				" from ");
 		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_record_id)");
 		sb.append(", ");
@@ -959,7 +999,7 @@ public class RepositoryDAO extends BaseDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				" select "+RECORDS_TABLE_COLUMNS+
-				" max(u.date_updated) as u.date_updated  " +
+					" , max(u.date_updated) as u.date_updated  " +
 				" from "+getTableName(name, RECORDS_TABLE)+" r, "+
 					getTableName(name, RECORD_UPDATES_TABLE)+" u ");
 		if (inputSet != null) {
@@ -1417,14 +1457,26 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 
-	public java.util.Set<Long> getSuccessorIds(String name, Long predId) {
-		java.util.Set<Long> succIds = new HashSet<Long>();
+	public java.util.Set<Record> getSuccessorIds(String name, Long predId) {
+		TimingLogger.start("RepositoryDAO.getSuccessorIds");
+		java.util.Set<Record> succIds = new TreeSet<Record>();
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-				"select record_id from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" where pred_record_id=?", predId);
+				" select r.record_id, status "+
+				" from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" rp, "+
+					getTableName(name, RECORDS_TABLE)+" r "+
+				" where rp.pred_record_id=? "+
+					" and rp.record_id = r.record_id ", 
+				predId);
 		for (Map<String, Object> row : rowList) {
-			Long succId = (Long)row.get("record_id");
-			succIds.add(succId);
+			LOG.debug("row: "+row);
+			Integer succId = (Integer)row.get("record_id");
+			LOG.debug("succId: "+succId);
+			Record r = new Record();
+			r.setId(succId);
+			r.setStatus(((String)row.get("status")).charAt(0));
+			succIds.add(r);
 		}
+		TimingLogger.stop("RepositoryDAO.getSuccessorIds");
 		return succIds;
 	}
 	
@@ -1559,6 +1611,7 @@ public class RepositoryDAO extends BaseDAO {
 	        	r.setId(rs.getLong("r.record_id"));
 		        r.setCreatedAt(rs.getTimestamp("r.oai_datestamp"));
 		        String status = rs.getString("r.status");
+		        String prevStatus = rs.getString("r.prev_status");
 		        try {
 			        Integer formatId = rs.getInt("r.format_id");
 			        r.setFormat(thisthis.getFormatDAO().getById(formatId));
@@ -1569,6 +1622,11 @@ public class RepositoryDAO extends BaseDAO {
 		        }
 		        if (status != null && status.length() == 1) {
 		        	r.setStatus(status.charAt(0));
+		        }
+		        if (prevStatus != null && prevStatus.length() == 1) {
+		        	char ps = prevStatus.charAt(0);
+		        	if (ps != 0)
+		        		r.setPreviousStatus(ps);
 		        }
 	        }
 	        if (tables.contains(RECORD_UPDATES_TABLE)) {
@@ -1892,6 +1950,73 @@ public class RepositoryDAO extends BaseDAO {
 			setPersistentProperty(name, "outgoingUpdated"+key, ""+counts4type.getValue()[1]);
 			setPersistentProperty(name, "outgoingDeleted"+key, ""+counts4type.getValue()[2]);
 		}
+	}
+	
+	public void persistRecordCounts(String repoName, RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
+		if (incomingRecordCounts != null)
+			persistRecordCounts(repoName, incomingRecordCounts, INCOMING_RECORD_COUNTS);
+		if (outgoingRecordCounts != null)
+			persistRecordCounts(repoName, outgoingRecordCounts, OUTGOING_RECORD_COUNTS);
+	}
+	
+	protected void persistRecordCounts(String repoName, RecordCounts rc, String tableName) {
+		LOG.info(rc.toString());
+		Map<String, Map<String, AtomicInteger>> countsKeyedByType = rc.getCounts();
+		
+		for (String type : countsKeyedByType.keySet()) {
+			int loops = 1;
+			if (type == null) {
+				type = "total";
+				loops = 2;
+			}
+			// This loop is for the purpose of getting totals by harvest AND totals for all harvests
+			for (int i=0; i < loops; i++) {
+				Date d1 = rc.getHarvestStartDate();
+				if (i == 1) {
+					d1 = new Date(0);
+				}
+				this.jdbcTemplate.update(
+						"insert ignore into "+getTableName(repoName, tableName)+
+							"  (harvest_start_date, type_name) values (?, ?);", 
+						d1,
+						type);
+				
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				
+				StringBuilder sb = new StringBuilder();
+				sb.append(
+						"update "+getTableName(repoName, tableName) +" set ");
+				
+				Map<String, AtomicInteger> counts4Type = countsKeyedByType.get(type.equals("total") ? null : type);
+				for (String updateType : counts4Type.keySet()) {
+					sb.append(updateType);
+					sb.append(" = ");
+					sb.append(updateType);
+					sb.append(" + :");
+					sb.append(updateType);
+					sb.append(",");
+					paramMap.put(updateType, counts4Type.get(updateType).get());
+				}
+				
+				sb.deleteCharAt(sb.length()-1);
+				sb.append(" where harvest_start_date ");
+				if (i < 10) {
+				//if (i == 0) {
+					sb.append(" = :harvest_start_date ");
+					paramMap.put("harvest_start_date", d1);					
+				} else {
+					sb.append(" is null ");
+				}
+				sb.append(" and type_name = :type_name ");
+				paramMap.put("type_name", type);
+				
+				LOG.debug("paramMap!!!");
+				for (Map.Entry<String, Object> me : paramMap.entrySet()) {
+					LOG.debug(me.getKey()+": "+me.getValue());
+				}
+				this.namedParameterJdbcTemplate.update(sb.toString(), paramMap);
+			}
+		}		
 	}
 	
 	public List<Integer> getSetIds(String name) {

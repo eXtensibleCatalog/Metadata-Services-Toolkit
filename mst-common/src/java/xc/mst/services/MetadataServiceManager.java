@@ -92,6 +92,7 @@ public class MetadataServiceManager extends WorkerThread {
 	}
 
 	public void setup() {
+		metadataService.setMetadataServiceManager(this);
 		metadataService.setup();
 	}
 	

@@ -37,6 +37,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 import xc.mst.utils.Util;
@@ -97,6 +98,11 @@ public class TestRepository extends BaseService implements Repository {
 	
 	public int getSize() {
 		return 0;
+	}
+
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount,
+			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
+		return commitIfNecessary(force);
 	}
 	
 	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {

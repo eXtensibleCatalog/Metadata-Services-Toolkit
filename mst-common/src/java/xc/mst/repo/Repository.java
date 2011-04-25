@@ -18,6 +18,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 
 public interface Repository {
@@ -32,15 +33,14 @@ public interface Repository {
 	public int getNumRecords();
 	
 	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
-
-	public void updateIncomingRecordCounts(String type, boolean update, boolean delete);
-	public void incrementUnexpectedProcessingErrors(String type);
 	
 	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
 	
-	public boolean commitIfNecessary(boolean force);
-	public boolean commitIfNecessary(boolean force, long processedRecordsCount);
+	//public boolean commitIfNecessary(boolean force);
+	//public boolean commitIfNecessary(boolean force, long processedRecordsCount);
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount, 
+			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts);
 	
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 	
