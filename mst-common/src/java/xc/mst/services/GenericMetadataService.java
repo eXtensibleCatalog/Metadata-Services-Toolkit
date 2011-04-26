@@ -492,9 +492,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
 				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
-		
-		getMetadataServiceManager().setIncomingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.INCOMING));
-		getMetadataServiceManager().setOutgoingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.OUTGOING));
+
+		if (getMetadataServiceManager() != null) {
+			getMetadataServiceManager().setIncomingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.INCOMING));
+			getMetadataServiceManager().setOutgoingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.OUTGOING));
+		}
 
 		int getRecordLoops = 0;
 		boolean previouslyPaused = false;

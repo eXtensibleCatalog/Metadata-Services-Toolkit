@@ -1960,7 +1960,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected void persistRecordCounts(String repoName, RecordCounts rc, String tableName) {
-		LOG.info(rc.toString());
+		LOG.info("\nRecordCounts for repo: "+repoName+rc.toString());
 		Map<String, Map<String, AtomicInteger>> countsKeyedByType = rc.getCounts();
 		
 		for (String type : countsKeyedByType.keySet()) {

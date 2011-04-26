@@ -36,9 +36,7 @@ public interface Repository {
 	
 	public void addRecord(Record record);
 	public void addRecords(List<Record> records);
-	
-	//public boolean commitIfNecessary(boolean force);
-	//public boolean commitIfNecessary(boolean force, long processedRecordsCount);
+
 	public boolean commitIfNecessary(boolean force, long processedRecordsCount, 
 			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts);
 	
