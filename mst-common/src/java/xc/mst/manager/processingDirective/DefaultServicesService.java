@@ -48,6 +48,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.AutoServiceReprocessingFileFilter;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -743,22 +744,26 @@ public class DefaultServicesService extends BaseService
 	
 	private static Collection<File> getAllServiceFiles(File file) {
 		Collection<File> all = new ArrayList<File>();     
-		all = addFilesRecursively(file, all);     
+		all = addFilesToScanRecursively(file, all);     
 		return all;
 	}
 	
-	private static Collection<File> addFilesRecursively(File file, Collection<File> all) {     
-		final File[] children = file.listFiles();     
+	private static Collection<File> addFilesToScanRecursively(File file, Collection<File> all) {
+		//AutoServiceReprocessingFileFilter
+		final File[] children = file.listFiles(new AutoServiceReprocessingFileFilter());     
 		if (children != null) {         
 			for (File child : children) {             
 				all.add(child);             
-				addFilesRecursively(child, all);         
+				addFilesToScanRecursively(child, all);         
 			}     
 		}
 		return all;
 	}
 	
 	// want latest date of an actual file within service, disqualify directory timestamps as not being relevant.
+	// Also filter based on file types acceptable found in MST config property:
+	//                                  (regexpOfFilesToScanForAutoServiceReprocessing)
+	//
 	private long getLatestServiceFileTime(String name) {
 		File dir = new File(getServiceDir(), name) ;
 		long latest = 0l;

@@ -88,21 +88,20 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 			// Check whether service has been 'updated' with later file(s),
-			// if so delete service harvest history (reprocess)
+			// if so delete service harvest history (re-process)
 			// NOTE / TODO service can't be running, right?  How do I ensure?  Did above code do it?
 			//
 			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {				
 				final List<Service> servicesList = getServicesService().getAllServices();
 				for (Service s : servicesList) {
-					//TODO file check + if update made -> delete harvest history/reprocess
+					//TODO file check + if update made -> delete harvest history/re-process
 					if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
 						LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
 						getServicesService().updateServiceLastModifiedTime(s.getName(), s);
 						getServicesService().updateService(s);
 						// now must persist it
 						getServiceDAO().deleteServiceHarvest(s);
-						// then must reprocess
-		    			try {
+		    			try {	// now must re-process
 							Job job = new Job(s, 0, Constants.THREAD_SERVICE);
 							job.setOrder(getJobService().getMaxOrder() + 1); 
 							getJobService().insertJob(job);
