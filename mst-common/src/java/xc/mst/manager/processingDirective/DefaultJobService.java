@@ -190,6 +190,10 @@ public class DefaultJobService extends BaseService implements JobService {
 		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
 		    		out.write(job.getOrder() + "\t\t" + "Deleting service " + job.getService().getName() + " and its records. \n");
 		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
+		    		log.debug("job: "+job);
+		    		log.debug("job.getHarvestSchedule(): "+job.getHarvestSchedule());
+		    		log.debug("job.getHarvestSchedule().getProvider(): "+job.getHarvestSchedule().getProvider());
+		    		log.debug("job.getHarvestSchedule().getProvider().getName(): "+job.getHarvestSchedule().getProvider().getName());
 		    		out.write(job.getOrder() + "\t\t" + "Marking provider records deleted " + job.getHarvestSchedule().getProvider().getName());
 		    	}
 		    }
