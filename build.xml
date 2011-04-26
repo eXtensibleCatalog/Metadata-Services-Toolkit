@@ -12,6 +12,10 @@
 		<echo>
 commands
 
+    retrieve
+		deletes already downloaded dependencies and gets them fresh.  This is useful when
+		a dependency is added or changed.  You'll want to run this and then refresh eclipse.
+
     package-all
         packages up all all subprojects for release.
 
@@ -238,12 +242,7 @@ note: help on the ant commands within particular service subprojects can be foun
 	<target name="publish" depends="mi.publish, mc.publish, ms.publish">
 	</target>
 
-	<target name="retrieve" depends="ms.copy-example,mc.retrieve,mp.retrieve,ms.retrieve">
-		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
-		<target-custom-services target="retrieve" />
-	</target>
-
-	<target name="coordinated.retrieve">
+	<target name="retrieve">
 		<ant target="ms.copy-example" />
 
 		<ant target="clean" />
@@ -263,7 +262,7 @@ note: help on the ant commands within particular service subprojects can be foun
 		<target-custom-services target="retrieve" />
 	</target>
 
-	<target name="package-all" depends="coordinated.retrieve">
+	<target name="package-all" depends="retrieve">
 		<ant target="mp.war" />
 
 		<ant dir="${mst-service}/example" target="zip" inheritAll="false" />
@@ -325,7 +324,7 @@ note: help on the ant commands within particular service subprojects can be foun
 		-->
 	</target>
 
-	<target name="dist" depends="coordinated.retrieve, dist.nodep" />
+	<target name="dist" depends="retrieve, dist.nodep" />
 	<target name="dist.nodep" depends="init, mc.resolve">
 		<copy todir="${dist.dir}/ivy/xc">
 			<fileset dir="${ivy.home}/local/xc" />

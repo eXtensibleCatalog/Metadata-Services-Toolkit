@@ -3,6 +3,7 @@ create table repo_name.records (
 	oai_datestamp     datetime,
 	type             char(1),
 	status           char(1),
+	prev_status      char(1),
 	format_id        int,
 
 	PRIMARY KEY (record_id)
@@ -72,3 +73,58 @@ create table repo_name.properties (
 
 	primary key(prop_key)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+create table repo_name.incoming_record_counts (
+	incoming_record_count_id      int         NOT NULL    AUTO_INCREMENT,
+	harvest_start_date            datetime    not null,
+	type_name                     varchar(35) not null,
+
+	new_act_cnt                   int    not null default 0,
+	new_del_cnt                   int    not null default 0,
+	upd_act_cnt                   int    not null default 0,
+	upd_del_cnt                   int    not null default 0,
+
+	upd_act_prev_act_cnt          int    not null default 0,
+	upd_act_prev_del_cnt          int    not null default 0,
+
+	upd_del_prev_act_cnt          int    not null default 0,
+	upd_del_prev_del_cnt          int    not null default 0,
+
+	unexpected_error_cnt          int    not null default 0,
+
+	primary key (incoming_record_count_id),
+	KEY idx_REPO_NAME_incoming_record_counts_type_name (type_name),
+	unique key idx_REPO_NAME_incoming_record_counts_date_type(harvest_start_date, type_name)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+create table repo_name.outgoing_record_counts (
+	outgoing_record_count_id      int         NOT NULL    AUTO_INCREMENT,
+	harvest_start_date            datetime    not null,
+	type_name                     varchar(35) not null,
+
+	new_act_cnt                   int    not null default 0,
+	new_held_cnt                  int    not null default 0,
+	new_del_cnt                   int    not null default 0,
+	upd_act_cnt                   int    not null default 0,
+	upd_held_cnt                  int    not null default 0,
+	upd_del_cnt                   int    not null default 0,
+
+	upd_act_prev_act_cnt          int    not null default 0,
+	upd_act_prev_held_cnt         int    not null default 0,
+	upd_act_prev_del_cnt          int    not null default 0,
+
+	upd_held_prev_act_cnt         int    not null default 0,
+	upd_held_prev_held_cnt        int    not null default 0,
+	upd_held_prev_del_cnt         int    not null default 0,
+
+	upd_del_prev_act_cnt          int    not null default 0,
+	upd_del_prev_held_cnt         int    not null default 0,
+	upd_del_prev_del_cnt          int    not null default 0,
+
+	primary key (outgoing_record_count_id),
+	KEY idx_REPO_NAME_outgoing_record_counts_type_name (type_name),
+	unique key idx_REPO_NAME_outgoing_record_counts_date_type(harvest_start_date, type_name)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

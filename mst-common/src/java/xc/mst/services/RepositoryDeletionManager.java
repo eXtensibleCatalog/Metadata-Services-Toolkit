@@ -14,7 +14,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
+import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.repo.Repository;
@@ -52,6 +55,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 
 	@Override
 	public void setup() {
+		this.incomingRecordCounts = new RecordCounts(new Date(), RecordCounts.INCOMING);
 	}
 
 	@Override
@@ -67,12 +71,19 @@ public class RepositoryDeletionManager extends WorkerThread {
 		LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method "+getName());
 		if (m_incomingRepository != null) {
 			long id = 0;
+			long numRecordsProcess = 0;
 			List<Record> records = getMoreRecords(m_incomingRepository, id);
-			while ( records != null && records.size() > 0 ) {
+			while ( records != null && records.size() > 0 && this.status != Status.CANCELED) {
 				for (Record r : records) {
+					if (r.getSets() != null) {
+						for (Set s : r.getSets()) {
+							this.incomingRecordCounts.incr(type, Record.DELETED, r.getStatus());		
+						}
+					}
+					this.incomingRecordCounts.incr(null, Record.DELETED, r.getStatus());
 					r.setStatus(Record.DELETED);
 					m_incomingRepository.addRecord(r);
-					m_incomingRepository.commitIfNecessary(false);
+					m_incomingRepository.commitIfNecessary(false, numRecordsProcess++, this.incomingRecordCounts, null);
 					m_processedRecordCount++;
 					id = r.getId();
 				}
@@ -84,7 +95,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 				records = getMoreRecords(m_incomingRepository, id);
 
 			}
-			m_incomingRepository.commitIfNecessary(true);
+			m_incomingRepository.commitIfNecessary(true, 0, this.incomingRecordCounts, null);
 
 			// and now, since harvest schedule doesn't seem to get auto-deleted, proceed to delete it...
 			deleteHarvestSchedule();

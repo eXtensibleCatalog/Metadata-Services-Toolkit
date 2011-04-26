@@ -1,13 +1,8 @@
 package xc.mst.services.transformation.test;
 
-import java.util.Calendar;
-
 import org.apache.log4j.Logger;
-import org.testng.annotations.Test;
 
-import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Set;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -17,12 +12,17 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	protected long getNumberOfRecordsToHarvest() {
 		//return Integer.MAX_VALUE;
 		//return 100000;
-		return 1000;
+		return 400;
 	}
 	
 	public String getRepoName() {
-		return "135";
+		return "rochester_135";
 	}
+	
+	protected String getSetSpec() {
+		return "rochester_135:bib";
+	}
+	
 	
 	@Override
 	protected String[] getPriorServices() {
@@ -43,6 +43,16 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public void finalTest() {
+		try {
+			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvests");
+			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvest_schedules");
+			getJdbcTemplate().execute("delete from MetadataServicesToolkit.service_harvests");
+			createHarvestSchedule();
+			waitUntilFinished();
+		} catch (Throwable t) {
+			LOG.error("", t);
+			throw new RuntimeException(t);
+		}
 		/*
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());

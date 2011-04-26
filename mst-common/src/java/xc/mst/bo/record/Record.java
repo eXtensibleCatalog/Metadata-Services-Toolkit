@@ -32,7 +32,7 @@ import xc.mst.utils.XmlHelper;
  *
  * @author Eric Osisek
  */
-public class Record implements InputRecord, OutputRecord {
+public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	
 	private static final Logger LOG = Logger.getLogger(Record.class);
 	
@@ -46,6 +46,7 @@ public class Record implements InputRecord, OutputRecord {
 	public static final char HELD = 'H';
 	public static final char DELETED = 'D';
 	public static final char REPLACED = 'R';
+	public static final char NULL = 'N';
 	
 	protected String mode = JDOM_MODE;
 
@@ -173,7 +174,8 @@ public class Record implements InputRecord, OutputRecord {
 	protected int numberOfSuccessors;
 
 	protected char status = Record.ACTIVE;
-	
+	protected char prevStatus = Record.NULL;
+
 	public Record() {
 		super();
 	}
@@ -182,6 +184,7 @@ public class Record implements InputRecord, OutputRecord {
 		Record dupe = new Record();
 		dupe.createdAt = this.createdAt;
 		dupe.status = this.status;
+		dupe.prevStatus = this.prevStatus;
 		dupe.id = this.id;
 		dupe.oaiHeader = this.oaiHeader;
 		dupe.oaiIdentifier = this.oaiIdentifier;
@@ -865,33 +868,6 @@ public class Record implements InputRecord, OutputRecord {
 		return record;
 	} // end method copyRecord(Record)
 
-	/**
-	 * Returns true iff the passed Object is equal to this Record.  It will be
-	 * considered equal if it is a Record with the same OAI Identifier as this Record
-	 *
-	 * @param o The Object to test for equality
-	 * @return true iff the passed Object is equal to this Record
-	 */
-	public boolean equals(Object o)
-	{
-		if(!(o instanceof Record))
-			return false;
-
-		Record otherRecord = (Record)o;
-
-		return otherRecord.getOaiIdentifier().equals(this.getOaiIdentifier());
-	} // end method equals
-	
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode()
-    {
-            int value = 0;
-            value += oaiIdentifier == null ? 0 : oaiIdentifier.hashCode();
-            return value;
-    }
-
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -999,5 +975,51 @@ public class Record implements InputRecord, OutputRecord {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	
+	public char getPreviousStatus() {
+		return prevStatus;
+	}
+
+	public void setPreviousStatus(char prevStatus) {
+		this.prevStatus = prevStatus;
+	}
+	
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		} else {
+			Record r = (Record)o;
+			if (r.getId() == -1 && getId() == -1) {
+				return super.equals(o);
+			} else if (r.getId() == -1) {
+				return false;
+			} else {
+				return getId() == r.getId();
+			}
+		}
+	}
+	
+    public int hashCode() {
+    	if (getId() == -1) {
+    		return super.hashCode();
+    	} else {
+    		return new Long(getId()).hashCode();
+    	}
+    }
+
+	@Override
+	public int compareTo(Record o) {
+		if (o == null) {
+			return 1;
+		} else {
+			if (o.getId() == -1 && getId() == -1) {
+				return new Long(hashCode()).compareTo(new Long(o.hashCode()));
+			} else if (o.getId() == -1) {
+				return 1;
+			} else {
+				return new Long(getId()).compareTo(new Long(o.getId()));
+			}
+		}
 	}
 }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Semaphore;
@@ -31,6 +32,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
@@ -65,6 +67,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
 	protected Emailer mailer = new Emailer();
 	
+	protected MetadataServiceManager metadataServiceManager = null;
+
 	protected TLongHashSet predecessors = new TLongHashSet();
 
 	/**
@@ -96,6 +100,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
+	}
+	
+	public MetadataServiceManager getMetadataServiceManager() {
+		return metadataServiceManager;
+	}
+
+	public void setMetadataServiceManager(
+			MetadataServiceManager metadataServiceManager) {
+		this.metadataServiceManager = metadataServiceManager;
 	}
 
 	public Service getService() {
@@ -428,7 +441,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	protected boolean commitIfNecessary(boolean force, long processedRecordCount) {
 		if (getRepository() != null) {
-			if (getRepository().commitIfNecessary(force, processedRecordCount)) {
+			if (getRepository().commitIfNecessary(
+					force, 
+					processedRecordCount, 
+					getMetadataServiceManager().getIncomingRecordCounts(), 
+					getMetadataServiceManager().getOutgoingRecordCounts())) {
+				
+				getMetadataServiceManager().getIncomingRecordCounts().clear();
+				getMetadataServiceManager().getOutgoingRecordCounts().clear();
+				
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
 				getMessageDAO().persistMessages(messages2insert);
@@ -472,6 +493,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
+		if (getMetadataServiceManager() != null) {
+			getMetadataServiceManager().setIncomingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.INCOMING));
+			getMetadataServiceManager().setOutgoingRecordCounts(new RecordCounts(sh.getUntil(), RecordCounts.OUTGOING));
+		}
+
 		int getRecordLoops = 0;
 		boolean previouslyPaused = false;
 		boolean atLeastOneRecordProcessed = false;
@@ -500,30 +526,42 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       the existing record.  Although I can't think of a reason
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
-				boolean update = false;
 				injectKnownSuccessorsIds(in);
+				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
-					update = true;
+					for (OutputRecord or : in.getSuccessors()) {
+						origSuccessorMap.put(or.getId(), or.clone());
+					}
 				}
 				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = null;
 				try {
 					out = process(in);
 				} catch (Throwable t) {
-					getRepository().incrementUnexpectedProcessingErrors(null);
+					if (in.getIndexedObjectType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), "unexpected_error_cnt");	
+					}
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, "unexpected_error_cnt");
 					LOG.error("error processing record w/ id: "+in.getId(), t);
 					continue;
 				}
 				if (getRepository() != null) {
 					if (in.getIndexedObjectType() != null) {
-						getRepository().updateIncomingRecordCounts(in.getIndexedObjectType(), update, in.getStatus() == Record.DELETED);
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), in.getPreviousStatus());
 					}
-					getRepository().updateIncomingRecordCounts(null, update, in.getStatus() == Record.DELETED);
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
 				TimingLogger.stop(getServiceName()+".process");
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
+						if (origSuccessorMap.containsKey(rout2.getId())) {
+							rout2.setPreviousStatus(rout2.getStatus());
+						}
+						if (rout2.getIndexedObjectType() != null) {
+							getMetadataServiceManager().getOutgoingRecordCounts().incr(in.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
+						}
+						getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 						rout2.addPredecessor(in);
 						rout2.setService(getService());
 						if (rout2.getId() == -1) {

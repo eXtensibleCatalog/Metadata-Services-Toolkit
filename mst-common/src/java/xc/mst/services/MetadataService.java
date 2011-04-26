@@ -62,4 +62,7 @@ public interface MetadataService {
 	public List<String> getUnprocessedErrorRecordIdentifiers();
 	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
 	public MSTConfiguration getConfig();
+	
+	public MetadataServiceManager getMetadataServiceManager();
+	public void setMetadataServiceManager(MetadataServiceManager msm);
 }
