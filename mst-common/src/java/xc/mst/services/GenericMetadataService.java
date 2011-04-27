@@ -536,6 +536,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = null;
 				try {
+					LOG.debug("in.getStatus(): "+in.getStatus());
 					out = process(in);
 				} catch (Throwable t) {
 					if (in.getIndexedObjectType() != null) {
@@ -555,6 +556,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				if (out != null) {
 					for (RecordIfc rout : out) {
 						Record rout2 = (Record)rout;
+						LOG.debug("rout2.getStatus(): "+rout2.getStatus());
 						if (origSuccessorMap.containsKey(rout2.getId())) {
 							rout2.setPreviousStatus(rout2.getStatus());
 						}

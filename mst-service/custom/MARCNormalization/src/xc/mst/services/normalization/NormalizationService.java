@@ -361,6 +361,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
+				oldNormalizedRecord.setStatus(Record.ACTIVE);
 				
 				// Add errors
 				oldNormalizedRecord.setMessages(outputRecordErrors);
