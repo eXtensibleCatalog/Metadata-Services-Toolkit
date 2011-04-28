@@ -358,10 +358,10 @@ public class NormalizationService extends GenericMetadataService {
 				OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
 				oldNormalizedRecord.setMode(Record.JDOM_MODE);
 				oldNormalizedRecord.setFormat(marc21);
+				oldNormalizedRecord.setStatus(Record.ACTIVE);
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
-				oldNormalizedRecord.setStatus(Record.ACTIVE);
 				
 				// Add errors
 				oldNormalizedRecord.setMessages(outputRecordErrors);

@@ -78,6 +78,9 @@ public class ValidateRepository extends HttpService {
 			throw new RuntimeException("Cannot find the provider with ID " + providerId);
 
 		baseUrl = provider.getOaiProviderUrl();
+		if (baseUrl.startsWith("file")) {
+			return;
+		}
 
 		StringBuilder errors = new StringBuilder();
 

@@ -28,6 +28,7 @@ import xc.mst.dao.provider.FormatDAO;
 import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.MessageDAO;
+import xc.mst.dao.record.RecordCountsDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.ScheduleService;
@@ -112,6 +113,10 @@ public class BaseTest {
 	
 	protected RepositoryDAO getRepositoryDAO() {
 		return (RepositoryDAO)getBean("RepositoryDAO");
+	}
+	
+	protected RecordCountsDAO getRecordCountsDAO() {
+		return (RecordCountsDAO)getBean("RecordCountsDAO");
 	}
 	
 	protected ServiceDAO getServiceDAO() {

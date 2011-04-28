@@ -535,16 +535,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				TimingLogger.start(getServiceName()+".process");
 				List<OutputRecord> out = null;
+				boolean unexpectedError = false;
 				try {
-					LOG.debug("in.getStatus(): "+in.getStatus());
 					out = process(in);
 				} catch (Throwable t) {
-					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), "unexpected_error_cnt");	
-					}
-					getMetadataServiceManager().getIncomingRecordCounts().incr(null, "unexpected_error_cnt");
+					unexpectedError = true;
 					LOG.error("error processing record w/ id: "+in.getId(), t);
-					continue;
 				}
 				if (getRepository() != null) {
 					if (in.getIndexedObjectType() != null) {
@@ -552,36 +548,42 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
-				TimingLogger.stop(getServiceName()+".process");
-				if (out != null) {
-					for (RecordIfc rout : out) {
-						Record rout2 = (Record)rout;
-						LOG.debug("rout2.getStatus(): "+rout2.getStatus());
-						if (origSuccessorMap.containsKey(rout2.getId())) {
-							rout2.setPreviousStatus(rout2.getStatus());
+				if (unexpectedError) {
+					if (in.getIndexedObjectType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), RecordCounts.UNEXPECTED_ERROR);	
+					}
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);					
+				} else {	
+					TimingLogger.stop(getServiceName()+".process");
+					if (out != null) {
+						for (RecordIfc rout : out) {
+							Record rout2 = (Record)rout;
+							if (origSuccessorMap.containsKey(rout2.getId())) {
+								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
+							}
+							if (rout2.getIndexedObjectType() != null) {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(in.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
+							}
+							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
+							rout2.addPredecessor(in);
+							rout2.setService(getService());
+							if (rout2.getId() == -1) {
+								getRepositoryDAO().injectId(rout2);
+							}
+							injectKnownPredecessors(in, rout2);
+							if (outputSet != null) {
+								rout2.addSet(outputSet);
+							}
+							getRepository().addRecord(rout2);
 						}
-						if (rout2.getIndexedObjectType() != null) {
-							getMetadataServiceManager().getOutgoingRecordCounts().incr(in.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
-						}
-						getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
-						rout2.addPredecessor(in);
-						rout2.setService(getService());
-						if (rout2.getId() == -1) {
-							getRepositoryDAO().injectId(rout2);
-						}
-						injectKnownPredecessors(in, rout2);
-						if (outputSet != null) {
-							rout2.addSet(outputSet);
-						}
-						getRepository().addRecord(rout2);
+					}
+					if (getRepository() == null || 
+							(in.getStatus() != Record.DELETED && 
+									(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
+						processedRecordCount++;
 					}
 				}
 				sh.setHighestId(in.getId());
-				if (getRepository() == null || 
-						(in.getStatus() != Record.DELETED && 
-								(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
-					processedRecordCount++;
-				}
 				updateService(out, sh);
 				
 				//  TODO not inserting errors on input record.

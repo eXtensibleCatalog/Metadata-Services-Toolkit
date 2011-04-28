@@ -50,10 +50,19 @@ public class ExampleMetadataService extends GenericMetadataService {
 				out.setStatus(Record.DELETED);
 				LOG.debug("deleted r.getId():"+r.getId()+" out.getId():"+out.getId());
 			} else {
+				out.setStatus(Record.ACTIVE);
 				r.setMode(Record.JDOM_MODE);
-				Element metadataEl = r.getOaiXmlEl();
-				Element foo = metadataEl.getChild("foo", Namespace.getNamespace(FOO_NS));
-				if (foo != null) {
+				Element foo = r.getOaiXmlEl();
+				if (foo != null && "foo".equals(foo.getName())) {
+					LOG.debug("foo is not null");
+					if ("true".equals(foo.getAttributeValue("hold"))) {
+						LOG.debug("record should be held");
+						out.setStatus(Record.HELD);
+					}
+					if ("true".equals(foo.getAttributeValue("exception"))) {
+						LOG.debug("record throws exception");
+						throw new RuntimeException("unanticipated exception from service");
+					}
 					getFooService().fooFound(foo.getText());
 					// you could do this 
 					// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
@@ -62,11 +71,12 @@ public class ExampleMetadataService extends GenericMetadataService {
 					barEl.setText("you've been barred: "+foo.getText());
 					out.setOaiXmlEl(barEl);
 				} else {
+					LOG.debug("foo is null");
 					Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
 					barEl.setText("you've been foobarred!");
-					metadataEl.addContent(barEl);
-					out.setOaiXmlEl(metadataEl);
-				}			
+					//metadataEl.addContent(barEl);
+					out.setOaiXmlEl(barEl);
+				}
 			}
 			records.add(out);
 		} catch (Throwable t) {
