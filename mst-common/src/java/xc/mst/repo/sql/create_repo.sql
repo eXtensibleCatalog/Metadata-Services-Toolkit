@@ -106,6 +106,7 @@ create table repo_name.outgoing_record_counts (
 	new_act_cnt                   int    not null default 0,
 	new_held_cnt                  int    not null default 0,
 	new_del_cnt                   int    not null default 0,
+
 	upd_act_cnt                   int    not null default 0,
 	upd_held_cnt                  int    not null default 0,
 	upd_del_cnt                   int    not null default 0,

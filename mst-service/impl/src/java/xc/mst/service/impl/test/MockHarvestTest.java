@@ -56,6 +56,9 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 	public String getProviderUrl() {
 		return "file://"+INPUT_FOLDER+"/"+getFolder();
 	}
+	
+	public void incrementalHarvestTest(String lastOaiRequest) {
+	}
 
 	public List<String> getFolders() {
 		List<String> fileStrs = new ArrayList<String>();
@@ -69,6 +72,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 		} else {
 			fileStrs.add(testFolder);
 		}
+		LOG.debug("fileStrs: "+fileStrs);
 		return fileStrs;
 	}
 	
@@ -79,8 +83,9 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 	
 	@Test
 	public void startToFinish() throws Exception  {
-		
+		LOG.info("in startToFinish");
 		for (String folderStr : getFolders()) {
+			LOG.info("folderStr: "+folderStr);
 			getRepositoryDAO().resetIdSequence(1);
 			this.provider = null;
 			this.folderName = folderStr;
@@ -116,6 +121,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 					previousLastOaiRequest = HarvestManager.lastOaiRequest;
 				}
 				LOG.debug("createHarvestSchedule()-1");
+				incrementalHarvestTest(HarvestManager.lastOaiRequest);
 				harvestOutRecordsFromMST();
 				LOG.debug("createHarvestSchedule()-2");
 			}

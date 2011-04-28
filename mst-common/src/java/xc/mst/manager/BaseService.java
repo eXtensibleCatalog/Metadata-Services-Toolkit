@@ -26,6 +26,7 @@ import xc.mst.dao.provider.ProviderDAO;
 import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.MessageDAO;
+import xc.mst.dao.record.RecordCountsDAO;
 import xc.mst.dao.record.RecordTypeDAO;
 import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
@@ -110,6 +111,7 @@ public class BaseService {
 	protected RecordDAO recordDAO = null;
 	protected RepositoryDAO repositoryDAO = null;
 	protected MessageDAO messageDAO = null;
+	protected RecordCountsDAO recordCountsDAO = null;
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
@@ -390,6 +392,13 @@ public class BaseService {
 
 	public void setMessageDAO(MessageDAO messageDAO) {
 		this.messageDAO = messageDAO;
+	}
+
+	public RecordCountsDAO getRecordCountsDAO() {
+		return recordCountsDAO;
+	}
+	public void setRecordCountsDAO(RecordCountsDAO recordCountsDAO) {
+		this.recordCountsDAO = recordCountsDAO;
 	}
 
 	public EmailConfigService getEmailConfigService() {
