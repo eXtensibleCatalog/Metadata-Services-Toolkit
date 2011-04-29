@@ -888,8 +888,13 @@ public class RepositoryDAO extends BaseDAO {
 		r.setHarvestedOaiIdentifier(this.jdbcTemplate.queryForObject(sql, String.class, (Long)r.getId()));
 	}
 	
+	public List<Record> getRecords(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet) {
+		return getRecords(name, from, until, startingId, inputFormat, inputSet, Record.ACTIVE);
+	}
 	@SuppressWarnings("unchecked")
-	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+	public List<Record> getRecords(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, char status) {
 		long t0 = System.currentTimeMillis();
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
@@ -900,7 +905,13 @@ public class RepositoryDAO extends BaseDAO {
 			sb.append("select straight_join 1 ")
 				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_date_updated) , ")
 				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
-				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? limit 1");
+				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? ");
+			if (status != Record.NULL) {
+				sb.append(" and status = '")
+					.append(status)
+					.append("' ");
+			}
+			sb.append(" limit 1");
 			List atleastone = this.jdbcTemplate.queryForList(sb.toString(), from, from, until);
 			if (atleastone == null || atleastone.size() == 0) {
 				return new ArrayList<Record>();
@@ -931,12 +942,11 @@ public class RepositoryDAO extends BaseDAO {
 					" and (u.date_updated >= ? or ? is null) "+
 					" and u.date_updated <= ?  "
 					);
-		/*
-					+
-			  		" and u.date_updated =" +
-						" (select max(u.date_updated)" +
-						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-						" where u.record_id = r.record_id )" */
+		if (status != Record.NULL) {
+			sb.append(" and status = '")
+				.append(status)
+				.append("' ");
+		}
 					
 		if (inputFormat != null) {
 			sb.append(
@@ -1045,7 +1055,10 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public long getRecordCount(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
+	public long getRecordCount(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, long offset) {
+		return -1l;
+		/*
 		LOG.debug("from: "+from);
 		LOG.debug("until: "+until);
 		LOG.debug("startingId: "+startingId);
@@ -1068,8 +1081,15 @@ public class RepositoryDAO extends BaseDAO {
 			if (keepGoing) {
 				if (inputFormat != null) {
 					// could LIMIT accomplish the same thing as explain ?
-					// actually - I dont think so, because if the answer is zero - limit takes a looooong time
-					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ?";
+					// no - I dont think so, because if the answer is zero - limit takes a looooong time
+					StringBuilder sb = new StringBuilder();
+					sb.append("select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ? ");
+					if (status != Record.NULL) {
+						sb.append(" and status = '")
+							.append(status)
+							.append("' ");
+					}
+					String sql = sb.toString();
 					records = this.jdbcTemplate.queryForList(
 							"explain "+sql, inputFormat.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
@@ -1290,6 +1310,7 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		
 		return -1l;
+		*/
 
 	}
 	
@@ -1310,16 +1331,17 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
-		return getRecordsWSets(name, from, until, startingId, null, null);
+		return getRecordsWSets(name, from, until, startingId, null, null, Record.ACTIVE);
 	}
 	
-	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+	public List<Record> getRecordsWSets(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, char status) {
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();
 		}
 		
-		List<Record> records = getRecords(name, from, until, startingId, inputFormat, inputSet);
+		List<Record> records = getRecords(name, from, until, startingId, inputFormat, inputSet, status);
 		if (records != null && records.size() > 0) {
 			Long highestId = records.get(records.size()-1).getId();
 			StringBuilder sb = new StringBuilder();
@@ -1360,11 +1382,22 @@ public class RepositoryDAO extends BaseDAO {
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWSets) {
-					while (currentRecord.getId() != rws.getId()) {
+					LOG.debug("rws.getId(): "+rws.getId());
+				}
+				for (Record r : records) {
+					LOG.debug("r.getId(): "+r.getId());
+				}
+				for (Record rws : recordsWSets) {
+					LOG.debug("currentRecord.getId(): "+currentRecord.getId());
+					LOG.debug("rws.getId(): "+rws.getId());
+					if (rws.getId() < currentRecord.getId()) {
+						continue;
+					}
+					while (rws.getId() > currentRecord.getId()) {
+						LOG.debug("recIdx: "+recIdx);
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
-			
 				}
 			} catch (EmptyResultDataAccessException e) {
 				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
@@ -1409,7 +1442,10 @@ public class RepositoryDAO extends BaseDAO {
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWMessages) {
-					while (currentRecord.getId() != rws.getId()) {
+					if (rws.getId() < currentRecord.getId()) {
+						continue;
+					}
+					while (rws.getId() > currentRecord.getId()) {
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addMessage(rws.getMessages().get(0));

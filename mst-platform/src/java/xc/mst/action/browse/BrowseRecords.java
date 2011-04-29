@@ -259,11 +259,11 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 		    // Query formation
 			solrQuery.setFacet(true)
 		    		 .setFacetMinCount(1);
+			solrQuery.addFacetField("status");
 			solrQuery.addFacetField("provider_name");
 			solrQuery.addFacetField("service_name");
 			solrQuery.addFacetField("format_name");
 			solrQuery.addFacetField("set_name");
-			solrQuery.addFacetField("harvest_start_time");
 			solrQuery.addFacetField("error");
 			
 			// Fields to load

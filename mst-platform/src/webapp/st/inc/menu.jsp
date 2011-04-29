@@ -71,7 +71,7 @@
 
 
        			<mst:checkUserPermission permission="Browse Records">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewBrowseRecords.action"/>">Browse Records</a>
+                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewBrowseRecords.action?addFacetName=status&addFacetValue=active"/>">Browse Records</a>
                     </li>
                  </mst:checkUserPermission>
 

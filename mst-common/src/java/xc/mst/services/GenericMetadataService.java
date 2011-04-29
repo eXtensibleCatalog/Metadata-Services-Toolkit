@@ -542,6 +542,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					unexpectedError = true;
 					LOG.error("error processing record w/ id: "+in.getId(), t);
 				}
+				TimingLogger.stop(getServiceName()+".process");
 				if (getRepository() != null) {
 					if (in.getIndexedObjectType() != null) {
 						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), in.getPreviousStatus());
@@ -554,7 +555,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);					
 				} else {	
-					TimingLogger.stop(getServiceName()+".process");
 					if (out != null) {
 						for (RecordIfc rout : out) {
 							Record rout2 = (Record)rout;

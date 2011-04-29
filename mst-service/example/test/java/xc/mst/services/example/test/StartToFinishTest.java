@@ -141,7 +141,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 		
 		Date until = new Date();
 		Long startingId = null;
-		List<Record> records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId);
+		List<Record> records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId, Record.ACTIVE);
 		int setCount = 0;
 		while (records != null && records.size() > 0) {
 			for (Record r2 : records) {
@@ -155,7 +155,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 					LOG.debug("r2.getSets().size() !> 0");
 				}
 			}
-			records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId);
+			records = ((DefaultRepository)getHarvestRepository()).getRecordsWSets(null, until, startingId, Record.ACTIVE);
 		}
 		LOG.debug("setCount: "+setCount);
 		//assert setCount == 2000;
