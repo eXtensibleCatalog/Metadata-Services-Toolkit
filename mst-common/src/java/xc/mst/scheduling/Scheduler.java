@@ -88,25 +88,39 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 			// Check whether service has been 'updated' with later file(s),
-			// if so delete service harvest history (re-process)
-			// NOTE / TODO service can't be running, right?  How do I ensure?  Did above code do it?
+			// if so delete service harvest history, then re-process
 			//
 			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {				
 				final List<Service> servicesList = getServicesService().getAllServices();
 				for (Service s : servicesList) {
-					//TODO file check + if update made -> delete harvest history/re-process
 					if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
 						LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
 						getServicesService().updateServiceLastModifiedTime(s.getName(), s);
-						getServicesService().updateService(s);
+						
 						// now must persist it
+						getServicesService().updateService(s);
+
 						getServiceDAO().deleteServiceHarvest(s);
-		    			try {	// now must re-process
-							Job job = new Job(s, 0, Constants.THREAD_SERVICE);
-							job.setOrder(getJobService().getMaxOrder() + 1); 
-							getJobService().insertJob(job);
-						} catch (DatabaseConfigException dce) {
-							LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+
+						// must attach the applicable processing directives where this service is the destination in the PD
+						// then we will create one job for each PD found
+						List<ProcessingDirective> procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(s.getId());
+						if (procDirectives == null || procDirectives.size() < 1) {
+							LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
+						}
+						else {
+			    			try {	// now must re-process
+								for (ProcessingDirective procDirective : procDirectives) {
+
+									Job job = new Job(s, 0, Constants.THREAD_SERVICE);
+									job.setOrder(getJobService().getMaxOrder() + 1); 
+									job.setProcessingDirective(procDirective);
+									LOG.debug("Creating new job THREAD_SERVICE, processing directive= "+procDirective);
+									getJobService().insertJob(job);
+								}
+							} catch (DatabaseConfigException dce) {
+								LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+							}
 						}
 					}
 					else {
@@ -340,9 +354,16 @@ public class Scheduler extends BaseService implements Runnable {
 							runningThread = new Thread(runningJob);
 							runningThread.start();
 						}
+						else {
+							LOG.debug("**** Scheduler - No valid job found to start! Provided type was " +
+									jobToStart.getJobType());
+						}
 					}
 				} catch(DataException de) {
 					LOG.error("DataException occured when getting job from database", de);
+				}
+				catch (Throwable t) {
+					LOG.error("** EXCEPTION occured while trying to process next jobtostart !", t);
 				}
 			}
 

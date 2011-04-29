@@ -52,6 +52,12 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	private static PreparedStatement psGetBySourceServiceId = null;
 
 	/**
+	 * A PreparedStatement to get processing directives from the database by their service ID 
+	 * (PDs where this service does work)
+	 */
+	private static PreparedStatement psGetByDestinationServiceId = null;
+
+	/**
 	 * A PreparedStatement to insert a processing directive into the database
 	 */
 	private static PreparedStatement psInsert = null;
@@ -85,6 +91,11 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 	 * Lock to synchronize access to the get by source service PreparedStatement
 	 */
 	private static Object psGetBySourceServiceIdLock = new Object();
+
+	/**
+	 * Lock to synchronize access to the get by destination service PreparedStatement
+	 */
+	private static Object psGetByDestinationServiceIdLock = new Object();
 
 	/**
 	 * Lock to synchronize access to the insert PreparedStatement
@@ -675,6 +686,102 @@ public class DefaultProcessingDirectiveDAO extends ProcessingDirectiveDAO
 			} // end finally(close ResultSet)
 		} // end synchronized
 	} // end method getBySourceServiceId(int)
+
+	@Override
+	public List<ProcessingDirective> getByDestinationServiceId(int serviceId) throws DatabaseConfigException {
+		// Throw an exception if the connection is null.  This means the configuration file was bad.
+		if(dbConnectionManager.getDbConnection() == null)
+			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+		
+		synchronized(psGetByDestinationServiceIdLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Getting all processing directives whose destination service is " + serviceId);
+
+			// The ResultSet from the SQL query
+			ResultSet results = null;
+
+			// The list of all ProcessingDirectives
+			List<ProcessingDirective> processingDirectives = new ArrayList<ProcessingDirective>();
+
+			try
+			{
+				// If the PreparedStatemnt to get a ProcessingDirective by ID was not defined, create it
+				if(psGetByDestinationServiceId == null || dbConnectionManager.isClosed(psGetByDestinationServiceId))
+				{
+					// SQL to get the rows
+					String selectSql = "SELECT " + COL_PROCESSING_DIRECTIVE_ID + ", " +
+					    						   COL_SOURCE_PROVIDER_ID + ", " +
+					    						   COL_SOURCE_SERVICE_ID + ", " +
+					    						   COL_SERVICE_ID + ", " +
+					    						   COL_OUTPUT_SET_ID + ", " +
+					    						   COL_MAINTAIN_SOURCE_SETS + " " +
+	                                   "FROM " + PROCESSING_DIRECTIVE_TABLE_NAME + " " +
+					                   "WHERE " + COL_SERVICE_ID + "=?";
+
+					if(log.isDebugEnabled())
+						log.debug("Creating the \"get processing directives by dest. service ID\" PreparedStatemnt from the SQL " + selectSql);
+
+					// A prepared statement to run the select SQL
+					// This should sanitize the SQL and prevent SQL injection
+					psGetByDestinationServiceId = dbConnectionManager.prepareStatement(selectSql, psGetByDestinationServiceId);
+				} // end if(get by source service ID PreparedStatement not defined)
+
+				// Set the parameters on the PreparedStatement
+				psGetByDestinationServiceId.setInt(1, serviceId);
+
+				// Get the result of the SELECT statement
+
+				// Execute the query
+				results = dbConnectionManager.executeQuery(psGetByDestinationServiceId);
+
+				// For each result returned, add a ProcessingDirective object to the list with the returned data
+				while(results.next())
+				{
+					// The Object which will contain data on the processing directive
+					ProcessingDirective processingDirective = new ProcessingDirective();
+
+					// Set the fields on the processing directive
+					processingDirective.setId(results.getInt(1));
+					processingDirective.setSourceService(getServiceDAO().getById(results.getInt(2)));
+					processingDirective.setSourceService(getServiceDAO().getById(results.getInt(3)));
+					processingDirective.setService(getServiceDAO().getById(results.getInt(4)));
+					processingDirective.setOutputSet(getSetDAO().getById(results.getInt(5)));
+					processingDirective.setMaintainSourceSets(results.getBoolean(6));
+
+					// Setup the list of triggering format IDs
+					for(Integer formatId : getProcessingDirectiveInputFormatUtilDAO().getInputFormatsForProcessingDirective(processingDirective.getId()))
+						processingDirective.addTriggeringFormat(getFormatDAO().getById(formatId));
+
+					// Setup the list of triggering set IDs
+					for(Integer setId : getProcessingDirectiveInputSetUtilDAO().getInputSetsForProcessingDirective(processingDirective.getId()))
+						processingDirective.addTriggeringSet(getSetDAO().getById(setId));
+
+					// Add the processing directive to the list
+					processingDirectives.add(processingDirective);
+				} // end loop over results
+
+				if(log.isDebugEnabled())
+					log.debug("Found " + processingDirectives.size() + " processing directives with destination service ID " + serviceId + " in the database.");
+
+				return processingDirectives;
+			} // end try(get results)
+			catch(SQLException e)
+			{
+				log.error("A SQLException occurred while getting the processing directives with destination service ID " + serviceId + ".", e);
+
+				return processingDirectives;
+			} // end catch(SQLException)
+			catch (DBConnectionResetException e){
+				log.info("Re executing the query that failed ");
+				return getByDestinationServiceId(serviceId);
+			}
+			finally
+			{
+				dbConnectionManager.closeResultSet(results);
+			} // end finally(close ResultSet)
+		} // end synchronized
+	}
 
 	@Override
 	public boolean insert(ProcessingDirective processingDirective) throws DataException

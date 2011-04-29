@@ -18,6 +18,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -312,11 +313,8 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
-    		//TODO the date you want to add needs to be based on a file scan of existing install to determine LATEST date!
 			long latest = getLatestServiceFileTime(name);
-		LOG.debug("* latest time returned on a file ="+latest+" date="+new Date(latest));
     		service.setServicesServiceLastModified(new Timestamp(latest));
-		LOG.debug("****** DefaultServicesService.addNewService, just setServicesServiceLastModified!");
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Status.NOT_RUNNING);
@@ -371,7 +369,6 @@ public class DefaultServicesService extends BaseService
     		}
 
     		// Insert the service
-     	LOG.debug("**** DefaultServicesService: addNewService");
     		getServiceDAO().insert(service);
     		
     		// TODO : Error need not be stored in db. This code can be removed. It is never read from db. 
@@ -414,6 +411,7 @@ public class DefaultServicesService extends BaseService
     }
 
 
+    // called when GUI update made to service
     public void updateService(String name, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException
     {
     	// Reload the service and confirm that it's not currently running.
@@ -467,7 +465,7 @@ public class DefaultServicesService extends BaseService
 			LOG.debug("**** DefaultServicesService.updateService, about to see if need to setServicesServiceLastModified!");
 			if (doesServiceFileTimeNeedUpdate(service)) {
 				updateServiceLastModifiedTime(name, service);
-				//TODO now, we really SHOULD force reprocessing!  (not just by set reprocessingRequired to true that does nada)
+				//TODO SHOULD we force reprocessing?
 			}
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
@@ -771,26 +769,51 @@ public class DefaultServicesService extends BaseService
 		for (File f : serviceFiles) {
 			if (!f.isDirectory() && f.lastModified() > latest) {
 				latest = f.lastModified();
-				LOG.debug("*** NEW Latest File found! Name="+f.getName()+ " Date="+new Date(latest));
+				LOG.debug("*** Latest filesystem service file found! Name="+f.getName()+ " Date="+new Date(latest));
 			}
 		}
 		return latest;
 	}
 	
+	// When you grab the time out of the database, it was stored as a Timestamp, and the db driver seems to clip (0) the 
+	// milliseconds at this point in time, so we need to be careful we compare apples to apples, so zero out the milliseconds
+	// from time we receive from file system scan.
+	// (Normalize the times by dropping milliseconds.)
+	//
 	public boolean doesServiceFileTimeNeedUpdate(Service service) {
+		Calendar calCurrentLatest = Calendar.getInstance();
+		Calendar calNewLatest = Calendar.getInstance();
+		
 		final String name = service.getName();
 		final long currentLatest = service.getServicesServiceLastModified().getTime();
-		return getLatestServiceFileTime(name) > currentLatest;
+		calCurrentLatest.setTimeInMillis(currentLatest);
+		calCurrentLatest.set(Calendar.MILLISECOND, 0);
+		
+		long newLatest = getLatestServiceFileTime(name);
+		calNewLatest.setTimeInMillis(newLatest);
+		calNewLatest.set(Calendar.MILLISECOND, 0);
+
+		// show latest date we found
+		LOG.debug("***** doesServiceFileTimeNeedUpdate? current latest time="+new Date(currentLatest));
+		
+		// show comparison of new and old long date values found, with milliseconds zeroed out.
+		LOG.debug("***** USE CAL: doesServiceFileTimeNeedUpdate? current latest="+
+				calCurrentLatest.getTimeInMillis()+" new latest="+calNewLatest.getTimeInMillis());
+
+		return calNewLatest.getTimeInMillis() > calCurrentLatest.getTimeInMillis();
 	}
 
 	public void updateServiceLastModifiedTime(String name, Service service) {
 		long latest = getLatestServiceFileTime(name);
 		service.setServicesServiceLastModified(new Timestamp(latest));
 		LOG.debug("***** latest time returned on a file ="+latest+" date="+new Date(latest));
-		LOG.debug("***** DefaultServicesService.updateService, just setServicesServiceLastModified!");
+		LOG.debug("***** DefaultServicesService.updateServiceLastModifiedTime, just setServicesServiceLastModified!");
 	}
 
 	public void reprocessService(Service service) {
+		// TODO
+		// THREAD_SERVICE_REPROCESS was empty (no assoc. code run in Scheduler)
+		// Do you REALLY want to reprocess, if so, how?  THREAD_SERVICE ?  Set a PD...(see scheduler code that does this)
 		try {
 			Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
 			JobService jobService = (JobService)config.getBean("JobService");

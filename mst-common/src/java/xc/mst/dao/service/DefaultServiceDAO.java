@@ -1126,29 +1126,8 @@ public class DefaultServiceDAO extends ServiceDAO
 			if(log.isDebugEnabled())
 				log.debug("Deleting the harvest records of the service with ID " + service.getId());
 
-//TODO clean up after determine this works!
-//			try
-//			{
 				this.jdbcTemplate.update("delete from service_harvests where service_id=?", service.getId());
 				return true;
-//			} // end try(delete the service)
-//			catch(SQLException e)
-//			{
-//				log.error("A SQLException occurred while deleting the service with ID " + service.getId(), e);
-
-//				LogWriter.addError(logObj.getLogFileLocation(), "Failed to delete the service with the name " + service.getName());
-				
-//				logObj.setErrors(logObj.getErrors() + 1);
-//				getLogDAO().update(logObj);
-		    	
-//				return false;
-//			} // end catch(SQLException)
-//			catch (DBConnectionResetException e){
-//				log.info("Re executing the query that failed ");
-//				return false;
-//			}
 		}
 	}	
-	
-	
 }

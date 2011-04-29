@@ -38,6 +38,15 @@ public interface ProcessingDirectiveService {
     public List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException;
 
     /**
+	 * Gets the processing directives based on the passed destination service ID
+	 *
+	 * @param serviceId The destination service ID of the processing directives to get
+	 * @return A list containing the processing directives with the passed destination service ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract List<ProcessingDirective> getByDestinationServiceId(int serviceId) throws DatabaseConfigException;
+
+    /**
      * Returns a processing directive based on the ID
      *
      * @param processingDirectiveId The ID based on which the processing Directive object is retrieved

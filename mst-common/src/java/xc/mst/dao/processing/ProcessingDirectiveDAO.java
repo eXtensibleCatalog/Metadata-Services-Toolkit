@@ -137,6 +137,15 @@ public abstract class ProcessingDirectiveDAO extends BaseDAO
 	public abstract List<ProcessingDirective> getBySourceServiceId(int serviceId) throws DatabaseConfigException;
 
 	/**
+	 * Gets the processing directives from the database with the passed destination service ID
+	 *
+	 * @param serviceId The destination service ID of the processing directives to get
+	 * @return A list containing the processing directives with the passed destination service ID
+	 * @throws DatabaseConfigException if there was a problem connecting to the database
+	 */
+	public abstract List<ProcessingDirective> getByDestinationServiceId(int serviceId) throws DatabaseConfigException;
+
+	/**
 	 * Gets the processing directives from the database with the passed source provider ID.
 	 *
 	 * @param providerId The source provider ID of the processing directives to get
