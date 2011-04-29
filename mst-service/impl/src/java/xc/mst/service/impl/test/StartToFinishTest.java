@@ -148,6 +148,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		
 		finalTest();
 		
+		postFinalTestTests();
+	}
+	
+	public void postFinalTestTests() throws Exception {
 		harvestOutRecordsFromMST();
 		LOG.debug("after harvestOutRecordsFromMST");
 		

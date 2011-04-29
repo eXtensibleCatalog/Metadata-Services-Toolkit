@@ -55,19 +55,28 @@ public class DeleteRepository extends BaseActionSupport
         {
         	log.debug("******* DeleteRepository in execute()!");
             log.debug("DeleteRepository:execute():Repository Id whose records shall be marked deleted : " + repositoryId);
+
             Provider provider = getProviderService().getProviderById(repositoryId);
 
             if(provider==null)
             {
-                this.addFieldError("viewRepositoryError", 
-                	"Error occurred while trying to mark repository records deleted. An email has been sent to the administrator");
+                this.addFieldError("viewRepositoryError", "Error occurred while deleting repository. An email has been sent to the administrator");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return SUCCESS;
             }
-            markRecordsForDeletion(provider);
-
-			return SUCCESS;
+            
+            // Delete provider only if it is not harvested.
+            if (provider.getLastHarvestEndTime() != null) {
+                message = "Repository has harvested data.";
+                deleted = false;   // this flag will be used by the jsp page to decide whether to show the 2nd dialog. 
+            } 
+            else {
+                markRecordsForDeletion(provider);
+            	deleted = true;
+            }
+            return SUCCESS;
+        	
         }
         catch(DatabaseConfigException dce)
         {
@@ -80,7 +89,7 @@ public class DeleteRepository extends BaseActionSupport
 
     /**
      * Delete repository and its harvested records
-     * 
+     *  This is called after the user says yes to the 2nd dialog, knowing that there are harvested records. 
      *
      */
     public String deleteRepositoryAndRecords()
@@ -147,9 +156,8 @@ public class DeleteRepository extends BaseActionSupport
 	/**
 	 * Returns true if repository deleted, else false
 	 * 
-	 * @return Returns true if repository deleted, else false
+	 * @return Returns true if repository deleted, else false  (for JSON object)
 	 */
-	//TODO junk this possibly
 	public boolean isDeleted() {
 		return deleted;
 	}

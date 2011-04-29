@@ -88,6 +88,11 @@ public abstract class ServiceDAO extends BaseDAO
 	public final static String COL_LOG_FILE_NAME = "log_file_name";
 
 	/**
+	 * The name of the last log reset column
+	 */
+	public final static String COL_SERVICE_LAST_MODIFIED = "service_last_modified";
+
+	/**
 	 * The name of the warnings column
 	 */
 	public final static String COL_HARVEST_OUT_WARNINGS = "harvest_out_warnings";
@@ -132,7 +137,6 @@ public abstract class ServiceDAO extends BaseDAO
 	 * Indicates service is deleted or not
 	 */
 	public final static String COL_DELETED = "is_deleted";
-		
 	
 	/**
 	 * A set of all columns which are valid for sorting
@@ -151,6 +155,7 @@ public abstract class ServiceDAO extends BaseDAO
 		sortableColumns.add(COL_OUTPUT_RECORD_COUNT);
 		sortableColumns.add(COL_LAST_LOG_RESET);
 		sortableColumns.add(COL_LOG_FILE_NAME);
+		sortableColumns.add(COL_SERVICE_LAST_MODIFIED);
 		sortableColumns.add(COL_HARVEST_OUT_WARNINGS);
 		sortableColumns.add(COL_HARVEST_OUT_ERRORS);
 		sortableColumns.add(COL_HARVEST_OUT_RECORDS_AVAILABLE);
@@ -233,6 +238,11 @@ public abstract class ServiceDAO extends BaseDAO
 	 * @throws DataException if the passed Service was not valid for inserting
 	 */
 	public abstract boolean delete(Service service) throws DataException;
+
+	/**
+	 * Delete records entirely out of service harvest.
+	 */
+	public abstract boolean deleteServiceHarvest(Service service) throws DataException;
 
 	/**
 	 * Validates the fields on the passed Service Object

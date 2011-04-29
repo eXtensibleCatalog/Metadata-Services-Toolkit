@@ -73,7 +73,7 @@ public class Scheduler extends BaseService implements Runnable {
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
 		Thread solrThread = null;
-		
+
 		try {
 			for (Service s : getServiceDAO().getAll()) {
 				if (Status.RUNNING.equals(s.getStatus())) {
@@ -87,6 +87,51 @@ public class Scheduler extends BaseService implements Runnable {
 					getHarvestScheduleDAO().update(hs, false);
 				}
 			}
+			// Check whether service has been 'updated' with later file(s),
+			// if so delete service harvest history, then re-process
+			//
+			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {				
+				final List<Service> servicesList = getServicesService().getAllServices();
+				for (Service s : servicesList) {
+					if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
+						LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
+						getServicesService().updateServiceLastModifiedTime(s.getName(), s);
+						
+						// now must persist it
+						getServicesService().updateService(s);
+
+						getServiceDAO().deleteServiceHarvest(s);
+
+						// must attach the applicable processing directives where this service is the destination in the PD
+						// then we will create one job for each PD found
+						List<ProcessingDirective> procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(s.getId());
+						if (procDirectives == null || procDirectives.size() < 1) {
+							LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
+						}
+						else {
+			    			try {	// now must re-process
+								for (ProcessingDirective procDirective : procDirectives) {
+
+									Job job = new Job(s, 0, Constants.THREAD_SERVICE);
+									job.setOrder(getJobService().getMaxOrder() + 1); 
+									job.setProcessingDirective(procDirective);
+									LOG.debug("Creating new job THREAD_SERVICE, processing directive= "+procDirective);
+									getJobService().insertJob(job);
+								}
+							} catch (DatabaseConfigException dce) {
+								LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+							}
+						}
+					}
+					else {
+						LOG.debug("*** No update found for service: "+s.getName()+ " Reprocessing NOT required! ***");
+					}
+				}
+			}
+			else {
+				LOG.debug("*** Checking for service updates is disabled! ***");
+			}
+
 		} catch (DataException de) {
 			throw new RuntimeException(de);
 		}
@@ -289,15 +334,6 @@ public class Scheduler extends BaseService implements Runnable {
 							serviceThread.start();
 							runningJob = serviceThread;
 							*/
-						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
-							/*
-							ServiceReprocessWorkerThread serviceReprocessWorkerThread = new ServiceReprocessWorkerThread();
-							serviceReprocessWorkerThread.setServiceId(jobToStart.getService().getId());
-							serviceReprocessWorkerThread.start();
-							runningJob = serviceReprocessWorkerThread;
-							*/
-						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-							// not currently used
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
 							LOG.debug("**** Scheduler - THREAD_MARK_PROVIDER_DELETED!");
 							RepositoryDeletionManager rdm = new RepositoryDeletionManager();
@@ -308,7 +344,6 @@ public class Scheduler extends BaseService implements Runnable {
 								Provider provider = jobToStart.getHarvestSchedule().getProvider();
 								incomingRepo = getRepositoryService().getRepository(provider);
 							}
-							LOG.debug("**** Scheduler.run() incomingRepo.getName(): "+ incomingRepo==null ? null:incomingRepo.getName());
 							rdm.setIncomingRepository(incomingRepo);
 							rdm.setHarvestSchedule(jobToStart.getHarvestSchedule());
 							runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
@@ -319,9 +354,16 @@ public class Scheduler extends BaseService implements Runnable {
 							runningThread = new Thread(runningJob);
 							runningThread.start();
 						}
+						else {
+							LOG.debug("**** Scheduler - No valid job found to start! Provided type was " +
+									jobToStart.getJobType());
+						}
 					}
 				} catch(DataException de) {
 					LOG.error("DataException occured when getting job from database", de);
+				}
+				catch (Throwable t) {
+					LOG.error("** EXCEPTION occured while trying to process next jobtostart !", t);
 				}
 			}
 

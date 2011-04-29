@@ -16,8 +16,11 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +35,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xc.mst.bo.processing.Job;
@@ -47,6 +49,7 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.BaseService;
 import xc.mst.manager.IndexException;
 import xc.mst.services.MetadataService;
+import xc.mst.utils.AutoServiceReprocessingFileFilter;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
@@ -310,6 +313,8 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
+			long latest = getLatestServiceFileTime(name);
+    		service.setServicesServiceLastModified(new Timestamp(latest));
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setStatus(Status.NOT_RUNNING);
@@ -406,6 +411,7 @@ public class DefaultServicesService extends BaseService
     }
 
 
+    // called when GUI update made to service
     public void updateService(String name, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException
     {
     	// Reload the service and confirm that it's not currently running.
@@ -456,6 +462,11 @@ public class DefaultServicesService extends BaseService
     		service.setName(name);
     		service.setVersion(version);
     		service.setClassName(className);
+			LOG.debug("**** DefaultServicesService.updateService, about to see if need to setServicesServiceLastModified!");
+			if (doesServiceFileTimeNeedUpdate(service)) {
+				updateServiceLastModifiedTime(name, service);
+				//TODO SHOULD we force reprocessing?
+			}
     		service.setHarvestOutLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestOut" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.setServicesLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "service" + MSTConfiguration.FILE_SEPARATOR + name + ".txt");
     		service.getInputFormats().clear();
@@ -550,14 +561,7 @@ public class DefaultServicesService extends BaseService
 
     		// Schedule a job to reprocess records through new service
     		if(reprocessingRequired)
-    		try {
-				Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
-				JobService jobService = (JobService)config.getBean("JobService");
-				job.setOrder(jobService.getMaxOrder() + 1); 
-				jobService.insertJob(job);
-			} catch (DatabaseConfigException dce) {
-				LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
-			}
+				reprocessService(service);
     	}
     	catch(ConfigurationException e)
     	{
@@ -574,7 +578,7 @@ public class DefaultServicesService extends BaseService
      */
     public void insertService(Service service) throws DataException
     {
-    	getServiceDAO().insert(service);
+       	getServiceDAO().insert(service);
     }
 
     /**
@@ -699,7 +703,7 @@ public class DefaultServicesService extends BaseService
     
     public Collection<String> getServicesAvailableForInstall() {
     	List<String> availableServices = new ArrayList<String>();
-    	File dir = new File(MSTConfiguration.getUrlPath() + "/services");
+    	File dir = getServiceDir();
     	File[] fileList = dir.listFiles();
     	
     	Set<String> allServices = new HashSet<String>();
@@ -730,4 +734,93 @@ public class DefaultServicesService extends BaseService
     	return availableServices;
     }
 
+	private static File getServiceDir() {
+		// this had a hard-coded '/' file separator in code before so leave it in for now.
+		File dir = new File(MSTConfiguration.getUrlPath() + "/services");
+		return dir;
+	}
+	
+	private static Collection<File> getAllServiceFiles(File file) {
+		Collection<File> all = new ArrayList<File>();     
+		all = addFilesToScanRecursively(file, all);     
+		return all;
+	}
+	
+	private static Collection<File> addFilesToScanRecursively(File file, Collection<File> all) {
+		//AutoServiceReprocessingFileFilter
+		final File[] children = file.listFiles(new AutoServiceReprocessingFileFilter());     
+		if (children != null) {         
+			for (File child : children) {             
+				all.add(child);             
+				addFilesToScanRecursively(child, all);         
+			}     
+		}
+		return all;
+	}
+	
+	// want latest date of an actual file within service, disqualify directory timestamps as not being relevant.
+	// Also filter based on file types acceptable found in MST config property:
+	//                                  (regexpOfFilesToScanForAutoServiceReprocessing)
+	//
+	private long getLatestServiceFileTime(String name) {
+		File dir = new File(getServiceDir(), name) ;
+		long latest = 0l;
+		final Collection<File> serviceFiles = getAllServiceFiles(dir);
+		for (File f : serviceFiles) {
+			if (!f.isDirectory() && f.lastModified() > latest) {
+				latest = f.lastModified();
+				LOG.debug("*** Latest filesystem service file found! Name="+f.getName()+ " Date="+new Date(latest));
+			}
+		}
+		return latest;
+	}
+	
+	// When you grab the time out of the database, it was stored as a Timestamp, and the db driver seems to clip (0) the 
+	// milliseconds at this point in time, so we need to be careful we compare apples to apples, so zero out the milliseconds
+	// from time we receive from file system scan.
+	// (Normalize the times by dropping milliseconds.)
+	//
+	public boolean doesServiceFileTimeNeedUpdate(Service service) {
+		Calendar calCurrentLatest = Calendar.getInstance();
+		Calendar calNewLatest = Calendar.getInstance();
+		
+		final String name = service.getName();
+		final long currentLatest = service.getServicesServiceLastModified().getTime();
+		calCurrentLatest.setTimeInMillis(currentLatest);
+		calCurrentLatest.set(Calendar.MILLISECOND, 0);
+		
+		long newLatest = getLatestServiceFileTime(name);
+		calNewLatest.setTimeInMillis(newLatest);
+		calNewLatest.set(Calendar.MILLISECOND, 0);
+
+		// show latest date we found
+		LOG.debug("***** doesServiceFileTimeNeedUpdate? current latest time="+new Date(currentLatest));
+		
+		// show comparison of new and old long date values found, with milliseconds zeroed out.
+		LOG.debug("***** USE CAL: doesServiceFileTimeNeedUpdate? current latest="+
+				calCurrentLatest.getTimeInMillis()+" new latest="+calNewLatest.getTimeInMillis());
+
+		return calNewLatest.getTimeInMillis() > calCurrentLatest.getTimeInMillis();
+	}
+
+	public void updateServiceLastModifiedTime(String name, Service service) {
+		long latest = getLatestServiceFileTime(name);
+		service.setServicesServiceLastModified(new Timestamp(latest));
+		LOG.debug("***** latest time returned on a file ="+latest+" date="+new Date(latest));
+		LOG.debug("***** DefaultServicesService.updateServiceLastModifiedTime, just setServicesServiceLastModified!");
+	}
+
+	public void reprocessService(Service service) {
+		// TODO
+		// THREAD_SERVICE_REPROCESS was empty (no assoc. code run in Scheduler)
+		// Do you REALLY want to reprocess, if so, how?  THREAD_SERVICE ?  Set a PD...(see scheduler code that does this)
+		try {
+			Job job = new Job(service, 0, Constants.THREAD_SERVICE_REPROCESS);
+			JobService jobService = (JobService)config.getBean("JobService");
+			job.setOrder(jobService.getMaxOrder() + 1); 
+			jobService.insertJob(job);
+		} catch (DatabaseConfigException dce) {
+			LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
+		}
+	}
 }

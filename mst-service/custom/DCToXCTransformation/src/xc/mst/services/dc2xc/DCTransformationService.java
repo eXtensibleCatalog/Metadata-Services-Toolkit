@@ -173,7 +173,7 @@ public class DCTransformationService extends GenericMetadataService {
 				} else {
 					inputRecordCount++;
 				}
-				results = getXCRecordService().getSplitXCRecordXML(getRepository(), ar, null);
+				results = getXCRecordService().getSplitXCRecordXML(getRepository(), ar, null, 0);
 			}
 			return results;
 			
