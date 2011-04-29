@@ -90,6 +90,7 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 			testng.addListener(tla);
 			testng.run();
 			for (Class c : testClasses) {
+				LOG.info("testing class: "+c);
 				/*
 				for (Method m : c.getMethods()) {
 					for (Annotation a : m.getAnnotations()) {

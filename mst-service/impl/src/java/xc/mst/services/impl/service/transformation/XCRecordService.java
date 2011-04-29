@@ -406,6 +406,11 @@ public class XCRecordService extends GenericMetadataServiceService {
 	 * @param transformationService 
 	 * @return
 	 */
+	public List<OutputRecord> getSplitXCRecordXML(Repository repo, AggregateXCRecord ar, Long manifestationId)
+			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+		return getSplitXCRecordXML(repo, ar, manifestationId, 0l);
+	}
+
 	public List<OutputRecord> getSplitXCRecordXML(Repository repo, AggregateXCRecord ar, Long manifestationId, long nextNewId) 
 			throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
 

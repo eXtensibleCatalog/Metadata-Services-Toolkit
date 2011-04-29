@@ -145,7 +145,7 @@ public class DefaultRepository extends BaseService implements Repository {
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
 			recordsToActivate.clear();
 			
-			getRepositoryDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
+			getRecordCountsDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
 			if (incomingRecordCounts != null)
 				incomingRecordCounts.clear();
 			if (outgoingRecordCounts != null)
