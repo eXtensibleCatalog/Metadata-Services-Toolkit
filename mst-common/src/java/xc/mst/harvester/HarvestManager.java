@@ -132,7 +132,7 @@ public class HarvestManager extends WorkerThread {
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 			TimingLogger.outputMemory();
 			getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
-			getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses);
+			getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses, false);
 			TimingLogger.reset();
 			
 			this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);

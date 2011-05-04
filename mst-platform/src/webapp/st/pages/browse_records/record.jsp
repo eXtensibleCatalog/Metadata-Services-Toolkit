@@ -72,6 +72,13 @@
 		<div id="bd">
 		
 		<div class="record_metadata">
+			Status:
+			<c:choose>
+				<c:when test="${record.status == 'A'}">Active</c:when>
+				<c:when test="${record.status == 'H'}">Held</c:when>
+				<c:when test="${record.status == 'D'}">Deleted</c:when>
+			</c:choose>
+			<br />
 			<c:if test="${record.provider != null}">
 				Repository:  ${record.provider.name}<br>
 				Repository URL:
@@ -84,7 +91,13 @@
 			<c:if test="${record.harvest != null}">Harvest:  ${record.harvestScheduleName}<br></c:if>
 			Schema:  ${record.format.name}<br>
 			Sets:
-			<c:forEach var="set" items="${record.sets}" varStatus="status"><c:if test="${status.count > 1 && fn:length(set.displayName)==0}">,&nbsp;</c:if>${set.displayName}</c:forEach>
+			<c:forEach var="set" items="${record.sets}" varStatus="status">
+				<c:if test="${status.count > 1}">,&nbsp;</c:if>
+				<c:choose>
+					<c:when test="${fn:length(set.displayName) > 0}">${set.displayName}</c:when>
+					<c:otherwise>${set.setSpec}</c:otherwise>
+				</c:choose>
+			</c:forEach>
 			<br>
 			<c:if test="${record.createdAt != null}">Created at: ${record.createdAt}<br></c:if>
 			<c:if test="${record.updatedAt != null}">Updated at: ${record.updatedAt}<br></c:if>

@@ -15,6 +15,16 @@
     </record>
     <record>
       <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/010</identifier>
+        <datestamp>2010-08-10T20:06:32Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <foo xmlns="foo:bar">new_act_cnt</foo>
+      </metadata>
+    </record>
+    <record>
+      <header>
         <identifier>oai:library.rochester.edu:URVoyager1/020</identifier>
         <datestamp>2010-08-10T20:06:32Z</datestamp>
         <setSpec>bib</setSpec>

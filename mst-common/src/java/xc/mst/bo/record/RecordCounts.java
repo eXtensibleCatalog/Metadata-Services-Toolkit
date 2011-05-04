@@ -179,18 +179,14 @@ public class RecordCounts {
 		this.counts = new HashMap<String, Map<String, AtomicInteger>>();
 	}
 	
-	@Override
-	public String toString() {
+	public String toString(String repoName) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\n");
-		sb.append(incomingOutgoing);
-		sb.append("\n");
 		for (String type : counts.keySet()) {
 			Map<String, AtomicInteger> counts4Type = counts.get(type);
 			
 			type = StringUtils.leftPad(type, 25);
 
-			sb.append("\ntype: "+type+" ");
+			sb.append("\n"+repoName+"-"+incomingOutgoing+" type: "+type+" ");
 			for (String updateType : counts4Type.keySet()) {
 				String line = StringUtils.leftPad(updateType, 20)+": "+StringUtils.leftPad(counts4Type.get(updateType).get()+"", 5)+"  ";
 				sb.append(line);

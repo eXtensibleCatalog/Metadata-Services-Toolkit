@@ -10,6 +10,7 @@
 package xc.mst.services;
 
 
+import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 
 import java.io.File;
@@ -69,7 +70,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	protected MetadataServiceManager metadataServiceManager = null;
 
-	protected TLongHashSet predecessors = new TLongHashSet();
+	protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
+	protected TLongByteHashMap tempPreviousStatuses= new TLongByteHashMap();
 
 	/**
 	 * A list of services to run after this service's processing completes
@@ -450,6 +452,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				getMetadataServiceManager().getIncomingRecordCounts().clear();
 				getMetadataServiceManager().getOutgoingRecordCounts().clear();
 				
+				getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
+				tempPreviousStatuses.clear();
+				
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
 				getMessageDAO().persistMessages(messages2insert);
@@ -480,8 +485,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 		running.acquireUninterruptibly();
 		if (getRepository() != null) {
-			predecessors.clear();
-			getRepository().populatePredecessors(predecessors);
+			previousStatuses.clear();
+			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
 		}
 		
 		LOG.debug("gettingServiceHarvest");
@@ -526,7 +531,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       the existing record.  Although I can't think of a reason
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
+				in.setPreviousStatus(Record.NULL);
 				injectKnownSuccessorsIds(in);
+				previousStatuses.put(in.getId(), (byte)in.getStatus());
+				tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());
 				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
 					for (OutputRecord or : in.getSuccessors()) {
@@ -562,7 +570,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
 							}
 							if (rout2.getIndexedObjectType() != null) {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(in.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
 							}
 							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							rout2.addPredecessor(in);
@@ -570,7 +578,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							if (rout2.getId() == -1) {
 								getRepositoryDAO().injectId(rout2);
 							}
-							injectKnownPredecessors(in, rout2);
 							if (outputSet != null) {
 								rout2.addSet(outputSet);
 							}
@@ -636,17 +643,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 	
 	protected void injectKnownSuccessorsIds(Record in) {
-		if (predecessors.contains(in.getId())) {
+		if (previousStatuses.contains(in.getId())) {
 			getRepository().injectSuccessorIds(in);
-		}
-	}
-	
-	protected void injectKnownPredecessors(Record in, Record out) {
-		if (in.getId() > -1) {
-			if (outputSet != null) {
-				out.addSet(outputSet);
-			}
-			predecessors.add(in.getId());
+			in.setPreviousStatus((char)previousStatuses.get(in.getId()));
 		}
 	}
 	

@@ -182,11 +182,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-		return getRecords(from, until, startingId, inputFormat, inputSet, Record.ACTIVE);
+		return getRecords(from, until, startingId, inputFormat, inputSet, new char[] {Record.ACTIVE, Record.DELETED});
 	}
-	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, char status) {
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, status);
+		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, statuses);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else { 
@@ -225,8 +225,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		return records;
 	}
 	
-	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, char status) {
-		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, null, null, status);
+	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, char[] statuses) {
+		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, null, null, statuses);
 		for (Record r : recs) {
 			getMessageService().injectMessageMessage(r);
 		}

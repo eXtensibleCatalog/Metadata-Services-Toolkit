@@ -38,7 +38,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
 		TimingLogger.start("getRecordsWSets");
 		List<Record> rs =  
-			((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), Record.NULL);
+			((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
 		TimingLogger.stop("getRecordsWSets");
 		return rs;
 	}

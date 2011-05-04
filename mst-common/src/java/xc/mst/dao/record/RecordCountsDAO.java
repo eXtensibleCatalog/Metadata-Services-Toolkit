@@ -102,7 +102,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 	}
 	
 	protected void persistRecordCounts(String repoName, RecordCounts rc, String tableName) {
-		LOG.info("\nRecordCounts for repo: "+repoName+rc.toString());
+		LOG.info("\nRecordCounts for repo: "+repoName+rc.toString(repoName));
 		Map<String, Map<String, AtomicInteger>> countsKeyedByType = rc.getCounts();
 		
 		for (String type : countsKeyedByType.keySet()) {
