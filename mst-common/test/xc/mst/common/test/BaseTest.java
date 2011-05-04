@@ -32,6 +32,7 @@ import xc.mst.dao.record.RecordCountsDAO;
 import xc.mst.dao.service.ServiceDAO;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.harvest.ScheduleService;
+import xc.mst.manager.processingDirective.JobService;
 import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.repository.FormatService;
@@ -105,6 +106,10 @@ public class BaseTest {
 	
 	public RepositoryService getRepositoryService() {
 		return (RepositoryService)getBean("RepositoryService");
+	}
+	
+	public JobService getJobService() {
+		return (JobService)getBean("JobService");
 	}
 	
 	public ServicesService getServicesService() {
