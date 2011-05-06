@@ -315,9 +315,17 @@ public class Scheduler extends BaseService implements Runnable {
 							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
 								incomingRepo = 
 									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
+								if (!incomingRepo.ready4harvest()) {
+									runningJob = null;
+									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
+								}
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
 								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
 								incomingRepo = s2.getMetadataService().getRepository();
+								if (!incomingRepo.ready4harvest()) {
+									runningJob = null;
+									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
+								}
 							} else {
 								throw new RuntimeException("error");
 							}
@@ -325,7 +333,9 @@ public class Scheduler extends BaseService implements Runnable {
 							msm.setIncomingRepository(incomingRepo);
 							msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
 							msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
-							runningJob.type = Constants.THREAD_SERVICE;
+							if (runningJob != null) {
+								runningJob.type = Constants.THREAD_SERVICE;
+							}
 							/*
 							TimingLogger.log("service : "+jobToStart.getService().getClassName());
 							ServiceWorkerThread serviceThread = new ServiceWorkerThread();

@@ -11,12 +11,17 @@
 
 package xc.mst.action.processingDirective;
 
+import java.text.MessageFormat;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This action method deletes a Processing Directive
@@ -36,6 +41,12 @@ public class DeleteProcessingDirective extends BaseActionSupport
     
 	/** Error type */
 	private String errorType;
+	
+	/** Message explaining why the processing rule cannot be deleted */
+	private String message;
+    
+    /** Determines whether processing rule is deleted */
+	private boolean deleted;
 
     /**
      * Sets the Processing directive ID
@@ -76,8 +87,26 @@ public class DeleteProcessingDirective extends BaseActionSupport
                 errorType = "error";
                 return SUCCESS;
             }
-            getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
-            return SUCCESS;
+            // TODO - if no processing is occurring &&
+            //        if all records on input side are marked deleted &&
+            //        if all successors of the of the records from the input side are marked deleted
+            //        then   ---->  the processing rule will be deleted immediately.
+            if (!isProcessingDirectiveInUse(tempProcDir)) {
+                getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
+                deleted = true;
+                return SUCCESS;
+            }
+//            else if () {
+//            		// need to create code to determine if records marked deleted or if no records exist.
+//            }
+            else {
+                deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
+
+                Object[] messageArguments = {tempProcDir.getId()}; 
+                message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
+                
+                return INPUT;   //TODO
+            }
         }
         catch(DatabaseConfigException e)
         {
@@ -87,6 +116,20 @@ public class DeleteProcessingDirective extends BaseActionSupport
             return SUCCESS;
         }
     }
+
+    private boolean isProcessingDirectiveInUse(ProcessingDirective tempProcDir)
+			throws DatabaseConfigException {
+		List<Job> jobs = getJobService().getAllJobs();
+		for (Job j:jobs) {
+			ProcessingDirective pd = j.getProcessingDirective();
+			if (pd != null) {
+				if (pd.getId() == tempProcDir.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
     /**
      * Returns error type
@@ -104,5 +147,23 @@ public class DeleteProcessingDirective extends BaseActionSupport
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	/**
+	 * Returns the error message
+	 * 
+	 * @return error message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * Returns true if repository deleted, else false
+	 * 
+	 * @return Returns true if repository deleted, else false  (for JSON object)
+	 */
+	public boolean isDeleted() {
+		return deleted;
 	}
 }

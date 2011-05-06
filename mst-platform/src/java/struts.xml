@@ -509,6 +509,7 @@
 	        	<param name="allowedRoles">Processing Rules</param>
 	      	</interceptor-ref>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
+			<result name="input">pages/processing_rules/process_rule_delete_confirmation.jsp</result>
 		</action>
 		
         <!--  ************************************ -->
