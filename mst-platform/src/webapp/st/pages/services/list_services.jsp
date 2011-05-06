@@ -200,50 +200,6 @@
 
             </div>
 
-	      <div id="deleteServiceDialog" class="hidden">
-	          <div class="hd">Delete Service</div>
-		      <div class="bd">
-		          <form id="deleteService" name="deleteService" method="POST"
-		              action="deleteService.action">
-
-		              <input type="hidden" name="serviceId" id="service_id"/>
-
-			          <p>Are you sure you want to delete this service?</p>
-		          </form>
-		      </div>
-	      </div>
-
-	      <div id="deleteServiceOkDialog" class="hidden">
-	          <div class="hd">Delete Service</div>
-		      <div class="bd">
-		          <form name="deleteServiceRecords" method="POST"
-		              action="deleteServiceRecords.action">
-
-		      		  <input type="hidden" name="serviceId" id="service_delete_id"/>
-			          <div id="deleteServiceError" cssClass="errorMessage"></div><br>
-			          Are you sure you want to delete this service?
-		          </form>
-		      </div>
-	      </div>
-	      
-	      <div id="cannotDeleteServiceDialog" class="hidden">
-	          <div class="hd">Delete Service</div>
-		      <div class="bd">
-			          <div id="cannotDeleteServiceError" cssClass="errorMessage"></div><br>
-			          
-		          </form>
-		      </div>
-	      </div>
-
-	      <div id="deleteServiceInfoDialog" >
-	          <div class="hd">Delete Service</div>
-		      <div class="bd">
-			          Note: Service will be marked as deleted. Process is scheduled to delete the records processed by the service.Once all records in the service are deleted, the  
-			          service will be deleted.
-			          
-		          </form>
-		      </div>
-	      </div>	      
 	       <div class="clear">&nbsp;</div>
             <!--  this is the footer of the page -->
             <c:import url="/st/inc/footer.jsp"/>  

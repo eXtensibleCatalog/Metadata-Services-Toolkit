@@ -21,7 +21,6 @@ import org.apache.commons.lang.StringUtils;
 import xc.mst.bo.log.Log;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.service.Service;
-import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.dao.DBConnectionResetException;
@@ -153,6 +152,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -195,6 +195,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -289,6 +290,7 @@ public class DefaultServiceDAO extends ServiceDAO
 										   COL_OUTPUT_RECORD_COUNT + ", " +
 										   COL_LAST_LOG_RESET + ", " +
 										   COL_LOG_FILE_NAME + ", " +
+										   COL_SERVICE_LAST_MODIFIED + ", " +
 										   COL_HARVEST_OUT_WARNINGS + ", " +
 										   COL_HARVEST_OUT_ERRORS + ", " +
 										   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -331,6 +333,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				service.setOutputRecordCount(results.getInt(i++));
 				service.setServicesLastLogReset(results.getDate(i++));
 				service.setServicesLogFileName(results.getString(i++));
+				service.setServicesServiceLastModified(results.getTimestamp(i++));
 				service.setHarvestOutWarnings(results.getInt(i++));
 				service.setHarvestOutErrors(results.getInt(i++));
 				service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -416,6 +419,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -461,6 +465,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -544,6 +549,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -589,6 +595,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -663,6 +670,7 @@ public class DefaultServiceDAO extends ServiceDAO
 												   COL_OUTPUT_RECORD_COUNT + ", " +
 												   COL_LAST_LOG_RESET + ", " +
 												   COL_LOG_FILE_NAME + ", " +
+												   COL_SERVICE_LAST_MODIFIED + ", " +
 												   COL_HARVEST_OUT_WARNINGS + ", " +
 												   COL_HARVEST_OUT_ERRORS + ", " +
 												   COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -710,6 +718,7 @@ public class DefaultServiceDAO extends ServiceDAO
 					service.setOutputRecordCount(results.getInt(i++));
 					service.setServicesLastLogReset(results.getDate(i++));
 					service.setServicesLogFileName(results.getString(i++));
+					service.setServicesServiceLastModified(results.getTimestamp(i++));
 					service.setHarvestOutWarnings(results.getInt(i++));
 					service.setHarvestOutErrors(results.getInt(i++));
 					service.setHarvestOutRecordsAvailable(results.getLong(i++));
@@ -791,6 +800,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_OUTPUT_RECORD_COUNT + ", " +
 	            	      													         COL_LAST_LOG_RESET + ", " +
 	            	      													         COL_LOG_FILE_NAME + ", " +
+	            	      														     COL_SERVICE_LAST_MODIFIED + ", " +
 	            	      													         COL_HARVEST_OUT_WARNINGS + ", " +
 	            	      													         COL_HARVEST_OUT_ERRORS + ", " +
 	            	      													         COL_HARVEST_OUT_RECORDS_AVAILABLE + ", " +
@@ -800,7 +810,7 @@ public class DefaultServiceDAO extends ServiceDAO
 	            	      													         COL_STATUS + ", " +
 	            	      													         COL_VERSION + ", " +
 	            	      													         COL_DELETED + ") " +
-	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	            				       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 					if(log.isDebugEnabled())
 						log.debug("Creating the \"insert service\" PreparedStatemnt from the SQL " + insertSql);
@@ -821,6 +831,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psInsert.setInt(i++, service.getOutputRecordCount());
 				psInsert.setDate(i++, service.getServicesLastLogReset());
 				psInsert.setString(i++, service.getServicesLogFileName());
+				psInsert.setTimestamp(i++, service.getServicesServiceLastModified());
 				psInsert.setInt(i++, service.getHarvestOutWarnings());
 				psInsert.setInt(i++, service.getHarvestOutErrors());
 				psInsert.setLong(i++, service.getHarvestOutRecordsAvailable());
@@ -936,6 +947,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				                                                          COL_OUTPUT_RECORD_COUNT + "=?, " +
 				                                                          COL_LAST_LOG_RESET + "=?, " +
 				                                                          COL_LOG_FILE_NAME + "=?, " +
+     	      														      COL_SERVICE_LAST_MODIFIED + "=?, " +
 				                                                          COL_HARVEST_OUT_WARNINGS + "=?, " +
 				                                                          COL_HARVEST_OUT_ERRORS + "=?, " +
 				                                                          COL_HARVEST_OUT_RECORDS_AVAILABLE + "=?, " +
@@ -965,6 +977,7 @@ public class DefaultServiceDAO extends ServiceDAO
 				psUpdate.setInt(i++, service.getOutputRecordCount());
 				psUpdate.setDate(i++, service.getServicesLastLogReset());
 				psUpdate.setString(i++, service.getServicesLogFileName());
+				psUpdate.setTimestamp(i++, service.getServicesServiceLastModified());
 				psUpdate.setInt(i++, service.getHarvestOutWarnings());
 				psUpdate.setInt(i++, service.getHarvestOutErrors());
 				psUpdate.setLong(i++, service.getHarvestOutRecordsAvailable());
@@ -1101,5 +1114,20 @@ public class DefaultServiceDAO extends ServiceDAO
 			}
 		}
 	}
-	
+
+	@Override
+	public boolean deleteServiceHarvest(Service service) throws DataException
+	{
+		// Check that the ID field on the service are valid
+		validateFields(service, true, false);
+
+		synchronized(psDeleteLock)
+		{
+			if(log.isDebugEnabled())
+				log.debug("Deleting the harvest records of the service with ID " + service.getId());
+
+				this.jdbcTemplate.update("delete from service_harvests where service_id=?", service.getId());
+				return true;
+		}
+	}	
 }

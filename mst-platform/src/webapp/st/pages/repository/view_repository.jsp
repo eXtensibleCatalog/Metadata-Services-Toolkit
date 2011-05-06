@@ -314,7 +314,7 @@
               		<button name="edit" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction();" class="xc_button">Edit</button>
                         <button name="View Log" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.downloadFile('HarvestIn',${provider.id});" class="xc_button">View Log</button>
                         <button name="Revalidate" type="button" id="revalidateRepository" class="xc_button">Revalidate</button>
-                        <button name="delete" type="button" id="confirmDeleteRepository" class="xc_button">Delete</button>            
+                        <button style="width:140px;" name="delete" type="button" id="confirmDeleteRepository" class="xc_button">Delete Records</button>            
                         <button name="done" style="float:right;position:relative;top:-30px;" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.done();" type="button" class="xc_button">Done</button>
              
         </div>

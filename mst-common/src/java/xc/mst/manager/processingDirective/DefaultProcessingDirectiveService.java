@@ -140,6 +140,19 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
     }
 
     /**
+     * Returns a list of processing directives associated with a service, in this case we want the PDs
+     * where the given serviceId represents the service that is going to do the work
+     *
+     * @param serviceId service ID
+     * @return list of processing directives
+     * @throws DatabaseConfigException 
+     */
+    public List<ProcessingDirective> getByDestinationServiceId(int serviceId) throws DatabaseConfigException
+    {
+        return getProcessingDirectiveDAO().getByDestinationServiceId(serviceId);
+    }
+
+    /**
      * Checks a processing directive against all records from its source.
      * If any records match, they are marked as input for the target service and
      * that service is scheduled to be run.
