@@ -42,7 +42,8 @@ public class CustomTest extends BaseMetadataServiceTest {
 		
 		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
 		repo.setName("test_repo");
-		List<Record> records = ((DefaultRepository)repo).getRecordsWSets(new Date(System.currentTimeMillis()-1000*60*60*24*50), new Date(), null);
+		List<Record> records = ((DefaultRepository)repo).getRecordsWSets(new Date(System.currentTimeMillis()-1000*60*60*24*50), 
+				new Date(), null, new char[] {Record.ACTIVE, Record.DELETED});
 		
 		for (Record r : records) {
 			LOG.debug(r.getId()+" "+r.getSets());

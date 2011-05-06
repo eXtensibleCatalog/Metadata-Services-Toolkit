@@ -416,7 +416,7 @@ public class TestRepository extends BaseService implements Repository {
 	}
 
 	@Override
-	public void activateRecord(long recordId) {
+	public void activateRecord(String type, long recordId) {
 		Record pr = getRecord(recordId);
 		if (pr == null) {
 			LOG.debug("record not found");

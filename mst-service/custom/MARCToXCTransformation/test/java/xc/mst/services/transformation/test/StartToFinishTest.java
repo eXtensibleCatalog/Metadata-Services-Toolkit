@@ -16,11 +16,11 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public String getRepoName() {
-		return "rochester_135";
+		return "rochester_137";
 	}
 	
 	protected String getSetSpec() {
-		return "rochester_135:bib";
+		return "rochester_137:bib";
 	}
 	
 	
@@ -30,8 +30,8 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public String getProviderUrl() {
-		//return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
-		return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
+		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
+		//return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {
@@ -43,6 +43,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public void finalTest() {
+		/*
 		try {
 			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvests");
 			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvest_schedules");
@@ -53,7 +54,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 			LOG.error("", t);
 			throw new RuntimeException(t);
 		}
-		/*
+
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
         TLongHashSet predecessors = new TLongHashSet();

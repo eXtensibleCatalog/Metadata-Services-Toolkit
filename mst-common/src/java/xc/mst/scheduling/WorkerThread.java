@@ -72,7 +72,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 					keepGoing = doSomeWork();
 				} else if (this.status == Status.CANCELED) {
 					keepGoing = false;
-				} else if (this.status == Status.PAUSED) {
+				} else if (this.status == Status.PAUSED || this.status == Status.PAUSING) {
 					Thread.sleep(5000);
 				}
 			}

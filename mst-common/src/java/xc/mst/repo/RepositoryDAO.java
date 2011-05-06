@@ -18,7 +18,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,6 +73,8 @@ public class RepositoryDAO extends BaseDAO {
 	public final static String REPOS_TABLE = "repos";
 	public final static String RECORD_LINKS_TABLE = "record_links";
 	public final static String PROPERTIES = "properties";
+	public final static String PREV_INCOMING_RECORD_STATUSES = "prev_incoming_record_statuses";
+
 	
 	protected Lock oaiIdLock = new ReentrantLock();
 	protected int nextId = -1;
@@ -737,27 +738,39 @@ public class RepositoryDAO extends BaseDAO {
 		TimingLogger.stop("populateHarvestCache");
 	}
 	
-	protected List<Map<String, Object>> getPreviousStatuses(String name, int page) {
+	protected List<Map<String, Object>> getPreviousStatuses(String name, int page, boolean service) {
+		String tableName = null;
+		if (service) {
+			tableName = PREV_INCOMING_RECORD_STATUSES;
+		} else {
+			tableName = RECORDS_TABLE;
+		}
 		TimingLogger.start("getPreviousStatuses");
 		int recordsAtOnce = 250000;
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-				"select record_id, status from "+getTableName(name, RECORDS_TABLE)+
+				"select record_id, status from "+getTableName(name, tableName)+
 				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
 		TimingLogger.stop("getPreviousStatuses");
 		return rowList;
 	}
 	
-	public void populatePreviousStatuses(String name, TLongByteHashMap previousStatuses) {
+	public void populatePreviousStatuses(String name, TLongByteHashMap previousStatuses, boolean service) {
 		TimingLogger.start("populatePreviousStatuses");
 		int page = 0;
-		List<Map<String, Object>> rowList = getPreviousStatuses(name, page);
+		List<Map<String, Object>> rowList = getPreviousStatuses(name, page, service);
 		while (rowList != null && rowList.size() > 0) {
 			for (Map<String, Object> row : rowList) {
-				Integer recordId = (Integer)row.get("record_id");
+				long recordId = -1;
+				Object recordIdObj = row.get("record_id");
+				if (recordIdObj instanceof Integer) {
+					recordId = (Integer)recordIdObj;
+				} else if (recordIdObj instanceof Long) {
+					recordId = (Long)recordIdObj;
+				}
 				char prevStatus = ((String)row.get("status")).charAt(0);
 				previousStatuses.put(recordId, (byte)prevStatus);
 			}
-			rowList = getPreviousStatuses(name, ++page);
+			rowList = getPreviousStatuses(name, ++page, service);
 		}
 		TimingLogger.stop("populatePreviousStatuses");
 	}
@@ -888,8 +901,33 @@ public class RepositoryDAO extends BaseDAO {
 		r.setHarvestedOaiIdentifier(this.jdbcTemplate.queryForObject(sql, String.class, (Long)r.getId()));
 	}
 	
+	protected void addStatusesInWhereClause(StringBuilder sb, char[] statuses) {
+		if (statuses != null) {
+			if (statuses.length == 1) {
+				sb.append(" and status = '")
+					.append(statuses[0])
+					.append("' ");
+			} else {
+				sb.append(" and status in (");
+				for (char status : statuses) {
+					sb.append("'");
+					sb.append(status);
+					sb.append("'");
+					sb.append(',');
+				}
+				sb.deleteCharAt(sb.length()-1);
+				sb.append(")");
+			}
+		}
+	}
+	
+	public List<Record> getRecords(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet) {
+		return getRecords(name, from, until, startingId, inputFormat, inputSet, new char[] {Record.ACTIVE, Record.DELETED});
+	}
 	@SuppressWarnings("unchecked")
-	public List<Record> getRecords(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+	public List<Record> getRecords(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
 		long t0 = System.currentTimeMillis();
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
@@ -900,7 +938,9 @@ public class RepositoryDAO extends BaseDAO {
 			sb.append("select straight_join 1 ")
 				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_date_updated) , ")
 				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
-				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? limit 1");
+				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? ");
+			addStatusesInWhereClause(sb, statuses);
+			sb.append(" limit 1");
 			List atleastone = this.jdbcTemplate.queryForList(sb.toString(), from, from, until);
 			if (atleastone == null || atleastone.size() == 0) {
 				return new ArrayList<Record>();
@@ -931,13 +971,7 @@ public class RepositoryDAO extends BaseDAO {
 					" and (u.date_updated >= ? or ? is null) "+
 					" and u.date_updated <= ?  "
 					);
-		/*
-					+
-			  		" and u.date_updated =" +
-						" (select max(u.date_updated)" +
-						" from " + getTableName(name, RECORD_UPDATES_TABLE)+" u " +
-						" where u.record_id = r.record_id )" */
-					
+		addStatusesInWhereClause(sb, statuses);
 		if (inputFormat != null) {
 			sb.append(
 					" and r.format_id = ? ");
@@ -1045,7 +1079,10 @@ public class RepositoryDAO extends BaseDAO {
 		return records;
 	}
 	
-	public long getRecordCount(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
+	public long getRecordCount(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, long offset) {
+		return -1l;
+		/*
 		LOG.debug("from: "+from);
 		LOG.debug("until: "+until);
 		LOG.debug("startingId: "+startingId);
@@ -1068,8 +1105,15 @@ public class RepositoryDAO extends BaseDAO {
 			if (keepGoing) {
 				if (inputFormat != null) {
 					// could LIMIT accomplish the same thing as explain ?
-					// actually - I dont think so, because if the answer is zero - limit takes a looooong time
-					String sql = "select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ?";
+					// no - I dont think so, because if the answer is zero - limit takes a looooong time
+					StringBuilder sb = new StringBuilder();
+					sb.append("select count(*) from "+getTableName(name, RECORDS_TABLE)+" where format_id <> ? ");
+					if (status != Record.NULL) {
+						sb.append(" and status = '")
+							.append(status)
+							.append("' ");
+					}
+					String sql = sb.toString();
 					records = this.jdbcTemplate.queryForList(
 							"explain "+sql, inputFormat.getId());
 					rows2examine = (BigInteger)records.get(0).get("rows");
@@ -1290,6 +1334,7 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		
 		return -1l;
+		*/
 
 	}
 	
@@ -1310,16 +1355,17 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId) {
-		return getRecordsWSets(name, from, until, startingId, null, null);
+		return getRecordsWSets(name, from, until, startingId, null, null, new char[] {Record.ACTIVE, Record.DELETED});
 	}
 	
-	public List<Record> getRecordsWSets(String name, Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+	public List<Record> getRecordsWSets(String name, Date from, Date until, 
+			Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
 		List<Object> params = new ArrayList<Object>();
 		if (until == null) {
 			until = new Date();
 		}
 		
-		List<Record> records = getRecords(name, from, until, startingId, inputFormat, inputSet);
+		List<Record> records = getRecords(name, from, until, startingId, inputFormat, inputSet, statuses);
 		if (records != null && records.size() > 0) {
 			Long highestId = records.get(records.size()-1).getId();
 			StringBuilder sb = new StringBuilder();
@@ -1360,11 +1406,22 @@ public class RepositoryDAO extends BaseDAO {
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWSets) {
-					while (currentRecord.getId() != rws.getId()) {
+					LOG.debug("rws.getId(): "+rws.getId());
+				}
+				for (Record r : records) {
+					LOG.debug("r.getId(): "+r.getId());
+				}
+				for (Record rws : recordsWSets) {
+					LOG.debug("currentRecord.getId(): "+currentRecord.getId());
+					LOG.debug("rws.getId(): "+rws.getId());
+					if (rws.getId() < currentRecord.getId()) {
+						continue;
+					}
+					while (rws.getId() > currentRecord.getId()) {
+						LOG.debug("recIdx: "+recIdx);
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
-			
 				}
 			} catch (EmptyResultDataAccessException e) {
 				LOG.info("no recordsWSets found for from: "+from+" until: "+until+" startingId: "+startingId);
@@ -1409,7 +1466,10 @@ public class RepositoryDAO extends BaseDAO {
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
 				for (Record rws : recordsWMessages) {
-					while (currentRecord.getId() != rws.getId()) {
+					if (rws.getId() < currentRecord.getId()) {
+						continue;
+					}
+					while (rws.getId() > currentRecord.getId()) {
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addMessage(rws.getMessages().get(0));
@@ -1506,9 +1566,47 @@ public class RepositoryDAO extends BaseDAO {
                 } );
         TimingLogger.stop(RECORD_LINKS_TABLE+".insert");
 	}
+	
+	public void persistPreviousStatuses(String repoName, TLongByteHashMap previousStatuses) {
+		try {
+			String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
+			byte[] tabBytes = "\t".getBytes();
+			byte[] newLineBytes = "\n".getBytes();
+			
+			File dbLoadFile = new File(dbLoadFileStr);
+			if (dbLoadFile.exists()) {
+				dbLoadFile.delete();
+			}
+			OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+			int i=0;
+			TimingLogger.start(PREV_INCOMING_RECORD_STATUSES+".insert");
+			TimingLogger.start(PREV_INCOMING_RECORD_STATUSES+".insert.create_infile");
+			for (long recordId : previousStatuses.keys()) {
+				if (i++ > 0) {
+					os.write(newLineBytes);
+				}
+				os.write((recordId+"").getBytes());
+				os.write(tabBytes);
+				os.write(previousStatuses.get(recordId));
+			}
+			os.close();
+			TimingLogger.stop(PREV_INCOMING_RECORD_STATUSES+".insert.create_infile");
+			TimingLogger.start(PREV_INCOMING_RECORD_STATUSES+".insert.load_infile");
+			this.jdbcTemplate.execute(
+					"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
+					getTableName(repoName, PREV_INCOMING_RECORD_STATUSES)+
+					" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+					);
+			TimingLogger.stop(PREV_INCOMING_RECORD_STATUSES+".insert.load_infile");
+			TimingLogger.stop(PREV_INCOMING_RECORD_STATUSES+".insert");
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
 
 	public void activateRecords(String name, final TLongHashSet recordIds) {
 		if (recordIds.size() > 0) {
+			long startTime = System.currentTimeMillis();
 			TimingLogger.start("activateRecords");
 			String sql = "update "+getTableName(name, RepositoryDAO.RECORDS_TABLE)+
 				" set status='"+Record.ACTIVE+"'"+
@@ -1525,6 +1623,29 @@ public class RepositoryDAO extends BaseDAO {
 						}
 					});
 	        TimingLogger.stop("activateRecords");
+	        long endTime = System.currentTimeMillis();
+			final long updateTime = System.currentTimeMillis() + (endTime - startTime) + 3000;
+			final TLongIterator it2 = recordIds.iterator();
+			TimingLogger.start("RECORD_UPDATES_TABLE.insert");
+			sql = 
+				"insert into "+getTableName(name, RECORD_UPDATES_TABLE)+
+				" (record_id, date_updated) "+
+				"values (?,?) "+
+				";";
+			jdbcTemplate.batchUpdate(
+					sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                        ps.setLong(i++, it2.next());
+	                        ps.setTimestamp(i++, new Timestamp(updateTime));
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordIds.size();
+	                    }
+	                } );
+	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
 		} else {
 			LOG.debug("linkedToIds is null or empty");
 		}
