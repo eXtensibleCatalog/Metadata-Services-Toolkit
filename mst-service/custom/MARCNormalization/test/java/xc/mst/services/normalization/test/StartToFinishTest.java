@@ -36,7 +36,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	
 	public String getProviderUrl() {
 		LOG.debug("**** getProviderUrl() BASE ");
-		return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
+		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
 	}
 	
 	public Format[] getIncomingFormats() throws Exception {

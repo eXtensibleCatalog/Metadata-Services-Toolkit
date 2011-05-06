@@ -103,8 +103,8 @@ public class RecordCountsTest extends MockHarvestTest {
 		LOG.debug(exampleServiceTotalOutgoingRecordCounts.toString());
 		
 		if (lastOaiRequest.contains("010.xml")) {
-			testCounts(new int[] {7,3, 0,0, 0,0, 0,0, 0}, providerMostRecentIncomingRecordCounts);
-			testCounts(new int[] {7,3, 0,0, 0,0, 0,0, 0}, providerTotalIncomingRecordCounts);
+			testCounts(new int[] {7,3, 1,0, 1,0, 0,0, 0}, providerMostRecentIncomingRecordCounts);
+			testCounts(new int[] {7,3, 1,0, 1,0, 0,0, 0}, providerTotalIncomingRecordCounts);
 			
 			testCounts(new int[] {7,3, 0,0, 0,0, 0,0, 1}, exampleServiceMostRecentIncomingRecordCounts);
 			testCounts(new int[] {7,3, 0,0, 0,0, 0,0, 1}, exampleServiceTotalIncomingRecordCounts);
@@ -114,7 +114,7 @@ public class RecordCountsTest extends MockHarvestTest {
 			
 		} else if (lastOaiRequest.contains("020.xml")) {
 			testCounts(new int[] {0,0, 7,3, 5,2, 2,1, 0}, providerMostRecentIncomingRecordCounts);
-			testCounts(new int[] {7,3, 7,3, 5,2, 2,1, 0}, providerTotalIncomingRecordCounts);
+			testCounts(new int[] {7,3, 8,3, 6,2, 2,1, 0}, providerTotalIncomingRecordCounts);
 			
 			testCounts(new int[] {0,0, 7,3, 5,2, 2,1, 0}, exampleServiceMostRecentIncomingRecordCounts);
 			testCounts(new int[] {7,3, 7,3, 5,2, 2,1, 1}, exampleServiceTotalIncomingRecordCounts);

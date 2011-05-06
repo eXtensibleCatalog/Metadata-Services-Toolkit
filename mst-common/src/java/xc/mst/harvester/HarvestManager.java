@@ -54,6 +54,7 @@ public class HarvestManager extends WorkerThread {
 	 * A reference to the logger which writes to the HarvestIn log file
 	 */
 	private static Logger log = Logger.getLogger("harvestIn");
+	private static Logger LOG = Logger.getLogger(HarvestManager.class);
 	
 	
 	protected static DateTimeFormatter UTC_SECOND_FORMATTER = null;
@@ -132,13 +133,29 @@ public class HarvestManager extends WorkerThread {
 			repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
 			TimingLogger.outputMemory();
 			getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
-			getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses);
+			getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses, false);
 			TimingLogger.reset();
 			
 			this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);
 			this.incomingRecordCounts = new RecordCounts(this.currentHarvest.getEndTime(), RecordCounts.INCOMING);
 		} catch (DatabaseConfigException e) {
 			getUtil().throwIt(e);
+		}
+	}
+	
+	@Override
+	public void finishInner() {
+		super.finishInner();
+		for (RecordCounts rc : new RecordCounts[] {
+				getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName()),
+				getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
+		}) {
+			LOG.debug("harvestSchedule: "+harvestSchedule);
+			LOG.debug("harvestSchedule.getProvider(): "+harvestSchedule.getProvider());
+			LOG.debug("harvestSchedule.getProvider().getLogFileName(): "+harvestSchedule.getProvider().getLogFileName());
+			LOG.debug("rc: "+rc);
+			LOG.debug("repo: "+repo);
+			LogWriter.addError(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
 		}
 	}
 	
@@ -497,7 +514,9 @@ public class HarvestManager extends WorkerThread {
 				
 				repo.addRecord(record);
 				for (Set s : record.getSets()) {
-					incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+					if (s.getSetSpec().contains(":")) {
+						incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+					}
 				}
 				incomingRecordCounts.incr(null, record.getStatus(), prevStatus);
 			} catch (Exception e) {

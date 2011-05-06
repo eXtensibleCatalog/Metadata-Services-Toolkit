@@ -94,7 +94,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 			LOG.info("after dropOldSchemas");
 
 			installService();
-			getServicesService().addNewService(getServiceName());
+			//getServicesService().addNewService(getServiceName());
 			LOG.info("after installService");
 	
 			installProvider();

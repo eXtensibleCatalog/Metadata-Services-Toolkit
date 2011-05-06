@@ -191,50 +191,25 @@
    -->
    
    <field name="record_id" type="string" indexed="true" stored="true" required="true" /> 
-   <field name="record_type" type="string" indexed="true" stored="true" />
    
-   <field name="indexed_object_type" type="string" indexed="true" stored="true"/>
-   <field name="frbr_level_id" type="string" indexed="true" stored="true"/>
-   <field name="created_at" type="date" indexed="true" stored="true"/>
-   <field name="deleted" type="string" indexed="true" stored="true"/>
-
-   <field name="format_id" type="string" indexed="true" stored="true"/>
+   <field name="indexed_object_type" type="string" indexed="true" stored="false"/>
+   <field name="format_id" type="string" indexed="true" stored="false"/>
    <field name="format_name" type="string" indexed="true" stored="true"/>
 
-   <field name="provider_id" type="string" indexed="true" stored="true"/>
+   <field name="status" type="string" indexed="true" stored="true"/>
+
+   <field name="provider_id" type="string" indexed="true" stored="false"/>
    <field name="provider_name" type="string" indexed="true" stored="true"/>
-   <field name="provider_url" type="string" indexed="true" stored="true"/>
-
  
-   <field name="harvest_id" type="string" indexed="true" stored="true"/>
-   <field name="harvest_schedule_name" type="string" indexed="true" stored="true"/>
-   <field name="harvest_start_time" type="string" indexed="true" stored="true"/>
-
-   <field name="service_id" type="string" indexed="true" stored="true"/>
+   <field name="service_id" type="string" indexed="true" stored="false"/>
    <field name="service_name" type="string" indexed="true" stored="true"/>
-
-   <field name="oai_identifier" type="string" indexed="true" stored="true"/>
-   <field name="oai_datestamp" type="date" indexed="true" stored="true"/>
-   <field name="oai_header" type="string" indexed="true" stored="true"  />
-   <field name="oai_xml" type="text" indexed="true" stored="true" compressed="true"/>
-
-   <field name="updated_at" type="date" indexed="true" stored="true"/>
-   <field name="up_link" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <field name="set_spec" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="set_name" type="string" indexed="true" stored="true" multiValued="true"/>
    
-   <field name="processed_from" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="successor" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="input_for_service_id" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="processed_by_service_id" type="string" indexed="true" stored="true" multiValued="true"/>
-
-   <field name="trait" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="error" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <field name="all" type="text" indexed="true" stored="false" multiValued="true"/>
-
-   <field name="processed" type="string" indexed="true" stored="true"/>
    
  </fields>
 

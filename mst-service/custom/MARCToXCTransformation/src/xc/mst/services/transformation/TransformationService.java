@@ -207,7 +207,7 @@ public class TransformationService extends SolrTransformationService {
 					new TLongProcedure() {
 						public boolean execute(long recordId) {
 							LOG.debug("getRepository().activateRecord("+recordId+")");
-							getRepository().activateRecord(recordId);
+							getRepository().activateRecord("holdings", recordId);
 							return true;
 						}
 					});

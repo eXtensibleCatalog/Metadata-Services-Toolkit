@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,6 +44,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
+	protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>(); 
 	
 	protected String name = null;
 	
@@ -143,7 +145,14 @@ public class DefaultRepository extends BaseService implements Repository {
 			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
 			uplinks.clear();
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
+			for (Map.Entry<String, AtomicInteger> me : recordCountsToActivateByType.entrySet()) {
+				outgoingRecordCounts.incr(me.getKey(), Record.ACTIVE, Record.HELD);
+				if (me.getKey() != null && !RecordCounts.TOTALS.equals(me.getKey())) {
+					outgoingRecordCounts.incr(null, Record.ACTIVE, Record.HELD);	
+				}
+			}
 			recordsToActivate.clear();
+			recordCountsToActivateByType.clear();
 			
 			getRecordCountsDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
 			if (incomingRecordCounts != null)
@@ -182,8 +191,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	}
 
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+		return getRecords(from, until, startingId, inputFormat, inputSet, new char[] {Record.ACTIVE, Record.DELETED});
+	}
+	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet);
+		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, statuses);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else { 
@@ -222,8 +234,8 @@ public class DefaultRepository extends BaseService implements Repository {
 		return records;
 	}
 	
-	public List<Record> getRecordsWSets(Date from, Date until, Long startingId) {
-		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId);
+	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, char[] statuses) {
+		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, null, null, statuses);
 		for (Record r : recs) {
 			getMessageService().injectMessageMessage(r);
 		}
@@ -286,7 +298,13 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
 	}
 
-	public void activateRecord(long recordId) {
+	public void activateRecord(String type, long recordId) {
+		AtomicInteger ai = recordCountsToActivateByType.get(type);
+		if (ai == null) {
+			ai = new AtomicInteger();
+			recordCountsToActivateByType.put(type, ai);
+		}
+		ai.incrementAndGet();
 		recordsToActivate.add(recordId);		
 	}
 	
