@@ -658,7 +658,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	
 	protected void injectKnownSuccessorsIds(Record in) {
 		if (previousStatuses.contains(in.getId())) {
-			getRepository().injectSuccessorIds(in);
+			if (getRepository() != null)
+				getRepository().injectSuccessorIds(in);
 			in.setPreviousStatus((char)previousStatuses.get(in.getId()));
 		}
 	}

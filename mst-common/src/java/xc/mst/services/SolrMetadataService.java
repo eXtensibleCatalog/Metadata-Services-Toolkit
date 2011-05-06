@@ -716,9 +716,11 @@ public abstract class SolrMetadataService extends BaseManager {
 		try
 		{
 			service = getServiceDAO().getById(this.service.getId());
-			LogWriter.addInfo(service.getServicesLogFileName(), "Setting the status of the service " +service.getName() +" as:" +status);
-			service.setStatus(status);
-			getServiceDAO().update(service);
+			if (service != null) {
+				LogWriter.addInfo(service.getServicesLogFileName(), "Setting the status of the service " +service.getName() +" as:" +status);
+				service.setStatus(status);
+				getServiceDAO().update(service);
+			}
 		}
 		catch (DatabaseConfigException e1)
 		{
