@@ -10,6 +10,7 @@ package xc.mst.dao.record;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,7 +24,6 @@ public class RecordCountsDAO extends RepositoryDAO {
 
 	private static final Logger LOG = Logger.getLogger(RecordCountsDAO.class);
 	
-	public static final Date TOTALS_DATE = new Date(0);
 	public final static String INCOMING_RECORD_COUNTS = "incoming_record_counts";
 	public final static String OUTGOING_RECORD_COUNTS = "outgoing_record_counts";
 	
@@ -32,7 +32,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 			if (rc == null) {
 				rc = new RecordCounts((Date)row.get("harvest_start_date"), INCOMING_RECORD_COUNTS);
 			}
-			Map<String, AtomicInteger> counts = new HashMap<String, AtomicInteger>();
+			Map<String, AtomicInteger> counts = new LinkedHashMap<String, AtomicInteger>();
 			rc.getCounts().put((String)row.get("type_name"), counts);
 			
 			for (Map.Entry<String, Object> me : row.entrySet()) {
@@ -60,6 +60,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 				" where harvest_start_date = "+
 					"(select max(harvest_start_date) from "+getTableName(repoName, INCOMING_RECORD_COUNTS)+")");
 		rc = injectRecordCounts(rc, rows);
+		rc.setIncomingOutgoing(RecordCounts.INCOMING);
 		return rc;
 	}
 	
@@ -68,8 +69,9 @@ public class RecordCountsDAO extends RepositoryDAO {
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
 				" select * "+
 				" from "+getTableName(repoName, INCOMING_RECORD_COUNTS)+
-				" where harvest_start_date = ? ", TOTALS_DATE);
+				" where harvest_start_date = ? ", RecordCounts.TOTALS_DATE);
 		rc = injectRecordCounts(rc, rows);
+		rc.setIncomingOutgoing(RecordCounts.INCOMING);
 		return rc;
 	}
 	
@@ -81,6 +83,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 				" where harvest_start_date = "+
 					"(select max(harvest_start_date) from "+getTableName(repoName, OUTGOING_RECORD_COUNTS)+")");
 		rc = injectRecordCounts(rc, rows);
+		rc.setIncomingOutgoing(RecordCounts.OUTGOING);
 		return rc;
 	}
 	
@@ -89,8 +92,9 @@ public class RecordCountsDAO extends RepositoryDAO {
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(
 				" select * "+
 				" from "+getTableName(repoName, OUTGOING_RECORD_COUNTS)+
-				" where harvest_start_date = ? ", TOTALS_DATE);
+				" where harvest_start_date = ? ", RecordCounts.TOTALS_DATE);
 		rc = injectRecordCounts(rc, rows);
+		rc.setIncomingOutgoing(RecordCounts.OUTGOING);
 		return rc;
 	}
 	
@@ -106,7 +110,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 		Map<String, Map<String, AtomicInteger>> countsKeyedByType = rc.getCounts();
 		
 		for (String type : countsKeyedByType.keySet()) {
-			int loops = 1;
+			int loops = 2;
 			if (type.equals(RecordCounts.TOTALS)) {
 				loops = 2;
 			}
@@ -114,7 +118,7 @@ public class RecordCountsDAO extends RepositoryDAO {
 			for (int i=0; i < loops; i++) {
 				Date d1 = rc.getHarvestStartDate();
 				if (i == 1) {
-					d1 = TOTALS_DATE;
+					d1 = RecordCounts.TOTALS_DATE;
 				}
 				this.jdbcTemplate.update(
 						"insert ignore into "+getTableName(repoName, tableName)+

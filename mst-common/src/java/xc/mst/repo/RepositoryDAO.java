@@ -1606,6 +1606,7 @@ public class RepositoryDAO extends BaseDAO {
 
 	public void activateRecords(String name, final TLongHashSet recordIds) {
 		if (recordIds.size() > 0) {
+			long startTime = System.currentTimeMillis();
 			TimingLogger.start("activateRecords");
 			String sql = "update "+getTableName(name, RepositoryDAO.RECORDS_TABLE)+
 				" set status='"+Record.ACTIVE+"'"+
@@ -1622,6 +1623,29 @@ public class RepositoryDAO extends BaseDAO {
 						}
 					});
 	        TimingLogger.stop("activateRecords");
+	        long endTime = System.currentTimeMillis();
+			final long updateTime = System.currentTimeMillis() + (endTime - startTime) + 3000;
+			final TLongIterator it2 = recordIds.iterator();
+			TimingLogger.start("RECORD_UPDATES_TABLE.insert");
+			sql = 
+				"insert into "+getTableName(name, RECORD_UPDATES_TABLE)+
+				" (record_id, date_updated) "+
+				"values (?,?) "+
+				";";
+			jdbcTemplate.batchUpdate(
+					sql,
+	                new BatchPreparedStatementSetter() {
+	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+	                    	int i=1;
+	                        ps.setLong(i++, it2.next());
+	                        ps.setTimestamp(i++, new Timestamp(updateTime));
+	                    }
+
+	                    public int getBatchSize() {
+	                        return recordIds.size();
+	                    }
+	                } );
+	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
 		} else {
 			LOG.debug("linkedToIds is null or empty");
 		}

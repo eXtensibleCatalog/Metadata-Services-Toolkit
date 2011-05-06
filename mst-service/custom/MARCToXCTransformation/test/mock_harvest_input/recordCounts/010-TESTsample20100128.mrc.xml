@@ -1,0 +1,279 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-23T16:26:00Z</responseDate>
+  <request from="1960-02-23T21:26:00Z" metadataPrefix="marcxml" until="2011-02-23T21:26:00Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marcnormalization-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/32</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLholding</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00291cy  a22001093  4500</marc:leader>
+          <marc:controlfield tag="001">4405</marc:controlfield>
+          <marc:controlfield tag="004">2684</marc:controlfield>
+          <marc:controlfield tag="005">20021002111301.0</marc:controlfield>
+          <marc:controlfield tag="008">9803264p    8   4001uueng0000000</marc:controlfield>
+          <marc:datafield ind1="0" ind2=" " tag="852">
+            <marc:subfield code="b">RheesStack</marc:subfield>
+            <marc:subfield code="h">F351.A1</marc:subfield>
+            <marc:subfield code="i">M67</marc:subfield>
+            <marc:subfield code="z">Current issues in Periodical Reading Room</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="3" ind2="0" tag="866">
+            <marc:subfield code="a">v.51 (1964)-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="866">
+            <marc:subfield code="8">0</marc:subfield>
+            <marc:subfield code="a">v. 96, no. 1 (June 2009)</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/31</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>02598cas a2200553 a 4500</marc:leader>
+          <marc:controlfield tag="001">2684</marc:controlfield>
+          <marc:controlfield tag="005">20050629165829.0</marc:controlfield>
+          <marc:controlfield tag="008">751101c19649999inuqr1p       0   a0eng  </marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="010">
+            <marc:subfield code="a">41015235 //r974</marc:subfield>
+            <marc:subfield code="z">sc 80000376</marc:subfield>
+            <marc:subfield code="z">sn 78005866</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="022">
+            <marc:subfield code="a">0021-8723</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="032">
+            <marc:subfield code="a">278180</marc:subfield>
+            <marc:subfield code="b">USPS</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(OCoLC)1754428</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="037">
+            <marc:subfield code="b">Executive Secretary, Organization of American Historians, 112 N. Bryan St., Bloomington, IN 47401</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="040">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">MUL</marc:subfield>
+            <marc:subfield code="d">BTI</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">COO</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">IUL</marc:subfield>
+            <marc:subfield code="d">DLC</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">NST</marc:subfield>
+            <marc:subfield code="d">AIP</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">AIP</marc:subfield>
+            <marc:subfield code="d">HUL</marc:subfield>
+            <marc:subfield code="d">AIP</marc:subfield>
+            <marc:subfield code="d">NST</marc:subfield>
+            <marc:subfield code="d">DLC</marc:subfield>
+            <marc:subfield code="d">NST</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">NST</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">MYG</marc:subfield>
+            <marc:subfield code="d">DLC</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="042">
+            <marc:subfield code="a">nsdp</marc:subfield>
+            <marc:subfield code="a">lc</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="043">
+            <marc:subfield code="a">n-us---</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="049">
+            <marc:subfield code="a">RRRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2="0" tag="050">
+            <marc:subfield code="a">E171</marc:subfield>
+            <marc:subfield code="b">.J87</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="090">
+            <marc:subfield code="a">F351.A1</marc:subfield>
+            <marc:subfield code="b">M67</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="130">
+            <marc:subfield code="a">Journal of American history (Bloomington, Ind.)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="210">
+            <marc:subfield code="a">J. Am. hist.</marc:subfield>
+            <marc:subfield code="b">(Bloomingt. Indiana)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="4" tag="222">
+            <marc:subfield code="a">The Journal of American history</marc:subfield>
+            <marc:subfield code="b">(Bloomington, Ind.)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2="4" tag="245">
+            <marc:subfield code="a">The Journal of American history.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="260">
+            <marc:subfield code="a">Bloomington, Ind. :</marc:subfield>
+            <marc:subfield code="b">Mississippi Valley Historical Association,</marc:subfield>
+            <marc:subfield code="c">c1964-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="300">
+            <marc:subfield code="a">v. ;</marc:subfield>
+            <marc:subfield code="c">26 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="310">
+            <marc:subfield code="a">Quarterly</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="362">
+            <marc:subfield code="a">Vol. 51, no. 1 (June 1964)-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="510">
+            <marc:subfield code="a">Magazine index</marc:subfield>
+            <marc:subfield code="b">1964-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="510">
+            <marc:subfield code="a">Book review digest</marc:subfield>
+            <marc:subfield code="x">0006-7326</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Annual bibliography of English language and literature</marc:subfield>
+            <marc:subfield code="x">0066-3786</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">MLA international bibliography of books and articles on the modern languages and literatures (Complete edition)</marc:subfield>
+            <marc:subfield code="x">0024-8215</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Book review index</marc:subfield>
+            <marc:subfield code="x">0524-0581</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="510">
+            <marc:subfield code="a">Social sciences &amp; humanities index</marc:subfield>
+            <marc:subfield code="x">0037-7899</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="510">
+            <marc:subfield code="a">International index</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="510">
+            <marc:subfield code="a">Humanities index</marc:subfield>
+            <marc:subfield code="x">0095-5981</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Recently published articles</marc:subfield>
+            <marc:subfield code="x">0145-5311</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Reference sources</marc:subfield>
+            <marc:subfield code="x">0163-3546</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Women studies abstracts</marc:subfield>
+            <marc:subfield code="x">0049-7835</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Writings on American history</marc:subfield>
+            <marc:subfield code="x">0364-2887</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">America, history and life</marc:subfield>
+            <marc:subfield code="x">0002-7065</marc:subfield>
+            <marc:subfield code="b">1954-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Historical abstracts. Part A. Modern history abstracts</marc:subfield>
+            <marc:subfield code="x">0363-2717</marc:subfield>
+            <marc:subfield code="b">1954-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="510">
+            <marc:subfield code="a">Historical abstracts. Part B. Twentieth century abstracts</marc:subfield>
+            <marc:subfield code="x">0363-2725</marc:subfield>
+            <marc:subfield code="b">1954-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="530">
+            <marc:subfield code="a">Scanned images of back issues also available via the World Wide Web.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="550">
+            <marc:subfield code="a">Vols. for June 1964-Mar. 1965 published by the Mississippi Valley Historical Association; June 1965-&lt;June 1984&gt; by the Organization of American Historians.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="651">
+            <marc:subfield code="a">United States</marc:subfield>
+            <marc:subfield code="x">History</marc:subfield>
+            <marc:subfield code="x">Periodicals.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="710">
+            <marc:subfield code="a">Organization of American Historians.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="710">
+            <marc:subfield code="a">Mississippi Valley Historical Association.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="776">
+            <marc:subfield code="t">Journal of American history (Bloomington, Ind. : Online)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2="0" tag="780">
+            <marc:subfield code="t">Mississippi Valley historical review</marc:subfield>
+            <marc:subfield code="x">0161-391X</marc:subfield>
+            <marc:subfield code="w">(OCoLC)1776316</marc:subfield>
+            <marc:subfield code="w">(DLC)sf 86005017</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="931">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="932">
+            <marc:subfield code="a">Language material</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="933">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="935">
+            <marc:subfield code="a">Serial</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="937">
+            <marc:subfield code="a">Non-Fiction</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="939">
+            <marc:subfield code="a">1964-    </marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="941">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="943">
+            <marc:subfield code="a">English</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(NRU)2684</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="965">
+            <marc:subfield code="x">History</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="965">
+            <marc:subfield code="x">Periodicals.</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="967">
+            <marc:subfield code="a">United States</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

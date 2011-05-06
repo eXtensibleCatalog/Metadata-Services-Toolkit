@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,6 +44,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	protected List<long[]> uplinks = new ArrayList<long[]>();
 	
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
+	protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>(); 
 	
 	protected String name = null;
 	
@@ -143,7 +145,14 @@ public class DefaultRepository extends BaseService implements Repository {
 			getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
 			uplinks.clear();
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
+			for (Map.Entry<String, AtomicInteger> me : recordCountsToActivateByType.entrySet()) {
+				outgoingRecordCounts.incr(me.getKey(), Record.ACTIVE, Record.HELD);
+				if (me.getKey() != null && !RecordCounts.TOTALS.equals(me.getKey())) {
+					outgoingRecordCounts.incr(null, Record.ACTIVE, Record.HELD);	
+				}
+			}
 			recordsToActivate.clear();
+			recordCountsToActivateByType.clear();
 			
 			getRecordCountsDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
 			if (incomingRecordCounts != null)
@@ -289,7 +298,13 @@ public class DefaultRepository extends BaseService implements Repository {
 		return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
 	}
 
-	public void activateRecord(long recordId) {
+	public void activateRecord(String type, long recordId) {
+		AtomicInteger ai = recordCountsToActivateByType.get(type);
+		if (ai == null) {
+			ai = new AtomicInteger();
+			recordCountsToActivateByType.put(type, ai);
+		}
+		ai.incrementAndGet();
 		recordsToActivate.add(recordId);		
 	}
 	

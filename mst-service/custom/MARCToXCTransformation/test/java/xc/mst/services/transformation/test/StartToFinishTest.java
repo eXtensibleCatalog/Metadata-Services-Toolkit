@@ -43,6 +43,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	}
 	
 	public void finalTest() {
+		/*
 		try {
 			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvests");
 			getJdbcTemplate().execute("delete from MetadataServicesToolkit.harvest_schedules");
@@ -53,7 +54,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 			LOG.error("", t);
 			throw new RuntimeException(t);
 		}
-		/*
+
 		repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
         TLongHashSet predecessors = new TLongHashSet();

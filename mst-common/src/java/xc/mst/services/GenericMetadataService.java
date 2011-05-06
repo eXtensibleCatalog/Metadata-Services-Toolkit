@@ -45,6 +45,7 @@ import xc.mst.dao.MetadataServiceDAO;
 import xc.mst.email.Emailer;
 import xc.mst.repo.Repository;
 import xc.mst.repo.TestRepository;
+import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -622,6 +623,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		if (!previouslyPaused) {
 			running.release();
 		}
+		
+		if (getRepository() != null) {
+			int i=0;
+			for (RecordCounts rc : new RecordCounts[] {
+					getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName()),
+					getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
+					getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
+					getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
+			}) {
+				LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));	
+			}
+		}
+		setStatus(Status.NOT_RUNNING);
 	}
 	
 	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {
