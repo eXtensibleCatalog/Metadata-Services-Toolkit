@@ -263,174 +263,174 @@ public class RepositoryDAO extends BaseDAO {
 			final long startTime = System.currentTimeMillis();
 			if (ready4harvest(name)) {
 				String sql = 
-	    			"insert into "+getTableName(name, RECORDS_TABLE)+
-	    			" (record_id, oai_datestamp, type, status, prev_status, format_id ) "+
-	    			"values (?,?,?,?,?,?) "+
-	    			"on duplicate key update "+
-	    				"status=?, "+
-	    				"prev_status=?, "+
-	    				"format_id=?, "+
-	    				"oai_datestamp=? "+
-	    			";";
+					"insert into "+getTableName(name, RECORDS_TABLE)+
+					" (record_id, oai_datestamp, type, status, prev_status, format_id ) "+
+					"values (?,?,?,?,?,?) "+
+					"on duplicate key update "+
+						"status=?, "+
+						"prev_status=?, "+
+						"format_id=?, "+
+						"oai_datestamp=? "+
+					";";
 				TimingLogger.start("RECORDS_TABLE.insert");
-		        int[] updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new BatchPreparedStatementSetter() {
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=1;
-		                    	Record r = recordsToAdd.get(j);
-		                        ps.setLong(i++, r.getId());
-		                        if (r.getOaiDatestamp() == null) {
-		                        	ps.setTimestamp(i++, new Timestamp(startTime));	
-		                        } else {
-		                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
-		                        }
-		                        if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
-		                        	ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
-		                        } else {
-		                        	ps.setString(i++, null);
-		                        }
-		                        for (int k=0; k<2; k++) {
-			                        ps.setString(i++, String.valueOf(r.getStatus()));
-			                        ps.setString(i++, String.valueOf(r.getPreviousStatus()));
-			                        if (r.getFormat() != null) {
-			                        	ps.setInt(i++, r.getFormat().getId());
-			                        } else { 
-			                        	ps.setObject(i++, null);
-			                        }
-		                        }
-		                        if (r.getOaiDatestamp() == null) {
-		                        	ps.setTimestamp(i++, new Timestamp(startTime));	
-		                        } else {
-		                        	ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
-		                        }
-		                    }
+				int[] updateCounts = jdbcTemplate.batchUpdate(
+						sql,
+						new BatchPreparedStatementSetter() {
+							public void setValues(PreparedStatement ps, int j) throws SQLException {
+								int i=1;
+								Record r = recordsToAdd.get(j);
+								ps.setLong(i++, r.getId());
+								if (r.getOaiDatestamp() == null) {
+									ps.setTimestamp(i++, new Timestamp(startTime));	
+								} else {
+									ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+								}
+								if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+									ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
+								} else {
+									ps.setString(i++, null);
+								}
+								for (int k=0; k<2; k++) {
+									ps.setString(i++, String.valueOf(r.getStatus()));
+									ps.setString(i++, String.valueOf(r.getPreviousStatus()));
+									if (r.getFormat() != null) {
+										ps.setInt(i++, r.getFormat().getId());
+									} else { 
+										ps.setObject(i++, null);
+									}
+								}
+								if (r.getOaiDatestamp() == null) {
+									ps.setTimestamp(i++, new Timestamp(startTime));	
+								} else {
+									ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
+								}
+							}
 	
-		                    public int getBatchSize() {
-		                        return recordsToAdd.size();
-		                    }
-		                } );
-		        TimingLogger.stop("RECORDS_TABLE.insert");
-		        final long endTime = System.currentTimeMillis();
-	        	
-		        final List<Record> recordXmls2Add = new ArrayList<Record>();
-	        	for (Record r : recordsToAdd) {
-	        		r.setMode(Record.STRING_MODE);
-	        		if (!Record.UNCHANGED.equals(r.getOaiXml())) {
-	            		recordXmls2Add.add(r);
-	            	}
-	        	}
-	        	
-		        TimingLogger.start("RECORDS_XML_TABLE.insert");
+							public int getBatchSize() {
+								return recordsToAdd.size();
+							}
+						} );
+				TimingLogger.stop("RECORDS_TABLE.insert");
+				final long endTime = System.currentTimeMillis();
+				
+				final List<Record> recordXmls2Add = new ArrayList<Record>();
+				for (Record r : recordsToAdd) {
+					r.setMode(Record.STRING_MODE);
+					if (!Record.UNCHANGED.equals(r.getOaiXml())) {
+						recordXmls2Add.add(r);
+					}
+				}
+				
+				TimingLogger.start("RECORDS_XML_TABLE.insert");
 				sql = 
-	    			"insert into "+getTableName(name, RECORDS_XML_TABLE)+
-	    			" (record_id, xml) "+
-	    			"values (?,?) "+
-	    			"on duplicate key update "+
-	    				"xml=? "+
-	    			";";
-		        updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new BatchPreparedStatementSetter() {
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=1;
-		                    	Record r = recordXmls2Add.get(j);
-		                    	r.setMode(Record.STRING_MODE);
-		                        ps.setLong(i++, r.getId());
-		                        ps.setString(i++, r.getOaiXml());
-		                        ps.setString(i++, r.getOaiXml());
-		                        if (r.getOaiXml() != null) {
-		                        	TimingLogger.add("RECORDS_XML_LENGTH", r.getOaiXml().length());
-		                        } else {
-		                        	TimingLogger.add("RECORDS_XML_LENGTH", 0);
-		                        }
-		                    }
+					"insert into "+getTableName(name, RECORDS_XML_TABLE)+
+					" (record_id, xml) "+
+					"values (?,?) "+
+					"on duplicate key update "+
+						"xml=? "+
+					";";
+				updateCounts = jdbcTemplate.batchUpdate(
+						sql,
+						new BatchPreparedStatementSetter() {
+							public void setValues(PreparedStatement ps, int j) throws SQLException {
+								int i=1;
+								Record r = recordXmls2Add.get(j);
+								r.setMode(Record.STRING_MODE);
+								ps.setLong(i++, r.getId());
+								ps.setString(i++, r.getOaiXml());
+								ps.setString(i++, r.getOaiXml());
+								if (r.getOaiXml() != null) {
+									TimingLogger.add("RECORDS_XML_LENGTH", r.getOaiXml().length());
+								} else {
+									TimingLogger.add("RECORDS_XML_LENGTH", 0);
+								}
+							}
 	
-		                    public int getBatchSize() {
-		                        return recordXmls2Add.size();
-		                    }
-		                } );
-		        TimingLogger.stop("RECORDS_XML_TABLE.insert");
-		        /*
-		        TimingLogger.start("RECORDS_XML_TABLE.fs_insert");
-		        try {
-			        OutputStream os = new BufferedOutputStream(new FileOutputStream(
-			        		MSTConfiguration.getUrlPath()+"/records/"+recordsToAdd.get(0).getId()+".xml"));
-			        for (Record r : recordsToAdd) {
-			        	r.setMode(Record.STRING_MODE);
-			        	os.write(r.getOaiXml().getBytes("UTF-8"));
-			        }
-			        os.close();
-		        } catch (Throwable t) {
-		        	LOG.error("", t);
-		        }
-		        TimingLogger.stop("RECORDS_XML_TABLE.fs_insert");
-		        */
-		        TimingLogger.start("RECORDS_SETS_TABLE.insert");
+							public int getBatchSize() {
+								return recordXmls2Add.size();
+							}
+						} );
+				TimingLogger.stop("RECORDS_XML_TABLE.insert");
+				/*
+				TimingLogger.start("RECORDS_XML_TABLE.fs_insert");
+				try {
+					OutputStream os = new BufferedOutputStream(new FileOutputStream(
+							MSTConfiguration.getUrlPath()+"/records/"+recordsToAdd.get(0).getId()+".xml"));
+					for (Record r : recordsToAdd) {
+						r.setMode(Record.STRING_MODE);
+						os.write(r.getOaiXml().getBytes("UTF-8"));
+					}
+					os.close();
+				} catch (Throwable t) {
+					LOG.error("", t);
+				}
+				TimingLogger.stop("RECORDS_XML_TABLE.fs_insert");
+				*/
+				TimingLogger.start("RECORDS_SETS_TABLE.insert");
 				sql = 
-	    			"insert ignore into "+getTableName(name, RECORDS_SETS_TABLE)+
-	    			" (record_id, set_id) "+
-	    			"values (?,?) "+
-	    			";";
-		        updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new BatchPreparedStatementSetter() {
-		        			int recordSetInserts=0;
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int k=0;
-		                    	Record r = recordsToAdd.get(j);
-		                    	if (r.getSets() != null && r.getSets().size() > 0) {
-			                    	int totalSets = r.getSets().size();
-			                    	for (Set s : r.getSets()) {
-				                    	int i=1;
-			                    		recordSetInserts++;
-			                    		ps.setLong(i++, r.getId());
-			                    		ps.setLong(i++, s.getId());
-			                    		if (++k < totalSets) {
-			                    			ps.addBatch();
-			                    		}
-			                    	}
-		                    	} else {
-		                    		ps.setObject(++k, null);
-		                    		ps.setObject(++k, null);
-		                    	}
-		                    }
-		                    public int getBatchSize() {
-		                    	return recordsToAdd.size();
-		                    }
-		                } );
-		        TimingLogger.stop("RECORDS_SETS_TABLE.insert");
-		        
-		        TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
-		        // TODO: Delete previous predecessors that are no longer there.
+					"insert ignore into "+getTableName(name, RECORDS_SETS_TABLE)+
+					" (record_id, set_id) "+
+					"values (?,?) "+
+					";";
+				updateCounts = jdbcTemplate.batchUpdate(
+						sql,
+						new BatchPreparedStatementSetter() {
+							int recordSetInserts=0;
+							public void setValues(PreparedStatement ps, int j) throws SQLException {
+								int k=0;
+								Record r = recordsToAdd.get(j);
+								if (r.getSets() != null && r.getSets().size() > 0) {
+									int totalSets = r.getSets().size();
+									for (Set s : r.getSets()) {
+										int i=1;
+										recordSetInserts++;
+										ps.setLong(i++, r.getId());
+										ps.setLong(i++, s.getId());
+										if (++k < totalSets) {
+											ps.addBatch();
+										}
+									}
+								} else {
+									ps.setObject(++k, null);
+									ps.setObject(++k, null);
+								}
+							}
+							public int getBatchSize() {
+								return recordsToAdd.size();
+							}
+						} );
+				TimingLogger.stop("RECORDS_SETS_TABLE.insert");
+				
+				TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
+				// TODO: Delete previous predecessors that are no longer there.
 				sql = 
-	    			"insert ignore into "+getTableName(name, RECORD_PREDECESSORS_TABLE)+
-	    			" (record_id, pred_record_id) "+
-	    			"values (?,?) "+
-	    			";";
+					"insert ignore into "+getTableName(name, RECORD_PREDECESSORS_TABLE)+
+					" (record_id, pred_record_id) "+
+					"values (?,?) "+
+					";";
 	
-		        List<long[]> recordPreds = new ArrayList<long[]>();
-		        for (Record r : recordsToAdd) {
-		        	if (r.getPredecessors() != null) {
-			        	for (RecordIfc p : r.getPredecessors()) {
-			        		long[] recPredRow = new long[2];
-			        		recPredRow[0] = r.getId();
-			        		recPredRow[1] = p.getId();
-			        		recordPreds.add(recPredRow);
-			        	}
-		        	}
-		        }
-		        updateCounts = jdbcTemplate.batchUpdate(
-		        		sql,
-		                new RecPredBatchPreparedStatementSetter(recordPreds));
-		        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
-		        
+				List<long[]> recordPreds = new ArrayList<long[]>();
+				for (Record r : recordsToAdd) {
+					if (r.getPredecessors() != null) {
+						for (RecordIfc p : r.getPredecessors()) {
+							long[] recPredRow = new long[2];
+							recPredRow[0] = r.getId();
+							recPredRow[1] = p.getId();
+							recordPreds.add(recPredRow);
+						}
+					}
+				}
+				updateCounts = jdbcTemplate.batchUpdate(
+						sql,
+						new RecPredBatchPreparedStatementSetter(recordPreds));
+				TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
+				
 				TimingLogger.start("RECORD_OAI_IDS.insert");
 				sql = 
-	    			"insert ignore into "+getTableName(name, RECORD_OAI_IDS)+
-	    			" (record_id, oai_id) "+
-	    			"values (?,?) "+
-	    			";";
+					"insert ignore into "+getTableName(name, RECORD_OAI_IDS)+
+					" (record_id, oai_id) "+
+					"values (?,?) "+
+					";";
 				updateCounts = this.jdbcTemplate.execute(sql, new PreparedStatementCallback<int[]>() {
 					public int[] doInPreparedStatement(PreparedStatement ps)
 							throws SQLException, DataAccessException {
@@ -458,27 +458,27 @@ public class RepositoryDAO extends BaseDAO {
 					";";
 				updateCounts = jdbcTemplate.batchUpdate(
 						sql,
-		                new BatchPreparedStatementSetter() {
-		                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-		                    	int i=1;
-		                    	Record r = recordsToAdd.get(j);
-		                        ps.setLong(i++, r.getId());
-		                        ps.setTimestamp(i++, new Timestamp(updateTime));
-		                    }
+						new BatchPreparedStatementSetter() {
+							public void setValues(PreparedStatement ps, int j) throws SQLException {
+								int i=1;
+								Record r = recordsToAdd.get(j);
+								ps.setLong(i++, r.getId());
+								ps.setTimestamp(i++, new Timestamp(updateTime));
+							}
 	
-		                    public int getBatchSize() {
-		                        return recordsToAdd.size();
-		                    }
-		                } );
-		        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
-		        LOG.debug(RECORD_UPDATES_TABLE+" committed: "+new Date());
-		        LOG.debug("updateTime: "+new Date(updateTime));
-		        
-		        LOG.debug("processedRecordsCount: "+processedRecordsCount);
-		        LOG.debug("db.numInserts2dropIndexes: "+MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0));
-		        if (processedRecordsCount > MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0)) {
-		        	dropIndicies(name);
-		        }
+							public int getBatchSize() {
+								return recordsToAdd.size();
+							}
+						} );
+				TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+				LOG.debug(RECORD_UPDATES_TABLE+" committed: "+new Date());
+				LOG.debug("updateTime: "+new Date(updateTime));
+				
+				LOG.debug("processedRecordsCount: "+processedRecordsCount);
+				LOG.debug("db.numInserts2dropIndexes: "+MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0));
+				if (processedRecordsCount > MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0)) {
+					dropIndicies(name);
+				}
 			} else {
 				try {
 					String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
@@ -506,9 +506,9 @@ public class RepositoryDAO extends BaseDAO {
 						os.write(tabBytes);
 						if (r.getOaiDatestamp() == null) {
 							os.write(startTimeBytes);
-                        } else {
-                        	os.write(sdf.format(r.getOaiDatestamp()).getBytes());
-                        }
+						} else {
+							os.write(sdf.format(r.getOaiDatestamp()).getBytes());
+						}
 						os.write(tabBytes);
 						if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
 							os.write(r.getIndexedObjectType().substring(0,1).getBytes());
@@ -531,16 +531,16 @@ public class RepositoryDAO extends BaseDAO {
 							);
 					TimingLogger.stop("RECORDS_TABLE.insert.load_infile");
 					TimingLogger.stop("RECORDS_TABLE.insert");
-			        final long endTime = System.currentTimeMillis();
-		        	
-			        final List<Record> recordXmls2Add = new ArrayList<Record>();
-		        	for (Record r : recordsToAdd) {
-		        		r.setMode(Record.STRING_MODE);
-		        		if (!Record.UNCHANGED.equals(r.getOaiXml())) {
-		            		recordXmls2Add.add(r);
-		            	}
-		        	}
-		        	
+					final long endTime = System.currentTimeMillis();
+					
+					final List<Record> recordXmls2Add = new ArrayList<Record>();
+					for (Record r : recordsToAdd) {
+						r.setMode(Record.STRING_MODE);
+						if (!Record.UNCHANGED.equals(r.getOaiXml())) {
+							recordXmls2Add.add(r);
+						}
+					}
+					
 					if (dbLoadFile.exists()) {
 						dbLoadFile.delete();
 					}
@@ -607,19 +607,19 @@ public class RepositoryDAO extends BaseDAO {
 					TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert");
 					TimingLogger.start("RECORD_PREDECESSORS_TABLE.insert.create_infile");
 					for (Record r : recordsToAdd) {
-			        	if (r.getPredecessors() != null) {
-				        	for (RecordIfc p : r.getPredecessors()) {
+						if (r.getPredecessors() != null) {
+							for (RecordIfc p : r.getPredecessors()) {
 								if (i++ > 0) {
 									os.write(newLineBytes);
 								}
 								os.write(String.valueOf(r.getId()).getBytes());
 								os.write(tabBytes);
 								os.write(String.valueOf(p.getId()).getBytes());
-				        	}
-			        	}
-			        }
-			        os.close();
-			        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert.create_infile");
+							}
+						}
+					}
+					os.close();
+					TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_SETS_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
 							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
@@ -627,8 +627,8 @@ public class RepositoryDAO extends BaseDAO {
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
 					TimingLogger.stop("RECORDS_SETS_TABLE.insert.load_infile");
-			        TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
-			        
+					TimingLogger.stop("RECORD_PREDECESSORS_TABLE.insert");
+					
 					if (dbLoadFile.exists()) {
 						dbLoadFile.delete();
 					}
@@ -638,18 +638,18 @@ public class RepositoryDAO extends BaseDAO {
 					TimingLogger.start("RECORD_OAI_IDS.insert");
 					TimingLogger.start("RECORD_OAI_IDS.insert.create_infile");
 					for (Record r : recordsToAdd) {
-			        	if (r.getHarvestedOaiIdentifier() != null) {
-			        		atLeastOne = true;
+						if (r.getHarvestedOaiIdentifier() != null) {
+							atLeastOne = true;
 							if (i++ > 0) {
 								os.write(newLineBytes);
 							}
 							os.write(String.valueOf(r.getId()).getBytes());
 							os.write(tabBytes);
 							os.write(String.valueOf(r.getHarvestedOaiIdentifier()).getBytes("UTF-8"));
-			        	}
-			        }
-			        os.close();
-			        TimingLogger.stop("RECORD_OAI_IDS.insert.create_infile");
+						}
+					}
+					os.close();
+					TimingLogger.stop("RECORD_OAI_IDS.insert.create_infile");
 					TimingLogger.start("RECORDS_OAI_IDS.insert.load_infile");
 					if (atLeastOne) {
 						this.jdbcTemplate.execute(
@@ -659,8 +659,8 @@ public class RepositoryDAO extends BaseDAO {
 								);
 					}
 					TimingLogger.stop("RECORDS_OAI_IDS.insert.load_infile");
-			        TimingLogger.stop("RECORD_OAI_IDS.insert");
-			        
+					TimingLogger.stop("RECORD_OAI_IDS.insert");
+					
 					if (dbLoadFile.exists()) {
 						dbLoadFile.delete();
 					}
@@ -684,9 +684,9 @@ public class RepositoryDAO extends BaseDAO {
 						} else {
 							os.write(sdf.format(r.getUpdatedAt()).getBytes());
 						}
-			        }
-			        os.close();
-			        TimingLogger.stop("RECORD_UPDATES_TABLE.insert.create_infile");
+					}
+					os.close();
+					TimingLogger.stop("RECORD_UPDATES_TABLE.insert.create_infile");
 					TimingLogger.start("RECORDS_UPDATES_TABLE.insert.load_infile");
 					this.jdbcTemplate.execute(
 							"load data infile '"+dbLoadFileStr+"' into table "+
@@ -694,13 +694,13 @@ public class RepositoryDAO extends BaseDAO {
 							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
 							);
 					TimingLogger.stop("RECORDS_UPDATES_TABLE.insert.load_infile");
-			        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+					TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
 
 				} catch (Throwable t) {
 					getUtil().throwIt(t);
 				}
 			}
-	        
+			
 			recordsToAdd = null;
 			TimingLogger.stop("commit to db");
 			if (force) {
@@ -775,41 +775,41 @@ public class RepositoryDAO extends BaseDAO {
 		TimingLogger.stop("populatePreviousStatuses");
 	}
 	
-    private final static class RecPredBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
-    	protected List<long[]> recPreds = null;
+	private final static class RecPredBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
+		protected List<long[]> recPreds = null;
 		public RecPredBatchPreparedStatementSetter(List<long[]> recPreds) {
 			this.recPreds = recPreds;
 		}
-        public void setValues(PreparedStatement ps, int j) throws SQLException {
-        	int i=1;
-        	//LOG.debug("this.recPreds.get("+j+")[0]: "+this.recPreds.get(j)[0]);
-    		ps.setLong(i++, this.recPreds.get(j)[0]);
-    		//LOG.debug("this.recPreds.get("+j+")[1]: "+this.recPreds.get(j)[1]);
-    		ps.setLong(i++, this.recPreds.get(j)[1]);
-        }
-        public int getBatchSize() {
-        	return this.recPreds.size();
-        }
-    }
-    
-    private final static class RecMessageBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
-    	protected List<Object[]> recMessages = null;
+		public void setValues(PreparedStatement ps, int j) throws SQLException {
+			int i=1;
+			//LOG.debug("this.recPreds.get("+j+")[0]: "+this.recPreds.get(j)[0]);
+			ps.setLong(i++, this.recPreds.get(j)[0]);
+			//LOG.debug("this.recPreds.get("+j+")[1]: "+this.recPreds.get(j)[1]);
+			ps.setLong(i++, this.recPreds.get(j)[1]);
+		}
+		public int getBatchSize() {
+			return this.recPreds.size();
+		}
+	}
+	
+	private final static class RecMessageBatchPreparedStatementSetter implements BatchPreparedStatementSetter {
+		protected List<Object[]> recMessages = null;
 		public RecMessageBatchPreparedStatementSetter(List<Object[]> recMessages) {
 			this.recMessages = recMessages;
 		}
-        public void setValues(PreparedStatement ps, int j) throws SQLException {
-        	int i=1;
-    		ps.setLong(i++, (Long)this.recMessages.get(j)[0]);
-    		ps.setBoolean(i++, (Boolean)this.recMessages.get(j)[1]);
-    		ps.setString(i++, (String)this.recMessages.get(j)[2]);
-    		ps.setString(i++, (String)this.recMessages.get(j)[3]);
-    		ps.setInt(i++, (Integer)this.recMessages.get(j)[4]);
-    		ps.setString(i++, (String)this.recMessages.get(j)[5]);
-        }
-        public int getBatchSize() {
-        	return this.recMessages.size();
-        }
-    }
+		public void setValues(PreparedStatement ps, int j) throws SQLException {
+			int i=1;
+			ps.setLong(i++, (Long)this.recMessages.get(j)[0]);
+			ps.setBoolean(i++, (Boolean)this.recMessages.get(j)[1]);
+			ps.setString(i++, (String)this.recMessages.get(j)[2]);
+			ps.setString(i++, (String)this.recMessages.get(j)[3]);
+			ps.setInt(i++, (Integer)this.recMessages.get(j)[4]);
+			ps.setString(i++, (String)this.recMessages.get(j)[5]);
+		}
+		public int getBatchSize() {
+			return this.recMessages.size();
+		}
+	}
 
 	public boolean exists(String name) {
 		try {
@@ -1551,20 +1551,20 @@ public class RepositoryDAO extends BaseDAO {
 	public void persistLinkedRecordIds(String name, final List<long[]> links) {
 		String sql = "insert into "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id, to_record_id) values (?,?)";
 		TimingLogger.start(RECORD_LINKS_TABLE+".insert");
-        int[] updateCounts = jdbcTemplate.batchUpdate(
-        		sql,
-                new BatchPreparedStatementSetter() {
-                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-                    	long[] link = links.get(j);
-                    	ps.setLong(1, link[0]);
-                    	ps.setLong(2, link[1]);
-                    }
+		int[] updateCounts = jdbcTemplate.batchUpdate(
+				sql,
+				new BatchPreparedStatementSetter() {
+					public void setValues(PreparedStatement ps, int j) throws SQLException {
+						long[] link = links.get(j);
+						ps.setLong(1, link[0]);
+						ps.setLong(2, link[1]);
+					}
 
-                    public int getBatchSize() {
-                        return links.size();
-                    }
-                } );
-        TimingLogger.stop(RECORD_LINKS_TABLE+".insert");
+					public int getBatchSize() {
+						return links.size();
+					}
+				} );
+		TimingLogger.stop(RECORD_LINKS_TABLE+".insert");
 	}
 	
 	public void persistPreviousStatuses(String repoName, TLongByteHashMap previousStatuses) {
@@ -1612,9 +1612,9 @@ public class RepositoryDAO extends BaseDAO {
 				" set status='"+Record.ACTIVE+"'"+
 				" where record_id = ?";
 			final TLongIterator it = recordIds.iterator();
-	        int[] updateCount = jdbcTemplate.batchUpdate(
-	        		sql, 
-	        		new BatchPreparedStatementSetter() {
+			int[] updateCount = jdbcTemplate.batchUpdate(
+					sql, 
+					new BatchPreparedStatementSetter() {
 						public void setValues(PreparedStatement ps, int j) throws SQLException {
 							ps.setLong(1, it.next());
 						}
@@ -1622,8 +1622,8 @@ public class RepositoryDAO extends BaseDAO {
 							return recordIds.size();
 						}
 					});
-	        TimingLogger.stop("activateRecords");
-	        long endTime = System.currentTimeMillis();
+			TimingLogger.stop("activateRecords");
+			long endTime = System.currentTimeMillis();
 			final long updateTime = System.currentTimeMillis() + (endTime - startTime) + 3000;
 			final TLongIterator it2 = recordIds.iterator();
 			TimingLogger.start("RECORD_UPDATES_TABLE.insert");
@@ -1634,18 +1634,18 @@ public class RepositoryDAO extends BaseDAO {
 				";";
 			jdbcTemplate.batchUpdate(
 					sql,
-	                new BatchPreparedStatementSetter() {
-	                    public void setValues(PreparedStatement ps, int j) throws SQLException {
-	                    	int i=1;
-	                        ps.setLong(i++, it2.next());
-	                        ps.setTimestamp(i++, new Timestamp(updateTime));
-	                    }
+					new BatchPreparedStatementSetter() {
+						public void setValues(PreparedStatement ps, int j) throws SQLException {
+							int i=1;
+							ps.setLong(i++, it2.next());
+							ps.setTimestamp(i++, new Timestamp(updateTime));
+						}
 
-	                    public int getBatchSize() {
-	                        return recordIds.size();
-	                    }
-	                } );
-	        TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
+						public int getBatchSize() {
+							return recordIds.size();
+						}
+					} );
+			TimingLogger.stop("RECORD_UPDATES_TABLE.insert");
 		} else {
 			LOG.debug("linkedToIds is null or empty");
 		}
@@ -1666,15 +1666,15 @@ public class RepositoryDAO extends BaseDAO {
 			sb.append("))");
 			LOG.debug("sb.toString(): "+sb.toString());
 			
-	        int updateCount = jdbcTemplate.update(
-	        		sb.toString(), new PreparedStatementSetter() {
+			int updateCount = jdbcTemplate.update(
+					sb.toString(), new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 							for (int i=0; i<linkedToIds.size(); i++) {
 								ps.setLong(i+1, linkedToIds.get(i));
 							}
 						}
 					});
-	        TimingLogger.stop("activateHeldHoldings");
+			TimingLogger.stop("activateHeldHoldings");
 		} else {
 			LOG.debug("linkedToIds is null or empty");
 		}
@@ -1694,24 +1694,24 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	private static final class RepoMapper implements RowMapper<Repository> {
-	    public Repository mapRow(ResultSet rs, int rowNum) throws SQLException {
-	    	Repository r = new DefaultRepository();
-	        r.setName(rs.getString("r.repo_name"));
-	        try {
-	        	Provider p = new Provider();
-	        	p.setName(rs.getString("p.name"));
-	        	p.setOaiProviderUrl(rs.getString("p.oai_provider_url"));
-	        	p.setId(rs.getInt("p.provider_id"));
-	        	r.setProvider(p);
-	        } catch (SQLException t) {
-	        	//LOG.debug("", t);
-	        	Service s = new Service();
-	        	s.setName(rs.getString("s.service_name"));
-	        	s.setId(rs.getInt("s.service_id"));
-	        	r.setService(s);
-	        }
-	        return r;
-	    }        
+		public Repository mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Repository r = new DefaultRepository();
+			r.setName(rs.getString("r.repo_name"));
+			try {
+				Provider p = new Provider();
+				p.setName(rs.getString("p.name"));
+				p.setOaiProviderUrl(rs.getString("p.oai_provider_url"));
+				p.setId(rs.getInt("p.provider_id"));
+				r.setProvider(p);
+			} catch (SQLException t) {
+				//LOG.debug("", t);
+				Service s = new Service();
+				s.setName(rs.getString("s.service_name"));
+				s.setId(rs.getInt("s.service_id"));
+				r.setService(s);
+			}
+			return r;
+		}		
 	}
 	
 	private static final class RecordMapper implements RowMapper<Record> {
@@ -1722,67 +1722,67 @@ public class RepositoryDAO extends BaseDAO {
 			this.tables = Arrays.asList(tables);
 			this.thisthis = thisthis;
 		}
-	    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
-	        Record r = new Record();
-	        if (tables.contains(RECORDS_TABLE)) {
-	        	r.setId(rs.getLong("r.record_id"));
-		        r.setCreatedAt(rs.getTimestamp("r.oai_datestamp"));
-		        String status = rs.getString("r.status");
-		        String prevStatus = rs.getString("r.prev_status");
-		        try {
-			        Integer formatId = rs.getInt("r.format_id");
-			        r.setFormat(thisthis.getFormatDAO().getById(formatId));
-		        } catch (NullPointerException npe) {
-		        	LOG.debug("no format for record: "+r.getId());
-		        } catch (Throwable t) {
-		        	LOG.debug("", t);
-		        }
-		        if (status != null && status.length() == 1) {
-		        	r.setStatus(status.charAt(0));
-		        }
-		        if (prevStatus != null && prevStatus.length() == 1) {
-		        	char ps = prevStatus.charAt(0);
-		        	if (ps != 0)
-		        		r.setPreviousStatus(ps);
-		        }
-	        }
-	        if (tables.contains(RECORD_UPDATES_TABLE)) {
-	        	r.setUpdatedAt(rs.getTimestamp("date_updated"));
-	        }
-	        if (tables.contains(RECORDS_XML_TABLE)) {
-	        	r.setMode(Record.STRING_MODE);
-		        r.setOaiXml(rs.getString("x.xml"));
-	        }
-	        
-	        if (tables.contains(RECORDS_SETS_TABLE)) {
-	        	r.setId(rs.getLong("rs.record_id"));
-	        	Set s = new Set();
-	        	s.setId(rs.getInt("s.set_id"));
-	        	s.setSetSpec(rs.getString("s.set_spec"));
-	        	s.setDisplayName(rs.getString("s.display_name"));
-	        	r.addSet(s);
-	        }
-	        if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
-	        }
-	        RecordMessage rm = null;
-	        if (tables.contains(MessageDAO.MESSAGES_TABLE)) {
-	        	r.setId(rs.getLong("m.record_id"));
-	        	String inOut = rs.getString("m.rec_in_out");
-	        	if (inOut != null) {
-	        		rm = new RecordMessage();
-	    	    	rm.setRecord(r);
-	    	    	rm.setInputRecord("O".equals(rs.getString("m.rec_in_out")));
-	    	    	rm.setCode(rs.getInt("m.msg_code"));
-	    	    	rm.setLevel(rs.getString("m.msg_level").charAt(0));
-	    	    	rm.setServiceId(rs.getInt("m.service_id"));
-	    	    	r.addMessage(rm);
-	        	}
-	        }
-	        if (rm != null && tables.contains(MessageDAO.MESSAGE_DETAILS_TABLE)) {
-    	    	rm.setDetail(rs.getString("md.detail"));	        	
-	        }
-	        return r;
-	    }        
+		public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Record r = new Record();
+			if (tables.contains(RECORDS_TABLE)) {
+				r.setId(rs.getLong("r.record_id"));
+				r.setCreatedAt(rs.getTimestamp("r.oai_datestamp"));
+				String status = rs.getString("r.status");
+				String prevStatus = rs.getString("r.prev_status");
+				try {
+					Integer formatId = rs.getInt("r.format_id");
+					r.setFormat(thisthis.getFormatDAO().getById(formatId));
+				} catch (NullPointerException npe) {
+					LOG.debug("no format for record: "+r.getId());
+				} catch (Throwable t) {
+					LOG.debug("", t);
+				}
+				if (status != null && status.length() == 1) {
+					r.setStatus(status.charAt(0));
+				}
+				if (prevStatus != null && prevStatus.length() == 1) {
+					char ps = prevStatus.charAt(0);
+					if (ps != 0)
+						r.setPreviousStatus(ps);
+				}
+			}
+			if (tables.contains(RECORD_UPDATES_TABLE)) {
+				r.setUpdatedAt(rs.getTimestamp("date_updated"));
+			}
+			if (tables.contains(RECORDS_XML_TABLE)) {
+				r.setMode(Record.STRING_MODE);
+				r.setOaiXml(rs.getString("x.xml"));
+			}
+			
+			if (tables.contains(RECORDS_SETS_TABLE)) {
+				r.setId(rs.getLong("rs.record_id"));
+				Set s = new Set();
+				s.setId(rs.getInt("s.set_id"));
+				s.setSetSpec(rs.getString("s.set_spec"));
+				s.setDisplayName(rs.getString("s.display_name"));
+				r.addSet(s);
+			}
+			if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
+			}
+			RecordMessage rm = null;
+			if (tables.contains(MessageDAO.MESSAGES_TABLE)) {
+				r.setId(rs.getLong("m.record_id"));
+				String inOut = rs.getString("m.rec_in_out");
+				if (inOut != null) {
+					rm = new RecordMessage();
+					rm.setRecord(r);
+					rm.setInputRecord("O".equals(rs.getString("m.rec_in_out")));
+					rm.setCode(rs.getInt("m.msg_code"));
+					rm.setLevel(rs.getString("m.msg_level").charAt(0));
+					rm.setServiceId(rs.getInt("m.service_id"));
+					r.addMessage(rm);
+				}
+			}
+			if (rm != null && tables.contains(MessageDAO.MESSAGE_DETAILS_TABLE)) {
+				rm.setDetail(rs.getString("md.detail"));				
+			}
+			return r;
+		}		
 	}
 	
 	public void dropIndicies(String name) {
