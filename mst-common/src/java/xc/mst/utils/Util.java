@@ -88,8 +88,8 @@ public class Util {
 	}
 	
 	public String getDBSchema(String name) {
-		if (!name.startsWith("xc_"))
-			return "xc_"+normalizeName(name);
+		if (!name.startsWith(MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")))
+			return MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")+normalizeName(name);
 		else
 			return name;
 	}
