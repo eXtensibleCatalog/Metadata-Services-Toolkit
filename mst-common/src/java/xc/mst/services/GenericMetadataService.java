@@ -58,7 +58,7 @@ import xc.mst.utils.TimingLogger;
  * @author Benjamin D. Anderson
  */
 
-public abstract class GenericMetadataService extends SolrMetadataService 
+public abstract class GenericMetadataService extends SolrMetadataService
 		implements MetadataService, MetadataServiceExtras, ApplicationContextAware {
 
 	protected static Logger LOG = Logger.getLogger(Constants.LOGGER_PROCESSING);
@@ -68,7 +68,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
 	protected Emailer mailer = new Emailer();
-	
+
 	protected MetadataServiceManager metadataServiceManager = null;
 
 	protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
@@ -86,17 +86,17 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected Semaphore running = new Semaphore(1);
 	protected Set outputSet;
 	protected List<String> unprocessedErrorRecordIdentifiers = new ArrayList<String>();
-	
+
 	protected long startTime = new Date().getTime();
 	protected long endTime = 0;
 	protected long timeDiff = 0;
-	
+
 	protected Repository repository = null;
-	
+
 	static {
 		LOG.debug("GenericMetadataService class loaded!!!");
 	}
-	
+
 	public ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
@@ -104,7 +104,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-	
+
 	public MetadataServiceManager getMetadataServiceManager() {
 		return metadataServiceManager;
 	}
@@ -121,7 +121,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	public void setService(Service service) {
 		this.service = service;
 	}
-	
+
 	public MetadataServiceDAO getMetadataServiceDAO() {
 		return metadataServiceDAO;
 	}
@@ -137,7 +137,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	public void setOutputSet(Set outputSet) {
 		this.outputSet = outputSet;
 	}
-    
+
 	public Repository getRepository() {
 		return this.repository;
 	}
@@ -148,13 +148,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 	public void setInputRecordCount(int inputRecordCount) {
 	}
-	
+
 	public void setup() {}
 	public void cancel() {stopped = true; running.acquireUninterruptibly(); running.release();}
 	public void finish() {running.acquireUninterruptibly(); running.release();}
 	public void pause()  {LOG.debug("pausing...");paused = true; running.acquireUninterruptibly(); running.release();LOG.debug("paused.");}
 	public void resume() {paused = false;}
-	
+
 	public void install() {
 		try {
 			getMetadataServiceDAO().executeServiceDBScripts(config.getServicePath()+getServiceName()+"/sql/install.sql");
@@ -163,7 +163,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			LOG.error("", t);
 		}
 	}
-	
+
 	public void postInstall() {
 	}
 
@@ -176,14 +176,14 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 		postUninstall();
 	}
-	
+
 	public void postUninstall() {
 	}
-	
+
 	public void update(String cvStr) {
 		update(cvStr, getService().getVersion());
 	}
-	
+
 	public void update(String pvStr, String cvStr) {
 		List<String> fileNames = new ArrayList<String>();
 		File dir = new File(config.getServicePath()+getServiceName()+"/sql/");
@@ -194,7 +194,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 		update(pvStr, cvStr, fileNames);
 	}
-	
+
 	public void update(String pvStr, String cvStr, List<String> fileNames) {
 		List<String> orderedFileNames2run = internalUpdate(pvStr, cvStr, fileNames);
 		for (String fn : orderedFileNames2run) {
@@ -204,16 +204,16 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				LOG.error("", t);
 			}
 		}
-		
+
 		postUpdate();
 	}
-	
+
 	public List<String> internalUpdate(String pvStr, String cvStr, List<String> fileNames) {
 		List<Integer> pvs = getSubversions(pvStr);
 		List<Integer> cvs = getSubversions(cvStr);
-		
+
 		List<List<Integer>> fileVersions = new ArrayList<List<Integer>>();
-		
+
 		String update = "update.";
 		for (String file : fileNames) {
 			int idx = file.indexOf(update);
@@ -221,7 +221,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			fileVers = fileVers.substring(0, fileVers.length()-4);
 			fileVersions.add(getSubversions(fileVers));
 		}
-		
+
 		int mostSubVersions = 0;
 		List<List<Integer>> allSubVersions = new ArrayList<List<Integer>>();
 		allSubVersions.addAll(fileVersions);
@@ -237,7 +237,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				v.add(0);
 			}
 		}
-		
+
 		List<List<Integer>> updates2run = new ArrayList<List<Integer>>();
 		for (int i=0; i<fileVersions.size(); i++) {
 			List<Integer> fv = fileVersions.get(i);
@@ -247,7 +247,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				Integer fsv = fv.get(j);
 				Integer csv = cvs.get(j);
 				Integer psv = pvs.get(j);
-				
+
 				boolean isFinalSubversion = j+1==fv.size();
 				boolean stillValid = false;
 				if (fsv > psv) {
@@ -256,17 +256,17 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				if (fsv < csv) {
 					lessThanCurrent = true;
 				}
-				if (!isFinalSubversion && 
-						(fsv >= psv || greaterThanPrevious) && 
+				if (!isFinalSubversion &&
+						(fsv >= psv || greaterThanPrevious) &&
 						(fsv <= csv || lessThanCurrent)) {
 					stillValid = true;
 				}
-				if (isFinalSubversion && 
-						(fsv > psv || greaterThanPrevious) && 
+				if (isFinalSubversion &&
+						(fsv > psv || greaterThanPrevious) &&
 						(fsv <= csv || lessThanCurrent)) {
 					stillValid = true;
 				}
-				
+
 				if (!stillValid) {
 					break;
 				}
@@ -311,11 +311,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				orderedFileNames2run.add(filename);
 			}
 		}
-		
+
 		return orderedFileNames2run;
 
 	}
-	
+
 	protected List<Integer> getSubversions(String s) {
 		List<Integer> versions = new ArrayList<Integer>();
 		for (String v : s.split("\\.")) {
@@ -323,13 +323,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 		return versions;
 	}
-	
+
 	public void postUpdate() {
 	}
-	
+
 	/**
-	 *  
-	 * 
+	 *
+	 *
 	 * @param r <b>note: modifying input objects has no effect on the system</b>
 	 * <ul>
 	 * 		<li>
@@ -337,7 +337,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	 * 			<ul>
 	 * 				<li>
 	 * 					If this InputRecord has been deleted, then the status will be Record.DELETED.
-	 * 					Otherwise it will be Record.ACTIVE. 
+	 * 					Otherwise it will be Record.ACTIVE.
 	 * 				</li>
 	 * 			</ul>
 	 * 		</li>
@@ -345,9 +345,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	 * 			r.successors
 	 * 			<ul>
 	 * 				<li>
-	 * 					If this InputRecord has been processed before (determined by the oai-id), then the record 
-	 * 					will have successor Records attached to it. The only data attached to these records 
-	 * 					is the id. The content (xml) is not attached. If implementers find it necessary to 
+	 * 					If this InputRecord has been processed before (determined by the oai-id), then the record
+	 * 					will have successor Records attached to it. The only data attached to these records
+	 * 					is the id. The content (xml) is not attached. If implementers find it necessary to
 	 * 					have this, we may provide an optional way to get that content.
 	 * 				</li>
 	 * 			</ul>
@@ -356,9 +356,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	 * 			r.successors.predecessors
 	 * 			<ul>
 	 * 				<li>
-	 * 					If this InputRecord has successors associated with it, then the predecessors of the successors 
-	 * 					will also be attached. As with InputRecord.successors, these predecessor records only have the 
-	 * 					id associated with them. For a typical one-to-one service, this data is somewhat redundant. 
+	 * 					If this InputRecord has successors associated with it, then the predecessors of the successors
+	 * 					will also be attached. As with InputRecord.successors, these predecessor records only have the
+	 * 					id associated with them. For a typical one-to-one service, this data is somewhat redundant.
 	 * 					But for more complex services in which a Record may have more than one predecessor, it becomes necessary.
 	 * 				</li>
 	 * 			</ul>
@@ -387,7 +387,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	 * 					Record.ACTIVE (default) - Record will be made available for oai-pmh harvesting once persisted.
 	 * 				</li>
 	 * 	 			<li>
-	 * 					Record.HELD - Record will be persisted and will await further notice to be made active. 
+	 * 					Record.HELD - Record will be persisted and will await further notice to be made active.
 	 * 					These records are not included in oai-pmh responses.
 	 * 				</li>
 	 *				<li>
@@ -396,13 +396,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
-	 * 
+	 *
 	 *  @see xc.mst.bo.record.RecordIfc
 	 *  @see xc.mst.bo.record.InputRecord
 	 *  @see xc.mst.bo.record.OutputRecord
 	 */
 	public abstract List<OutputRecord> process(InputRecord r);
-	
+
 	protected ServiceHarvest getServiceHarvest(Format inputFormat, xc.mst.bo.provider.Set inputSet, String repoName, Service service) {
 		LOG.debug("inputFormat: "+inputFormat);
 		LOG.debug("inputSet: "+inputSet);
@@ -436,31 +436,31 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		LOG.debug("sh.getId(): "+sh.getId());
 		return sh;
 	}
-	
+
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
-		return  
-			repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);	
+		return
+			repo.getRecords(sh.getFrom(), sh.getUntil(), sh.getHighestId(), inputFormat, inputSet);
 	}
-	
+
 	protected boolean commitIfNecessary(boolean force, long processedRecordCount) {
 		if (getRepository() != null) {
 			if (getRepository().commitIfNecessary(
-					force, 
-					processedRecordCount, 
-					getMetadataServiceManager().getIncomingRecordCounts(), 
+					force,
+					processedRecordCount,
+					getMetadataServiceManager().getIncomingRecordCounts(),
 					getMetadataServiceManager().getOutgoingRecordCounts())) {
-				
+
 				getMetadataServiceManager().getIncomingRecordCounts().clear();
 				getMetadataServiceManager().getOutgoingRecordCounts().clear();
-				
+
 				getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
 				tempPreviousStatuses.clear();
-				
+
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
 				getMessageDAO().persistMessages(messages2insert);
 				messages2insert.clear();
-				
+
 				try {
 					getServiceDAO().update(service);
 				} catch(DataException de) {
@@ -471,8 +471,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 		return force;
 	}
-	
+
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		startTime = new Date().getTime();
 		if (!(this instanceof SolrIndexService)) {
 			setStatus(Status.RUNNING);
 			LOG.info("getClass(): "+getClass());
@@ -489,13 +490,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			previousStatuses.clear();
 			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
 		}
-		
+
 		LOG.debug("gettingServiceHarvest");
 		ServiceHarvest sh = getServiceHarvest(
 				inputFormat, inputSet, repo.getName(), getService());
 		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
-		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
 				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
@@ -560,10 +561,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				if (unexpectedError) {
 					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), RecordCounts.UNEXPECTED_ERROR);	
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), RecordCounts.UNEXPECTED_ERROR);
 					}
-					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);					
-				} else {	
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
+				} else {
 					if (out != null) {
 						for (RecordIfc rout : out) {
 							Record rout2 = (Record)rout;
@@ -585,25 +586,25 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							getRepository().addRecord(rout2);
 						}
 					}
-					if (getRepository() == null || 
-							(in.getStatus() != Record.DELETED && 
+					if (getRepository() == null ||
+							(in.getStatus() != Record.DELETED &&
 									(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
 						processedRecordCount++;
 					}
 				}
 				sh.setHighestId(in.getId());
 				updateService(out, sh);
-				
+
 				//  TODO not inserting errors on input record.
 				// Update the error message on incoming record
 //				repo.addRecord(in);
 			}
-			
+
 			if (commitIfNecessary(false, processedRecordCount)) {
 				getServiceDAO().persist(sh);
 			}
-			
-			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), 
+
+			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
 					sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
 			records = getRecords(repo, sh, inputFormat, inputSet);
 		}
@@ -623,21 +624,26 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		if (!previouslyPaused) {
 			running.release();
 		}
-		
+
 		if (getRepository() != null) {
-			int i=0;
-			for (RecordCounts rc : new RecordCounts[] {
-					getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
-			}) {
-				LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));	
+			RecordCounts mostRecentIncomingRecordCounts =
+				getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName());
+			// I'm substracting 1s from startTime because they might actually be equal by the second,
+			// but
+			if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+				for (RecordCounts rc : new RecordCounts[] {
+						mostRecentIncomingRecordCounts,
+						getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
+						getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
+						getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
+				}) {
+					LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
+				}
 			}
 		}
 		setStatus(Status.NOT_RUNNING);
 	}
-	
+
 	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {
 		if (getRepository() != null && !(getRepository() instanceof TestRepository)) {
 			// Set number of input and output records.
@@ -649,13 +655,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			service.setInputRecordCount(service.getInputRecordCount() + 1);
 			if (outputRecords != null)
 				service.setOutputRecordCount(service.getOutputRecordCount() + outputRecords.size());
-			
+
 			// TODO : currently # of output records and HarvestOutRecordsAvailable are same. So we can get rid of one of the fields in Services.
-			// TODO : Should # of harvest out records available include deleted records too? 
+			// TODO : Should # of harvest out records available include deleted records too?
 			service.setHarvestOutRecordsAvailable(service.getOutputRecordCount());
 		}
 	}
-	
+
 	protected void injectKnownSuccessorsIds(Record in) {
 		if (previousStatuses.contains(in.getId())) {
 			if (getRepository() != null)
@@ -663,15 +669,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			in.setPreviousStatus((char)previousStatuses.get(in.getId()));
 		}
 	}
-	
+
 	public MSTConfiguration getConfig() {
 		return config;
 	}
-	
+
 	protected void addMessage(OutputRecord record, int code, char level) {
 		addMessage(record, code, level, null);
 	}
-	
+
 	protected void addMessage(OutputRecord record, int code, char level, String detail) {
 		Record r = (Record)record;
 		RecordMessage rm = new RecordMessage();
@@ -682,15 +688,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		rm.setLevel(level);
 		rm.setDetail(detail);
 		rm.setRecord(r);
-		
+
 		messages2insert.add(rm);
 	}
-	
+
 	protected void addMessage(InputRecord record, int code, char level) {
 		addMessage(record, code, level, null);
 	}
-	
-	protected void addMessage(InputRecord record, int code, 
+
+	protected void addMessage(InputRecord record, int code,
 			char level, String detail) {
 		Record r = (Record)record;
 		RecordMessage rm = new RecordMessage();
@@ -704,7 +710,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 		messages2insert.add(rm);
 	}
-	
+
 	public String getMessage(int code) {
 		return config.getProperty("error."+code+".text");
 	}

@@ -34,20 +34,20 @@ import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
 
 public class DefaultRepository extends BaseService implements Repository {
-	
+
 	private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
-	
+
 	// This is meant only to be a cache of what is not yet in the DB.  This will not
 	// keep all pred-succs in memory.
 	protected Map<Long, java.util.Set<Record>> predSuccMap = new HashMap<Long, java.util.Set<Record>>();
-	
+
 	protected List<long[]> uplinks = new ArrayList<long[]>();
-	
+
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
-	protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>(); 
-	
+	protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>();
+
 	protected String name = null;
-	
+
 	protected Provider provider = null;
 	protected Service service = null;
 
@@ -66,11 +66,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setService(Service service) {
 		this.service = service;
 	}
-	
+
 	public Date getLastModified() {
 		return getRepositoryDAO().getLastModified(name);
 	}
-	
+
 	public int getNumRecords() {
 		return getRepositoryDAO().getNumRecords(name);
 	}
@@ -81,8 +81,8 @@ public class DefaultRepository extends BaseService implements Repository {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
 					LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
-					if (previousVersion == null && 
-							currentVersion != null && 
+					if (previousVersion == null &&
+							currentVersion != null &&
 							currentVersion.startsWith("0.3.")) {
 						getRepositoryDAO().createTables(thisthis);
 					}
@@ -93,15 +93,15 @@ public class DefaultRepository extends BaseService implements Repository {
 			}
 		});
 	}
-	
+
 	public void populatePredecessors(TLongHashSet predecessors) {
 		getRepositoryDAO().populatePredecessors(name, predecessors);
 	}
-	
+
 	protected boolean exists() {
 		return false;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -109,11 +109,11 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setName(String name) {
 		this.name = getUtil().normalizeName(name);
 	}
-	
+
 	public int getSize() {
 		return getRepositoryDAO().getSize(name);
 	}
-	
+
 	public void addRecord(Record record) {
 		if (record.getPredecessors() != null) {
 			for (InputRecord ir : record.getPredecessors()) {
@@ -127,7 +127,7 @@ public class DefaultRepository extends BaseService implements Repository {
 		}
 		getRepositoryDAO().addRecord(name, record);
 	}
-	
+
 	public void addRecords(List<Record> records) {
 		getRepositoryDAO().addRecords(name, records);
 	}
@@ -138,7 +138,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
 		return commitIfNecessary(force, processedRecordsCount, null, null);
 	}
-	public boolean commitIfNecessary(boolean force, long processedRecordsCount, 
+	public boolean commitIfNecessary(boolean force, long processedRecordsCount,
 			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
 		if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
 			predSuccMap.clear();
@@ -146,14 +146,17 @@ public class DefaultRepository extends BaseService implements Repository {
 			uplinks.clear();
 			getRepositoryDAO().activateRecords(name, recordsToActivate);
 			for (Map.Entry<String, AtomicInteger> me : recordCountsToActivateByType.entrySet()) {
-				outgoingRecordCounts.incr(me.getKey(), Record.ACTIVE, Record.HELD);
-				if (me.getKey() != null && !RecordCounts.TOTALS.equals(me.getKey())) {
-					outgoingRecordCounts.incr(null, Record.ACTIVE, Record.HELD);	
+				int num = me.getValue().get();
+				for (int i=0; i<num; i++) {
+					outgoingRecordCounts.incr(me.getKey(), Record.ACTIVE, Record.HELD);
+					if (me.getKey() != null && !RecordCounts.TOTALS.equals(me.getKey())) {
+						outgoingRecordCounts.incr(null, Record.ACTIVE, Record.HELD);
+					}
 				}
 			}
 			recordsToActivate.clear();
 			recordCountsToActivateByType.clear();
-			
+
 			getRecordCountsDAO().persistRecordCounts(name, incomingRecordCounts, outgoingRecordCounts);
 			if (incomingRecordCounts != null)
 				incomingRecordCounts.clear();
@@ -179,11 +182,11 @@ public class DefaultRepository extends BaseService implements Repository {
 		} else {
 			return null;
 		}
-		
+
 	}
 
 	// TODO: you need to check the cache as well
-	public Record getRecord(long id) {	
+	public Record getRecord(long id) {
 		Record r = getRepositoryDAO().getRecord(name, id);
 		if (r != null)
 			r.setSets(getRepositoryDAO().getSets(name, id));
@@ -198,7 +201,7 @@ public class DefaultRepository extends BaseService implements Repository {
 		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, statuses);
 		if (records == null) {
 			LOG.debug("no records found");
-		} else { 
+		} else {
 			LOG.debug("records.size(): "+records.size());
 		}
 		return records;
@@ -217,23 +220,23 @@ public class DefaultRepository extends BaseService implements Repository {
 			recordCount = offset + completeListSizeThreshold;
 		}
 		LOG.debug("recordCount:"+recordCount);
-		// if (recordCount + numAlreadyHarvested) < 
+		// if (recordCount + numAlreadyHarvested) <
 		return recordCount;
 		*/
 	}
-	
-	
+
+
 	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
 		List<Record> records = getRepositoryDAO().getRecordHeader(name, from, until, startingId, inputFormat, inputSet);
 		if (records == null) {
 			LOG.debug("no records found");
-		} else { 
+		} else {
 			LOG.debug("records.size(): "+records.size());
 		}
 		return records;
 	}
-	
+
 	public List<Record> getRecordsWSets(Date from, Date until, Long startingId, char[] statuses) {
 		List<Record> recs = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, null, null, statuses);
 		for (Record r : recs) {
@@ -241,14 +244,14 @@ public class DefaultRepository extends BaseService implements Repository {
 		}
 		return recs;
 	}
-	
+
 	public void injectSuccessors(Record r) {
 		List<Record> succs = getRepositoryDAO().getSuccessors(name, r.getId());
 		if (succs != null) {
 			r.getSuccessors().addAll(succs);
 		}
 	}
-	
+
 	public void injectSuccessorIds(Record r) {
 		java.util.Set<Record> succIds = predSuccMap.get(r.getId());
 		if (succIds == null) {
@@ -261,10 +264,10 @@ public class DefaultRepository extends BaseService implements Repository {
 			}
 		}
 	}
-	
+
 	/**
 	 *  I slightly future dated the timestamp of the records so that a record will always
-	 *  have been available from it's update_date forward.  We need to wait for that 
+	 *  have been available from it's update_date forward.  We need to wait for that
 	 *  future dating to become present before moving on here.  Otherwise, the next service
 	 *  will not pick up all the records that were just inserted.
 	 */
@@ -276,7 +279,7 @@ public class DefaultRepository extends BaseService implements Repository {
 			repoCreated = ready4harvest();
 			if (repoCreated) {
 				lm = getLastModified();
-			    keepSleeping = (lm != null && new Date().before(lm));	
+			    keepSleeping = (lm != null && new Date().before(lm));
 			}
 	    	try {
 	    		Thread.sleep(500);
@@ -285,7 +288,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	    	}
 	    }
 	}
-	
+
 	public void deleteAllData() {
 		getRepositoryDAO().deleteAllData(this.name);
 	}
@@ -305,18 +308,18 @@ public class DefaultRepository extends BaseService implements Repository {
 			recordCountsToActivateByType.put(type, ai);
 		}
 		ai.incrementAndGet();
-		recordsToActivate.add(recordId);		
+		recordsToActivate.add(recordId);
 	}
-	
+
 	public void processComplete() {
 		getRepositoryDAO().createIndiciesIfNecessary(name);
 		getRepositoryDAO().updateOutgoingRecordCounts(name);
 	}
-	
+
 	public boolean ready4harvest() {
 		return getRepositoryDAO().ready4harvest(name);
 	}
-	
+
 	public int getPersistentPropertyAsInt(String key, int def) {
 		String val = getRepositoryDAO().getPersistentProperty(name, key);
 		if (!StringUtils.isEmpty(val)) {
@@ -324,11 +327,11 @@ public class DefaultRepository extends BaseService implements Repository {
 				return Integer.parseInt(val);
 			} catch (Throwable t) {
 				// do nothing
-			}	
+			}
 		}
 		return def;
 	}
-	
+
 	public long getPersistentPropertyAsLong(String key, long def) {
 		String val = getRepositoryDAO().getPersistentProperty(name, key);
 		if (!StringUtils.isEmpty(val)) {
@@ -336,11 +339,11 @@ public class DefaultRepository extends BaseService implements Repository {
 				return Long.parseLong(val);
 			} catch (Throwable t) {
 				// do nothing
-			}	
+			}
 		}
 		return def;
 	}
-	
+
 	public String getPersistentProperty(String key) {
 		return getRepositoryDAO().getPersistentProperty(name, key);
 	}
@@ -348,17 +351,17 @@ public class DefaultRepository extends BaseService implements Repository {
 	public void setPersistentProperty(String key, int value) {
 		getRepositoryDAO().setPersistentProperty(name, key, value+"");
 	}
-	
+
 	public void setPersistentProperty(String key, long value) {
 		getRepositoryDAO().setPersistentProperty(name, key, value+"");
 	}
-	
+
 	public void setPersistentProperty(String key, String value) {
 		getRepositoryDAO().setPersistentProperty(name, key, value);
 	}
-	
+
 	public void injectHarvestInfo(Record r) {
 		getRepositoryDAO().injectHarvestInfo(name, r);
 	}
-	
+
 }

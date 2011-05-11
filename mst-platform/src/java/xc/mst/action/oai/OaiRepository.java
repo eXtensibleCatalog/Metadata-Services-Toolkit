@@ -7,7 +7,7 @@
   *
   */
 
-package xc.mst.oai;
+package xc.mst.action.oai;
 
 import java.io.IOException;
 
@@ -19,21 +19,22 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.service.ServiceDAO;
+import xc.mst.oai.Facade;
+import xc.mst.oai.OaiRequestBean;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * A simple servlet that parses an OAI request and passes the parameters to the Facade class for processing.
  *
  * @author Eric Osisek
  */
-public class OaiRepository extends ActionSupport implements ServletRequestAware, ServletResponseAware
+public class OaiRepository extends BaseActionSupport implements ServletRequestAware, ServletResponseAware
 {
 	/** Used for serialization */
 	private static final long serialVersionUID = 56789L;
@@ -63,19 +64,19 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 		try
 		{
-			// Get servlet path from request 
+			// Get servlet path from request
 			String servletPath = request.getServletPath();
 
 			// Extract the service name from servlet path
 			int firstOccuranceOfSlash = servletPath.indexOf("/");
 			String serviceName = null;
-			
-			// Check if / exist in servlet path. 
-			if (firstOccuranceOfSlash != -1) 
+
+			// Check if / exist in servlet path.
+			if (firstOccuranceOfSlash != -1)
 			{
 				int secondOccuranceOfSlash = servletPath.indexOf("/", firstOccuranceOfSlash + 1);
 				int thirdOccuranceOfSlash = servletPath.indexOf("/", secondOccuranceOfSlash + 1);
-			
+
 				if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1 && thirdOccuranceOfSlash != -1) && (thirdOccuranceOfSlash > secondOccuranceOfSlash))
 					serviceName = servletPath.substring(secondOccuranceOfSlash + 1, thirdOccuranceOfSlash);
 				else // Invalid URL
@@ -83,23 +84,28 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			} else { // Invalid URL
 				response.getWriter().write("Invalid URL");
 			}
-	
+
 			// Get the service based on the port.
 			Service service = ((ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO")).getByServiceName(serviceName.replace("-", " "));
-	
-			if(service == null)
-			{
+
+			if (service == null) {
 				// Write the response
 				response.getWriter().write("Service with name: " + serviceName + " does not exist.");
-		
+				response.setStatus(503);
 			    return SUCCESS;
 			}
-			
+			if (!getRepositoryDAO().ready4harvest(serviceName)) {
+				// Write the response
+				response.getWriter().write("Service with name: " + serviceName + " is not available at this time.  It might be in optimize mode.");
+				response.setStatus(503);
+			    return SUCCESS;
+			}
+
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "Received the OAI request " + request.getQueryString());
-	
+
 			// Bean to manage data for handling the request
 			OaiRequestBean oaiRequest = new OaiRequestBean();
-	
+
 			// Set parameters on the bean based on the OAI request's parameters
 			oaiRequest.setVerb(request.getParameter("verb"));
 			oaiRequest.setFrom(request.getParameter("from"));
@@ -111,33 +117,33 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 			oaiRequest.setServiceId(service != null ? service.getId() : 0);
 			oaiRequest.setOaiRepoBaseURL("http://" + request.getServerName() + ":" +  request.getServerPort() + request.getContextPath() + servletPath);
 			oaiRequest.setRequest(request.getRequestURL().toString());
-			
+
 			// Create the Facade Object, which will compute the results of the request and set them on the bean
 			Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
-	
+
 			// Execute the correct request on the Facade Object
 			oaiXMLOutput = facade.execute(oaiRequest);
-	
+
 			response.setContentType("text/xml; charset=UTF-8");
-			
+
 			// Write the response
 			response.getWriter().write(oaiXMLOutput);
 
 		    return SUCCESS;
 		}
 		catch(DatabaseConfigException e)
-		{	
+		{
 			log.error("Cannot connect to the database with the parameters from the config file.", e);
-			
+
 			response.getWriter().write("Do to a configuration error, this OAI repository cannot access its database.");
-			
+
 			return ERROR;
 		}
 	}
 
 	/**
-	 * Get servlet request 
-	 * 
+	 * Get servlet request
+	 *
 	 * @return servlet request
 	 */
 	public HttpServletRequest getServletRequest() {
@@ -146,7 +152,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/**
 	 * Set servlet request
-	 * 
+	 *
 	 * @param servletRequest servlet request
 	 */
 	public void setServletRequest(HttpServletRequest servletRequest) {
@@ -155,7 +161,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/**
 	 * Get servlet response
-	 * 
+	 *
 	 * @return servlet response
 	 */
 	public HttpServletResponse getServletResponse() {
@@ -164,7 +170,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/**
 	 * Set servlet response
-	 * 
+	 *
 	 * @param servletResponse servlet response
 	 */
 	public void setServletResponse(HttpServletResponse servletResponse) {
@@ -173,7 +179,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/**
 	 * Get output OAI PHM response xml
-	 * 
+	 *
 	 * @return OAI PHM response xml
 	 */
 	public String getOaiXMLOutput() {
@@ -182,7 +188,7 @@ public class OaiRepository extends ActionSupport implements ServletRequestAware,
 
 	/**
 	 * Set output OAI PHM response xml
-	 * 
+	 *
 	 * @param oaiXMLOutput OAI PHM response xml
 	 */
 	public void setOaiXMLOutput(String oaiXMLOutput) {

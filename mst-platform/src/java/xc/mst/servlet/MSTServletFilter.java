@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
 public class MSTServletFilter implements Filter {
 
 	private static final Logger LOG = Logger.getLogger(MSTServletFilter.class);
-	
+
 	public void init(FilterConfig config) throws ServletException {}
-	
+
 	public void destroy() {}
 
 	public void doFilter(ServletRequest req, ServletResponse resp,
@@ -41,7 +41,7 @@ public class MSTServletFilter implements Filter {
 		sessionFactory.openSession();
 		*/
 		try {
-			HttpServletRequest hsr = (HttpServletRequest)req; 
+			HttpServletRequest hsr = (HttpServletRequest)req;
 			//LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
 			if (hsr.getRequestURI().contains("/solr/")) {
 				if (hsr.getSession().getAttribute("user") == null) {
@@ -50,9 +50,17 @@ public class MSTServletFilter implements Filter {
 					int idx0 = uri.indexOf("/solr/");
 					uri = uri.substring(0, idx0)+"/st/";
 					hresp.sendRedirect(uri);
-					
+
 					return;
 				}
+			}
+			if (hsr.getRequestURI().startsWith("/pub") && !hsr.getRequestURI().endsWith("oaiRepository")) {
+				HttpServletResponse hresp = (HttpServletResponse)resp;
+				String uri = hsr.getRequestURI();
+				uri = uri.replaceAll("pub", "st");
+				hresp.sendRedirect(uri);
+
+				return;
 			}
 			req.setCharacterEncoding("UTF-8");
 			chain.doFilter(req, resp);
@@ -62,5 +70,5 @@ public class MSTServletFilter implements Filter {
 			//sessionFactory.close();
 		}
 	}
-	
+
 }

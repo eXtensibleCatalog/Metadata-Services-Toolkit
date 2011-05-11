@@ -311,6 +311,19 @@ note: help on the ant commands within particular service subprojects can be foun
 		<ant dir="${dir}" target="${target}" inheritAll="false" />
 	</target>
 
+	<target name="test" depends="package-all, test.nodep" />
+	<target name="test.nodep">
+		<ant dir="mst-service/example" target="test">
+			<property name="test" value="RecordCounts"/>
+		</ant>
+		<ant dir="mst-service/custom/MARCNormalization" target="test">
+			<property name="test" value="MarkProviderDeleted "/>
+		</ant>
+		<ant dir="mst-service/custom/MARCToXCTransformation" target="test">
+			<property name="test" value="ActivateHeldHoldings"/>
+		</ant>
+	</target>
+
 	<target name="deploy" >
 		<ant target="mi.deploy" />
 		<ant target="mc.deploy" />
