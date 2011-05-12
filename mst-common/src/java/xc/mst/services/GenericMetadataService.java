@@ -576,6 +576,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							if (origSuccessorMap.containsKey(rout2.getId())) {
 								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
 							}
+							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getIndexedObjectType()+
+									" rout2.getStatus(): "+rout2.getStatus()+
+									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
 							if (rout2.getIndexedObjectType() != null) {
 								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
 							}
@@ -644,6 +647,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}) {
 					LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
 				}
+				LogWriter.addInfo(service.getServicesLogFileName(), getRepository().getRecordStatsByType());
 			}
 		}
 		setStatus(Status.NOT_RUNNING);

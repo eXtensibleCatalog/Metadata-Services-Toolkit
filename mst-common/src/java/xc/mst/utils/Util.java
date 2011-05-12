@@ -233,5 +233,15 @@ public class Util {
 		}
 		return oaiId;
 	}
+	
+	public long getLongPrim(Object numObj) {
+		long numLongPrim = -1;
+		if (numObj instanceof Integer) {
+			numLongPrim = (Integer)numObj;
+		} else if (numObj instanceof Long) {
+			numLongPrim = (Long)numObj;
+		}
+		return numLongPrim;
+	}
 
 }

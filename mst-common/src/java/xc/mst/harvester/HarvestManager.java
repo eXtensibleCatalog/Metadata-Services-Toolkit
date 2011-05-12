@@ -158,6 +158,7 @@ public class HarvestManager extends WorkerThread {
 			LOG.debug("repo: "+repo);
 			LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
 		}
+		LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
 	}
 
 	public void logError(Throwable t) {

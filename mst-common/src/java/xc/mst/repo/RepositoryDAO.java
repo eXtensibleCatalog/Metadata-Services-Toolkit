@@ -22,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -267,6 +268,7 @@ public class RepositoryDAO extends BaseDAO {
 					" (record_id, oai_datestamp, type, status, prev_status, format_id ) "+
 					"values (?,?,?,?,?,?) "+
 					"on duplicate key update "+
+						"type=?, "+
 						"status=?, "+
 						"prev_status=?, "+
 						"format_id=?, "+
@@ -285,12 +287,12 @@ public class RepositoryDAO extends BaseDAO {
 								} else {
 									ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
 								}
-								if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
-									ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
-								} else {
-									ps.setString(i++, null);
-								}
 								for (int k=0; k<2; k++) {
+									if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
+										ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
+									} else {
+										ps.setString(i++, null);
+									}
 									ps.setString(i++, String.valueOf(r.getStatus()));
 									ps.setString(i++, String.valueOf(r.getPreviousStatus()));
 									if (r.getFormat() != null) {
@@ -512,6 +514,8 @@ public class RepositoryDAO extends BaseDAO {
 						os.write(tabBytes);
 						if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
 							os.write(r.getIndexedObjectType().substring(0,1).getBytes());
+						} else {
+							os.write("\\N".getBytes());
 						}
 						os.write(tabBytes);
 						os.write(String.valueOf(r.getStatus()).getBytes());
@@ -762,15 +766,8 @@ public class RepositoryDAO extends BaseDAO {
 		List<Map<String, Object>> rowList = getPreviousStatuses(name, page, service);
 		while (rowList != null && rowList.size() > 0) {
 			for (Map<String, Object> row : rowList) {
-				long recordId = -1;
-				Object recordIdObj = row.get("record_id");
-				if (recordIdObj instanceof Integer) {
-					recordId = (Integer)recordIdObj;
-				} else if (recordIdObj instanceof Long) {
-					recordId = (Long)recordIdObj;
-				}
 				char prevStatus = ((String)row.get("status")).charAt(0);
-				previousStatuses.put(recordId, (byte)prevStatus);
+				previousStatuses.put(getUtil().getLongPrim(row.get("record_id")), (byte)prevStatus);
 			}
 			rowList = getPreviousStatuses(name, ++page, service);
 		}
@@ -1519,7 +1516,7 @@ public class RepositoryDAO extends BaseDAO {
 		TimingLogger.start("RepositoryDAO.getSuccessorIds");
 		java.util.Set<Record> succIds = new TreeSet<Record>();
 		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-				" select r.record_id, status "+
+				" select r.record_id, status, type "+
 				" from "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" rp, "+
 					getTableName(name, RECORDS_TABLE)+" r "+
 				" where rp.pred_record_id=? "+
@@ -1531,6 +1528,7 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.debug("succId: "+succId);
 			Record r = new Record();
 			r.setId(succId);
+			r.setIndexedObjectType((String)row.get("type"));
 			r.setStatus(((String)row.get("status")).charAt(0));
 			succIds.add(r);
 		}
@@ -2008,6 +2006,43 @@ public class RepositoryDAO extends BaseDAO {
 		this.jdbcTemplate.update("insert into "+getTableName(name, PROPERTIES)+
 				" values (?, ?) on duplicate key update value=?",
 				key, value, value);
+	}
+	
+	public String getRecordStatsByType(String name) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (String sql : new String[] {
+				"select status, count(*) c from "+
+					getTableName(name, RECORDS_TABLE)+" group by status order by status",
+				"select type, status, count(*) c from "+
+					getTableName(name, RECORDS_TABLE)+" group by type, status order by type, status"
+		}) {
+			int col=0;
+			List<Map<String, Object>> rows =
+				this.jdbcTemplate.queryForList(sql);
+			for (Map<String, Object> row : rows) {
+				String type = "total";
+				if (row.containsKey("type")) {
+					if (StringUtils.isEmpty((String)row.get("type"))) {
+						continue;
+					} else {
+						type = (String)row.get("type");
+					}
+				}
+				if (col == 0)
+					sb.append("\n");
+				sb.append(StringUtils.leftPad(type+"-"+
+						Record.statusNames.get(((String)row.get("status")).charAt(0)), 
+						25));
+				sb.append(":");
+				DecimalFormat myFormatter = new DecimalFormat("###,###,###");
+				sb.append(StringUtils.leftPad(myFormatter.format(getUtil().getLongPrim(row.get("c"))), 12));
+				if (++col == 3) {
+					col = 0;
+				}
+			}	
+		}
+		return sb.toString();
 	}
 	
 	public void updateOutgoingRecordCounts(String name) {

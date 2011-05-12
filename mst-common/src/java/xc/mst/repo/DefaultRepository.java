@@ -74,6 +74,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	public int getNumRecords() {
 		return getRepositoryDAO().getNumRecords(name);
 	}
+	
+	public String getRecordStatsByType() {
+		return getRepositoryDAO().getRecordStatsByType(name);
+	}
 
 	public void installOrUpdateIfNecessary(final String previousVersion, final String currentVersion) {
 		final Repository thisthis = this;

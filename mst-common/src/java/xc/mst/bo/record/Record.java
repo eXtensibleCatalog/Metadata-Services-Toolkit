@@ -11,7 +11,9 @@ package xc.mst.bo.record;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
@@ -47,6 +49,16 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	public static final char DELETED = 'D';
 	public static final char REPLACED = 'R';
 	public static final char NULL = 'N';
+	
+	public static Map<Character, String> statusNames = new HashMap<Character, String>();
+	
+	static {
+		statusNames.put(ACTIVE, "Active");
+		statusNames.put(HELD, "Held");
+		statusNames.put(DELETED, "Deleted");
+		statusNames.put(NULL, "Null");
+		statusNames.put(REPLACED, "Replaced");
+	}
 	
 	protected String mode = JDOM_MODE;
 
@@ -192,6 +204,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 		dupe.oaiXmlEl = this.oaiXmlEl;
 		dupe.predecessors = this.predecessors;
 		dupe.messages = this.messages;
+		dupe.indexedObjectType = this.indexedObjectType;
 		return dupe;
 	}
 	

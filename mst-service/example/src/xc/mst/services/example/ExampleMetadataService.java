@@ -49,6 +49,7 @@ public class ExampleMetadataService extends GenericMetadataService {
 			if (r.getStatus() == Record.DELETED) {
 				out.setStatus(Record.DELETED);
 				LOG.debug("deleted r.getId():"+r.getId()+" out.getId():"+out.getId());
+				LOG.debug("out.getIndexedObjectType():"+((Record)out).getIndexedObjectType());
 			} else {
 				out.setStatus(Record.ACTIVE);
 				r.setMode(Record.JDOM_MODE);
@@ -59,6 +60,9 @@ public class ExampleMetadataService extends GenericMetadataService {
 						LOG.debug("record should be held");
 						out.setStatus(Record.HELD);
 					}
+					LOG.debug("type: "+foo.getAttributeValue("type"));
+					out.setIndexedObjectType(foo.getAttributeValue("type"));
+					LOG.debug("out.getIndexedObjectType(): "+((Record)out).getIndexedObjectType());
 					if ("true".equals(foo.getAttributeValue("exception"))) {
 						LOG.debug("record throws exception");
 						throw new RuntimeException("unanticipated exception from service");

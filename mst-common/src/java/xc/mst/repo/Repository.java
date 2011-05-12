@@ -32,6 +32,8 @@ public interface Repository {
 	
 	public int getNumRecords();
 	
+	public String getRecordStatsByType();
+	
 	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 	
 	public void addRecord(Record record);
