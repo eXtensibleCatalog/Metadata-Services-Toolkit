@@ -271,8 +271,8 @@
         	<interceptor-ref name="roles">
 	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
-			<result name="success">pages/schedule/add_schedule.jsp</result>
-			<result name="input">pages/schedule/add_schedule.jsp</result>
+			<result name="success">pages/schedule/view_schedule.jsp</result>
+			<result name="input">pages/schedule/view_schedule.jsp</result>
 		</action>
 		
 		<!-- Action to update schedule and go to add schedule step 2 -->
@@ -282,7 +282,7 @@
 	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
-			<result name="input">pages/schedule/add_schedule.jsp</result>
+			<result name="input">pages/schedule/view_schedule.jsp</result>
 		</action>
 
 		<!-- Action to update schedule and go to all schedule page 
