@@ -715,9 +715,10 @@ public class RepositoryDAO extends BaseDAO {
 	protected List<Map<String, Object>> getHarvestCache(String name, int page) {
 		TimingLogger.start("getHarvestCache");
 		int recordsAtOnce = 250000;
-		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-				"select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS)+
-				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		String sql = "select record_id, oai_id from "+getTableName(name, RECORD_OAI_IDS)+
+			" limit "+(page*recordsAtOnce)+","+recordsAtOnce;
+		LOG.info(sql);
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
 		TimingLogger.stop("getHarvestCache");
 		return rowList;
 	}
@@ -747,9 +748,10 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		TimingLogger.start("getPreviousStatuses");
 		int recordsAtOnce = 250000;
-		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-				"select record_id, status from "+getTableName(name, tableName)+
-				" limit "+(page*recordsAtOnce)+","+recordsAtOnce);
+		String sql = "select record_id, status from "+getTableName(name, tableName)+
+			" limit "+(page*recordsAtOnce)+","+recordsAtOnce;
+		LOG.info(sql);
+		List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
 		TimingLogger.stop("getPreviousStatuses");
 		return rowList;
 	}

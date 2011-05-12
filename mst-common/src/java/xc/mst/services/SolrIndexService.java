@@ -62,6 +62,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 		this.incomingRepository = repo;
+		this.preserveStatuses = false;
 		super.process(repo, inputFormat, inputSet, outputSet);
 	}
 	

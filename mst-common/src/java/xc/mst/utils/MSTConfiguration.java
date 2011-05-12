@@ -191,6 +191,10 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 		}
 		return value;
 	}
+	
+	public void setProperty(String key, String value) {
+		properties.setProperty(key, value);
+	}
 
 	/**
 	 * Get property value as int

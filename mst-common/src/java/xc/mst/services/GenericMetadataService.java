@@ -71,6 +71,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 	protected MetadataServiceManager metadataServiceManager = null;
 
+	protected boolean preserveStatuses = true;
 	protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
 	protected TLongByteHashMap tempPreviousStatuses= new TLongByteHashMap();
 
@@ -486,7 +487,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					(outputSet==null?"null":outputSet.getDisplayName())+")");
 		}
 		running.acquireUninterruptibly();
-		if (getRepository() != null) {
+		if (getRepository() != null && preserveStatuses) {
 			previousStatuses.clear();
 			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
 		}
@@ -535,8 +536,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       We may want to supply an optional way of doing that.
 				in.setPreviousStatus(Record.NULL);
 				injectKnownSuccessorsIds(in);
-				previousStatuses.put(in.getId(), (byte)in.getStatus());
-				tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());
+				if (preserveStatuses) {
+					if (getRepository() != null) {
+						previousStatuses.put(in.getId(), (byte)in.getStatus());
+					}
+					tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());	
+				}
 				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
 					for (OutputRecord or : in.getSuccessors()) {
@@ -663,7 +668,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 
 	protected void injectKnownSuccessorsIds(Record in) {
-		if (previousStatuses.contains(in.getId())) {
+		if (preserveStatuses && previousStatuses.contains(in.getId())) {
 			if (getRepository() != null)
 				getRepository().injectSuccessorIds(in);
 			in.setPreviousStatus((char)previousStatuses.get(in.getId()));
