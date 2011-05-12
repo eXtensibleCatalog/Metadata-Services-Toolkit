@@ -44,7 +44,7 @@
  <body class="yui-skin-sam">
 
         
-        <!--  yahoo doc 2 template creates a page 950 pixles wide -->
+        <!--  yahoo doc 2 template creates a page 950 pixels wide -->
         <div id="doc2">
 
             <!-- page header - this uses the yahoo page styling -->
@@ -57,7 +57,7 @@
                 <c:import url="/st/inc/menu.jsp"/>
                 <jsp:include page="/st/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Processing Rules | <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> | Edit Processing Rule (Step 2)" />
+                    <jsp:param name="bread" value="Processing Rules | <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> | Show Processing Rule (Step 2)" />
 
                 </jsp:include>
                 
@@ -158,7 +158,7 @@
                                          </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="listBox">
+                                        <div class="listBoxDisabled">
                                             <B>Formats</B> <br>
                                            <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected">
                                                <c:forEach var="format" items="${formatList}" varStatus="formatCount">
@@ -184,21 +184,16 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                                <c:if test="${!empty formatList}">
-                                     <div class="smallText">
-                                        (CTRL click to select multiple formats)
-                                    </div>
-                                </c:if>
                             </td>
                       
                             <td>
 
                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
                                     You have the option to create a named set of output records for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
-                                    Output Set Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50" size="40">
+                                    Output Set Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50" size="40" disabled>
                                 </div>
                                  <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
-                                    Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40">
+                                    Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40" disabled>
                                 </div>
 
                                 
@@ -215,7 +210,7 @@
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div style="overflow:auto;width:300px;" align="left">  
+                                         <div  class="listBoxDisabled" style="overflow:auto;width:300px;" align="left">  
                                             <B>Sets</B> <br>
                                             <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
@@ -247,12 +242,6 @@
                                          </div>
                                      </c:otherwise>
                                  </c:choose>
-                                <c:if test="${!empty setList}">
-                                     <div class="smallText">
-                                        (CTRL click to select multiple sets)
-                                    </div>
-                                </c:if>
-
                             </td>
                         </tr>
                         
@@ -263,7 +252,7 @@
                                 <div align="right">
                                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
                                   <button style="width:170px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.goBack();" name="goBack"><img src="page-resources/img/bullet_go_left.gif"><span style="position:relative;top:-3px;">Back to Step 1 </span> </button> &nbsp;&nbsp;&nbsp;
-                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.editProcessingDirective();"name="editDirective">Finish</button>
+                                  <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.cancel();"name="editDirective">Finish</button>
                                 </div>
                             </td>
                         </tr>

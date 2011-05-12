@@ -492,7 +492,7 @@
 			<interceptor-ref name="roles">
 	        	<param name="allowedRoles">Processing Rules</param>
 	      	</interceptor-ref>
-			<result name="success" type="redirect">viewEditProcessingDirectives.action</result>
+			<result name="success" type="redirect">viewEditProcessingDirectives.action?ProcessingDirectiveId=${processingDirectiveId}</result>
 			<result name="input">pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
         <action name="editProcessingDirectiveCancel" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectiveCancel">

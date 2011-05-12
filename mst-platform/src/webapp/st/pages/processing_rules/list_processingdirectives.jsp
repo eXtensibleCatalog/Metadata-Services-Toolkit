@@ -264,7 +264,7 @@
 		  <div class="hd">Delete Processing Directive</div>
 		      <div class="bd">
 		          <form name="deleteProcessingDirectiveNak" method="POST" 
-				  action="deleteProcessingDirective.action">  <!-- TODO need different action to point to? -->
+				  action="deleteProcessingDirective.action">
 			          <input type="hidden" id="processingDirective_id" name="processingDirectiveId"/>
 			          <div id="deleteProcessingRuleError" cssClass="errorMessage"></div>
                           </form>
