@@ -38,7 +38,6 @@ import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
-import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
@@ -246,9 +245,6 @@ public class BaseDAO {
 	}
 	public RecordTypeDAO getRecordTypeDAO() {
 		return (RecordTypeDAO)config.getBean("RecordTypeDAO");
-	}
-	public ResumptionTokenDAO getResumptionTokenDAO() {
-		return (ResumptionTokenDAO)config.getBean("ResumptionTokenDAO");
 	}
 	public XcIdentifierForFrbrElementDAO getXcIdentifierForFrbrElementDAO() {
 		return (XcIdentifierForFrbrElementDAO)config.getBean("XcIdentifierForFrbrElementDAO");

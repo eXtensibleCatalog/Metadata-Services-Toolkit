@@ -47,8 +47,10 @@ public class DevAdminServlet extends HttpServlet {
 			pw.println("</table>");
 		} else if ("refreshSolr".equals(op)) {
 			((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrService")).refreshServer();
+		} else if ("setProperty".equals(op)) {
+			MSTConfiguration.getInstance().setProperty(req.getParameter("key"), req.getParameter("value"));
 		} else {
-			pw.println("add ?op=[props|refreshSolr] to the url");
+			pw.println("add ?op=[props|refreshSolr|setProperty] to the url");
 		}
 	}
 	

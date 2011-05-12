@@ -27,7 +27,7 @@ public class Expression extends Record
 	 *
 	 * @return The type of indexed object for this Object
 	 */
-	public String getIndexedObjectType()
+	public String getType()
 	{
 		return Expression.indexedObjectType;
 	} // end method getIndexedObjectType()

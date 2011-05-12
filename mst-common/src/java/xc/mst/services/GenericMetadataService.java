@@ -559,14 +559,14 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				TimingLogger.stop(getServiceName()+".process");
 				if (getRepository() != null) {
-					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), in.getPreviousStatus());
+					if (in.getType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
 				if (unexpectedError) {
-					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), RecordCounts.UNEXPECTED_ERROR);
+					if (in.getType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
 				} else {
@@ -576,11 +576,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							if (origSuccessorMap.containsKey(rout2.getId())) {
 								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
 							}
-							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getIndexedObjectType()+
+							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
 									" rout2.getStatus(): "+rout2.getStatus()+
 									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
-							if (rout2.getIndexedObjectType() != null) {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
+							if (rout2.getType() != null) {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
 							}
 							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							rout2.addPredecessor(in);

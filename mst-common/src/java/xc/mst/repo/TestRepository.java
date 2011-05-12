@@ -452,5 +452,10 @@ public class TestRepository extends BaseService implements Repository {
 	public void setPersistentProperty(String key, int value) {}
 	public void setPersistentProperty(String key, long value) {}
 	public void setPersistentProperty(String key, String value) {}
+
+	@Override
+	public String getRecordStatsByType() {
+		return null;
+	}
 	
 }

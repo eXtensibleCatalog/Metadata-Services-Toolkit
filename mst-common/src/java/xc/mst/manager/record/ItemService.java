@@ -106,13 +106,13 @@ public abstract class ItemService extends BaseService
 		validateFields(item, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + item.getIndexedObjectType());
+			log.debug("Inserting a new " + item.getType());
 
 		item.setCreatedAt(new Date());
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, item.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, item.getType());
 
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(item, doc, true);
@@ -142,7 +142,7 @@ public abstract class ItemService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, item.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, item.getType());
 
 		// Set up the fields for the Item
 		doc = setFieldsOnDocument(item, doc, false);

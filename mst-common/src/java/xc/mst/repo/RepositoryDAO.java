@@ -288,8 +288,8 @@ public class RepositoryDAO extends BaseDAO {
 									ps.setTimestamp(i++, new Timestamp(r.getOaiDatestamp().getTime()));
 								}
 								for (int k=0; k<2; k++) {
-									if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
-										ps.setString(i++, ""+r.getIndexedObjectType().charAt(0));
+									if (r.getType() != null && r.getType().length() > 0) {
+										ps.setString(i++, ""+r.getType().charAt(0));
 									} else {
 										ps.setString(i++, null);
 									}
@@ -512,8 +512,8 @@ public class RepositoryDAO extends BaseDAO {
 							os.write(sdf.format(r.getOaiDatestamp()).getBytes());
 						}
 						os.write(tabBytes);
-						if (r.getIndexedObjectType() != null && r.getIndexedObjectType().length() > 0) {
-							os.write(r.getIndexedObjectType().substring(0,1).getBytes());
+						if (r.getType() != null && r.getType().length() > 0) {
+							os.write(r.getType().substring(0,1).getBytes());
 						} else {
 							os.write("\\N".getBytes());
 						}
@@ -1528,7 +1528,7 @@ public class RepositoryDAO extends BaseDAO {
 			LOG.debug("succId: "+succId);
 			Record r = new Record();
 			r.setId(succId);
-			r.setIndexedObjectType((String)row.get("type"));
+			r.setType((String)row.get("type"));
 			r.setStatus(((String)row.get("status")).charAt(0));
 			succIds.add(r);
 		}

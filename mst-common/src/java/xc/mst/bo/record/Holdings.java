@@ -40,7 +40,7 @@ public class Holdings extends Record
 	 *
 	 * @return The type of indexed object for this Object
 	 */
-	public String getIndexedObjectType()
+	public String getType()
 	{
 		return Holdings.indexedObjectType;
 	} // end method getIndexedObjectType()

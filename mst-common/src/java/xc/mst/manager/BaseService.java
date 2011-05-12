@@ -27,8 +27,8 @@ import xc.mst.dao.provider.ProviderFormatUtilDAO;
 import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordCountsDAO;
+import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
-import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
@@ -42,7 +42,6 @@ import xc.mst.dao.user.PermissionDAO;
 import xc.mst.dao.user.ServerDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
-import xc.mst.dao.record.RecordDAO;
 import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.logs.LogService;
@@ -59,7 +58,6 @@ import xc.mst.manager.record.MessageService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.record.WorkService;
 import xc.mst.manager.repository.FormatService;
-
 import xc.mst.manager.repository.ProviderService;
 import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.GroupService;
@@ -94,7 +92,6 @@ public class BaseService {
 	protected ProviderFormatUtilDAO providerFormatUtilDAO = null;
 	protected SetDAO setDAO = null;
 	protected RecordTypeDAO recordTypeDAO = null;
-	protected ResumptionTokenDAO resumptionTokenDAO = null;
 	protected XcIdentifierForFrbrElementDAO xcIdentifierForFrbrElementDAO = null;
 	protected ErrorCodeDAO errorCodeDAO = null;
 	protected OaiIdentifierForServiceDAO oaiIdentifierForServiceDAO = null;
@@ -252,14 +249,6 @@ public class BaseService {
 
 	public void setRecordTypeDAO(RecordTypeDAO recordTypeDAO) {
 		this.recordTypeDAO = recordTypeDAO;
-	}
-
-	public ResumptionTokenDAO getResumptionTokenDAO() {
-		return resumptionTokenDAO;
-	}
-
-	public void setResumptionTokenDAO(ResumptionTokenDAO resumptionTokenDAO) {
-		this.resumptionTokenDAO = resumptionTokenDAO;
 	}
 
 	public XcIdentifierForFrbrElementDAO getXcIdentifierForFrbrElementDAO() {

@@ -42,13 +42,17 @@ public class MSTServletFilter implements Filter {
 		*/
 		try {
 			HttpServletRequest hsr = (HttpServletRequest)req;
-			//LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
-			if (hsr.getRequestURI().contains("/solr/")) {
+			LOG.debug("hsr.getRequestURI(): "+hsr.getRequestURI());
+			if (hsr.getRequestURI().contains("/solr/") || hsr.getRequestURI().contains("/devAdmin")) {
 				if (hsr.getSession().getAttribute("user") == null) {
 					HttpServletResponse hresp = (HttpServletResponse)resp;
 					String uri = hsr.getRequestURI();
 					int idx0 = uri.indexOf("/solr/");
+					if (idx0 == -1) {
+						idx0 = uri.indexOf("/devAdmin");
+					}
 					uri = uri.substring(0, idx0)+"/st/";
+
 					hresp.sendRedirect(uri);
 
 					return;

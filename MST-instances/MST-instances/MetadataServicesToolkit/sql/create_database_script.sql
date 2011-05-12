@@ -394,26 +394,6 @@ CREATE TABLE harvests_to_records
   INDEX idx_harvests_to_records_record_id(record_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
--- -------------------------------------------------------------
--- Table structure for table resumption_tokens
--- -------------------------------------------------------------
-
-DROP TABLE IF EXISTS resumption_tokens;
-CREATE TABLE resumption_tokens
-(
-  resumption_token_id BIGINT(11) NOT NULL AUTO_INCREMENT,
-  set_spec VARCHAR(255),
-  metadata_format VARCHAR(511),
-  starting_from TIMESTAMP NULL DEFAULT NULL,
-  until TIMESTAMP NULL DEFAULT NULL,
-  offset BIGINT(11) NOT NULL,
-  token VARCHAR(255),
-  starting_id BIGINT(11) NOT NULL,
-  PRIMARY KEY(resumption_token_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 -- -------------------------------------------------------------
 -- Table structure for table 'services'
 -- -------------------------------------------------------------
