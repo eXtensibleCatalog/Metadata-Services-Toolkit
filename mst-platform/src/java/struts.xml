@@ -244,6 +244,18 @@
 			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
 			<result name="input">pages/schedule/add_schedule.jsp</result>
 		</action>	
+
+		<!-- Action to add schedule and go to step 2 of add schedule -->
+		<!--
+		<action name="viewScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addScheduleAndProvider">
+        	<interceptor-ref name="crudStack"/>
+        	<interceptor-ref name="roles">
+	        	<param name="allowedRoles">harvest</param>
+	      	</interceptor-ref>   
+			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
+			<result name="input">pages/schedule/add_schedule.jsp</result>
+		</action>	
+		-->
 		
 		<!-- Action to add sets and formats for schedule and go to all schedule page -->
 		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
@@ -271,8 +283,8 @@
         	<interceptor-ref name="roles">
 	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
-			<result name="success">pages/schedule/view_schedule.jsp</result>
-			<result name="input">pages/schedule/view_schedule.jsp</result>
+			<result name="success">pages/schedule/add_schedule.jsp</result>
+			<result name="input">pages/schedule/add_schedule.jsp</result>
 		</action>
 		
 		<!-- Action to update schedule and go to add schedule step 2 -->
@@ -282,7 +294,7 @@
 	        	<param name="allowedRoles">harvest</param>
 	      	</interceptor-ref>   
 			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
-			<result name="input">pages/schedule/view_schedule.jsp</result>
+			<result name="input">pages/schedule/add_schedule.jsp</result>
 		</action>
 
 		<!-- Action to update schedule and go to all schedule page 
