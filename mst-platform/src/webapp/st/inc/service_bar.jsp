@@ -53,48 +53,5 @@
     <xxx id="currentProcess">No process running</xxx>
 </c:if>
 </li>
-
-<%--
-<li style="float:right;"> 
-<c:choose>
-    <c:when test="${currentProcess!=null}">
-        <c:choose>
-            <c:when test="${displayType!=null}">
-					<c:if test="${displayType eq varPausing}">
-						<button id='resumeButton' disabled="disabled" class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-                         <button style="display:none;width:60px" id='pauseButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-                         <button id='abortButton' class='xc_button' style="width:60px;"  type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-					</c:if>
-                    <c:if test="${displayType eq varPause}">
-                         <button style="display:none;width:60px" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-                         <button id='pauseButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-                         <button id='abortButton' class='xc_button' style="width:60px;"  type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-                    </c:if>
-                    <c:if test="${displayType eq varResume}">
-                          <button id='resumeButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-                          <button style="display:none;width:60px" id='pauseButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-                          <button id='abortButton' class='xc_button' style="width:60px;" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-                    </c:if>
-                    <c:if test="${displayType eq varAbort}">
-                          <button id='resumeButton' style='display:none;width:60px' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-                          <button disabled id='pauseButton' style="width:60px;" class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-                          <button disabled id='abortButton' style="width:60px;" class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-                    </c:if>
-
-            </c:when>
-            <c:otherwise>
-                <button style="display:none;width:60px" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-                <button id='pauseButton' style="width:60px;" class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-                <button id='abortButton' style="width:60px;" class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-            </c:otherwise>
-        </c:choose>
-    </c:when>
-    <c:otherwise>
-            <button style="display:none;width:60px" id='resumeButton' class='xc_button' type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("resume");' name='Resume'>Resume</button>
-            <button style="width:60px;" id='pauseButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("pause");' name='Pause'>Pause</button>
-            <button style="width:60px;" id='abortButton' disabled class="xc_button_disabled" type='button' onclick='javascript:YAHOO.xc.mst.serviceStatusBar.yuiAlterStatus("abort");' name='Abort'>Abort</button>
-    </c:otherwise>
-</c:choose>
- --%>
  
  </li>
