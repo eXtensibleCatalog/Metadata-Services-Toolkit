@@ -113,18 +113,13 @@
 				<b>This will allow you to harvest records from the service and schedule incremental updates</b>
 				<br><br>
 				
-				Which <b>Repository</b> do you want to Harvest?<br>
+				<b>Repository</b> to Harvest:<br>
 					<c:forEach items="${repositories}" var="repository">
-						<c:if test="${repository.identify}">
-							<option value = "${repository.id}"
+						   <c:choose>
 							<c:when test="${schedule.provider.id == repository.id}">
-                                <c:out value="${schedule.provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="repositoryName" value="${schedule.provider.name}" disabled><br><br>
+                                <c:out value="${schedule.provider.name}"/>&nbsp;&nbsp;<input type="text" name="repositoryName" value="${schedule.provider.name}"  maxlength="50" size="40" disabled><br><br>
 							</c:when>
-							<c:otherwise>
-                                <c:out value="${schedule.provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="repositoryName" value="${schedule.provider.name}" disabled><br><br>
-							</c:otherwise>
-							> ${repository.name}</option>
-						</c:if>
+						   </c:choose>
 					</c:forEach>
 				<!--
 				add something like this:

@@ -158,7 +158,7 @@
                                          </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="listBoxDisabled">
+                                        <div class="listBox" readonly="readonly">
                                             <B>Formats</B> <br>
                                            <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected">
                                                <c:forEach var="format" items="${formatList}" varStatus="formatCount">
@@ -210,7 +210,7 @@
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div  class="listBoxDisabled" style="overflow:auto;width:300px;" align="left">  
+                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left" readonly="readonly">  
                                             <B>Sets</B> <br>
                                             <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
