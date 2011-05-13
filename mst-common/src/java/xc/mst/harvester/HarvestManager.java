@@ -103,7 +103,11 @@ public class HarvestManager extends WorkerThread {
 	protected Emailer mailer = new Emailer();
 
 	public String getName() {
-		return "harvest-"+harvestSchedule.getProvider().getName();
+		if (harvestSchedule != null && harvestSchedule.getProvider() != null) {
+			return "harvest-"+harvestSchedule.getProvider().getName();	
+		} else {
+			return "harvest";
+		}
 	}
 
 	public String getDetailedStatus() {

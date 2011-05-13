@@ -15,6 +15,7 @@ YAHOO.xc.mst.serviceStatusBar = {
 		try {
 			var url = "refreshServiceBar.action";
 			YAHOO.util.Connect.asyncRequest('GET', url, {
+				timeout: 20000,
 				success: function (o) {
 					if (o.responseText != null && o.responseText.search("ServiceStatus") < 0 ) {
 						if(o.responseText != null && o.responseText.search("LoginPage") > 0 ) {	 
@@ -23,9 +24,12 @@ YAHOO.xc.mst.serviceStatusBar = {
 					} else {
 						document.getElementById("serviceBar").innerHTML = o.responseText;
 					}
+					window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',5000);
+				}, failure: function (o) {
+					document.getElementById("serviceBar").innerHTML = 'status unknown';
+					window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',20000);
 				}
 			});
-			window.setTimeout('YAHOO.xc.mst.serviceStatusBar.refreshServiceBar()',1000);
 		} catch(e) {
 			alert(e.description);
 		}

@@ -307,9 +307,9 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob.type = Constants.THREAD_REPOSITORY;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							MetadataServiceManager msm = new MetadataServiceManager();
-							runningJob = msm;
 							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
 							msm.setMetadataService(s.getMetadataService());
+							runningJob = msm;
 							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
 							Repository incomingRepo = null;
 							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {

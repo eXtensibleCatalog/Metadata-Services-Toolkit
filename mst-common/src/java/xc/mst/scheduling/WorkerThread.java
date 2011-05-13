@@ -54,6 +54,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	public void waitForSetupCompletion() {
 		if (setupComplete != null) {
 			setupComplete.acquireUninterruptibly();
+			setupComplete.release();
 			setupComplete = null;
 		}
 	}
@@ -88,7 +89,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	}
 
 	public String getJobName() {
-		waitForSetupCompletion();
+		//waitForSetupCompletion();
 		return getName();
 	}
 
