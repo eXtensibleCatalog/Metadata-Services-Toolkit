@@ -53,16 +53,16 @@ YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats = {
      if(document.getElementById("formatsSelected")==null)
          {
 
-               createErrorDiv('error','Formats empty. Processing Rule cannot be created without specifying a format.');
-               choice = false;
+//               createErrorDiv('error','Formats empty. Processing Rule cannot be created without specifying a format.');
+//               choice = false;
 
          }
      else
          {
              if (document.editProcessingDirectiveSetsFormats.formatsSelected.value=='')
              {
-                 createErrorDiv('error','Select a format.');
-                 choice = false;
+//                 createErrorDiv('error','Select a format.');
+//                 choice = false;
              }
          }
 

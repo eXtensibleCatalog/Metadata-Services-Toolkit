@@ -11,12 +11,20 @@
 
 package xc.mst.action.processingDirective;
 
+import java.text.MessageFormat;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.action.BaseActionSupport;
+import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Provider;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.repo.Repository;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * This action method deletes a Processing Directive
@@ -36,6 +44,12 @@ public class DeleteProcessingDirective extends BaseActionSupport
     
 	/** Error type */
 	private String errorType;
+	
+	/** Message explaining why the processing rule cannot be deleted */
+	private String message;
+    
+    /** Determines whether processing rule is deleted */
+	private boolean deleted;
 
     /**
      * Sets the Processing directive ID
@@ -76,8 +90,46 @@ public class DeleteProcessingDirective extends BaseActionSupport
                 errorType = "error";
                 return SUCCESS;
             }
-            getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
-            return SUCCESS;
+            // TODO - if no processing is occurring &&
+            //        if all records on input side are marked deleted &&
+            //        if all successors of the of the records from the input side are marked deleted
+            //        then   ---->  the processing rule will be deleted immediately.
+            if (!isProcessingDirectiveInUse(tempProcDir)) {
+            	
+            	if (!hasNonDeletedSourceRecords(tempProcDir)) {
+            		if (!hasNonDeletedDestinationRecords(tempProcDir)) {
+                        getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
+                        deleted = true;
+                        return SUCCESS;
+            		}
+                	else {
+                        deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
+
+                        Object[] messageArguments = {getOutputRepository(tempProcDir).getName()}; 
+                        message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedDestRecords", messageArguments);
+LOG.debug("**** action error: message set to: "+message);                        
+                        return INPUT;   //TODO
+                	}
+            	}
+            	else {
+                    deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
+
+                    Object[] messageArguments = {getInputRepository(tempProcDir).getName()}; 
+                    message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedSrcRecords", messageArguments);
+LOG.debug("**** action error: message set to: "+message);                        
+                    
+                    return INPUT;   //TODO
+            	}	
+            }
+        	else {
+                deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
+
+                Object[] messageArguments = {tempProcDir.getId()}; 
+                message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
+ LOG.debug("**** action error: message set to: "+message);                        
+               
+                return INPUT;   //TODO
+        	}
         }
         catch(DatabaseConfigException e)
         {
@@ -87,6 +139,62 @@ public class DeleteProcessingDirective extends BaseActionSupport
             return SUCCESS;
         }
     }
+
+    private Repository getOutputRepository(ProcessingDirective tempProcDir) {
+    	Service outputS = tempProcDir.getService();  // the service used to produce the output
+    	Repository outgoingRepo = getRepository(outputS);
+    	
+    	return  outgoingRepo;
+    }
+
+    private Repository getInputRepository(ProcessingDirective tempProcDir) {
+    	Provider provider = tempProcDir.getSourceProvider();
+    	Repository incomingRepo = getRepositoryService().getRepository(provider);
+    	
+    	return incomingRepo;
+    }
+    
+    private Repository getRepository(Service outputS) {
+    	List<Repository> list =  getRepositoryService().getAll();
+    	for (Repository r: list) {
+    		if (r.getService().equals(outputS)) {
+    			return r;
+    		}
+    	}
+    	return null;
+    }
+    
+    private boolean hasNonDeletedSourceRecords(ProcessingDirective tempProcDir){
+    	return hasNonDeletedRecords(getInputRepository(tempProcDir));
+    }
+
+    private boolean hasNonDeletedDestinationRecords(ProcessingDirective tempProcDir){
+    	return hasNonDeletedRecords(getOutputRepository(tempProcDir));
+    }
+    
+    private boolean hasNonDeletedRecords(Repository r){
+    	if (!getRepositoryDAO().exists(r.getName())) {
+    		return false;
+    	}
+    	else if (getRepositoryDAO().hasOnlyRecordsOfStatus(r.getName(), 'D')) {
+    		return false;
+    	}
+    	return true;
+    }
+
+    private boolean isProcessingDirectiveInUse(ProcessingDirective tempProcDir)
+			throws DatabaseConfigException {
+		List<Job> jobs = getJobService().getAllJobs();
+		for (Job j:jobs) {
+			ProcessingDirective pd = j.getProcessingDirective();
+			if (pd != null) {
+				if (pd.getId() == tempProcDir.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
     /**
      * Returns error type
@@ -104,5 +212,23 @@ public class DeleteProcessingDirective extends BaseActionSupport
      */
 	public void setErrorType(String errorType) {
 		this.errorType = errorType;
+	}
+
+	/**
+	 * Returns the error message
+	 * 
+	 * @return error message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * Returns true if repository deleted, else false
+	 * 
+	 * @return Returns true if repository deleted, else false  (for JSON object)
+	 */
+	public boolean isDeleted() {
+		return deleted;
 	}
 }

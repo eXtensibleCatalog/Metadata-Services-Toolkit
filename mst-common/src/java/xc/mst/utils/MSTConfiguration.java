@@ -11,6 +11,7 @@
 package xc.mst.utils;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -254,5 +255,20 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 	public String getServicePath() {
 		return getUrlPath()+"/services/";
 	}
+
+	// messageArguments injected into the given String mstPropertyName
+	// i.e. for the following String:
+	// message.processingRuleInUse = Processing occurring on Processing Rule  {0}. Cannot delete Processing Rule.
+	// - the messageArgument[0] populates {0} in the String
+	//
+    public static String getMSTString(String mstPropertyName, Object[] messageArguments) {
+    	if (mstPropertyName == null) {
+    		return "";
+    	}
+        String msg = MSTConfiguration.getInstance().getProperty(mstPropertyName);
+        MessageFormat msgFormatter = new MessageFormat(msg);
+
+        return msgFormatter.format(messageArguments);
+    }
 
 }
