@@ -510,8 +510,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				try {
 					out = process(in);
 				} catch (Throwable t) {
-					getRepository().incrementUnexpectedProcessingErrors(null);
 					LOG.error("error processing record w/ id: "+in.getId(), t);
+					if (getRepository() != null) {
+						getRepository().incrementUnexpectedProcessingErrors(null);
+					}
 					continue;
 				}
 				if (getRepository() != null) {
