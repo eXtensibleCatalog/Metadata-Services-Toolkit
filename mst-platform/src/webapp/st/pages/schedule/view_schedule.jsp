@@ -114,30 +114,9 @@
 				<br><br>
 				
 				<b>Repository</b> to Harvest:<br>
-					<c:forEach items="${repositories}" var="repository">
-						   <c:choose>
-							<c:when test="${schedule.provider.id == repository.id}">
-                                <c:out value="${schedule.provider.name}"/>&nbsp;&nbsp;<input type="text" name="repositoryName" value="${schedule.provider.name}"  maxlength="50" size="40" disabled><br><br>
-							</c:when>
-						   </c:choose>
-					</c:forEach>
 				<!--
-				add something like this:
-				                             <c:forEach var="provider" items="${providerList}" varStatus="providerCount">
-                                                <c:choose>
-                                                    <c:when test="${source==provider.name}">
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source" value="${provider.name}" disabled><br><br>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input type="radio" name="source" value="${provider.name}" disabled><br><br>
-                                                    </c:otherwise>
-                                                </c:choose>
-
-                                            </c:forEach>
-				 -->
-				
-					<!--
-				<select id="schedule_repository" name="repositoryId" style="width:250px;">
+				-->
+				<select id="schedule_repository" name="repositoryId" style="display:none;" >
 
 					<option value = "0"></option>
 
@@ -153,9 +132,28 @@
 					<c:if test="${schedule.provider != null && !schedule.provider.identify}">
 						<option value = "${schedule.provider.id}" selected>${schedule.provider.name}</option>
 					</c:if>							
-
 				</select>
+
+				<!--
 				-->
+				
+				<select id="schedule_repository_shown" name="repositoryIdShown" style="width:250px;" disabled>
+
+					<option value = "0"></option>
+
+					<c:forEach items="${repositories}" var="repository">
+						<c:if test="${repository.identify}">
+							<option value = "${repository.id}"
+							<c:if test="${schedule.provider.id == repository.id}">
+								selected
+							</c:if>
+							> ${repository.name}</option>
+						</c:if>
+					</c:forEach>
+					<c:if test="${schedule.provider != null && !schedule.provider.identify}">
+						<option value = "${schedule.provider.id}" selected>${schedule.provider.name}</option>
+					</c:if>							
+				</select>
 				<br><br>
 				
 				<b>How often do you want to harvest updated records?</b>

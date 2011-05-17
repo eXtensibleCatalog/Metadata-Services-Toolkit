@@ -11,7 +11,6 @@
 
 package xc.mst.action.processingDirective;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -90,46 +89,51 @@ public class DeleteProcessingDirective extends BaseActionSupport
                 errorType = "error";
                 return SUCCESS;
             }
-            // TODO - if no processing is occurring &&
+            //      - if no processing is occurring &&
             //        if all records on input side are marked deleted &&
             //        if all successors of the of the records from the input side are marked deleted
             //        then   ---->  the processing rule will be deleted immediately.
-            if (!isProcessingDirectiveInUse(tempProcDir)) {
             	
-            	if (!hasNonDeletedSourceRecords(tempProcDir)) {
-            		if (!hasNonDeletedDestinationRecords(tempProcDir)) {
+        	if (!hasNonDeletedSourceRecords(tempProcDir)) {
+        		if (!hasNonDeletedDestinationRecords(tempProcDir)) {
+                    if (!isProcessingDirectiveInUse(tempProcDir)) {
+                    	// The "Processing occurring..." error 
+                    	// should only come up if the records are all marked deleted, AND processing is occurring.
+                    	
                         getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
                         deleted = true;
+                        
                         return SUCCESS;
-            		}
+                    }
                 	else {
                         deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
 
-                        Object[] messageArguments = {getOutputRepository(tempProcDir).getName()}; 
-                        message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedDestRecords", messageArguments);
-LOG.debug("**** action error: message set to: "+message);                        
-                        return INPUT;   //TODO
+                        Object[] messageArguments = {tempProcDir.getId()}; 
+                        message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
+                        LOG.debug("**** action error: message set to: "+message);                        
+                       
+                        return INPUT;
                 	}
-            	}
+        		}
             	else {
                     deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
 
-                    Object[] messageArguments = {getInputRepository(tempProcDir).getName()}; 
-                    message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedSrcRecords", messageArguments);
-LOG.debug("**** action error: message set to: "+message);                        
+                    Object[] messageArguments = {getOutputRepository(tempProcDir).getName()}; 
+                    message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedDestRecords", messageArguments);
+                    LOG.debug("**** action error: message set to: "+message);
                     
-                    return INPUT;   //TODO
-            	}	
-            }
+                    return INPUT;
+            	}
+        	}
         	else {
                 deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
 
-                Object[] messageArguments = {tempProcDir.getId()}; 
-                message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
- LOG.debug("**** action error: message set to: "+message);                        
-               
-                return INPUT;   //TODO
-        	}
+                Object[] messageArguments = {getInputRepository(tempProcDir).getName()}; 
+                message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedSrcRecords", messageArguments);
+                LOG.debug("**** action error: message set to: "+message);                        
+                
+                return INPUT;
+        	}	
         }
         catch(DatabaseConfigException e)
         {

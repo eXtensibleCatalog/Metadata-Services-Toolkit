@@ -18,6 +18,13 @@ YAHOO.xc.mst.schedule.add = {
 	
 	},
 	
+	gotoPreviousUpdateStep : function()
+	{
+		document.addScheduleForm.action=  'saveSetFormatForScheduleAndGoToPreviousUpdate.action';
+		document.addScheduleForm.submit();
+	
+	},
+	
 	cancel : function()
 	{
 		document.addScheduleForm.action=  'allSchedules.action';
