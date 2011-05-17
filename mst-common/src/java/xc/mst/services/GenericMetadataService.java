@@ -563,41 +563,42 @@ public abstract class GenericMetadataService extends SolrMetadataService
 						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
-				}
-				if (unexpectedError) {
-					if (in.getType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
-					}
-					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
-				} else {
-					if (out != null) {
-						for (RecordIfc rout : out) {
-							Record rout2 = (Record)rout;
-							if (origSuccessorMap.containsKey(rout2.getId())) {
-								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
-							}
-							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
-									" rout2.getStatus(): "+rout2.getStatus()+
-									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
-							if (rout2.getType() != null) {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
-							}
-							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
-							rout2.addPredecessor(in);
-							rout2.setService(getService());
-							if (rout2.getId() == -1) {
-								getRepositoryDAO().injectId(rout2);
-							}
-							if (outputSet != null) {
-								rout2.addSet(outputSet);
-							}
-							getRepository().addRecord(rout2);
+					
+					if (unexpectedError) {
+						if (in.getType() != null) {
+							getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
 						}
-					}
-					if (getRepository() == null ||
-							(in.getStatus() != Record.DELETED &&
-									(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
-						processedRecordCount++;
+						getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
+					} else {
+						if (out != null) {
+							for (RecordIfc rout : out) {
+								Record rout2 = (Record)rout;
+								if (origSuccessorMap.containsKey(rout2.getId())) {
+									rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
+								}
+								LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
+										" rout2.getStatus(): "+rout2.getStatus()+
+										" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
+								if (rout2.getType() != null) {
+									getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
+								}
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
+								rout2.addPredecessor(in);
+								rout2.setService(getService());
+								if (rout2.getId() == -1) {
+									getRepositoryDAO().injectId(rout2);
+								}
+								if (outputSet != null) {
+									rout2.addSet(outputSet);
+								}
+								getRepository().addRecord(rout2);
+							}
+						}
+						if (getRepository() == null ||
+								(in.getStatus() != Record.DELETED &&
+										(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
+							processedRecordCount++;
+						}
 					}
 				}
 				sh.setHighestId(in.getId());
@@ -636,8 +637,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		if (getRepository() != null) {
 			RecordCounts mostRecentIncomingRecordCounts =
 				getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName());
-			// I'm substracting 1s from startTime because they might actually be equal by the second,
-			// but
+			// I'm substracting 1s from startTime because they might actually be equal by the second
 			if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
 				for (RecordCounts rc : new RecordCounts[] {
 						mostRecentIncomingRecordCounts,

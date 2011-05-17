@@ -80,6 +80,7 @@ public class HarvestManager extends WorkerThread {
 	protected Date startDate = null;
 	protected String resumptionToken = null;
 	protected int requestsSent4Step = 0;
+	protected long startTime = 0;
 
 	protected long recordsProcessedThisRun = 0l;
 	protected long records2ProcessThisRun = 0l;
@@ -125,6 +126,7 @@ public class HarvestManager extends WorkerThread {
 			this.resumptionToken = null;
 			oaiIdCache.clear();
 			previousStatuses.clear();
+			startTime = new Date().getTime();
 			// BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
 			// list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
 			// there's really no other way to tell.
@@ -151,18 +153,23 @@ public class HarvestManager extends WorkerThread {
 	@Override
 	public void finishInner() {
 		super.finishInner();
-		for (RecordCounts rc : new RecordCounts[] {
-				getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName()),
-				getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
-		}) {
-			LOG.debug("harvestSchedule: "+harvestSchedule);
-			LOG.debug("harvestSchedule.getProvider(): "+harvestSchedule.getProvider());
-			LOG.debug("harvestSchedule.getProvider().getLogFileName(): "+harvestSchedule.getProvider().getLogFileName());
-			LOG.debug("rc: "+rc);
-			LOG.debug("repo: "+repo);
-			LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
+		RecordCounts mostRecentIncomingRecordCounts =
+			getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName());
+		// I'm substracting 1s from startTime because they might actually be equal by the second
+		if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+			for (RecordCounts rc : new RecordCounts[] {
+					mostRecentIncomingRecordCounts,
+					getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
+			}) {
+				LOG.debug("harvestSchedule: "+harvestSchedule);
+				LOG.debug("harvestSchedule.getProvider(): "+harvestSchedule.getProvider());
+				LOG.debug("harvestSchedule.getProvider().getLogFileName(): "+harvestSchedule.getProvider().getLogFileName());
+				LOG.debug("rc: "+rc);
+				LOG.debug("repo: "+repo);
+				LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
+			}
+			LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
 		}
-		LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
 	}
 
 	public void logError(Throwable t) {

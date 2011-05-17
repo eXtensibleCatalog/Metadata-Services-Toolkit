@@ -9,6 +9,9 @@
 
 package xc.mst.common.test;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -34,12 +37,50 @@ public class GenericTest extends BaseTest {
 	public void goTest() {
 		
 		try {
+			System.out.println("beluga");
+			LOG.error("beluga");
+			
+			//problem 
+			//2750000,250000
+			
+			// this works
+			//int offset = 2750000;
+			//int incr = 25000;
+
+			// this doesn't work
+			//int offset = 2750000;
+			//int incr = 250000;
+			
+			// this doesn't work
+			int offset = 2750000;
+			int incr = 250000;
+			
+			for (int i=0; (offset+(incr*i))<=3000000; i++) {
+				String sql = "select record_id, oai_id from  xc_rochester_137.record_oai_ids limit "+(offset+(incr*i))+","+incr;
+				LOG.error("sql: "+sql);
+				List<Map<String, Object>> rowList = getJdbcTemplate().queryForList(sql);
+				LOG.error("rowList.size(): "+rowList.size());
+				int j=0;
+				for (Map<String, Object> row : rowList) {
+					if (j++ % 10000 == 0) {
+						LOG.error("record_id: "+row.get("record_id"));
+						LOG.error("oai_id: "+row.get("oai_id"));
+					}
+				}
+				LOG.error("done.");
+			}
+			/*
+			*/
+			
+			
+			/*
 			String[] rtSplit = "|||xc|13360453".split("\\\\|");
 			
 			for (int i=0; i<rtSplit.length; i++) {
 				LOG.debug("i: "+i);
 				LOG.debug("rtSplit[i]: "+rtSplit[i]);
 			}
+			*/
 			
 			/*
 			int i=1;

@@ -770,11 +770,11 @@ public class Facade extends BaseManager
 		/*
 		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
 		log.debug("totalCount: "+totalCount);
+		*/
 		
 		if (totalCount != 0) {
 			records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);
 		}
-		*/
 
 		// The XML for the OAI result
 		StringBuffer xml = new StringBuffer();
