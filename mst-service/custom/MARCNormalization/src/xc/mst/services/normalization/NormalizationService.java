@@ -49,7 +49,7 @@ public class NormalizationService extends GenericMetadataService {
 	 * The Properties file with the location name mappings
 	 */
 	protected Properties locationNameProperties = null;
-    
+
 	/**
 	 * The Properties file with the location limit name mappings
 	 */
@@ -104,7 +104,7 @@ public class NormalizationService extends GenericMetadataService {
 	 * The output format (marcxml) for records processed from this service
 	 */
 	protected Format marc21 = null;
-	
+
 	/**
 	 * A list of errors to add to the record currently being processed
 	 */
@@ -114,7 +114,7 @@ public class NormalizationService extends GenericMetadataService {
 	 * A list of errors to add to the output record
 	 */
 	protected List<RecordMessage> outputRecordErrors = new ArrayList<RecordMessage>();
-	
+
 	protected XmlHelper xmlHelper = new XmlHelper();
 
     /**
@@ -148,7 +148,7 @@ public class NormalizationService extends GenericMetadataService {
 				if (successors != null && successors.size() > 0) {
 					inputRecordCount--;
 				}
-				
+
 				// Handle reprocessing of successors
 				for(OutputRecord successor : successors){
 					successor.setStatus(Record.DELETED);
@@ -159,15 +159,15 @@ public class NormalizationService extends GenericMetadataService {
 			} else {
 				// Get the results of processing the record
 				TimingLogger.start("processRecord.convertRecord");
-				
+
 				//TODO: make sure that recordIn is used to create the successors
 				results = convertRecord(recordIn);
 
 				TimingLogger.stop("processRecord.convertRecord");
-				
+
 				TimingLogger.stop("processRecord");
 			}
-			
+
 			if (results.size() != 1) {
 				addMessage(recordIn, 108, RecordMessage.ERROR);
 			}
@@ -177,15 +177,15 @@ public class NormalizationService extends GenericMetadataService {
 		}
 		return null;
 	}
-	
+
 	private List<OutputRecord> convertRecord(InputRecord record) {
 		// Empty the lists of errors because we're beginning to process a new record
 		errors = new ArrayList<RecordMessage>();
 		outputRecordErrors = new ArrayList<RecordMessage>();
-		
+
 		// The list of records resulting from processing the incoming record
 		ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
-		
+
 		try {
 			if(LOG.isDebugEnabled())
 				LOG.debug("Normalizing record with ID " + record.getId() + ".");
@@ -201,17 +201,19 @@ public class NormalizationService extends GenericMetadataService {
 			// Create a MarcXmlManagerForNormalizationService for the record
 			MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
 			normalizedXml.setInputRecord(record);
-			
+
 			LOG.debug("normalizedXml: "+normalizedXml);
 			LOG.debug("normalizedXml.getLeader(): "+normalizedXml.getLeader());
 
 			// Get the Leader 06.  This will allow us to determine the record's type, and we'll put it in the correct set for that type
 			char leader06 = normalizedXml.getLeader().charAt(6);
-			
+
 			// Run these steps only if the record is a bibliographic record
 			String type = null;
-			if("abcdefghijkmnoprt".contains(""+leader06))
-			{
+			if("abcdefghijkmnoprt".contains(""+leader06)) {
+
+				TimingLogger.start("bibsteps");
+
 				type = "bib";
 				((Record)record).setIndexedObjectType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
@@ -265,7 +267,7 @@ public class NormalizationService extends GenericMetadataService {
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
 					normalizedXml = supplyMARCOrgCode(normalizedXml);
 
-				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1") 
+				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")
 						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
 						|| enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
 					normalizedXml = fix035(normalizedXml);
@@ -273,7 +275,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_035, "0").equals("1"))
 					normalizedXml = dedup035(normalizedXml);
-				
+
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_ROLE_AUTHOR, "0").equals("1"))
 					normalizedXml = roleAuthor(normalizedXml);
 
@@ -318,15 +320,17 @@ public class NormalizationService extends GenericMetadataService {
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
 					normalizedXml = IIILocationName(normalizedXml);
-				
+
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_945_FIELD, "0").equals("1"))
 					normalizedXml = remove945Field(normalizedXml);
 
+				TimingLogger.stop("bibsteps");
 			}
 
 			// Run these steps only if the record is a holding record
-			if("uvxy".contains(""+leader06))
-			{
+			if("uvxy".contains(""+leader06)) {
+				TimingLogger.start("holdsteps");
+
 				type = "hold";
 				((Record)record).setIndexedObjectType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
@@ -334,22 +338,26 @@ public class NormalizationService extends GenericMetadataService {
 
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
 					normalizedXml = locationLimitName(normalizedXml);
+
+				TimingLogger.stop("holdsteps");
 			}
-			
+
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
 
 			record.setMessages(errors);
-						
+
 			if(LOG.isDebugEnabled())
 				LOG.debug("Creating the normalized record.");
 
 			// Get any records which were processed from the record we're processing
 			// If there are any (there should be at most 1) we need to update them
 			// instead of inserting a new Record
-			
+
 			// If there was already a processed record for the record we just processed, update it
 			if(record.getSuccessors() != null && record.getSuccessors().size() > 0) {
+				TimingLogger.start("update");
+
 				if(LOG.isDebugEnabled())
 					LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
 
@@ -362,21 +370,22 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Set the XML to the new normalized XML
 				oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
-				
+
 				// Add errors
 				oldNormalizedRecord.setMessages(outputRecordErrors);
-				
+
 				// Add the normalized record after modifications were made to it to
 				// the list of modified records.
 				oldNormalizedRecord.setIndexedObjectType(type);
 				results.add(oldNormalizedRecord);
 
+				TimingLogger.stop("update");
 				return results;
-			}
+
 			// We need to create a new normalized record since we haven't normalized an older version of the original record
 			// Do this only if the record we're processing is not deleted
-			else
-			{
+			} else {
+				TimingLogger.start("new");
 				if(LOG.isDebugEnabled())
 					LOG.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
@@ -387,7 +396,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Add errors
 				normalizedRecord.setMessages(outputRecordErrors);
-				
+
 				// Insert the normalized record
 
 				// The setSpec and set Description of the "type" set we should add the normalized record to
@@ -404,7 +413,7 @@ public class NormalizationService extends GenericMetadataService {
 					setSpec = "MARCXMLholding";
 					setName = "MARCXML Holding Records";
 					setDescription = "A set of all MARCXML Holding records in the repository.";
-					
+
 				} else if(leader06 == 'z') {
 					setSpec = "MARCXMLauthority";
 					setName = "MARCXML Authority Records";
@@ -414,17 +423,17 @@ public class NormalizationService extends GenericMetadataService {
 					return new ArrayList<OutputRecord>();
 				}
 				TimingLogger.add(setName, 0);
-				
+
 				if(setSpec != null) {
 					// Get the set for the provider
 					TimingLogger.start("getSetBySetSpec");
 					Set recordTypeSet = getSetService().getSetBySetSpec(setSpec);
 					TimingLogger.stop("getSetBySetSpec");
-					
+
 					// Add the set if it doesn't already exist
 					if(recordTypeSet == null)
 						recordTypeSet = addSet(setSpec, setName, setDescription);
-					
+
 					// Add the set to the record
 					normalizedRecord.addSet(recordTypeSet);
 				}
@@ -435,6 +444,8 @@ public class NormalizationService extends GenericMetadataService {
 				results.add(normalizedRecord);
 				if(LOG.isDebugEnabled())
 					LOG.debug("Created normalized record from unnormalized record with ID " + record.getId());
+
+				TimingLogger.stop("new");
 				return results;
 			}
 		}
@@ -444,7 +455,7 @@ public class NormalizationService extends GenericMetadataService {
 
 			if(LOG.isDebugEnabled())
 				LOG.debug("Adding errors to the record.");
-			
+
 			record.setMessages(errors);
 			return results;
 		}
@@ -553,7 +564,7 @@ public class NormalizationService extends GenericMetadataService {
 		{
 			if(LOG.isDebugEnabled())
 				LOG.debug("Cannot find a MARC vocabulary mapping for the leader 06 value of " + leader06 + ".");
-			
+
 			if(leader06 != ' ') {
 				addMessage(marcXml.getInputRecord(), 102, RecordMessage.INFO);
 				//addMessage(marcXml.getInputRecord(), 102, RecordMessage.INFO, "Invalid leader 06 value: " + leader06));
@@ -645,7 +656,7 @@ public class NormalizationService extends GenericMetadataService {
 	 */
 	private MarcXmlManager modeOfIssuance(MarcXmlManager marcXml)
 	{
-		
+
 		if(LOG.isDebugEnabled())
 			LOG.debug("Entering ModeOfIssuance normalization step.");
 
@@ -662,7 +673,7 @@ public class NormalizationService extends GenericMetadataService {
 
 			addMessage(marcXml.getInputRecord(), 103, RecordMessage.INFO);
 			//addMessage(marcXml.getInputRecord(), 103, RecordMessage.INFO, "Invalid leader 07 value: " + leader07);
-			
+
 			return marcXml;
 		}
 
@@ -695,7 +706,7 @@ public class NormalizationService extends GenericMetadataService {
 			addMessage(marcXml.getInputRecord(), 103, RecordMessage.INFO);
 			//addMessage(marcXml.getInputRecord(), 103, RecordMessage.INFO, " - Cannot create 035 from 001.");
 		}
-	
+
 		// If either control field didn't exist, we don't have to do anything
 		if(control001 == null || control003 == null)
 		{
@@ -710,7 +721,7 @@ public class NormalizationService extends GenericMetadataService {
 		// Create the new 035 field
 		if(moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode())) {
 			String new035 = null;
-			
+
 			if (Character.isLetter(control001.charAt(0))) {
 				int index = 0;
 				StringBuffer s = new StringBuffer();
@@ -719,9 +730,9 @@ public class NormalizationService extends GenericMetadataService {
 					index++;
 				}
 				String new003 = s.toString();
-				
+
 				control001 = control001.substring(new003.length());
-				
+
 				new035 = "(" + new003 + ")" + control001;
 			} else {
 				new035 = "(" + control003 + ")" + control001;
@@ -789,34 +800,34 @@ public class NormalizationService extends GenericMetadataService {
 
 		// The value of field 007
 		String field007 = marcXml.getField007();
-		
+
 		if (field007 != null && field007.length() > 0) {
-	
+
 			// The character at offset 00 of the 007 field
 			char field007offset00 = field007.charAt(0);
-			
+
 			// Pull the 007 Vocab mapping from the configuration file based on the leader 06 value.
 			String smdVocab = vocab007Properties.getProperty(""+field007offset00, null);
-	
+
 			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
 			if(smdVocab == null)
 			{
 				if(LOG.isDebugEnabled())
 					LOG.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
-	
+
 				addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO);
 				//addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO, "Invalid value in Control Field 007 offset 00: " + field007offset00);
-				
+
 				return marcXml;
 			}
-	
+
 			if(LOG.isDebugEnabled())
 				LOG.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
-	
+
 			// Add a MARCXML field to store the SMD Vocab
 			marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, smdVocab);
 		}
-		
+
 		// Return the modified MARCXML record
 		return marcXml;
 	}
@@ -841,16 +852,16 @@ public class NormalizationService extends GenericMetadataService {
 		if (!field007offset00and01.equals("  ")) {
 			// Pull the SMD type mapping from the configuration file based on the leader 06 value.
 			String smdVocab = smdType007Properties.getProperty(field007offset00and01, null);
-	
+
 			// If there was no mapping for the provided 007 offset 00, we can't create the field.  In this case return the unmodified MARCXML
 			if(smdVocab == null)
 			{
 				if(LOG.isDebugEnabled())
 					LOG.debug("Cannot find a SMD Vocab mapping for the 007 offset 00 and 01 values of " + field007offset00and01 + ", returning the unmodified MARCXML.");
-				
+
 				addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO);
 				//addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO, "Invalid value in Control Field 007 offset 00: " + field007offset00and01);
-	
+
 				return marcXml;
 			}
 			if(LOG.isDebugEnabled())
@@ -1055,7 +1066,7 @@ public class NormalizationService extends GenericMetadataService {
 		{
 			// Pull the language term mapping from the configuration file based on the language code.
 			String languageTerm = languageTermProperties.getProperty(languageCode, null);
-			
+
 			// If no mapping for language code, then check for capitalized language code
 			if (languageTerm == null) {
 				languageTerm = languageTermProperties.getProperty(languageCode.toUpperCase(), null);
@@ -1069,7 +1080,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO);
 				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
-				
+
 				continue;
 			}
 
@@ -1254,7 +1265,7 @@ public class NormalizationService extends GenericMetadataService {
 
 			return marcXml;
 		}
-		
+
 		String new003 = null;
 
 		if (Character.isLetter(control001.charAt(0))) {
@@ -1265,7 +1276,7 @@ public class NormalizationService extends GenericMetadataService {
 				index++;
 			}
 			new003 = s.toString();
-			
+
 			control001 = control001.substring(new003.length());
 		} else {
 			// Add an 003 to thee header
@@ -1277,7 +1288,7 @@ public class NormalizationService extends GenericMetadataService {
 
 		// Add the new 003 field
 		marcXml.addMarcXmlControlField("003", new003);
-				
+
 		// Create the new 035 field
 		String new035 = "(" + getOrganizationCode() + ")" + control001;
 
@@ -1289,7 +1300,7 @@ public class NormalizationService extends GenericMetadataService {
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * Edits OCLC 035 records with common incorrect formats to take the format
 	 * (OCoLC)%CONTROL_NUMBER%.
@@ -1330,7 +1341,7 @@ public class NormalizationService extends GenericMetadataService {
 				if(subfield.getAttribute("code").getValue().equals("b")) {
 					bSubfield = subfield;
 					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO, 
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO,
 					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
 				}
 
@@ -1338,10 +1349,10 @@ public class NormalizationService extends GenericMetadataService {
 				if(subfield.getAttribute("code").getValue().equals("9")) {
 					subfield9 = subfield;
 					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, 
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR,
 					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
 				}
-					
+
 			} // end loop over 035 subfields
 
 			// Execute only if Fix035 step is enabled
@@ -1358,7 +1369,7 @@ public class NormalizationService extends GenericMetadataService {
 							try
 							{
 								String controlNumber = aSubfield.getText().trim();
-	
+
 								// Set $a to (OCoLC)%CONTROL_NUMBER%
 								aSubfield.setText("(OCoLC)" + controlNumber);
 							}
@@ -1367,15 +1378,15 @@ public class NormalizationService extends GenericMetadataService {
 							}
 						}
 					}
-	
+
 					// Remove the b subfield as we shouldn't ever have one
 					field035.removeContent(bSubfield);
 				}
-	
+
 				// Second case: $a = (OCoLC)ocm%CONTROL_NUMBER% or (OCoLC)ocn%CONTROL_NUMBER% or (OCoLC)ocl%CONTROL_NUMBER%
 				if(aSubfield != null && (aSubfield.getText().startsWith("(OCoLC)ocm") || aSubfield.getText().startsWith("(OCoLC)ocn") || aSubfield.getText().startsWith("(OCoLC)ocl")))
 					aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(10));
-	
+
 				// Third case: $a = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
 				if(aSubfield != null && (aSubfield.getText().startsWith("ocm") || aSubfield.getText().startsWith("ocn") || aSubfield.getText().startsWith("ocl")))
 					aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(3));
@@ -1393,12 +1404,12 @@ public class NormalizationService extends GenericMetadataService {
 						aSubfield.setAttribute("code", "a");
 						field035.addContent("\t").addContent(aSubfield).addContent("\n");
 					}
-	
+
 					aSubfield.setText("(OCoLC)" + subfield9.getText().substring(3));
 					field035.removeContent(subfield9);
 				}
 			}
-		
+
 			// Execute only if Fix035 step is enabled
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
 				// If the $a has more than one prefix, only use the first one
@@ -1410,34 +1421,34 @@ public class NormalizationService extends GenericMetadataService {
 				}
 			}
 
-			// Execute only if 035LeadingZero step is enabled. Removes leading zeros in 035 $a records. Changes (OCoLC)00021452 to (OCoLC)21452 
+			// Execute only if 035LeadingZero step is enabled. Removes leading zeros in 035 $a records. Changes (OCoLC)00021452 to (OCoLC)21452
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")) {
-				
+
 				if (aSubfield != null) {
 					// Get value of $a
 					String value = aSubfield.getText();
 					String newValue = "";
 
-					// Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052 
+					// Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052
 					int indexOfBracket = value.indexOf(")");
 					newValue = value.substring(0, indexOfBracket + 1);
-					
+
 					boolean numericValueStarts = false;
 					String regex = "[1-9]";
-					
+
 					for (int i=indexOfBracket + 1;i < value.length();i++) {
-						
+
 						if (String.valueOf(value.charAt(i)).matches(regex)) {
 							numericValueStarts = true;
 						}
-						
+
 						if (value.charAt(i) != '0') {
 							newValue = newValue + value.charAt(i);
 						} else if (numericValueStarts) {
 							newValue = newValue + value.charAt(i);
 						}
 					}
-					
+
 					// Set the new value back in subfield $a
 					aSubfield.setText(newValue);
 				}
@@ -1902,18 +1913,18 @@ public class NormalizationService extends GenericMetadataService {
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
-		
+
 		// Lopp through the 852
 		for(Element dataField:dataFields) {
-			
+
 			// Get all $b for that field
 			List<Element> subFieldsB = marcXml.getSubfieldsOfField(dataField, 'b');
-			
+
 			// Loop through the $b values
 			for (Element subFieldB:subFieldsB) {
 				int index = dataField.indexOf(subFieldB);
 				String limitName = locationNameProperties.getProperty(subFieldB.getText().replace(' ', '_'), null);
-				
+
 				// If there was no mapping for the provided 852 $b, we can't set the value.  In this case do nothing and start looking at next $b
 				if(limitName == null)
 				{
@@ -1927,7 +1938,7 @@ public class NormalizationService extends GenericMetadataService {
 				Element newSubfieldC = new Element("subfield", marcNamespace);
 				newSubfieldC.setAttribute("code", "c");
 				newSubfieldC.setText(limitName);
-			
+
 				// Add the $c subfield to the new datafield
 				dataField.addContent("\n\t").addContent(index + 1, newSubfieldC).addContent("\n");
 			}
@@ -1935,10 +1946,10 @@ public class NormalizationService extends GenericMetadataService {
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * For the location code in 852 $b, it assigns corresponding location limit name to 852 $b.
-	 * In case of more than 1 limit name exist then put each limit name in separate $b within same 852 
+	 * In case of more than 1 limit name exist then put each limit name in separate $b within same 852
 	 *
 	 * @param marcXml The original MARCXML record
 	 * @return The MARCXML record after performing this normalization step.
@@ -1950,17 +1961,17 @@ public class NormalizationService extends GenericMetadataService {
 
 		// Get dataFiled with tag=852
 		List<Element> dataFields = marcXml.getDataFields("852");
-		
+
 		// Lopp through the 852
 		for(Element dataField:dataFields) {
-			
+
 			// Get all $b for that field
 			List<Element> subFieldsB = marcXml.getSubfieldsOfField(dataField, 'b');
-			
+
 			// Loop through the $b values
 			for (Element subFieldB:subFieldsB) {
 				String limitNames = locationLimitNameProperties.getProperty(subFieldB.getText().replace(' ', '_'), null);
-				
+
 				// If there was no mapping for the provided 852 $b, we can't set the value.  In this case do nothing and start looking at next $b
 				if(limitNames == null)
 				{
@@ -1972,11 +1983,11 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Limit names are delimited by |
 				StringTokenizer tokenizer = new StringTokenizer(limitNames, "|");
-				
+
 				int tokenCount = 1;
 				while (tokenizer.hasMoreTokens()) {
 					String limitName = tokenizer.nextToken().trim();
-					
+
 					if (tokenCount ==1) {
 						subFieldB.setText(limitName);
 					} else {
@@ -1984,12 +1995,12 @@ public class NormalizationService extends GenericMetadataService {
 						Element newSubfieldB = new Element("subfield", marcNamespace);
 						newSubfieldB.setAttribute("code", "b");
 						newSubfieldB.setText(limitName);
-						
+
 						// Add the $b subfield to the new datafield
 						dataField.addContent("\n\t").addContent(newSubfieldB).addContent("\n");
 					}
 					tokenCount++;
-					
+
 				}
 			}
 		}
@@ -1997,7 +2008,7 @@ public class NormalizationService extends GenericMetadataService {
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * Replaces the location code in 945 $l with the name of the location it represents.
 	 *
@@ -2035,7 +2046,7 @@ public class NormalizationService extends GenericMetadataService {
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * Removes 945 field if there is no $5 field with organization code
 	 *
@@ -2047,7 +2058,7 @@ public class NormalizationService extends GenericMetadataService {
 	{
 		if(LOG.isDebugEnabled())
 			LOG.debug("Entering remove945Field normalization step.");
-		
+
 		// The 945 $l value
 		List<Element> field945s = marcXml.getField945();
 
@@ -2057,27 +2068,27 @@ public class NormalizationService extends GenericMetadataService {
 			List<Element> subfields = field945.getChildren("subfield",marcNamespace);
 
 			boolean remove945 = true;
-			
+
 			// Check if $5 is present as a subfield with institution code
 			for (Element subfield : subfields) {
-				
+
 				if(subfield.getAttribute("code").getValue().equals("5") &&
 						subfield.getText().equals(getOrganizationCode())) {
-				
+
 					// Remove this field
 					remove945 = false;
 				}
 			}
-			
+
 			if (remove945) {
 				marcXml.remove945(field945);
-				
+
 			}
 	    }
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * Copies relevant fields from the 651 datafield into 9xx fields.
 	 *
@@ -2100,7 +2111,7 @@ public class NormalizationService extends GenericMetadataService {
 
 		return marcXml;
 	}
-	
+
 	/**
 	 * Create a 246 field without an initial article whenever a 245 exists with an initial article.
 	 *
@@ -2114,20 +2125,20 @@ public class NormalizationService extends GenericMetadataService {
 
 		// Get dataFiled with tag=245
 		List<Element> dataFields = marcXml.getDataFields("245");
-		
+
 		for(Element dataField:dataFields) {
 
 			// Execute step only if 1st indicator is 1 & 2nd indicator is not 0 for tag=245
-			if (marcXml.getIndicatorOfField(dataField, "1").equals("1") && !marcXml.getIndicatorOfField(dataField, "2").equals("0") 
+			if (marcXml.getIndicatorOfField(dataField, "1").equals("1") && !marcXml.getIndicatorOfField(dataField, "2").equals("0")
 						&& !marcXml.getIndicatorOfField(dataField, "2").equals(" ") && !marcXml.getIndicatorOfField(dataField, "2").equals("")) {
-				
+
 				// Create field 246
 				marcXml.copyMarcXmlField("245", "246", "anpf", "3", "0", true);
 				// Deduplicate 246
 				marcXml.deduplicateMarcXmlField("246");
-			}	
+			}
 		}
-		
+
 		return marcXml;
 	}
 
@@ -2168,17 +2179,17 @@ public class NormalizationService extends GenericMetadataService {
 
 	@Override
 	public void loadConfiguration(String configuration)
-	{	
+	{
 		String[] configurationLines = configuration.split("\n");
-	
+
 		// The Properties file we're currently populating
 		Properties current = null;
 		LOG.debug("loadConfiguration: "+this);
-		
+
 	    for(String line : configurationLines)
 	    {
     		line = line.trim();
-    		
+
 	    	// Skip comments and blank lines
 	    	if(line.startsWith("#") || line.length() == 0)
 	    		continue;
@@ -2203,7 +2214,7 @@ public class NormalizationService extends GenericMetadataService {
 	    			if(locationLimitNameProperties == null)
 	    				locationLimitNameProperties = new Properties();
 	    			current = locationLimitNameProperties;
-	    		}	    		
+	    		}
 	    		else if(line.equals("LEADER 06 TO DCMI TYPE"))
 	    		{
 	    			if(dcmiType06Properties == null)
@@ -2267,9 +2278,9 @@ public class NormalizationService extends GenericMetadataService {
 	    	}
 	    }
 	}
-	
+
 	@Override
-	protected void validateService() throws ServiceValidationException 
+	protected void validateService() throws ServiceValidationException
 	{
 		if(locationNameProperties == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION");
@@ -2297,9 +2308,9 @@ public class NormalizationService extends GenericMetadataService {
 			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
 
 	}
-	
+
 	protected String getOrganizationCode() {
 		return enabledSteps.getProperty("OrganizationCode");
 	}
-	
+
 }
