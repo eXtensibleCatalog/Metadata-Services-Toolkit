@@ -20,7 +20,6 @@ import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.service.Service;
-import xc.mst.constants.Constants;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
@@ -39,7 +38,7 @@ public class DeleteProcessingDirective extends BaseActionSupport
     private int processingDirectiveId;
 
     /** A reference to the logger for this class */
-    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    static Logger log = Logger.getLogger(DeleteProcessingDirective.class);
     
 	/** Error type */
 	private String errorType;
@@ -84,6 +83,7 @@ public class DeleteProcessingDirective extends BaseActionSupport
             ProcessingDirective tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             if(tempProcDir==null)
             {
+            	deleted = false;
                 this.addFieldError("DeleteDirectiveError", "Error Deleting Processing Rule. An email has been sent to the administrator.");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
@@ -110,7 +110,7 @@ public class DeleteProcessingDirective extends BaseActionSupport
 
                         Object[] messageArguments = {tempProcDir.getId()}; 
                         message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
-                        LOG.debug("**** action error: message set to: "+message);                        
+                        log.debug("**** action error: message set to: "+message);                        
                        
                         return INPUT;
                 	}
@@ -120,7 +120,7 @@ public class DeleteProcessingDirective extends BaseActionSupport
 
                     Object[] messageArguments = {getOutputRepository(tempProcDir).getName()}; 
                     message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedDestRecords", messageArguments);
-                    LOG.debug("**** action error: message set to: "+message);
+                    log.debug("**** action error: message set to: "+message);
                     
                     return INPUT;
             	}
@@ -130,11 +130,14 @@ public class DeleteProcessingDirective extends BaseActionSupport
 
                 Object[] messageArguments = {getInputRepository(tempProcDir).getName()}; 
                 message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedSrcRecords", messageArguments);
-                LOG.debug("**** action error: message set to: "+message);                        
+                log.debug("**** action error: message set to: "+message);                        
                 
                 return INPUT;
         	}	
         }
+        // any other uncaught exception will get shown to the user through a javascript alert 
+        //                                              - list_processingdirectives -> handleError
+        //                                                (this is the desired behavior)
         catch(DatabaseConfigException e)
         {
             log.error("Deletion of processing rule Unsuccessful",e);
@@ -145,35 +148,65 @@ public class DeleteProcessingDirective extends BaseActionSupport
     }
 
     private Repository getOutputRepository(ProcessingDirective tempProcDir) {
-    	Service outputS = tempProcDir.getService();  // the service used to produce the output
-    	Repository outgoingRepo = getRepository(outputS);
+    	Repository outgoingRepo;
+		try {
+			Service outputS = tempProcDir.getService();  // the service used to produce the output
+			outgoingRepo = getRepository(outputS);
+		} 
+		catch (NullPointerException e) {
+			return null;
+		}
     	
     	return  outgoingRepo;
     }
 
     private Repository getInputRepository(ProcessingDirective tempProcDir) {
-    	Provider provider = tempProcDir.getSourceProvider();
-    	Repository incomingRepo = getRepositoryService().getRepository(provider);
+    	Repository incomingRepo;
+		try {
+			Provider provider = tempProcDir.getSourceProvider();
+			incomingRepo = getRepositoryService().getRepository(provider);
+		} 
+		catch (NullPointerException e) {
+			return null;
+		}
     	
     	return incomingRepo;
     }
     
     private Repository getRepository(Service outputS) {
-    	List<Repository> list =  getRepositoryService().getAll();
-    	for (Repository r: list) {
-    		if (r.getService().equals(outputS)) {
-    			return r;
-    		}
+    	if (outputS == null) {
+    		return null;
     	}
+    	try {
+			List<Repository> list =  getRepositoryService().getAll();
+			for (Repository r: list) {
+				if (r != null) {
+					if (r.getService().equals(outputS)) {
+						return r;
+					}
+				}
+			}
+		} 
+    	catch (NullPointerException e) {
+			return null;
+		}
     	return null;
     }
     
     private boolean hasNonDeletedSourceRecords(ProcessingDirective tempProcDir){
-    	return hasNonDeletedRecords(getInputRepository(tempProcDir));
+    	Repository r = getInputRepository(tempProcDir);
+    	if (r == null) {
+    		return false;
+    	}
+    	return hasNonDeletedRecords(r);
     }
 
     private boolean hasNonDeletedDestinationRecords(ProcessingDirective tempProcDir){
-    	return hasNonDeletedRecords(getOutputRepository(tempProcDir));
+    	Repository r = getOutputRepository(tempProcDir);
+    	if (r == null) {
+    		return false;
+    	}
+    	return hasNonDeletedRecords(r);
     }
     
     private boolean hasNonDeletedRecords(Repository r){

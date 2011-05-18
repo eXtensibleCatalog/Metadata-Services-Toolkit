@@ -50,7 +50,7 @@ import xc.mst.utils.TimingLogger;
  */
 public class Scheduler extends BaseService implements Runnable {
 	
-	private final static Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
+	private final static Logger LOG = Logger.getLogger(Scheduler.class);
 	
 	protected boolean killed = false;
 	
@@ -222,7 +222,9 @@ public class Scheduler extends BaseService implements Runnable {
 							LOG.debug("service.getName(): "+service.getName());
 							LOG.debug("service.getMetadataService(): "+service.getMetadataService());
 							previousRepo = service.getMetadataService().getRepository();
-							service.setStatus(runningJob.getJobStatus());
+							if (runningJob != null) {
+								service.setStatus(runningJob.getJobStatus());
+							}
 							getServiceDAO().update(service);
 						}
 						LOG.debug("processingDirectives: "+processingDirectives);
@@ -316,6 +318,8 @@ public class Scheduler extends BaseService implements Runnable {
 								incomingRepo = 
 									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
 								if (!incomingRepo.ready4harvest()) {
+									
+									getJobService().deleteJob(jobToStart);
 									runningJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
@@ -323,6 +327,8 @@ public class Scheduler extends BaseService implements Runnable {
 								Service s2 = getServicesService().getServiceById(jobToStart.getProcessingDirective().getSourceService().getId());
 								incomingRepo = s2.getMetadataService().getRepository();
 								if (!incomingRepo.ready4harvest()) {
+
+									getJobService().deleteJob(jobToStart);
 									runningJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
