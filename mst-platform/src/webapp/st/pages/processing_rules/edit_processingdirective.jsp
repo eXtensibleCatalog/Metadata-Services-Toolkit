@@ -110,10 +110,21 @@
                                             <c:forEach var="provider" items="${providerList}" varStatus="providerCount">
                                                 <c:choose>
                                                     <c:when test="${source==provider.name}">
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source" value="${provider.name}" disabled><br><br>
+                                                        <input checked type="radio" name="source" value="${provider.name}"  style="display:none;"><br><br>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input type="radio" name="source" value="${provider.name}" disabled><br><br>
+                                                        <input type="radio" name="source" value="${provider.name}"  style="display:none;"><br><br>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </c:forEach>
+                                            <c:forEach var="provider" items="${providerList}" varStatus="providerCount">
+                                                <c:choose>
+                                                    <c:when test="${source==provider.name}">
+                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source2" value="${provider.name}" disabled><br><br>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input type="radio" name="source2" value="${provider.name}" disabled><br><br>
                                                     </c:otherwise>
                                                 </c:choose>
 

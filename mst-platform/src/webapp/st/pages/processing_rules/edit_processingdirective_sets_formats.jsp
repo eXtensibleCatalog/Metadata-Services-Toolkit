@@ -210,9 +210,9 @@
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left">  
+                                         <div  class="listBox" style="display:none;">  
                                             <B>Sets</B> <br>
-                                            <select multiple size="10" id="setsSelected" name="setsSelected" disabled>
+                                            <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
@@ -238,7 +238,35 @@
                                                     </c:choose>
                                                 </c:forEach>
                                             </select>
+                                         </div>
+                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left">  
+                                            <B>Sets</B> <br>
+                                            <select multiple size="10" id="setsSelectedShown" name="setsSelectedShown" disabled>
+                                                <option value="0"
+                                                    <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
+                                                         selected
+                                                    </c:if>
+                                                >All Sets</option>
+                                                <c:forEach var="set" items="${setList}" varStatus="setcount">
+                                                    <c:set var="flag" value="${false}"/>
+                                                      <c:forEach var="triggerSet" items="${temporaryProcessingDirective.triggeringSets}" varStatus="triggerSetCount">
 
+                                                            <c:if test="${set.id == triggerSet.id}">
+                                                                <c:set var="flag" value="${true}"/>
+
+                                                            </c:if>
+
+                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${flag==true}">
+                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                        </c:when>
+                                                         <c:otherwise>
+                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
                                          </div>
                                      </c:otherwise>
                                  </c:choose>
