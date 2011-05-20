@@ -31,7 +31,7 @@ YAHOO.xc.mst.directives.deleteDirective = {
 
 			//get the response from deleting a rule
 			var response = eval("("+o.responseText+")");
-			
+
 			//if the rule was not deleted then show the error message.
 			// received from the server
 			if( response.processingRuleDeleted == "false" )
@@ -41,6 +41,10 @@ YAHOO.xc.mst.directives.deleteDirective = {
 				deleteProcessingRuleError.innerHTML = '<p id="newDeleteProcessingRuleError">'
 					+ response.message + '</p>';
 				YAHOO.xc.mst.directives.deleteDirective.deleteProcessingDirectiveNakDialog.showDialog();
+			}
+			else {
+				// redirect
+				window.location='listProcessingDirectives.action';
 			}
 		};
 

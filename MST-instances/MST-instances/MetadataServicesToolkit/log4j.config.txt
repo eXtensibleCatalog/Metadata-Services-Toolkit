@@ -86,5 +86,5 @@ log4j.logger.org.hibernate=INFO
 log4j.logger.org.hibernate.SQL=INFO
 log4j.logger.org.hibernate.type=INFO
 log4j.logger.com.opensymphony.xwork2=ERROR
-log4j.logger.org.apache.struts2=DEBUG
+#log4j.logger.org.apache.struts2=ERROR
 #log4j.logger.com.opensymphony.xwork2.ognl.OgnlValueStack=ERROR

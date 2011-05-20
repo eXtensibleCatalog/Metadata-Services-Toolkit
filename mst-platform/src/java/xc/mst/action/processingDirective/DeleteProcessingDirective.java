@@ -87,7 +87,7 @@ public class DeleteProcessingDirective extends BaseActionSupport
                 this.addFieldError("DeleteDirectiveError", "Error Deleting Processing Rule. An email has been sent to the administrator.");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
-                return SUCCESS;
+        		return ERROR;
             }
             //      - if no processing is occurring &&
             //        if all records on input side are marked deleted &&
@@ -101,9 +101,10 @@ public class DeleteProcessingDirective extends BaseActionSupport
                     	// should only come up if the records are all marked deleted, AND processing is occurring.
                     	
                         getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
+                        log.debug("**** PD deleted! ");                        
                         deleted = true;
                         
-                        return SUCCESS;
+                        return INPUT;
                     }
                 	else {
                         deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
@@ -143,7 +144,8 @@ public class DeleteProcessingDirective extends BaseActionSupport
             log.error("Deletion of processing rule Unsuccessful",e);
             this.addFieldError("listServicesError", "Deletion of processing rule Unsuccessful");
             errorType = "error";
-            return SUCCESS;
+        	deleted = false;
+    		return ERROR;
         }
     }
 
