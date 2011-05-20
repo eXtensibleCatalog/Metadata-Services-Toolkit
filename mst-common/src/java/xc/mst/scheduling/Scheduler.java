@@ -70,6 +70,10 @@ public class Scheduler extends BaseService implements Runnable {
 	
 	public void run() {
 		LOG.info("Scheduler.run");
+		if (!config.getPropertyAsBoolean("runScheduler", true)) {
+			return;
+		}
+
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
 		Thread solrThread = null;

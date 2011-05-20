@@ -11,7 +11,6 @@ package xc.mst.services;
 
 
 import gnu.trove.TLongByteHashMap;
-import gnu.trove.TLongHashSet;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -497,8 +496,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				inputFormat, inputSet, repo.getName(), getService());
 		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
-		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
-				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
+		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
 		if (getMetadataServiceManager() != null) {
@@ -613,8 +611,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				getServiceDAO().persist(sh);
 			}
 
-			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
-					sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
+			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 			records = getRecords(repo, sh, inputFormat, inputSet);
 		}
 		//  TODO not inserting errors on input record.

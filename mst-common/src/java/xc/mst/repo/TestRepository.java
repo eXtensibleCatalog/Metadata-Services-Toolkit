@@ -357,7 +357,7 @@ public class TestRepository extends BaseService implements Repository {
 	 * @param inputSet
 	 * @return
 	 */
-	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, xc.mst.bo.provider.Set inputSet, long offset) {
+	public long getRecordCount(Date from, Date until, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

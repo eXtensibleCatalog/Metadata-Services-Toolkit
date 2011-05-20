@@ -285,9 +285,6 @@ public class BaseDAO {
 	public UserGroupUtilDAO getUserGroupUtilDAO() {
 		return (UserGroupUtilDAO)config.getBean("UserGroupUtilDAO");
 	}
-	public RecordDAO getRecordDAO() {
-		return (RecordDAO)config.getBean("DBRecordDAO");
-	}
 	public MessageDAO getMessageDAO() {
 		return (MessageDAO)config.getBean("MessageDAO");
 	}

@@ -766,11 +766,9 @@ public class Facade extends BaseManager
 		//long totalRecords =	service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
 		
 		// BDA TODO: first do a count
-		long totalCount = -1;
-		/*
-		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
+		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
+		//long totalCount = -1;
 		log.debug("totalCount: "+totalCount);
-		*/
 		
 		if (totalCount != 0) {
 			records = service.getMetadataService().getRepository().getRecords(fromDate, untilDate, startingId, format, setObject);

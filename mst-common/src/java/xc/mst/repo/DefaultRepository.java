@@ -14,6 +14,7 @@ import gnu.trove.TLongHashSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -45,11 +46,16 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	protected TLongHashSet recordsToActivate = new TLongHashSet();
 	protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>();
+	protected Map<String, Long> completeListSizeMap = new LinkedHashMap<String, Long>(1000);
 
 	protected String name = null;
 
 	protected Provider provider = null;
 	protected Service service = null;
+	
+	public Map<String, Long> getCompletListSizeMap() {
+		return this.completeListSizeMap;
+	}
 
 	public Provider getProvider() {
 		return provider;
@@ -203,6 +209,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
 		LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
 		List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, statuses);
+		//List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet, statuses);
 		if (records == null) {
 			LOG.debug("no records found");
 		} else {
@@ -211,22 +218,27 @@ public class DefaultRepository extends BaseService implements Repository {
 		return records;
 	}
 
-	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset) {
-		LOG.debug("from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet);
-		long estimatedRecordsRemaining = getRepositoryDAO().getRecordCount(name, from, until, startingId, inputFormat, inputSet, offset);
-		int completeListSizeThreshold = config.getPropertyAsInt("harvestProvider.estimateCompleteListSizeThreshold", 1000000);
-		LOG.debug("completeListSizeThreshold: "+completeListSizeThreshold);
-		return estimatedRecordsRemaining;
-		/*
-		// This logic only makes sense if you're taking guesses
-		long recordCount = 0;
-		if (estimatedRecordsRemaining < -1 && (estimatedRecordsRemaining * -1) < completeListSizeThreshold) {
-			recordCount = offset + completeListSizeThreshold;
+	public long getRecordCount(final Date from, final Date until, 
+			final Format inputFormat, final Set inputSet) {
+		final String key = "from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet; 
+		LOG.debug(key);
+		if (completeListSizeMap.containsKey(key)) {
+			LOG.debug("found recordCount in cache");
+			return completeListSizeMap.get(key);
+		} else {
+			long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet, false);
+			completeListSizeMap.put(key, recordCount);			
+			if (recordCount == -1) {
+				new Thread() {
+					public void run() {
+						long recordCount = getRepositoryDAO().getRecordCount(
+								name, from, until, inputFormat, inputSet, true);
+						completeListSizeMap.put(key, recordCount);
+					}
+				}.start();
+			}
+			return recordCount;
 		}
-		LOG.debug("recordCount:"+recordCount);
-		// if (recordCount + numAlreadyHarvested) <
-		return recordCount;
-		*/
 	}
 
 
