@@ -34,13 +34,19 @@ public class SolrIndexService extends GenericMetadataService  {
 	Repository incomingRepository = null;
 	protected int recordsProcessedSinceCommit;
 	
+	protected String name4progressBar = null;
+	
+	public String getName4progressBar() {
+		return name4progressBar;
+	}
+
 	@Override
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
-		TimingLogger.start("getRecordsWSets");
-		List<Record> rs =  
-			((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
-		TimingLogger.stop("getRecordsWSets");
-		return rs;
+			TimingLogger.start("getRecordsWSets");
+			List<Record> rs =  
+				((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
+			TimingLogger.stop("getRecordsWSets");
+			return rs;
 	}
 	
 	@Override
@@ -68,6 +74,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	public List<OutputRecord> process(InputRecord ri) {
 		recordsProcessedSinceCommit++;
+		this.name4progressBar = "indexing "+incomingRepository.getName();
 		/*
 		if (ri.getStatus() != Record.ACTIVE) {
 			TimingLogger.start("deleteByQuery");

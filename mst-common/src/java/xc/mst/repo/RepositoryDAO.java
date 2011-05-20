@@ -1349,12 +1349,12 @@ public class RepositoryDAO extends BaseDAO {
 						"s.set_id, "+
 						"s.set_spec, "+
 						"s.display_name "+
-					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_xc_marctoxctransformation_record_updates_record_id), "+
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_record_id), "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
 						" sets s "+
 					" where rs.record_id = u.record_id " +
 						" and rs.set_id = s.set_id "+
-						" and (rs.record_id > ? or ? is null) "+
+						" and (rs.record_id >= ? or ? is null) "+
 						" and rs.record_id <= ? "+
 						" and (u.date_updated >= ? or ? is null) "+
 						" and u.date_updated <= ? "+
@@ -1945,6 +1945,7 @@ public class RepositoryDAO extends BaseDAO {
 		} catch (Throwable t) {
 			//do nothing
 		}
+		LOG.debug(name+" ready4harvest"+genericRepoIndexExists);
 		return genericRepoIndexExists;
 	}
 	
