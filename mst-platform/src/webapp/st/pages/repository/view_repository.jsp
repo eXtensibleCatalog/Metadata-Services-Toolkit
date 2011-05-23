@@ -311,7 +311,7 @@
             <form id="repositoryForm" name="repositoryForm" method="POST">
 	    	<input type="hidden" name="repositoryId" value="${provider.id}"/>
 	    </form>		  
-              		<button style="width:140px;" name="edit" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction();" class="xc_button">View Settings</button>
+              		<button name="edit" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.editFunction();" class="xc_button">Edit</button>
                         <button name="View Log" type="button" onclick="javascript:YAHOO.xc.mst.repository.viewRepository.downloadFile('HarvestIn',${provider.id});" class="xc_button">View Log</button>
                         <button name="Revalidate" type="button" id="revalidateRepository" class="xc_button">Revalidate</button>
                         <button style="width:140px;" name="delete" type="button" id="confirmDeleteRepository" class="xc_button">Delete Records</button>            

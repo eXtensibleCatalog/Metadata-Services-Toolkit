@@ -56,7 +56,7 @@
                 <c:import url="/st/inc/menu.jsp"/>
                  <jsp:include page="/st/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Processing Rules | <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> | Show Processing Rule (Step 1)" />
+                    <jsp:param name="bread" value="Processing Rules | <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> | Edit Processing Rule (Step 1)" />
 
                 </jsp:include>
             </div>
@@ -110,34 +110,23 @@
                                             <c:forEach var="provider" items="${providerList}" varStatus="providerCount">
                                                 <c:choose>
                                                     <c:when test="${source==provider.name}">
-                                                        <input checked type="radio" name="source" value="${provider.name}"  style="display:none;"><br><br>
+                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source" value="${provider.name}"><br><br>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <input type="radio" name="source" value="${provider.name}"  style="display:none;"><br><br>
-                                                    </c:otherwise>
-                                                </c:choose>
-
-                                            </c:forEach>
-                                            <c:forEach var="provider" items="${providerList}" varStatus="providerCount">
-                                                <c:choose>
-                                                    <c:when test="${source==provider.name}">
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source2" value="${provider.name}" disabled><br><br>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input type="radio" name="source2" value="${provider.name}" disabled><br><br>
+                                                        <c:out value="${provider.name}"/>&nbsp;&nbsp;<input type="radio" name="source" value="${provider.name}"><br><br>
                                                     </c:otherwise>
                                                 </c:choose>
 
                                             </c:forEach>
                                             <br><br><br>
-                                        <B> Input Records to Services </B><br><br>
+                                        <B> INput Records to Services </B><br><br>
                                             <c:forEach var="service" items="${serviceList}" varStatus="serviceCount">
                                                 <c:choose>
                                                     <c:when test="${source==service.name}">
-                                                        <c:out value="${service.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source" value="${service.name}" disabled><br><br>
+                                                        <c:out value="${service.name}"/>&nbsp;&nbsp;<input checked type="radio" name="source" value="${service.name}"><br><br>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:out value="${service.name}"/>&nbsp;&nbsp;<input type="radio" name="source" value="${service.name}" disabled><br><br>
+                                                        <c:out value="${service.name}"/>&nbsp;&nbsp;<input type="radio" name="source" value="${service.name}"><br><br>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
@@ -155,10 +144,10 @@
                                     <c:forEach var="service" items="${serviceList}" varStatus="serviceCount">
                                         <c:choose>
                                             <c:when test="${service.id==temporaryProcessingDirective.service.id}">
-                                                <input checked type="radio" name="service" value="${service.id}" disabled>&nbsp;&nbsp;<c:out value="${service.name}"/>&nbsp;&nbsp;<br><br>
+                                                <input checked type="radio" name="service" value="${service.id}">&nbsp;&nbsp;<c:out value="${service.name}"/>&nbsp;&nbsp;<br><br>
                                             </c:when>
                                             <c:otherwise>
-                                                <input type="radio" name="service" value="${service.id}" disabled>&nbsp;&nbsp;<c:out value="${service.name}"/>&nbsp;&nbsp;<br><br>
+                                                <input type="radio" name="service" value="${service.id}">&nbsp;&nbsp;<c:out value="${service.name}"/>&nbsp;&nbsp;<br><br>
                                             </c:otherwise>
                                         </c:choose>
 

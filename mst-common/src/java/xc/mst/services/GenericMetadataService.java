@@ -534,7 +534,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       why, someone might also want the xml with these injected records.
 				//       We may want to supply an optional way of doing that.
 				in.setPreviousStatus(Record.NULL);
-				injectKnownData(in);
+				injectKnownSuccessorsIds(in);
 				if (preserveStatuses) {
 					if (getRepository() != null) {
 						previousStatuses.put(in.getId(), (byte)in.getStatus());
@@ -669,16 +669,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 	}
 
-	protected void injectKnownData(Record in) {
+	protected void injectKnownSuccessorsIds(Record in) {
 		if (preserveStatuses && previousStatuses.contains(in.getId())) {
-			TimingLogger.start("injectKnownData");
-			if (getRepository() != null) {
-				TimingLogger.start("injectSuccessorIds");
+			if (getRepository() != null)
 				getRepository().injectSuccessorIds(in);
-				TimingLogger.stop("injectSuccessorIds");
-			}
 			in.setPreviousStatus((char)previousStatuses.get(in.getId()));
-			TimingLogger.stop("injectKnownData");
 		}
 	}
 

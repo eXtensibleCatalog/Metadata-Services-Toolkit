@@ -22,6 +22,7 @@ import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
@@ -45,7 +46,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
     /** Stores the temporary processing directive object that is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
 
-    /** The sets that have been selected by the user in the previous page */
+    /** The sets that have been selecetd by the user in the previous page */
     private String[] setsSelected;
 
     /** The formats that have been selected by the user in the previous page */
@@ -60,11 +61,11 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
     /** The output set name for the processing directive */
     private String outputSetName;
 
-    /** The output set specification for the processing directive */
+    /** The output set spec for the processing directive */
     private String outputSetSpec;
 
     /** A reference to the logger for this class */
-    static Logger log = Logger.getLogger(AddProcessingDirectiveSetsFormats.class);
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
     
 	/** Error type */
 	private String errorType; 
@@ -106,7 +107,6 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                 		tempProcDir.getSourceProvider().getSets().size() > 0) {
                 	tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
                 }
-                
             }
             else
             {
@@ -121,7 +121,6 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
             }
             setFormatList(tempFormatList);
             setSetList(tempSetList);
-            log.debug("**** execute:just setSetList, the list size = "+tempSetList.size());
 
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
@@ -158,7 +157,6 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
             }
 
             String[] SetIdList = getSetsSelected();
-            log.debug("**** addProcessingDirectivesSetsFormats:SetIdList, the list size = "+SetIdList.length);
             String[] FormatIdList = getFormatsSelected();
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = new ArrayList<Set>();
@@ -167,12 +165,15 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
             {
                 for(int i=0;i<FormatIdList.length;i++)
                 {
+
                        Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
                        tempFormatList.add(format);
+
+
                 }
             }
 
-            if(SetIdList!=null) //setting the triggering sets of the processing directive
+            if(SetIdList!=null) //setting the triggering sets of the procesisng directive
             {
                 for(int i=0;i<SetIdList.length;i++)
                 {
@@ -204,7 +205,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
            request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
 
            Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
-           if((setExists==null) && (outputSetSpec!=null) && (!outputSetSpec.equals(""))) //output set doesn't already exist
+           if((setExists==null) && (outputSetSpec!=null) && (!outputSetSpec.equals(""))) //output set doesnt already exist
            {
         	   Set tempSet = new Set();
         	   tempSet.setDisplayName(outputSetName);

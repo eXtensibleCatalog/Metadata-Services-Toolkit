@@ -40,7 +40,7 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
     /**ID of the processing directive whose details are to be edited */
     private int processingDirectiveId;
 
-    /** The source that is associated with a processing directive*/
+    /** The source that is associated with a procesisng directive*/
     private String source;
 
     /** Request */
@@ -55,10 +55,10 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
     /**List of all services */
     private List<Service> serviceList;
 
-    /** specifies the type of source i.e whether it is a provider or a service */
+    /** specifies the type of source i.e whther it is a provider or a service */
     private String sourceType;
 
-    /** The service associated with the processing directive */
+    /** Ther service associated with the processing directive */
     private String service;
     
 	/** Error type */
@@ -225,11 +225,8 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
     {
         try
         {
+            
             temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-            LOG.debug("****** EditProcessingDirective:execute "+" tempProcDir="+temporaryProcessingDirective);
-     
-            request.getSession().setAttribute("processingDirectiveId",processingDirectiveId);
-     
             if(temporaryProcessingDirective==null)
             {
                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
@@ -252,13 +249,14 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
             }
             else //source is a provider
             {
+
                 setSourceType("provider");
+
             }
 
             setProviderList(getProviderService().getAllProviders());
             setServiceList(getServicesService().getAllServices());
             setTemporaryProcessingDirective(temporaryProcessingDirective);
-
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -279,12 +277,11 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
     {
         try
         {
-            temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-            LOG.debug("****** EditProcessingDirective:editProcessingDirectives() "+" tempProcDir="+temporaryProcessingDirective+ " id="+processingDirectiveId);
+            temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
             if(temporaryProcessingDirective==null)
             {
-                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");            
+                 temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             }
             
             if(temporaryProcessingDirective==null)
@@ -300,14 +297,19 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
             if(tempProvider!=null) //source is a provider
             {
                 request.getSession().setAttribute("sourceType","provider");
+                temporaryProcessingDirective.setSourceProvider(tempProvider);
+                temporaryProcessingDirective.setSourceService(null);
+
             }
-            else if (tempService != null) //source is a service
+            else //source is a service
             {
                 request.getSession().setAttribute("sourceType","service");
+                temporaryProcessingDirective.setSourceService(tempService);
+                temporaryProcessingDirective.setSourceProvider(null);
+
             }
             request.getSession().setAttribute("service",getService());
-            
-            LOG.debug("****** END EditProcessingDirective:editProcessingDirectives() "+" tempProcDir="+temporaryProcessingDirective);
+            temporaryProcessingDirective.setService(getServicesService().getServiceById(Integer.parseInt(getService())));
 
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             return SUCCESS;
@@ -319,6 +321,7 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
             errorType = "error";
             return INPUT;
         }
+
     }
 
     /**

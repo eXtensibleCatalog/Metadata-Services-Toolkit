@@ -85,15 +85,54 @@
                     <br>
                     <tr>
                        <td colspan="2" >                          
-                                To update a service, see <a style="text-decoration:underline;color:blue;"href="page-resources/docs/MST User Manual.docx">user manual</a> for instructions.<br>
+                                Step 1: To edit a service, see <a style="text-decoration:underline;color:blue;"href="page-resources/docs/MST User Manual.docx">user manual</a> for configuration file information.<br>
+                                (If you have made any changes to a service, you must come to update it)<br><br>
                        </td>
                     </tr>
                     <br>
+                    <tr>
+                      <td valign="top">Step 2: Select the Configuration File  : 
+                          
+                          <select id="selectedLocation" name ="selectedLocation">
+                              <c:forEach var="serviceFile" items="${serviceFiles}" varStatus="a">
+                                 
+                                  <c:choose>
+                                      <c:when test="${temporaryService.name eq serviceFile}">
+                                          <option selected id="${serviceFile}" value="${serviceFile}">${serviceFile}
+                                      </c:when>
+                                      <c:otherwise>
+		                                  <option id="${serviceFile}" value="${serviceFile}">${serviceFile}
+                                      </c:otherwise>
+                                  </c:choose>
+                                  
+                              </c:forEach>
+                          </select>
+
+                          <br><br>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="reprocess_required" name="reprocessRecords" value="true" 
+							<c:if test="${reprocessRecords}">
+								checked
+							</c:if>/> Check this box if records needs to be reprocessed
+                        </td>
+                    </tr>  
+				    <tr>
+				    <td colspan="2">
+				       <font color="red">Note: On Clicking 'Save' button, the records processed by this service will be deleted and reprocessed again according to the new Configuration file changes.
+				       If you donot wish to reprocess the records, then click 'Cancel'.</font>
+				       <br>
+				       <br>
+				    </td>
+                    </tr>
                     
                     
                     <tr>
                         <td>
-                            <button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Done</button>&nbsp;&nbsp;
+                            <button class="xc_button_small" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Cancel</button>&nbsp;&nbsp;
+                            <button class="xc_button" type="submit" name="editService">Save</button>
                         </td>
                     </tr>
                   

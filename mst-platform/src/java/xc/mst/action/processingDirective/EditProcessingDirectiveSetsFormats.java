@@ -23,7 +23,8 @@ import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.service.Service;
+import xc.mst.constants.Constants;
+import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
 /**
@@ -56,9 +57,9 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
     private String[] formatsSelected;
 
      /** A reference to the logger for this class */
-    static Logger log = Logger.getLogger(EditProcessingDirective.class);
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /** Attribute that determines whether sets are to be maintained*/
+    /** Attribute that determies whether sets are to be maintained*/
     private String[] maintainSourceSets;
 
     /** The output set name for a processing directive*/
@@ -276,41 +277,9 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
     public String execute()
     {
        
-            ProcessingDirective tempProcDir;
-            try {
-				tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-			}
-	        catch(DatabaseConfigException dce)
-	        {
-	            log.error(dce.getMessage(),dce);
-	            this.addFieldError("editProcessingDirectiveError", "Unable to connect to the database. Database Configuration may be incorrect.");
-	            errorType = "error";
-	            return INPUT;
-	        }
-            if(tempProcDir==null)
-            {
-                LOG.debug("***** execute: tempProcDir NULL! "+" procDirectiveId="+processingDirectiveId);
-            	tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            }
-            if(tempProcDir==null)
-            {
-            	LOG.error("***** execute: tempProcDir STILL NULL! "+" procDirectiveId="+processingDirectiveId);
-            }
-
-	        Service tempService = tempProcDir.getSourceService();
-            String sourceType; 
-
-            if(tempService!=null) //source is a service
-            {
-                sourceType = "service";
-            }
-            else //source is a provider
-            {
-            	sourceType = "provider";
-            }
-
-            request.getSession().setAttribute("sourceType",sourceType);
             
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            String sourceType = (String)request.getSession().getAttribute("sourceType");
             if((tempProcDir==null)||(sourceType==null))
             {
                 this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while displaying Step-2 of edit processing rules. An email has been sent to the administrator.");
@@ -320,7 +289,6 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
             }
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = null;
-
             if(sourceType.equalsIgnoreCase("provider")) //source is a provider
             {
                 List<Format> tempList = tempProcDir.getSourceProvider().getFormats();
@@ -379,45 +347,7 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
             }
             setFormatList(tempFormatList);
             setSetList(tempSetList);
-            
-            try {
-                if (tempProcDir.getOutputSet() == null) {
-                	// get the real PD again.
-    				tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(tempProcDir.getId());
-    	            if (tempProcDir.getOutputSet() == null) {
-    					log.debug("***** execute: problem TRYING to get outputSet set! tempProcDir: "+tempProcDir+" outputSet: "+tempProcDir.getOutputSet());
-    	            }
-    			}
-
-                outputSetName = tempProcDir.getOutputSet().getDisplayName();
-				outputSetSpec = tempProcDir.getOutputSet().getSetSpec();
-			} 
-            // was ending up here after if was on step 2, then issued 'go back' followed by a 'continue to step 2'
-            catch (Exception e) {
-				log.debug("***** execute EXCEPTION: tempProcDir: "+tempProcDir+" outputSet: "+tempProcDir.getOutputSet());
-            	processingDirectiveId = tempProcDir.getId();
-            	try {
-            		// get the real PD again.
-					tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-					try {
-		                outputSetName = tempProcDir.getOutputSet().getDisplayName();
-						outputSetSpec = tempProcDir.getOutputSet().getSetSpec();
-					} catch (NullPointerException e1) {
-		                LOG.debug("***** execute: "+e1);
-					}
-
-				} catch (DatabaseConfigException e1) {
-					log.error("***** execute EXCEPTION2: tempProcDir: "+tempProcDir+" outputSet: "+tempProcDir.getOutputSet());
-	                this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred while displaying Step-2 of edit processing rules. An email has been sent to the administrator.");
-	                getUserService().sendEmailErrorReport();
-	                errorType = "error";
-	                return INPUT;
-				}
-			}
-
-			setTemporaryProcessingDirective(tempProcDir);
-            request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
-
+            setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
        
     }
@@ -431,15 +361,13 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
     {
     	try
     	{
-    		if (temporaryProcessingDirective == null) {
-    			temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-    		}
-            if(temporaryProcessingDirective==null)
-            {
-            	log.debug("***** editProcessingDirectivesSetsFormats: tempProcDir NULL! "+" procDirectiveId="+processingDirectiveId);
-                temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            }
+    		temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
 
+    		if(getMaintainSourceSets()!=null)
+    			temporaryProcessingDirective.setMaintainSourceSets(true);
+    		else
+    			temporaryProcessingDirective.setMaintainSourceSets(false);
+                
     		String sourceType = (String)request.getSession().getAttribute("sourceType");
 
     		if((temporaryProcessingDirective==null)||(sourceType==null))
@@ -475,48 +403,51 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
     				}
     				else
     				{
-    					if(sourceType.equalsIgnoreCase("provider")) {
+    					/*
+    					if(sourceType.equalsIgnoreCase("provider"))
     						tempSetList = temporaryProcessingDirective.getSourceProvider().getHarvestedRecordSets();
-    					}
-    					else {
+    					else
     						tempSetList = temporaryProcessingDirective.getSourceService().getOutputSets();
-    					}
-						//TODO why isn't anything being done with tempSetList?  built up and discarded.
+    					*/
     					tempSetList = null;
     					break;
     				}
     			}
     		}
 	
+    		temporaryProcessingDirective.setTriggeringFormats(tempFormatList);
+    		temporaryProcessingDirective.setTriggeringSets(tempSetList);
     		request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
 
     		Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
     		if((setExists==null)&&(outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase(""))) //output set doesnt already exist
     		{
     			Set tempSet = new Set();
-    			
-    			tempSet.setDisplayName(temporaryProcessingDirective.getOutputSet().getDisplayName());
-    			tempSet.setSetSpec(temporaryProcessingDirective.getOutputSet().getSetSpec());
-
-    			try {
-					outputSetName = temporaryProcessingDirective.getOutputSet().getDisplayName();
-				} 
-    			catch (NullPointerException e1) {
-	                LOG.debug("***** editProcessingDirectivesSetsFormats: "+e1);
-				}
-				try {
-					outputSetSpec = temporaryProcessingDirective.getOutputSet().getSetSpec();
-				} 
-				catch (NullPointerException e1) {
-	                LOG.debug("***** editProcessingDirectivesSetsFormats: "+e1);
-				}
+    			tempSet.setDisplayName(outputSetName);
+    			tempSet.setSetSpec(outputSetSpec);
+    			getSetService().insertSet(tempSet);
+    			temporaryProcessingDirective.setOutputSet(tempSet);
     		}
+    		else
+    			temporaryProcessingDirective.setOutputSet(setExists);
+                        
+    		getProcessingDirectiveService().updateProcessingDirective(temporaryProcessingDirective);
+
+    		request.getSession().setAttribute("temporaryProcessingDirective",null);
     		return SUCCESS;
     	}
     	catch(DatabaseConfigException dce)
     	{
     		log.error(dce.getMessage(),dce);
     		this.addFieldError("editProcessingDirectives2Error", "Unable to connect to the database. Database configuation may be incorrect");
+    		errorType = "error";
+    		return ERROR;
+    	}
+    	catch(DataException de)
+    	{
+    		log.error(de.getMessage(),de);
+    		this.addFieldError("editProcessingDirectives2Error", "Error occurred while editing processing rule. An email has been sent to the administrator.");
+    		getUserService().sendEmailErrorReport();
     		errorType = "error";
     		return ERROR;
     	}
@@ -532,30 +463,22 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
          try
         {
            
-            ProcessingDirective tempProcDir = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
-            if(tempProcDir==null)
-            {
-                log.debug("*****  unknown PD; GoBack: tempProcDir NULL! "+" procDirectiveId="+processingDirectiveId);
-            	tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            	if (tempProcDir != null) {
-                	processingDirectiveId = tempProcDir.getId();
-            	}
-            }
-            if(tempProcDir==null)
-            {
-            	log.error("***** GoBack:  tempProcDir NULL! "+" procDirectiveId="+processingDirectiveId);
-                this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred returning to step-1 of editing processing rule . An email has been sent to the administrator.");
-                getUserService().sendEmailErrorReport();
-                errorType = "error";
-                return INPUT;
-            }
-
+            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+            if((tempProcDir==null))
+                {
+                    this.addFieldError("editProcessingDirectiveSetsFormatsError", "Error occurred returning to step-1 of editing processing rule . An email has been sent to the administrator.");
+                    getUserService().sendEmailErrorReport();
+                    errorType = "error";
+                    return INPUT;
+                }
             if(maintainSourceSets==null)
                 {
+
                     tempProcDir.setMaintainSourceSets(false);
                 }
                 else
                 {
+
                     tempProcDir.setMaintainSourceSets(true);
                 }
 
@@ -584,6 +507,7 @@ public class EditProcessingDirectiveSetsFormats extends BaseActionSupport implem
                     }
                 }
 
+               
                 tempProcDir.setTriggeringSets(tempSetList);
                 Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
                 if(setExists==null)

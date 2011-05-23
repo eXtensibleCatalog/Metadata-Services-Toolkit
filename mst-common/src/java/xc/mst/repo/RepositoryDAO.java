@@ -825,30 +825,6 @@ public class RepositoryDAO extends BaseDAO {
 			return false;
 		}
 	}
-
-	// first check that the table exists
-	public boolean hasOnlyRecordsOfStatus(String name, char status) {
-		try {
-			List<Map<String, Object>> rows = 
-				this.jdbcTemplate.queryForList("select count(*), status from "+getTableName(name, RECORDS_TABLE)+" group by status");
-
-			for (Map<String, Object> row : rows) {
-				char stat = ((String)row.get("status")).charAt(0);
-				if (stat != status) {
-					LOG.debug("**** looking to see if have record type: "+status+ "FALSE now looking at: "+stat);
-					return false;
-				}
-				else {
-					LOG.debug("**** looking to see if have record type: "+status+ "TRUE now looking at: "+stat);
-				}
-			}
-			return true;
-		} 
-		catch (Throwable t) {
-			LOG.error("unexpected exception in RepositoryDAO.hasOnlyRecordsOfStatus");
-			return true;
-		}
-	}
 	
 	protected void createRepo(Repository repo) {
 		String name = repo.getName();

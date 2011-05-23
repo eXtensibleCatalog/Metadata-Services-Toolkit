@@ -53,7 +53,7 @@ YAHOO.xc.mst.schedule = {
 			}
 			if (selectedRecurrence=='Weekly') {
 				if (document.scheduleForm.dayOfWeek.value=='0') {
-					createErrorDiv('error','Select a Day of week to harvest the repository.');
+					createErrorDiv('error','Select a Day of week to havest the repository.');
 					return false;
 				}
 				if (document.scheduleForm.hour.value=='-1') {

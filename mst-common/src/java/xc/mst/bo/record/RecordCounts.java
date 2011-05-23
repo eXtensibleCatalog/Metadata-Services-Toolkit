@@ -197,7 +197,16 @@ public class RecordCounts {
 
 	public String toString(String repoName) {
 		StringBuilder sb = new StringBuilder();
+		
+		// This is for the purpose of making the totals appear last
+		List<String> keys = new ArrayList<String>();
 		for (String type : counts.keySet()) {
+			if (!type.equals(TOTALS)) {
+				keys.add(type);
+			}
+		}
+		keys.add(TOTALS);
+		for (String type : keys) {
 			Map<String, AtomicInteger> counts4Type = counts.get(type);
 
 			type = StringUtils.rightPad(type, 25);
