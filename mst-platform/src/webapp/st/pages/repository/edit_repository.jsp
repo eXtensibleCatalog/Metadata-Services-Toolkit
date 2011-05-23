@@ -18,7 +18,7 @@
 
 <html>
     <head>
-        <title>Edit Repository</title>
+        <title>Show Repository</title>
         <c:import url="/st/inc/meta-frag.jsp"/>
 
         <LINK href="page-resources/yui/reset-fonts-grids/reset-fonts-grids.css" rel="stylesheet" type="text/css" >
@@ -59,7 +59,7 @@
             <c:import url="/st/inc/menu.jsp"/>
              <jsp:include page="/st/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Repository | <a style='text-decoration:none;color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | Edit Repository" />
+                    <jsp:param name="bread" value="Repository | <a style='text-decoration:none;color:#292929;' href='allRepository.action'><U>All Repositories</U></a> | Show Repository" />
 
             </jsp:include>
 
@@ -92,16 +92,16 @@
         <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 12px;">
 
                 OAI-PMH <B>Repository Name</B> <br>
-                    <input type="text" readonly="readonly" id="repositoryName" name="repositoryName" value="<s:property value="repositoryName"/>" style="width:305px;" maxlength="255"><br><br>
+                    <input type="text" id="repositoryName" name="repositoryName" value="<s:property value="repositoryName"/>" style="width:305px;" maxlength="255" disabled><br><br>
                      
                  OAI-PMH <B>Repository URL</B> <br>
-                     <input type="text" id="repositoryURL" name="repositoryURL" value="<s:property value="repositoryURL"/>" style="width:470px;" maxlength="255"><br><br>
+                     <input type="text" id="repositoryURL" name="repositoryURL" value="<s:property value="repositoryURL"/>" style="width:470px;" maxlength="255" disabled><br><br>
                   Number of records to harvest(Used for testing purpose. If left blank, it will harvest all records.) <br>
-                     <input type="text" readonly="readonly" id="numberOfRecordsToHarvest" name="numberOfRecordsToHarvest" value="<s:property value="numberOfRecordsToHarvest"/>" style="width:200px;" maxlength="255">
+                     <input type="text" id="numberOfRecordsToHarvest" name="numberOfRecordsToHarvest" value="<s:property value="numberOfRecordsToHarvest"/>" style="width:200px;" maxlength="255" disabled>
                 
                  <div style="margin-top:20px;margin-left:0px;vertical-align:bottom;">
                    <button style="vertical-align:bottom;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.repository.editRepository.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
-                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.editRepository.editValidator()">Save</button>
+                   <button class="xc_button" type="button" name="edit" onclick="javascript:YAHOO.xc.mst.repository.editRepository.cancel()">Done</button>
 
                  </div>
         </div>

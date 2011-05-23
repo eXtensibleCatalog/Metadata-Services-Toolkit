@@ -259,11 +259,22 @@
 			      </div>
 		      </div>
 
-           </div>
+		      
+	      <div id="deleteProcessingDirectiveNakDialog" class="hidden">
+		  <div class="hd">Delete Processing Directive</div>
+		      <div class="bd">
+		          <form name="deleteProcessingDirectiveNak" method="POST" 
+				  action="deleteProcessingDirective.action">
+			          <input type="hidden" id="processingDirective_id" name="processingDirectiveId"/>
+			          <div id="deleteProcessingRuleError" cssClass="errorMessage"></div>
+                          </form>
+		      </div>
+              </div>
              <!--  this is the footer of the page -->
             <c:import url="/st/inc/footer.jsp"/>             
 
         </div>
+    </div>
 
 
 </body>

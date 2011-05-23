@@ -248,6 +248,18 @@
 			<result name="input">pages/schedule/add_schedule.jsp</result>
 		</action>
 
+		<!-- Action to add schedule and go to step 2 of add schedule -->
+		<!--
+		<action name="viewScheduleAndNext" class="xc.mst.action.harvest.AddSchedule" method="addScheduleAndProvider">
+					<interceptor-ref name="crudStack"/>
+					<interceptor-ref name="roles">
+						<param name="allowedRoles">harvest</param>
+					</interceptor-ref>
+			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
+			<result name="input">pages/schedule/add_schedule.jsp</result>
+		</action>
+		-->
+
 		<!-- Action to add sets and formats for schedule and go to all schedule page -->
 		<action name="saveSetFormatForScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="addSchedule">
 			<interceptor-ref name="crudStack" />
@@ -268,14 +280,24 @@
 			<result name="input">pages/schedule/add_schedule_sets_formats.jsp</result>
 		</action>
 
+		<!-- Action to add sets and formats for schedule and go to add schedule step 1 -->
+		<action name="saveSetFormatForScheduleAndGoToPreviousUpdate" class="xc.mst.action.harvest.AddSchedule" method="addSetFormatForSchedule">
+			<interceptor-ref name="crudStack" />
+			<interceptor-ref name="roles">
+				<param name="allowedRoles">harvest</param>
+			</interceptor-ref>
+			<result name="success">pages/schedule/view_schedule.jsp</result>
+			<result name="input">pages/schedule/update_schedule_sets_formats.jsp</result>
+		</action>
+
 		<!-- Action to edit schedule step 1 -->
 		<action name="viewEditSchedule" class="xc.mst.action.harvest.AddSchedule" method="viewEdit">
 			<interceptor-ref name="editStack" />
 			<interceptor-ref name="roles">
 				<param name="allowedRoles">harvest</param>
 			</interceptor-ref>
-			<result name="success">pages/schedule/add_schedule.jsp</result>
-			<result name="input">pages/schedule/add_schedule.jsp</result>
+			<result name="success">pages/schedule/view_schedule.jsp</result>
+			<result name="input">pages/schedule/view_schedule.jsp</result>
 		</action>
 
 		<!-- Action to update schedule and go to add schedule step 2 -->
@@ -284,16 +306,16 @@
 			<interceptor-ref name="roles">
 				<param name="allowedRoles">harvest</param>
 			</interceptor-ref>
-			<result name="success">pages/schedule/add_schedule_sets_formats.jsp</result>
-			<result name="input">pages/schedule/add_schedule.jsp</result>
+			<result name="success">pages/schedule/update_schedule_sets_formats.jsp</result>
+			<result name="input">pages/schedule/view_schedule.jsp</result>
 		</action>
 
-		<!-- Action to update schedule and go to all schedule page 
+		<!-- Action to update schedule and go to all schedule page
 		<action name="updateScheduleAndExit" class="xc.mst.action.harvest.AddSchedule" method="updateSchedule">
-        	<interceptor-ref name="editStack"/>
-        	<interceptor-ref name="roles">
-	        	<param name="allowedRoles">harvest</param>
-	      	</interceptor-ref>   
+					<interceptor-ref name="editStack"/>
+					<interceptor-ref name="roles">
+						<param name="allowedRoles">harvest</param>
+					</interceptor-ref>
 			<result name="success" type="redirect">allSchedules.action</result>
 			<result name="input">pages/schedule/add_schedule.jsp</result>
 		</action>
@@ -450,7 +472,7 @@
 				<param name="allowedRoles">Processing Rules</param>
 			</interceptor-ref>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
-            <result name="input">pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
+			<result name="input">pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 			<result name="error">pages/processing_rules/add_processingdirective_sets_formats.jsp</result>
 		</action>
 
@@ -468,7 +490,7 @@
 			<interceptor-ref name="roles">
 				<param name="allowedRoles">Processing Rules</param>
 			</interceptor-ref>
-			<result name="success" type="redirect">viewEditProcessingDirectivesSetsFormats.action?ProcessingDirectiveId=${processingDirectiveId}</result>
+			<result name="success" type="redirect">viewEditProcessingDirectivesSetsFormats.action</result>
 			<result name="input">pages/processing_rules/edit_processingdirective.jsp</result>
 		</action>
 
@@ -488,14 +510,14 @@
 			</interceptor-ref>
 			<result name="success" type="redirect">listProcessingDirectives.action</result>
 			<result name="input">pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
-            <result name="error">pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
+			<result name="error">pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
 		<action name="editProcessingDirectiveGoBack" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectiveGoBack">
 			<interceptor-ref name="default" />
 			<interceptor-ref name="roles">
 				<param name="allowedRoles">Processing Rules</param>
 			</interceptor-ref>
-			<result name="success" type="redirect">viewEditProcessingDirectives.action</result>
+			<result name="success" type="redirect">viewEditProcessingDirectives.action?ProcessingDirectiveId=${processingDirectiveId}</result>
 			<result name="input">pages/processing_rules/edit_processingdirective_sets_formats.jsp</result>
 		</action>
 		<action name="editProcessingDirectiveCancel" class="xc.mst.action.processingDirective.EditProcessingDirectiveSetsFormats" method="editProcessingDirectiveCancel">
@@ -511,7 +533,8 @@
 			<interceptor-ref name="roles">
 				<param name="allowedRoles">Processing Rules</param>
 			</interceptor-ref>
-			<result name="success" type="redirect">listProcessingDirectives.action</result>
+			<result name="input">pages/processing_rules/process_rule_delete_confirmation.jsp</result>
+			<result name="error" type="redirect">listProcessingDirectives.action</result>
 		</action>
 
 		<!--  ************************************ -->
