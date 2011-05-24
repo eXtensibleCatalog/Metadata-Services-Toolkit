@@ -198,8 +198,10 @@ public class DefaultRepository extends BaseService implements Repository {
 	// TODO: you need to check the cache as well
 	public Record getRecord(long id) {
 		Record r = getRepositoryDAO().getRecord(name, id);
-		if (r != null)
+		if (r != null) {
 			r.setSets(getRepositoryDAO().getSets(name, id));
+			getMessageService().injectMessages(r);
+		}
 		return r;
 	}
 

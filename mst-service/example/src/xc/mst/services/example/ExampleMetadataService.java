@@ -18,6 +18,7 @@ import org.jdom.Namespace;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.service.FooService;
 
@@ -42,6 +43,7 @@ public class ExampleMetadataService extends GenericMetadataService {
 			OutputRecord out = null;
 			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
 				out = r.getSuccessors().get(0);
+				((Record)out).getMessages().clear();
 			} else {
 				out = getRecordService().createRecord();
 			}
@@ -56,6 +58,10 @@ public class ExampleMetadataService extends GenericMetadataService {
 				Element foo = r.getOaiXmlEl();
 				if (foo != null && "foo".equals(foo.getName())) {
 					LOG.debug("foo is not null");
+					if ("true".equals(foo.getAttributeValue("message"))) {
+						addMessage(r, 101, RecordMessage.ERROR);
+						addMessage(out, 102, RecordMessage.ERROR);
+					}
 					if ("true".equals(foo.getAttributeValue("hold"))) {
 						LOG.debug("record should be held");
 						out.setStatus(Record.HELD);

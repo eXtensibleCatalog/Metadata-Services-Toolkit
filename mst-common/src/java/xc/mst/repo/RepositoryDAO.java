@@ -1438,7 +1438,7 @@ public class RepositoryDAO extends BaseDAO {
 					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u "+
 							" inner join ("+MessageDAO.MESSAGES_TABLE+" m) on (m.record_id=u.record_id) "+
 							" left outer join ("+MessageDAO.MESSAGE_DETAILS_TABLE+" md) on (m.record_message_id=md.record_message_id) "+
-					" where (u.record_id > ? or ? is null) "+
+					" where (u.record_id >= ? or ? is null) "+
 						" and u.record_id <= ? "+
 						" and (u.date_updated >= ? or ? is null) "+
 						" and u.date_updated <= ? "+

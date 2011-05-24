@@ -11,6 +11,7 @@ package xc.mst.services;
 
 
 import gnu.trove.TLongByteHashMap;
+import gnu.trove.TLongHashSet;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected MetadataServiceDAO metadataServiceDAO = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
+	protected List<RecordMessage> messages2delete = new ArrayList<RecordMessage>();
+	protected TLongHashSet messages2deleteByRecordId = new TLongHashSet();
 	protected Emailer mailer = new Emailer();
 
 	protected MetadataServiceManager metadataServiceManager = null;
@@ -455,6 +458,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 				getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
 				tempPreviousStatuses.clear();
+				
+				getMessageDAO().deleteMessagesByRecordId(getService().getId(), messages2deleteByRecordId);
+				messages2deleteByRecordId.clear();
+				getMessageDAO().deleteMessages(messages2delete);
+				messages2delete.clear();
 
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
@@ -535,6 +543,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       We may want to supply an optional way of doing that.
 				in.setPreviousStatus(Record.NULL);
 				injectKnownData(in);
+				if (in.getMessages() != null) {
+					for (RecordMessage rm : in.getMessages()) {
+						if (rm.getServiceId() == getService().getId()) {
+							messages2delete.add(rm.clone());
+						}
+					}
+				}
 				if (preserveStatuses) {
 					if (getRepository() != null) {
 						previousStatuses.put(in.getId(), (byte)in.getStatus());
@@ -562,41 +577,38 @@ public abstract class GenericMetadataService extends SolrMetadataService
 						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
+				}
 					
-					if (unexpectedError) {
-						if (in.getType() != null) {
-							getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
-						}
-						getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
-					} else {
-						if (out != null) {
-							for (RecordIfc rout : out) {
-								Record rout2 = (Record)rout;
-								if (origSuccessorMap.containsKey(rout2.getId())) {
-									rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
-								}
-								LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
-										" rout2.getStatus(): "+rout2.getStatus()+
-										" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
-								if (rout2.getType() != null) {
-									getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
-								}
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
-								rout2.addPredecessor(in);
-								rout2.setService(getService());
-								if (rout2.getId() == -1) {
-									getRepositoryDAO().injectId(rout2);
-								}
-								if (outputSet != null) {
-									rout2.addSet(outputSet);
-								}
-								getRepository().addRecord(rout2);
+				if (unexpectedError && getRepository() != null) {
+					if (in.getType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
+					}
+					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
+				} else {
+					processedRecordCount++;
+					if (out != null) {
+						for (RecordIfc rout : out) {
+							messages2deleteByRecordId.add(rout.getId());
+							Record rout2 = (Record)rout;
+							if (origSuccessorMap.containsKey(rout2.getId())) {
+								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
 							}
-						}
-						if (getRepository() == null ||
-								(in.getStatus() != Record.DELETED &&
-										(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
-							processedRecordCount++;
+							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
+									" rout2.getStatus(): "+rout2.getStatus()+
+									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
+							if (rout2.getType() != null) {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
+							}
+							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
+							rout2.addPredecessor(in);
+							rout2.setService(getService());
+							if (rout2.getId() == -1) {
+								getRepositoryDAO().injectId(rout2);
+							}
+							if (outputSet != null) {
+								rout2.addSet(outputSet);
+							}
+							getRepository().addRecord(rout2);
 						}
 					}
 				}

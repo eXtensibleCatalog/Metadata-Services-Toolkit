@@ -137,8 +137,7 @@ public class SolrIndexService extends GenericMetadataService  {
 				try {
 					LOG.debug("m: "+m);
 					doc.addField(RecordService.FIELD_ERROR,
-							m.getServiceId() + "-" + m.getCode() + ":" + 
-							m.getMessage());
+							m.getCode() + ":" + m.getMessage());
 				} catch (Throwable t) {
 					LOG.error("continuing, but logging", t);
 				}
