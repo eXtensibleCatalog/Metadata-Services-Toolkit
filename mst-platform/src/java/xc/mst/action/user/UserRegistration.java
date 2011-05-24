@@ -136,7 +136,7 @@ public class UserRegistration extends BaseActionSupport {
 					if (!emailSent) {
 						servers =  getServerService().getAll();
 						StringBuffer errorMessage = new StringBuffer();
-						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
+						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registration.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
 						return INPUT;
@@ -149,7 +149,7 @@ public class UserRegistration extends BaseActionSupport {
 					boolean permissionEmailSent = getUserService().sendEmailForUserPermission(newUser.getUsername().trim(), comments);
 					if (!permissionEmailSent) {
 						StringBuffer errorMessage = new StringBuffer();
-						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registeration.");
+						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registration.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
 						servers =  getServerService().getAll();
@@ -169,7 +169,7 @@ public class UserRegistration extends BaseActionSupport {
 				return INPUT;
 			}
 		} catch (DataException e) {
-      		log.error("Exception occured while saving user registeration information", e);
+      		log.error("Exception occured while saving user registration information", e);
 			addFieldError("dataError", e.getMessage());
 			errorType = "error";
 			return INPUT;
