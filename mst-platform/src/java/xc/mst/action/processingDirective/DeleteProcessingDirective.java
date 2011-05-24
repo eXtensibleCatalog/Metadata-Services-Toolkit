@@ -18,7 +18,10 @@ import org.apache.log4j.Logger;
 import xc.mst.action.BaseActionSupport;
 import xc.mst.bo.processing.Job;
 import xc.mst.bo.processing.ProcessingDirective;
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
+import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.Record;
 import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.repo.Repository;
@@ -95,34 +98,23 @@ public class DeleteProcessingDirective extends BaseActionSupport
             //        then   ---->  the processing rule will be deleted immediately.
             	
         	if (!hasNonDeletedSourceRecords(tempProcDir)) {
-        		if (!hasNonDeletedDestinationRecords(tempProcDir)) {
-                    if (!isProcessingDirectiveInUse(tempProcDir)) {
-                    	// The "Processing occurring..." error 
-                    	// should only come up if the records are all marked deleted, AND processing is occurring.
-                    	
-                        getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
-                        log.debug("**** PD deleted! ");                        
-                        deleted = true;
-                        
-                        return INPUT;
-                    }
-                	else {
-                        deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
-
-                        Object[] messageArguments = {tempProcDir.getId()}; 
-                        message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
-                        log.debug("**** action error: message set to: "+message);                        
-                       
-                        return INPUT;
-                	}
-        		}
+                if (!isProcessingDirectiveInUse(tempProcDir)) {
+                	// The "Processing occurring..." error 
+                	// should only come up if the records are all marked deleted, AND processing is occurring.
+                	
+                    getProcessingDirectiveService().deleteProcessingDirective(tempProcDir);
+                    log.debug("**** PD deleted! ");                        
+                    deleted = true;
+                    
+                    return INPUT;
+                }
             	else {
                     deleted = false; // this flag will be used to decide whether to show the 2nd dialog.
 
-                    Object[] messageArguments = {getOutputRepository(tempProcDir).getName()}; 
-                    message = MSTConfiguration.getMSTString("message.processingRuleNonDeletedDestRecords", messageArguments);
-                    log.debug("**** action error: message set to: "+message);
-                    
+                    Object[] messageArguments = {tempProcDir.getId()}; 
+                    message = MSTConfiguration.getMSTString("message.processingRuleInUse", messageArguments);
+                    log.debug("**** action error: message set to: "+message);                        
+                   
                     return INPUT;
             	}
         	}
@@ -200,26 +192,42 @@ public class DeleteProcessingDirective extends BaseActionSupport
     	if (r == null) {
     		return false;
     	}
-    	return hasNonDeletedRecords(r);
-    }
-
-    private boolean hasNonDeletedDestinationRecords(ProcessingDirective tempProcDir){
-    	Repository r = getOutputRepository(tempProcDir);
-    	if (r == null) {
-    		return false;
-    	}
-    	return hasNonDeletedRecords(r);
+    	return hasNonDeletedRecords(r, tempProcDir);
     }
     
-    private boolean hasNonDeletedRecords(Repository r){
+    private boolean hasNonDeletedRecords(Repository r, ProcessingDirective pd){
     	if (!getRepositoryDAO().exists(r.getName())) {
     		return false;
     	}
-    	else if (getRepositoryDAO().hasOnlyRecordsOfStatus(r.getName(), 'D')) {
+    	else if (hasNoActiveRecords(r, pd)) {
     		return false;
     	}
     	return true;
     }
+    
+	/*
+	 * for the given pd, for its sets and formats, check whether records in the repository have status of 'A' or 'H'
+	 * , if so, do not allow deletion of PD.
+	 */
+    private boolean hasNoActiveRecords(Repository r, ProcessingDirective pd) {
+		for (Set s:pd.getTriggeringSets()) {
+	    	if (getRepositoryDAO().getRecords(r.getName(), null, null, 0l, null, s, getRecordTypes()).size() > 0 ) {
+	    		   log.debug(" *** 1), can not delete PD because have records in repository not of type D");
+	    		return false;
+	    	}
+		}
+		for (Format f:pd.getTriggeringFormats()) {
+	    	if (getRepositoryDAO().getRecords(r.getName(), null, null, 0l, f, null, getRecordTypes()).size() > 0 ) {
+	    		   log.debug(" *** 2), can not delete PD because have records in repository not of type D");
+	    		return false;
+	    	}
+		}
+    	return true;
+    }
+
+	private char[] getRecordTypes() {
+		return new char[]  {Record.ACTIVE, Record.HELD};
+	}
 
     private boolean isProcessingDirectiveInUse(ProcessingDirective tempProcDir)
 			throws DatabaseConfigException {
