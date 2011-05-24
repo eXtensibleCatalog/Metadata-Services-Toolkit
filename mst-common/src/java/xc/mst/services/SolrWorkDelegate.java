@@ -42,9 +42,9 @@ public class SolrWorkDelegate extends WorkerThread {
 		LOG.debug("released");
 	}
 	
-	public void finishInner() {
+	public void finishInner(boolean success) {
 		solrIndexService.finish();
-		super.finishInner();
+		super.finishInner(success);
 	}
 
 	public String getDetailedStatus() {

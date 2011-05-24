@@ -151,8 +151,8 @@ public class HarvestManager extends WorkerThread {
 	}
 
 	@Override
-	public void finishInner() {
-		super.finishInner();
+	public void finishInner(boolean success) {
+		super.finishInner(success);
 		RecordCounts mostRecentIncomingRecordCounts =
 			getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName());
 		// I'm substracting 1s from startTime because they might actually be equal by the second
@@ -250,6 +250,7 @@ public class HarvestManager extends WorkerThread {
 		requestsSent4Step++;
 		log.debug("harvestScheduleSteps.size(): "+harvestScheduleSteps.size());
 		if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
+			Provider provider = null;
 			try {
 				HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
 
@@ -270,7 +271,7 @@ public class HarvestManager extends WorkerThread {
 
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Starting harvest of " + baseURL);
 
-                Provider provider = harvestSchedule.getProvider();
+                provider = harvestSchedule.getProvider();
 				String request = null;
 				Document doc = null;
 				if (baseURL.startsWith("file:")) {
@@ -402,7 +403,6 @@ public class HarvestManager extends WorkerThread {
                 log.debug("resumptionToken: "+resumptionToken);
                 TimingLogger.stop("parseRecords");
 
-                provider.setLastHarvestEndTime(new Date());
                 getProviderDAO().update(provider, false);
 
 				LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL);
@@ -419,6 +419,15 @@ public class HarvestManager extends WorkerThread {
 			hssFirstTime = false;
 			retVal = true;
 			if (resumptionToken == null) {
+				try {
+					if (provider.getNumberOfRecordsToHarvest() == 0) {
+						provider.setLastHarvestEndTime(new Date());
+				        getProviderDAO().update(provider, false);
+					}
+				} catch (Throwable t) {
+					LOG.debug("", t);
+				}
+		        
 				hssFirstTime = true;
 				harvestScheduleStepIndex++;
 				if (harvestScheduleStepIndex >= harvestScheduleSteps.size()) {

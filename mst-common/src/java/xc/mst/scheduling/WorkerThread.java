@@ -60,6 +60,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	}
 
 	public void run() {
+		boolean success = true;
 		try {
 			this.status = Status.RUNNING;
 			setup();
@@ -80,9 +81,10 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 		} catch(Exception e) {
 			LOG.error("", e);
 			this.status = Status.ERROR;
+			success = false;
 		} finally {
 			LOG.debug("before finish workDelegate.getName(): "+getName());
-			finish();
+			finish(success);
 			LOG.debug("after finish workDelegate.getName(): "+getName());
 			this.status = Status.NOT_RUNNING;
 		}
@@ -127,18 +129,18 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	}
 	public void cancelInner() {}
 	
-	public final void finish() {
+	public final void finish(boolean success) {
 		LOG.debug("finish-1");
 		waitForSetupCompletion();
 		LOG.debug("finish-2");
 		running.lock();
 		LOG.debug("finish-3");
-		finishInner();
+		finishInner(success);
 		LOG.debug("finish-4");
 		running.unlock();
 		LOG.debug("finish-5");
 	}
-	public void finishInner() {
+	public void finishInner(boolean success) {
 		if (repo != null) {
 			repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
 			LOG.debug("before repo.processComplete");
