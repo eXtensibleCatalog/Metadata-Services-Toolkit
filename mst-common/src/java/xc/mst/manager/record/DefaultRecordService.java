@@ -1170,7 +1170,7 @@ public class DefaultRecordService extends RecordService
 	@SuppressWarnings("unchecked")
 	public Record parse(Element recordEl, Provider provider) {
 		Record r = new Record();
-		{
+		try {
 			Element headerEl = recordEl.getChild("header", recordEl.getNamespace());
 			Element identifierElement = headerEl.getChild("identifier", recordEl.getNamespace());
 			if (identifierElement != null) {
@@ -1201,7 +1201,7 @@ public class DefaultRecordService extends RecordService
 			//             since this is only currently used in the filesystem testing
 			//             mechanism and we don't care about setSpecs there.
 			List setSpecList = headerEl.getChildren("setSpec", recordEl.getNamespace());
-			if (setSpecList != null) {
+			if (setSpecList != null && setSpecList.size() > 0) {
 				for (Object setSpecObj : setSpecList) {
 					Element setSpecEl = (Element)setSpecObj;
 
@@ -1223,33 +1223,48 @@ public class DefaultRecordService extends RecordService
 					// Loop over all levels in the set spec
 					for(String setSpecLevel : setSpecLevels)
 					{
-						try {
-							// Append the set at the current level to the setSpec at the previous level to
-							// get the setSpec for the current level. Append colons as needed
-							setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
+						// Append the set at the current level to the setSpec at the previous level to
+						// get the setSpec for the current level. Append colons as needed
+						setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
 
-							String currentSetSpec = setSpecAtLevel.toString();
+						String currentSetSpec = setSpecAtLevel.toString();
 
-							// If the set's already in the index, get it
-							Set set = getSetDAO().getBySetSpec(currentSetSpec);
+						// If the set's already in the index, get it
+						Set set = getSetDAO().getBySetSpec(currentSetSpec);
 
-							// Add the set if there wasn't already one in the database
-							if(set == null && provider != null) {
-								set = new Set();
-								set.setSetSpec(currentSetSpec);
-								set.setDisplayName(set.getDisplayName());
-								set.setIsProviderSet(false);
-								set.setIsRecordSet(true);
-								TimingLogger.start("setDao.insertForProvider");
-								getSetDAO().insertForProvider(set, provider.getId());
-								TimingLogger.stop("setDao.insertForProvider");
-							}
-							// Add the set's ID to the list of sets to which the record belongs
-							r.addSet(set);
-						} catch (Throwable t) {
-							LOG.error("", t);
+						// Add the set if there wasn't already one in the database
+						if(set == null && provider != null) {
+							set = new Set();
+							set.setSetSpec(currentSetSpec);
+							set.setDisplayName(set.getDisplayName());
+							set.setIsProviderSet(false);
+							set.setIsRecordSet(true);
+							TimingLogger.start("setDao.insertForProvider");
+							getSetDAO().insertForProvider(set, provider.getId());
+							TimingLogger.stop("setDao.insertForProvider");
 						}
+						// Add the set's ID to the list of sets to which the record belongs
+						r.addSet(set);
 					}
+				}
+			} else {
+				if (provider != null) {
+					String setSpec = provider.getName().replace(' ', '-');
+					// If the set's already in the index, get it
+					Set set = getSetDAO().getBySetSpec(setSpec);
+
+					// Add the set if there wasn't already one in the database
+					if(set == null && provider != null) {
+						set = new Set();
+						set.setSetSpec(setSpec);
+						set.setDisplayName(set.getDisplayName());
+						set.setIsProviderSet(false);
+						set.setIsRecordSet(true);
+						TimingLogger.start("setDao.insertForProvider");
+						getSetDAO().insertForProvider(set, provider.getId());
+						TimingLogger.stop("setDao.insertForProvider");
+					}
+					r.addSet(set);
 				}
 			}
 
@@ -1265,13 +1280,15 @@ public class DefaultRecordService extends RecordService
 					r.setStatus(Record.REPLACED);
 				}
 			}
-		}
 
-		// Metadata element will not exist in case the record has status = deleted. So null check is required here.
-		if (recordEl.getChild("metadata", recordEl.getNamespace()) != null) {
-			Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
-			xmlEl.detach();
-			r.setOaiXmlEl(xmlEl);
+			// Metadata element will not exist in case the record has status = deleted. So null check is required here.
+			if (recordEl.getChild("metadata", recordEl.getNamespace()) != null) {
+				Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
+				xmlEl.detach();
+				r.setOaiXmlEl(xmlEl);
+			}
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
 		}
 
 		return r;

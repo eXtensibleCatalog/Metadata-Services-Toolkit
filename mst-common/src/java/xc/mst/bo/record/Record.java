@@ -53,11 +53,11 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	public static Map<Character, String> statusNames = new HashMap<Character, String>();
 	
 	static {
-		statusNames.put(ACTIVE, "Active");
-		statusNames.put(HELD, "Held");
-		statusNames.put(DELETED, "Deleted");
-		statusNames.put(NULL, "Null");
-		statusNames.put(REPLACED, "Replaced");
+		statusNames.put(ACTIVE, "active");
+		statusNames.put(HELD, "held");
+		statusNames.put(DELETED, "deleted");
+		statusNames.put(NULL, "null");
+		statusNames.put(REPLACED, "replaced");
 	}
 	
 	protected String mode = JDOM_MODE;

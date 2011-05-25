@@ -163,6 +163,16 @@ public class DefaultProcessingDirectiveService extends BaseService implements Pr
     {
     	JobService jobService = (JobService)config.getBean("JobService");
     	
+    	// Delete the solr-indexer's service harvest for the incoming repo
+    	// since running this service could attach messages to the incoming repo
+    	String incomingRepoName = null;
+    	if (pd.getSourceProvider() != null) {
+    		incomingRepoName = pd.getSourceProvider().getName();
+    	} else if (pd.getSourceService() != null) {
+    		incomingRepoName = pd.getSourceService().getName();
+    	}
+    	getServiceDAO().deleteServiceHarvests(-1, incomingRepoName);
+    	
     	// Add job to database queue
 		try {
 			Job job = new Job();

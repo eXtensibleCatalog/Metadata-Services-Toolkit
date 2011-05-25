@@ -1,0 +1,57 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-23T16:26:00Z</responseDate>
+  <request from="1960-02-23T21:26:00Z" metadataPrefix="marcxml" until="2011-02-23T21:26:00Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marcnormalization-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/020</identifier>
+        <datestamp>2010-08-10T20:06:32Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+  		<metadata>
+				<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.135:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+					<marc:leader>00198cx  a22000973  4500</marc:leader>
+					<marc:controlfield tag="001">2</marc:controlfield>
+					<marc:controlfield tag="003">NRU</marc:controlfield>
+					<marc:controlfield tag="004">2</marc:controlfield>
+					<marc:controlfield tag="005">19961209123635.0</marc:controlfield>
+					<marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+					<marc:datafield ind1=" " ind2=" " tag="014">
+						<marc:subfield code="a">00000005</marc:subfield>
+					</marc:datafield>
+					<marc:datafield ind1="2" ind2=" " tag="852">
+						<marc:subfield code="b">MinerStack</marc:subfield>
+						<marc:subfield code="h">WM 203 H323 1976</marc:subfield>
+					</marc:datafield>
+				</marc:record>
+			</metadata>
+		</record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/021</identifier>
+        <datestamp>2010-08-10T20:06:32Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+  		<metadata>
+				<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.135:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+					<marc:leader>00198cx  a22000972  4500</marc:leader>
+					<marc:controlfield tag="001">3</marc:controlfield>
+					<marc:controlfield tag="003">NRU</marc:controlfield>
+					<marc:controlfield tag="004">2</marc:controlfield>
+					<marc:controlfield tag="005">20090603103901.0</marc:controlfield>
+					<marc:controlfield tag="008">9612092u    0   4001au   0000000</marc:controlfield>
+					<marc:datafield ind1=" " ind2=" " tag="014">
+						<marc:subfield code="a">00000005</marc:subfield>
+					</marc:datafield>
+					<marc:datafield ind1="0" ind2=" " tag="852">
+						<marc:subfield code="b">RheesStack</marc:subfield>
+						<marc:subfield code="h">RC514</marc:subfield>
+						<marc:subfield code="i">.H34 1976</marc:subfield>
+					</marc:datafield>
+				</marc:record>
+			</metadata>
+		</record>
+		<resumptionToken>it doesn't matter</resumptionToken>
+	</ListRecords>
+</OAI-PMH>
+

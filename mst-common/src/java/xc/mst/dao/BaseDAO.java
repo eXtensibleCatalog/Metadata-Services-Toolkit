@@ -116,17 +116,26 @@ public class BaseDAO {
 		return false;
 	}
 	
-	protected boolean tableExists(String name) {
-		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+	protected boolean tableExists(List<String> allTables, String tableName) {
 		List<String> allTablesUpper = new ArrayList<String>();
 		for (String table : allTables) {
 			allTablesUpper.add(table.toUpperCase());
 		}
-		boolean ret = allTablesUpper.contains(name.toUpperCase());
+		boolean ret = allTablesUpper.contains(tableName.toUpperCase());
 		LOG.debug("allTablesUpper: "+allTablesUpper);
-		LOG.debug("name: "+name);
-		LOG.debug(ret+":tableExists("+name+")");
-		return ret;
+		LOG.debug("name: "+tableName);
+		LOG.debug(ret+":tableExists("+tableName+")");
+		return ret;	
+	}
+	
+	protected boolean tableExists(String repoName, String tableName) {
+		List<String> allTables = this.jdbcTemplate.queryForList("show tables from "+getUtil().normalizeName(repoName), String.class);
+		return tableExists(allTables, tableName);
+	}
+	
+	protected boolean tableExists(String tableName) {
+		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+		return tableExists(allTables, tableName);
 	}
 	
 	public List<String> getTablesWithPrefix(String prefix) {

@@ -304,6 +304,13 @@ public abstract class ServiceDAO extends BaseDAO
 		}
 	}
 	
+	public void deleteServiceHarvests(int serviceId, String repoName) {
+		repoName = getUtil().normalizeName(repoName);
+		this.jdbcTemplate.execute("delete from service_harvests "+
+				"where service_id = "+serviceId+
+				" and repo_name = '"+repoName+"'");
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ServiceHarvest getServiceHarvest(Format format, xc.mst.bo.provider.Set set, String repoName, Service service) {
 		List params = new ArrayList();

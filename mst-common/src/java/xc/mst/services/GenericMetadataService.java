@@ -575,6 +575,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				if (getRepository() != null) {
 					if (in.getType() != null) {
 						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
+					} else {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(RecordCounts.OTHER, in.getStatus(), in.getPreviousStatus());
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
@@ -598,6 +600,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
 							if (rout2.getType() != null) {
 								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
+							} else {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(RecordCounts.OTHER, rout2.getStatus(), rout2.getPreviousStatus());
 							}
 							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							rout2.addPredecessor(in);

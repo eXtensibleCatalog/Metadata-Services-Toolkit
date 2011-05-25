@@ -535,10 +535,14 @@ public class HarvestManager extends WorkerThread {
 				oaiIdCache.put(nonRedundantId, record.getId());
 
 				repo.addRecord(record);
-				for (Set s : record.getSets()) {
-					if (s.getSetSpec().contains(":")) {
-						incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+				if (record.getSets() != null && record.getSets().size() > 1) {
+					for (Set s : record.getSets()) {
+						if (s.getSetSpec().contains(":")) {
+							incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+						}
 					}
+				} else {
+					incomingRecordCounts.incr(RecordCounts.OTHER, record.getStatus(), prevStatus);
 				}
 				incomingRecordCounts.incr(null, record.getStatus(), prevStatus);
 			} catch (Exception e) {
