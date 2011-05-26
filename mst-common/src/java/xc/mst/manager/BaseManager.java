@@ -9,6 +9,7 @@
 
 package xc.mst.manager;
 
+import xc.mst.email.Emailer;
 import xc.mst.harvester.HttpService;
 import xc.mst.harvester.ValidateRepository;
 import xc.mst.manager.configuration.EmailConfigService;
@@ -65,6 +66,7 @@ public class BaseManager extends BaseService {
 	protected HttpService httpService = null;
 	protected RepositoryService repositoryService = null;
 	protected MessageService messageService = null;
+	protected Emailer emailer = null;
 	
 	public EmailConfigService getEmailConfigService() {
 		return emailConfigService;
@@ -229,5 +231,11 @@ public class BaseManager extends BaseService {
 	}
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
+	}
+	public Emailer getEmailer() {
+		return emailer;
+	}
+	public void setEmailer(Emailer emailer) {
+		this.emailer = emailer;
 	}
 }

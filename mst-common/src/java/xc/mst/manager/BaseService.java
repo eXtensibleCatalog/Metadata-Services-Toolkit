@@ -43,6 +43,7 @@ import xc.mst.dao.user.ServerDAO;
 import xc.mst.dao.user.UserDAO;
 import xc.mst.dao.user.UserGroupUtilDAO;
 import xc.mst.dao.record.RecordDAO;
+import xc.mst.email.Emailer;
 import xc.mst.manager.configuration.EmailConfigService;
 import xc.mst.manager.harvest.ScheduleService;
 import xc.mst.manager.logs.LogService;
@@ -475,5 +476,8 @@ public class BaseService {
 	}
 	public MessageService getMessageService() {
 		return (MessageService)config.getBean("MessageService");
+	}
+	public Emailer getEmailer() {
+		return (Emailer)config.getBean("Emailer");
 	}
 }
