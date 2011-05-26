@@ -29,26 +29,45 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.emailconfig.EmailConfig;
-import xc.mst.constants.Constants;
+import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.BaseService;
 
 /**
  * This class can be used to send emails based on parameters in the configuration file
  *
  * @author Eric Osisek
  */
-public class Emailer
+public class Emailer extends BaseService
 {
 
 	/**
 	 * A reference to the logger for this class
 	 */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+	static Logger log = Logger.getLogger(Emailer.class);
 
 	/**
 	 * The SMTP configuration from the database
 	 */
 	private EmailConfig emailConfig = null;
 
+	public EmailConfig getEmailConfig() {
+		return emailConfig;
+	}
+	
+	public void setEmailConfig(EmailConfig config)
+	{
+		this.emailConfig = config;
+	}
+
+	public void init() {
+		try {
+			this.emailConfig = getEmailConfigService().getEmailConfiguration();
+		} catch (DatabaseConfigException e) {
+			log.error("Unexpected exception trying to get email configuration!",e);
+			emailConfig = null;
+		}
+	}
+	
 	/**
 	 * Configures the Emailer to use the specified SMTP server
 	 *
@@ -60,12 +79,12 @@ public class Emailer
 	}
 
 	/**
-	 * Returns true iff the mailer has been configured.  This can be used to check
+	 * Returns true if the mailer has been configured.  This can be used to check
 	 * whether or not the configuration was found in the database when the Emailer
 	 * was constructed.  If this returns false, the configure method must be
 	 * called before any emails can be sent.
 	 *
-	 * @return true iff the Emailer has been configured.
+	 * @return true if the Emailer has been configured.
 	 */
 	public boolean isConfigured()
 	{

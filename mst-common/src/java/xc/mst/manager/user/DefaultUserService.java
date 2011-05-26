@@ -36,6 +36,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.email.Emailer;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * Service class for User to deal with creating, updating
@@ -201,7 +202,7 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean  authenticateLDAPUser(User user, String password, Server server)  {
 
-    	log.debug("authenticateLDAPUser::" + user + "password::"+ password + server.getName());
+    	log.debug("authenticateLDAPUser::" + user + " " + server.getName());
 
     	   DirContext dcon = getLDAPConnection(user.getUsername(), password, server);
     	   
@@ -305,7 +306,7 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean sendEmailForForgotPassword(String newPassword, User user) {
 
-    	Emailer emailer = new Emailer();
+    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
     	boolean emailSent = emailer.sendEmail(user.getEmail(), "New password", "Password has been reset. \nUser name is : " + user.getUsername() + "\nNew password is : " + newPassword);
 
@@ -392,7 +393,7 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException {
 
-    	Emailer emailer = new Emailer();
+    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
  		// Email the admin to assign permissions for new user
 		StringBuffer adminMessageBody = new StringBuffer();
@@ -404,9 +405,11 @@ public class DefaultUserService extends BaseService implements UserService {
 		GroupService groupService = (GroupService)config.getBean("GroupService");
 		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
 		
-		boolean emailConfigured = new Emailer().isConfigured();
+		boolean emailConfigured = emailer.isConfigured();
 		
 		if (!emailConfigured) {
+            log.debug("*** DefaultUserService: e-mail is not configured! ");
+            		
 			return false;
 		}
 		
@@ -425,7 +428,7 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean sendEmailToUserWithPermissions(User user) throws DatabaseConfigException {
 
-    	Emailer emailer = new Emailer();
+    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
  		// Email the user to inform that following permissions has been assigned.
 		StringBuffer messageBody = new StringBuffer();
@@ -461,7 +464,7 @@ public class DefaultUserService extends BaseService implements UserService {
         {
             String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n\n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the attached log file here> \n";
 
-            Emailer emailer = new Emailer();
+        	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
             String adminSubject = "MST error";
 

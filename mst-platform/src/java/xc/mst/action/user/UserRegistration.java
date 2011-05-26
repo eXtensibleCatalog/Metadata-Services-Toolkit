@@ -125,7 +125,7 @@ public class UserRegistration extends BaseActionSupport {
 					boolean emailSent = false;
 
 					// Email the user
-					Emailer emailer = new Emailer();
+					Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 					StringBuffer messageBody = new StringBuffer();
 					messageBody.append("An account has been created successfully in Metadata Services Toolkit with the user name of \"" +  newUser.getUsername().trim() + "\".\n");
 					messageBody.append("You will be able to login once a system admin assigns permissions for your account.");
@@ -148,14 +148,16 @@ public class UserRegistration extends BaseActionSupport {
 					// Email the admin to assign permissions for new user
 					boolean permissionEmailSent = getUserService().sendEmailForUserPermission(newUser.getUsername().trim(), comments);
 					if (!permissionEmailSent) {
+						log.error("** Your account has been set up, but failed to mail a message to the admin account!");
 						StringBuffer errorMessage = new StringBuffer();
-						errorMessage.append("E-mail is not configured for the application. E-mail should be setup for user registration.");
+						errorMessage.append("Your account has been created successfully in Metadata Services Toolkit but there was a problem e-mailing the admin account.");
 						addFieldError("emailError",  errorMessage.toString());
 						errorType = "error";
 						servers =  getServerService().getAll();
 						return INPUT;
 					}
-				} else {
+				} 
+				else {
 					servers =  getServerService().getAll();
 					addFieldError("userEmailExist", "This email address already exists in the system.- " + newUser.getEmail().trim());
 					errorType = "error";

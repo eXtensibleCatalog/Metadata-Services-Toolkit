@@ -27,7 +27,6 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.record.RecordService;
 import xc.mst.manager.user.GroupService;
 import xc.mst.manager.user.UserService;
-import xc.mst.utils.index.RecordList;
 
 /**
  * Utility class for generic functions performed by services.
@@ -39,7 +38,7 @@ public class ServiceUtil {
 	/**
 	 * The logger object
 	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_PROCESSING);
+	protected static Logger log = Logger.getLogger(ServiceUtil.class);
 
 	/**
 	 * Data access object for getting services
@@ -54,7 +53,7 @@ public class ServiceUtil {
 	/**
 	 * Used to send email reports
 	 */
-	private Emailer mailer = new Emailer();
+	private Emailer mailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 	
 	/** Singleton instance */
 	private static ServiceUtil instance;
