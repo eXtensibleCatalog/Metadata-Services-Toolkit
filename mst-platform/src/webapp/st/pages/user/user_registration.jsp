@@ -61,7 +61,7 @@
             </div>
             <jsp:include page="/st/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="User Registeration" />
+                    <jsp:param name="bread" value="User Registration" />
 
             </jsp:include>
  		</div>
@@ -87,7 +87,7 @@
 
                  <div class="clear">&nbsp;</div>
    			
-   			<form name="registerationForm" method="post">
+   			<form name="registrationForm" method="post">
    			
 			<table class="basicTable" align="left">
 			<tr>

@@ -210,22 +210,28 @@ public class DeleteProcessingDirective extends BaseActionSupport
 	 * , if so, do not allow deletion of PD.
 	 */
     private boolean hasNoActiveRecords(Repository r, ProcessingDirective pd) {
-		for (Set s:pd.getTriggeringSets()) {
-	    	if (getRepositoryDAO().getRecords(r.getName(), null, null, 0l, null, s, getRecordTypes()).size() > 0 ) {
-	    		   log.debug(" *** 1), can not delete PD because have records in repository not of type D");
-	    		return false;
-	    	}
-		}
-		for (Format f:pd.getTriggeringFormats()) {
-	    	if (getRepositoryDAO().getRecords(r.getName(), null, null, 0l, f, null, getRecordTypes()).size() > 0 ) {
-	    		   log.debug(" *** 2), can not delete PD because have records in repository not of type D");
-	    		return false;
-	    	}
-		}
-    	return true;
+        for (Format f:pd.getTriggeringFormats()) {
+            if(pd.getTriggeringSets() != null && pd.getTriggeringSets().size() > 0)  {
+                for (Set s:pd.getTriggeringSets()) {
+                	if (getRepositoryDAO().hasRecordsOfStatus(r.getName(), f.getId(), new Integer(s.getId()), getRecordTypes()))
+                    {
+                        log.debug(" *** 1) can not delete PD because have records in repository not of type D");
+                        return false;
+                    }
+                }
+            } 
+            else {
+                if (getRepositoryDAO().hasRecordsOfStatus(r.getName(), f.getId(), null, getRecordTypes()))
+                {
+                    log.debug(" *** 2) can not delete PD because have records in repository not of type D");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-	private char[] getRecordTypes() {
+    private char[] getRecordTypes() {
 		return new char[]  {Record.ACTIVE, Record.HELD};
 	}
 

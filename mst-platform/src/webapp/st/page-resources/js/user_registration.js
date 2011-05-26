@@ -94,15 +94,15 @@ YAHOO.xc.mst.registeration = {
 
 		}
 
-		document.registerationForm.action= 'registerUser.action';
-		document.registerationForm.submit();
+		document.registrationForm.action= 'registerUser.action';
+		document.registrationForm.submit();
 	
 	},
 
 	cancel : function()
 	{
-		document.registerationForm.action= 'home.action';
-		document.registerationForm.submit();
+		document.registrationForm.action= 'home.action';
+		document.registrationForm.submit();
 	
 	},
 	
