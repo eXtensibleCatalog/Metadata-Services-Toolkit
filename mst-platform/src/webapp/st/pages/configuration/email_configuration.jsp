@@ -102,7 +102,7 @@
 
                        <tr>
                            <td><B>Password </B>&nbsp;&nbsp;<br>
-                           <input type="text" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="100" size="45"><br><br></td>
+                           <input type="password" id="password" name ="password" class="textfield" value="${emailConfig.password}" maxlength="100" size="45"><br><br></td>
                        </tr>
 
                        <tr>
