@@ -85,7 +85,7 @@
                     <br>
                     <tr>
                        <td colspan="2" >                          
-                                To update a service, see <a style="text-decoration:underline;color:blue;"href="page-resources/docs/MST User Manual.docx">user manual</a> for instructions.<br>
+				To update a service, see the <a style="text-decoration:underline;color:blue;"href="http://code.google.com/p/xcmetadataservicestoolkit/wiki/Metadata">user manual</a> for instructions.<br>
                        </td>
                     </tr>
                     <br>

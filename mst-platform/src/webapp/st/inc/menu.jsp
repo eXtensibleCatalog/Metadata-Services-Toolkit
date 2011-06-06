@@ -104,18 +104,6 @@
                     </div>
                     </li>
                  </mst:checkUserPermission>
-                 
-                 <mst:checkUserPermission permission="Configuration">
-                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Stats</a>
-                   <div id="UsersGroups" class="yuimenu">
-                       <div class="bd">
-                            <ul>
-                                <li class="yuimenuitem"><a class="yuimenuitemlabel" style="text-decoration:none;color:#000000" href="<c:url value="recordCounts.action" />" >Record Counts</a></li>
-                           </ul>
-                        </div>
-                    </div>
-                    </li>
-                 </mst:checkUserPermission>
 
        			<mst:checkUserPermission permission="Configuration">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Configuration</a>
