@@ -202,6 +202,7 @@ public class Scheduler extends BaseService implements Runnable {
 				//LOG.debug("previousJob: "+previousJob);
 				try {
 					if (previousJob != null) {
+						LOG.debug("previousJob: "+previousJob);
 						getJobService().deleteJob(previousJob);
 						
 						TimingLogger.reset();
@@ -325,6 +326,7 @@ public class Scheduler extends BaseService implements Runnable {
 									
 									getJobService().deleteJob(jobToStart);
 									runningJob = null;
+									previousJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
@@ -334,6 +336,7 @@ public class Scheduler extends BaseService implements Runnable {
 
 									getJobService().deleteJob(jobToStart);
 									runningJob = null;
+									previousJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
 							} else {

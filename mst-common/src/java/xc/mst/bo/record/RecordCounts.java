@@ -127,7 +127,7 @@ public class RecordCounts {
 	}
 
 	public void incr(String type, char newStatus, char prevStatus) {
-		LOG.debug("incr - type:"+type+" newStatus:"+newStatus+" prevStatus:"+prevStatus);
+		//LOG.debug("incr - type:"+type+" newStatus:"+newStatus+" prevStatus:"+prevStatus);
 		if (type == null) {
 			type = TOTALS;
 		}

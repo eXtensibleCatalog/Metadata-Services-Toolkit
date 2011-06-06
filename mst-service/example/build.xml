@@ -288,7 +288,9 @@ commands
 		</unzip>
 	</target>
 
-	<target name="install-mst" depends="unzip-mst, mst-sql" />
+	<target name="install-mst" depends="jar, unzip-mst, mst-sql, install.dependent.service">
+		<ant target="copy-resources" />
+	</target>
 
 	<target name="unzip-mst" depends="retrieve">
 		<delete dir="${build.mst-instances.dir}" />
@@ -333,7 +335,7 @@ commands
 		</delete>
 	</target>
 
-	<target name="test" depends="install-mst, install.dependent.service, compile.test, test.nodep" />
+	<target name="test" depends="install-mst, compile.test, test.nodep" />
 	<target name="test.nodep" depends="init.test, init.skip.mst.install, unzip-base-tests, compile.test.nodep">
 		<java classpathref="classpath.test.run" 
 				classname="xc.mst.services.test.MetadataServiceSpecificTest"

@@ -256,7 +256,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected boolean commitIfNecessary(String name, boolean force, long processedRecordsCount) {
-		LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
+		//LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
 		int batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
 		if (recordsToAdd != null) {
 			//LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
@@ -967,7 +967,7 @@ public class RepositoryDAO extends BaseDAO {
 		if (startingId == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("select straight_join 1 ")
-				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_date_updated) , ")
+				.append(" from " ).append(getTableName(name, RECORD_UPDATES_TABLE)).append(" u force index (idx_record_updates_date_updated) , ")
 				.append(getTableName(name, RECORDS_TABLE)).append(" r ")
 				.append("where r.record_id = u.record_id  and (u.date_updated >= ? or ? is null)  and u.date_updated <= ? ");
 			addStatusesInWhereClause(sb, statuses);
@@ -982,18 +982,18 @@ public class RepositoryDAO extends BaseDAO {
 				" select straight_join "+RECORDS_TABLE_COLUMNS+
 					" , x.xml, "+ " max(u.date_updated) as date_updated " +
 				" from ");
-		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_record_id)");
+		sb.append(getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_record_updates_record_id)");
 		sb.append(", ");
 		sb.append(getTableName(name, RECORDS_TABLE)+" r ");
 		if (inputFormat != null) {
-			sb.append("IGNORE index (idx_"+getUtil().getDBSchema(name)+"_records_format_id) " );
+			sb.append("IGNORE index (idx_records_format_id) " );
 		}
 		sb.append(", ");
 		sb.append(getTableName(name, RECORDS_XML_TABLE)+" x ");
 		
 		if (inputSet != null) {
 			sb.append(
-				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+getUtil().getDBSchema(name)+"_"+RECORDS_SETS_TABLE+"_set_id) ");
+				", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+RECORDS_SETS_TABLE+"_set_id) ");
 		}
 		sb.append(
 				" where r.record_id = x.record_id " +
@@ -1279,14 +1279,13 @@ public class RepositoryDAO extends BaseDAO {
 				until = new Date();
 			}
 			StringBuilder sb = new StringBuilder();
-			String indexPrefix = getUtil().getDBSchema(name);
 			sb.append(
 					" select straight_join count(distinct u.record_id) " +
-					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u  force index (idx_"+indexPrefix+"_record_updates_date_updated), "+
-						getTableName(name, RECORDS_TABLE)+" r IGNORE index (idx_"+indexPrefix+"_records_format_id)");
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u  force index (idx_record_updates_date_updated), "+
+						getTableName(name, RECORDS_TABLE)+" r IGNORE index (idx_records_format_id)");
 			
 			if (inputSet != null) {
-				sb.append(", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_"+indexPrefix+"_record_sets_set_id) ");
+				sb.append(", "+getTableName(name, RECORDS_SETS_TABLE)+" rs ignore index (idx_record_sets_set_id) ");
 			}
 			sb.append(
 					" where r.status in ('" +Record.ACTIVE+"','"+Record.DELETED+"')"+  
@@ -1374,7 +1373,7 @@ public class RepositoryDAO extends BaseDAO {
 						"s.set_id, "+
 						"s.set_spec, "+
 						"s.display_name "+
-					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_"+getUtil().getDBSchema(name)+"_record_updates_record_id), "+
+					" from "+getTableName(name, RECORD_UPDATES_TABLE)+" u force index (idx_record_updates_record_id), "+
 						getTableName(name, RECORDS_SETS_TABLE)+" rs, "+
 						" sets s "+
 					" where rs.record_id = u.record_id " +
@@ -1406,20 +1405,22 @@ public class RepositoryDAO extends BaseDAO {
 				
 				int recIdx = 0;
 				Record currentRecord = records.get(recIdx);
+				/*
 				for (Record rws : recordsWSets) {
 					LOG.debug("rws.getId(): "+rws.getId());
 				}
 				for (Record r : records) {
 					LOG.debug("r.getId(): "+r.getId());
 				}
+				*/
 				for (Record rws : recordsWSets) {
-					LOG.debug("currentRecord.getId(): "+currentRecord.getId());
-					LOG.debug("rws.getId(): "+rws.getId());
+					//LOG.debug("currentRecord.getId(): "+currentRecord.getId());
+					//LOG.debug("rws.getId(): "+rws.getId());
 					if (rws.getId() < currentRecord.getId()) {
 						continue;
 					}
 					while (rws.getId() > currentRecord.getId()) {
-						LOG.debug("recIdx: "+recIdx);
+						//LOG.debug("recIdx: "+recIdx);
 						currentRecord = records.get(++recIdx);
 					}
 					currentRecord.addSet(rws.getSets().get(0));
@@ -1791,15 +1792,15 @@ public class RepositoryDAO extends BaseDAO {
 		name = getUtil().getDBSchema(name);
 		TimingLogger.start("dropIndicies."+name);
 		String[] indicies2drop = new String[] {
-				"idx_"+name+"_"+RECORDS_TABLE+"_date_created", RECORDS_TABLE,
-				"idx_"+name+"_"+RECORDS_TABLE+"_status", RECORDS_TABLE,
-				"idx_"+name+"_"+RECORDS_TABLE+"_format_id", RECORDS_TABLE,
-				"idx_"+name+"_"+RECORD_UPDATES_TABLE+"_date_updated", RECORD_UPDATES_TABLE,
-				"idx_"+name+"_"+RECORD_UPDATES_TABLE+"_record_id", RECORD_UPDATES_TABLE,
-				"idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id", RECORDS_SETS_TABLE,
-				"idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id", RECORDS_SETS_TABLE,
-				"idx_"+name+"_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
-				"idx_"+name+"_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
+				"idx_"+RECORDS_TABLE+"_date_created", RECORDS_TABLE,
+				"idx_"+RECORDS_TABLE+"_status", RECORDS_TABLE,
+				"idx_"+RECORDS_TABLE+"_format_id", RECORDS_TABLE,
+				"idx_"+RECORD_UPDATES_TABLE+"_date_updated", RECORD_UPDATES_TABLE,
+				"idx_"+RECORD_UPDATES_TABLE+"_record_id", RECORD_UPDATES_TABLE,
+				"idx_"+RECORDS_SETS_TABLE+"_record_id", RECORDS_SETS_TABLE,
+				"idx_"+RECORDS_SETS_TABLE+"_set_id", RECORDS_SETS_TABLE,
+				"idx_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
+				"idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
 		};
 		for (int i=0; i<indicies2drop.length; i+=2) {
 			this.jdbcTemplate.execute("drop index "+indicies2drop[i]+" on "+getTableName(name, indicies2drop[i+1]));
@@ -1819,7 +1820,7 @@ public class RepositoryDAO extends BaseDAO {
 				for (Map<String, Object> row : rows) {
 					String indexName = (String)row.get("Key_name");
 					LOG.debug("indexName: "+indexName);
-					if (("idx_"+name+"_to_record_id").equals(indexName)) {
+					if (("idx_to_record_id").equals(indexName)) {
 						dropIndiciesOnRecordLinks = false;
 						break;
 					}
@@ -1828,8 +1829,8 @@ public class RepositoryDAO extends BaseDAO {
 		}
 		if (dropIndiciesOnRecordLinks) {
 			indicies2drop = new String[] {
-					"drop index idx_"+name+"_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE),
-					"drop index idx_"+name+"_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)
+					"drop index idx_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE),
+					"drop index idx_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)
 			};
 			for (String index2drop : indicies2drop) {
 				execute(index2drop);
@@ -1847,7 +1848,7 @@ public class RepositoryDAO extends BaseDAO {
 			for (Map<String, Object> row : rows) {
 				String indexName = (String)row.get("Key_name");
 				LOG.debug("indexName: "+indexName);
-				if (("idx_"+name+"_records_status").equals(indexName)) {
+				if (("idx_records_status").equals(indexName)) {
 					genericRepoIndexExists = true;
 					break;
 				}
@@ -1881,7 +1882,7 @@ public class RepositoryDAO extends BaseDAO {
 				for (Map<String, Object> row : rows) {
 					String indexName = (String)row.get("Key_name");
 					LOG.debug("indexName: "+indexName);
-					if (("idx_"+name+"_to_record_id").equals(indexName)) {
+					if (("idx_to_record_id").equals(indexName)) {
 						createIndiciesOnRecordLinks = false;
 						break;
 					}
@@ -1892,24 +1893,24 @@ public class RepositoryDAO extends BaseDAO {
 		if (!genericRepoIndexExists) { 
 			String[] indicies2create = new String[] {
 					//"alter table"+getTableName(name, RECORDS_TABLE)+" add primary key (record_id)",
-					"create index idx_"+name+"_records_date_created on "+getTableName(name, RECORDS_TABLE)+" (oai_datestamp)",
-					"create index idx_"+name+"_records_status on "+getTableName(name, RECORDS_TABLE)+" (status)",
-					"create index idx_"+name+"_records_format_id on "+getTableName(name, RECORDS_TABLE)+" (format_id)",
+					"create index idx_records_date_created on "+getTableName(name, RECORDS_TABLE)+" (oai_datestamp)",
+					"create index idx_records_status on "+getTableName(name, RECORDS_TABLE)+" (status)",
+					"create index idx_records_format_id on "+getTableName(name, RECORDS_TABLE)+" (format_id)",
 
 					//"alter table "+getTableName(name, RECORD_UPDATES_TABLE)+" add primary key (id)",
-					"create index idx_"+name+"_record_updates_date_updated on "+getTableName(name, RECORD_UPDATES_TABLE)+" (date_updated)",
-					"create index idx_"+name+"_record_updates_record_id on "+getTableName(name, RECORD_UPDATES_TABLE)+" (record_id)",
+					"create index idx_record_updates_date_updated on "+getTableName(name, RECORD_UPDATES_TABLE)+" (date_updated)",
+					"create index idx_record_updates_record_id on "+getTableName(name, RECORD_UPDATES_TABLE)+" (record_id)",
 					 
 					//"alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
 					 
 					//"alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
-					"create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
-					"create index idx_"+name+"_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
+					"create index idx_"+RECORDS_SETS_TABLE+"_record_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (record_id)",
+					"create index idx_"+RECORDS_SETS_TABLE+"_set_id on "+getTableName(name, RECORDS_SETS_TABLE)+" (set_id)",
 					 
 					//"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
 					//"alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
-					"create index idx_"+name+"_record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
-					"create index idx_"+name+"_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
+					"create index idx__record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
+					"create index idx_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
 
 			};
 			for (String i2c : indicies2create) {
@@ -1939,8 +1940,8 @@ public class RepositoryDAO extends BaseDAO {
 		if (createIndiciesOnRecordLinks) {
 			// TODO: you might have to remove duplicates
 			String[] indicies2create = new String[] {
-					"create index idx_"+name+"_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id)",
-					"create index idx_"+name+"_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (to_record_id)"
+					"create index idx_from_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (from_record_id)",
+					"create index idx_to_record_id on "+getTableName(name, RECORD_LINKS_TABLE)+" (to_record_id)"
 			};
 			for (String i2c : indicies2create) {
 				TimingLogger.start(i2c.split(" ")[2]);
@@ -1961,7 +1962,7 @@ public class RepositoryDAO extends BaseDAO {
 				for (Map<String, Object> row : rows) {
 					String indexName = (String)row.get("Key_name");
 					LOG.debug("indexName: "+indexName);
-					if (("idx_"+name+"_records_status").equals(indexName)) {
+					if (("idx_records_status").equals(indexName)) {
 						genericRepoIndexExists = true;
 						break;
 					}
@@ -1970,7 +1971,7 @@ public class RepositoryDAO extends BaseDAO {
 		} catch (Throwable t) {
 			//do nothing
 		}
-		LOG.debug(name+" ready4harvest"+genericRepoIndexExists);
+		LOG.debug(name+" ready4harvest: "+genericRepoIndexExists);
 		return genericRepoIndexExists;
 	}
 	
