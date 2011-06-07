@@ -1,5 +1,6 @@
-service.name=MARCNormalization
-solr.index.whenIdle=true
+service.name=example
+#mst.root.dir=
+test.memory=700M
 
 # This only applies to your local testing.  If you're bundling your service
 # to be plopped in an mst server, don't worry about changing these properties
@@ -9,3 +10,6 @@ DatabaseUrl=jdbc:mysql://localhost:3306
 Database=MetadataServicesToolkit
 DatabaseUsername=root
 DatabasePassword=root
+
+solr.index.whenIdle=false
+

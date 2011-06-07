@@ -43,7 +43,7 @@ note: help on the ant commands within particular service subprojects can be foun
 			<echo>
 				subdir: @{subdir}
 			</echo>
-			<copy todir="${ms.custom}" enablemultiplemappings="true" overwrite="true">
+			<copy todir="${ms.custom}" enablemultiplemappings="true">
 				<macro-file-set />
 				<scriptmapper language="javascript">
 				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
