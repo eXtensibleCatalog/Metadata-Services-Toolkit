@@ -434,7 +434,7 @@ public class HarvestManager extends WorkerThread {
 
 	@SuppressWarnings("unchecked")
 	protected String parseRecords(String prefix, Document doc, String baseURL) {
-		
+
 		String resumption = null;
 		Element root = doc.getRootElement();
 
@@ -476,13 +476,13 @@ public class HarvestManager extends WorkerThread {
 
 			// If we got here, the URL element wasn't found.  In this
 			// case report the error as "invalid OAI response"
-			LogWriter.addError(currentHarvest.getProvider().getLogFileName(), "The OAI provider retured an invalid response to the ListRecords request.");
-			sendReportEmail("The OAI provider retured an invalid response to the ListRecords request.");
+			LogWriter.addError(currentHarvest.getProvider().getLogFileName(), "The OAI provider returned an invalid response to the ListRecords request.");
+			sendReportEmail("The OAI provider returned an invalid response to the ListRecords request.");
 			throw new RuntimeException("The data provider returned an invalid response to the ListRecords request: " + e.getMessage());
 		}
 
 		// Loop over all records in the OAI response
-		List recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
+		List<Element> recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
 		log.debug("recordsEl.size(): "+recordsEl.size());
 		
 		for (Object recordElObj : recordsEl) {
@@ -578,6 +578,9 @@ public class HarvestManager extends WorkerThread {
 
 			return mailer.sendEmail(harvestSchedule.getNotifyEmail(), subject, body.toString());
 		} else {
+			// note, after configuring email, seem to have to restart MST for it to work.
+            log.debug("HarvestManager.sendReportEmail-mail is not configured right! sendto:" +
+            		harvestSchedule.getNotifyEmail()+ " isConfigured:"+mailer.isConfigured());
 			return false;
 		}
 	}
