@@ -260,7 +260,7 @@ public class TransformationService extends SolrTransformationService {
 						results.add(or);
 						Record r = getRepository().getRecord(or.getId());
 						String type = getXCRecordService().getType(r);
-						or.setIndexedObjectType(type);
+						or.setType(type);
 						if (AggregateXCRecord.MANIFESTATION.equals(type)) {
 							manifestationId = or.getId();
 						}
@@ -304,18 +304,18 @@ public class TransformationService extends SolrTransformationService {
 				
 				AggregateXCRecord ar = new AggregateXCRecord();
 				if (isBib) {
-					((Record)record).setIndexedObjectType("bib");
+					((Record)record).setType("bib");
 					processBibliographicRecord(ar, originalRecord);
 				} else if (isHolding) {
 					processHoldingRecord(ar, originalRecord);
-					((Record)record).setIndexedObjectType("hold");
+					((Record)record).setType("hold");
 				}
 				
 				if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
 					for (OutputRecord or : record.getSuccessors()) {
 						Record succ = getRepository().getRecord(or.getId());
 						String type = getXCRecordService().getType(succ);
-						or.setIndexedObjectType(type);
+						or.setType(type);
 						if (AggregateXCRecord.HOLDINGS.equals(type)) {
 							ar.getPreviousHoldingIds().add(or.getId());
 						} else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -405,7 +405,7 @@ public class TransformationService extends SolrTransformationService {
 			for (OutputRecord or : results) {
 				if (!or.getDeleted()) {
 					String type = getXCRecordService().getType((Record)or);
-					or.setIndexedObjectType(type);
+					or.setType(type);
 				}
 				or.setFormat(xcFormat);
 			}

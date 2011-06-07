@@ -501,7 +501,7 @@ public abstract class RecordService extends BaseService
 		validateFields(record, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + record.getIndexedObjectType());
+			log.debug("Inserting a new " + record.getType());
 
 		Date now = new Date();
 		record.setCreatedAt(now);
@@ -509,7 +509,7 @@ public abstract class RecordService extends BaseService
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getType());
 
 		// Set up the fields for the specific type of indexed object
 		if(record instanceof Work)
@@ -549,7 +549,7 @@ public abstract class RecordService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, record.getType());
 
 		// Set up the fields for the Record
 		doc = setFieldsOnDocument(record, doc, false);
@@ -573,7 +573,7 @@ public abstract class RecordService extends BaseService
 			log.debug("Deleting the record with ID " + record.getId());
 
 		String deleteQuery = FIELD_RECORD_ID + ":" + Long.toString(record.getId()) + "  AND "
-		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + record.indexedObjectType;
+		                     + FIELD_INDEXED_OBJECT_TYPE + ":" + record.type;
 
 		// Delete all records with the matching record ID
 		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");

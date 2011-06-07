@@ -27,7 +27,7 @@ public class DBRecordService extends DefaultRecordService {
 		validateFields(record, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + record.getIndexedObjectType());
+			log.debug("Inserting a new " + record.getType());
 
 		Date now = new Date();
 		record.setCreatedAt(now);

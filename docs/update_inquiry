@@ -1,0 +1,150 @@
+=================
+== Question #1 ==
+=================
+
+The oai-toolkit is reporting that it has a total of 7,452,718 records while the MST is reporting that it harvested 7,462,772 unique records (10,057 more).  How can this be?  I'm not sure, but the below queries show that the MST does indeed have that many unique record ids.  My next step would be to investigate the oai-toolkit further.
+
+$  /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_rochester_135 -e "create unique index oai_id_idx on record_oai_ids (oai_id)"
+-- created succesfully
+
+
+$  /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_rochester_135 -e "select oai_id from record_oai_ids where oai_id not like 'oai:library.rochester.edu:URVoyager1/%' limit 10;"
+-- no results
+
+$  /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_rochester_135 -e "select *  from record_oai_ids where cast(substring(oai_id, 38) as unsigned) = 0 limit 10;"
++-----------+----------------------------------------+
+| record_id | oai_id                                 |
++-----------+----------------------------------------+
+|         1 | oai:library.rochester.edu:URVoyager1/0 |
+|     39931 | oai:library.rochester.edu:URVoyager1/  |
++-----------+----------------------------------------+
+
+$  curl -s 'http://128.151.244.135:8080/OAIToolkit/oai-request.do?verb=GetRecord&identifier=oai:library.rochester.edu:URVoyager1/&metadataPrefix=marc21' | xmllint --format -
+# results in an actual record
+
+=================
+== Question #2 ==
+=================
+incoming all time bibs:
+	new_act_cnt:  2,656,619    
+	upd_act_cnt:     29,912 
+	-----------------------
+                  2,686,531
+
+outgoing all time manifestations:     
+    new_act_cnt:  2,660,692               
+    upd_act_cnt:     25,831
+	  no output:          8
+	-----------------------
+                  2,686,531
+
+How could a bib update result in a new manifestation?  
+
+num of these?  
+   29,912 
+ - 25,831
+ ---------
+    4,081
+
+$ /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_marctoxctransformation -e "explain select * from records r, record_predecessors p where p.record_id = r.record_id and r.type = 'm' group by p.pred_record_id having count(*) > 1" > /export/home/devuser/double_manis.out2
+-- results in 9 records 
+
+why doesn't the above query result in 4,081?
+
+auth
+oai:library.rochester.edu:URVoyager1/5552506
+oai:mst.rochester.edu:MetadataServicesToolkit/rochester_135/5550051
+oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/12947872
+001: 130586
+	Blackburn, Elizabeth H.
+	Telomeres, 1995:
+	(Elizabeth H. Blackburn, Univ. of Calif., San Francisco)
+
+
+holding
+oai:library.rochester.edu:URVoyager1/218068
+oai:mst.rochester.edu:MetadataServicesToolkit/rochester_135/217950
+oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/7615772
+oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15459809
+	001: 130586
+	004: 106678
+	<xc:manifestationHeld>15459805</xc:manifestationHeld>
+
+bib
+oai:library.rochester.edu:URVoyager1/346448
+oai:mst.rochester.edu:MetadataServicesToolkit/rochester_135/346318
+	001: 125622
+	245: The jewelry of Margaret De Patta :
+oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/7744140 
+	manifestation
+	oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15843334
+	NRU: 130586
+	expressionManifested: 15843336
+	title: Die Lehre des Thomas von Aquino...
+
+	work
+	oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15843335
+	author: De Patta, Margaret, 1903-1964.
+	titleOfWork: Jewelry of Margaret De Patta 
+
+	expression
+	oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15843336
+	titleOfExpression: Jewelry of Margaret De Patta
+
+	manifestation
+    oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15843338
+	expressionManifested: 15843336
+	NRU: 125622
+	title: The jewelry of Margaret De Patta
+
+searching for "Die Lehre des Thomas von Aquino" returns no records besides the 15843334 record
+
+oai:library.rochester.edu:URVoyager1/376900
+oai:mst.rochester.edu:MetadataServicesToolkit/rochester_135/376760
+oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/7774582
+oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15933912
+	manifestationHeld: 15843334
+
+	manifestationHeld: 15843824
+	manifestationHeld: 15843828
+	manifestationHeld: 15871939
+	manifestationHeld: 15843812
+	manifestationHeld: 15864997
+	manifestationHeld: 15843816
+	manifestationHeld: 15933908
+	manifestationHeld: 15865001
+	manifestationHeld: 15843820
+
+
+
+=================
+== Question #3 ==
+=================
+incoming all time holdings:
+	new_act_cnt:  2,820,526
+	upd_act_cnt:     30,853
+	-----------------------
+                  2,851,379
+
+outgoing all time holdings:     
+    new_act_cnt:  2,715,642
+    upd_act_cnt:     25,453
+	  no output:          8
+	-----------------------
+                  2,686,531
+
+why doesn't incoming holdings match outgoing holdings?
+
+=================
+== Question #4 ==
+=================
+in marctoxctransformation
+adding up new_del_cnt (0) + upd_del_cnt (4,328) is one more than total-Deleted (4,327)
+
+$ /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_marctoxctransformation -e "select count(*) from records where prev_status = 'D';"
+-- no results
+
+$ /usr/local/mysql/bin/mysql --user=root --password=pass -D xc_marctoxctransformation -e "select count(*), r.record_id from records r, record_updates u where u.record_id = r.record_id and status = 'D' group by record_id having count(*) > 2;"
+-- no results
+
+

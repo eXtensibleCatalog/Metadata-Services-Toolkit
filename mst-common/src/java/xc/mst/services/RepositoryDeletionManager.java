@@ -82,6 +82,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 					}
 					this.incomingRecordCounts.incr(null, Record.DELETED, r.getStatus());
 					r.setStatus(Record.DELETED);
+					r.setUpdatedAt(null);
 					m_incomingRepository.addRecord(r);
 					m_incomingRepository.commitIfNecessary(false, numRecordsProcess++, this.incomingRecordCounts, null);
 					m_processedRecordCount++;

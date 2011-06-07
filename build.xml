@@ -43,7 +43,7 @@ note: help on the ant commands within particular service subprojects can be foun
 			<echo>
 				subdir: @{subdir}
 			</echo>
-			<copy todir="${ms.custom}" enablemultiplemappings="true" overwrite="true">
+			<copy todir="${ms.custom}" enablemultiplemappings="true">
 				<macro-file-set />
 				<scriptmapper language="javascript">
 				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
@@ -309,6 +309,19 @@ note: help on the ant commands within particular service subprojects can be foun
 
 	<target name="subcall">
 		<ant dir="${dir}" target="${target}" inheritAll="false" />
+	</target>
+
+	<target name="test" depends="package-all, test.nodep" />
+	<target name="test.nodep">
+		<ant dir="mst-service/example" target="test">
+			<property name="test" value="RecordCounts"/>
+		</ant>
+		<ant dir="mst-service/custom/MARCNormalization" target="test">
+			<property name="test" value="MarkProviderDeleted "/>
+		</ant>
+		<ant dir="mst-service/custom/MARCToXCTransformation" target="test">
+			<property name="test" value="ActivateHeldHoldings"/>
+		</ant>
 	</target>
 
 	<target name="deploy" >

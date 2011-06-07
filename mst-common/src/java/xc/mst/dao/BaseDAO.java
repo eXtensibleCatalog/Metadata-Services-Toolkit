@@ -38,7 +38,6 @@ import xc.mst.dao.provider.SetDAO;
 import xc.mst.dao.record.MessageDAO;
 import xc.mst.dao.record.RecordDAO;
 import xc.mst.dao.record.RecordTypeDAO;
-import xc.mst.dao.record.ResumptionTokenDAO;
 import xc.mst.dao.record.XcIdentifierForFrbrElementDAO;
 import xc.mst.dao.service.ErrorCodeDAO;
 import xc.mst.dao.service.OaiIdentifierForServiceDAO;
@@ -117,17 +116,26 @@ public class BaseDAO {
 		return false;
 	}
 	
-	protected boolean tableExists(String name) {
-		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+	protected boolean tableExists(List<String> allTables, String tableName) {
 		List<String> allTablesUpper = new ArrayList<String>();
 		for (String table : allTables) {
 			allTablesUpper.add(table.toUpperCase());
 		}
-		boolean ret = allTablesUpper.contains(name.toUpperCase());
+		boolean ret = allTablesUpper.contains(tableName.toUpperCase());
 		LOG.debug("allTablesUpper: "+allTablesUpper);
-		LOG.debug("name: "+name);
-		LOG.debug(ret+":tableExists("+name+")");
-		return ret;
+		LOG.debug("name: "+tableName);
+		LOG.debug(ret+":tableExists("+tableName+")");
+		return ret;	
+	}
+	
+	protected boolean tableExists(String repoName, String tableName) {
+		List<String> allTables = this.jdbcTemplate.queryForList("show tables from "+getUtil().normalizeName(repoName), String.class);
+		return tableExists(allTables, tableName);
+	}
+	
+	protected boolean tableExists(String tableName) {
+		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
+		return tableExists(allTables, tableName);
 	}
 	
 	public List<String> getTablesWithPrefix(String prefix) {
@@ -247,9 +255,6 @@ public class BaseDAO {
 	public RecordTypeDAO getRecordTypeDAO() {
 		return (RecordTypeDAO)config.getBean("RecordTypeDAO");
 	}
-	public ResumptionTokenDAO getResumptionTokenDAO() {
-		return (ResumptionTokenDAO)config.getBean("ResumptionTokenDAO");
-	}
 	public XcIdentifierForFrbrElementDAO getXcIdentifierForFrbrElementDAO() {
 		return (XcIdentifierForFrbrElementDAO)config.getBean("XcIdentifierForFrbrElementDAO");
 	}
@@ -288,9 +293,6 @@ public class BaseDAO {
 	}
 	public UserGroupUtilDAO getUserGroupUtilDAO() {
 		return (UserGroupUtilDAO)config.getBean("UserGroupUtilDAO");
-	}
-	public RecordDAO getRecordDAO() {
-		return (RecordDAO)config.getBean("DBRecordDAO");
 	}
 	public MessageDAO getMessageDAO() {
 		return (MessageDAO)config.getBean("MessageDAO");

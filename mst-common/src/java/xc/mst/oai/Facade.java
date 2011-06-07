@@ -694,6 +694,8 @@ public class Facade extends BaseManager
 			} catch (IllegalArgumentException iae) {
 				return ErrorBuilder.badArgumentError("from: "+from);
 			}
+		} else {
+			fromDate = new Date(0);
 		}
 		Date untilDate = null;
 		if (!StringUtils.isEmpty(until)) {
@@ -702,6 +704,8 @@ public class Facade extends BaseManager
 			} catch (IllegalArgumentException iae) {
 				return ErrorBuilder.badArgumentError("until: "+until);
 			}
+		} else {
+			untilDate = new Date();
 		}
 		
 		// Starting record id 
@@ -717,10 +721,11 @@ public class Facade extends BaseManager
 			if(log.isDebugEnabled())
 				log.debug("The request had a resumption token " + resumptionToken);
 
+			resToken = new ResumptionToken();
 			String[] rtSplit = resumptionToken.split("\\|");
 			// Set the values from the resumption token rather than keeping the ones parsed from the request
-			fromDate = getUtil().parseDateTime(rtSplit[0]);
-			untilDate = getUtil().parseDateTime(rtSplit[1]);
+			fromDate = new Date(UTC_PARSER.parseDateTime(rtSplit[0]).getMillis());
+			untilDate = new Date(UTC_PARSER.parseDateTime(rtSplit[1]).getMillis());
 			set = rtSplit[2];
 			metadataPrefix = rtSplit[3];
 			startingId = Long.parseLong(rtSplit[4]);
@@ -754,9 +759,6 @@ public class Facade extends BaseManager
 
 			return XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"});
 		}
-
-		// The offset into the returned results which we should start from
-		long offset = (resToken == null ? 0 : resToken.getOffset());
 		
 		List<Record> records = new ArrayList<Record>();
 
@@ -764,7 +766,8 @@ public class Facade extends BaseManager
 		//long totalRecords =	service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
 		
 		// BDA TODO: first do a count
-		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, startingId, format, setObject, offset);
+		long totalCount = service.getMetadataService().getRepository().getRecordCount(fromDate, untilDate, format, setObject);
+		//long totalCount = -1;
 		log.debug("totalCount: "+totalCount);
 		
 		if (totalCount != 0) {
@@ -850,106 +853,30 @@ public class Facade extends BaseManager
 				}
 				*/
 			}
-
-			// If there are more results which need to be returned in a future call, set up a resumption token
-			if(hasMore)
-			{
+			
+			if (hasMore) {
+				ResumptionToken newResToken = new ResumptionToken();
+				// Set the fields on the resumption token
+				newResToken.setFrom(fromDate);
+				newResToken.setUntil(untilDate);
+				newResToken.setSetSpec(set);
+				newResToken.setMetadataFormat(metadataPrefix);
+				newResToken.setStartingId(startingId);
+				
 				if (totalCount < -1) {
 					xml.append("<!-- completeListSize is an estimate -->");
 					totalCount = -1 * totalCount;
 				}
-				// If there was already a resumption token, update it with the new offset
-				if(resToken != null)
-				{
-					if(log.isDebugEnabled())
-						log.debug("Updating resumption token with ID " + resToken.getId() + " to have offset " + offset);
-
-					resToken.setOffset(offset + returnedRecordsCount);
-					resToken.setToken(resToken.getId() + "|" + (offset + returnedRecordsCount));
-					resToken.setStartingId(startingId);
-
-					try
-					{
-						if(getResumptionTokenDAO().update(resToken))
-						{
-							if (totalCount > 0) {
-								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken(), new String[] {"completeListSize", ""+totalCount}));	
-							} else {
-								xml.append(XMLUtil.xmlTag("resumptionToken", "" + resToken.getToken()));
-							}
-									//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
-
-							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + resToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
-						}
-					}
-					catch(DataException e)
-					{
-						log.error("Could not update the resumption token.", e);
-					}
+				if (totalCount > 0) {
+					xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(), new String[] {"completeListSize", ""+totalCount}));
+				} else {
+					xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken()
+					));
+					//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
+		
 				}
-				// There was not already a resumption token, so insert one.
-				else
-				{
-					// The resumption token to return with the result
-					ResumptionToken newResToken = new ResumptionToken();
 
-					// Set the fields on the resumption token
-					newResToken.setFrom(fromDate);
-					newResToken.setUntil(untilDate);
-					newResToken.setSetSpec(set);
-					newResToken.setOffset(offset + returnedRecordsCount);
-					newResToken.setMetadataFormat(metadataPrefix);
-					newResToken.setStartingId(startingId);
-
-					// Insert the new resumption token, this will set the resumption token's ID as a side effect
-					try
-					{
-						if(getResumptionTokenDAO().insert(newResToken))
-						{
-							newResToken.setToken(newResToken.getId() + "|" + (offset + returnedRecordsCount));
-							getResumptionTokenDAO().update(newResToken);
-							if (totalCount > 0) {
-								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken(), new String[] {"completeListSize", ""+totalCount}));
-							} else {
-								xml.append(XMLUtil.xmlTag("resumptionToken", "" + newResToken.getToken()
-								));
-								//,new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
-					
-							}
-
-							//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
-						}
-					}
-					catch(DataException e)
-					{
-						log.error("Could not insert the new resumption token.", e);
-					}
-				}
-			}
-			// else there are no records which they haven't harvested.
-			// If there was a resumption token, delete it
-			else
-			{
-				if(resToken != null)
-				{
-					try
-					{
-						/*
-						xml.append(XMLUtil.xmlTag("resumptionToken", null,
-								new String[] { "cursor", "" + offset, "completeListSize", ""+totalRecords } ));
-
-						LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and a null resumptionToken in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
-						*/
-						
-						getResumptionTokenDAO().delete(resToken);
-					}
-					catch(DataException e)
-					{
-						log.error("An error occurred while deleting the resumption token.", e);
-					}
-				}
-				//else
-					//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and no resumptionToken in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
+				//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 			}
 		}
 

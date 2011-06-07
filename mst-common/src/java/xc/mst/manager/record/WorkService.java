@@ -117,13 +117,13 @@ public abstract class WorkService extends BaseService
 		validateFields(work, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + work.getIndexedObjectType());
+			log.debug("Inserting a new " + work.getType());
 
 		work.setCreatedAt(new Date());
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, work.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, work.getType());
 
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(work, doc, true);
@@ -153,7 +153,7 @@ public abstract class WorkService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, work.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, work.getType());
 
 		// Set up the fields for the Work
 		doc = setFieldsOnDocument(work, doc, false);

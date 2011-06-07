@@ -70,59 +70,6 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		return r;
 	}
 	
-	protected Format getDCFormat() throws Exception {
-		return getFormat(new String[] {"oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"});
-	}
-	
-	protected Format getDCTermsFormat() throws Exception {
-		return getFormat(new String[] {"dcterms", "http://dublincore.org/documents/dcmi-terms/", "http://dublincore.org/schemas/xmls/qdc/dcterms.xsd"});
-	}
-	
-	protected Format getOaiMarcFormat() throws Exception {
-		return getFormat(new String[] {"oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc.xsd"});
-	}
-
-	protected Format getMarcXmlFormat() throws Exception {
-		return getFormat(new String[] {"marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
-	}
-	
-	protected Format getMarc21Format() throws Exception {
-		return getFormat(new String[] {"marc21", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
-	}
-	
-	protected Format getFooBarFormat() throws Exception {
-		return getFormat(new String[] {"foobar", "foo:bar", "http://foo.com/bar"});
-	}
-
-	protected Format getRfc1807Format() throws Exception {
-		return getFormat(new String[] {"rfc1807", "http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1807.txt", "http://www.openarchives.org/OAI/1.1/rfc1807.xsd"});
-	}
-
-	protected Format getModsFormat() throws Exception {
-		return getFormat(new String[] {"mods", "http://www.loc.gov/mods/v3", "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"});
-	}
-	
-	protected Format getHtmlFormat() throws Exception {
-		return getFormat(new String[] {"html", "http://www.w3.org/TR/REC-html40", "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"});
-	}
-	
-	protected Format getXCFormat() throws Exception {
-		return getFormat(new String[] {"xc", "http://www.extensiblecatalog.info/Elements", "http://www.extensiblecatalog.info/Elements"});
-	}
-
-	protected Format getFormat(String[] arr) throws Exception {
-		Format f = getFormatDAO().getByName(arr[0]);
-		if (f == null) {
-			f = new Format();
-			f.setName(arr[0]);
-			f.setNamespace(arr[1]);
-			f.setSchemaLocation(arr[2]);
-			getFormatDAO().insert(f);
-			f = getFormatDAO().getByName(arr[0]);
-		}
-		return f;
-	}
-	
 	protected String[] getPriorServices() {
 		return new String[] {};
 	}

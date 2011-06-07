@@ -128,13 +128,13 @@ public abstract class HoldingsService extends BaseService
 		validateFields(holdings, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + holdings.getIndexedObjectType());
+			log.debug("Inserting a new " + holdings.getType());
 
 		holdings.setCreatedAt(new Date());
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, holdings.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, holdings.getType());
 
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(holdings, doc, true);
@@ -164,7 +164,7 @@ public abstract class HoldingsService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, holdings.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, holdings.getType());
 
 		// Set up the fields for the Holdings
 		doc = setFieldsOnDocument(holdings, doc, false);

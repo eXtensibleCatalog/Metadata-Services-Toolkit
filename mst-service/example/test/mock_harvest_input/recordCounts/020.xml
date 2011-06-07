@@ -10,7 +10,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_act_prev_act</foo>
+        <foo xmlns="foo:bar" type="a">upd_act_prev_act</foo>
       </metadata>
     </record>
     <record>
@@ -20,7 +20,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_act_prev_held</foo>
+        <foo xmlns="foo:bar" type="b">upd_act_prev_held</foo>
       </metadata>
     </record>
     <record>
@@ -30,7 +30,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_act_prev_del</foo>
+        <foo xmlns="foo:bar" type="c">upd_act_prev_del</foo>
       </metadata>
     </record>
     <record>
@@ -40,7 +40,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">upd_held_prev_act</foo>
+        <foo xmlns="foo:bar" type="a" hold="true">upd_held_prev_act</foo>
       </metadata>
     </record>
     <record>
@@ -50,7 +50,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">upd_held_prev_held</foo>
+        <foo xmlns="foo:bar" type="b" hold="true">upd_held_prev_held</foo>
       </metadata>
     </record>
     <record>
@@ -60,7 +60,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">upd_held_prev_del</foo>
+        <foo xmlns="foo:bar" type="c" hold="true">upd_held_prev_del</foo>
       </metadata>
     </record>
     <record>
@@ -70,7 +70,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_del_prev_act</foo>
+        <foo xmlns="foo:bar" type="a">upd_del_prev_act</foo>
       </metadata>
     </record>
     <record>
@@ -80,7 +80,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_del_prev_held</foo>
+        <foo xmlns="foo:bar" type="b">upd_del_prev_held</foo>
       </metadata>
     </record>
     <record>
@@ -90,7 +90,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">upd_del_prev_del</foo>
+        <foo xmlns="foo:bar" type="c">upd_del_prev_del</foo>
       </metadata>
     </record>
     <record>
@@ -100,7 +100,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">active</foo>
+        <foo xmlns="foo:bar" type="a">active</foo>
       </metadata>
     </record>
   </ListRecords>

@@ -99,13 +99,13 @@ public abstract class ManifestationService extends BaseService
 		validateFields(manifestation, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + manifestation.getIndexedObjectType());
+			log.debug("Inserting a new " + manifestation.getType());
 
 		manifestation.setCreatedAt(new Date());
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, manifestation.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, manifestation.getType());
 
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(manifestation, doc, true);
@@ -135,7 +135,7 @@ public abstract class ManifestationService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, manifestation.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, manifestation.getType());
 
 		// Set up the fields for the Manifestation
 		doc = setFieldsOnDocument(manifestation, doc, false);

@@ -10,7 +10,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_act_cnt</foo>
+        <foo xmlns="foo:bar" type="a">new_act_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -20,7 +20,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_act_cnt</foo>
+        <foo xmlns="foo:bar" type="a">new_act_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -30,7 +30,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">new_held_cnt</foo>
+        <foo xmlns="foo:bar" type="b" hold="true">new_held_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -40,7 +40,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_del_cnt</foo>
+        <foo xmlns="foo:bar" type="c">new_del_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -50,7 +50,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_act_cnt</foo>
+        <foo xmlns="foo:bar" type="a">new_act_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -60,7 +60,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">new_held_cnt</foo>
+        <foo xmlns="foo:bar" type="b" hold="true">new_held_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -70,7 +70,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_del_cnt</foo>
+        <foo xmlns="foo:bar" type="c">new_del_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -80,7 +80,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_act_cnt</foo>
+        <foo xmlns="foo:bar" type="a">new_act_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -90,7 +90,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" hold="true">new_held_cnt</foo>
+        <foo xmlns="foo:bar" type="b" hold="true">new_held_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -100,7 +100,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar">new_del_cnt</foo>
+        <foo xmlns="foo:bar" type="c">new_del_cnt</foo>
       </metadata>
     </record>
     <record>
@@ -110,7 +110,7 @@
         <setSpec>bib</setSpec>
       </header>
       <metadata>
-        <foo xmlns="foo:bar" exception="true">exception</foo>
+        <foo xmlns="foo:bar" type="a" exception="true">exception</foo>
       </metadata>
     </record>
   </ListRecords>

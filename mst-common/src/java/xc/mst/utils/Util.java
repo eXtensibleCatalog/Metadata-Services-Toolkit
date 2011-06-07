@@ -88,8 +88,8 @@ public class Util {
 	}
 	
 	public String getDBSchema(String name) {
-		if (!name.startsWith("xc_"))
-			return "xc_"+normalizeName(name);
+		if (!name.startsWith(MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")))
+			return MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")+normalizeName(name);
 		else
 			return name;
 	}
@@ -232,6 +232,16 @@ public class Util {
 			oaiId = oaiId.replaceAll(redundantToken, "");	
 		}
 		return oaiId;
+	}
+	
+	public long getLongPrim(Object numObj) {
+		long numLongPrim = -1;
+		if (numObj instanceof Integer) {
+			numLongPrim = (Integer)numObj;
+		} else if (numObj instanceof Long) {
+			numLongPrim = (Long)numObj;
+		}
+		return numLongPrim;
 	}
 
 }

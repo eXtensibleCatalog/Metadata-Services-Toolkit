@@ -17,6 +17,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.apache.log4j.PropertyConfigurator;
 
 public class SetupClasspath {
@@ -30,7 +31,7 @@ public class SetupClasspath {
     		String rootDir = null;
     		if (System.getenv("MST_ROOT_DIR") != null) {
     			rootDir = System.getenv("MST_ROOT_DIR");
-    			if (rootDir.indexOf("beluga") != -1) {
+    			if (StringUtils.isEmpty(rootDir) || rootDir.indexOf("beluga") != -1) {
     				rootDir = null;
     			}
     		}

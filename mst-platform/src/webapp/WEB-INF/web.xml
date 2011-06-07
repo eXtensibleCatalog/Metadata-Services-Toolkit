@@ -9,7 +9,7 @@
   *
   -->
 
-<!-- 
+<!--
 <web-app>
  -->
 
@@ -19,22 +19,22 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring-mst.xml</param-value>
 	</context-param>
-	 
+
 	<filter>
 		<filter-name>mst-filter</filter-name>
 		<filter-class>xc.mst.servlet.MSTServletFilter</filter-class>
 	</filter>
-	
+
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
 	</filter>
-	
+
 	<filter>
 		<filter-name>SolrRequestFilter</filter-name>
 		<filter-class>org.apache.solr.servlet.SolrDispatchFilter</filter-class>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>mst-filter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -44,22 +44,27 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/st/*</url-pattern>
 	</filter-mapping>
-	
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/pub/*</url-pattern>
+	</filter-mapping>
+
 	<filter-mapping>
 		<filter-name>SolrRequestFilter</filter-name>
 		<url-pattern>/solr/*</url-pattern>
 	</filter-mapping>
-	 
+
 	<listener>
 		<listener-class>xc.mst.servlet.MSTContextListener</listener-class>
 	</listener>
- 	
+
 	<servlet>
 		<servlet-name>DevAdminServlet</servlet-name>
 		<servlet-class>xc.mst.servlet.DevAdminServlet</servlet-class>
 		<load-on-startup>3</load-on-startup>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>SolrServer</servlet-name>
 		<servlet-class>org.apache.solr.servlet.SolrServlet</servlet-class>
@@ -76,7 +81,7 @@
 		<servlet-name>Logging</servlet-name>
 		<servlet-class>org.apache.solr.servlet.LogLevelSelection</servlet-class>
 	</servlet>
-	
+
 	<!-- @Deprecated -->
 	<servlet>
 		<servlet-name>ping</servlet-name>
@@ -87,7 +92,7 @@
 		<servlet-name>jsp</servlet-name>
 		<url-pattern>/pages/js/*</url-pattern>
 	</servlet-mapping>
- 
+
 	<servlet-mapping>
 		<servlet-name>DevAdminServlet</servlet-name>
 		<url-pattern>/devAdmin/*</url-pattern>
@@ -119,7 +124,7 @@
 		<servlet-name>Logging</servlet-name>
 		<url-pattern>/solr/admin/logging.jsp</url-pattern>
 	</servlet-mapping>
-  
+
 	<mime-mapping>
 		<extension>.xsl</extension>
 		<!-- per http://www.w3.org/TR/2006/PR-xslt20-20061121/ -->
@@ -129,5 +134,31 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+
+	<!--  UNCOMMENT both security constraints if using ssl -->
+
+	<!--  oai should be a non secure url for OAIster
+	<security-constraint>
+		<web-resource-collection>
+		<web-resource-name>MetadataServicesToolkit</web-resource-name>
+			<url-pattern>/pub/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	 -->
+
+	<!-- Define a Security Constraint on this application for ssl
+	<security-constraint>
+		<web-resource-collection>
+		<web-resource-name>MetadataServicesToolkit</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	 -->
 
 </web-app>

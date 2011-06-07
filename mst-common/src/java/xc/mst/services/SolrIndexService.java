@@ -34,13 +34,19 @@ public class SolrIndexService extends GenericMetadataService  {
 	Repository incomingRepository = null;
 	protected int recordsProcessedSinceCommit;
 	
+	protected String name4progressBar = null;
+	
+	public String getName4progressBar() {
+		return name4progressBar;
+	}
+
 	@Override
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
-		TimingLogger.start("getRecordsWSets");
-		List<Record> rs =  
-			((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
-		TimingLogger.stop("getRecordsWSets");
-		return rs;
+			TimingLogger.start("getRecordsWSets");
+			List<Record> rs =  
+				((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
+			TimingLogger.stop("getRecordsWSets");
+			return rs;
 	}
 	
 	@Override
@@ -62,11 +68,13 @@ public class SolrIndexService extends GenericMetadataService  {
 	
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 		this.incomingRepository = repo;
+		this.preserveStatuses = false;
 		super.process(repo, inputFormat, inputSet, outputSet);
 	}
 	
 	public List<OutputRecord> process(InputRecord ri) {
 		recordsProcessedSinceCommit++;
+		this.name4progressBar = "indexing "+incomingRepository.getName();
 		/*
 		if (ri.getStatus() != Record.ACTIVE) {
 			TimingLogger.start("deleteByQuery");
@@ -129,8 +137,7 @@ public class SolrIndexService extends GenericMetadataService  {
 				try {
 					LOG.debug("m: "+m);
 					doc.addField(RecordService.FIELD_ERROR,
-							m.getServiceId() + "-" + m.getCode() + ":" + 
-							m.getMessage());
+							m.getCode() + ":" + m.getMessage());
 				} catch (Throwable t) {
 					LOG.error("continuing, but logging", t);
 				}

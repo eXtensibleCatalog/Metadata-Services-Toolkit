@@ -70,6 +70,10 @@ public class Scheduler extends BaseService implements Runnable {
 	
 	public void run() {
 		LOG.info("Scheduler.run");
+		if (!config.getPropertyAsBoolean("runScheduler", true)) {
+			return;
+		}
+
 		Map<Integer, String> lastRunDate = new HashMap<Integer, String>();
 		WorkerThread solrWorkerThread = null;
 		Thread solrThread = null;
@@ -198,12 +202,14 @@ public class Scheduler extends BaseService implements Runnable {
 				//LOG.debug("previousJob: "+previousJob);
 				try {
 					if (previousJob != null) {
+						LOG.debug("previousJob: "+previousJob);
 						getJobService().deleteJob(previousJob);
 						
 						TimingLogger.reset();
 						
 						Repository previousRepo = null;
 						List<ProcessingDirective> processingDirectives = null;
+						LOG.debug("previousJob.getHarvestSchedule(): "+previousJob.getHarvestSchedule());
 						if (previousJob.getHarvestSchedule() != null) { // was harvest
 							processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
 									previousJob.getHarvestSchedule().getProvider().getId());
@@ -309,9 +315,9 @@ public class Scheduler extends BaseService implements Runnable {
 							runningJob.type = Constants.THREAD_REPOSITORY;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
 							MetadataServiceManager msm = new MetadataServiceManager();
-							runningJob = msm;
 							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
 							msm.setMetadataService(s.getMetadataService());
+							runningJob = msm;
 							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
 							Repository incomingRepo = null;
 							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
@@ -321,6 +327,7 @@ public class Scheduler extends BaseService implements Runnable {
 									
 									getJobService().deleteJob(jobToStart);
 									runningJob = null;
+									previousJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
 							} else if (jobToStart.getProcessingDirective().getSourceService() != null) {
@@ -330,6 +337,7 @@ public class Scheduler extends BaseService implements Runnable {
 
 									getJobService().deleteJob(jobToStart);
 									runningJob = null;
+									previousJob = null;
 									LOG.error("A job came in of type THREAD_SERVICE but incomingRepo ! ready4harvest.");
 								}
 							} else {
@@ -362,6 +370,7 @@ public class Scheduler extends BaseService implements Runnable {
 							}
 							rdm.setIncomingRepository(incomingRepo);
 							rdm.setHarvestSchedule(jobToStart.getHarvestSchedule());
+							LOG.debug("jobToStart.getHarvestSchedule(): "+jobToStart.getHarvestSchedule());
 							runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
 						}
 
