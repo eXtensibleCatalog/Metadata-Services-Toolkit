@@ -209,6 +209,7 @@ public class Scheduler extends BaseService implements Runnable {
 						
 						Repository previousRepo = null;
 						List<ProcessingDirective> processingDirectives = null;
+						LOG.debug("previousJob.getHarvestSchedule(): "+previousJob.getHarvestSchedule());
 						if (previousJob.getHarvestSchedule() != null) { // was harvest
 							processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
 									previousJob.getHarvestSchedule().getProvider().getId());
@@ -369,6 +370,7 @@ public class Scheduler extends BaseService implements Runnable {
 							}
 							rdm.setIncomingRepository(incomingRepo);
 							rdm.setHarvestSchedule(jobToStart.getHarvestSchedule());
+							LOG.debug("jobToStart.getHarvestSchedule(): "+jobToStart.getHarvestSchedule());
 							runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
 						}
 

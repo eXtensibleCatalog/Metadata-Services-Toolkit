@@ -786,7 +786,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	 */
 	public void addMessage(RecordMessage message)
 	{
-		LOG.debug("Record.addMessage() called on record.id:"+getId());
+		//LOG.debug("Record.addMessage() called on record.id:"+getId());
 		if(!messages.contains(message))
 			messages.add(message);
 	} // end method addMessage(RecordMessage)
