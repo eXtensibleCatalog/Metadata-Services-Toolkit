@@ -932,6 +932,26 @@ public class RepositoryDAO extends BaseDAO {
 		r.setHarvestedOaiIdentifier(this.jdbcTemplate.queryForObject(sql, String.class, (Long)r.getId()));
 	}
 	
+	private void addStatusesInClause(StringBuilder sb, char[] statuses) {
+		if (statuses != null) {
+			if (statuses.length == 1) {
+				sb.append(" where status = '")
+					.append(statuses[0])
+					.append("' ");
+			} else {
+				sb.append(" where status in (");
+				for (char status : statuses) {
+					sb.append("'");
+					sb.append(status);
+					sb.append("'");
+					sb.append(',');
+				}
+				sb.deleteCharAt(sb.length()-1);
+				sb.append(")");
+			}
+		}
+	}
+	
 	protected void addStatusesInWhereClause(StringBuilder sb, char[] statuses) {
 		if (statuses != null) {
 			if (statuses.length == 1) {
@@ -950,6 +970,55 @@ public class RepositoryDAO extends BaseDAO {
 				sb.append(")");
 			}
 		}
+	}
+	
+	/**
+	 * check if row returned, if so have records with given status
+	 * @param name repo_name
+	 * @param format_id
+	 * @param set_id - allowed to be null
+	 * @param statuses - the record statuses we are looking for
+	 * @return false if no rows with statuses, return true if found a row with the status
+	 */
+	public boolean hasRecordsOfStatus(String name, int format_id, Integer set_id, char[] statuses) {
+		StringBuilder sb = new StringBuilder("select 1");
+		
+		/*
+		select 1
+		from records r
+		where status in ('A','H')
+                and r.format_id = 1
+		limit 1		 
+		*/
+		if (set_id == null) {
+			sb.append(" from ").append(getTableName(name, RECORDS_TABLE)).append(" r ");
+			addStatusesInClause(sb, statuses);
+			sb.append(" and r.format_id = ").append(format_id);
+			sb.append(" limit 1");
+		}
+
+		// if set_id != null, run this and see if a row is returned:
+		/*
+		select 1
+		from records r,
+		                record_sets rs
+		where status in ('A','H')
+		                and r.format_id = 1
+		                and rs.record_id = r.record_id
+		                and rs.set_id = 3
+		limit 1
+		*/
+		else {
+			sb.append(" from ").append(getTableName(name, RECORDS_TABLE)).append(" r , ").append(getTableName(name, RECORDS_SETS_TABLE)).append(" rs ");
+			addStatusesInClause(sb, statuses);
+			sb.append(" and r.format_id = ").append(format_id);
+			sb.append(" and rs.record_id = r.record_id ");
+			sb.append(" and rs.set_id = ").append(set_id.intValue());
+			sb.append(" limit 1");
+		}
+
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sb.toString());
+		return rows.size() > 0;
 	}
 	
 	public List<Record> getRecords(String name, Date from, Date until, 

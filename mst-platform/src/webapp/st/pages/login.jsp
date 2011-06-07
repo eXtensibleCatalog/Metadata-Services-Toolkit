@@ -125,7 +125,7 @@
 							 </td>
 						</tr>
 						<tr>
-							<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registeration</a>&nbsp;&nbsp;&nbsp;&nbsp;  
+							<td colspan="2" align="center"> <a href="viewUserRegisteration.action">New User Registration</a>&nbsp;&nbsp;&nbsp;&nbsp;  
 							<span id="forgot_password_url">
 								&nbsp;
 							</span>						
@@ -159,7 +159,7 @@
 							 </td>
 						</tr>
 						<tr>
-							<td colspan="2" align="center" style="color:grey">New User Registeration&nbsp;&nbsp;&nbsp;&nbsp;  
+							<td colspan="2" align="center" style="color:grey">New User Registration&nbsp;&nbsp;&nbsp;&nbsp;  
 								   | 
 								&nbsp;&nbsp;&nbsp;&nbsp;Forgot Password
 

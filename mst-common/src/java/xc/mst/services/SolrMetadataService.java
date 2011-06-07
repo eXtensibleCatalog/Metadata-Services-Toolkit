@@ -39,6 +39,7 @@ import xc.mst.email.Emailer;
 import xc.mst.manager.BaseManager;
 import xc.mst.manager.IndexException;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.ServiceUtil;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.index.Records;
@@ -53,7 +54,7 @@ public abstract class SolrMetadataService extends BaseManager {
 	protected int warningCount = 0;
 	protected int errorCount = 0;
 	protected int errorCountPerCommit = 0;
-	protected Emailer mailer = new Emailer();
+	protected Emailer mailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
 	/**
 	 * A list of services to run after this service's processing completes

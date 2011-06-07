@@ -125,62 +125,6 @@
                                                      </c:if>
                                                 </td>
                                                 <td>
-                                                    <c:if test="${columnSorted!='RecordsAvailable'}">
-                                                         <c:url var="logSortUrl" value="harvestOutLog.action">
-                                                           <c:param name="isAscendingOrder" value="true"/>
-                                                           <c:param name="columnSorted" value="RecordsAvailable"/>
-                                                         </c:url>
-                                                          <a href="${logSortUrl}">#Records Available</a>
-                                                     </c:if>
-
-                                                     <c:if test="${columnSorted=='RecordsAvailable'}">
-                                                       <c:url var="logSortUrl" value="harvestOutLog.action">
-                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                         <c:param name="columnSorted" value="RecordsAvailable"/>
-                                                       </c:url>
-
-                                                       <a href="${logSortUrl}">#Records Available</a>
-
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                     </c:if>
-                                                </td>
-                                                <td>
-                                                    <c:if test="${columnSorted!='RecordsHarvested'}">
-                                                         <c:url var="logSortUrl" value="harvestOutLog.action">
-                                                           <c:param name="isAscendingOrder" value="true"/>
-                                                           <c:param name="columnSorted" value="RecordsHarvested"/>
-                                                         </c:url>
-                                                          <a href="${logSortUrl}">#Of harvests</a>
-                                                     </c:if>
-
-                                                     <c:if test="${columnSorted=='RecordsHarvested'}">
-                                                       <c:url var="logSortUrl" value="harvestOutLog.action">
-                                                         <c:param name="isAscendingOrder" value="${!isAscendingOrder}"/>
-                                                         <c:param name="columnSorted" value="RecordsHarvested"/>
-                                                       </c:url>
-
-                                                       <a href="${logSortUrl}">#Of harvests</a>
-
-                                                        <c:choose>
-                                                            <c:when test="${isAscendingOrder==true}">
-                                                                &nbsp;<img src="page-resources/img/triangle_sort.jpg">
-
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                &nbsp;<img src="page-resources/img/triangle_sort_down.jpg">
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                     </c:if>
-                                                </td>
-                                                <td>
                                                     <c:if test="${columnSorted!='Warnings'}">
                                                          <c:url var="logSortUrl" value="harvestOutLog.action">
                                                            <c:param name="isAscendingOrder" value="true"/>
@@ -278,20 +222,6 @@
                                                             </c:if>
                                                       <td class="${classColumn}">
                                                           <a style="cursor:pointer;color:#245f8a;" onclick ="javascript:YAHOO.xc.mst.log.harvestOut.downloadFile('${log.id}')">${log.name}</a>
-                                                      </td>
-                                                             <c:set var="classColumn" value="plainColumn"/>
-                                                             <c:if test="${columnSorted=='RecordsAvailable'}">
-                                                               <c:set var="classColumn" value="sortColumn"/>
-                                                             </c:if>
-                                                      <td class="${classColumn}">
-                                                          ${log.harvestOutRecordsAvailable}
-                                                      </td>
-                                                             <c:set var="classColumn" value="plainColumn"/>
-                                                             <c:if test="${columnSorted=='RecordsHarvested'}">
-                                                               <c:set var="classColumn" value="sortColumn"/>
-                                                             </c:if>
-                                                      <td class="${classColumn}">
-                                                          ${log.numberOfHarvests}
                                                       </td>
                                                              <c:set var="classColumn" value="plainColumn"/>
                                                              <c:if test="${columnSorted=='Warnings'}">

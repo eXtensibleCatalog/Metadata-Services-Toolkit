@@ -101,7 +101,7 @@ public class HarvestManager extends WorkerThread {
 	 */
 	protected int deletedRecord = -1;
 
-	protected Emailer mailer = new Emailer();
+	protected Emailer mailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
 	public String getName() {
 		if (harvestSchedule != null && harvestSchedule.getProvider() != null) {

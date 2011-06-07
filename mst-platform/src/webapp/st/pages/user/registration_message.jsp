@@ -61,7 +61,7 @@
             </div>
             <jsp:include page="/st/inc/breadcrumb.jsp">
 
-                    <jsp:param name="bread" value="Registeration Success" />
+                    <jsp:param name="bread" value="Registration Success" />
 
             </jsp:include>
 
