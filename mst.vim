@@ -1,3 +1,4 @@
+"sed -i mst.vim 's/bens_perma_branch_0.3.x'
 let SessionLoad = 1
 if &cp | set nocp | endif
 let s:cpo_save=&cpo
@@ -14,30 +15,30 @@ onoremap  gggHG
 nnoremap  gggHG
 vnoremap  "+y
 noremap  
-vnoremap  :update
-nnoremap  :update
-onoremap  :update
-nmap  :tabnew
-nmap  :tabclose
+vnoremap  :update
+nnoremap  :update
+onoremap  :update
+nmap  :tabnew
+nmap  :tabclose
 vnoremap  "+x
 noremap  u
-cnoremap   :simalt ~
-inoremap   :simalt ~
+cnoremap   :simalt ~
+inoremap   :simalt ~
 map Q gq
 nmap gx <Plug>NetrwBrowseX
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
-nmap <C-Tab> :tabnext
-nmap <C-S-Tab> :tabprevious
-map <F7> :1,$ !xmllint --format -
-map <F6> :set syntax=html
-map <F5> :%s/<l:warningDays>\(.*\)<\/l:warningDays>/<l:stateCriticalDates>013<l:stateCriticalDate>013<l:type>Warning<\/l:type>013<l:fcdType>Closing<\/l:fcdType>013<l:offset>\1<\/l:offset>013<\/l:stateCriticalDate>013<\/l:stateCriticalDates>/g
-map <F9> :%s/^\(009*\)  /\1009/g
-map <F8> :set tabstop=8:set shiftwidth=8:set taglength=8
-map <F4> :set tabstop=4:set shiftwidth=4:set taglength=4
-map <F2> :set tabstop=2:set shiftwidth=2:set taglength=2
-map <F3> :w !ruby
-map <F11> :%s/013$//g
-map <F12> :source $vimruntime/../_vimrc
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
+nmap <C-Tab> :tabnext
+nmap <C-S-Tab> :tabprevious
+map <F7> :1,$ !xmllint --format -
+map <F6> :set syntax=html
+map <F5> :%s/<l:warningDays>\(.*\)<\/l:warningDays>/<l:stateCriticalDates>013<l:stateCriticalDate>013<l:type>Warning<\/l:type>013<l:fcdType>Closing<\/l:fcdType>013<l:offset>\1<\/l:offset>013<\/l:stateCriticalDate>013<\/l:stateCriticalDates>/g
+map <F9> :%s/^\(009*\)  /\1009/g
+map <F8> :set tabstop=8:set shiftwidth=8:set taglength=8
+map <F4> :set tabstop=4:set shiftwidth=4:set taglength=4
+map <F2> :set tabstop=2:set shiftwidth=2:set taglength=2
+map <F3> :w !ruby
+map <F11> :%s/013$//g
+map <F12> :source $vimruntime/../_vimrc
 onoremap <C-F4> c
 nnoremap <C-F4> c
 vnoremap <C-F4> c
@@ -52,12 +53,12 @@ nmap <S-Insert> "+gP
 omap <S-Insert> "+gP
 cnoremap  gggHG
 inoremap  gggHG
-inoremap  :update
+inoremap  :update
 inoremap  u
 cmap  +
 inoremap  
 inoremap  u
-noremap   :simalt ~
+noremap   :simalt ~
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set autoindent
@@ -86,7 +87,7 @@ set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd C:\dev\xc\mst\svn\branches\0.3.0
+cd C:\dev\xc\mst\svn\branches\0.3.x
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -299,8 +300,8 @@ exe s:l
 normal! zt
 109
 normal! 023l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\scripts\env\170.sh
+lcd C:\dev\xc\mst\svn\branches\0.3.x
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\scripts\env\170.sh
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -421,10 +422,10 @@ exe s:l
 normal! zt
 14
 normal! 032l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\scripts\env\170.pass.sh
+edit C:\dev\xc\mst\svn\branches\0.3.x\scripts\env\170.pass.sh
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -526,10 +527,10 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\scripts\gen_randys_30.sh
+edit C:\dev\xc\mst\svn\branches\0.3.x\scripts\gen_randys_30.sh
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -637,14 +638,14 @@ exe s:l
 normal! zt
 40
 normal! 098l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe '1resize ' . ((&lines * 38 + 39) / 78)
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe '2resize ' . ((&lines * 37 + 39) / 78)
 exe 'vert 2resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 3resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\MST-instances\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\MST-instances\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -758,10 +759,10 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\MST-instances\build.xml
+edit C:\dev\xc\mst\svn\branches\0.3.x\MST-instances\build.xml
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -863,11 +864,11 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\mst-common\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -994,10 +995,10 @@ exe s:l
 normal! zt
 65
 normal! 039l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-common\ivy.xml
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\ivy.xml
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1117,10 +1118,10 @@ exe s:l
 normal! zt
 267
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-common\build.properties
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1222,14 +1223,14 @@ exe s:l
 normal! zt
 15
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 133 + 134) / 268)
 exe '2resize ' . ((&lines * 38 + 39) / 78)
 exe 'vert 2resize ' . ((&columns * 134 + 134) / 268)
 exe '3resize ' . ((&lines * 37 + 39) / 78)
 exe 'vert 3resize ' . ((&columns * 134 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\mst-platform\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-platform\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1353,10 +1354,10 @@ exe s:l
 normal! zt
 86
 normal! 036l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-platform\build.properties
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-platform\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1458,11 +1459,11 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\impl\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\impl\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1598,10 +1599,10 @@ exe s:l
 normal! zt
 82
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\impl\build.properties
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\impl\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1703,11 +1704,11 @@ exe s:l
 normal! zt
 20
 normal! 02l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\example\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\example\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1931,10 +1932,10 @@ exe s:l
 normal! zt
 235
 normal! 01l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\example\custom.properties
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\example\custom.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -2036,11 +2037,11 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\custom\MARCNormalization\build.xml
+tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\custom\MARCNormalization\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -2272,10 +2273,10 @@ exe s:l
 normal! zt
 238
 normal! 022l
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.0\mst-service\custom\MARCNormalization\custom.properties
+edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\custom\MARCNormalization\custom.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -2377,7 +2378,7 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.0
+lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
