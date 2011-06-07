@@ -59,7 +59,7 @@ commands
 		<echo>normalized.service.name: ${normalized.service.name}</echo>
 	</target>
 
-	<target name="init">
+	<target name="init" depends="dev.properties.uptodate">
 		<delete dir="${build.test}" />
 		<mkdir dir="${build.test.classes}" />
 		<mkdir dir="${build.test.actual-output-records}" />
@@ -68,6 +68,23 @@ commands
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.zip.lib}" />
 		<mkdir dir="${ivy.dir}" />
+	</target>
+	<target name="dev.properties.uptodate">
+		<uptodate property="dev.properties.uptodate" 
+			targetfile="dev.properties" srcfile="dev.properties.example" />
+		<echo>${dev.properties.uptodate}</echo>
+		<antcall target="fail.dev.properties.uptodate" />
+	</target>
+	<target name="fail.dev.properties.uptodate" unless="dev.properties.uptodate">
+		<echo>
+ERROR:	The file dev.properties does not exist.  If this is your first time,
+		you must manually copy dev.properties.example (making the necessary 
+		customizations) to dev.properties.  If you've already done that, the 
+		purpose of this failure is to alert you that dev.properties.example 
+		has been updated.  Check the file and manually sync it with your 
+		dev.properties.  Saving dev.properties (updating the timestamp) will 
+		resolve this error.
+		</echo>
 	</target>
 
 	<target name="check.skip.download">
