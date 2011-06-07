@@ -94,10 +94,18 @@ public class RecordMessage {
 		this.serviceId = serviceId;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	public RecordMessage clone() {
+		RecordMessage rm = new RecordMessage();
+		rm.id = this.id;
+		rm.isInputRecord = this.isInputRecord;
+		rm.code = this.code;
+		rm.level = this.level;
+		rm.detail = this.detail;
+		rm.record = this.record;
+		rm.serviceId = this.serviceId;
+		return rm;
+	}
+	
 	public String toString() {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(super.toString());

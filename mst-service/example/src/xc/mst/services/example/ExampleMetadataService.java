@@ -18,6 +18,7 @@ import org.jdom.Namespace;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.service.FooService;
 
@@ -42,6 +43,7 @@ public class ExampleMetadataService extends GenericMetadataService {
 			OutputRecord out = null;
 			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
 				out = r.getSuccessors().get(0);
+				((Record)out).getMessages().clear();
 			} else {
 				out = getRecordService().createRecord();
 			}
@@ -49,16 +51,24 @@ public class ExampleMetadataService extends GenericMetadataService {
 			if (r.getStatus() == Record.DELETED) {
 				out.setStatus(Record.DELETED);
 				LOG.debug("deleted r.getId():"+r.getId()+" out.getId():"+out.getId());
+				LOG.debug("out.getIndexedObjectType():"+((Record)out).getType());
 			} else {
 				out.setStatus(Record.ACTIVE);
 				r.setMode(Record.JDOM_MODE);
 				Element foo = r.getOaiXmlEl();
 				if (foo != null && "foo".equals(foo.getName())) {
 					LOG.debug("foo is not null");
+					if ("true".equals(foo.getAttributeValue("message"))) {
+						addMessage(r, 101, RecordMessage.ERROR);
+						addMessage(out, 102, RecordMessage.ERROR);
+					}
 					if ("true".equals(foo.getAttributeValue("hold"))) {
 						LOG.debug("record should be held");
 						out.setStatus(Record.HELD);
 					}
+					LOG.debug("type: "+foo.getAttributeValue("type"));
+					out.setType(foo.getAttributeValue("type"));
+					LOG.debug("out.getIndexedObjectType(): "+((Record)out).getType());
 					if ("true".equals(foo.getAttributeValue("exception"))) {
 						LOG.debug("record throws exception");
 						throw new RuntimeException("unanticipated exception from service");

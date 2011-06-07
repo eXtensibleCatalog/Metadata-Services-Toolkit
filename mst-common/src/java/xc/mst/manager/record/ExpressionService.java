@@ -85,13 +85,13 @@ public abstract class ExpressionService extends BaseService
 		validateFields(expression, false, true);
 
 		if(log.isDebugEnabled())
-			log.debug("Inserting a new " + expression.getIndexedObjectType());
+			log.debug("Inserting a new " + expression.getType());
 
 		expression.setCreatedAt(new Date());
 
 		// Create a Document object and set it's type field
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, expression.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, expression.getType());
 
 		// Set up the fields for the specific type of indexed object
 		doc = setFieldsOnDocument(expression, doc, true);
@@ -121,7 +121,7 @@ public abstract class ExpressionService extends BaseService
 		// Create a Document object and set it's type field
 
 		SolrInputDocument doc = new SolrInputDocument();
-		doc.addField(FIELD_INDEXED_OBJECT_TYPE, expression.getIndexedObjectType());
+		doc.addField(FIELD_INDEXED_OBJECT_TYPE, expression.getType());
 
 		// Set up the fields for the Expression
 		doc = setFieldsOnDocument(expression, doc, false);

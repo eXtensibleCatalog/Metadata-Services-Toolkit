@@ -61,7 +61,7 @@ import xc.mst.utils.index.SolrIndexManager;
 public class DefaultRecordService extends RecordService
 {
 	private static final Logger LOG = Logger.getLogger(DefaultRecordService.class);
-	
+
 	/**
 	 * The FRBR level ID term
 	 */
@@ -76,7 +76,7 @@ public class DefaultRecordService extends RecordService
 	 * The trait term
 	 */
 	protected final static Term TERM_TRAIT = new Term(FIELD_TRAIT, "");
-	
+
 	// yes, these are thread safe.
 	protected static final DateTimeFormatter UTC_PARSER = ISODateTimeFormat.dateTimeParser();
 	protected static DateTimeFormatter UTC_FORMATTER = null;
@@ -84,17 +84,17 @@ public class DefaultRecordService extends RecordService
 		UTC_FORMATTER = ISODateTimeFormat.dateTime();
 		UTC_FORMATTER = UTC_FORMATTER.withZone(DateTimeZone.UTC);
 	}
-	
+
 	public OutputRecord createRecord() {
 		Record rec = new Record();
 		getRepositoryDAO().injectId(rec);
 		return rec;
 	}
-	
+
 	public void injectNewId(Record r) {
 		getRepositoryDAO().injectId(r);
 	}
-	
+
 	@Override
 	public List<Record> getAll() throws IndexException
 	{
@@ -156,7 +156,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProviderId(int)
-	
+
 	@Override
 	public int getCountByProviderId(int providerId) throws IndexException
 	{
@@ -185,7 +185,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByServiceId(int)
-	
+
 	@Override
 	public Record getLastCreatedRecord(int serviceId) throws IndexException, DatabaseConfigException
 	{
@@ -198,7 +198,7 @@ public class DefaultRecordService extends RecordService
 		query.setSortField(FIELD_RECORD_ID, ORDER.desc);
 		query.setRows(1);
 		query.setStart(0);
-		
+
 		// Get the result of the query
 		SolrDocumentList docs = null;
 		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
@@ -222,7 +222,7 @@ public class DefaultRecordService extends RecordService
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting all records with service ID " + serviceId);
-		
+
 		// Create a query to get the Documents with the requested service ID
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_SERVICE_ID + ":" +  Integer.toString(serviceId));
@@ -230,7 +230,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query).size();
 	} // end method getByServiceId(long)
-	
+
 	@Override
 	public RecordList getProcessedByServiceId(int serviceId) throws IndexException
 	{
@@ -244,7 +244,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProcessingServiceId(int)
-	
+
 	@Override
 	public List<Record> getByHarvestId(int harvestId) throws IndexException
 	{
@@ -287,7 +287,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new Records(query);
 	} // end method getInputForService(int)
-	
+
 	@Override
 	public Records getByInputToServiceAndRecordType(int serviceId, String recordType) throws IndexException {
 
@@ -296,15 +296,15 @@ public class DefaultRecordService extends RecordService
 
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
-		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND " 
-				+ FIELD_RECORD_TYPE + ":" + recordType); 
-		
-		
+		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId) + " AND "
+				+ FIELD_RECORD_TYPE + ":" + recordType);
+
+
 
 		// Return the list of results
 		return new Records(query);
 	}
-	
+
 	@Override
 	public List<Record> getInputForService(int serviceId) throws IndexException
 	{
@@ -330,24 +330,24 @@ public class DefaultRecordService extends RecordService
 //		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
 //		query.setRows(rows);
 //		query.setStart(start);
-//		
+//
 //		SolrDocumentList docs = indexMgr.getDocumentList(query);
 //		log.info("Num of docs="+ docs.getNumFound());
 //		ArrayList<Record> records = new ArrayList<Record>();
 //		Iterator<SolrDocument> itr = docs.iterator();
-//		
+//
 //		try {
 //			while (itr.hasNext()) {
 //				records.add(getRecordFromDocument(itr.next()));
 //			}
 //		} catch (DatabaseConfigException dce) {
-//			
+//
 //		}
-//		
+//
 //		// Return the list of results
 //		return records;
 //	} // end method getInputForService(int)
-	
+
 	@Override
 	public int getCountOfRecordsToBeProcessedVyService(int serviceId) throws IndexException
 	{
@@ -357,13 +357,13 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents with the requested input for service IDs
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_INPUT_FOR_SERVICE_ID + ":" + Integer.toString(serviceId));
-		
+
 		RecordList recordList = new RecordList(query, 0);
-		
+
 		// Return the count
 		return recordList.size();
 	} // end method getCountOfRecordsToBeProcessedVyService(int)
-	
+
 	@Override
 	public List<Record> getByProviderName(String providerName) throws IndexException
 	{
@@ -391,7 +391,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProviderUrl(String)
-	
+
 	@Override
 	public List<Record> getBySetName(String setName) throws IndexException
 	{
@@ -462,7 +462,7 @@ public class DefaultRecordService extends RecordService
 		return records.get(0);
 	} // end method getByOaiIdentifier(String)
 
-	
+
 	@Override
 	public List<Record> getByOaiIdentifiers(List<String> identifiers) throws  IndexException
 	{
@@ -472,16 +472,16 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the record with the correct identifier
 		SolrQuery query = new SolrQuery();
 		StringBuffer b = new StringBuffer();
-		
+
 		int size = identifiers.size();
-		
+
 		int counter = 0;
-		
+
 		b.append(FIELD_DELETED + ":" + "false" + " AND ");
 		for (String identifier : identifiers) {
 			b.append(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:"));
 			counter++;
-			
+
 			if (counter != size) {
 				b.append(" OR ");
 			}
@@ -505,7 +505,7 @@ public class DefaultRecordService extends RecordService
 
 		// Get the result of the query
 		RecordList records = new RecordList(query);
-		
+
 		// Return null if we couldn't find the record
 		if(records == null || records.size() == 0)
 		{
@@ -532,7 +532,7 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_SERVICE_ID + ":" + Integer.toString(serviceId));
-		
+
 		// Get the result of the query
 		RecordList records = new RecordList(query);
 
@@ -552,7 +552,7 @@ public class DefaultRecordService extends RecordService
 	} // end method getByOaiIdentifierAndService(String, int)
 
 	@Override
-	public Record getInputForServiceByOaiIdentifier(String identifier, int serviceId) throws DatabaseConfigException, IndexException 
+	public Record getInputForServiceByOaiIdentifier(String identifier, int serviceId) throws DatabaseConfigException, IndexException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Getting the input record with the OAI identifier " + identifier + " and service ID " + serviceId);
@@ -561,7 +561,7 @@ public class DefaultRecordService extends RecordService
 		SolrQuery query = new SolrQuery();
 		query.setQuery(FIELD_OAI_IDENTIFIER + ":" + identifier.replaceAll(" ", "_").replaceAll(":", "\\\\:") + " AND "
 				+ FIELD_PROCESSED_BY_SERVICE_ID + ":" + Integer.toString(serviceId));
-		
+
 		// Get the result of the query
 		RecordList records = new RecordList(query);
 
@@ -593,7 +593,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProcessedFrom(long)
-	
+
 	@Override
 	public List<Record> getSuccessorsCreatedByServiceId(long recordId, long serviceId) throws IndexException
 	{
@@ -607,7 +607,7 @@ public class DefaultRecordService extends RecordService
 		// Return the list of results
 		return new RecordList(query);
 	} // end method getByProcessedFrom(long)
-	
+
 	@Override
 	public RecordList getSuccessorsCreatedByServiceIdIncludingDeletedRecords(long recordId, long serviceId) throws IndexException
 	{
@@ -693,7 +693,7 @@ public class DefaultRecordService extends RecordService
 			queryBuffer.append(" AND ").append(FIELD_FORMAT_ID).append(":").append(Integer.toString(formatId));
 
 		queryBuffer.append(" AND ").append(FIELD_DELETED).append(":").append("false");
-		
+
 		query.setQuery(queryBuffer.toString());
 
 		if(from != null && until != null)
@@ -711,7 +711,7 @@ public class DefaultRecordService extends RecordService
 
 	@Override
 	public SolrBrowseResult getOutgoingRecordsInRange(Date from, Date until, Set set, int formatId, int offset, int numResults, int serviceId)
-			throws IndexException 
+			throws IndexException
 	{
 		// True if we're getting the records for a specific set, false if we're getting all records
 		boolean useSet = (set != null);
@@ -725,7 +725,7 @@ public class DefaultRecordService extends RecordService
 		// Create a query to get the Documents for unprocessed records
 		SolrQuery query = new SolrQuery();
 		StringBuffer queryBuffer = new StringBuffer();
-		
+
 		if(useSet)
 			queryBuffer.append(FIELD_SET_SPEC).append(":").append(set.getSetSpec());
 		if (useSet && useMetadataPrefix)
@@ -738,7 +738,7 @@ public class DefaultRecordService extends RecordService
 
 		queryBuffer.append(FIELD_SERVICE_ID).append(":").append(Integer.toString(serviceId));
 
-		
+
 		// Get only fields OAI header & OAI XML
 		query.addField(FIELD_OAI_HEADER);
 		query.addField(FIELD_OAI_XML);
@@ -747,7 +747,7 @@ public class DefaultRecordService extends RecordService
 		if(from != null && until != null) {
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 		}
-		
+
 		if(from != null && until == null) {
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[" + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(from)) + " TO *]");
 		}
@@ -755,7 +755,7 @@ public class DefaultRecordService extends RecordService
 		if(from == null && until != null) {
 			query.addFilterQuery(FIELD_UPDATED_AT + ":[ * TO " + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(until)) + "]");
 		}
-		
+
 		query.setStart(offset);
 		query.setRows(numResults);
 		SolrDocumentList docs = ((SolrIndexManager)config.getBean("SolrIndexManager")).getDocumentList(query);
@@ -843,7 +843,7 @@ public class DefaultRecordService extends RecordService
 		record.setHarvest(getHarvestDAO().getById(Integer.parseInt((String)doc.getFieldValue(FIELD_HARVEST_ID))));
 		record.setHarvestScheduleName((String)doc.getFieldValue(FIELD_HARVEST_SCHEDULE_NAME));
 
-		
+
 		if (doc.getFieldValue(FIELD_RECORD_TYPE) != null) {
 			//record.setType((String)doc.getFieldValue(FIELD_RECORD_TYPE));
 		}
@@ -858,14 +858,14 @@ public class DefaultRecordService extends RecordService
 			for(Object error : errors) {
 				//record.addMessage(new RecordMessage((String)error));
 			}
-		
+
 		Collection<Object> uplinks = doc.getFieldValues(FIELD_UP_LINK);
 		if(uplinks != null) {
 			for(Object uplink : uplinks) {
 				record.addUpLink((String)uplink);
 			}
 		}
-		
+
 		Collection<Object> processedFroms = doc.getFieldValues(FIELD_PROCESSED_FROM);
 		if(processedFroms != null) {
 			record.setNumberOfPredecessors(processedFroms.size());
@@ -873,7 +873,7 @@ public class DefaultRecordService extends RecordService
 				record.addProcessedFrom(loadBasicRecord(Long.parseLong((String)processedFrom)));
 			}
 		}
-		
+
 		Collection<Object> successors = doc.getFieldValues(FIELD_SUCCESSOR);
 		if(successors != null) {
 			record.setNumberOfSuccessors(successors.size());
@@ -881,7 +881,7 @@ public class DefaultRecordService extends RecordService
 				record.addSuccessor(loadBasicRecord(Long.parseLong((String)successor)));
 			}
 		}
-		
+
 		Collection<Object> inputForServices = doc.getFieldValues(FIELD_INPUT_FOR_SERVICE_ID);
 		if(inputForServices != null)
 			for(Object inputForService : inputForServices)
@@ -891,19 +891,19 @@ public class DefaultRecordService extends RecordService
 		if(processedByServices != null)
 			for(Object processedByService : processedByServices)
 				record.addProcessedByService(getServiceDAO().loadBasicService(Integer.parseInt((String)processedByService)));
-		
+
 		Collection<Object> traits = doc.getFieldValues(FIELD_TRAIT);
 		if(traits != null)
 			for(Object trait : traits)
 				record.addTrait((String)trait);
-		
+
 		if (doc.getFieldValue(FIELD_CREATED_AT) != null) {
 			record.setCreatedAt((Date)doc.getFieldValue(FIELD_CREATED_AT));
 		}
 		if(doc.getFieldValue(FIELD_UPDATED_AT) != null) {
 			record.setUpdatedAt((Date)doc.getFieldValue(FIELD_UPDATED_AT));
 		}
-		
+
 		// Return the record we parsed from the document
 		return record;
 	} // end method getRecordFromDocument(Document)
@@ -915,9 +915,9 @@ public class DefaultRecordService extends RecordService
 		return record;
 	}
 
-	
+
 	@Override
-	public Record getRecordXMLFromDocument(SolrDocument doc) 
+	public Record getRecordXMLFromDocument(SolrDocument doc)
 	{
 		// Create a Record object to store the result
 		Record record = new Record();
@@ -925,17 +925,17 @@ public class DefaultRecordService extends RecordService
 		record.setOaiHeader((String)doc.getFieldValue(FIELD_OAI_HEADER));
 		record.setOaiXml((String)doc.getFieldValue(FIELD_OAI_XML));
 		record.setDeleted(Boolean.parseBoolean((String)doc.getFieldValue(FIELD_DELETED)));
-		
+
 		// Return the record we parsed from the document
 		return record;
 	} // end method getRecordXMLFromDocument(Document)
-	
+
 	@Override
 	protected SolrInputDocument setFieldsOnDocument(Record record, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
 	{
 		if(log.isDebugEnabled())
 			log.debug("Set Field on Document");
-		
+
 		boolean throttleSolr = false;
 
 		// If we need to generate an ID, set the record's ID to the next available record ID
@@ -969,7 +969,7 @@ public class DefaultRecordService extends RecordService
 
 			record.setOaiHeader(header.toString());
 		} // end if(header needs to be set)
-		
+
 		//TimingLogger.turnOff();
 
 		// Set the appropriate fields on it.
@@ -979,11 +979,11 @@ public class DefaultRecordService extends RecordService
 			doc.addField(FIELD_RECORD_TYPE, record.getType());
 			TimingLogger.add("SOLR-"+FIELD_RECORD_TYPE, record.getType().length());
 		}
-		
+
 		doc.addField(FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()));
 		TimingLogger.add("SOLR-"+FIELD_FRBR_LEVEL_ID, Long.toString(record.getFrbrLevelId()).length());
 		*/
-		
+
 		if (record.getCreatedAt() != null) {
 			doc.addField(FIELD_CREATED_AT, record.getCreatedAt());
 			TimingLogger.add("SOLR-"+FIELD_CREATED_AT, 10);
@@ -1011,8 +1011,8 @@ public class DefaultRecordService extends RecordService
 
 		doc.addField(FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())));
 		TimingLogger.add("SOLR-"+FIELD_HARVEST_ID, (record.getHarvest() == null ? "0" : Integer.toString(record.getHarvest().getId())).length());
-		
-		if (record.getHarvest() != null) 
+
+		if (record.getHarvest() != null)
 		{
 			HarvestSchedule schedule = record.getHarvest().getHarvestSchedule();
 			if(schedule != null) {
@@ -1021,16 +1021,16 @@ public class DefaultRecordService extends RecordService
 			}
 		}
 
-		if (record.getHarvest() != null && record.getProvider() != null) 
+		if (record.getHarvest() != null && record.getProvider() != null)
 		{
 			doc.addField(FIELD_HARVEST_START_TIME,record.getProvider().getName() + " " + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(record.getHarvest().getStartTime()));
 			TimingLogger.add("SOLR-"+FIELD_HARVEST_START_TIME, record.getProvider().getName().length()+10);
 		}
-		
+
 		doc.addField(FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())));
 		TimingLogger.add("SOLR-"+FIELD_SERVICE_ID, (record.getService() == null ? "0" : Integer.toString(record.getService().getId())).length());
 
-		
+
 		if (record.getService() != null) {
 			doc.addField(FIELD_SERVICE_NAME, record.getService().getName());
 			TimingLogger.add("SOLR-"+FIELD_SERVICE_NAME, record.getService().getName().length());
@@ -1038,7 +1038,7 @@ public class DefaultRecordService extends RecordService
 
 		doc.addField(FIELD_OAI_IDENTIFIER, record.getOaiIdentifier());
 		TimingLogger.add("SOLR-"+FIELD_OAI_IDENTIFIER, record.getOaiIdentifier().length());
-		
+
 		if (record.getOaiDatestamp() != null) {
 			// If the record is output of a harvest then the OAI date stamp is already in UTC format
 			if(record.getProvider() != null) {
@@ -1049,11 +1049,11 @@ public class DefaultRecordService extends RecordService
 				TimingLogger.add("SOLR-"+FIELD_OAI_DATESTAMP, 10);
 			}
 		}
-		
+
 		if (!throttleSolr) {
 			doc.addField(FIELD_OAI_HEADER, record.getOaiHeader());
 			TimingLogger.add("SOLR-"+FIELD_OAI_HEADER, record.getOaiHeader().length());
-			
+
 			doc.addField(FIELD_OAI_XML, record.getOaiXml());
 			TimingLogger.add("SOLR-"+FIELD_OAI_XML, record.getOaiXml().length());
 			//System.out.println(record.getOaiXml());
@@ -1085,7 +1085,7 @@ public class DefaultRecordService extends RecordService
 			doc.addField(FIELD_SUCCESSOR, Long.toString(successor.getId()));
 			TimingLogger.add("SOLR-"+FIELD_SUCCESSOR, Long.toString(successor.getId()).length());
 		}
-		
+
 		for(Service inputForService : record.getInputForServices()) {
 			doc.addField(FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()));
 			TimingLogger.add("SOLR-"+FIELD_INPUT_FOR_SERVICE_ID, Long.toString(inputForService.getId()).length());
@@ -1118,7 +1118,7 @@ public class DefaultRecordService extends RecordService
 			all.append(record.getProvider().getName());
 			all.append(" ");
 		}
-		
+
 		for(Set set : record.getSets())
 		{
 			all.append(set.getSetSpec());
@@ -1131,31 +1131,31 @@ public class DefaultRecordService extends RecordService
 			all.append(record.getService().getName());
 			all.append(" ");
 		}
-		
+
 		for(RecordMessage error : record.getMessages())
 		{
 			//all.append(error.getServiceId() + "-" + error.getMessageCode() + ":" + error.getMessage());
 			all.append(" ");
 		}
-		
+
 		if (record.getHarvest() != null) {
 			all.append(record.getHarvest().getStartTime());
 		}
-		
+
 		all.append(record.getOaiIdentifier());
-		
+
 		if (!throttleSolr) {
 			doc.addField(FIELD_ALL, all.toString());
 			TimingLogger.add("SOLR-"+FIELD_ALL, all.length());
 		}
-		
+
 		TimingLogger.turnOn();
 
 		return doc;
 	} // end method setFieldsOnDocument(Record, Document, boolean)
 
 	@Override
-	protected String escapeString(String str) 
+	protected String escapeString(String str)
 	{
 		return str.replaceAll(":", "\\\\:")
 				  .replaceAll("\\(", "\\\\\\(")
@@ -1170,7 +1170,7 @@ public class DefaultRecordService extends RecordService
 	@SuppressWarnings("unchecked")
 	public Record parse(Element recordEl, Provider provider) {
 		Record r = new Record();
-		{
+		try {
 			Element headerEl = recordEl.getChild("header", recordEl.getNamespace());
 			Element identifierElement = headerEl.getChild("identifier", recordEl.getNamespace());
 			if (identifierElement != null) {
@@ -1181,10 +1181,10 @@ public class DefaultRecordService extends RecordService
 			if (datestampElement != null && !StringUtils.isEmpty(datestampElement.getText())) {
 				r.setOaiDatestamp(new Date(UTC_PARSER.parseDateTime(datestampElement.getText()).getMillis()));
 			}
-			
+
 			/*
 			 * I think this isn't really necessary
-			 * 
+			 *
 			Element predecessorEl = headerEl.getChild("predecessors");
 			if (predecessorEl != null) {
 				List children = predecessorEl.getChildren("predecessor");
@@ -1192,16 +1192,16 @@ public class DefaultRecordService extends RecordService
 					for (Object predObj : children) {
 						Element predEl = (Element)predObj;
 						r.addPredecessor(predEl.getText());
-					}	
+					}
 				}
 			}
 			*/
-			
+
 			// TODO: BDA - This might not be right, but I don't think I really care
 			//             since this is only currently used in the filesystem testing
 			//             mechanism and we don't care about setSpecs there.
 			List setSpecList = headerEl.getChildren("setSpec", recordEl.getNamespace());
-			if (setSpecList != null) {
+			if (setSpecList != null && setSpecList.size() > 0) {
 				for (Object setSpecObj : setSpecList) {
 					Element setSpecEl = (Element)setSpecObj;
 
@@ -1223,33 +1223,48 @@ public class DefaultRecordService extends RecordService
 					// Loop over all levels in the set spec
 					for(String setSpecLevel : setSpecLevels)
 					{
-						try {
-							// Append the set at the current level to the setSpec at the previous level to
-							// get the setSpec for the current level. Append colons as needed
-							setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
-	
-							String currentSetSpec = setSpecAtLevel.toString();
-							
-							// If the set's already in the index, get it
-							Set set = getSetDAO().getBySetSpec(currentSetSpec);
-	
-							// Add the set if there wasn't already one in the database
-							if(set == null && provider != null) {
-								set = new Set();
-								set.setSetSpec(currentSetSpec);
-								set.setDisplayName(set.getDisplayName());
-								set.setIsProviderSet(false);
-								set.setIsRecordSet(true);
-								TimingLogger.start("setDao.insertForProvider");
-								getSetDAO().insertForProvider(set, provider.getId());
-								TimingLogger.stop("setDao.insertForProvider");
-							}
-							// Add the set's ID to the list of sets to which the record belongs
-							r.addSet(set);
-						} catch (Throwable t) {
-							LOG.error("", t);
+						// Append the set at the current level to the setSpec at the previous level to
+						// get the setSpec for the current level. Append colons as needed
+						setSpecAtLevel.append(setSpecAtLevel.length() <= 0 ? setSpecLevel : ":" + setSpecLevel);
+
+						String currentSetSpec = setSpecAtLevel.toString();
+
+						// If the set's already in the index, get it
+						Set set = getSetDAO().getBySetSpec(currentSetSpec);
+
+						// Add the set if there wasn't already one in the database
+						if(set == null && provider != null) {
+							set = new Set();
+							set.setSetSpec(currentSetSpec);
+							set.setDisplayName(set.getDisplayName());
+							set.setIsProviderSet(false);
+							set.setIsRecordSet(true);
+							TimingLogger.start("setDao.insertForProvider");
+							getSetDAO().insertForProvider(set, provider.getId());
+							TimingLogger.stop("setDao.insertForProvider");
 						}
-					} 
+						// Add the set's ID to the list of sets to which the record belongs
+						r.addSet(set);
+					}
+				}
+			} else {
+				if (provider != null) {
+					String setSpec = provider.getName().replace(' ', '-');
+					// If the set's already in the index, get it
+					Set set = getSetDAO().getBySetSpec(setSpec);
+
+					// Add the set if there wasn't already one in the database
+					if(set == null && provider != null) {
+						set = new Set();
+						set.setSetSpec(setSpec);
+						set.setDisplayName(set.getDisplayName());
+						set.setIsProviderSet(false);
+						set.setIsRecordSet(true);
+						TimingLogger.start("setDao.insertForProvider");
+						getSetDAO().insertForProvider(set, provider.getId());
+						TimingLogger.stop("setDao.insertForProvider");
+					}
+					r.addSet(set);
 				}
 			}
 
@@ -1265,22 +1280,24 @@ public class DefaultRecordService extends RecordService
 					r.setStatus(Record.REPLACED);
 				}
 			}
-		}
 
-		// Metadata element will not exist in case the record has status = deleted. So null check is required here.
-		if (recordEl.getChild("metadata", recordEl.getNamespace()) != null) {
-			Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
-			xmlEl.detach();
-			r.setOaiXmlEl(xmlEl);
+			// Metadata element will not exist in case the record has status = deleted. So null check is required here.
+			if (recordEl.getChild("metadata", recordEl.getNamespace()) != null) {
+				Element xmlEl = (Element)recordEl.getChild("metadata", recordEl.getNamespace()).getChildren().get(0);
+				xmlEl.detach();
+				r.setOaiXmlEl(xmlEl);
+			}
+		} catch (Throwable t) {
+			getUtil().throwIt(t);
 		}
 
 		return r;
 	}
-	
+
 	public Element createJDomElement(Record r) {
 		return createJDomElement(r, OAI_NS_2_0);
 	}
-	
+
 	public Element createJDomElement(Record r, String namespace) {
 		Element recordEl = new Element("record", namespace);
 		Element headerEl = new Element("header", namespace);
@@ -1292,17 +1309,17 @@ public class DefaultRecordService extends RecordService
 		headerEl.addContent(datestampElement);
 		if (r.getOaiDatestamp() != null)
 			datestampElement.setText(UTC_FORMATTER.print(r.getOaiDatestamp().getTime()));
-		 
+
 		Element predsrEl = new Element("predecessors", namespace);
 		headerEl.addContent(predsrEl);
-		
+
 		for (RecordIfc p : r.getPredecessors()) {
 			Element predEl = new Element("predecessor", namespace);
 			Record p2 = (Record)p;
 			predEl.setText(p2.getHarvestedOaiIdentifier());
 			predsrEl.addContent(predEl);
 		}
-		
+
 		if (r.getSets() != null) {
 			for (Set s : r.getSets()) {
 				Element setSpecEl = new Element("setSpec", namespace);
@@ -1310,7 +1327,7 @@ public class DefaultRecordService extends RecordService
 				setSpecEl.setText(s.getDisplayName());
 			}
 		}
-		
+
 		if (r.getStatus() != 0) {
 			if (r.getStatus() == Record.ACTIVE) {
 				headerEl.setAttribute("status", "active");
@@ -1343,21 +1360,23 @@ public class DefaultRecordService extends RecordService
 		LOG.debug("r: "+r);
 		return recordEl;
 	}
-	
+
 	public String getOaiIdentifier(long id, Provider p) {
 		return getOaiIdentifier(id, p, null);
 	}
-	
+
 	public String getOaiIdentifier(long id, Service s) {
 		return getOaiIdentifier(id, null, s);
 	}
-	
+
 	public String getOaiIdentifier(long id, Provider p, Service s) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("oai:");
 		sb.append(MSTConfiguration.getInstance().getProperty("DomainNameIdentifier"));
 		sb.append(":");
 		String name = null;
+		sb.append(MSTConfiguration.getInstanceName());
+		sb.append("/");
 		if (p != null) {
 			name = p.getName();
 		}
@@ -1370,5 +1389,5 @@ public class DefaultRecordService extends RecordService
 		sb.append(id);
 		return sb.toString();
 	}
-	
+
 }

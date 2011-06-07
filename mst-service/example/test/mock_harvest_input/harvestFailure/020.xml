@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2010-08-10T20:06:37Z</responseDate>
+  <request verb="ListRecords" from="2010-08-10T20:06:24Z" until="2010-08-10T20:06:35Z" metadataPrefix="marcxml">http://localhost:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+    <record>
+		<<< invalid xml >>>
+    </record>
+  </ListRecords>
+</OAI-PMH>

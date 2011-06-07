@@ -67,10 +67,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	protected MetadataServiceDAO metadataServiceDAO = null;
 	protected List<ProcessingDirective> processingDirectives = null;
 	protected List<RecordMessage> messages2insert = new ArrayList<RecordMessage>();
+	protected List<RecordMessage> messages2delete = new ArrayList<RecordMessage>();
+	protected TLongHashSet messages2deleteByRecordId = new TLongHashSet();
 	protected Emailer mailer = new Emailer();
 
 	protected MetadataServiceManager metadataServiceManager = null;
 
+	protected boolean preserveStatuses = true;
 	protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
 	protected TLongByteHashMap tempPreviousStatuses= new TLongByteHashMap();
 
@@ -455,6 +458,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
 				getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
 				tempPreviousStatuses.clear();
+				
+				getMessageDAO().deleteMessagesByRecordId(getService().getId(), messages2deleteByRecordId);
+				messages2deleteByRecordId.clear();
+				getMessageDAO().deleteMessages(messages2delete);
+				messages2delete.clear();
 
 				LOG.debug("getMessageDAO().persistMessages(messages2insert);");
 				LOG.debug("messages2insert.size(): "+messages2insert.size());
@@ -473,6 +481,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+		startTime = new Date().getTime();
+		processedRecordCount = 0;
 		if (!(this instanceof SolrIndexService)) {
 			setStatus(Status.RUNNING);
 			LOG.info("getClass(): "+getClass());
@@ -485,7 +495,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					(outputSet==null?"null":outputSet.getDisplayName())+")");
 		}
 		running.acquireUninterruptibly();
-		if (getRepository() != null) {
+		if (getRepository() != null && preserveStatuses) {
 			previousStatuses.clear();
 			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
 		}
@@ -495,8 +505,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				inputFormat, inputSet, repo.getName(), getService());
 		//this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		LOG.debug("sh: "+sh);
-		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
-				sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
+		this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 		List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
 		if (getMetadataServiceManager() != null) {
@@ -534,8 +543,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				//       We may want to supply an optional way of doing that.
 				in.setPreviousStatus(Record.NULL);
 				injectKnownData(in);
-				previousStatuses.put(in.getId(), (byte)in.getStatus());
-				tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());
+				if (in.getMessages() != null) {
+					for (RecordMessage rm : in.getMessages()) {
+						if (rm.getServiceId() == getService().getId()) {
+							messages2delete.add(rm.clone());
+						}
+					}
+				}
+				if (preserveStatuses) {
+					if (getRepository() != null) {
+						previousStatuses.put(in.getId(), (byte)in.getStatus());
+					}
+					tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());	
+				}
 				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
 					for (OutputRecord or : in.getSuccessors()) {
@@ -553,25 +573,35 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				}
 				TimingLogger.stop(getServiceName()+".process");
 				if (getRepository() != null) {
-					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), in.getStatus(), in.getPreviousStatus());
+					if (in.getType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
+					} else {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(RecordCounts.OTHER, in.getStatus(), in.getPreviousStatus());
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
-				if (unexpectedError) {
-					if (in.getIndexedObjectType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getIndexedObjectType(), RecordCounts.UNEXPECTED_ERROR);
+					
+				if (unexpectedError && getRepository() != null) {
+					if (in.getType() != null) {
+						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
 				} else {
+					processedRecordCount++;
 					if (out != null) {
 						for (RecordIfc rout : out) {
+							messages2deleteByRecordId.add(rout.getId());
 							Record rout2 = (Record)rout;
 							if (origSuccessorMap.containsKey(rout2.getId())) {
 								rout2.setPreviousStatus(origSuccessorMap.get(rout2.getId()).getStatus());
 							}
-							if (rout2.getIndexedObjectType() != null) {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getIndexedObjectType(), rout2.getStatus(), rout2.getPreviousStatus());
+							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
+									" rout2.getStatus(): "+rout2.getStatus()+
+									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
+							if (rout2.getType() != null) {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
+							} else {
+								getMetadataServiceManager().getOutgoingRecordCounts().incr(RecordCounts.OTHER, rout2.getStatus(), rout2.getPreviousStatus());
 							}
 							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							rout2.addPredecessor(in);
@@ -584,11 +614,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							}
 							getRepository().addRecord(rout2);
 						}
-					}
-					if (getRepository() == null ||
-							(in.getStatus() != Record.DELETED &&
-									(in.getSuccessors() == null || in.getSuccessors().size() == 0))) {
-						processedRecordCount++;
 					}
 				}
 				sh.setHighestId(in.getId());
@@ -603,8 +628,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 				getServiceDAO().persist(sh);
 			}
 
-			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(),
-					sh.getHighestId(), inputFormat, inputSet, processedRecordCount);
+			this.totalRecordCount = repo.getRecordCount(sh.getFrom(), sh.getUntil(), inputFormat, inputSet);
 			records = getRecords(repo, sh, inputFormat, inputSet);
 		}
 		//  TODO not inserting errors on input record.
@@ -625,14 +649,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		}
 
 		if (getRepository() != null) {
-			int i=0;
-			for (RecordCounts rc : new RecordCounts[] {
-					getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
-					getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
-			}) {
-				LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
+			RecordCounts mostRecentIncomingRecordCounts =
+				getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName());
+			// I'm substracting 1s from startTime because they might actually be equal by the second
+			if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+				for (RecordCounts rc : new RecordCounts[] {
+						mostRecentIncomingRecordCounts,
+						getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
+						getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
+						getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
+				}) {
+					LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
+				}
+				LogWriter.addInfo(service.getServicesLogFileName(), getRepository().getRecordStatsByType());
 			}
 		}
 		setStatus(Status.NOT_RUNNING);
@@ -657,7 +686,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 
 	protected void injectKnownData(Record in) {
-		if (previousStatuses.contains(in.getId())) {
+		if (preserveStatuses && previousStatuses.contains(in.getId())) {
 			TimingLogger.start("injectKnownData");
 			if (getRepository() != null) {
 				TimingLogger.start("injectSuccessorIds");

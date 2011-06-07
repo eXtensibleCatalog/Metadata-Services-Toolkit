@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-03-30T11:23:44Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="xc">http://localhost:8080/MetadataServicesToolkit/st/marctoxctransformation/oaiRepository.action</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/119</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/119">
+            <xc:recordID type="OCoLC">7064165</xc:recordID>
+            <xc:recordID type="CHANGE_ME">1178174</xc:recordID>
+            <dcterms:title>ϓellow</dcterms:title>
+            <rdvocab:placeOfProduction>Moskva,</rdvocab:placeOfProduction>
+            <dcterms:publisher>Gos. izd-vo khudozh. lit-ry,</dcterms:publisher>
+            <dcterms:issued>1956.</dcterms:issued>
+            <dcterms:extent>654 p.</dcterms:extent>
+            <rdvocab:dimensions>21 cm.</rdvocab:dimensions>
+            <dcterms:description>In Cyrillic characters.</dcterms:description>
+            <dcterms:description>At head of title: Ilʹi︠a︡ Ilʹf, Evgeniĭ Petrov.</dcterms:description>
+            <dcterms:alternative>Zolotoĭ telenok.</dcterms:alternative>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/121</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/120</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/120">
+            <dcterms:subject xsi:type="dcterms:LCC">PG3476</dcterms:subject>
+            <rdarole:author>Ilʹf, Ilʹi︠a︡, 1897-1937.</rdarole:author>
+            <rdvocab:titleOfWork>Dvenadt︠s︡atʹ stulʹev. Zolotoĭ telenok.</rdvocab:titleOfWork>
+            <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/121</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/121">
+            <xc:titleOfExpression>Dvenadt︠s︡atʹ stulʹev. Zolotoĭ telenok.</xc:titleOfExpression>
+            <rdvocab:illustrationContent>illus.</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>Russian</dcterms:language>
+            <xc:contributor>Petrov, Evgeniĭ, 1903-1942, joint author.</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/120</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/122</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/122">
+            <xc:recordID type="OCoLC">99999999</xc:recordID>
+            <xc:recordID type="CHANGE_ME">1532339</xc:recordID>
+            <xc:identifier type="SuDoc">MS86.P23</xc:identifier>
+            <dcterms:title>ϓellow</dcterms:title>
+            <dcterms:alternative>Are We Having Fun Yet?</dcterms:alternative>
+            <dcterms:alternative>Previous Title</dcterms:alternative>
+            <rdvocab:placeOfProduction>Rochester</rdvocab:placeOfProduction>
+            <dcterms:issued>2000</dcterms:issued>
+            <dcterms:description>⁰¹²³⁴₉₈₇₆</dcterms:description>
+            <dcterms:isPartOf>Eight thirty no. 1</dcterms:isPartOf>
+            <dcterms:isPartOf>Voyager 2000 no. 2</dcterms:isPartOf>
+            <xc:typeLeader06>Projected medium</xc:typeLeader06>
+            <xc:typeLeader06>Nonmusical sound recording</xc:typeLeader06>
+            <xc:type007>Electronic resource</xc:type007>
+            <xc:typeSMD>Remote</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">0743250079</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/124</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/123</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/123">
+            <dcterms:subject xsi:type="dcterms:NLM">MS60.P23</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:DDC">MS82</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:LCC">SO90</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:LCC">MS90</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:LCC">DD90</dcterms:subject>
+            <xc:creator>Stowe, Melinda.</xc:creator>
+            <rdvocab:titleOfWork>Le prélude. [videorecording]</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Endeavor Information 1994 Interpretive dance gg</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Suszczynski, Jeff (AKA Bartman)</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Heller, P.D. (Paul David)</xc:subject>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 00 Continues Titles</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 01 continues in part</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 02 Supersedes</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 03 Supersedes in Part</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 04 Formed by the union of</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 05 Absorbed</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 06 Absorbed in Part</dcterms:replaces>
+            <dcterms:replaces dcterms:ISSN="0302-4377">780 07 Separated from</dcterms:replaces>
+            <dcterms:isReplacedBy>785 00 Continued by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 01 Continued in Part by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 02 Superseded by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 03 Superseded in Part by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 04 Absorbed by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 05 Absorbed in Part by</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>785 06 Split into</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>First Title</dcterms:isReplacedBy>
+            <dcterms:isReplacedBy>Third Title</dcterms:isReplacedBy>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/124</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/124">
+            <xc:titleOfExpression>Le prélude. [videorecording]</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <xc:contributor>Hoagland, Denise</xc:contributor>
+            <xc:contributor>O'Connor, Stephen T. 1961-</xc:contributor>
+            <xc:contributor>Marciano, Tony</xc:contributor>
+            <xc:contributor>Aragon, Catherine</xc:contributor>
+            <xc:contributor>Arbelo, Ralph</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/123</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/125</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/125">
+            <xc:textualHoldings type="Basic Bibliographic Unit">Random data for test</xc:textualHoldings>
+            <xc:textualHoldings type="Supplementary material">Random data for test</xc:textualHoldings>
+            <xc:textualHoldings type="Indexes">Random data for test</xc:textualHoldings>
+            <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/122</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/126</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/126">
+            <xc:recordID type="OCoLC">8448190</xc:recordID>
+            <xc:recordID type="CHANGE_ME">3619537</xc:recordID>
+            <dcterms:title>Ύellow</dcterms:title>
+            <dcterms:alternative>Printer test record</dcterms:alternative>
+            <dcterms:description>*******************************************************</dcterms:description>
+            <dcterms:description>Each field gives the diacrictic name, and displays the diacritic with the letter[s] it modifies.</dcterms:description>
+            <dcterms:description>acute                  á ć d́ é ǵ ń í ḱ ḿ ń ó ớ ṕ q́ ŕ ś t́ ú ứ v́ ẃ ý ź</dcterms:description>
+            <dcterms:description>breve                  ă c̆ ĕ ğ ĭ m̆ ŏ ơ̆ ŭ ư̆ y̆ z̆</dcterms:description>
+            <dcterms:description>candrabindu            a̐ h̐ i̐ m̐ n̐ o̐ u̐</dcterms:description>
+            <dcterms:description>cedilla                ç ȩ ḩ ļ ņ ş</dcterms:description>
+            <dcterms:description>circle above           å e̊ g̊ k̊ r̊ s̊ o̊ ẙ</dcterms:description>
+            <dcterms:description>circle below           l̥ m̥ n̥ r̥ s̥ t̥</dcterms:description>
+            <dcterms:description>circumflex             â ĉ ê ĝ ĥ î ĵ n̂ ô ơ̂ ŝ û ư̂ ŵ ŷ</dcterms:description>
+            <dcterms:description>dot below              ạ ḅ ḍ ẹ ḥ ị ḳ ḷ ṃ ṇ ọ ợ p̣ ṛ ṣ ṭ ụ ự ṿ ỵ ẓ</dcterms:description>
+            <dcterms:description>double acute           a̋ ő ű</dcterms:description>
+            <dcterms:description>double dot below       b̤ d̤ h̤ l̤ s̤ t̤</dcterms:description>
+            <dcterms:description>double tilde           n︢g︣</dcterms:description>
+            <dcterms:description>double underscore      g̳h̳</dcterms:description>
+            <dcterms:description>grave                  à è ì ǹ ò ờ s̀ ù ừ ỳ</dcterms:description>
+            <dcterms:description>haček                 ǎ č ď ě ǧ ǐ ǰ ľ ň ǒ ř š ť ǔ ž</dcterms:description>
+            <dcterms:description>high comma centered    g̓ w̓</dcterms:description>
+            <dcterms:description>high comma off-centered   d̕ g̕ k̕ l̕ t̕</dcterms:description>
+            <dcterms:description>inverted cedilla        o̜</dcterms:description>
+            <dcterms:description>left hook              a̦ c̦ d̦ e̦ G̦ i̦ k̦ l̦ n̦ r̦ ș ț</dcterms:description>
+            <dcterms:description>ligature   (left and right)            d︠z︡ g︠h︡ i︠a︡ i︠e︡ i︠g︡ i︠n︡ i︠o︡ i︠u︡ j︠n︡ k︠h︡ k︠s︡ n︠g︡ o︠t︡ p︠s︡ t︠h︡ t︠s︡ z︠h︡</dcterms:description>
+            <dcterms:description>macron                 ā ǣ c̄ d̄ ē ḡ ī j̄ k̄ m̄ n̄ ō ơ̄ œ̄ p̄ q̄ r̄ s̄ t̄ ū ư̄ ȳ z̄</dcterms:description>
+            <dcterms:description>pseudo question mark        ả ẻ ỉ ỏ ở ủ ử ỷ</dcterms:description>
+            <dcterms:description>right hook             ą ę h̨ į ǫ ǫ̛ s̨ t̨ ų</dcterms:description>
+            <dcterms:description>superior dot           ȧ ḃ ċ ḋ ė ḟ ġ ḣ i̇ İ k̇ l̇ ṁ ṅ ȯ ṗ ṙ ṡ ṫ u̇ ẇ ẏ ż</dcterms:description>
+            <dcterms:description>tilde                  ã c̃ ẽ ĩ ñ õ ỡ q̃ r̃ s̃ ũ ữ w̃ ỹ z̃</dcterms:description>
+            <dcterms:description>umlaut                 ä c̈ ë g̈ ï j̈ ö r̈ s̈ ü v̈ ÿ z̈</dcterms:description>
+            <dcterms:description>underscore             a̲ b̲ c̲ d̲ g̲ h̲ i̲ k̲ l̲ n̲ o̲ r̲ s̲ t̲ u̲ z̲</dcterms:description>
+            <dcterms:description>upadhmānīya          ḫ</dcterms:description>
+            <dcterms:description>Double Diacritics</dcterms:description>
+            <dcterms:description>ậ     r̥̄     ũ̄     á̆     ó̂     ố     à̂</dcterms:description>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/128</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/127</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/127">
+            <rdvocab:titleOfWork>CHARACTER SET TEST RECORD: DIACRITICS.</rdvocab:titleOfWork>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/128</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/128">
+            <xc:titleOfExpression>CHARACTER SET TEST RECORD: DIACRITICS.</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/127</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/129</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/129">
+            <xc:recordID type="OCoLC">8460397</xc:recordID>
+            <xc:recordID type="CHANGE_ME">3619529</xc:recordID>
+            <dcterms:title>Ύellow</dcterms:title>
+            <dcterms:alternative>Printer test record</dcterms:alternative>
+            <dcterms:description>**************************************************************</dcterms:description>
+            <dcterms:description>Here are the special characters which can be used in WorldCat.</dcterms:description>
+            <dcterms:description>--------------------------------------------------------------</dcterms:description>
+            <dcterms:description>æ ae, lower case.</dcterms:description>
+            <dcterms:description>Æ AE, upper case.</dcterms:description>
+            <dcterms:description>ʼ alif.</dcterms:description>
+            <dcterms:description>ʻ ayn.</dcterms:description>
+            <dcterms:description>đ d with crossbar, lower case.</dcterms:description>
+            <dcterms:description>Đ d with crossbar, upper case.</dcterms:description>
+            <dcterms:description>· dot in center of line.</dcterms:description>
+            <dcterms:description>ð eth, lower case.</dcterms:description>
+            <dcterms:description>Đ eth, upper case (use D with crossbar)</dcterms:description>
+            <dcterms:description>ł slashed l, lower case.</dcterms:description>
+            <dcterms:description>Ł slashed l, upper case.</dcterms:description>
+            <dcterms:description>ʹ mi︠a︡gkiĭ znak (soft sign, prime).</dcterms:description>
+            <dcterms:description>ơ hooked o, lower case.</dcterms:description>
+            <dcterms:description>Ơ hooked o, upper case.</dcterms:description>
+            <dcterms:description>ø slashed o, lower case.</dcterms:description>
+            <dcterms:description>Ø slashed o, upper case.</dcterms:description>
+            <dcterms:description>œ oe, lower case.</dcterms:description>
+            <dcterms:description>Œ oe, upper case.</dcterms:description>
+            <dcterms:description>₁₂₃₄₅₆₇₈₉₀₍₊₋₎ subscripts.</dcterms:description>
+            <dcterms:description>¹²³⁴⁵⁶⁷⁸⁹⁰⁽⁺⁻⁾ superscripts.</dcterms:description>
+            <dcterms:description>[alpha] [beta] [gamma] (The Greek symbols originally defined in the MARC character set are no longer used.)</dcterms:description>
+            <dcterms:description>þ thorn, lower case.</dcterms:description>
+            <dcterms:description>Þ thorn, upper case.</dcterms:description>
+            <dcterms:description>ı Turkish i (without dot)</dcterms:description>
+            <dcterms:description>ʺ tvërdyĭ znak (hard sign, double prime).</dcterms:description>
+            <dcterms:description>ư hooked u, lower case.</dcterms:description>
+            <dcterms:description>Ư hooked u, upper case.</dcterms:description>
+            <dcterms:description>£ British pound.</dcterms:description>
+            <dcterms:description>° degree symbol</dcterms:description>
+            <dcterms:description>♭ musical flat.</dcterms:description>
+            <dcterms:description>± plus or minus.</dcterms:description>
+            <dcterms:description>® subscript patent mark.</dcterms:description>
+            <dcterms:description>ℓ script l.</dcterms:description>
+            <dcterms:description>℗ phonogram copyright.</dcterms:description>
+            <dcterms:description>© copyright sign.</dcterms:description>
+            <dcterms:description>♯ music sharp.</dcterms:description>
+            <dcterms:description>¿ inverted question mark.</dcterms:description>
+            <dcterms:description>¡ inverted exclamation point.</dcterms:description>
+            <dcterms:description>ss eszett.</dcterms:description>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/131</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/130</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/130">
+            <dcterms:subject xsi:type="dcterms:LCC">Z123</dcterms:subject>
+            <rdvocab:titleOfWork>CHARACTER SET TEST RECORD: SPECIAL CHARACTERS.</rdvocab:titleOfWork>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/131</identifier>
+        <datestamp>2011-03-30T15:04:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+          <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/131">
+            <xc:titleOfExpression>CHARACTER SET TEST RECORD: SPECIAL CHARACTERS.</xc:titleOfExpression>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/130</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

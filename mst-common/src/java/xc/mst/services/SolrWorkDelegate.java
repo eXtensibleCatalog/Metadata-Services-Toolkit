@@ -23,7 +23,7 @@ public class SolrWorkDelegate extends WorkerThread {
 	
 	private static final Logger LOG = Logger.getLogger(SolrWorkDelegate.class);
 	
-	protected MetadataService solrIndexService = null;
+	protected SolrIndexService solrIndexService = null;
 	//protected ReentrantLock lock = new ReentrantLock();
 	protected Semaphore lock = new Semaphore(1);
 	
@@ -33,7 +33,7 @@ public class SolrWorkDelegate extends WorkerThread {
 
 	public void setup() {
 		LOG.debug("setup");
-		solrIndexService = (MetadataService)config.getBean("SolrIndexService");
+		solrIndexService = (SolrIndexService)config.getBean("SolrIndexService");
 		Service s2 = new Service();
 		s2.setName("solr-indexer");
 		solrIndexService.setService(s2);
@@ -42,9 +42,9 @@ public class SolrWorkDelegate extends WorkerThread {
 		LOG.debug("released");
 	}
 	
-	public void finishInner() {
+	public void finishInner(boolean success) {
 		solrIndexService.finish();
-		super.finishInner();
+		super.finishInner(success);
 	}
 
 	public String getDetailedStatus() {
@@ -52,7 +52,7 @@ public class SolrWorkDelegate extends WorkerThread {
 	}
 
 	public String getName() {
-		return solrIndexService.getService().getName();
+		return solrIndexService.getName4progressBar();
 	}
 
 	public void pauseInner() {

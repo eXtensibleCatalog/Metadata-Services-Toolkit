@@ -32,6 +32,8 @@ public interface Repository {
 	
 	public int getNumRecords();
 	
+	public String getRecordStatsByType();
+	
 	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion); 
 	
 	public void addRecord(Record record);
@@ -50,10 +52,9 @@ public interface Repository {
 	 * @param startingId starting record id to query from
 	 * @param inputFormat format of the record
 	 * @param inputSet Set of record
-	 * @param offset
 	 * @return
 	 */
-	public long getRecordCount(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, long offset);
+	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet);
 	
 	/**
 	 * Get record header information

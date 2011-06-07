@@ -28,12 +28,5 @@ public interface InputRecord extends RecordIfc {
 	 * @see xc.mst.services.impl.GenericMetadataService#process(InputRecord)
 	 */
 	public List<OutputRecord> getSuccessors();
-	
-	/**
-	 * 
-	 * @return May be null.  If it is not null, then it will be used to 
-	 * create this screen http://code.google.com/p/xcmetadataservicestoolkit/wiki/LoggingRecordCounts
-	 */
-	public String getIndexedObjectType();
 
 }

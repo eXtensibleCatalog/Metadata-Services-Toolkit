@@ -205,7 +205,7 @@ public class TimingStats {
 		LOG.debug("");
 		LOG.debug("Free  memory: " + StringUtils.leftPad(freeMem+"", 7) + " MB.");
 		LOG.debug("Used  memory: " + StringUtils.leftPad(usedMem+"", 7) + " MB.");
-		LOG.debug("Increaed  by: " + StringUtils.leftPad(memIncrease+"", 7) + " MB.");
+		LOG.debug("Increased by: " + StringUtils.leftPad(memIncrease+"", 7) + " MB.");
 		LOG.debug("Total memory: " + StringUtils.leftPad(totalMem+"", 7) + " MB.");
 		LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem+"", 7) + " MB.");
 	}

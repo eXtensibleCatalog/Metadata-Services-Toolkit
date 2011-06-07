@@ -25,11 +25,6 @@ public class ResumptionToken
 {
 	
 	protected Util util = new Util();
-	
-	/**
-	 * The resumption token's ID
-	 */
-	private long resumptionTokenId = -1;
 
 	/**
 	 * The resumption token's setSpec
@@ -50,41 +45,11 @@ public class ResumptionToken
 	 * The resumption token's until parameter
 	 */
 	private Timestamp until = null;
-
-	/**
-	 * The resumption token's offset column
-	 */
-	private long offset = -1;
-	
-	/**
-	 * The token issued to get more records.
-	 */
-	private String token;
 	
 	/**
 	 * Starting record Id to query
 	 */
 	private long startingId;
-
-	/**
-	 * Gets the resumption token's ID
-	 *
-	 * @return The resumption token's ID
-	 */
-	public long getId()
-	{
-		return resumptionTokenId;
-	} // end method getId()
-
-	/**
-	 * Sets the resumption token's ID
-	 *
-	 * @param resumptionTokenId The resumption token's new ID
-	 */
-	public void setId(long resumptionTokenId)
-	{
-		this.resumptionTokenId = resumptionTokenId;
-	} // end method setId(long)
 
 	/**
 	 * Gets the resumption token's setSpec
@@ -165,26 +130,6 @@ public class ResumptionToken
 	{
 		this.until = (until == null ? null : new Timestamp(until.getTime()));
 	} // end method setUntil(Date)
-
-	/**
-	 * Gets the resumption token's offset
-	 *
-	 * @return The resumption token's offset
-	 */
-	public long getOffset()
-	{
-		return offset;
-	} // end method getOffset()
-
-	/**
-	 * Sets the resumption token's offset
-	 *
-	 * @param offset The resumption token's new offset
-	 */
-	public void setOffset(long offset)
-	{
-		this.offset = offset;
-	} // end method setOffset(int)
 
 	public String getToken() {
 		StringBuilder sb = new StringBuilder();

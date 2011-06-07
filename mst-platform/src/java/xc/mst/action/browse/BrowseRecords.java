@@ -179,7 +179,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 				solrQuery.setQuery("*:*");
 			}	else {
 				if (searchXML) {
-					solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + "oai_xml:" + query.replaceAll(":", "\\\\:"));
+					solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + RecordService.FIELD_ALL+":" + query.replaceAll(":", "\\\\:"));
 				} else {
 					solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
 				}

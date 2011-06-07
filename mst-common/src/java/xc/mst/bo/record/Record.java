@@ -11,7 +11,9 @@ package xc.mst.bo.record;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
@@ -48,6 +50,16 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	public static final char REPLACED = 'R';
 	public static final char NULL = 'N';
 	
+	public static Map<Character, String> statusNames = new HashMap<Character, String>();
+	
+	static {
+		statusNames.put(ACTIVE, "active");
+		statusNames.put(HELD, "held");
+		statusNames.put(DELETED, "deleted");
+		statusNames.put(NULL, "null");
+		statusNames.put(REPLACED, "replaced");
+	}
+	
 	protected String mode = JDOM_MODE;
 
 	protected XmlHelper xmlHelper = new XmlHelper();
@@ -57,7 +69,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	/**
 	 * The type of indexed Object this is
 	 */
-	public String indexedObjectType = null;
+	public String type = null;
 
 	/**
 	 * The record's ID
@@ -192,6 +204,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 		dupe.oaiXmlEl = this.oaiXmlEl;
 		dupe.predecessors = this.predecessors;
 		dupe.messages = this.messages;
+		dupe.type = this.type;
 		return dupe;
 	}
 	
@@ -260,17 +273,14 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 		this.mode = JDOM_MODE;
 		this.oaiXmlEl = oaiXmlEl;
 	}
+
+	public String getType() {
+		return type;
+	}
 	
-	/**
-	 * Get's the indexed object type of this class.  This is used to differentiate between
-	 * different types of objects stored in the index.
-	 *
-	 * @return The type of indexed object for this Object
-	 */
-	public String getIndexedObjectType()
-	{
-		return indexedObjectType;
-	} // end method getIndexedObjectType()
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	/**
 	 * Gets the record's ID
@@ -776,7 +786,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	 */
 	public void addMessage(RecordMessage message)
 	{
-		LOG.debug("Record.addMessage() called on record.id:"+getId());
+		//LOG.debug("Record.addMessage() called on record.id:"+getId());
 		if(!messages.contains(message))
 			messages.add(message);
 	} // end method addMessage(RecordMessage)
@@ -964,11 +974,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 	public List<InputRecord> getPredecessors() {
 		return predecessors;
 	}
-	
-	public void setIndexedObjectType(String indexedObjectType) {
-		this.indexedObjectType = indexedObjectType;
-	}
-	
+
 	public char getStatus() {
 		return status;
 	}

@@ -71,4 +71,13 @@ public interface RecordIfc {
 	public void setMessages(List<RecordMessage> errors);
 
 	public Record clone();
+	
+	
+	/**
+	 * 
+	 * @return May be null.  If it is not null, then it will be used to 
+	 * create this screen http://code.google.com/p/xcmetadataservicestoolkit/wiki/LoggingRecordCounts
+	 */
+	public String getType();
+	public void setType(String type);
 }

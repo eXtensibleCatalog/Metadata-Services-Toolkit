@@ -1,9 +1,13 @@
 package xc.mst.dao.record;
 
+import gnu.trove.TLongHashSet;
+import gnu.trove.TLongIterator;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -16,6 +20,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
@@ -57,6 +62,34 @@ public class MessageDAO extends BaseDAO {
 		}
 		idLock.unlock();
 		return this.nextId++;
+	}
+	
+	public void deleteMessagesByRecordId(int serviceId, final TLongHashSet messages2deleteByRecordId) {
+		final TLongIterator it = messages2deleteByRecordId.iterator();
+		int[] updateCount = jdbcTemplate.batchUpdate(
+				"delete from "+MESSAGES_TABLE+" where record_id = ? and service_id ="+serviceId, 
+				new BatchPreparedStatementSetter() {
+					public void setValues(PreparedStatement ps, int j) throws SQLException {
+						ps.setLong(1, it.next());
+					}
+					public int getBatchSize() {
+						return messages2deleteByRecordId.size();
+					}
+				});
+	}
+	
+	public void deleteMessages(final List<RecordMessage> messages2delete) {
+		final Iterator it = messages2delete.iterator();
+		int[] updateCount = jdbcTemplate.batchUpdate(
+				"delete from "+MESSAGES_TABLE+" where record_id = ?", 
+				new BatchPreparedStatementSetter() {
+					public void setValues(PreparedStatement ps, int j) throws SQLException {
+						ps.setLong(1, ((RecordMessage)it.next()).getId());
+					}
+					public int getBatchSize() {
+						return messages2delete.size();
+					}
+				});		
 	}
 	
 	@SuppressWarnings("unused")

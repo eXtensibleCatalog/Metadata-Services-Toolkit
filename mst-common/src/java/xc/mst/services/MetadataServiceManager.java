@@ -96,9 +96,9 @@ public class MetadataServiceManager extends WorkerThread {
 		metadataService.setup();
 	}
 	
-	public void finishInner() {
+	public void finishInner(boolean success) {
 		metadataService.finish();
-		super.finishInner();
+		super.finishInner(success);
 	}
 
 	public String getDetailedStatus() {
@@ -106,7 +106,11 @@ public class MetadataServiceManager extends WorkerThread {
 	}
 
 	public String getName() {
-		return metadataService.getService().getName();
+		if (metadataService != null && metadataService.getService() != null) {
+			return metadataService.getService().getName();
+		} else {
+			return "service starting up";
+		}
 	}
 
 	public void pauseInner() {
