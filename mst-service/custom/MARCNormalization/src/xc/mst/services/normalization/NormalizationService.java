@@ -24,9 +24,11 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.constants.Status;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.service.GenericMetadataService;
+import xc.mst.utils.LogWriter;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
@@ -127,6 +129,38 @@ public class NormalizationService extends GenericMetadataService {
 			loadConfiguration(getUtil().slurp("service.xccfg", getClass().getClassLoader()));
 		} catch (DatabaseConfigException e) {
 			LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+		}
+	}
+
+	/**
+	 * Gets the status of the service
+	 * @return This service's status
+	 */
+	public Status getServiceStatus(){
+
+		if (service.getStatus() != null) {
+			if (service.getStatus().equals(Status.ERROR)) {
+				return Status.ERROR;
+			}
+		}
+		return super.getServiceStatus();
+	}
+	
+	@Override
+	public void setup() {
+		LOG.info("NormalizationService.setup");
+		try {
+			validateService();
+		} catch (ServiceValidationException e) {
+
+			// Update database with status of service
+			service.setStatus(Status.ERROR);
+			LOG.error("Error validating service:",e);
+			LogWriter.addInfo(service.getServicesLogFileName(), "** Error validating service - service will not run "+ e.getMessage()+ " **");
+			sendReportEmail("Error validating service: "+e.getMessage());
+			
+			// in case the WorkerThread code addition causes issues, simply uncomment the below:
+			// throw new RuntimeException(e);
 		}
 	}
 
@@ -2304,6 +2338,10 @@ public class NormalizationService extends GenericMetadataService {
 			throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 008 OFFSET 22 TO AUDIENCE");
 		else if(enabledSteps == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
+		else if (getOrganizationCode() == null)
+			throw new ServiceValidationException("Service configuration file Organization Code error:  Please set an OrganizationCode.");
+		else if (getOrganizationCode().equals("CHANGE_ME"))
+			throw new ServiceValidationException("Service configuration file Organization Code error:  Please change CHANGE_ME to a valid OrganizationCode.");
 		else if(locationLimitNameProperties == null)
 			throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
 
