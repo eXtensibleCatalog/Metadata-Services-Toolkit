@@ -254,6 +254,8 @@ public class DefaultUserService extends BaseService implements UserService {
 		      // context and specifying LDAP service provider parameters.
 		      return new InitialDirContext(ldapProperties);
 	     }
+//	     catch(MalformedURLException e1) {}  // not thrown in above, but I thought I saw this in the log with misconfigured ldap?
+//	     catch(AuthenticationException e2) {} // more specific then below, I think this is the one thrown if invalid password.
 	     catch(NamingException e)
 	     {
 		      // If the exception was an error code 49, the username or password was incorrect.

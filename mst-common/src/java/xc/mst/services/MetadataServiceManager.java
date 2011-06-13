@@ -12,6 +12,7 @@ import java.util.List;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 
@@ -94,6 +95,17 @@ public class MetadataServiceManager extends WorkerThread {
 	public void setup() {
 		metadataService.setMetadataServiceManager(this);
 		metadataService.setup();
+	}
+	
+	// only call after setup has run
+	public boolean isSetupHappy() {
+		if (metadataService == null) {
+			return true;
+		}
+		if (metadataService.getServiceStatus().equals(Status.ERROR)) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void finishInner(boolean success) {
