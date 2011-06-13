@@ -1872,7 +1872,11 @@ public class RepositoryDAO extends BaseDAO {
 				"idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
 		};
 		for (int i=0; i<indicies2drop.length; i+=2) {
-			this.jdbcTemplate.execute("drop index "+indicies2drop[i]+" on "+getTableName(name, indicies2drop[i+1]));
+			try {
+				this.jdbcTemplate.execute("drop index "+indicies2drop[i]+" on "+getTableName(name, indicies2drop[i+1]));
+			} catch (Throwable t) {
+				LOG.error("", t);
+			}
 		}
 		java.util.Set<String> tables = new HashSet<String>();
 		List<Map<String,Object>> rows = this.jdbcTemplate.queryForList("show tables in "+name);
