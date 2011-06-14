@@ -78,7 +78,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 					Thread.sleep(5000);
 				}
 			}
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			LOG.error("", e);
 			this.status = Status.ERROR;
 			success = false;
