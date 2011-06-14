@@ -772,7 +772,7 @@ VALUES (1, '', 'Local', 2, '0', '', '', 'University Name', '', '', '0');
 
 
 -- Insert default admin user
-insert into users(user_id,username,first_name,last_name,password,email,server_id,last_login,account_created,failed_login_attempts) values(1,'admin','Metadata Services Toolkit', 'admin','L7I6GIFm7yfGo9cqko8U9jQBtQo=','MST_admin@mst.com',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
+insert into users(user_id,username,first_name,last_name,password,email,server_id,last_login,account_created,failed_login_attempts) values(1,'admin','Metadata Services Toolkit', 'admin','L7I6GIFm7yfGo9cqko8U9jQBtQo=','yourmstadmin@yourinstitution.edu',1,'2008-10-20 00:00:00','2008-10-20 00:00:00',0);
 
 -- Insert group for admin user
 insert into users_to_groups values(1,1,1);

@@ -58,6 +58,11 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			setupComplete = null;
 		}
 	}
+	
+	// only call after setup has run
+	public boolean isSetupHappy() {
+		return true;
+	}
 
 	public void run() {
 		boolean success = true;
@@ -65,7 +70,13 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			this.status = Status.RUNNING;
 			setup();
 			setupComplete.release();
-			boolean keepGoing = true;
+			boolean keepGoing = isSetupHappy();
+			if (!keepGoing) {
+				WorkerThread.serviceBarDisplay = "abort";
+				LOG.error("Job aborting, setup did not complete successfully!");
+				this.status = Status.ERROR;
+				success = false;
+			}
 			while (keepGoing) {
 				LOG.debug("getName(): "+getName());
 				LOG.debug("status: "+status);
