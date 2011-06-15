@@ -22,8 +22,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +33,6 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import xc.mst.bo.record.RecordMessage;
-import xc.mst.cache.DynMap;
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
@@ -56,134 +54,150 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 	
 	@SuppressWarnings("unchecked")
 	public void persistBibMaps(
-			TLongLongHashMap bibsProcessedLongIdAdded, 
-			Map<String, Long> bibsProcessedStringIdAdded,
-			TLongLongHashMap bibsProcessedLongIdRemoved, 
-			Map<String, Long> bibsProcessedStringIdRemoved,
-			TLongLongHashMap bibsYet2ArriveLongIdAdded,
-			Map<String, Long> bibsYet2ArriveStringIdAdded,
-			TLongLongHashMap bibsYet2ArriveLongIdRemoved,
-			Map<String, Long> bibsYet2ArriveStringIdRemoved ) {
+			Map<String, TLongLongHashMap> bibsProcessedLongIdAddedMap, 
+			Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap,
+			Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap, 
+			Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap,
+			Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap,
+			Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap,
+			Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap,
+			Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap ) {
 		
 		TimingLogger.start("TransformationDAO.persistBibMaps");
 		
 		Object[] objArr = new Object[] {
-				bibsProcessedLongIdAdded, bibsProcessedLongId_table,
-				bibsProcessedStringIdAdded, bibsProcessedStringId_table,
-				bibsYet2ArriveLongIdAdded, bibsYet2ArriveLongId_table,
-				bibsYet2ArriveStringIdAdded, bibsYet2ArriveStringId_table};
+				bibsProcessedLongIdAddedMap, bibsProcessedLongId_table,
+				bibsProcessedStringIdAddedMap, bibsProcessedStringId_table,
+				bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringIdAddedMap, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
-			try {
-				if (objArr[i] == null) {
+			
+			for (Object keyObj : ((Map)objArr[i]).keySet()) {
+				String orgCode = (String)keyObj;
+				Object map = ((Map)objArr[i]).get(orgCode);
+
+				try {
+					if (map == null) {
+						continue;
+					}
+					final byte[] orgCodeBytes = orgCode.getBytes("UTF-8");
+					String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
+					final byte[] tabBytes = "\t".getBytes();
+					final byte[] newLineBytes = "\n".getBytes();
+					
+					File dbLoadFile = new File(dbLoadFileStr);
+					if (dbLoadFile.exists()) {
+						dbLoadFile.delete();
+					}
+					final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+					final MutableInt j = new MutableInt(0);
+					final String tableName = (String)objArr[i+1];
+					TimingLogger.start(tableName+".insert");
+					TimingLogger.start(tableName+".insert.create_infile");
+					final List<Object[]> params = new ArrayList<Object[]>();
+					if (map instanceof TLongLongHashMap) {
+						TLongLongHashMap longKeyedMap = (TLongLongHashMap)map;
+						LOG.debug("insert: "+tableName+".size(): "+longKeyedMap.size());
+						if (longKeyedMap != null && longKeyedMap.size() > 0) {
+							longKeyedMap.forEachEntry(new TLongLongProcedure() {
+								public boolean execute(long key, long value) {
+									try {
+										if (j.intValue() > 0) {
+											LOG.debug("line break!!! j:"+j.intValue());
+											os.write(newLineBytes);
+										} else {
+											j.increment();
+										}
+										os.write(orgCodeBytes);
+										os.write(tabBytes);
+										os.write(String.valueOf(key).getBytes());
+										os.write(tabBytes);
+										os.write(String.valueOf(value).getBytes());
+									} catch (Throwable t) {
+										getUtil().throwIt(t);
+									}
+									return true;
+								}
+							});		
+						}
+					} else if (map instanceof Map) {
+						Map<String, Long> stringKeyedMap = (Map<String, Long>)map;
+						LOG.debug("insert: "+tableName+".size(): "+stringKeyedMap.size());
+						if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
+							for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
+								if (j.intValue() > 0) {
+									os.write(newLineBytes);
+								} else {
+									j.increment();
+								}
+								os.write(orgCodeBytes);
+								os.write(tabBytes);
+								os.write(me.getKey().getBytes());
+								os.write(tabBytes);
+								os.write(String.valueOf(me.getValue()).getBytes());
+							}
+						}
+					}
+		
+					os.close();
+					TimingLogger.stop(tableName+".insert.create_infile");
+					TimingLogger.start(tableName+".insert.load_infile");
+					this.jdbcTemplate.execute(
+							"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
+							tableName+
+							" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+							);
+					TimingLogger.stop(tableName+".insert.load_infile");
+					TimingLogger.stop(tableName+".insert");
+				} catch (Throwable t) {
+					getUtil().throwIt(t);
+				}
+			}
+		}
+				
+		objArr = new Object[] {
+				bibsProcessedLongIdRemovedMap, bibsProcessedLongId_table,
+				bibsProcessedStringIdRemovedMap, bibsProcessedStringId_table,
+				bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringIdRemovedMap, bibsYet2ArriveStringId_table};
+		for (int i=0; i<objArr.length; i+=2){
+			for (Object keyObj : ((Map)objArr[i]).keySet()) {
+				String orgCode = (String)keyObj;
+				Object map = ((Map)objArr[i]).get(orgCode);
+				
+				if (map == null) {
 					continue;
 				}
-				String dbLoadFileStr = (MSTConfiguration.getUrlPath()+"/db_load.in").replace('\\', '/');
-				final byte[] tabBytes = "\t".getBytes();
-				final byte[] newLineBytes = "\n".getBytes();
-				
-				File dbLoadFile = new File(dbLoadFileStr);
-				if (dbLoadFile.exists()) {
-					dbLoadFile.delete();
-				}
-				final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-				final MutableInt j = new MutableInt(0);
-				final String tableName = (String)objArr[i+1];
-				TimingLogger.start(tableName+".insert");
-				TimingLogger.start(tableName+".insert.create_infile");
+				String tableName = (String)objArr[i+1];
 				final List<Object[]> params = new ArrayList<Object[]>();
-				if (objArr[i] instanceof TLongLongHashMap) {
-					TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
-					LOG.debug("insert: "+tableName+".size(): "+longKeyedMap.size());
+				if (map instanceof TLongLongHashMap) {
+					TLongLongHashMap longKeyedMap = (TLongLongHashMap)map;
+					LOG.debug("delete: "+tableName+".size(): "+longKeyedMap.size());
 					if (longKeyedMap != null && longKeyedMap.size() > 0) {
 						longKeyedMap.forEachEntry(new TLongLongProcedure() {
 							public boolean execute(long key, long value) {
-								try {
-									if (j.intValue() > 0) {
-										LOG.debug("line break!!! j:"+j.intValue());
-										os.write(newLineBytes);
-									} else {
-										j.increment();
-									}
-									os.write(String.valueOf(key).getBytes());
-									os.write(tabBytes);
-									os.write(String.valueOf(value).getBytes());
-								} catch (Throwable t) {
-									getUtil().throwIt(t);
-								}
+								params.add(new Object[] {key, value});
 								return true;
 							}
 						});		
 					}
-				} else if (objArr[i] instanceof Map) {
-					Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
-					LOG.debug("insert: "+tableName+".size(): "+stringKeyedMap.size());
+				} else if (map instanceof Map) {
+					Map<String, Long> stringKeyedMap = (Map<String, Long>)map;
+					LOG.debug("delete: "+tableName+".size(): "+stringKeyedMap.size());
 					if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
 						for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
-							if (j.intValue() > 0) {
-								os.write(newLineBytes);
-							} else {
-								j.increment();
-							}
-							os.write(me.getKey().getBytes());
-							os.write(tabBytes);
-							os.write(String.valueOf(me.getValue()).getBytes());
+							params.add(new Object[] {me.getKey(), me.getValue()});
 						}
 					}
 				}
-	
-				os.close();
-				TimingLogger.stop(tableName+".insert.create_infile");
-				TimingLogger.start(tableName+".insert.load_infile");
-				this.jdbcTemplate.execute(
-						"load data infile '"+dbLoadFileStr+"' REPLACE into table "+
-						tableName+
-						" character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-						);
-				TimingLogger.stop(tableName+".insert.load_infile");
-				TimingLogger.stop(tableName+".insert");
-			} catch (Throwable t) {
-				getUtil().throwIt(t);
-			}
-		}
-		
-		objArr = new Object[] {
-				bibsProcessedLongIdRemoved, bibsProcessedLongId_table,
-				bibsProcessedStringIdRemoved, bibsProcessedStringId_table,
-				bibsYet2ArriveLongIdRemoved, bibsYet2ArriveLongId_table,
-				bibsYet2ArriveStringIdRemoved, bibsYet2ArriveStringId_table};
-		for (int i=0; i<objArr.length; i+=2){
-			if (objArr[i] == null) {
-				continue;
-			}
-			String tableName = (String)objArr[i+1];
-			final List<Object[]> params = new ArrayList<Object[]>();
-			if (objArr[i] instanceof TLongLongHashMap) {
-				TLongLongHashMap longKeyedMap = (TLongLongHashMap)objArr[i];
-				LOG.debug("delete: "+tableName+".size(): "+longKeyedMap.size());
-				if (longKeyedMap != null && longKeyedMap.size() > 0) {
-					longKeyedMap.forEachEntry(new TLongLongProcedure() {
-						public boolean execute(long key, long value) {
-							params.add(new Object[] {key, value});
-							return true;
-						}
-					});		
+				if (params.size() > 0) {
+					TimingLogger.start(tableName+".delete");
+					String sql =
+						"delete from "+tableName+
+						" where bib_001=? and record_id=?";
+			        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
+			        TimingLogger.stop(tableName+".delete");	
 				}
-			} else if (objArr[i] instanceof Map) {
-				Map<String, Long> stringKeyedMap = (Map<String, Long>)objArr[i];
-				LOG.debug("delete: "+tableName+".size(): "+stringKeyedMap.size());
-				if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
-					for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
-						params.add(new Object[] {me.getKey(), me.getValue()});
-					}
-				}
-			}
-			if (params.size() > 0) {
-				TimingLogger.start(tableName+".delete");
-				String sql =
-					"delete from "+tableName+
-					" where bib_001=? and record_id=?";
-		        int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
-		        TimingLogger.stop(tableName+".delete");	
 			}
 		}
 		
@@ -203,28 +217,39 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 	
 	@SuppressWarnings("unchecked")
 	public void loadBibMaps	(
-			TLongLongHashMap bibsProcessedLongId, 
-			Map<String, Long> bibsProcessedStringId,
-			TLongLongHashMap bibsYet2ArriveLongId,
-			Map<String, Long> bibsYet2ArriveStringId ) {
+			Map<String, TLongLongHashMap> bibsProcessedLongIdMap, 
+			Map<String, Map<String, Long>> bibsProcessedStringIdMap,
+			Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap,
+			Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap ) {
 		
 		Object[] objArr = new Object[] {
-				bibsProcessedLongId, bibsProcessedLongId_table,
-				bibsProcessedStringId, bibsProcessedStringId_table,
-				bibsYet2ArriveLongId, bibsYet2ArriveLongId_table,
-				bibsYet2ArriveStringId, bibsYet2ArriveStringId_table};
+				bibsProcessedLongIdMap, bibsProcessedLongId_table,
+				bibsProcessedStringIdMap, bibsProcessedStringId_table,
+				bibsYet2ArriveLongIdMap, bibsYet2ArriveLongId_table,
+				bibsYet2ArriveStringIdMap, bibsYet2ArriveStringId_table};
 		for (int i=0; i<objArr.length; i+=2){
 			String tableName = (String)objArr[i+1];
-			
+			Map m1 = ((Map)objArr[i]);
 			int page = 0;
 			List<Map<String, Object>> rowList = getBibMaps(tableName, page);
 			while (rowList != null && rowList.size() > 0) {
 				for (Map<String, Object> row : rowList) {
+					String orgCode = (String)row.get("org_code");
 					TimingLogger.add(tableName, 0);
-					if (objArr[i] instanceof TLongLongHashMap) {
-						((TLongLongHashMap)objArr[i]).put((Long)row.get("bib_001"), (Long)row.get("record_id"));
-					} else if (objArr[i] instanceof Map) {
-						((Map)objArr[i]).put((String)row.get("bib_001"), (Long)row.get("record_id"));
+					if (i % 4 == 0) {
+						TLongLongHashMap m2 = (TLongLongHashMap)m1.get(orgCode);
+						if (m2 == null) {
+							m2 = new TLongLongHashMap();
+							m1.put(orgCode, m2);
+						}
+						m2.put((Long)row.get("bib_001"), (Long)row.get("record_id"));
+					} else {
+						Map<String, Long> m2 = (Map)m1.get(orgCode);
+						if (m2 == null) {
+							m2 = new HashMap<String, Long>();
+							m1.put(orgCode, m2);
+						}
+						m2.put((String)row.get("bib_001"), (Long)row.get("record_id"));
 					}
 				}
 				rowList = getBibMaps(tableName, ++page);
