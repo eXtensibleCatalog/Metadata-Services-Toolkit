@@ -13,9 +13,9 @@ create table repo_name.records (
 	To increase performance on an initial load,
 	I'm going to delay the creation of these indicies
 	until the completion of the first harvest/service
-	KEY idx_REPO_NAME_records_date_created (oai_datestamp),
-	KEY idx_REPO_NAME_records_status (status),
-	KEY idx_REPO_NAME_records_format_id (format_id)
+	KEY idx_records_date_created (oai_datestamp),
+	KEY idx_records_status (status),
+	KEY idx_records_format_id (format_id)
 	*/
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -30,8 +30,8 @@ create table repo_name.record_updates (
 
 	/*,
 	PRIMARY KEY (id),
-	KEY idx_REPO_NAME_record_updates_date_updated (date_updated),
-	KEY idx_REPO_NAME_record_id (record_id)
+	KEY idx_record_updates_date_updated (date_updated),
+	KEY idx_record_id (record_id)
 	*/
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -48,8 +48,8 @@ create table repo_name.record_sets (
 	
 	PRIMARY KEY (record_id, set_id)
 	/*
-	KEY idx_REPO_NAME_records_set_record_id(record_id),
-	KEY idx_REPO_NAME_records_set_set_id(set_id)
+	KEY idx_records_set_record_id(record_id),
+	KEY idx_records_set_set_id(set_id)
 	*/
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -62,8 +62,8 @@ create table repo_name.record_predecessors (
 	
 	PRIMARY KEY (record_id, pred_record_id)
 	/*,
-	KEY idx_REPO_NAME_record_predecessors_record_id(record_id),
-	KEY idx_REPO_NAME_record_predecessors_set_pred_record_id(pred_record_id)
+	KEY idx_record_predecessors_record_id(record_id),
+	KEY idx_record_predecessors_set_pred_record_id(pred_record_id)
 	*/
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -93,8 +93,8 @@ create table repo_name.incoming_record_counts (
 	unexpected_error_cnt          int    not null default 0,
 
 	primary key (incoming_record_count_id),
-	KEY idx_REPO_NAME_incoming_record_counts_type_name (type_name),
-	unique key idx_REPO_NAME_incoming_record_counts_date_type(harvest_start_date, type_name)
+	KEY idx_incoming_record_counts_type_name (type_name),
+	unique key idx_incoming_record_counts_date_type(harvest_start_date, type_name)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -124,8 +124,8 @@ create table repo_name.outgoing_record_counts (
 	upd_del_prev_del_cnt          int    not null default 0,
 
 	primary key (outgoing_record_count_id),
-	KEY idx_REPO_NAME_outgoing_record_counts_type_name (type_name),
-	unique key idx_REPO_NAME_outgoing_record_counts_date_type(harvest_start_date, type_name)
+	KEY idx_outgoing_record_counts_type_name (type_name),
+	unique key idx_outgoing_record_counts_date_type(harvest_start_date, type_name)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

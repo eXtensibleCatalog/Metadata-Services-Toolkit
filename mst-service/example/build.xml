@@ -76,15 +76,17 @@ commands
 		<antcall target="fail.dev.properties.uptodate" />
 	</target>
 	<target name="fail.dev.properties.uptodate" unless="dev.properties.uptodate">
-		<echo>
+		<fail>@
+
+${service.name}
 ERROR:	The file dev.properties does not exist.  If this is your first time,
-		you must manually copy dev.properties.example (making the necessary 
-		customizations) to dev.properties.  If you've already done that, the 
-		purpose of this failure is to alert you that dev.properties.example 
-		has been updated.  Check the file and manually sync it with your 
-		dev.properties.  Saving dev.properties (updating the timestamp) will 
-		resolve this error.
-		</echo>
+	you must manually copy dev.properties.example (making the necessary 
+	customizations) to dev.properties.  If you've already done that, the 
+	purpose of this failure is to alert you that dev.properties.example 
+	has been updated.  Check the file and manually sync it with your 
+	dev.properties.  Saving dev.properties (updating the timestamp) will 
+	resolve this error.
+		</fail>
 	</target>
 
 	<target name="check.skip.download">
