@@ -139,7 +139,13 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		provider.setOaiProviderUrl(getProviderUrl());
 		provider.setCreatedAt(new java.util.Date());
 		provider.setNumberOfRecordsToHarvest(getNumberOfRecordsToHarvest());
-		getProviderService().insertProvider(provider);
+		try {
+			getProviderService().insertProvider(provider);
+		} catch (Exception e) {
+			// adding this try/catch because ran a test where exception was thrown, nothing seen in log, hard to debug error.
+			LOG.error("error trying to insert provider! "+e);
+			throw new RuntimeException(e);
+		}
 		
 		if (shouldValidateRepo)
 			getValidateRepository().validate(provider.getId());
