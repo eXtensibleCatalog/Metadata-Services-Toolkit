@@ -256,7 +256,6 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	protected boolean commitIfNecessary(String name, boolean force, long processedRecordsCount) {
-		LOG.debug("RepositoryDAO.commitIfNecessary");
 		//LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
 		int batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
 		if (recordsToAdd != null) {
