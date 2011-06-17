@@ -668,7 +668,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	}
 
 	protected boolean isSolrIndexer() {
-		return getRepository() != null;
+		boolean ret = getRepository() == null;
+		LOG.debug("ret: "+ret);
+		return ret;
 	}
 	
 	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {

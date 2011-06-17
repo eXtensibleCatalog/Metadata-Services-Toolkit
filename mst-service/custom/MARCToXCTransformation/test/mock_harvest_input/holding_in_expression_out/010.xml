@@ -1,0 +1,436 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-23T16:26:00Z</responseDate>
+  <request from="1960-02-23T21:26:00Z" metadataPrefix="marcxml" until="2011-02-23T21:26:00Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marcnormalization-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/010</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00827nam a22002650  4500</marc:leader>
+          <marc:controlfield tag="001">5606</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="005">820615          </marc:controlfield>
+          <marc:controlfield tag="008">770413s1931    enk      b    001 0 eng d</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(OCoLC)2884530</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="9">00111630</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="040">
+            <marc:subfield code="a">UPC</marc:subfield>
+            <marc:subfield code="c">UPC</marc:subfield>
+            <marc:subfield code="d">RRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="049">
+            <marc:subfield code="a">RRRR</marc:subfield>
+            <marc:subfield code="c">1,2</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="090">
+            <marc:subfield code="a">BH39</marc:subfield>
+            <marc:subfield code="b">.C31t 1931</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="099">
+            <marc:subfield code="a">BH39 .C31t 1931</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="100">
+            <marc:subfield code="a">Carritt, E. F.</marc:subfield>
+            <marc:subfield code="q">(Edgar Frederick),</marc:subfield>
+            <marc:subfield code="d">1876-1964.</marc:subfield>
+            <marc:subfield code="4">aut</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2="4" tag="245">
+            <marc:subfield code="a">The theory of beauty /</marc:subfield>
+            <marc:subfield code="c">by E. F. Carritt.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="250">
+            <marc:subfield code="a">4th ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="260">
+            <marc:subfield code="a">London :</marc:subfield>
+            <marc:subfield code="b">Methuen,</marc:subfield>
+            <marc:subfield code="c">1931.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="300">
+            <marc:subfield code="a">viii, 344 p. ;</marc:subfield>
+            <marc:subfield code="c">20 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="504">
+            <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="650">
+            <marc:subfield code="a">Aesthetics.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="911">
+            <marc:subfield code="a">u</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="966">
+            <marc:subfield code="l">Stack </marc:subfield>
+            <marc:subfield code="m">RMON  </marc:subfield>
+            <marc:subfield code="s">BH39 .C31t 1931</marc:subfield>
+            <marc:subfield code="b">39087001068149</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="966">
+            <marc:subfield code="l">Stack </marc:subfield>
+            <marc:subfield code="m">RMON  </marc:subfield>
+            <marc:subfield code="s">BH39 .C31t 1931</marc:subfield>
+            <marc:subfield code="b">39087001068156</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="966">
+            <marc:subfield code="l">/Stack</marc:subfield>
+            <marc:subfield code="m">SMONO </marc:subfield>
+            <marc:subfield code="s">N66 .C318t</marc:subfield>
+            <marc:subfield code="c"> 1</marc:subfield>
+            <marc:subfield code="b">39087012828580</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="931" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Language material</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="935" ind1=" " ind2=" ">
+            <marc:subfield code="a">Monograph/Item</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(NRU)5606</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="937" ind1=" " ind2=" ">
+            <marc:subfield code="a">Non-Fiction</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="941" ind1=" " ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="943" ind1=" " ind2=" ">
+            <marc:subfield code="a">English</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="240" ind1="0" ind2="0">
+            <marc:subfield code="a">Theory of beauty /</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="3" ind2="0">
+            <marc:subfield code="a">Theory of beauty /</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/020</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00196cx  a22000973  4500</marc:leader>
+          <marc:controlfield tag="001">9441</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="004">5606</marc:controlfield>
+          <marc:controlfield tag="005">19961209123724.0</marc:controlfield>
+          <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="014">
+            <marc:subfield code="a">00111630</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="852">
+            <marc:subfield code="b">SibStack</marc:subfield>
+            <marc:subfield code="h">N66 .C318t</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/030</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01087cam a2200289 a 4500</marc:leader>
+          <marc:controlfield tag="001">4527116</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="005">20110304161634.0</marc:controlfield>
+          <marc:controlfield tag="006">m        u        </marc:controlfield>
+          <marc:controlfield tag="007">cr cn|||||||||</marc:controlfield>
+          <marc:controlfield tag="008">091127s2008    cm      s     000 p eng d</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="020">
+            <marc:subfield code="z">9789956558483</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="020">
+            <marc:subfield code="z">9789956615780</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="020">
+            <marc:subfield code="z">9956558486</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(CaPaEBR)ebr10333795</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="040">
+            <marc:subfield code="a">CaPaEBR</marc:subfield>
+            <marc:subfield code="c">CaPaEBR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2="4" tag="050">
+            <marc:subfield code="a">PR9372.9.V35</marc:subfield>
+            <marc:subfield code="b">G74 2008eb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="100">
+            <marc:subfield code="a">Vakunta, Peter W.</marc:subfield>
+            <marc:subfield code="4">aut</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2="0" tag="245">
+            <marc:subfield code="a">Green rape</marc:subfield>
+            <marc:subfield code="h">[electronic resource] :</marc:subfield>
+            <marc:subfield code="b">poetry for the environment /</marc:subfield>
+            <marc:subfield code="c">Peter Wuteh Vakunta.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="260">
+            <marc:subfield code="a">Mankon, Bamenda :</marc:subfield>
+            <marc:subfield code="b">Langaa Research &amp; Pub. CIG,</marc:subfield>
+            <marc:subfield code="c">2008.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="300">
+            <marc:subfield code="a">ix, 66 p. ;</marc:subfield>
+            <marc:subfield code="c">22 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="505">
+            <marc:subfield code="a">pt. 1. Free verse -- pt. 2. Haiku.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="533">
+            <marc:subfield code="a">Electronic reproduction.</marc:subfield>
+            <marc:subfield code="b">Palo Alto, Calif. :</marc:subfield>
+            <marc:subfield code="c">ebrary,</marc:subfield>
+            <marc:subfield code="d">2010.</marc:subfield>
+            <marc:subfield code="n">Available via World Wide Web.</marc:subfield>
+            <marc:subfield code="n">Access may be limited to ebrary affiliated libraries.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="650">
+            <marc:subfield code="a">Nature</marc:subfield>
+            <marc:subfield code="x">Effect of human beings on</marc:subfield>
+            <marc:subfield code="v">Poetry.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="7" tag="655">
+            <marc:subfield code="a">Electronic books.</marc:subfield>
+            <marc:subfield code="2">local</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="710">
+            <marc:subfield code="a">ebrary, Inc.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="4" ind2="0" tag="856">
+            <marc:subfield code="u">http://site.ebrary.com/lib/rochester/Doc?id=10333795</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="999">
+            <marc:subfield code="a">Text data RCL Internet ebrary</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="931" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Language material</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Computer file</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="935" ind1=" " ind2=" ">
+            <marc:subfield code="a">Monograph/Item</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(NRU)4527116</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Electronic resource</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="934" ind1=" " ind2=" ">
+            <marc:subfield code="a">Remote</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="937" ind1=" " ind2=" ">
+            <marc:subfield code="a">Fiction</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="941" ind1=" " ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="943" ind1=" " ind2=" ">
+            <marc:subfield code="a">English</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="240" ind1="0" ind2="0">
+            <marc:subfield code="a">Green rape</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="a">Nature</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="x">Effect of human beings on</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="969" ind1=" " ind2="0">
+            <marc:subfield code="v">Poetry.</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/040</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01153cam a2200301Ia 4500</marc:leader>
+          <marc:controlfield tag="001">4527117</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="005">20110304161635.0</marc:controlfield>
+          <marc:controlfield tag="006">m        u        </marc:controlfield>
+          <marc:controlfield tag="007">cr cn|||||||||</marc:controlfield>
+          <marc:controlfield tag="008">081213s2009    jm      sb    001 0 eng d</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="020">
+            <marc:subfield code="z">9766402159</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="020">
+            <marc:subfield code="z">9789766402150</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(CaPaEBR)ebr10342239</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">4527117</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="040">
+            <marc:subfield code="a">CaPaEBR</marc:subfield>
+            <marc:subfield code="c">CaPaEBR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2="4" tag="050">
+            <marc:subfield code="a">PR9214</marc:subfield>
+            <marc:subfield code="b">.M35 2009eb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2=" " tag="100">
+            <marc:subfield code="a">McKenzie, Earl,</marc:subfield>
+            <marc:subfield code="d">1943-</marc:subfield>
+            <marc:subfield code="4">aut</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="1" ind2="0" tag="245">
+            <marc:subfield code="a">Philosophy in the West Indian novel</marc:subfield>
+            <marc:subfield code="h">[electronic resource] /</marc:subfield>
+            <marc:subfield code="c">Earl McKenzie.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="260">
+            <marc:subfield code="a">Kingston, Jamaica :</marc:subfield>
+            <marc:subfield code="b">University of the West Indies Press,</marc:subfield>
+            <marc:subfield code="c">c2009.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="300">
+            <marc:subfield code="a">xi, 152 p.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="504">
+            <marc:subfield code="a">Includes bibliographical references (p. [137]-143) and index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="533">
+            <marc:subfield code="a">Electronic reproduction.</marc:subfield>
+            <marc:subfield code="b">Palo Alto, Calif. :</marc:subfield>
+            <marc:subfield code="c">ebrary,</marc:subfield>
+            <marc:subfield code="d">2009.</marc:subfield>
+            <marc:subfield code="n">Available via World Wide Web.</marc:subfield>
+            <marc:subfield code="n">Access may be limited to ebrary affiliated libraries.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="650">
+            <marc:subfield code="a">Philosophy in literature.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="650">
+            <marc:subfield code="a">West Indian fiction (English)</marc:subfield>
+            <marc:subfield code="x">History and criticism.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="7" tag="655">
+            <marc:subfield code="a">Electronic books.</marc:subfield>
+            <marc:subfield code="2">local</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="2" ind2=" " tag="710">
+            <marc:subfield code="a">ebrary, Inc.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="4" ind2="0" tag="856">
+            <marc:subfield code="u">http://site.ebrary.com/lib/rochester/Doc?id=10342239</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="999">
+            <marc:subfield code="a">Text data RCL Internet ebrary</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="931" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Language material</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Computer file</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="935" ind1=" " ind2=" ">
+            <marc:subfield code="a">Monograph/Item</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(NRU)4527117</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Electronic resource</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="934" ind1=" " ind2=" ">
+            <marc:subfield code="a">Remote</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="937" ind1=" " ind2=" ">
+            <marc:subfield code="a">Non-Fiction</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="941" ind1=" " ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="943" ind1=" " ind2=" ">
+            <marc:subfield code="a">English</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="240" ind1="0" ind2="0">
+            <marc:subfield code="a">Philosophy in the West Indian novel</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="a">West Indian fiction (English)</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="x">History and criticism.</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
