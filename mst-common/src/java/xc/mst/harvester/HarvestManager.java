@@ -155,8 +155,14 @@ public class HarvestManager extends WorkerThread {
 		super.finishInner(success);
 		RecordCounts mostRecentIncomingRecordCounts =
 			getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName());
-		// I'm substracting 1s from startTime because they might actually be equal by the second
-		if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+		// I'm subtracting 1s from startTime because they might actually be equal by the second
+		if (mostRecentIncomingRecordCounts == null) {
+			LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts == null!");
+		}
+		else if (mostRecentIncomingRecordCounts.getHarvestStartDate() == null) {
+			LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
+		}
+		else if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
 			for (RecordCounts rc : new RecordCounts[] {
 					mostRecentIncomingRecordCounts,
 					getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
