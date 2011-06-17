@@ -18,6 +18,7 @@ import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
+import xc.mst.utils.MSTConfiguration;
 
 public class SolrWorkDelegate extends WorkerThread {
 	
@@ -95,7 +96,7 @@ public class SolrWorkDelegate extends WorkerThread {
 		}
 		if (getJobStatus().equals(Status.RUNNING)) {
 			setJobStatus(Status.IDLE);
-			try {Thread.sleep(10000);} catch (Throwable t) {}
+			try {Thread.sleep(config.getPropertyAsInt("solr.index.sleepBetweenNewRecordsCheck", 10000));} catch (Throwable t) {}
 			if (getJobStatus().equals(Status.IDLE)) {
 				setJobStatus(Status.RUNNING);
 			}

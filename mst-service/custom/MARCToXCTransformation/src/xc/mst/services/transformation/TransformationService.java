@@ -55,20 +55,38 @@ public class TransformationService extends SolrTransformationService {
 	// which begs the question about the lack of transactions... I need a way to 
 	// rollback if something bad happens.  Probably the easiest thing to do is just to delete
 	// records with some id higher than something.
-	protected TLongLongHashMap bibsProcessedLongId = new TLongLongHashMap();
-	protected Map<String, Long> bibsProcessedStringId = new HashMap<String, Long>();
-	protected TLongLongHashMap bibsYet2ArriveLongId = new TLongLongHashMap();
-	protected Map<String, Long> bibsYet2ArriveStringId = new HashMap<String, Long>();
+	protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>(); 
+	protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+	protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap = new HashMap<String, TLongLongHashMap>();
+	protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, Long>>();
 	
-	protected TLongLongHashMap bibsProcessedLongIdAdded = new TLongLongHashMap();
-	protected Map<String, Long> bibsProcessedStringIdAdded = new HashMap<String, Long>();
-	protected TLongLongHashMap bibsYet2ArriveLongIdAdded = new TLongLongHashMap();
-	protected Map<String, Long> bibsYet2ArriveStringIdAdded = new HashMap<String, Long>();
+	protected Map<String, TLongLongHashMap> bibsProcessedLongIdAddedMap = new HashMap<String, TLongLongHashMap>(); 
+	protected Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap = new HashMap<String, Map<String, Long>>();
+	protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
+	protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, Long>>();
 	
-	protected TLongLongHashMap bibsProcessedLongIdRemoved = new TLongLongHashMap();
-	protected Map<String, Long> bibsProcessedStringIdRemoved = new HashMap<String, Long>();
-	protected TLongLongHashMap bibsYet2ArriveLongIdRemoved = new TLongLongHashMap();
-	protected Map<String, Long> bibsYet2ArriveStringIdRemoved = new HashMap<String, Long>();
+	protected Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap = new HashMap<String, TLongLongHashMap>(); 
+	protected Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+	protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
+	protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+	
+	protected TLongLongHashMap getLongKeyedMap(String key, Map<String, TLongLongHashMap> m1) {
+		TLongLongHashMap m2 = m1.get(key);
+		if (m2 == null) {
+			m2 = new TLongLongHashMap();
+			m1.put(key, m2);
+		}
+		return m2;
+	}
+	
+	protected Map<String, Long> getStringKeyedMap(String key, Map<String, Map<String, Long>> m1) {
+		Map<String, Long> m2 = m1.get(key);
+		if (m2 == null) {
+			m2 = new HashMap<String, Long>();
+			m1.put(key, m2);
+		}
+		return m2;
+	}
 	
 	protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 	protected List<long[]> heldHoldings = new ArrayList<long[]>();
@@ -107,7 +125,11 @@ public class TransformationService extends SolrTransformationService {
 		LOG.info("TransformationService.setup");
 		TimingLogger.outputMemory();
 		TimingLogger.start("getTransformationDAO().loadBibMaps");
-		getTransformationDAO().loadBibMaps(bibsProcessedLongId, bibsProcessedStringId, bibsYet2ArriveLongId, bibsYet2ArriveStringId);
+		getTransformationDAO().loadBibMaps(
+				bibsProcessedLongIdMap, 
+				bibsProcessedStringIdMap, 
+				bibsYet2ArriveLongIdMap, 
+				bibsYet2ArriveStringIdMap);
 		TimingLogger.stop("getTransformationDAO().loadBibMaps");
 		TimingLogger.reset();
 		inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs", 0);
@@ -152,23 +174,49 @@ public class TransformationService extends SolrTransformationService {
 		}
 	}
 	
-	protected Long getManifestationId4BibProcessed(String s) {
-		return getLongFromMap(bibsProcessedLongId, bibsProcessedStringId, s);
+	protected Long getManifestationId4BibProcessed(String orgCode, String s) {
+		return getLongFromMap(
+				getLongKeyedMap(orgCode, bibsProcessedLongIdMap), 
+				getStringKeyedMap(orgCode, bibsProcessedStringIdMap), 
+				s);
 	}
-	protected void addManifestationId4BibProcessed(String s, Long l) {
-		add2Map(bibsProcessedLongId, bibsProcessedStringId, bibsProcessedLongIdAdded, bibsProcessedStringIdAdded, s, l);
+	protected void addManifestationId4BibProcessed(String orgCode, String s, Long l) {
+		add2Map(
+				getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
+				getStringKeyedMap(orgCode, bibsProcessedStringIdMap), 
+				getLongKeyedMap(orgCode, bibsProcessedLongIdAddedMap), 
+				getStringKeyedMap(orgCode, bibsProcessedStringIdAddedMap), 
+				s, l);
 	}
-	protected void removeManifestationId4BibProcessed(String s) {
-		removeFromMap(bibsProcessedLongId, bibsProcessedStringId, bibsProcessedLongIdRemoved, bibsProcessedStringIdRemoved, s);
+	protected void removeManifestationId4BibProcessed(String orgCode, String s) {
+		removeFromMap(
+				getLongKeyedMap(orgCode, bibsProcessedLongIdMap), 
+				getStringKeyedMap(orgCode, bibsProcessedStringIdMap), 
+				getLongKeyedMap(orgCode, bibsProcessedLongIdRemovedMap), 
+				getStringKeyedMap(orgCode, bibsProcessedStringIdRemovedMap), 
+				s);
 	}
-	protected Long getManifestationId4BibYet2Arrive(String s) {
-		return getLongFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, s);
+	protected Long getManifestationId4BibYet2Arrive(String orgCode, String s) {
+		return getLongFromMap(
+				getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap), 
+				getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap), 
+				s);
 	}
-	protected void addManifestationId4BibYet2Arrive(String s, Long l) {
-		add2Map(bibsYet2ArriveLongId, bibsYet2ArriveStringId, bibsYet2ArriveLongIdAdded, bibsYet2ArriveStringIdAdded, s, l);
+	protected void addManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
+		add2Map(
+				getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap), 
+				getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap), 
+				getLongKeyedMap(orgCode, bibsYet2ArriveLongIdAddedMap), 
+				getStringKeyedMap(orgCode, bibsYet2ArriveStringIdAddedMap), 
+				s, l);
 	}
-	protected void removeManifestationId4BibYet2Arrive(String s) {
-		removeFromMap(bibsYet2ArriveLongId, bibsYet2ArriveStringId, bibsYet2ArriveLongIdRemoved, bibsYet2ArriveStringIdRemoved, s);
+	protected void removeManifestationId4BibYet2Arrive(String orgCode, String s) {
+		removeFromMap(
+				getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap), 
+				getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
+				getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
+				getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap), 
+				s);
 	}
 	
 	@Override
@@ -182,19 +230,19 @@ public class TransformationService extends SolrTransformationService {
 			TimingLogger.start("TransformationDAO.non-generic");
 			// persist 4 001->recordId maps
 			getTransformationDAO().persistBibMaps(
-					bibsProcessedLongIdAdded, bibsProcessedStringIdAdded,
-					bibsProcessedLongIdRemoved, bibsProcessedStringIdRemoved,
-					bibsYet2ArriveLongIdAdded, bibsYet2ArriveStringIdAdded,
-					bibsYet2ArriveLongIdRemoved, bibsYet2ArriveStringIdRemoved);
+					bibsProcessedLongIdAddedMap, bibsProcessedStringIdAddedMap,
+					bibsProcessedLongIdRemovedMap, bibsProcessedStringIdRemovedMap,
+					bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveStringIdAddedMap,
+					bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveStringIdRemovedMap);
 			
-			bibsProcessedLongIdAdded.clear();
-			bibsProcessedStringIdAdded.clear();
-			bibsProcessedLongIdRemoved.clear();
-			bibsProcessedStringIdRemoved.clear();
-			bibsYet2ArriveLongIdAdded.clear();
-			bibsYet2ArriveStringIdAdded.clear();
-			bibsYet2ArriveLongIdRemoved.clear();
-			bibsYet2ArriveStringIdRemoved.clear();
+			bibsProcessedLongIdAddedMap.clear();
+			bibsProcessedStringIdAddedMap.clear();
+			bibsProcessedLongIdRemovedMap.clear();
+			bibsProcessedStringIdRemovedMap.clear();
+			bibsYet2ArriveLongIdAddedMap.clear();
+			bibsYet2ArriveStringIdAddedMap.clear();
+			bibsYet2ArriveLongIdRemovedMap.clear();
+			bibsYet2ArriveStringIdRemovedMap.clear();
 			
 			previouslyHeldManifestationIds.forEach(new TLongProcedure() {
 				public boolean execute(long recordId) {
@@ -339,10 +387,12 @@ public class TransformationService extends SolrTransformationService {
 				long nextNewId = getRepositoryDAO().getNextId();
 				if (isBib) {
 					String bib001 = originalRecord.getControlField(1);
-					Long manifestationId = getManifestationId4BibYet2Arrive(bib001);
+					Long manifestationId = getManifestationId4BibYet2Arrive(
+							originalRecord.getOrgCode(), bib001);
 					if (manifestationId != null) {
 						TimingLogger.add("found BibYet2Arrive", 1);
-						removeManifestationId4BibYet2Arrive(bib001);
+						removeManifestationId4BibYet2Arrive(
+								originalRecord.getOrgCode(), bib001);
 						previouslyHeldManifestationIds.add(manifestationId);
 					} else {
 						if (ar.getPreviousManifestationId() != null) {
@@ -351,7 +401,8 @@ public class TransformationService extends SolrTransformationService {
 							manifestationId = getRepositoryDAO().getNextIdAndIncr();
 						}
 					}
-					addManifestationId4BibProcessed(bib001, manifestationId);
+					addManifestationId4BibProcessed(
+							originalRecord.getOrgCode(), bib001, manifestationId);
 					List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
 							getRepository(), ar, manifestationId, nextNewId);
 					if (bibRecords != null) {
@@ -365,15 +416,18 @@ public class TransformationService extends SolrTransformationService {
 						LOG.error("ar.getReferencedBibs() == null");
 					} else {
 						for (String ref001 : ar.getReferencedBibs()) {
-							Long manifestationId = getManifestationId4BibProcessed(ref001);
+							Long manifestationId = getManifestationId4BibProcessed(
+									originalRecord.getOrgCode(), ref001);
 							
 							LOG.debug("input "+record.getId()+ "manifestationId: "+manifestationId);
 							if (manifestationId == null) {
-								manifestationId = getManifestationId4BibYet2Arrive(ref001);
+								manifestationId = getManifestationId4BibYet2Arrive(
+										originalRecord.getOrgCode(), ref001);
 								status = Record.HELD;
 								if (manifestationId == null) {
 									manifestationId = getRepositoryDAO().getNextIdAndIncr();
-									addManifestationId4BibYet2Arrive(ref001, manifestationId);
+									addManifestationId4BibYet2Arrive(
+											originalRecord.getOrgCode(), ref001, manifestationId);
 								}
 								manifestaionsIdsInWaiting.add(manifestationId);
 							}

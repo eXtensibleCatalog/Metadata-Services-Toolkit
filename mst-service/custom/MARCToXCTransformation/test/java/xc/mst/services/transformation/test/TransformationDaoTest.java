@@ -21,6 +21,7 @@ import xc.mst.services.transformation.dao.TransformationDAO;
 
 public class TransformationDaoTest extends BaseMetadataServiceTest {
 	
+	/*
 	private final static Logger LOG = Logger.getLogger(TransformationDaoTest.class);
 
 	@Test
@@ -143,4 +144,5 @@ public class TransformationDaoTest extends BaseMetadataServiceTest {
 	protected TransformationDAO getTransformationDAO() {
 		return ((TransformationService)getMetadataService()).getTransformationDAO();	
 	}
+	*/
 }
