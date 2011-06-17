@@ -4129,7 +4129,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		// Add each subfield to the specified level with the specified tag and attribute
 		for(Field element : elements)
 		{
-			// A StringBuilder to concat the values of all the subfields of the Element
+			// A StringBuilder to concat the va lues of all the subfields of the Element
 			StringBuilder locationBuilder = new StringBuilder();
 			StringBuilder callNumberBuilder = new StringBuilder();
 
