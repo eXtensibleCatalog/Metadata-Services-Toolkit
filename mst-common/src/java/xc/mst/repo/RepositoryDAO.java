@@ -230,7 +230,7 @@ public class RepositoryDAO extends BaseDAO {
 	}
 	
 	public long getNextId() {
-		return this.nextId++;
+		return this.nextId+1;
 	}
 	
 	public void addRecords(String name, List<Record> records) {
