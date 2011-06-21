@@ -30,10 +30,11 @@ addValidator : function()
                    else
                        {
                            var arr = rurl.split("http://");
+                           var arr2 = rurl.split("file://");
 
-                           if(arr[1]==null)
+                           if(arr[1]==null && arr2[1]==null)
                                {
-                                   createErrorDiv("error","URL should begin with a protocol such as http:// or https://");
+                                   createErrorDiv("error","URL should begin with a protocol such as http://");
                                }
                            else
                                {

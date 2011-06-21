@@ -23,6 +23,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XmlHelper;
 
 /**
@@ -64,6 +65,22 @@ public class ValidateRepository extends HttpService {
 	 */
 	private int deletedRecord = -1;
 	
+	
+
+	//for debug usage only - when using a 'repository' that consists of files on a local filesystem.
+	private Format getFormat(String[] arr) throws Exception {
+		Format f = getFormatDAO().getByName(arr[0]);
+		if (f == null) {
+			f = new Format();
+			f.setName(arr[0]);
+			f.setNamespace(arr[1]);
+			f.setSchemaLocation(arr[2]);
+			getFormatDAO().insert(f);
+			f = getFormatDAO().getByName(arr[0]);
+		}
+		return f;
+	}
+
 	/**
 	 * Validates the OAI provider with the passed provider ID
 	 *
@@ -71,6 +88,9 @@ public class ValidateRepository extends HttpService {
 	 * @throws DatabaseConfigException 
 	 */
 	public void validate(int providerId) throws DatabaseConfigException {
+
+		StringBuilder errors = new StringBuilder();
+
 		this.providerId = providerId;
 		provider = getProviderDAO().getById(providerId);
 
@@ -78,44 +98,63 @@ public class ValidateRepository extends HttpService {
 			throw new RuntimeException("Cannot find the provider with ID " + providerId);
 
 		baseUrl = provider.getOaiProviderUrl();
-		if (baseUrl.startsWith("file")) {
-			return;
-		}
+		if (isFileUrl(baseUrl)) {
 
-		StringBuilder errors = new StringBuilder();
+			// Mark the provider as being valid - buyer beware
+			provider.setIdentify(true);
+			provider.setListSets(true);
+
+			final String f_name = MSTConfiguration.getInstance().getProperty("file_repo_format_name");
+			final String f_namespace = MSTConfiguration.getInstance().getProperty("file_repo_format_namespace");
+			final String f_schema = MSTConfiguration.getInstance().getProperty("file_repo_format_schema_loc");
+			try {
+				Format file_format = getFormat(new String[] {f_name,f_namespace,f_schema});
+				provider.addFormat(file_format);
+				provider.setListFormats(true);
+				provider.setService(true);
+			} catch (Exception e) {
+				provider.setListFormats(false);
+				provider.setService(false);
+				LOG.error("", e);
+				errors.append(e.getMessage()).append("\n");
+			}
+		}
 
 		// Validate the Identify OAI verb
-		try {
-			checkIdentifyInfo();
-			provider.setIdentify(true);
-			provider.setGranularity(getGranularity());
-		} catch(Exception e) {
-			provider.setIdentify(false);
-			LOG.error("", e);
-			errors.append(e.getMessage()).append("\n");
-		} 
-		
-		try {
-			checkSets();
-			provider.setListSets(true);
-		} catch(Exception e) {
-			provider.setListSets(false);
-			LOG.error("", e);
-			errors.append(e.getMessage()).append("\n");
-		}
-		
-		try {
-			checkFormats();
-			provider.setListFormats(true);
-		} catch(Exception e) {
-			provider.setListFormats(false);
-			LOG.error("", e);
-			errors.append(e.getMessage()).append("\n");
-		}
+		if (!isFileUrl(baseUrl)) {
+			try {
+				checkIdentifyInfo();
+				provider.setIdentify(true);
+				provider.setGranularity(getGranularity());
+			} catch(Exception e) {
+				provider.setIdentify(false);
+				LOG.error("", e);
+				errors.append(e.getMessage()).append("\n");
+			} 
+			
+			try {
+				checkSets();
+				provider.setListSets(true);
+			} catch(Exception e) {
+				provider.setListSets(false);
+				LOG.error("", e);
+				errors.append(e.getMessage()).append("\n");
+			}
+			
+			try {
+				checkFormats();
+				provider.setListFormats(true);
+			} catch(Exception e) {
+				provider.setListFormats(false);
+				LOG.error("", e);
+				errors.append(e.getMessage()).append("\n");
+			}
 
-		// Mark the provider as being valid for harvesting if and only if
-		// it passed validation for the identify, listSets, and listMetadataFormats verbs
-		provider.setService(provider.getIdentify() && provider.getListSets() && provider.getListFormats());
+
+			// Mark the provider as being valid for harvesting if and only if
+			// it passed validation for the identify, listSets, and listMetadataFormats verbs
+			provider.setService(provider.getIdentify() && provider.getListSets() && provider.getListFormats());
+		}
 
 		try {
 			getProviderDAO().update(provider);
@@ -126,6 +165,10 @@ public class ValidateRepository extends HttpService {
 
 		if(errors.length() > 0)
 			throw new RuntimeException(errors.toString());
+	}
+
+	private boolean isFileUrl(String urlStr) {
+		return urlStr.startsWith("file");
 	}
 
 	public void checkIdentifyInfo() throws DatabaseConfigException, HttpException {

@@ -16,8 +16,12 @@ import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang.StringUtils;
@@ -306,7 +310,9 @@ public class HarvestManager extends WorkerThread {
 							}
 						}
 
-						for (File file : folder.listFiles()) {
+						File[] files = folder.listFiles();
+						files = sortFiles(files);
+						for (File file : files) {
 							log.debug("file.getName(): "+file.getName());
 							log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
 							if (!file.getName().endsWith(".xml")) {
@@ -321,7 +327,7 @@ public class HarvestManager extends WorkerThread {
 							}
 						}
 					}
-					log.debug("file2harvest: "+file2harvest);
+					log.info("file2harvest: "+file2harvest);
 					if (file2harvest == null) {
 						return false;
 					}
@@ -458,6 +464,76 @@ public class HarvestManager extends WorkerThread {
 		repo.commitIfNecessary(false, recordsProcessedThisRun, this.incomingRecordCounts, null);
 		running.unlock();
 		return retVal;
+	}
+
+	// this is for debug use with a harvest from filesystem, files have format like:
+	// 7_969999_970000_6679727.xml
+	// 7_974999_975000_6679727.xml
+	// must then sort by token after 2nd _
+	//
+	// assumptions:  already know files != null
+	private File[] sortFiles(File[] files) {
+		if (files.length < 2) {
+			return files;
+		}
+		String name = files[0].getName();
+		if (!name.startsWith("initial")) {
+			StringTokenizer st = new StringTokenizer(name, "_");
+			if (st.countTokens() >= 3) {
+				// have at least 2 underscores...can proceed with sorting by token after 2nd underscore.
+				return reallySortFiles(files);
+			}
+			else {
+				return files;
+			}
+		}
+		else if (files.length > 1) {
+			name = files[1].getName();
+			StringTokenizer st = new StringTokenizer(name, "_");
+			if (st.countTokens() >= 3) {
+				// have at least 2 underscores...can proceed with sorting by token after 2nd underscore.
+				return reallySortFiles(files);
+			}
+			else return files;
+		}
+		return files;
+	}
+
+	// this is for debug use with a harvest from filesystem, files have format like:
+	// 7_969999_970000_6679727.xml
+	// 7_974999_975000_6679727.xml
+	// must then sort by token after 2nd _
+	//
+	// by earlier method determined we have files containing 2 '_' characters, sort these by int after 2nd underscore.
+	private File[] reallySortFiles(File[] files) {
+		TreeMap<Long, File> map = new TreeMap<Long, File>();
+		for (File file: files) {
+			if (file.getName().startsWith("initial")) {  // want this one to be 1st.
+				map.put(0l, file);
+			}
+			else {
+				StringTokenizer st = new StringTokenizer(file.getName(), "_");
+				try {
+					st.nextToken(); st.nextToken();
+				} catch (NoSuchElementException e) {
+					LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file "+file.toString(), e);
+					return files;
+				}
+				try {
+					long tokL = Long.parseLong(st.nextToken());
+					map.put(tokL, file);
+				}
+				catch (NumberFormatException nfe) {
+					LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file "+file.toString(), nfe);
+					return files;
+				}
+				
+			}
+			
+			//map.put
+		}
+		Collection<File> collection = map.values();
+		return collection.toArray(new File[0]);
 	}
 
 	@SuppressWarnings("unchecked")
