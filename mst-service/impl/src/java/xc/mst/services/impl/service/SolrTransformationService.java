@@ -20,6 +20,8 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 
 import xc.mst.bo.record.AggregateXCRecord;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.bo.record.marc.Subfield;
@@ -3284,6 +3286,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		}
 
 		// The subfields of the 852 datafield we're processing
+		// TODO is 'a' a valid locationTargetSubfields?
 		String locationTargetSubfields = "bc";
 		String textualHoldingsTargetSubfields = "az";
 		String callNumberTargetSubfields = "hijklm";
@@ -3371,6 +3374,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 					
 				}
 					
+				// TODO do we need to check for the existence of this?
 				if(locationTargetSubfields.indexOf(subfieldCode) != -1)
 					locationValues.add(subfield.getContents());
 
@@ -4096,15 +4100,16 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	 *
 	 * @param transformMe The MARC XML record we're transforming
 	 * @param transformInto The XC record which will store the transformed version of the record
+	 * @param record In case we need to attach an error.
 	 * @return A reference to transformInto after this transformation step has been completed.
 	 */
 	@SuppressWarnings("unchecked")
-	protected AggregateXCRecord holdingsProcess852(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto)
+	protected AggregateXCRecord holdingsProcess852(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto, InputRecord record)
 	{
 		// Get the elements with the requested tags in the MARC XML record
 		List<Field> elements = transformMe.getDataFields(852);
 		
-		List<Field> relevantSiblings = new ArrayList();
+		List<Field> relevantSiblings = new ArrayList<Field>();
 		for (int df : new int[] {866, 867, 868}) {
 			List<Field> sibs = transformMe.getDataFields(df);
 			if (sibs != null && sibs.size() > 0)
@@ -4112,6 +4117,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		}
 
 		// The subfields of the 852 datafield we're processing
+		// TODO are 'a' and 'c' valid locationTargetSubfields?
 		String locationTargetSubfields = "b";
 		String callNumberTargetSubfields = "hijklm";
 		String textualHoldingsTargetSubfields = "az";
@@ -4123,7 +4129,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		// Add each subfield to the specified level with the specified tag and attribute
 		for(Field element : elements)
 		{
-			// A StringBuilder to concat the values of all the subfields of the Element
+			// A StringBuilder to concat the va lues of all the subfields of the Element
 			StringBuilder locationBuilder = new StringBuilder();
 			StringBuilder callNumberBuilder = new StringBuilder();
 
@@ -4137,10 +4143,16 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 				// Get the subfield's code
 				char subfieldCode = subfield.getCode();
 
-				if(locationTargetSubfields.indexOf(subfieldCode) != -1)
+				if(locationTargetSubfields.indexOf(subfieldCode) != -1) {
 					locationBuilder.append(subfield.getContents() + " ");
-				if(callNumberTargetSubfields.indexOf(subfieldCode) != -1)
+				}
+				else {
+					// note, for now, just attach this error to input record, a case could be made to attach it to either side.
+					addMessage(record, 852, RecordMessage.ERROR);
+				}
+				if(callNumberTargetSubfields.indexOf(subfieldCode) != -1) {
 					callNumberBuilder.append(subfield.getContents() + " ");
+				}
 			}
 
 			// A list of the values of the textual holdings elements, which are taken from
