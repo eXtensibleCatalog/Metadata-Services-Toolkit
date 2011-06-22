@@ -95,6 +95,7 @@ group by rf.type,
 +----------+------+------+
 */
 
+/*
 select *
 from record_links rl
 	,records rf
@@ -104,3 +105,83 @@ where rl.to_record_id = rt.record_id
 	and rt.type='e'
 	and rf.type='e'
 limit 1;
+*/
+/*
++----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+-----------+---------------------+------+--------+-------------+-----------+
+| from_record_id | to_record_id | record_id | oai_datestamp       | type | status | prev_status | format_id | record_id | oai_datestamp       | type | status | prev_status | format_id |
++----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+-----------+---------------------+------+--------+-------------+-----------+
+|       13396549 |     13396543 |  13396549 | 2011-06-14 14:16:32 | e    | A      | N           |         5 |  13396543 | 2011-06-14 14:16:32 | e    | A      | N           |         5 |
++----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+-----------+---------------------+------+--------+-------------+-----------+
+*/
+
+/*
+select * 
+from record_links
+where from_record_id in 
+(13396543,13396547,13396549, 13396551, 13396555) or to_record_id in 
+(13396543,13396547,13396549, 13396551, 13396555);
+*/
+
+/*
+select *
+from record_predecessors
+where record_id in 
+(13396543,13396547,13396549, 13396551, 13396555);
+*/
+/*
+select distinct pred_record_id 
+from record_predecessors
+where record_id in 
+(13396541, 13396542, 13396543, 13396544, 13396545, 13396547, 13396548, 13396549, 13396551, 13396552, 13396555);
+*/
+/*
+select distinct record_id 
+from record_predecessors
+where pred_record_id in 
+(6692601, 6692602, 6692603, 6692604, 6692605, 6692606, 13371151, 13371152, 13371153, 13371154, 13371155 );
+*/
+/*
+select *
+from record_predecessors p,
+	records r,
+	record_updates u
+where p.record_id = r.record_id
+	and r.record_id = u.record_id
+	and r.record_id = 13370940;
+*/
+
+/*
+select *
+from record_predecessors
+where record_id in 
+(6683810, 6692601, 6692602, 6692603, 6692604, 6692605, 6692606);
+*/
+
+/*
+select * 
+from record_oai_ids
+where record_id in (4083, 12874, 12875, 12876, 12877, 12878, 12879 );
+*/
+
+/*
+select *
+from record_updates
+where record_id in ( 6683735, 13370940, 13395911);
+*/
+
+/*
+select count(*) from xc_rochester_137.records rr, xc_marcnormalization.records nr where rr.record_id = nr.record_id
+*/
+
+select o.oai_id
+from xc_rochester_137.record_oai_ids o
+	,xc_marcnormalization.records nr
+	,xc_marcnormalization.record_predecessors nrp
+	,xc_marctoxctransformation.records tr
+	,xc_marctoxctransformation.record_predecessors trp
+where tr.record_id = 29735902
+	and trp.record_id = tr.record_id
+	and trp.pred_record_id = nr.record_id
+	and nrp.record_id = nr.record_id
+	and nrp.pred_record_id = o.record_id
+
