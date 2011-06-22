@@ -470,6 +470,7 @@ public class HarvestManager extends WorkerThread {
 	// 7_969999_970000_6679727.xml
 	// 7_974999_975000_6679727.xml
 	// must then sort by token after 2nd _
+	// also note that the first file gets the special name, initial.xml
 	//
 	// assumptions:  already know files != null
 	private File[] sortFiles(File[] files) {
@@ -527,10 +528,7 @@ public class HarvestManager extends WorkerThread {
 					LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file "+file.toString(), nfe);
 					return files;
 				}
-				
 			}
-			
-			//map.put
 		}
 		Collection<File> collection = map.values();
 		return collection.toArray(new File[0]);

@@ -98,6 +98,8 @@ public class ValidateRepository extends HttpService {
 			throw new RuntimeException("Cannot find the provider with ID " + providerId);
 
 		baseUrl = provider.getOaiProviderUrl();
+
+		// if file url, dummy up the repository
 		if (isFileUrl(baseUrl)) {
 
 			// Mark the provider as being valid - buyer beware
@@ -121,7 +123,7 @@ public class ValidateRepository extends HttpService {
 		}
 
 		// Validate the Identify OAI verb
-		if (!isFileUrl(baseUrl)) {
+		else {
 			try {
 				checkIdentifyInfo();
 				provider.setIdentify(true);
