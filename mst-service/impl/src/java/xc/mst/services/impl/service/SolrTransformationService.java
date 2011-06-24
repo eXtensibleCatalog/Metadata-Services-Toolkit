@@ -4138,6 +4138,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
 			// Iterate over the subfields, and append each one to the StringBuilder if it
 			// is in the list of target subfields
+			boolean hasLocationCode = false;
 			for(Subfield subfield : subfields)
 			{
 				// Get the subfield's code
@@ -4145,14 +4146,19 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
 				if(locationTargetSubfields.indexOf(subfieldCode) != -1) {
 					locationBuilder.append(subfield.getContents() + " ");
-				}
-				else {
-					// note, for now, just attach this error to input record, a case could be made to attach it to either side.
-					addMessage(record, 852, RecordMessage.ERROR);
+					hasLocationCode = true;
 				}
 				if(callNumberTargetSubfields.indexOf(subfieldCode) != -1) {
 					callNumberBuilder.append(subfield.getContents() + " ");
 				}
+			}
+			if (!hasLocationCode) {
+				// note, for now, just attach this error to input record, a case could be made to attach it to either side.
+				addMessage(record, 852, RecordMessage.ERROR);
+				LOG.error("*** BAD, no 852 location code, ERROR!");
+			}
+			else {
+				LOG.debug("*** Good we had an 852 location code, no ERROR!");
 			}
 
 			// A list of the values of the textual holdings elements, which are taken from

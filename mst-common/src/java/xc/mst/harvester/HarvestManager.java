@@ -162,9 +162,11 @@ public class HarvestManager extends WorkerThread {
 		// I'm subtracting 1s from startTime because they might actually be equal by the second
 		if (mostRecentIncomingRecordCounts == null) {
 			LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts == null!");
+			LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null mostRecentIncomingRecordCounts!");
 		}
 		else if (mostRecentIncomingRecordCounts.getHarvestStartDate() == null) {
 			LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
+			LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null harvest start date!");
 		}
 		else if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
 			for (RecordCounts rc : new RecordCounts[] {
@@ -566,7 +568,14 @@ public class HarvestManager extends WorkerThread {
 			recordEl = listRecordsEl.getChild("record", root.getNamespace());
 		} catch (Throwable e) {
 			// Check the response for the request URL
-			Element requestUrlElement = listRecordsEl.getChild("requestURL", root.getNamespace());
+			Element requestUrlElement;
+			try {
+				requestUrlElement = listRecordsEl.getChild("requestURL", root.getNamespace());
+			} catch (Exception e1) {
+				LogWriter.addError(currentHarvest.getProvider().getLogFileName(), "The OAI provider returned an invalid response to the ListRecords request.");
+				sendReportEmail("The OAI provider returned an invalid response to the ListRecords request.");
+				throw new RuntimeException("The data provider returned an invalid response to the ListRecords request: " + e.getMessage());  //exc. e more interesting than e1?
+			}
 
 			// If the response contained the URL, report the error "no records found"
 			if (requestUrlElement != null) {
