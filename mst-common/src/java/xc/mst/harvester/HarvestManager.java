@@ -301,6 +301,9 @@ public class HarvestManager extends WorkerThread {
 					log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
 					log.debug("provider: "+provider);
 					log.debug("provider.hashCode(): "+provider.hashCode());
+					if (!folder.exists()) {
+						throw new RuntimeException("folder "+folder.getAbsolutePath()+" does not exist");
+					}
 					if (folder.listFiles() != null) {
 						if (provider.getLastOaiRequest() != null) {
 							List<String> fileNames = new ArrayList<String>();
@@ -650,6 +653,7 @@ public class HarvestManager extends WorkerThread {
 		if (!StringUtils.isEmpty(resumption)) {
 			try {
 				this.records2ProcessThisRun = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
+				oaiIdCache.ensureCapacity((int)this.records2ProcessThisRun);
 			} catch (Throwable t) {
 				this.records2ProcessThisRun = -1;
 			}
