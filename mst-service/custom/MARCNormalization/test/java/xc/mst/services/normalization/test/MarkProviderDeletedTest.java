@@ -8,24 +8,17 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.harvest.HarvestSchedule;
 import xc.mst.bo.record.Record;
-import xc.mst.constants.Constants;
 import xc.mst.repo.Repository;
 
-public class MarkProviderDeletedTest extends StartToFinishTest {
+public class MarkProviderDeletedTest extends MockHarvestTest {
 	
 	protected static final Logger LOG = Logger.getLogger(MarkProviderDeletedTest.class);
 
 	public List<String> getFolders() {
 		List<String> fileStrs = new ArrayList<String>();
-		fileStrs.add("demo_175");
+		fileStrs.add("file_harvest");
 		return fileStrs;
 	}
-	
-//	@Override
-//	public String getProviderUrl() {
-//		LOG.debug("**** getProviderUrl() SUBCLASS ");
-//		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
-//	}
 	
 	public void finalTest() {
 		try {
@@ -82,3 +75,4 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
 	}
 	
 }
+

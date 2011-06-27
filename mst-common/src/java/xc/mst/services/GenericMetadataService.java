@@ -497,6 +497,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		running.acquireUninterruptibly();
 		if (!isSolrIndexer() && preserveStatuses) {
 			previousStatuses.clear();
+			previousStatuses.ensureCapacity(repo.getSize());
+			LOG.debug("previousStatuses.ensureCapacity("+repo.getSize()+");");
+			tempPreviousStatuses.ensureCapacity(MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000));
 			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
 		}
 

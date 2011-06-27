@@ -248,7 +248,7 @@ public class NormalizationService extends GenericMetadataService {
 
 				TimingLogger.start("bibsteps");
 
-				type = "bib";
+				type = "b";
 				((Record)record).setType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
 					normalizedXml = removeOcolc003(normalizedXml);
@@ -365,7 +365,7 @@ public class NormalizationService extends GenericMetadataService {
 			if("uvxy".contains(""+leader06)) {
 				TimingLogger.start("holdsteps");
 
-				type = "hold";
+				type = "h";
 				((Record)record).setType(type);
 				if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
 					normalizedXml = holdingsLocationName(normalizedXml);

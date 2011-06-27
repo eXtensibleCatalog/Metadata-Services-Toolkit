@@ -320,6 +320,7 @@ public class TransformationService extends SolrTransformationService {
 								Record orphanedHolding = new Record();
 								orphanedHolding.setStatus(Record.HELD);
 								orphanedHolding.setId(holdingId);
+								orphanedHolding.setType("h");
 								results.add(orphanedHolding);
 							}
 						}

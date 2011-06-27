@@ -241,6 +241,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 	}
 	
 	public void createHarvestSchedule(String name) throws Exception {
+		// clear out previous harvest
+		getProvider().setLastOaiRequest(null);
+		getProviderService().updateProvider(getProvider());
+		
 		HarvestSchedule schedule = new HarvestSchedule();
 		Calendar nowCal = Calendar.getInstance();
         schedule.setScheduleName(name);
@@ -317,3 +321,4 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 		return harvestOutResponse;
 	}
 }
+
