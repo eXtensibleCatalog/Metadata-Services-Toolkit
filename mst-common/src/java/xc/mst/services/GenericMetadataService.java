@@ -654,17 +654,30 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		if (!isSolrIndexer()) {
 			RecordCounts mostRecentIncomingRecordCounts =
 				getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName());
-			// I'm substracting 1s from startTime because they might actually be equal by the second
-			if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
-				for (RecordCounts rc : new RecordCounts[] {
-						mostRecentIncomingRecordCounts,
-						getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
-						getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
-						getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
-				}) {
-					LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
+			// I'm subtracting 1s from startTime because they might actually be equal by the second
+			try {
+				if (mostRecentIncomingRecordCounts == null) {
+					LOG.error("*** GenericMetadataService.process: mostRecentIncomingRecordCounts == null!");
+					LogWriter.addInfo(service.getServicesLogFileName(), "GenericMetadataService-unable to print record counts, null mostRecentIncomingRecordCounts!");
 				}
-				LogWriter.addInfo(service.getServicesLogFileName(), getRepository().getRecordStatsByType());
+				else if (mostRecentIncomingRecordCounts.getHarvestStartDate() == null) {
+					LOG.error("*** GenericMetadataService.process: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
+					LogWriter.addInfo(service.getServicesLogFileName(), "GenericMetadataService-unable to print record counts, null harvest start date!");
+				}
+				else if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+					for (RecordCounts rc : new RecordCounts[] {
+							mostRecentIncomingRecordCounts,
+							getRecordCountsDAO().getTotalIncomingRecordCounts(getRepository().getName()),
+							getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getRepository().getName()),
+							getRecordCountsDAO().getTotalOutgoingRecordCounts(getRepository().getName())
+					}) {
+						LogWriter.addInfo(service.getServicesLogFileName(), rc.toString(getRepository().getName()));
+					}
+					LogWriter.addInfo(service.getServicesLogFileName(), getRepository().getRecordStatsByType());
+				}
+			} catch (Throwable t) {
+				LOG.error("*** HarvestManager.finishInner: exception "+t);
+				LogWriter.addInfo(service.getServicesLogFileName(), "GenericMetadataService-unable to print record counts, unexpected exception!");
 			}
 		}
 		setStatus(Status.NOT_RUNNING);
