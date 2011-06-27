@@ -91,6 +91,7 @@ public class RepositoryDAO extends BaseDAO {
 			"r.oai_datestamp, "+
 			"r.format_id, "+
 			"r.status, "+
+			"r.type, "+
 			"r.prev_status ";
 	
 	protected final static String RECORD_MESSAGES_TABLE_COLUMNS = 
@@ -1799,6 +1800,7 @@ public class RepositoryDAO extends BaseDAO {
 			if (tables.contains(RECORDS_TABLE)) {
 				r.setId(rs.getLong("r.record_id"));
 				r.setCreatedAt(rs.getTimestamp("r.oai_datestamp"));
+				r.setType(rs.getString("type"));
 				String status = rs.getString("r.status");
 				String prevStatus = rs.getString("r.prev_status");
 				try {

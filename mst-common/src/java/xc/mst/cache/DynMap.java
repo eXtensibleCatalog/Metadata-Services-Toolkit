@@ -1,10 +1,15 @@
 package xc.mst.cache;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.utils.TimingLogger;
+import gnu.trove.THash;
 import gnu.trove.TLongLongHashMap;
 import gnu.trove.TObjectLongHashMap;
 
 public class DynMap {
+	
+	private static final Logger LOG = Logger.getLogger(DynMap.class);
 	
 	protected TObjectLongHashMap stringKeyedMap = new TObjectLongHashMap();
 	protected TLongLongHashMap longKeyedMap = new TLongLongHashMap();
@@ -32,6 +37,12 @@ public class DynMap {
 		} catch (NumberFormatException nfe) {
 			return stringKeyedMap.get(k);
 		}
+	}
+	
+	public void ensureCapacity(int desiredCapacity) {
+		LOG.debug("desiredCapacity: "+desiredCapacity);
+		longKeyedMap.ensureCapacity(desiredCapacity);
+		stringKeyedMap.ensureCapacity(desiredCapacity);
 	}
 	
 	public void clear() {

@@ -1,3 +1,70 @@
+select rs.set_id, r.status, count(*)
+from xc_rochester_137_local.records r
+	,xc_rochester_137_local.record_sets rs
+where r.record_id = rs.record_id
+group by rs.set_id, r.status;
+
+/*
+select o.oai_id
+from xc_marcnormalization.records nr
+	,xc_marcnormalization.record_predecessors nrp
+	,xc_rochester_137_local.records hr
+	,xc_rochester_137_local.record_oai_ids o
+where nr.type is null
+	and nrp.record_id = nr.record_id
+	and nrp.pred_record_id = hr.record_id
+	and hr.record_id = o.record_id
+;
+*/
+
+/*
+select count(*)
+from xc_marcnormalization.records nr
+	, xc_marctoxctransformation.records tr
+where nr.record_id = tr.record_id;
+*/
+
+/*
+select count(*) 
+from records r
+where r.type is null
+*/
+
+/*
+select straight_join *
+from 
+	 records r
+	, records_xml x
+	, record_updates u
+where r.type is null
+	and r.record_id = x.record_id
+	and u.record_id = x.record_id
+order by r.record_id
+limit 10;
+*/
+
+/*
+select straight_join *
+from 
+	 records r
+	 left join record_updates u on (u.record_id = r.record_id)
+	, records_xml x
+where r.type is null
+	and r.record_id = x.record_id
+	#and x.xml is not null
+limit 1;
+
+*/
+
+/*
+select count(*), r.type
+from 
+	record_links rl,
+	records r
+where rl.from_record_id = r.record_id
+group by r.type;
+*/
+
 /*
 select straight_join count(*)
 	, rl.to_record_id
@@ -173,15 +240,33 @@ where record_id in ( 6683735, 13370940, 13395911);
 select count(*) from xc_rochester_137.records rr, xc_marcnormalization.records nr where rr.record_id = nr.record_id
 */
 
+/*
 select o.oai_id
 from xc_rochester_137.record_oai_ids o
 	,xc_marcnormalization.records nr
 	,xc_marcnormalization.record_predecessors nrp
 	,xc_marctoxctransformation.records tr
 	,xc_marctoxctransformation.record_predecessors trp
-where tr.record_id = 29735902
+where tr.record_id = 13723663
 	and trp.record_id = tr.record_id
 	and trp.pred_record_id = nr.record_id
 	and nrp.record_id = nr.record_id
 	and nrp.pred_record_id = o.record_id
+*/
+
+/*
+I was trying to go from oai_id to transformation id, but since oai_id isn't indexed that won't work
+select tr.record_id
+from xc_rochester_137.record_oai_ids o
+	,xc_marcnormalization.records nr
+	,xc_marcnormalization.record_predecessors nrp
+	,xc_marctoxctransformation.records tr
+	,xc_marctoxctransformation.record_predecessors trp
+where o.oai_id = ''
+	and trp.record_id = tr.record_id
+	and trp.pred_record_id = nr.record_id
+	and nrp.record_id = nr.record_id
+	and nrp.pred_record_id = o.record_id
+*/
+
 
