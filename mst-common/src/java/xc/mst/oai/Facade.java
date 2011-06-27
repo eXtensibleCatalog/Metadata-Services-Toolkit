@@ -274,7 +274,6 @@ public class Facade extends BaseManager
 						}
 						response = xmlHelper.getString(oaiEl);
 					} else {
-						
 					}
 				}
 				
@@ -716,12 +715,12 @@ public class Facade extends BaseManager
 		Set setObject = null;
 
 		// If there was a resumption token, get it from the database
-		ResumptionToken resToken = null;
+		//ResumptionToken resToken = null;
 		if(resumptionToken != null) {
 			if(log.isDebugEnabled())
 				log.debug("The request had a resumption token " + resumptionToken);
 
-			resToken = new ResumptionToken();
+			//resToken = new ResumptionToken();
 			String[] rtSplit = resumptionToken.split("\\|");
 			// Set the values from the resumption token rather than keeping the ones parsed from the request
 			fromDate = new Date(UTC_PARSER.parseDateTime(rtSplit[0]).getMillis());
@@ -782,9 +781,9 @@ public class Facade extends BaseManager
 		// to the database if needed
 		if (records == null || records.size() == 0) {
 			LogWriter.addInfo(service.getHarvestOutLogFileName(), "There were no records which matched the parameters provided in the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
-
-			xml.append(XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"}));
-		} else {
+			return xml.append(XMLUtil.xmlTag("error", Constants.ERROR_NO_RECORDS_MATCH, new String[]{"code", "noRecordsMatch"})).toString();
+		} 
+		else {
 			// True if there are more results remaining than we can return at once
 			boolean hasMore = records.size() == MSTConfiguration.getInstance().getPropertyAsInt(Constants.CONFIG_OAI_REPO_MAX_RECORDS, 5000);
 
@@ -879,7 +878,6 @@ public class Facade extends BaseManager
 				//LogWriter.addInfo(service.getHarvestOutLogFileName(), "Returning " + totalRecords + " records and the resumptionToken " + newResToken.getId() + " in response to the " + (getRecords ? " ListRecords "  : " ListIdentifiers") + " request.");
 			}
 		}
-
 		return XMLUtil.xmlTag((getRecords ? "ListRecords" : "ListIdentifiers"), xml.toString());
 	}
 
