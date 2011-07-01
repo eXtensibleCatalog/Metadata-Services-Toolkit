@@ -1,0 +1,152 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-07-01T12:18:01Z</responseDate>
+  <request from="1960-07-01T16:18:01Z" metadataPrefix="xc" until="2011-07-01T16:18:01Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/2</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/2" type="manifestation">
+            <xc:recordID type="LCCN">78075014</xc:recordID>
+            <xc:recordID type="OCoLC">403152</xc:recordID>
+            <xc:recordID type="NRU">75</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>[by] Harry M. Orlinsky.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>Understanding the Bible through history and archaeology</dcterms:title>
+            <rdvocab:placeOfProduction>New York,</rdvocab:placeOfProduction>
+            <dcterms:publisher>Ktav Pub. House</dcterms:publisher>
+            <dcterms:issued>[1972]</dcterms:issued>
+            <dcterms:extent>ix, 292 p.</dcterms:extent>
+            <rdvocab:dimensions>29 cm.</rdvocab:dimensions>
+            <dcterms:description>Based on the author's Ancient Israel, first published in 1954.</dcterms:description>
+            <dcterms:description>Includes selections from the Bible in English and Hebrew.</dcterms:description>
+            <dcterms:description>Bibliography: p. 277-282.</dcterms:description>
+            <xc:typeLeader06>Language material</xc:typeLeader06>
+            <xc:type007>Text</xc:type007>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">087068096X</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/4</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/6</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/8</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/3</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/3" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">BS1197</dcterms:subject>
+            <rdarole:author>Orlinsky, Harry Meyer, 1908-</rdarole:author>
+            <rdvocab:titleOfWork>Understanding the Bible through history and archaeology</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Bible. O.T.-History of Biblical events.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Bible.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">History of Biblical events.</xc:subject>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/4</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/4" type="expression">
+            <xc:titleOfExpression>Understanding the Bible through history and archaeology</xc:titleOfExpression>
+            <rdvocab:illustrationContent>illus.</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>Hebrew</dcterms:language>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/3</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/5</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/5" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">BS1197</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Bible. O.T.-History of Biblical events.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Bible.</xc:subject>
+            <rdvocab:titleOfWork>Bible. O.T. Selections.</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/6</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/6" type="expression">
+            <rdvocab:illustrationContent>illus.</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>Hebrew</dcterms:language>
+            <rdvocab:titleOfExpression>Bible. O.T. English. Selections.</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/5</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/7</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/7" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">BS1197</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Bible. O.T.-History of Biblical events.</xc:subject>
+            <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+            <xc:subject xsi:type="dcterms:LCSH">Bible.</xc:subject>
+            <rdvocab:titleOfWork>Bible. O.T. Selections.</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/8</identifier>
+        <datestamp>2011-07-01T16:17:54Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/8" type="expression">
+            <rdvocab:illustrationContent>illus.</rdvocab:illustrationContent>
+            <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>Hebrew</dcterms:language>
+            <rdvocab:titleOfExpression>Bible. O.T. Hebrew. Selections.</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/7</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
