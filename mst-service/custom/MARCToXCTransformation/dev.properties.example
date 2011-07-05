@@ -1,6 +1,7 @@
-service.name=example
+service.name=marctoxctransformation
 #mst.root.dir=
 test.memory=700M
+dependent.service=marcnormalization
 
 # This only applies to your local testing.  If you're bundling your service
 # to be plopped in an mst server, don't worry about changing these properties

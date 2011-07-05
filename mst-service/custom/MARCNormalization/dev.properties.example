@@ -1,4 +1,4 @@
-service.name=example
+service.name=marcnormalization
 #mst.root.dir=
 test.memory=700M
 
