@@ -1,0 +1,102 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-07-06T11:33:09Z</responseDate>
+  <request from="2011-07-06T15:32:50Z" metadataPrefix="xc" until="2011-07-06T15:33:09Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/102</identifier>
+        <datestamp>2011-07-06T15:33:01Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/102" type="manifestation">
+            <xc:identifier type="UPC">043396053410</xc:identifier>
+            <xc:identifier type="VideoNr">05341</xc:identifier>
+            <xc:recordID type="OCoLC">56133006</xc:recordID>
+            <xc:recordID type="NRU">2715432</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>Castle Rock Entertainment ; West-Shapiro ; producers, Tom Cherones, Larry David ; written by Larry David &amp; Jerry Seinfeld ; director, Tom Cherones.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>Seinfeld. Seasons 1 &amp; 2</dcterms:title>
+            <rdvocab:placeOfProduction>Culver City, CA :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Columbia TriStar Home Entertainment,</dcterms:publisher>
+            <dcterms:issued>2004.</dcterms:issued>
+            <dcterms:extent>4 videodiscs (437 min.) :</dcterms:extent>
+            <xc:otherPhysicalDetails>sd., col. ;</xc:otherPhysicalDetails>
+            <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+            <dcterms:description>Originally broadcast on television during the 1990-1992 seasons.</dcterms:description>
+            <dcterms:description>Contains all 18 episodes from season one and two.</dcterms:description>
+            <dcterms:description>On box: Volume 1.</dcterms:description>
+            <dcterms:description>English, dubbed French or dubbed Spanish dialogue, French, Portuguese or Spanish subtitles.</dcterms:description>
+            <dcterms:description>Special features: approximately 13 hours of exclusive special features from the creative talents behind the show, including all-new interviews with Jerry Seinfeld, Larry David, Julia Louis-Dreyfus, Michael Richards, Jason Alexander; "How it began": An hour-long look at how Jerry Seinfeld and Larry David first came up with the idea for the show; "Notes about nothing": Behind-the-scenes scoop and production notes; "Inside look": The cast and creators talk about what was happening behind the scenes of certain episodes; "In the vault": Saved from the cutting room floor ... ; "Not that there's anything wrong with that": Never-before-seen outtakes and bloopers; "Yada, yada, yada": Creator and cast audio commentaries; "Master of his domain": See Jerry Seinfeld in exclusive, never-before-seen stand-up comedy footage; "Sponsored by Vandelay Industries: Original NBC promotional ads and trailers; Featuring the original (1-2 minutes longer) NBC network versions, not seen since their original broadcast runs.</dcterms:description>
+            <dcterms:description>Closed captioned.</dcterms:description>
+            <xc:typeLeader06>Projected medium</xc:typeLeader06>
+            <xc:type007>Video recording</xc:type007>
+            <xc:typeSMD>Videodisc</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">1404957464</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/104</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/103</identifier>
+        <datestamp>2011-07-06T15:33:01Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/103" type="work">
+            <dcterms:subject xsi:type="dcterms:DDC">791.45/75</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:LCC">PN1992.8.C55</dcterms:subject>
+            <rdvocab:titleOfWork>Seinfeld. Seasons 1 &amp; 2</rdvocab:titleOfWork>
+            <dcterms:abstract>Jerry is a very succesful stand-up comedian, mainly because of the people around him who offer an endless supply of great material. His best friend, George, is a balding, whiny kind of guy, who craves the kind of success Jerry has but is never willing to do what it takes to get it. Jerry's neighbor Kramer often barges into his apartment and imposes onto his life. Jerry's former girlfriend, Elaine, comes back into his life, and the four form a friendship together. They focus more on mundane conversations and situations that can be found during everyday life in New York.</dcterms:abstract>
+            <dcterms:audience>MPAA rating: Not rated.</dcterms:audience>
+            <xc:type xsi:type="dcterms:LCSH">Video recordings for the hearing impaired.</xc:type>
+            <xc:type type="migfg">Comedy.</xc:type>
+            <dcterms:audience>General</dcterms:audience>
+            <xc:relation>Seinfeld (Television program)</xc:relation>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/104</identifier>
+        <datestamp>2011-07-06T15:33:01Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/104" type="expression">
+            <xc:titleOfExpression>Seinfeld. Seasons 1 &amp; 2</xc:titleOfExpression>
+            <rdvocab:artisticAndOrTechnicalCredits>Directors of photography, Robert Berry, Jerry D. Good ; editors, Janet Ashikaga ... [et al.] ; music, Jonathan Wolff ; costume designer, Charmaine Simmons ; production designer, Thomas Azzari.</rdvocab:artisticAndOrTechnicalCredits>
+            <rdvocab:performerNarratorAndOrPresenter>Jerry Seinfeld, Julia Louis-Dreyfus, Michael Richards, Jason Alexander, Richard Fancy, Len Lesser.</rdvocab:performerNarratorAndOrPresenter>
+            <dcterms:requires>DVD, region 1, full screen (1.33:1) presentation; Dolby Digital stereo, remastered in high-definition.</dcterms:requires>
+            <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+            <dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:producer>Cherones, Tom.</rdarole:producer>
+            <rdarole:director>Cherones, Tom.</rdarole:director>
+            <rdarole:producer>David, Larry.</rdarole:producer>
+            <rdarole:performer>Seinfeld, Jerry.</rdarole:performer>
+            <rdarole:performer>Louis-Dreyfus, Julia.</rdarole:performer>
+            <rdarole:performer>Richards, Michael, 1950 July 14-</rdarole:performer>
+            <rdarole:performer>Alexander, Jason, 1959-</rdarole:performer>
+            <xc:contributor>Fancy, Richard.</xc:contributor>
+            <xc:contributor>Berry, Robert.</xc:contributor>
+            <xc:contributor>Good, Jerry D.</xc:contributor>
+            <xc:contributor>Wolff, Jonathan, 1958-</xc:contributor>
+            <xc:contributor>West-Shapiro.</xc:contributor>
+            <xc:contributor>Castle Rock Entertainment (Firm)</xc:contributor>
+            <xc:contributor>Columbia TriStar Home Entertainment (Firm)</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/103</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

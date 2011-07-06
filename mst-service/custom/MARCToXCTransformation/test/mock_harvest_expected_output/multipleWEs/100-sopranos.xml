@@ -1,0 +1,103 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-07-06T11:32:50Z</responseDate>
+  <request from="2011-07-06T15:32:32Z" metadataPrefix="xc" until="2011-07-06T15:32:50Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/98</identifier>
+        <datestamp>2011-07-06T15:32:43Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/98" type="manifestation">
+            <xc:identifier type="VideoNr">99247</xc:identifier>
+            <xc:recordID type="OCoLC">48448172</xc:recordID>
+            <xc:recordID type="NRU">2386823</xc:recordID>
+            <rdvocab:statementOfResponsibilityRelatingToTitle>a Brad Grey Television production ; producer, Martin Bruestle, Allen Coulter, Ilene S. Landress ; directed by Allen Coulter, John Patterson.</rdvocab:statementOfResponsibilityRelatingToTitle>
+            <dcterms:title>The Sopranos [Second season] /</dcterms:title>
+            <dcterms:alternative>Sopranos, the complete second season</dcterms:alternative>
+            <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+            <dcterms:publisher>HBO Home Video,</dcterms:publisher>
+            <dcterms:issued>[2001]</dcterms:issued>
+            <dcterms:extent>4 videodiscs (696 min.) :</dcterms:extent>
+            <xc:otherPhysicalDetails>sd., col. ;</xc:otherPhysicalDetails>
+            <rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+            <dcterms:tableOfContents>Episode 1. Guy walks into a psychiatrit's office -- Episode 2. Do not resuscitate -- Episode 3. Toodle-fucking-do -- Episode 4. Commendatori -- Episode 5. Big girls don't cry -- Episode 6. the happy wanderer -- Episode 7. D-girl -- Episode 8. Full leather jacket -- Episode 9. From where to eternity -- Episode 10. Bust out -- Episode 11. House arrest -- Episode 12. The knight in white satin armor -- Episode 13. Funhouse -- The Sopranos special features (2 featurettes).</dcterms:tableOfContents>
+            <dcterms:description>English Dolby 5.1, Spanish and French stereo ; closed captioned.</dcterms:description>
+            <xc:typeLeader06>Projected medium</xc:typeLeader06>
+            <xc:type007>Video recording</xc:type007>
+            <xc:typeSMD>Videodisc</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <dcterms:identifier type="ISBN">0783119364</dcterms:identifier>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/100</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/99</identifier>
+        <datestamp>2011-07-06T15:32:43Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/99" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">PN1992.8.D7</dcterms:subject>
+            <dcterms:subject xsi:type="dcterms:DDC">791.4572</dcterms:subject>
+            <rdvocab:titleOfWork>Sopranos [Second season] /</rdvocab:titleOfWork>
+            <dcterms:abstract>Tony Soprano is a middle-class businessman with a wife, a daughter, a son, and an elderly mother. He's also a mob boss.</dcterms:abstract>
+            <dcterms:audience>Not rated.</dcterms:audience>
+            <xc:subject xsi:type="dcterms:LCSH">Mafia-United States-Drama.</xc:subject>
+            <xc:type type="UR">Drama.</xc:type>
+            <xc:type type="lcsh">Video recordings for the hearing impaired.</xc:type>
+            <xc:subject xsi:type="dcterms:LCSH">Mafia</xc:subject>
+            <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
+            <xc:type xsi:type="dcterms:LCSH">Drama.</xc:type>
+            <xc:relation>Sopranos (Television program) 2nd season</xc:relation>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/100</identifier>
+        <datestamp>2011-07-06T15:32:43Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/100" type="expression">
+            <xc:titleOfExpression>Sopranos [Second season] /</xc:titleOfExpression>
+            <rdvocab:artisticAndOrTechnicalCredits>Director of photography, Phil Abraham ; editor, Sidney Wolinsky.</rdvocab:artisticAndOrTechnicalCredits>
+            <rdvocab:performerNarratorAndOrPresenter>James Gandolfini, Lorraine Bracco, Edie Falco, Michael Imperioli, Dominic Chianese, Vincent Pastore, Steven Van Zandt, Tony Siricio, Robert Iler, Jamie-Lynn Sigler, Drea de Matteo.</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Originally televised in 2000 on HBO.</rdvocab:placeAndDateOfCapture>
+            <dcterms:requires>DVD.</dcterms:requires>
+            <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+            <dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Gandolfini, James.</rdarole:performer>
+            <rdarole:performer>Bracco, Lorraine, 1955-</rdarole:performer>
+            <rdarole:performer>Falco, Edie.</rdarole:performer>
+            <rdarole:performer>Imperioli, Michael, 1966-</rdarole:performer>
+            <rdarole:performer>Chianese, Dominic, 1931-</rdarole:performer>
+            <rdarole:performer>Pastore, Vincent.</rdarole:performer>
+            <rdarole:performer>Van Zandt, Steve.</rdarole:performer>
+            <rdarole:performer>Sirico, Tony.</rdarole:performer>
+            <rdarole:performer>Iler, Robert.</rdarole:performer>
+            <rdarole:performer>Sigler, Jamie-Lynn, 1981-</rdarole:performer>
+            <rdarole:producer>Coulter, Allen.</rdarole:producer>
+            <rdarole:director>Coulter, Allen.</rdarole:director>
+            <rdarole:director>Patterson, John,</rdarole:director>
+            <xc:contributor>Brad Grey Television Productions.</xc:contributor>
+            <xc:contributor>HBO Video (Firm)</xc:contributor>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/99</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

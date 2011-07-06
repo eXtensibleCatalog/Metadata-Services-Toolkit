@@ -50,6 +50,9 @@ public class MarkProviderDeletedTest extends MockHarvestTest {
 			ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
 			// - create a new harvest schedule
+			// clear out previous harvest
+			getProvider().setLastOaiRequest(null);
+			getProviderService().updateProvider(getProvider());
 			createHarvestSchedule();  //you'll end up with active records again...must be from beginning
 			waitUntilFinished();
 
