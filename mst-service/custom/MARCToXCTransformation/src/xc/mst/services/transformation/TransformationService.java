@@ -354,7 +354,7 @@ public class TransformationService extends SolrTransformationService {
 				AggregateXCRecord ar = new AggregateXCRecord();
 				if (isBib) {
 					((Record)record).setType("bib");
-					processBibliographicRecord(ar, originalRecord);
+					processBibliographicRecord(ar, originalRecord, record);
 				} else if (isHolding) {
 					processHoldingRecord(ar, originalRecord, record);
 					((Record)record).setType("hold");
@@ -479,7 +479,7 @@ public class TransformationService extends SolrTransformationService {
 	 * Process bibliographic record
 	 */
 	protected void processBibliographicRecord(
-			AggregateXCRecord transformedRecord, SaxMarcXmlRecord originalRecord) 
+			AggregateXCRecord transformedRecord, SaxMarcXmlRecord originalRecord, InputRecord record) 
 				throws DataException, DatabaseConfigException, TransformerConfigurationException, 
 					IndexException, TransformerException{
 		
@@ -584,7 +584,7 @@ public class TransformationService extends SolrTransformationService {
 		transformedRecord = process810(originalRecord, transformedRecord);
 		transformedRecord = process811(originalRecord, transformedRecord);
 		transformedRecord = process830(originalRecord, transformedRecord);
-		transformedRecord = process852(originalRecord, transformedRecord);
+		transformedRecord = process852(originalRecord, transformedRecord, record);  //TODO
 		transformedRecord = process856(originalRecord, transformedRecord);
 		transformedRecord = process866(originalRecord, transformedRecord);
 		transformedRecord = process867(originalRecord, transformedRecord);
