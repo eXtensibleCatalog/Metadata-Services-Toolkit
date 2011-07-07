@@ -4834,7 +4834,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 			// these,
 			addMessage(inRecord, 104, RecordMessage.INFO);
 			// LOG.debug("*** This bib had a holding associated with it.");
-			LOG.info("*** This bib had a holding associated with it. This is holding "+i+1);
+			LOG.info("*** This bib had multiple holdings associated with it. This is holding "+i+1);
 		    }
 	    }
 
@@ -5901,7 +5901,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	if (elements.size() > 1) {
 	    for (int i = 1; i < elements.size(); i++) {
 		addMessage(record, 105, RecordMessage.INFO);
-		LOG.info("*** This record had multiple holdings associated with it.  This is record "
+		LOG.info("*** This holdings record had multiple holdings associated with it.  This is record "
 			+ i+1);
 	    }
 	}
