@@ -5791,7 +5791,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	    if (!hasLocationCode) {
 		// note, for now, just attach this error to input record, a case
 		// could be made to attach it to either side.
-		addMessage(record, 852, RecordMessage.ERROR);
+		addMessage(record, 103, RecordMessage.ERROR);
 		LOG.error("*** BAD, no location code for the 852, ERROR!");
 	    } else {
 		LOG.debug("*** Good we had a location code for the 852, no ERROR!");

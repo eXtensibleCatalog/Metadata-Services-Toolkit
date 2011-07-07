@@ -856,22 +856,23 @@ public abstract class GenericMetadataService extends SolrMetadataService
 	messages2insert.add(rm);
     }
 
-    private static final String ERROR = "error";
     public String getMessage(int code) {
-	return getMessage(code, ERROR);
+	return getMessage(code, RecordMessage.ERROR);
     }
 
-    public String getMessage(int code, String type) {
-	return config.getProperty(type + "." + code + ".text");
+    public String getMessage(int code, char type) {
+	//don't use type as part of message retrieval...yet.
+	return config.getProperty("error." + code + ".text");
     }
 
-    // look for an entry like info.852.enabled=true
+    // look for an entry like error.852.enabled=true
     // if not found, return false, if found, parse for true/false
-    public boolean isMessageEnabled(int code, String type) {
-	if (type.equals(ERROR)) {  // default to enabled for error messages.
-            return config.getPropertyAsBoolean(type+ "."+code+"enabled", true);
+    public boolean isMessageEnabled(int code, char type) {
+	//don't use type as part of message retrieval...yet.
+	if (type == RecordMessage.ERROR) {  // default to enabled for error messages.
+            return config.getPropertyAsBoolean("error."+code+"enabled", true);
 	}
-	return config.getPropertyAsBoolean(type+ "."+code+"enabled", false);
+	return config.getPropertyAsBoolean("error."+code+"enabled", false);
     }
 
 }

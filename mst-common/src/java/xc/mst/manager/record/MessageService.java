@@ -23,19 +23,16 @@ public class MessageService extends BaseService {
 			.getServiceById(m.getServiceId()).getMetadataService();
 		final int code = m.getCode();
 		if (m.isInfoRecord()) {
-		    final String type = "info";
-		    if (service.isMessageEnabled(code, type)) {
-			m.setMessage(service.getMessage(code, type));
+		    if (service.isMessageEnabled(code, RecordMessage.INFO)) {
+			m.setMessage(service.getMessage(code, RecordMessage.INFO));
 		    }
 		} else if (m.isWarnRecord()) {
-		    final String type = "warn";
-		    if (service.isMessageEnabled(code, type)) {
-			m.setMessage(service.getMessage(code, type));
+		    if (service.isMessageEnabled(code, RecordMessage.WARN)) {
+			m.setMessage(service.getMessage(code, RecordMessage.WARN));
 		    }
 		} else { // default == "error" record
-		    final String type = "error";
-		    if (service.isMessageEnabled(code, type)) {
-			m.setMessage(service.getMessage(code, type));
+		    if (service.isMessageEnabled(code, RecordMessage.ERROR)) {
+			m.setMessage(service.getMessage(code, RecordMessage.ERROR));
 		    }
 		}
 	    } catch (Throwable t) {
