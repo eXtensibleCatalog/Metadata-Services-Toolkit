@@ -258,7 +258,6 @@ public class Facade extends BaseManager
 				oaiResponseElement.append(Constants.OAI_RESPONSE_FOOTER);
 				
 				String response = oaiResponseElement.toString();
-				//TODO remove this
 				if (transformer != null) {
 					Document oaiDoc = xmlHelper.getJDomDocument(response);
 					Element oaiEl = oaiDoc.getRootElement();
@@ -567,16 +566,9 @@ public class Facade extends BaseManager
 		}
 		// Get the XML for the full records
 		// The last parameter is true to query for the full records and not just the identifiers
-		String response = 	  handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), 
-			getPersistedMetadataPrefix(oaiRequest.getMetadataPrefix()),
-			oaiRequest.getSet(), oaiRequest.getResumptionToken(), true);
-LOG.info("will call listRecords from "+oaiRequest.getFrom()+ " until "+oaiRequest.getUntil()+ "  prefix "+ getPersistedMetadataPrefix(oaiRequest.getMetadataPrefix())+
-	" set "+oaiRequest.getSet()+" token "+oaiRequest.getResumptionToken());
-LOG.info("listRecords response\n"+       //TODO remove this info statement...note, at this stage looks correct!  (on localhost BUT, overall is OKAY on localhost!)
-	  handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), 
+		return  handleRecordLists(oaiRequest.getFrom(), oaiRequest.getUntil(), 
 				getPersistedMetadataPrefix(oaiRequest.getMetadataPrefix()),
-				oaiRequest.getSet(), oaiRequest.getResumptionToken(), true));
-                return response;
+				oaiRequest.getSet(), oaiRequest.getResumptionToken(), true);
 		
 	}
 
