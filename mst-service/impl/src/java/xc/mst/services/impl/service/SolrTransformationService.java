@@ -4824,21 +4824,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 		holdingsContent.add(textualHolding);
 	    }
 
-	    if (holdingsContent.size() < 1) {
-		LOG.info("*** This bib had a holding associated with it (an 852)");
-		addMessage(inRecord, 104, RecordMessage.INFO);
-	    }
-	    else {
-		    for (int i = 0; i < holdingsContent.size(); i++) {
-			// each 852 will produce an extra holding in this case, so track
-			// these,
-			addMessage(inRecord, 104, RecordMessage.INFO);
-			// LOG.debug("*** This bib had a holding associated with it.");
-			LOG.info("*** This bib had multiple holdings associated with it. This is holding "+i+1);
-		    }
-	    }
-
-	    getXCRecordService().addHoldingsElement(transformInto,
+	    LOG.info("*** This bib had a holding associated with it (an 852)");
+   	    addMessage(inRecord, 104, RecordMessage.INFO);
+	    
+   	    getXCRecordService().addHoldingsElement(transformInto,
 		    holdingsContent);
 
 	    if (subjectLCCBuilder.length() > 0) {
@@ -5902,7 +5891,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 	    for (int i = 1; i < elements.size(); i++) {
 		addMessage(record, 105, RecordMessage.INFO);
 		LOG.info("*** This holdings record had multiple holdings associated with it.  This is record "
-			+ i+1);
+			+ (i+1));
 	    }
 	}
 
