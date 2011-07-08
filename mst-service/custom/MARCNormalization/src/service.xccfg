@@ -89,7 +89,7 @@ LanguageTerm = 1
 SupplyMARCOrgCode = 1
 
 # Organization code 
-OrganizationCode = CHANGE_ME
+OrganizationCode = NRU
 
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
