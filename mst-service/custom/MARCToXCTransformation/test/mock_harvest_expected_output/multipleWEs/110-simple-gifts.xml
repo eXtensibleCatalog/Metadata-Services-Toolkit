@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
-  <responseDate>2011-07-06T11:33:26Z</responseDate>
-  <request from="2011-07-06T15:33:09Z" metadataPrefix="xc" until="2011-07-06T15:33:26Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2011-07-08T09:36:53Z</responseDate>
+  <request from="2011-07-08T13:36:35Z" metadataPrefix="xc" until="2011-07-08T13:36:53Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/106</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -24,7 +24,7 @@
             <rdvocab:dimensions>12 in.</rdvocab:dimensions>
             <dcterms:description>"Produced for the Metropolitan Opera Guild."</dcterms:description>
             <dcterms:description>Notes on container ; program notes and texts ([2] p.) by J. Freeman inserted.</dcterms:description>
-            <dcterms:tableOfContents>Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflo�te overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compe`re Gre�goire / M.A. Charpentier -- Ojos morenos ; Na~o me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</dcterms:tableOfContents>
+            <dcterms:tableOfContents>Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflöte overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compère Grégoire / M.A. Charpentier -- Ojos morenos ; Não me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</dcterms:tableOfContents>
             <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
             <xc:type007>Sound recording</xc:type007>
             <xc:typeSMD>Sound disk</xc:typeSMD>
@@ -57,7 +57,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/107</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -74,7 +74,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/108</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -105,7 +105,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/109</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -123,7 +123,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/110</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -154,7 +154,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/111</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -172,7 +172,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/112</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -203,7 +203,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/113</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -221,7 +221,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/114</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -252,7 +252,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/115</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -270,7 +270,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/116</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -301,7 +301,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/117</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -319,7 +319,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/118</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -350,7 +350,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/119</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -360,7 +360,7 @@
             <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
             <rdvocab:titleOfWork>Motets (1572). O magnum mysterium. </rdvocab:titleOfWork>
-            <xc:creator>Victoria, Toma�s Luis de, ca. 1548-1611.</xc:creator>
+            <xc:creator>Victoria, Tomás Luis de, ca. 1548-1611.</xc:creator>
           </xc:entity>
         </xc:frbr>
       </metadata>
@@ -368,7 +368,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/120</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -399,7 +399,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/121</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -417,7 +417,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/122</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -448,7 +448,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/123</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -457,7 +457,7 @@
             <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
-            <rdvocab:titleOfWork>Zauberflo�te. Ouverture; arr. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Zauberflöte. Ouverture; arr. </rdvocab:titleOfWork>
             <xc:creator>Mozart, Wolfgang Amadeus, 1756-1791.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -466,7 +466,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/124</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -488,7 +488,7 @@
             <rdarole:performer>Schmorr, Robert.</rdarole:performer>
             <rdarole:performer>Boucher, Gene.</rdarole:performer>
             <rdarole:performer>Best, Richard.</rdarole:performer>
-            <rdvocab:titleOfExpression>Zauberflo�te. Ouverture; arr. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Zauberflöte. Ouverture; arr. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/123</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -497,7 +497,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/125</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -515,7 +515,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/126</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -546,7 +546,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/127</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -555,7 +555,7 @@
             <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
-            <rdvocab:titleOfWork>Veux-tu, compe`re Gre�goire. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Veux-tu, compère Grégoire. </rdvocab:titleOfWork>
             <xc:creator>Charpentier, Marc-Antoine, 1643-1704.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -564,7 +564,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/128</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -586,7 +586,7 @@
             <rdarole:performer>Schmorr, Robert.</rdarole:performer>
             <rdarole:performer>Boucher, Gene.</rdarole:performer>
             <rdarole:performer>Best, Richard.</rdarole:performer>
-            <rdvocab:titleOfExpression>Veux-tu, compe`re Gre�goire. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Veux-tu, compère Grégoire. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/127</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -595,7 +595,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/129</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -604,8 +604,8 @@
             <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
-            <rdvocab:titleOfWork>Recopilacio�n de sonetos y villancicos. Ojos morenos, qua�ndo nos veremos? </rdvocab:titleOfWork>
-            <xc:creator>Va�squez, Juan, fl. 1535-1560.</xc:creator>
+            <rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </rdvocab:titleOfWork>
+            <xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
           </xc:entity>
         </xc:frbr>
       </metadata>
@@ -613,7 +613,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/130</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -635,7 +635,7 @@
             <rdarole:performer>Schmorr, Robert.</rdarole:performer>
             <rdarole:performer>Boucher, Gene.</rdarole:performer>
             <rdarole:performer>Best, Richard.</rdarole:performer>
-            <rdvocab:titleOfExpression>Recopilacio�n de sonetos y villancicos. Ojos morenos, qua�ndo nos veremos? </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/129</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -644,7 +644,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/131</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -653,8 +653,8 @@
             <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
             <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
-            <rdvocab:titleOfWork>Recopilacio�n de sonetos y villancicos. Na~o me firays, madre. </rdvocab:titleOfWork>
-            <xc:creator>Va�squez, Juan, fl. 1535-1560.</xc:creator>
+            <rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Não me firays, madre. </rdvocab:titleOfWork>
+            <xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
           </xc:entity>
         </xc:frbr>
       </metadata>
@@ -662,7 +662,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/132</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -684,7 +684,7 @@
             <rdarole:performer>Schmorr, Robert.</rdarole:performer>
             <rdarole:performer>Boucher, Gene.</rdarole:performer>
             <rdarole:performer>Best, Richard.</rdarole:performer>
-            <rdvocab:titleOfExpression>Recopilacio�n de sonetos y villancicos. Na~o me firays, madre. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Recopilación de sonetos y villancicos. Não me firays, madre. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/131</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -693,7 +693,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/133</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -711,7 +711,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/134</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -742,7 +742,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/135</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -760,7 +760,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/136</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -791,7 +791,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/137</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -809,7 +809,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/138</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -840,7 +840,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/139</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -858,7 +858,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/140</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -889,7 +889,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/141</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -907,7 +907,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/142</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -938,7 +938,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/143</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -955,7 +955,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/144</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -986,7 +986,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/145</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1003,7 +1003,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/146</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1034,7 +1034,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/147</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1051,7 +1051,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/148</identifier>
-        <datestamp>2011-07-06T15:33:19Z</datestamp>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>

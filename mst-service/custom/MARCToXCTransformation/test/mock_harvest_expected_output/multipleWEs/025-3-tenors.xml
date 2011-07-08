@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
-  <responseDate>2011-07-06T11:30:14Z</responseDate>
-  <request from="2011-07-06T15:29:59Z" metadataPrefix="xc" until="2011-07-06T15:30:14Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2011-07-08T09:33:38Z</responseDate>
+  <request from="2011-07-08T13:33:19Z" metadataPrefix="xc" until="2011-07-08T13:33:38Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/14</identifier>
-        <datestamp>2011-07-06T15:30:09Z</datestamp>
+        <datestamp>2011-07-08T13:33:30Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -31,7 +31,7 @@
             <dcterms:description>"Greatest moments from the Rome, Los Angeles and Paris concerts"--Container.</dcterms:description>
             <dcterms:description>Compact disc.</dcterms:description>
             <dcterms:description>Program notes in English, French, German, Italian, and Spanish ([24] p. : col. ill.) inserted in container.</dcterms:description>
-            <dcterms:tableOfContents>'O sole mio -- Funiculi`, funicula` -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna e` mobile.</dcterms:tableOfContents>
+            <dcterms:tableOfContents>'O sole mio -- Funiculì, funiculà -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna è mobile.</dcterms:tableOfContents>
             <dcterms:description>Sung in English, French, German, Italian or and Spanish.</dcterms:description>
             <dcterms:description>Art/Music copy: Gift of Sara Dougherty in memory of David Dougherty.</dcterms:description>
             <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
@@ -46,7 +46,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/15</identifier>
-        <datestamp>2011-07-06T15:30:09Z</datestamp>
+        <datestamp>2011-07-08T13:33:30Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -70,19 +70,19 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/16</identifier>
-        <datestamp>2011-07-06T15:30:09Z</datestamp>
+        <datestamp>2011-07-08T13:33:30Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/16" type="expression">
             <xc:titleOfExpression>Best of the 3 tenors</xc:titleOfExpression>
-            <rdvocab:performerNarratorAndOrPresenter>Jose� Carreras, Pla�cido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:performerNarratorAndOrPresenter>José Carreras, Plácido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded live in Rome (July 7, 1990), Los Angeles (July 16, 1994), and Paris (July 10, 1998).</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
-            <rdarole:performer>Carreras, Jose�.</rdarole:performer>
-            <rdarole:performer>Domingo, Pla�cido, 1941-</rdarole:performer>
+            <rdarole:performer>Carreras, José.</rdarole:performer>
+            <rdarole:performer>Domingo, Plácido, 1941-</rdarole:performer>
             <rdarole:performer>Pavarotti, Luciano.</rdarole:performer>
             <xc:contributor>Levine, James, 1943-</xc:contributor>
             <rdarole:performer>Mehta, Zubin.</rdarole:performer>

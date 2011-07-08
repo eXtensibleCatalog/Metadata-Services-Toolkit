@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
-  <responseDate>2011-07-06T11:31:06Z</responseDate>
-  <request from="2011-07-06T15:30:49Z" metadataPrefix="xc" until="2011-07-06T15:31:06Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2011-07-08T09:34:32Z</responseDate>
+  <request from="2011-07-08T13:34:14Z" metadataPrefix="xc" until="2011-07-08T13:34:32Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/46</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -16,7 +16,7 @@
             <xc:identifier type="SoundNr">289 467 049-2</xc:identifier>
             <xc:recordID type="OCoLC">45180085</xc:recordID>
             <xc:recordID type="NRU">2117963</xc:recordID>
-            <dcterms:title>Rene�e Fleming</dcterms:title>
+            <dcterms:title>Renée Fleming</dcterms:title>
             <rdvocab:placeOfProduction>New York, NY :</rdvocab:placeOfProduction>
             <dcterms:publisher>Decca :</dcterms:publisher>
             <dcterms:publisher>Manufactured and marketed by Universal Classics Group,</dcterms:publisher>
@@ -27,7 +27,7 @@
             <dcterms:description>Opera excerpts.</dcterms:description>
             <dcterms:description>Compact disc.</dcterms:description>
             <dcterms:description>Biographical notes by Albert Innaurato and texts with English translations (25 p. : ill.) inserted in container.</dcterms:description>
-            <dcterms:tableOfContents>Gianni Schicchi. O mio babbino caro / Puccini ; Forzano (2:51) -- Madama Butterfly. Un bel di` vedremo / Puccini ; Giacosa &amp; Illica (4:51) -- La Bohe`me. Quando me n'vo` / Puccini ; Giacosa &amp; Illica (2:47) -- Turandot. Signore, ascolta! / Puccini ; compl. Alfano ; Adami &amp; Simoni (2:54) -- Pagliacci. Qual fiamma!-- Stridono lassu` / Leoncavallo (4:59) -- Adriana Lecouvreur. Ecco, respiro appena-- Io son l'umile ancella / Cilea ; Colautti (3:53) -- La Wally. Ebben?-- Ne andro` lontana / Catalani ; Illica (5:01) -- Manon. Je suis encor[e] tout e�tourdie / Massenet ; Meilhac &amp; Gille (3:55) -- Manon. Allons! il le faut! pour lui-me^me-- Adieu, notre petite table / Massenet ; Meilhac &amp; Gille (4:28) -- Carmen. C'est des contrebandiers le refuge ordinaire-- Je dis que rien ne m'e�pouvante / Bizet ; Meilhac &amp; Hale�vy (6:26) -- Romeo et Juliette. Ah! Je veux vivre / Gounod ; Barbier &amp; Carre� (3:39) -- Simon Boccanegra. Come in quest'ora bruna / Verdi ; Piave ; rev. Boito (6:12) -- Norma. Casta diva / Bellini ; Romani (7:33) -- Les ve^pres siciliennes. Merci, jeunes amies / Verdi ; Scribe &amp; Duveyrier (4:30).</dcterms:tableOfContents>
+            <dcterms:tableOfContents>Gianni Schicchi. O mio babbino caro / Puccini ; Forzano (2:51) -- Madama Butterfly. Un bel dì vedremo / Puccini ; Giacosa &amp; Illica (4:51) -- La Bohème. Quando me n'vò / Puccini ; Giacosa &amp; Illica (2:47) -- Turandot. Signore, ascolta! / Puccini ; compl. Alfano ; Adami &amp; Simoni (2:54) -- Pagliacci. Qual fiamma!-- Stridono lassù / Leoncavallo (4:59) -- Adriana Lecouvreur. Ecco, respiro appena-- Io son l'umile ancella / Cilea ; Colautti (3:53) -- La Wally. Ebben?-- Ne andrò lontana / Catalani ; Illica (5:01) -- Manon. Je suis encor[e] tout étourdie / Massenet ; Meilhac &amp; Gille (3:55) -- Manon. Allons! il le faut! pour lui-même-- Adieu, notre petite table / Massenet ; Meilhac &amp; Gille (4:28) -- Carmen. C'est des contrebandiers le refuge ordinaire-- Je dis que rien ne m'épouvante / Bizet ; Meilhac &amp; Halévy (6:26) -- Romeo et Juliette. Ah! Je veux vivre / Gounod ; Barbier &amp; Carré (3:39) -- Simon Boccanegra. Come in quest'ora bruna / Verdi ; Piave ; rev. Boito (6:12) -- Norma. Casta diva / Bellini ; Romani (7:33) -- Les vêpres siciliennes. Merci, jeunes amies / Verdi ; Scribe &amp; Duveyrier (4:30).</dcterms:tableOfContents>
             <dcterms:description>Sung in Italian and French.</dcterms:description>
             <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
             <xc:type007>Sound recording</xc:type007>
@@ -55,14 +55,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/47</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/47" type="work">
             <dcterms:subject xsi:type="dcterms:DDC">782.1</dcterms:subject>
-            <rdvocab:titleOfWork>Rene�e Fleming</rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Renée Fleming</rdvocab:titleOfWork>
             <xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts.</xc:subject>
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
@@ -74,15 +74,15 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/48</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/48" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <xc:titleOfExpression>Rene�e Fleming</xc:titleOfExpression>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <xc:titleOfExpression>Renée Fleming</xc:titleOfExpression>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -98,7 +98,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/49</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -118,14 +118,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/50</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/50" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -142,7 +142,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/51</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -153,7 +153,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Madama Butterfly. Un bel di`, vedremo. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Madama Butterfly. Un bel dì, vedremo. </rdvocab:titleOfWork>
             <xc:creator>Puccini, Giacomo, 1858-1924.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -162,14 +162,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/52</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/52" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -177,7 +177,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Madama Butterfly. Un bel di`, vedremo. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Madama Butterfly. Un bel dì, vedremo. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/51</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -186,7 +186,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/53</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -197,7 +197,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Bohe`me. Quando me'n vo. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Bohème. Quando me'n vo. </rdvocab:titleOfWork>
             <xc:creator>Puccini, Giacomo, 1858-1924.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -206,14 +206,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/54</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/54" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -221,7 +221,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Bohe`me. Quando me'n vo. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Bohème. Quando me'n vo. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/53</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -230,7 +230,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/55</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -250,14 +250,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/56</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/56" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -274,7 +274,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/57</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -285,7 +285,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Pagliacci. Hui! stridono lassu`. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Pagliacci. Hui! stridono lassù. </rdvocab:titleOfWork>
             <xc:creator>Leoncavallo, Ruggiero, 1858-1919.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -294,14 +294,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/58</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/58" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -309,7 +309,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Pagliacci. Hui! stridono lassu`. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Pagliacci. Hui! stridono lassù. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/57</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -318,7 +318,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/59</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -330,7 +330,7 @@
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
             <rdvocab:titleOfWork>Adriana Lecouvreur. Io son l'umile ancella. </rdvocab:titleOfWork>
-            <xc:creator>Cile`a, Francesco, 1866-1950.</xc:creator>
+            <xc:creator>Cilèa, Francesco, 1866-1950.</xc:creator>
           </xc:entity>
         </xc:frbr>
       </metadata>
@@ -338,14 +338,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/60</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/60" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -362,7 +362,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/61</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -373,7 +373,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Wally. Ebben? Ne andro` lontana. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Wally. Ebben? Ne andrò lontana. </rdvocab:titleOfWork>
             <xc:creator>Catalani, Alfredo, 1854-1893.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -382,14 +382,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/62</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/62" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -397,7 +397,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Wally. Ebben? Ne andro` lontana. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Wally. Ebben? Ne andrò lontana. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/61</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -406,7 +406,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/63</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -417,7 +417,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Manon. Je suis encore tout e�tourdie. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Manon. Je suis encore tout étourdie. </rdvocab:titleOfWork>
             <xc:creator>Massenet, Jules, 1842-1912.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -426,14 +426,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/64</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/64" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -441,7 +441,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Manon. Je suis encore tout e�tourdie. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Manon. Je suis encore tout étourdie. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/63</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -450,7 +450,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/65</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -470,14 +470,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/66</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/66" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -494,7 +494,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/67</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -505,7 +505,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Carmen. Je dis que rien ne m'e�pouvante. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Carmen. Je dis que rien ne m'épouvante. </rdvocab:titleOfWork>
             <xc:creator>Bizet, Georges, 1838-1875.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -514,14 +514,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/68</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/68" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -529,7 +529,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Carmen. Je dis que rien ne m'e�pouvante. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Carmen. Je dis que rien ne m'épouvante. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/67</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -538,7 +538,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/69</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -549,7 +549,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Rome�o et Juliette. Je veux vivre dans le re^ve. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Roméo et Juliette. Je veux vivre dans le rêve. </rdvocab:titleOfWork>
             <xc:creator>Gounod, Charles, 1818-1893.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -558,14 +558,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/70</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/70" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -573,7 +573,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Rome�o et Juliette. Je veux vivre dans le re^ve. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Roméo et Juliette. Je veux vivre dans le rêve. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/69</xc:workExpressed>
           </xc:entity>
         </xc:frbr>
@@ -582,7 +582,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/71</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -602,14 +602,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/72</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/72" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -626,7 +626,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/73</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -646,14 +646,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/74</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/74" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -670,7 +670,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/75</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -681,7 +681,7 @@
             <xc:type type="local">Operas/Musicals.</xc:type>
             <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
             <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-            <rdvocab:titleOfWork>Ve^pres siciliennes. Merci jeunes amies. </rdvocab:titleOfWork>
+            <rdvocab:titleOfWork>Vêpres siciliennes. Merci jeunes amies. </rdvocab:titleOfWork>
             <xc:creator>Verdi, Giuseppe, 1813-1901.</xc:creator>
           </xc:entity>
         </xc:frbr>
@@ -690,14 +690,14 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/76</identifier>
-        <datestamp>2011-07-06T15:30:59Z</datestamp>
+        <datestamp>2011-07-08T13:34:24Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/76" type="expression">
-            <rdarole:performer>Fleming, Rene�e.</rdarole:performer>
-            <rdvocab:performerNarratorAndOrPresenter>Rene�e Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+            <rdarole:performer>Fleming, Renée.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
             <rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
             <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
             <dcterms:language>Italian</dcterms:language>
@@ -705,7 +705,7 @@
             <rdarole:performer>Mackerras, Charles, 1925-2010.</rdarole:performer>
             <rdarole:performer>London Voices.</rdarole:performer>
             <rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
-            <rdvocab:titleOfExpression>Ve^pres siciliennes. Merci jeunes amies. </rdvocab:titleOfExpression>
+            <rdvocab:titleOfExpression>Vêpres siciliennes. Merci jeunes amies. </rdvocab:titleOfExpression>
             <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/75</xc:workExpressed>
           </xc:entity>
         </xc:frbr>

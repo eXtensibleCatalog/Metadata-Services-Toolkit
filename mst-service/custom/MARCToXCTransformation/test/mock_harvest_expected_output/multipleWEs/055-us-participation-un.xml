@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
-  <responseDate>2011-07-06T11:31:40Z</responseDate>
-  <request from="2011-07-06T15:31:22Z" metadataPrefix="xc" until="2011-07-06T15:31:40Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2011-07-08T09:35:07Z</responseDate>
+  <request from="2011-07-08T13:34:49Z" metadataPrefix="xc" until="2011-07-08T13:35:07Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/82</identifier>
-        <datestamp>2011-07-06T15:31:33Z</datestamp>
+        <datestamp>2011-07-08T13:35:00Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -46,7 +46,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/83</identifier>
-        <datestamp>2011-07-06T15:31:33Z</datestamp>
+        <datestamp>2011-07-08T13:35:00Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -66,7 +66,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/84</identifier>
-        <datestamp>2011-07-06T15:31:33Z</datestamp>
+        <datestamp>2011-07-08T13:35:00Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
