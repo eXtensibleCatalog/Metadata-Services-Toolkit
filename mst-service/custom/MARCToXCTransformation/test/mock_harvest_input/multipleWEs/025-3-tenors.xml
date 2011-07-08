@@ -102,10 +102,10 @@
             <marc:subfield code="a">Program notes in English, French, German, Italian, and Spanish ([24] p. : col. ill.) inserted in container.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1="0" ind2=" " tag="505">
-            <marc:subfield code="a">'O sole mio -- Funiculi`, funicula` -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna e` mobile.</marc:subfield>
+            <marc:subfield code="a">'O sole mio -- FuniculiÃÄ, funiculaÃÄ -- Libiamo ne' lieti calici -- Sous le ciel de Paris -- Torero quiero ser -- Parlami d'amore, Mariu -- Manha de carnaval -- Lolita -- Dicitencello vuie -- Core 'ngrato -- Because -- You'll never walk alone -- Singin' in the rain -- Maria/Tonight ; Cielito lindo -- Ochi tchorniye ; Caminito ; La vie en rose -- Mattinata ; Wien, Wien, nur du allein ; Amapola -- Lippen schweigen -- Brazil -- Sous les ponts de Paris -- Torna a surriento -- Nessun dorma -- La donna eÃÄ mobile.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1="0" ind2=" " tag="511">
-            <marc:subfield code="a">Jose¥ Carreras, Pla¥cido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</marc:subfield>
+            <marc:subfield code="a">JoseÃÅ Carreras, PlaÃÅcido Domingo, Luciano Pavarotti, tenors ; Orchestra de maggio musicale fiorentino, Orchestra del teatro dell'opera di Roma, Los Angeles Philharmonic, Orchestre de Paris ; James Levine, Zubin Mehta, conductors.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1=" " ind2=" " tag="518">
             <marc:subfield code="a">Recorded live in Rome (July 7, 1990), Los Angeles (July 16, 1994), and Paris (July 10, 1998).</marc:subfield>
@@ -136,11 +136,11 @@
             <marc:subfield code="5">NRU</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1="1" ind2=" " tag="700">
-            <marc:subfield code="a">Carreras, Jose¥.</marc:subfield>
+            <marc:subfield code="a">Carreras, JoseÃÅ.</marc:subfield>
             <marc:subfield code="4">prf</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1="1" ind2=" " tag="700">
-            <marc:subfield code="a">Domingo, Pla¥cido,</marc:subfield>
+            <marc:subfield code="a">Domingo, PlaÃÅcido,</marc:subfield>
             <marc:subfield code="d">1941-</marc:subfield>
             <marc:subfield code="4">prf</marc:subfield>
           </marc:datafield>

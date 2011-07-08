@@ -51,11 +51,11 @@
           </marc:datafield>
           <marc:datafield ind1="1" ind2="0" tag="240">
             <marc:subfield code="a">Ruinen von Athen.</marc:subfield>
-            <marc:subfield code="p">Ouvertu¨re</marc:subfield>
+            <marc:subfield code="p">OuvertuÌˆre</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1="0" ind2="0" tag="245">
             <marc:subfield code="a">Ouverture zu Aug. v. Kotzebue's Ruinen von Athen ... 113tes Werk :</marc:subfield>
-            <marc:subfield code="b">aufgefu¨hrt bei der Ero¨ffnung des neuen Theaters zu Pest /</marc:subfield>
+            <marc:subfield code="b">aufgefuÌˆhrt bei der EroÌˆffnung des neuen Theaters zu Pest /</marc:subfield>
             <marc:subfield code="c">verfasst von Ludw. van Beethoven.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1=" " ind2=" " tag="254">
@@ -71,7 +71,7 @@
             <marc:subfield code="c">35 cm.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1=" " ind2=" " tag="500">
-            <marc:subfield code="a">First edition of the overture. Cf. Kinsky, Georg. Das Werk Beethovens. Mu¨nchen, 1955, p. 327.</marc:subfield>
+            <marc:subfield code="a">First edition of the overture. Cf. Kinsky, Georg. Das Werk Beethovens. MuÌˆnchen, 1955, p. 327.</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1=" " ind2=" " tag="500">
             <marc:subfield code="a">In ms. on t.p.: Partitur.</marc:subfield>
