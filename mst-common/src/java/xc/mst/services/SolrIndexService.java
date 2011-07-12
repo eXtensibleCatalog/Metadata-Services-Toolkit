@@ -101,12 +101,7 @@ public class SolrIndexService extends GenericMetadataService  {
 		}
 		
 		if (r.getSets() != null) {
-			boolean done = false;
 			for (Set s : r.getSets()) {
-				if (!done) {
-					//LOG.debug("r.getId(): "+r.getId()+" index set: "+s.getSetSpec());
-					done = true;
-				}
 				doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
 				doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
 			}
