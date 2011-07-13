@@ -268,6 +268,7 @@ note: help on the ant commands within particular service subprojects can be foun
 		<ant dir="${mst-service}/example" target="zip" inheritAll="false" />
 
 		<target-custom-services target="zip" />
+		<target-custom-services target="zip-dev-env" />
 
 		<ant target="mi.refetch-example" />
 		<ant target="mi.publish" />

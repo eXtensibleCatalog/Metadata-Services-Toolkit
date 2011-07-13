@@ -47,9 +47,31 @@ auths don't seem to be the right number
 select type, status, count(*)
 from xc_rochester_137_local.records
 group by type, status;
++------+--------+----------+
+| type | status | count(*) |
++------+--------+----------+
+| NULL | A      |  6588750 |
+| NULL | D      |     4547 |
++------+--------+----------+
 
-NULL    A       6588750
-NULL    D       4547
+select rs.set_id, r.status, count(*)
+from xc_rochester_137_local.records r
+	,xc_rochester_137_local.record_sets rs
+where r.record_id = rs.record_id
+group by rs.set_id, r.status;
++--------+--------+----------+
+| set_id | status | count(*) |
++--------+--------+----------+
+|      4 | A      |  6588750 |
+|      4 | D      |     4547 |
+|      5 | A      |  2632308 |
+|      5 | D      |     3578 |
+|      6 | A      |  2796252 |
+|      6 | D      |      964 |
+|      7 | A      |  1160190 |
+|      7 | D      |        5 |
++--------+--------+----------+
+
 
 voyager@xcvoyoai2 > ./lucene_dbStatistics.sh
 0 [main] INFO lucene_dbStatistics  -  *************** Lucene Database Statistics ***************

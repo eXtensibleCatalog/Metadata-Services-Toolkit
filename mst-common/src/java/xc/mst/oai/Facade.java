@@ -474,8 +474,13 @@ public class Facade extends BaseManager
 
 			for (Set set : service.getOutputSets()) {
 				
-				listSets.addContent(XMLUtil.xmlEl("set", null).addContent(XMLUtil.xmlEl("setSpec", set.getSetSpec()))
-                        .addContent(XMLUtil.xmlEl("setName", set.getDisplayName())));
+				try {
+				    listSets.addContent(XMLUtil.xmlEl("set", null).addContent(XMLUtil.xmlEl("setSpec", set.getSetSpec()))
+                                            .addContent(XMLUtil.xmlEl("setName", set.getDisplayName())));
+				} catch (Exception e) {
+				    LogWriter.addWarning(service.getHarvestOutLogFileName(), "The OAI ListIdentifiers request failed returning set spec or display name.");
+				    warningCount++;
+				}
 
 			}
 		}
