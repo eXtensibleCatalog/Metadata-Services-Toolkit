@@ -47,6 +47,19 @@ public class RecordMessage {
 	public boolean isInputRecord() {
 		return isInputRecord;
 	}
+	
+	public boolean isErrorRecord() {
+		return this.level == (ERROR);
+	}
+	
+	public boolean isInfoRecord() {
+		return this.level == (INFO);
+	}
+	
+	public boolean isWarnRecord() {
+		return this.level == (WARN);
+	}
+	
 	public void setInputRecord(boolean isInputRecord) {
 		this.isInputRecord = isInputRecord;
 	}

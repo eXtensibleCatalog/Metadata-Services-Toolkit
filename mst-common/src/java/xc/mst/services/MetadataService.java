@@ -49,6 +49,8 @@ public interface MetadataService {
 	public void setService(Service service);
 	public String getServiceName();
 	public String getMessage(int code);
+	public String getMessage(int code, char type);
+	public boolean isMessageEnabled(int code, char type);
 	
 	// leftover methods that I think can be eventually deleted
 	public void runService(int serviceId, int outputSetId);
