@@ -30,6 +30,7 @@ import xc.mst.utils.TimingLogger;
 public class SolrIndexService extends GenericMetadataService  {
 	
 	private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
+	protected int loops = 1;
 	
 	Repository incomingRepository = null;
 	protected int recordsProcessedSinceCommit;
@@ -46,6 +47,12 @@ public class SolrIndexService extends GenericMetadataService  {
 			List<Record> rs =  
 				((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
 			TimingLogger.stop("getRecordsWSets");
+			/*
+			if (loops++ % 1000 == 0) {
+				loops = 1;
+				TimingLogger.reset();
+			}
+			*/
 			return rs;
 	}
 	

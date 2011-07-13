@@ -82,6 +82,7 @@ public class TimingLogger {
 	}
 	
 	public static void reset() {
+		//TimingStats.LOG.debug("", new Exception());
 		if (TimingStats.LOG.isDebugEnabled()) {
 			//TimingStats ts = (TimingStats)timingStats.get();
 			ts.reset();
