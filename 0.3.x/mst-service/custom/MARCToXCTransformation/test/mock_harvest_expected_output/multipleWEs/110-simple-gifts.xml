@@ -1,0 +1,1083 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-07-08T09:36:53Z</responseDate>
+  <request from="2011-07-08T13:36:35Z" metadataPrefix="xc" until="2011-07-08T13:36:53Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/106</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/106" type="manifestation">
+            <xc:recordID type="LCCN">75750655 /R</xc:recordID>
+            <xc:identifier type="SoundNr">5012</xc:identifier>
+            <xc:recordID type="OCoLC">1663487</xc:recordID>
+            <xc:recordID type="NRU">1586760</xc:recordID>
+            <dcterms:title>Simple gifts</dcterms:title>
+            <rdvocab:placeOfProduction>Cleveland, Ohio :</rdvocab:placeOfProduction>
+            <dcterms:publisher>Advent Records,</dcterms:publisher>
+            <dcterms:issued>[1975], p1974.</dcterms:issued>
+            <dcterms:extent>1 sound disc :</dcterms:extent>
+            <rdvocab:soundCharacteristics>analog, 33 1/3 rpm, stereo. ;</rdvocab:soundCharacteristics>
+            <rdvocab:dimensions>12 in.</rdvocab:dimensions>
+            <dcterms:description>"Produced for the Metropolitan Opera Guild."</dcterms:description>
+            <dcterms:description>Notes on container ; program notes and texts ([2] p.) by J. Freeman inserted.</dcterms:description>
+            <dcterms:tableOfContents>Simple gifts : Shaker hymn / [Joseph Brackett] -- Sumer is icumen in / Anon., 14th cent. -- To the shady woods / Thomas Tomkins -- What if I never speede / John Dowland -- Thus saith my Cloris bright / John Wilbye -- Now is the month of maying / Thomas Morley -- O magnum mysterium / Tomas Luis da Vittoria -- Nowel syng we / Anon., 15th cent. -- Remember o thou man / Thomas Ravenscroft -- Dormi, o bel bambin / Anon. -- Die Zauberflöte overture / Wolfgang Amadeus Mozart -- Un jour vis un foulon / Roland de Lassus -- Veux-tu, compère Grégoire / M.A. Charpentier -- Ojos morenos ; Não me firays, madre / Juan Vasquez -- Chi la gagliarda / Baldassare Donato -- L'humor svegghiato ; Applauso / Orazio Vecchi -- Vergine gloriosa / Luca Marenzio -- Contrappunto bestiale / Adriano Banchieri.</dcterms:tableOfContents>
+            <xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+            <xc:type007>Sound recording</xc:type007>
+            <xc:typeSMD>Sound disk</xc:typeSMD>
+            <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/108</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/110</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/112</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/114</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/116</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/118</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/120</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/122</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/124</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/126</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/128</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/130</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/132</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/134</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/136</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/138</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/140</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/142</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/144</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/146</xc:expressionManifested>
+            <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/148</xc:expressionManifested>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/107</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/107" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <rdvocab:titleOfWork>Simple gifts</rdvocab:titleOfWork>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/108</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/108" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <xc:titleOfExpression>Simple gifts</xc:titleOfExpression>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/107</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/109</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/109" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Simple gifts. </rdvocab:titleOfWork>
+            <xc:creator>Brackett, Joseph.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/110</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/110" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Simple gifts. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/109</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/111</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/111" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Songs, voices (3-6). To the shady woods. </rdvocab:titleOfWork>
+            <xc:creator>Tomkins, Thomas, 1572-1656.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/112</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/112" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Songs, voices (3-6). To the shady woods. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/111</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/113</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/113" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Songs or ayres, 3rd book. What if I never speede. </rdvocab:titleOfWork>
+            <xc:creator>Dowland, John, 1563?-1626.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/114</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/114" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Songs or ayres, 3rd book. What if I never speede. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/113</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/115</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/115" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Madrigals, voices (3-6), set 1. Thus saith my Cloris bright </rdvocab:titleOfWork>
+            <xc:creator>Wilbye, John, 1574-1638.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/116</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/116" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Madrigals, voices (3-6), set 1. Thus saith my Cloris bright </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/115</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/117</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/117" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Balletts. Now is the month of maying. </rdvocab:titleOfWork>
+            <xc:creator>Morley, Thomas, 1557-1603?</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/118</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/118" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Balletts. Now is the month of maying. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/117</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/119</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/119" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Motets (1572). O magnum mysterium. </rdvocab:titleOfWork>
+            <xc:creator>Victoria, Tomás Luis de, ca. 1548-1611.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/120</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/120" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Motets (1572). O magnum mysterium. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/119</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/121</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/121" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Remember, O thou man. </rdvocab:titleOfWork>
+            <xc:creator>Ravenscroft, Thomas, 1592?-1635?</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/122</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/122" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Remember, O thou man. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/121</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/123</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/123" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Zauberflöte. Ouverture; arr. </rdvocab:titleOfWork>
+            <xc:creator>Mozart, Wolfgang Amadeus, 1756-1791.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/124</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/124" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Zauberflöte. Ouverture; arr. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/123</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/125</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/125" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Jour vis un foulon. </rdvocab:titleOfWork>
+            <xc:creator>Lasso, Orlando di, 1532-1594.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/126</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/126" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Jour vis un foulon. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/125</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/127</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/127" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Veux-tu, compère Grégoire. </rdvocab:titleOfWork>
+            <xc:creator>Charpentier, Marc-Antoine, 1643-1704.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/128</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/128" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Veux-tu, compère Grégoire. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/127</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/129</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/129" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </rdvocab:titleOfWork>
+            <xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/130</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/130" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Recopilación de sonetos y villancicos. Ojos morenos, quándo nos veremos? </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/129</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/131</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/131" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Recopilación de sonetos y villancicos. Não me firays, madre. </rdvocab:titleOfWork>
+            <xc:creator>Vásquez, Juan, fl. 1535-1560.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/132</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/132" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Recopilación de sonetos y villancicos. Não me firays, madre. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/131</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/133</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/133" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Canzoni, libro 1. Chi la gagliarda. </rdvocab:titleOfWork>
+            <xc:creator>Donato, Baldassare, d. 1603.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/134</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/134" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Canzoni, libro 1. Chi la gagliarda. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/133</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/135</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/135" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Veglie de Sienna. Humor svegghiato. </rdvocab:titleOfWork>
+            <xc:creator>Vecchi, Orazio, 1550-1605.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/136</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/136" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Veglie de Sienna. Humor svegghiato. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/135</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/137</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/137" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Applauso. </rdvocab:titleOfWork>
+            <xc:creator>Vecchi, Orazio, 1550-1605.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/138</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/138" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Applauso. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/137</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/139</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/139" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Madrigals, voices (5) book 1. Vergine glorioso e lieta. </rdvocab:titleOfWork>
+            <xc:creator>Marenzio, Luca, 1553-1599.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/140</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/140" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Madrigals, voices (5) book 1. Vergine glorioso e lieta. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/139</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/141</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/141" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Festino nella sera del Giovedi Grasso avanti cena. Contrappunto bestiale alla mente. </rdvocab:titleOfWork>
+            <xc:creator>Banchieri, Adriano, d. 1634.</xc:creator>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/142</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/142" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Festino nella sera del Giovedi Grasso avanti cena. Contrappunto bestiale alla mente. </rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/141</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/143</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/143" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Sumer is icumen in.</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/144</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/144" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Sumer is icumen in.</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/143</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/145</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/145" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Nowel syng we.</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/146</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/146" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Nowel syng we.</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/145</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/147</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/147" type="work">
+            <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
+            <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
+            <rdvocab:titleOfWork>Dormi, dormi, o bel bambin.</rdvocab:titleOfWork>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/148</identifier>
+        <datestamp>2011-07-08T13:36:46Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/148" type="expression">
+            <rdarole:performer>Metropolitan Opera (New York, N.Y.). Madrigal Singers.</rdarole:performer>
+            <rdvocab:performerNarratorAndOrPresenter>Metropolitan Opera Madrigal Singers (Christine Weidinger, soprano ; Shirley Love, mezzo-soprano ; Nico Castel, tenor ; Robert Schmorr, tenor ; Gene Boucher, baritone ; Richard Best, bass).</rdvocab:performerNarratorAndOrPresenter>
+            <rdvocab:placeAndDateOfCapture>Recorded Sept. 19, 1974, St. Paul's Episcopal Church, Cleveland Heights, Ohio.</rdvocab:placeAndDateOfCapture>
+            <dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+            <dcterms:language>English</dcterms:language>
+            <dcterms:language>French</dcterms:language>
+            <dcterms:language>German</dcterms:language>
+            <dcterms:language>Italian</dcterms:language>
+            <dcterms:language>Portuguese</dcterms:language>
+            <dcterms:language>Spanish</dcterms:language>
+            <rdarole:performer>Weidinger, Christine.</rdarole:performer>
+            <rdarole:performer>Love, Shirley.</rdarole:performer>
+            <rdarole:performer>Castel, Nico.</rdarole:performer>
+            <rdarole:performer>Schmorr, Robert.</rdarole:performer>
+            <rdarole:performer>Boucher, Gene.</rdarole:performer>
+            <rdarole:performer>Best, Richard.</rdarole:performer>
+            <rdvocab:titleOfExpression>Dormi, dormi, o bel bambin.</rdvocab:titleOfExpression>
+            <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/147</xc:workExpressed>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

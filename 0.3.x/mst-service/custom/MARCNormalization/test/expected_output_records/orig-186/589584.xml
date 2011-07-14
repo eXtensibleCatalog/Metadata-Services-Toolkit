@@ -1,0 +1,146 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/160</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:160</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01003nam a22002890  45 A</marc:leader>
+      <marc:controlfield tag="001">589584</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="008">791205s1979    xx       b    000 0 eng d</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)5764222</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">00515853</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">RES</marc:subfield>
+        <marc:subfield code="c">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RESL [copy 1] [ ] [Archive] [copy 2]</marc:subfield>
+        <marc:subfield code="c">1, 2</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">ML95.2</marc:subfield>
+        <marc:subfield code="b">.V877</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">ML95.2 .V877</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="100" ind1="1" ind2=" ">
+        <marc:subfield code="a">Vogan, Wayne Hamilton.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="1" ind2="2">
+        <marc:subfield code="a">A rare union of literature with music :</marc:subfield>
+        <marc:subfield code="b">selective indices to the Quarterly Musical Magazine and Review and the Harmonicon /</marc:subfield>
+        <marc:subfield code="c">by Wayne Hamilton Vogan.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="c">1979.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">106 leaves ;</marc:subfield>
+        <marc:subfield code="c">28 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Reproduced from typescript.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="502" ind1=" " ind2=" ">
+        <marc:subfield code="a">Thesis (M.A.)--University of Rochester.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="504" ind1=" " ind2=" ">
+        <marc:subfield code="a">Bibliography: leaves 103-106.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="630" ind1="0" ind2="0">
+        <marc:subfield code="a">Quarterly musical magazine and review.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="630" ind1="0" ind2="0">
+        <marc:subfield code="a">Harmonicon.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Music</marc:subfield>
+        <marc:subfield code="x">Periodicals</marc:subfield>
+        <marc:subfield code="x">Indexes.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">951115</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Stack</marc:subfield>
+        <marc:subfield code="m">SMONO</marc:subfield>
+        <marc:subfield code="s">ML95.2 .V877</marc:subfield>
+        <marc:subfield code="c">1</marc:subfield>
+        <marc:subfield code="b">39087013576816</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Archv</marc:subfield>
+        <marc:subfield code="m">SARCHV</marc:subfield>
+        <marc:subfield code="s">ML95.2 .V877</marc:subfield>
+        <marc:subfield code="c">2</marc:subfield>
+        <marc:subfield code="b">39087013705365</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)589584</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Rare union of literature with music :</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Music</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Periodicals</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Indexes.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Rare union of literature with music :</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

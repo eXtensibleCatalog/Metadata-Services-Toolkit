@@ -1,0 +1,77 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/498</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:167</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/498">
+        <dcterms:subject xsi:type="dcterms:LCC">QA445</dcterms:subject>
+        <rdvocab:titleOfWork>Géométrie, problèmes de géométrie commentés et rédigés.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Geometry-Problems, exercises, etc.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Geometry</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Problems, exercises, etc.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/499</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:167</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/499">
+        <xc:titleOfExpression>Géométrie, problèmes de géométrie commentés et rédigés. English.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Berger, Marcel, 1927-</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/498</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/497</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:167</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/497">
+        <xc:recordID type="LCCN">84005495</xc:recordID>
+        <xc:recordID type="OCoLC">10726748</xc:recordID>
+        <xc:recordID type="NRU">811369</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Marcel Berger ... [et al.] ; translated by Silvio Levy.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Problems in geometry /</dcterms:title>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Springer-Verlag,</dcterms:publisher>
+        <dcterms:issued>c1984.</dcterms:issued>
+        <dcterms:extent>viii, 266 p. :</dcterms:extent>
+        <rdvocab:dimensions>25 cm.</rdvocab:dimensions>
+        <dcterms:description>Translation of: Géométrie, problèmes de géométrie commentés et rédigés.</dcterms:description>
+        <dcterms:description>Includes index.</dcterms:description>
+        <dcterms:isPartOf>Problem books in mathematics</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0387909710</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/499</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

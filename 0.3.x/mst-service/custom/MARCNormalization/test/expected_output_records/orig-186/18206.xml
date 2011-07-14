@@ -1,0 +1,153 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/61</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:61</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01587nam a22003490  45 A</marc:leader>
+      <marc:controlfield tag="001">18206</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="005">19860410212206.0</marc:controlfield>
+      <marc:controlfield tag="008">730226s1947    sz            000 0 ger u</marc:controlfield>
+      <marc:datafield tag="010" ind1=" " ind2=" ">
+        <marc:subfield code="a">   49052183 </marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)564693</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">00590521</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="c">OBE</marc:subfield>
+        <marc:subfield code="d">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RESM</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">ML159.B5</marc:subfield>
+        <marc:subfield code="b">V8</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">ML159.B5 V8</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="100" ind1="1" ind2=" ">
+        <marc:subfield code="a">Vischer, Dora Christiane.</marc:subfield>
+        <marc:subfield code="4">aut</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="1" ind2="4">
+        <marc:subfield code="a">Der musikgeschichtliche.</marc:subfield>
+        <marc:subfield code="b">Traktat des Pierre Bourdelot, 1610 bis 1685.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">Bern,</marc:subfield>
+        <marc:subfield code="b">P. Haupt,</marc:subfield>
+        <marc:subfield code="c">1947.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">173 p.</marc:subfield>
+        <marc:subfield code="c">21cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Berner Veröffentlichungen zur Musikforschung,</marc:subfield>
+        <marc:subfield code="v">Heft 14</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">"Die vorliegende Dissertation [Bern] enthielt bei ihrer Einreichung zwei Hauptteile: der erste Teil bildete ... eine Übersicht der Hauptgedanken ... Dieser ganze übersichtsteil muss für den Druck wegfallen ... Der zweite Teil erscheint in seiner ursprünglichen Gestalt."</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">"Histoire de la musique, et de ses effets" was begun by Pierre Bourdelot, continued by Pierre Bonnet and completed and pub. by Jacques Bonnet.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="590" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sibley Music Library copies 3 and 4: Microfiche (negative)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="600" ind1="1" ind2="0">
+        <marc:subfield code="a">Bonnet, Jacques,</marc:subfield>
+        <marc:subfield code="d">1644-1724.</marc:subfield>
+        <marc:subfield code="t">Histoire de la musique, et de ses effets.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="600" ind1="1" ind2="0">
+        <marc:subfield code="a">Bourdelot, Pierre,</marc:subfield>
+        <marc:subfield code="d">1610-1684 or 5.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Berner Veröffentlichungen zur Musikforschung ;</marc:subfield>
+        <marc:subfield code="v">Heft 14.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">u</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Csstk</marc:subfield>
+        <marc:subfield code="m">SMONC </marc:subfield>
+        <marc:subfield code="s">ML159.B5 V8</marc:subfield>
+        <marc:subfield code="c"> 1</marc:subfield>
+        <marc:subfield code="b">39087008624530</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Csstk</marc:subfield>
+        <marc:subfield code="m">SMONC </marc:subfield>
+        <marc:subfield code="s">ML159.B5 V8</marc:subfield>
+        <marc:subfield code="c"> 2</marc:subfield>
+        <marc:subfield code="b">39087008624548</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Micro</marc:subfield>
+        <marc:subfield code="m">SMIC  </marc:subfield>
+        <marc:subfield code="s">ML159.B5 V8</marc:subfield>
+        <marc:subfield code="c"> 3</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">/Micro</marc:subfield>
+        <marc:subfield code="m">SMIC  </marc:subfield>
+        <marc:subfield code="s">ML159.B5 V8</marc:subfield>
+        <marc:subfield code="c"> 4</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)18206</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">ger</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">German</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="240" ind1="0" ind2="0">
+        <marc:subfield code="a">Musikgeschichtliche.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="246" ind1="3" ind2="0">
+        <marc:subfield code="a">Musikgeschichtliche.</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

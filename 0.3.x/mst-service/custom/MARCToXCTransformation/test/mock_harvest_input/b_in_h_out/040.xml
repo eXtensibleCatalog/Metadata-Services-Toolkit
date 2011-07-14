@@ -1,0 +1,250 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-23T16:26:00Z</responseDate>
+  <request from="1960-02-23T21:26:00Z" metadataPrefix="marcxml" until="2011-02-23T21:26:00Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marcnormalization-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/040</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>02060cas a2200517 a 4500</marc:leader>
+	  <marc:controlfield tag="001">3395160</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20100408153545.0</marc:controlfield>
+	  <marc:controlfield tag="006">m        d        </marc:controlfield>
+	  <marc:controlfield tag="007">cr  n         </marc:controlfield>
+	  <marc:controlfield tag="008">030414c20049999nyuqr p s     0   a0eng c</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">  2003212226</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="7" ind2=" " tag="016">
+	    <marc:subfield code="a">101255943</marc:subfield>
+	    <marc:subfield code="2">DNLM</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="022">
+	    <marc:subfield code="a">1544-3558</marc:subfield>
+	    <marc:subfield code="l">1544-3558</marc:subfield>
+	    <marc:subfield code="2">1</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(WaSeSS)ssj24955</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="037">
+	    <marc:subfield code="b">ACM, 1515 Broadway, New York, NY 10036</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">NSDP</marc:subfield>
+	    <marc:subfield code="c">NSDP</marc:subfield>
+	    <marc:subfield code="d">OrPS</marc:subfield>
+	    <marc:subfield code="d">NSDP</marc:subfield>
+	    <marc:subfield code="d">TxU</marc:subfield>
+	    <marc:subfield code="d">MCM</marc:subfield>
+	    <marc:subfield code="d">CaQMU</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">OCoLC</marc:subfield>
+	    <marc:subfield code="d">InU</marc:subfield>
+	    <marc:subfield code="d">DNLM</marc:subfield>
+	    <marc:subfield code="d">NSDP</marc:subfield>
+	    <marc:subfield code="d">CLU</marc:subfield>
+	    <marc:subfield code="d">OCoLC</marc:subfield>
+	    <marc:subfield code="d">WaSeSS</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="042">
+	    <marc:subfield code="a">nsdp</marc:subfield>
+	    <marc:subfield code="a">pcc</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">QA76.9.H85</marc:subfield>
+	    <marc:subfield code="b">A268</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="4" tag="050">
+	    <marc:subfield code="a">T385</marc:subfield>
+	    <marc:subfield code="b">.A368</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="060">
+	    <marc:subfield code="a">W1</marc:subfield>
+	    <marc:subfield code="b">AC732B</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="082">
+	    <marc:subfield code="a">006.3</marc:subfield>
+	    <marc:subfield code="2">13</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="130">
+	    <marc:subfield code="a">ACM transactions on applied perception (Online)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="210">
+	    <marc:subfield code="a">ACM trans. appl. percept.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="222">
+	    <marc:subfield code="a">ACM transactions on applied perception</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">ACM transactions on applied perception</marc:subfield>
+	    <marc:subfield code="h">[electronic resource].</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2=" " tag="246">
+	    <marc:subfield code="a">Transactions on applied perception</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="7" tag="246">
+	    <marc:subfield code="a">ACM transactions on applied perceptions</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="246">
+	    <marc:subfield code="i">Also known as:</marc:subfield>
+	    <marc:subfield code="a">TAP</marc:subfield>
+	    <marc:subfield code="f">&lt;Oct. 2004-&gt;</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">New York, N.Y. :</marc:subfield>
+	    <marc:subfield code="b">Association for Computing Machinery,</marc:subfield>
+	    <marc:subfield code="c">c2004-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="310">
+	    <marc:subfield code="a">Quarterly</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="362">
+	    <marc:subfield code="a">Vol. 1, no. 1 (July 2004)-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Title from cover.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Latest issue consulted: Vol. 3, no. 1 (Jan. 2006).</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="515">
+	    <marc:subfield code="a">Vol. 1 has only two no.: Vol. 1, no. 1 (July 2004) and v. 1, no. 2 (Oct. 2004).</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Human-computer interaction</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Computer graphics</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Psychology</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="2" tag="650">
+	    <marc:subfield code="a">Computer Graphics</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">ACM Digital Library.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="776">
+	    <marc:subfield code="t">ACM transactions on applied perception (Online)</marc:subfield>
+	    <marc:subfield code="x">1544-3965</marc:subfield>
+	    <marc:subfield code="w">(DLC)  2003212227</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)52051712</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="852">
+	    <marc:subfield code="x">universal pattern</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2="0" tag="853">
+	    <marc:subfield code="8">1</marc:subfield>
+	    <marc:subfield code="a">v.</marc:subfield>
+	    <marc:subfield code="b">no.</marc:subfield>
+	    <marc:subfield code="u">4</marc:subfield>
+	    <marc:subfield code="v">r</marc:subfield>
+	    <marc:subfield code="i">(year)</marc:subfield>
+	    <marc:subfield code="j">(month)</marc:subfield>
+	    <marc:subfield code="w">q</marc:subfield>
+	    <marc:subfield code="x">07</marc:subfield>
+	    <marc:subfield code="y">pm01,04,07,10</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="0" tag="856">
+	    <marc:subfield code="z">Full text</marc:subfield>
+	    <marc:subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=ACMTRANONA&amp;T=marc</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="863">
+	    <marc:subfield code="8">1.1</marc:subfield>
+	    <marc:subfield code="a">1</marc:subfield>
+	    <marc:subfield code="b">1</marc:subfield>
+	    <marc:subfield code="i">2004</marc:subfield>
+	    <marc:subfield code="j">07</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="999">
+	    <marc:subfield code="a">Journal RCL Internet SS</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Computer file</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Serial</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)3395160</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Electronic resource</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="934">
+	    <marc:subfield code="a">Remote</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="939">
+	    <marc:subfield code="a">2004-    </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Human-computer interaction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Computer graphics</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Psychology</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="2" tag="965">
+	    <marc:subfield code="a">Computer Graphics</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="2" tag="969">
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

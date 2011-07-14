@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:URMST:Transformation Service/15643">
+		<xc:titleOfExpression>No country for old men</xc:titleOfExpression>
+		<dcterms:version>Widescreen version.</dcterms:version>
+		<rdvocab:artisticAndOrTechnicalCredits>Director of photography, Roger Deakins ; editor, Roderick Jaynes ; music, Carter Burwell ; costume designer, Mary Zophres ; production designer, Jess Gonchor.</rdvocab:artisticAndOrTechnicalCredits>
+		<rdvocab:performerNarratorAndOrPresenter>Tommy Lee Jones, Javier Bardem, Josh Brolin, Woody Harrelson, Kelly Macdonald.</rdvocab:performerNarratorAndOrPresenter>
+		<dcterms:requires>DVD, NTSC; region 1, widescreen (2.35:1, enhanced) presentation; Dolby Digital 5.1 surround, digitally mastered.</dcterms:requires>
+		<dcterms:language>English dialogue, with optional French, Spanish subtitles, English subtitles for the deaf and hard of hearing; closed-captioned.</dcterms:language>
+		<rdvocab:awards>Academy Awards, 2008: Best Achievement in Directing; Best Motion Picture of the Year; Best Performance by an Actor in a Supporting Role (Bardem); Best Writing, Screenplay Based on Material Previously Produced or Published. Golden Globes, USA, 2008: Golden Globe - Best Performance by an Actor in a Supporting Role in a Motion Picture (Javier Bardem) ; Best Screenplay - Motion Picture (Joel Coen, Ethan Coen)</rdvocab:awards>
+		<dcterms:relation>http://www.mrqe.com/lookup?no+country Connect to reviews of this title online</dcterms:relation>
+		<dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+		<dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<rdarole:producer>Rudin, Scott, 1958-</rdarole:producer>
+		<rdarole:producer>Coen, Ethan.</rdarole:producer>
+		<rdarole:director>Coen, Ethan.</rdarole:director>
+		<rdarole:producer>Coen, Joel.</rdarole:producer>
+		<rdarole:director>Coen, Joel.</rdarole:director>
+		<rdarole:performer>Jones, Tommy Lee, 1946-</rdarole:performer>
+		<rdarole:performer>Bardem, Javier, 1969-</rdarole:performer>
+		<rdarole:performer>Brolin, Josh.</rdarole:performer>
+		<rdarole:performer>Harrelson, Woody.</rdarole:performer>
+		<rdarole:performer>MacDonald, Kelly, 1976-</rdarole:performer>
+		<xc:contributor>Miramax Films.</xc:contributor>
+		<xc:contributor>Paramount Vantage.</xc:contributor>
+		<xc:contributor>Miramax Home Entertainment (Firm)</xc:contributor>
+		<xc:contributor>Buena Vista Home Entertainment (Firm)</xc:contributor>
+		<xc:link>oai:URMST:Transformation Service/15642</xc:link></xc:entity>
+</xc:frbr>

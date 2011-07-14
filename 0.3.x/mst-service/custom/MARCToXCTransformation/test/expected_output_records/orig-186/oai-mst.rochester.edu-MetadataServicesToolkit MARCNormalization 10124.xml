@@ -1,0 +1,78 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/405</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:125</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/405">
+        <dcterms:subject xsi:type="dcterms:LCC">PG3485.8.D77</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">891.7/3/5</dcterms:subject>
+        <rdarole:author>Sadur, Nina, 1950-</rdarole:author>
+        <rdarole:author>Садур, Нина, 1950-</rdarole:author>
+        <rdvocab:titleOfWork>Igolka li︠u︡bvi :</rdvocab:titleOfWork>
+        <rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/406</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:125</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/406">
+        <xc:titleOfExpression>Igolka li︠u︡bvi :</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>Russian</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/405</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/404</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:125</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/404">
+        <xc:recordID type="OCoLC">175286707</xc:recordID>
+        <xc:recordID type="NRU">3722562</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>N. Sadur.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Н. Садур.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Igolka li︠u︡bvi : proza /</dcterms:title>
+        <dcterms:title>Иголка любви : проза /</dcterms:title>
+        <rdvocab:placeOfProduction>Moskva :</rdvocab:placeOfProduction>
+        <rdvocab:placeOfProduction>Москва :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Vagrius,</dcterms:publisher>
+        <dcterms:publisher>Вагриус,</dcterms:publisher>
+        <dcterms:issued>2007.</dcterms:issued>
+        <dcterms:extent>287 p. ;</dcterms:extent>
+        <rdvocab:dimensions>21 cm.</rdvocab:dimensions>
+        <dcterms:tableOfContents>Detki v kletke -- I︠U︡g -- Nemet︠s︡ -- Igolka l︠u︡bvi.</dcterms:tableOfContents>
+        <dcterms:tableOfContents>Детки в клетке -- Юг -- Немец -- Иголка любви.</dcterms:tableOfContents>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">9785969704084</dcterms:identifier>
+        <dcterms:identifier type="ISBN">5969704083</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/406</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

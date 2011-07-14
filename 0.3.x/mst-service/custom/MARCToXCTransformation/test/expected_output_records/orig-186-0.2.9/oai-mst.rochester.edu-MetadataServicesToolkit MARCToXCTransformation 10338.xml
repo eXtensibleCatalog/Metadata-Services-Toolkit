@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10338">
+		<xc:recordID type="OCoLC">58597443</xc:recordID>
+		<xc:recordID type="NRU">3157056</xc:recordID>
+		<dcterms:title>Directory of published proceedings</dcterms:title>
+		<dcterms:alternative>InterDok -- Directory of published proceedings</dcterms:alternative>
+		<dcterms:alternative>Directory of published conference proceedings</dcterms:alternative>
+		<dcterms:alternative>DoPP</dcterms:alternative>
+		<rdvocab:placeOfProduction>Harrison, NY :</rdvocab:placeOfProduction>
+		<dcterms:publisher>InterDok Corp.</dcterms:publisher>
+		<rdvocab:numberingOfSerials>Began in 2005?</rdvocab:numberingOfSerials>
+		<dcterms:description>Title from opening screen (viewed Mar. 24, 2005).</dcterms:description>
+		<dcterms:description>Database coverage: 1995-</dcterms:description>
+		<dcterms:tableOfContents>Science/technology -- Medical/life sciences -- Pollution control/ecology -- Social sciences/humanitites.</dcterms:tableOfContents>
+		<dcterms:rights>Access restricted to subscribers.</dcterms:rights>
+		<dcterms:identifier>http://www.interdok.com/dopp/index.cfm</dcterms:identifier>
+		<xc:typeLeader06>Computer file</xc:typeLeader06>
+		<xc:type007>Electronic resource</xc:type007>
+		<xc:typeSMD>Remote</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10337</xc:expressionManifested></xc:entity>
+</xc:frbr>

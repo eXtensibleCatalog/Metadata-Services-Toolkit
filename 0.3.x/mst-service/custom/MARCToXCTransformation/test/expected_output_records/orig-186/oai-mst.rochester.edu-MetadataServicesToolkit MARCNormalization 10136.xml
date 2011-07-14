@@ -1,0 +1,77 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/437</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:137</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/437">
+        <dcterms:subject xsi:type="dcterms:LCC">ML100</dcterms:subject>
+        <rdarole:author>Apel, Willi, 1893-1988.</rdarole:author>
+        <rdvocab:titleOfWork>Harvard dictionary of music.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Music-Dictionaries.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Music</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Dictionaries.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/438</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:137</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/438">
+        <xc:titleOfExpression>Harvard dictionary of music.</xc:titleOfExpression>
+        <dcterms:version>2d ed., rev. and enl.</dcterms:version>
+        <rdvocab:illustrationContent>illus., music.</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/437</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/436</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:137</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/436">
+        <xc:recordID type="LCCN">68021970 /MN</xc:recordID>
+        <xc:recordID type="OCoLC">21452</xc:recordID>
+        <xc:recordID type="NRU">418963</xc:recordID>
+        <dcterms:title>Harvard dictionary of music.</dcterms:title>
+        <rdvocab:editionStatement>2d ed., rev. and enl.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>Cambridge, Mass.,</rdvocab:placeOfProduction>
+        <dcterms:publisher>Belknap Press of Harvard University Press,</dcterms:publisher>
+        <dcterms:issued>1969.</dcterms:issued>
+        <dcterms:extent>xv, 935 p.</dcterms:extent>
+        <rdvocab:dimensions>24 cm.</rdvocab:dimensions>
+        <dcterms:description>Restricted to musical topics, omitting biographical articles.</dcterms:description>
+        <dcterms:description>Includes bibliographies.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0674375017</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/438</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

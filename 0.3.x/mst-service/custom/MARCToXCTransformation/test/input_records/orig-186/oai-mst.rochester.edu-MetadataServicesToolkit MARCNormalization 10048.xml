@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:49</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>02028cas a2200457 a 45e0</marc:leader>
+        <marc:controlfield tag="001">1654634</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20080722140305.0</marc:controlfield>
+        <marc:controlfield tag="008">980717d19811992nyuar1        1   a0eng d</marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">   85644294 </marc:subfield>
+          <marc:subfield code="z">sn 83002131</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)9508687</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">NSD</marc:subfield>
+          <marc:subfield code="c">NSD</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">AIP</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">IUL</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">WAU</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">NST</marc:subfield>
+          <marc:subfield code="d">DLC</marc:subfield>
+          <marc:subfield code="d">MYG</marc:subfield>
+          <marc:subfield code="d">GUA</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="019" ind1=" " ind2=" ">
+          <marc:subfield code="a">13321764</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="022" ind1="0" ind2=" ">
+          <marc:subfield code="a">0738-100X</marc:subfield>
+          <marc:subfield code="y">0146-7123</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="042" ind1=" " ind2=" ">
+          <marc:subfield code="a">nsdp</marc:subfield>
+          <marc:subfield code="a">lc</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">TA174</marc:subfield>
+          <marc:subfield code="b">.D46a</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">TA174.A1</marc:subfield>
+          <marc:subfield code="b">D45</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="111" ind1="2" ind2=" ">
+          <marc:subfield code="a">ACM IEEE Design Automation Conference.</marc:subfield>
+          <marc:subfield code="4">aut</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="210" ind1="0" ind2=" ">
+          <marc:subfield code="a">Proc. - ACM IEEE Des. Autom. Conf.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="222" ind1=" " ind2="0">
+          <marc:subfield code="a">Proceedings - ACM IEEE Design Automation Conference</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Proceedings /</marc:subfield>
+          <marc:subfield code="c">ACM IEEE Design Automation Conference.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="3">
+          <marc:subfield code="a">Proceedings of the Design Automation Conference</marc:subfield>
+          <marc:subfield code="f">&lt;1983-&gt;</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">New York, NY :</marc:subfield>
+          <marc:subfield code="b">Institute of Electrical and Electronics Engineers,</marc:subfield>
+          <marc:subfield code="c">-c1992.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">12 v. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">28 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="310" ind1=" " ind2=" ">
+          <marc:subfield code="a">Annual</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="1" ind2=" ">
+          <marc:subfield code="a">Began in 1981.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">-29th (June 8-12, 1992).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Description based on: 19th (1982).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="510" ind1="1" ind2=" ">
+          <marc:subfield code="a">Index to IEEE publications</marc:subfield>
+          <marc:subfield code="x">0099-1368</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="530" ind1=" " ind2=" ">
+          <marc:subfield code="a">Issued also in microfiche; tables of contents also online via the World Wide Web.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="550" ind1=" " ind2=" ">
+          <marc:subfield code="a">Vols. for   -1992 sponsored by: ACM SIGDA, IEEE Computer Society DATC, in cooperation with: EDAC.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Engineering design</marc:subfield>
+          <marc:subfield code="x">Data processing</marc:subfield>
+          <marc:subfield code="v">Congresses.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Computer-aided design</marc:subfield>
+          <marc:subfield code="v">Congresses.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Institute of Electrical and Electronics Engineers.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">ACM Special Interest Group on Design Automation.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">IEEE Computer Society.</marc:subfield>
+          <marc:subfield code="b">Design Automation Technical Committee.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="710" ind1="2" ind2=" ">
+          <marc:subfield code="a">Electronic Design Automation Companies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="780" ind1="0" ind2="0">
+          <marc:subfield code="a">Design Automation Conference.</marc:subfield>
+          <marc:subfield code="t">Proceedings - Design Automation Conference</marc:subfield>
+          <marc:subfield code="x">0146-7123</marc:subfield>
+          <marc:subfield code="w">(DLC)   76150348</marc:subfield>
+          <marc:subfield code="w">(OCoLC)2723552</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="785" ind1="0" ind2="0">
+          <marc:subfield code="a">Design Automation Conference.</marc:subfield>
+          <marc:subfield code="s">Proceedings (1993)</marc:subfield>
+          <marc:subfield code="w">(DLC)sn 95037139</marc:subfield>
+          <marc:subfield code="w">(OCoLC)32030472</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="939" ind1=" " ind2=" ">
+          <marc:subfield code="a">1981-1992</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)1654634</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="0" ind2="0">
+          <marc:subfield code="a">Proceedings /</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Engineering design</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Computer-aided design</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="x">Data processing</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Congresses.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="969" ind1=" " ind2="0">
+          <marc:subfield code="v">Congresses.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

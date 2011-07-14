@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10424">
+		<xc:titleOfExpression>Harvard dictionary of music.</xc:titleOfExpression>
+		<dcterms:version>2d ed., rev. and enl.</dcterms:version>
+		<rdvocab:illustrationContent>illus., music.</rdvocab:illustrationContent>
+		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10423</xc:workExpressed></xc:entity>
+</xc:frbr>

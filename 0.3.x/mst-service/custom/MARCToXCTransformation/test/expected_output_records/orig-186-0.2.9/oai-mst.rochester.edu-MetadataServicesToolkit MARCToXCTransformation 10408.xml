@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10408">
+		<xc:titleOfExpression>[Tonto National Forest and other adjacent Forest Service areas] :</xc:titleOfExpression>
+		<dcterms:version>Rev. 2004.</dcterms:version>
+		<rdvocab:scale>Scale 1:24,000 ; universal transverse Mercator proj. (W 112⁰07ʹ30ʺ--W 110⁰30ʹ00ʺ/N 34⁰30ʹ00ʺ--N 33⁰07ʹ30ʺ).</rdvocab:scale>
+		<dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>United States. Forest Service.</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10407</xc:workExpressed></xc:entity>
+</xc:frbr>

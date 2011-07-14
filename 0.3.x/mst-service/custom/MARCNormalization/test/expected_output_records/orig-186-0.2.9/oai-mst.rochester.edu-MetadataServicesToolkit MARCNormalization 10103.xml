@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>01860cmm a2200373Ia 4500</marc:leader>
+	<marc:controlfield tag="001">3157056</marc:controlfield>
+	<marc:controlfield tag="005">20060703152455.0</marc:controlfield>
+	<marc:controlfield tag="006">suu w s     0    2</marc:controlfield>
+	<marc:controlfield tag="007">cr mnu--------</marc:controlfield>
+	<marc:controlfield tag="008">050325m20059999nyu        j        eng d</marc:controlfield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="a">(OCoLC)58597443</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">SUC</marc:subfield>
+		<marc:subfield code="c">SUC</marc:subfield>
+		<marc:subfield code="d">OCLCQ</marc:subfield>
+		<marc:subfield code="d">COU</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RRRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="0" ind2="0">
+		<marc:subfield code="a">Directory of published proceedings</marc:subfield>
+		<marc:subfield code="h">[electronic resource].</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="246" ind1="1" ind2=" ">
+		<marc:subfield code="i">HTML source code title:</marc:subfield>
+		<marc:subfield code="a">InterDok -- Directory of published proceedings</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="246" ind1="1" ind2=" ">
+		<marc:subfield code="a">Directory of published conference proceedings</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="246" ind1="1" ind2=" ">
+		<marc:subfield code="i">Also known as:</marc:subfield>
+		<marc:subfield code="a">DoPP</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">Harrison, NY :</marc:subfield>
+		<marc:subfield code="b">InterDok Corp.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="362" ind1="1" ind2=" ">
+		<marc:subfield code="a">Began in 2005?</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="538" ind1=" " ind2=" ">
+		<marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Title from opening screen (viewed Mar. 24, 2005).</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Database coverage: 1995-</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="505" ind1="0" ind2=" ">
+		<marc:subfield code="a">Science/technology -- Medical/life sciences -- Pollution control/ecology -- Social sciences/humanitites.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="580" ind1=" " ind2=" ">
+		<marc:subfield code="a">Supersedes the print publications: Directory of published proceedings. Series SEMT, Science/engineering/medicine/technology; Directory of published proceedings. Series SSH, Social sciences/humanities; Directory of published proceedings. Series MLS, Medical/life sciences; and Directory of published proceedings. Series PCE, Pollution control/ecology.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="520" ind1=" " ind2=" ">
+		<marc:subfield code="a">A database service that locates proceedings from conferences, congresses and symposia. Can also search for proceedings by sponsor and publisher, country, state/province, and year the event took place.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="506" ind1=" " ind2=" ">
+		<marc:subfield code="a">Access restricted to subscribers.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1="1" ind2="2">
+		<marc:subfield code="a">Congresses</marc:subfield>
+		<marc:subfield code="v">Database.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1="1" ind2="2">
+		<marc:subfield code="a">Congresses</marc:subfield>
+		<marc:subfield code="v">Directory.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Congresses and conventions</marc:subfield>
+		<marc:subfield code="v">Databases.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">Meetings</marc:subfield>
+		<marc:subfield code="v">Databases.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="710" ind1="2" ind2=" ">
+		<marc:subfield code="a">InterDok Corp.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="856" ind1="4" ind2="0">
+		<marc:subfield code="u">http://www.interdok.com/dopp/index.cfm</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="994" ind1=" " ind2=" ">
+		<marc:subfield code="a">C0</marc:subfield>
+		<marc:subfield code="b">RRR</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="999" ind1=" " ind2=" ">
+		<marc:subfield code="a">Bibliographic database RCL Internet</marc:subfield>
+	</marc:datafield>
+
+<marc:datafield tag="932" ind1=" " ind2=" ">
+	<marc:subfield code="a">Computer file</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="933" ind1=" " ind2=" ">
+	<marc:subfield code="a">Electronic resource</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="935" ind1=" " ind2=" ">
+	<marc:subfield code="a">Monograph/Item</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="933" ind1=" " ind2=" ">
+	<marc:subfield code="a">Electronic resource</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="934" ind1=" " ind2=" ">
+	<marc:subfield code="a">Remote</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="941" ind1=" " ind2=" ">
+	<marc:subfield code="a">eng</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="943" ind1=" " ind2=" ">
+	<marc:subfield code="a">English</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:controlfield tag="003">NRU</marc:controlfield>
+
+<marc:datafield tag="035" ind1=" " ind2=" ">
+	<marc:subfield code="a">(NRU)3157056</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="130" ind1="0" ind2=" ">
+	<marc:subfield code="a">Directory of published proceedings</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1="1" ind2="2">
+	<marc:subfield code="a">Congresses</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1="1" ind2="2">
+	<marc:subfield code="a">Congresses</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1=" " ind2="0">
+	<marc:subfield code="a">Congresses and conventions</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1=" " ind2="0">
+	<marc:subfield code="a">Meetings</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="969" ind1="1" ind2="2">
+	<marc:subfield code="v">Database.</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="969" ind1="1" ind2="2">
+	<marc:subfield code="v">Directory.</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="969" ind1=" " ind2="0">
+	<marc:subfield code="v">Databases.</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="969" ind1=" " ind2="0">
+	<marc:subfield code="v">Databases.</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+</marc:record>

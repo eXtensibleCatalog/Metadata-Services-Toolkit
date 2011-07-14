@@ -1,0 +1,62 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/37</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:37</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Holding Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>00983cx  a22002413  4500</marc:leader>
+      <marc:controlfield tag="001">1469520</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="004">1352471</marc:controlfield>
+      <marc:controlfield tag="005">20060829114355.0</marc:controlfield>
+      <marc:controlfield tag="008">9612090p    0   4001au   0000000</marc:controlfield>
+      <marc:datafield tag="852" ind1="8" ind2=" ">
+        <marc:subfield code="b">NewsMicro</marc:subfield>
+        <marc:subfield code="h">FILM .Una191 reel 747-748, 1720-1726, 1936</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1="3" ind2="0">
+        <marc:subfield code="a">Vol. 3, no. 1 (Jan. 1843)-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 3-8 (Jan. 1843-Oct. 1848) = reel 747</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 9-10 (Jan. 1849-Dec. 1850) = reel 748</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 11-15 (Jan. 1851-Dec. 1855) = reel 1720</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 18-23 (nsv 2-7) (July 1, 1858-June 27, 1861) = reel 1721</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v.  29-34 (nsv 13-18) (Jan. 2, 1864-Dec. 29, 1866) = reel 1722</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 35-36 (nsv19-20) (Jan. 5-Dec. 28, 1867) = reel 1723</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 39, 41-42 (July 4, 1868-Dec. 30, 1871) = reel 1936</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 43 (Jan. 6-Dec. 28, 1872) = reel 1723</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 44-45 (Jan. 4, 1873-Dec. 26, 1874) = reel 1724</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 46-47 (Jan. 2, 1875-Dec. 30, 1876) = reel 1725</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="866" ind1=" " ind2="0">
+        <marc:subfield code="a">v. 48 (Jan. 6-Dec. 29, 1877) = reel 1726</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

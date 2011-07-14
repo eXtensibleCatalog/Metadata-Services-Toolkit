@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:113</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01792cam a2200469 a 4500</marc:leader>
+        <marc:controlfield tag="001">3447574</marc:controlfield>
+        <marc:controlfield tag="005">20070302082345.0</marc:controlfield>
+        <marc:controlfield tag="008">051208s2006    maua     b    001 0 eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">  2005058420</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm62679945</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">DLC</marc:subfield>
+          <marc:subfield code="d">BAKER</marc:subfield>
+          <marc:subfield code="d">BTCTA</marc:subfield>
+          <marc:subfield code="d">C#P</marc:subfield>
+          <marc:subfield code="d">YDXCP</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0262134594 (alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0262633248 (pbk. : alk. paper)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="024" ind1="7" ind2=" ">
+          <marc:subfield code="a">40013713909</marc:subfield>
+          <marc:subfield code="2">YBP</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">YDXCP</marc:subfield>
+          <marc:subfield code="b">2212065</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="029" ind1="1" ind2=" ">
+          <marc:subfield code="a">YDXCP</marc:subfield>
+          <marc:subfield code="b">2212069</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)62679945</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="043" ind1=" " ind2=" ">
+          <marc:subfield code="a">n-us---</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="050" ind1="0" ind2="0">
+          <marc:subfield code="a">E840</marc:subfield>
+          <marc:subfield code="b">.D392 2006</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="082" ind1="0" ind2="0">
+          <marc:subfield code="a">327.73009/045</marc:subfield>
+          <marc:subfield code="2">22</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="0" ind2="0">
+          <marc:subfield code="a">Dealing with dictators :</marc:subfield>
+          <marc:subfield code="b">dilemmas of U.S. diplomacy and intelligence analysis, 1945-1990 /</marc:subfield>
+          <marc:subfield code="c">Ernest R. May and Philip D. Zelikow, editors ; with Kirsten Lundberg and Robert D. Johnson.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Cambridge, Mass. :</marc:subfield>
+          <marc:subfield code="b">MIT Press,</marc:subfield>
+          <marc:subfield code="c">2006.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xiv, 227 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">24 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="440" ind1=" " ind2="0">
+          <marc:subfield code="a">BCSIA studies in international security</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="651" ind1=" " ind2="0">
+          <marc:subfield code="a">United States</marc:subfield>
+          <marc:subfield code="x">Foreign relations</marc:subfield>
+          <marc:subfield code="y">1945-1989</marc:subfield>
+          <marc:subfield code="v">Case studies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Dictators</marc:subfield>
+          <marc:subfield code="v">Case studies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Intelligence service</marc:subfield>
+          <marc:subfield code="z">United States</marc:subfield>
+          <marc:subfield code="x">History</marc:subfield>
+          <marc:subfield code="y">20th century</marc:subfield>
+          <marc:subfield code="v">Case studies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Totalitarianism</marc:subfield>
+          <marc:subfield code="v">Case studies.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">May, Ernest R.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Zelikow, Philip,</marc:subfield>
+          <marc:subfield code="d">1954-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Lundberg, Kirsten.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Johnson, Robert David,</marc:subfield>
+          <marc:subfield code="d">1967-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="938" ind1=" " ind2=" ">
+          <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+          <marc:subfield code="b">BKTY</marc:subfield>
+          <marc:subfield code="c">54.00</marc:subfield>
+          <marc:subfield code="d">54.00</marc:subfield>
+          <marc:subfield code="i">0262134594</marc:subfield>
+          <marc:subfield code="n">0006426904</marc:subfield>
+          <marc:subfield code="s">active</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="938" ind1=" " ind2=" ">
+          <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+          <marc:subfield code="b">BKTY</marc:subfield>
+          <marc:subfield code="c">27.00</marc:subfield>
+          <marc:subfield code="d">27.00</marc:subfield>
+          <marc:subfield code="i">0262633248</marc:subfield>
+          <marc:subfield code="n">0006426905</marc:subfield>
+          <marc:subfield code="s">active</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="938" ind1=" " ind2=" ">
+          <marc:subfield code="a">Baker and Taylor</marc:subfield>
+          <marc:subfield code="b">BTCP</marc:subfield>
+          <marc:subfield code="n">2005058420</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="938" ind1=" " ind2=" ">
+          <marc:subfield code="a">YBP Library Services</marc:subfield>
+          <marc:subfield code="b">YANK</marc:subfield>
+          <marc:subfield code="n">2212069</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="945" ind1=" " ind2=" ">
+          <marc:subfield code="a">PromptCat</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="949" ind1=" " ind2=" ">
+          <marc:subfield code="b">39087028921098</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="980" ind1=" " ind2=" ">
+          <marc:subfield code="a">2007-02-14</marc:subfield>
+          <marc:subfield code="b">27</marc:subfield>
+          <marc:subfield code="e">25.65</marc:subfield>
+          <marc:subfield code="f">68219</marc:subfield>
+          <marc:subfield code="g">1</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">92</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

@@ -1,0 +1,195 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/30</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:30</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01926cas a2200481 a 45&amp;#x2019;A</marc:leader>
+      <marc:controlfield tag="001">1341018</marc:controlfield>
+      <marc:controlfield tag="003">OCoLC</marc:controlfield>
+      <marc:controlfield tag="005">19961012095332.0</marc:controlfield>
+      <marc:controlfield tag="007">hduafv---baca</marc:controlfield>
+      <marc:controlfield tag="008">810618u1880uuuumiuuu   a     0   a0eng d</marc:controlfield>
+      <marc:datafield tag="010" ind1=" " ind2=" ">
+        <marc:subfield code="a">sf 88092303 </marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)7510382</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">PIT</marc:subfield>
+        <marc:subfield code="c">PIT</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">PES</marc:subfield>
+        <marc:subfield code="d">OCL</marc:subfield>
+        <marc:subfield code="d">DLC</marc:subfield>
+        <marc:subfield code="d">NST</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="022" ind1=" " ind2=" ">
+        <marc:subfield code="a">0002-9599</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="030" ind1=" " ind2=" ">
+        <marc:subfield code="a">AJSCAP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="042" ind1=" " ind2=" ">
+        <marc:subfield code="a">msc</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="050" ind1="0" ind2="0">
+        <marc:subfield code="a">Microfilm 01104 no. 820-830 AP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">Q1</marc:subfield>
+        <marc:subfield code="b">.A5</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="092" ind1=" " ind2=" ">
+        <marc:subfield code="a">505</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">FILM</marc:subfield>
+        <marc:subfield code="a">Una191</marc:subfield>
+        <marc:subfield code="a">820-830.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">American journal of science (1880)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="210" ind1="0" ind2=" ">
+        <marc:subfield code="a">Am. j. sci.</marc:subfield>
+        <marc:subfield code="b">(1880)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="222" ind1=" " ind2="0">
+        <marc:subfield code="a">American journal of science</marc:subfield>
+        <marc:subfield code="b">(1880)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="4">
+        <marc:subfield code="a">The American journal of science</marc:subfield>
+        <marc:subfield code="h">[microform].</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">[New Haven, Conn. :</marc:subfield>
+        <marc:subfield code="b">J.D. &amp; E.S. Dana],</marc:subfield>
+        <marc:subfield code="c">1880-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">v. :</marc:subfield>
+        <marc:subfield code="b">ill. ;</marc:subfield>
+        <marc:subfield code="c">23 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="310" ind1=" " ind2=" ">
+        <marc:subfield code="a">Ten no. a year.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="321" ind1=" " ind2=" ">
+        <marc:subfield code="a">Annual,</marc:subfield>
+        <marc:subfield code="b">1939-1969.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="321" ind1=" " ind2=" ">
+        <marc:subfield code="a">Semiannual,</marc:subfield>
+        <marc:subfield code="b">1970-1971.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="321" ind1=" " ind2=" ">
+        <marc:subfield code="a">Annual,</marc:subfield>
+        <marc:subfield code="b">1972-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="362" ind1="0" ind2=" ">
+        <marc:subfield code="a">3rd ser., vol. 19, no. 109 (Jan. 1880)-   = whole no. 119-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Title from caption.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Ser. 5, v. 35A (v. [325A]) is also publication no. 1000 of the Geophysical Laboratory, Carnegie Institution of Washington.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="515" ind1=" " ind2=" ">
+        <marc:subfield code="a">Since 1938 the numbering by series has been discontinued.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="515" ind1=" " ind2=" ">
+        <marc:subfield code="a">Vols. 101-150 also numbered ser. 3, v. 1-50; Vol. 151-200 as ser. 4, Vol. 1-50; v. 201-236 as ser. 5, v. 1-36.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="533" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microfilm.</marc:subfield>
+        <marc:subfield code="b">Ann Arbor, Mich. :</marc:subfield>
+        <marc:subfield code="c">University Microfilms.</marc:subfield>
+        <marc:subfield code="e">11 microfilm reels ; 35 mm.</marc:subfield>
+        <marc:subfield code="f">(American periodical series, 1800-1850 ; 820-830)</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="555" ind1=" " ind2=" ">
+        <marc:subfield code="a">Vols. 231-236, 1936-38, with v. 236.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Science</marc:subfield>
+        <marc:subfield code="x">Periodicals.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="776" ind1="1" ind2=" ">
+        <marc:subfield code="t">American journal of science (1880)</marc:subfield>
+        <marc:subfield code="x">0002-9599</marc:subfield>
+        <marc:subfield code="w">(OCoLC)5694945</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="780" ind1="0" ind2="0">
+        <marc:subfield code="t">American journal of science and arts</marc:subfield>
+        <marc:subfield code="x">0099-5363</marc:subfield>
+        <marc:subfield code="w">(OCoLC)7524917</marc:subfield>
+        <marc:subfield code="w">(DLC)sf 88092302</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">American periodical series, 1800-1850 ;</marc:subfield>
+        <marc:subfield code="v">820-830.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="890" ind1=" " ind2=" ">
+        <marc:subfield code="a">American journal of science (1880).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Serial</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microform</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Microfilm reel</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Science</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Periodicals.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

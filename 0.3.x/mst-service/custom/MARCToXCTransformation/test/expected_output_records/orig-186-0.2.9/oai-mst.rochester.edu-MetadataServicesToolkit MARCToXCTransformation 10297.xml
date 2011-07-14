@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10297">
+		<xc:titleOfExpression>Gone with the wind</xc:titleOfExpression>
+		<rdvocab:artisticAndOrTechnicalCredits>Music by Max Steiner.</rdvocab:artisticAndOrTechnicalCredits>
+		<rdvocab:performerNarratorAndOrPresenter>Clark Gable, Vivien Leigh, Leslie Howard, Olivia De Havilland, Thomas Mitchell, Hattie McDaniel, Butterfly McQueen.</rdvocab:performerNarratorAndOrPresenter>
+		<dcterms:requires>DVD ; all area code ; double sided.</dcterms:requires>
+		<rdvocab:awards>Academy Award for Best Picture, 1939.</rdvocab:awards>
+		<dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+		<dcterms:type xsi:type="dcterms:DCMIType">MovingImage</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>Gable, Clark, 1901-1960.</xc:contributor>
+		<xc:contributor>Leigh, Vivien, 1913-1967.</xc:contributor>
+		<xc:contributor>Howard, Leslie, 1893-1943.</xc:contributor>
+		<xc:contributor>De Havilland, Olivia.</xc:contributor>
+		<xc:contributor>Mitchell, Thomas, 1892-1962.</xc:contributor>
+		<xc:contributor>McDaniel, Hattie, 1895-1952.</xc:contributor>
+		<xc:contributor>McQueen, Butterfly.</xc:contributor>
+		<xc:contributor>Fleming, Victor, 1883-1949.</xc:contributor>
+		<xc:contributor>Selznick, David O., 1902-1965.</xc:contributor>
+		<xc:contributor>Howard, Sidney Coe, 1891-1939.</xc:contributor>
+		<xc:contributor>Selznick International Pictures.</xc:contributor>
+		<xc:contributor>Evervision Corp.</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10296</xc:workExpressed></xc:entity>
+</xc:frbr>

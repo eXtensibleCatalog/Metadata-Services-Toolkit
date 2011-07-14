@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:99</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00237cx  a2200109   4500</marc:leader>
+        <marc:controlfield tag="001">2941762</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20050316094922.0</marc:controlfield>
+        <marc:controlfield tag="008">050307                          </marc:controlfield>
+        <marc:datafield tag="852" ind1=" " ind2=" ">
+          <marc:subfield code="b">Internet</marc:subfield>
+        </marc:datafield>
+        <marc:controlfield tag="004">2767993</marc:controlfield>
+        <marc:datafield tag="856" ind1=" " ind2=" ">
+          <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS18167</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

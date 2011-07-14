@@ -1,0 +1,80 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/324</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:94</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/324">
+        <rdvocab:titleOfWork>Illegal alien resident population</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Illegal aliens-United States-Statistics.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Immigrants-United States-Statistics.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Illegal aliens</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Immigrants</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">United States</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Statistics.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/325</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:94</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/325">
+        <xc:titleOfExpression>Illegal alien resident population</xc:titleOfExpression>
+        <dcterms:version>Updated Dec. 2001.</dcterms:version>
+        <dcterms:requires>System requirements: Adobe Acrobat Reader.</dcterms:requires>
+        <dcterms:requires>Mode of access: Internet from the INS web site. Address as of  3/14/02:http://www.ins.gov/graphics/aboutins/statistics/illegalalien/illegal.pdf; current access is available via PURL.</dcterms:requires>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>United States. Immigration and Naturalization Service.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/324</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/323</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:94</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/323">
+        <xc:recordID type="OCoLC">49315959</xc:recordID>
+        <xc:recordID type="NRU">2767993</xc:recordID>
+        <xc:identifier type="GPOItem">0725 (online)</xc:identifier>
+        <xc:identifier type="SuDoc">J 21.2:IL 6/2001</xc:identifier>
+        <dcterms:title>Illegal alien resident population</dcterms:title>
+        <dcterms:alternative>Estimates of the undocumented immigrant population residing in the United States : October 1996</dcterms:alternative>
+        <rdvocab:editionStatement>Updated Dec. 2001.</rdvocab:editionStatement>
+        <rdvocab:placeOfProduction>[Washington, D.C.] :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Immigration and Naturalization Service,</dcterms:publisher>
+        <dcterms:issued>2001.</dcterms:issued>
+        <dcterms:description>Title from title screen.</dcterms:description>
+        <dcterms:identifier>http://purl.access.gpo.gov/GPO/LPS18167</dcterms:identifier>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:typeLeader06>Computer file</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/325</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

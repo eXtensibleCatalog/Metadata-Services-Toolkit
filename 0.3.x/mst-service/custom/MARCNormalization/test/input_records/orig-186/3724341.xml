@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:127</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00848cam a2200265Ia 4500</marc:leader>
+        <marc:controlfield tag="001">3724341</marc:controlfield>
+        <marc:controlfield tag="005">20080229160441.0</marc:controlfield>
+        <marc:controlfield tag="008">950714s1981    ja a          000 1 jpnod</marc:controlfield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)ocm32818412</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">SFR</marc:subfield>
+          <marc:subfield code="c">SFR</marc:subfield>
+          <marc:subfield code="d">OCL</marc:subfield>
+          <marc:subfield code="d">OCLCQ</marc:subfield>
+          <marc:subfield code="d">RRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">4102170022 (pbk.) :</marc:subfield>
+          <marc:subfield code="c">$8.00</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">9784102170021 (pbk.)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)32818412</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="041" ind1="1" ind2=" ">
+          <marc:subfield code="a">jpn</marc:subfield>
+          <marc:subfield code="h">eng</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="090" ind1=" " ind2=" ">
+          <marc:subfield code="a">PS3553</marc:subfield>
+          <marc:subfield code="b">.U75Ta</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RRRR</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Cussler, Clive.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="240" ind1="1" ind2="0">
+          <marc:subfield code="a">Raise the Titanic!</marc:subfield>
+          <marc:subfield code="l">Japanese</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Taitanikku o hikiagero /</marc:subfield>
+          <marc:subfield code="c">Kuraibu Kassura&#x304; ; Nakayama Yoshiyuki yaku.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">To&#x304;kyo&#x304; :</marc:subfield>
+          <marc:subfield code="b">Shincho&#x304;sha,</marc:subfield>
+          <marc:subfield code="c">Sho&#x304;wa 56 [1981]</marc:subfield>
+          <marc:subfield code="g">(1986 printing)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">520 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">15 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="440" ind1=" " ind2="0">
+          <marc:subfield code="a">Shincho&#x304; bunko ;</marc:subfield>
+          <marc:subfield code="v">2713</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Pitt, Dirk (Fictitious character)</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="610" ind1="2" ind2="0">
+          <marc:subfield code="a">Titanic (Steamship)</marc:subfield>
+          <marc:subfield code="v">Fiction.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="994" ind1=" " ind2=" ">
+          <marc:subfield code="a">C0</marc:subfield>
+          <marc:subfield code="b">RRR</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

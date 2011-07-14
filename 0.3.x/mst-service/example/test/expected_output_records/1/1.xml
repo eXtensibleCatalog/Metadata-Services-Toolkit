@@ -1,0 +1,32 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="replaced">
+    <identifier>oai:mst.rochester.edu:example/1</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      pb&amp;j
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:example/1</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:1</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <foo xmlns="foo:bar">
+      pb&amp;j 2
+      <bar>you've been foobarred!</bar>
+    </foo>
+  </metadata>
+</record>
+</records>

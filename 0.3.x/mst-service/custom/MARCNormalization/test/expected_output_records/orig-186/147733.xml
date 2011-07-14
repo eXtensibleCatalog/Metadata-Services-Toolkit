@@ -1,0 +1,171 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/40</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:40</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01309pam a22003490  45 A</marc:leader>
+      <marc:controlfield tag="001">147733</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="008">761130r19771860nyu           000 1 eng  </marc:controlfield>
+      <marc:datafield tag="010" ind1=" " ind2=" ">
+        <marc:subfield code="a">   76057230 </marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="020" ind1=" " ind2=" ">
+        <marc:subfield code="a">0824017005 :</marc:subfield>
+        <marc:subfield code="c">$25.00</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)2644644</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">00043987</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">DLC</marc:subfield>
+        <marc:subfield code="c">DLC</marc:subfield>
+        <marc:subfield code="d">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="043" ind1=" " ind2=" ">
+        <marc:subfield code="a">n-us---</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="050" ind1="0" ind2=" ">
+        <marc:subfield code="a">E85</marc:subfield>
+        <marc:subfield code="b">.G2 vol. 76</marc:subfield>
+        <marc:subfield code="a">PT2660.A1</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">E85</marc:subfield>
+        <marc:subfield code="b">.G2 vol. 76</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">E85 .G2 vol. 76</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Abenteuer unter den Indianern =</marc:subfield>
+        <marc:subfield code="b">Captivity of the Haverland family.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">New York :</marc:subfield>
+        <marc:subfield code="b">Garland Publishing,</marc:subfield>
+        <marc:subfield code="c">1977.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">77, 3 p. ;</marc:subfield>
+        <marc:subfield code="c">23 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">The Garland library of narratives of North American Indian captivities ; v. 76</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Original t.p.: "Frei nach dem Englischen."</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">Reprint of the 1863 ed. published by J. M. Hoffmann, Pittsburgh.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="501" ind1=" " ind2=" ">
+        <marc:subfield code="a">Issued with the reprint of the 1860 ed. of Bone, J. H. A. The Indian captive. New York, 1977.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="600" ind1="3" ind2="0">
+        <marc:subfield code="a">Haviland family</marc:subfield>
+        <marc:subfield code="x">Fiction.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Indian captivities</marc:subfield>
+        <marc:subfield code="x">Fiction.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Mohawk Indians</marc:subfield>
+        <marc:subfield code="x">Captivities</marc:subfield>
+        <marc:subfield code="x">Fiction.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">Captivity of the Haverland family.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Garland library of narratives of North American Indian captivities ;</marc:subfield>
+        <marc:subfield code="v">v. 76.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">961028</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">Stack</marc:subfield>
+        <marc:subfield code="m">RMON</marc:subfield>
+        <marc:subfield code="s">E85 .G2 vol. 76</marc:subfield>
+        <marc:subfield code="b">39087006693693</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">0824017005 </marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)147733</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">Abenteuer unter den Indianern =</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1="3" ind2="0">
+        <marc:subfield code="a">Haviland family</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Indian captivities</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Mohawk Indians</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1="3" ind2="0">
+        <marc:subfield code="x">Fiction.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Captivities</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

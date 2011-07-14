@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10244">
+		<xc:titleOfExpression>U.S. participation in the UN.</xc:titleOfExpression>
+		<dcterms:version>Departmental edition</dcterms:version>
+		<dcterms:relation>Document edition</dcterms:relation>
+		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+		<dcterms:language>English</dcterms:language>
+		<xc:contributor>United States. Dept. of State. Bureau of International Organization Affairs.</xc:contributor>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10243</xc:workExpressed></xc:entity>
+</xc:frbr>

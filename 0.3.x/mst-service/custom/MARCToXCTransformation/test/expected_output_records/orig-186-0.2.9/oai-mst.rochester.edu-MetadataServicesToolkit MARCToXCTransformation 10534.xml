@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10534">
+		<xc:recordID type="LCCN">89015525</xc:recordID>
+		<xc:recordID type="OCoLC">20016870</xc:recordID>
+		<xc:recordID type="NRU">997125</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>Sheldon P. Zitner.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>All's well that ends well /</dcterms:title>
+		<rdvocab:placeOfProduction>Boston :</rdvocab:placeOfProduction>
+		<dcterms:publisher>Twayne Publishers,</dcterms:publisher>
+		<dcterms:issued>c1989.</dcterms:issued>
+		<dcterms:extent>xxv, 187 p. ;</dcterms:extent>
+		<rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+		<dcterms:description>Includes bibliographical references (p. 181-183) and index.</dcterms:description>
+		<dcterms:isPartOf>Twayne's new critical introductions to Shakespeare</dcterms:isPartOf>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<dcterms:identifier type="ISBN">0805787186</dcterms:identifier>
+		<dcterms:identifier type="ISBN">0805787194</dcterms:identifier>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10533</xc:expressionManifested></xc:entity>
+</xc:frbr>

@@ -1,0 +1,89 @@
+<project name="Catalina Ant JMX" 
+        xmlns:jmx="antlib:org.apache.catalina.ant.jmx" 
+        default="state"
+        basedir=".">
+
+    <property name="jmx.server.name" value="localhost" />
+    <property name="jmx.server.port" value="9014" />
+    <property name="webapp" value="MetadataServicesToolkit" />
+	<!--
+    <property name="cluster.server.address" value="192.168.1.75" />
+    <property name="cluster.server.port" value="9025" />
+	-->
+ 
+    <target name="state" description="Show JMX state">
+        <jmx:open
+            host="${jmx.server.name}"
+            port="${jmx.server.port}"
+            username="controlRole"
+            password="tomcat"/>
+		<!--
+        <jmx:get
+            name="Catalina:type=IDataSender,host=localhost,senderAddress=${cluster.server.address},senderPort=${cluster.server.port}" 
+            attribute="connected"
+            resultproperty="IDataSender.backup.connected"
+            echo="false"
+        />
+       <jmx:get
+            name="Catalina:type=ClusterSender,host=localhost" 
+            attribute="senderObjectNames"
+            resultproperty="senderObjectNames"
+            echo="false"
+        />
+		-->
+        <!-- get current maxActiveSessions from ClusterTest application
+             echo it to Ant output and store at 
+             property <em>clustertest.maxActiveSessions.orginal</em>
+        -->
+       <jmx:get
+            name="Catalina:type=Manager,path=/${webapp},host=localhost" 
+            attribute="maxActiveSessions"
+            resultproperty="maxActiveSessions.original"
+            echo="true"
+        />
+        <!-- set maxActiveSessions to 100
+        <jmx:set
+            name="Catalina:type=Manager,path=/${webapp},host=localhost" 
+            attribute="maxActiveSessions"
+            value="100"
+            type="int"
+        />
+        -->
+        <!-- get all sessions and split result as delimiter <em>SPACE</em> for easy
+             access all session ids directly with Ant property sessions.[0..n].
+        -->
+        <jmx:invoke
+            name="Catalina:type=Manager,path=/${webapp},host=localhost" 
+            operation="listSessionIds"
+            resultproperty="sessions"
+            echo="true"
+            delimiter=" "
+        />
+        <!-- Access session attribute <em>Hello</em> from first session.
+        <jmx:invoke
+            name="Catalina:type=Manager,path=/${webapp},host=localhost" 
+            operation="getSessionAttribute"
+            resultproperty="Hello"
+            echo="false"
+        >
+          <arg value="${sessions.0}"/>
+          <arg value="Hello"/>
+        </jmx:invoke> 
+        -->
+        <!-- Query for all application manager.of the server from all hosts
+             and bind all attributes from all found manager MBeans.
+        -->
+        <jmx:query
+            name="Catalina:type=Manager,*" 
+            resultproperty="manager"
+            echo="false"
+            attributebinding="true"
+        />
+        <!-- echo the create properties -->
+        <echo>
+           session: ${sessions.0}
+           sessions: ${sessions.Length}
+        </echo>   
+
+    </target>
+</project>

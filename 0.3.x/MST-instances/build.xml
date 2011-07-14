@@ -1,0 +1,80 @@
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+<project name="mi" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<dirname property="mi.dir" file="${ant.file.mi}" />
+	
+	<property file="${mi.dir}/build.properties" />
+
+	<target name="mi.clean">
+		<delete dir="mi.build.dir" />
+	</target>
+
+	<target name="mi.init" depends="init">
+		<mkdir dir="${mi.build.dir}" />
+	</target>
+
+	<target name="mi.resolve" depends="mi.init">
+		<ivy:resolve file="${mi.dir}/ivy.xml"/>
+	</target>
+
+	<target name="mi.publish" depends="mi.zip">
+		<ivy:publish resolver="local" pubrevision="${mi.version}" overwrite="true" update="true" forcedeliver="true">
+			<artifacts pattern="${mi.build.dir}/${mst-instances}-${mi.version}.[ext]" />
+		</ivy:publish>
+	</target>
+
+	<target name="mi.jar" depends="mi.resolve">
+		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.jar">
+			<fileset dir="${mi.dir}">
+				<exclude name="${mst-instances}/**/*.war" />
+				<include name="${mst-instances}/**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="mi.zip" depends="mi.jar">
+		<echo>${svn.version}</echo>
+		<replaceregexp file="${mi.dir}/${mst-instances}/MetadataServicesToolkit/install.properties"
+			match="svn.version:.*$"
+			replace="svn.version: ${svn.version}"
+			byline="true" />
+		<zip file="${mi.build.dir}/${mst-instances}-${mi.version}.zip">
+			<fileset dir="${mi.dir}">
+				<include name="${mst-instances}/**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="mi.refetch-example">
+		<delete dir="${mi.service.dir}/example"/>
+		<property file="mst-service/example/custom.properties" />
+		<unzip src="mst-service/example/build/example-${service.version}.zip" dest="${mi.service.dir}" />
+	</target>
+
+	<target name="mi.deploy" depends="mi.jar">
+		<copy todir="${mc.build.lib}" 
+			file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
+		<copy todir="${mp.build.lib}" 
+			file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
+		<copy todir="${ms.build.lib}" 
+			file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
+		<copy todir="${mst-service}/example/build/lib" 
+			file="${mi.build.dir}/${mst-instances}-${mi.version}.jar" />
+		<copy-to-custom-services subdir="build/lib">
+			<macro-file-set>
+				<fileset dir="${mi.build.dir}">
+					<include name="${mst-instances}-${mi.version}.jar" />
+				</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
+	</target>
+	
+
+</project>

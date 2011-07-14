@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10213">
+		<rdarole:performer>Fleming, Renee.</rdarole:performer>
+		<xc:titleOfExpression>Renée Fleming</xc:titleOfExpression>
+		<rdvocab:performerNarratorAndOrPresenter>Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded July 3-9, 1999, The Colosseum, Watford.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<dcterms:language>Italian</dcterms:language>
+		<dcterms:language>French</dcterms:language>
+		<rdarole:performer>Mackerras, Charles, Sir, 1925-</rdarole:performer>
+		<rdarole:performer>London Voices.</rdarole:performer>
+		<rdarole:performer>London Philharmonic Orchestra.</rdarole:performer>
+		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10212</xc:workExpressed></xc:entity>
+</xc:frbr>

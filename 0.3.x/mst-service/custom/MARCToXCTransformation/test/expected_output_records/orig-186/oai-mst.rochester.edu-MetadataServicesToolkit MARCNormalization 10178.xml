@@ -1,0 +1,78 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/531</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:179</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/531">
+        <rdvocab:titleOfWork>Independent (New York, N.Y. : 1848)</rdvocab:titleOfWork>
+        <dcterms:replaces>Chautauquan</dcterms:replaces>
+        <dcterms:replaces>Harper's weekly</dcterms:replaces>
+        <dcterms:replaces>Countryside and suburban life</dcterms:replaces>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/532</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:179</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/532">
+        <xc:titleOfExpression>Independent (New York, N.Y. : 1848)</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill.</rdvocab:illustrationContent>
+        <dcterms:hasFormat>Microfilm. Ann Arbor, Mich. : Xerox University Microfilms, [n.d.], 1974. 63 microfilm reels ; 35 mm. (American periodical series: 1800-1850 ; 418, 1420-1481)</dcterms:hasFormat>
+        <dcterms:relation>Absorbed: The Chautauquan in June 1914; Harper's weekly in May 1916; Countryside and suburban life in Aug. 1917.</dcterms:relation>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/531</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/4</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:179</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/4">
+        <xc:recordID type="OCoLC">4927591</xc:recordID>
+        <xc:recordID type="NRU">942016</xc:recordID>
+        <dcterms:title>The Independent</dcterms:title>
+        <dcterms:alternative>Independent and weekly review</dcterms:alternative>
+        <rdvocab:placeOfProduction>New York, N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Published for the proprietors by S. W. Benedict,</dcterms:publisher>
+        <dcterms:issued>1848-1928.</dcterms:issued>
+        <dcterms:extent>121 v. :</dcterms:extent>
+        <rdvocab:frequency>Weekly</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Vol. 1, no. 1 (Dec. 7, 1848)-v. 121 (Oct. 13, 1928) = [Whole no.] 1-4089.</rdvocab:numberingOfSerials>
+        <dcterms:description>Title from caption.</dcterms:description>
+        <dcterms:description>Title varies slightly.</dcterms:description>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <xc:type007>Microform</xc:type007>
+        <xc:typeSMD>Microfilm reel</xc:typeSMD>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1848-1928</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/532</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

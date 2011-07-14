@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:123</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00205cx  a22000974  4500</marc:leader>
+        <marc:controlfield tag="001">3696609</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="004">3494560</marc:controlfield>
+        <marc:controlfield tag="005">20070612104751.0</marc:controlfield>
+        <marc:controlfield tag="008">0705240p    8   1001uu   0000000</marc:controlfield>
+        <marc:datafield tag="852" ind1="2" ind2=" ">
+          <marc:subfield code="b">MinerRef20</marc:subfield>
+          <marc:subfield code="h">WM 203.5</marc:subfield>
+          <marc:subfield code="i">S559u 2006</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

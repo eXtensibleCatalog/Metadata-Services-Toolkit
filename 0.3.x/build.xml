@@ -1,0 +1,398 @@
+<!--
+  * Copyright (c) 2009 University of Rochester
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+<project name="MetadataServicesToolkit" default="help" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<target name="help">
+		<echo>
+commands
+
+    retrieve
+		deletes already downloaded dependencies and gets them fresh.  This is useful when
+		a dependency is added or changed.  You'll want to run this and then refresh eclipse.
+
+    package-all
+        packages up all all subprojects for release.
+
+    ftp.ivy 
+        push jars to website so that others can get them
+		</echo>
+		<!--
+    javadocs 
+        creates javadocs locally.  You must push them to the website manually.
+		-->
+		<ant target="mc.help" />
+		<ant target="mp.help" />
+		<ant target="ms.help" />
+
+		<echo>
+note: help on the ant commands within particular service subprojects can be found 
+      by issuing an "ant help" command directly within those directories.
+		</echo>
+	</target>
+
+	<macrodef name="copy-to-custom-services">
+		<attribute name="subdir" />
+		<element name="macro-file-set" />
+		<sequential>
+			<echo>
+				subdir: @{subdir}
+			</echo>
+			<copy todir="${ms.custom}" enablemultiplemappings="true">
+				<macro-file-set />
+				<scriptmapper language="javascript">
+				  self.addMappedName("MARCNormalization/@{subdir}/"+source);
+				  self.addMappedName("MARCToXCTransformation/@{subdir}/"+source);
+				  self.addMappedName("DCToXCTransformation/@{subdir}/"+source);
+				</scriptmapper>
+				<!--
+				  self.addMappedName("aggregation/@{subdir}/"+source);
+				-->
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<target name="test.macro">
+		<copy-to-custom-services subdir="">
+			<macro-file-set>
+				<fileset dir=".">
+					<include name="out" />
+				</fileset>
+			</macro-file-set>
+		</copy-to-custom-services>
+	</target>
+
+	<macrodef name="target-custom-services">
+		<attribute name="target" />
+		<sequential>
+			<echo>
+				target: @{target}
+			</echo>
+			<!--
+			<ant dir="${mst-service}/custom/aggregation" target="@{target}" inheritAll="false" />
+			-->
+			<ant dir="${mst-service}/custom/MARCNormalization" target="@{target}" inheritAll="false" />
+			<ant dir="${mst-service}/custom/MARCToXCTransformation" target="@{target}" inheritAll="false" />
+			<ant dir="${mst-service}/custom/DCToXCTransformation" target="@{target}" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
+	<property file="build.properties"/>
+
+	<property environment="env"/>
+
+	<path id="ivy.lib.path">
+		 <fileset dir="${ivy.dir}" includes="*.jar" />
+	</path>
+
+	<import file="${mst-instances}/build.xml" />
+	<import file="${mst-common}/build.xml" />
+	<import file="${mst-platform}/build.xml" />
+	<import file="${mst-service.impl}/build.xml" />
+
+	<target name="echo">
+		<echo>
+			${ant.project.name} help
+			${src.dir}
+			${mc.src.dir}
+		</echo>
+	</target>
+
+	<target name="init.default.properties" unless="box">
+		<property name="box" value="local" />
+	</target>
+
+	<target name="check.skip.get.antlibs">
+		<available property="skip.get.antlibs" file="${ant.home}/lib/oro-2.0.8.jar" />
+	</target>
+
+	<target name="get.antlibs" depends="check.skip.get.antlibs" unless="skip.get.antlibs">
+		<echo>skit.get.antlibs: ${skip.get.antlibs}</echo>
+		<echo>ant.home: ${ant.home}</echo>
+		<echo>mc.build.lib: ${mc.build.lib}</echo>
+		<ant target="mc.retrieve" />
+		<copy todir="${ant.home}/lib" flatten="true">
+			<fileset dir="${mc.build.lib}">
+				<include name="oro*.jar" />
+				<include name="commons-net*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="init" depends="download-ivy, init.default.properties">
+		<echo>box: ${box}</echo>
+		<tstamp/>
+		<mkdir dir="${build.dir}" />
+		<taskdef resource="org/apache/ivy/ant/antlib.xml"
+				onerror="report"
+				uri="antlib:org.apache.ivy.ant"
+				classpathref="ivy.lib.path" />
+
+		<copy tofile="local.properties" file="local.properties.example" />
+		<property file="${box}.properties"/>
+
+		<exec failifexecutionfails="false" outputProperty="svn.version" executable="${svn.home}/svnversion" />
+		<echo>svn.version: ${svn.version}</echo>
+		<!--
+		<taskdef resource="testngtasks" classpathref="testLibraries"  classpath="testng.jar"/>
+		-->
+	</target>
+
+	<target name="javadoc" depends="init">
+		<!-- linksource="yes" -->
+		<javadoc
+			destdir="${build.javadoc}"
+			author="true"
+			version="true"
+			use="true"
+			classpathref="ms.classpath.compile"
+			windowtitle="eXtensinble Catalog">
+
+			<fileset dir="${mc.src.java}" defaultexcludes="yes">
+				<include name="xc/**/*.java"/>
+			</fileset>
+
+			<fileset dir="${ms.src.java}" defaultexcludes="yes">
+				<include name="xc/**/*.java"/>
+			</fileset>
+
+			<doctitle><![CDATA[<h1>eXtensible Catalog</h1>]]></doctitle>
+		    <bottom>
+			<![CDATA[<i>Copyright &#169; 2010 University of Rochester Libraries</i>]]></bottom>
+	       <tag name="todo" scope="all" description="To do:"/>
+	       <link href="http://download.oracle.com/javase/6/docs/api/"/>
+        </javadoc>
+	</target>
+
+	<target name="echo2" depends="init">
+		<echo>
+			ftp.server: ${ftp.server}
+			ftp.userid: ${ftp.userid}
+			ftp.password: ${ftp.password}
+		</echo>
+	</target>
+
+	<target name="ftp.javadoc" depends="get.antlibs, javadoc, ftp.javadoc.nodep"/>
+	<target name="ftp.javadoc.nodep" depends="init">
+		<ftp server="${ftp.server}"
+				userid="${ftp.userid}"
+				remotedir="/MST/api"
+				password="${ftp.password}"
+				binary="yes"
+				retriesAllowed="10">
+			<fileset dir="${build.javadoc}"/>
+		</ftp>
+	</target>
+
+	<target name="ftp.ivy" depends="get.antlibs, ftp.ivy.nodep"/>
+	<target name="ftp.ivy.nodep" depends="init, mi.resolve">
+		<ftp server="${ftp.server}"
+				userid="${ftp.userid}"
+				remotedir="/Ivy"
+				password="${ftp.password}"
+				binary="yes"
+				retriesAllowed="10">
+			<fileset dir="${ivy.home}/local"/>
+		</ftp>
+	</target>
+
+	<target name="check.skip.download">
+		<available property="skip.download" file="${ivy.jar}" />
+	</target>
+	
+	<target name="download-ivy" depends="check.skip.download" unless="skip.download">
+		<mkdir dir="${ivy.dir}" />
+		<!--  download Ivy from web site so that it can be used
+				even without any special installation -->
+		<echo message="Please wait this may take a few minutes - installing ivy..." />
+		<delete>
+			<fileset dir="${ivy.dir}" includes="*.jar"/>
+		</delete>
+		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
+			dest="${ivy.jar}" usetimestamp="true" />
+	</target>
+
+	<!--  =================================
+		  target: install-ivy
+		 
+		  this target is not necessary if you put ivy.jar in your ant lib directory
+		  if you already have ivy in your ant lib, you can simply remove this
+		  target and the dependency the 'go' target has on it
+		 =================================
+	-->
+
+	<!-- clean the ivy cache -->
+	<target name="clean-cache" depends="download-ivy"
+	   description="--> clean the ivy cache">
+	   <ivy:cleancache />
+	</target>
+
+	<!-- Clean up the build -->
+	<target name="clean" depends="mi.clean,mc.clean,mp.clean,ms.clean">
+		<delete dir="${build.dir}" />
+		<ant dir="${mst-service}/example" target="clean" inheritAll="false" />
+		<target-custom-services target="clean" />
+	</target>
+
+	<target name="publish" depends="mi.publish, mc.publish, ms.publish">
+	</target>
+
+	<target name="retrieve">
+		<ant target="ms.copy-example" />
+
+		<ant target="clean" />
+
+		<ant target="mi.publish" />
+
+		<ant target="mc.retrieve" />
+		<ant target="mc.publish" />
+
+		<ant target="ms.retrieve" />
+		<ant target="ms.publish" />
+
+		<ant target="mp.retrieve" />
+
+		<ant dir="${mst-service}/example" target="retrieve" inheritAll="false" />
+
+		<target-custom-services target="retrieve" />
+	</target>
+
+	<target name="package-all" depends="retrieve">
+		<ant target="mp.war" />
+
+		<ant dir="${mst-service}/example" target="zip" inheritAll="false" />
+
+		<target-custom-services target="zip" />
+		<target-custom-services target="zip-dev-env" />
+
+		<ant target="mi.refetch-example" />
+		<ant target="mi.publish" />
+	</target>
+
+	<!-- Create the distriubtion file -->
+	<target name="dist-zip">
+	</target>
+
+	<target name="deploy-webapp" depends="mc.publish,mp.deploy">
+	</target>
+
+	<target name="deploy-service.nodep" depends="init,ms.copy-example">
+		<ant dir="${mst-service}/custom/${sname}" target="zip" inheritAll="false"/>
+		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}.zip" 
+			todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+		<unzip src="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}-${sversion}.zip"
+			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+	</target>
+
+	<target name="change-service-name" if="alt-name">
+		<move todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${alt-name}" >
+			<fileset dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}"/>
+		</move>
+		<delete dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}" />
+	</target>
+
+	<target name="deploy-service" depends="deploy-service-itl, change-service-name">
+	</target>
+
+	<target name="deploy-service-itl" depends="init,ms.copy-example">
+		<ant dir="${mst-service}/custom/${sname}" target="zip.nodep" inheritAll="false"/>
+		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}.zip" 
+			todir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+		<delete dir="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}" />
+		<unzip src="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services/${sname}-${sversion}.zip"
+			dest="${tomcat.dir}/MST-instances/MetadataServicesToolkit/services" />
+	</target>
+
+	<target name="subcall">
+		<ant dir="${dir}" target="${target}" inheritAll="false" />
+	</target>
+
+	<target name="test" depends="package-all, test.nodep" />
+	<target name="test.nodep">
+		<ant dir="mst-service/example" target="test">
+			<property name="test" value="RecordCounts"/>
+		</ant>
+		<ant dir="mst-service/custom/MARCNormalization" target="test">
+			<property name="test" value="MarkProviderDeleted "/>
+		</ant>
+		<ant dir="mst-service/custom/MARCToXCTransformation" target="test">
+			<property name="test" value="ActivateHeldHoldings"/>
+		</ant>
+	</target>
+
+	<target name="deploy" >
+		<ant target="mi.deploy" />
+		<ant target="mc.deploy" />
+		<ant target="mp.deploy" />
+		<ant target="ms.copy-example" />
+		<!--
+		<ant target="deploy-service">
+			<property name="sname" value="MARCNormalization"/>
+			<property name="sversion" value="0.3.0"/>
+		</ant>
+		-->
+	</target>
+
+	<target name="dist" depends="retrieve, dist.nodep" />
+	<target name="dist.nodep" depends="init, mc.resolve">
+		<copy todir="${dist.dir}/ivy/xc">
+			<fileset dir="${ivy.home}/local/xc" />
+		</copy>
+
+		<property name="sname" value="example" />
+		<property name="sversion" value="0.3.0" />
+		<ant dir="${mst-service}/${sname}" target="zip-dev-env" inheritAll="false" />
+		<copy file="${mst-service}/${sname}/build/${sname}-${sversion}-dev-env.zip" 
+			todir="${dist.dir}/mst-service-example" />
+
+		<!--
+		<property name="sname" value="MARCNormalization" />
+		<property name="sversion" value="0.3.0" />
+		<ant dir="${mst-service}/custom/${sname}" target="zip-dev-env" inheritAll="false" />
+		<copy file="${mst-service}/custom/${sname}/build/${sname}-${sversion}-dev-env.zip" 
+			todir="${dist.dir}/mst-service-example" />
+		-->
+	</target>
+
+	<!--
+	<target name="full-dist" depends="compile, dist-jar, javadoc"
+			description="generate the distribution" >
+		<zip destfile="${distdir}/${project.name}-${version}.zip"
+			   basedir="${distdir}"/>
+	</target>
+
+	<target name="dist" depends="makeWar">
+		<delete dir="dist"/>
+		<mkdir dir="dist/MST-instances/MetadataServicesToolkit"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/solr">
+			<fileset dir="MST-instances/MetadataServicesToolkit/solr"/>
+		</copy>
+		<delete dir="dist/MST-instances/MetadataServicesToolkit/solr/data"/>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit/sql">
+			<fileset dir="sql"/>
+		</copy>
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="MetadataServicesToolkit_config.xml" />
+		<copy todir="dist/MST-instances/MetadataServicesToolkit" file="src/java/log4j.config.txt" />
+		<copy file="MetadataServicesToolkit.war" todir="dist/mst-instances"/>
+		<zip destfile="dist/MetadataServicesToolkit_v_0.2.6.6.zip"  basedir="dist" />
+
+		<zip destfile="Normalization_v_0.2.8.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Normalization/**"/> 
+		<move file="Normalization_v_0.2.8.zip" todir="dist" />
+		
+		<zip destfile="Transformation_v_0.1.9.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Transformation/**" /> 
+		<move file="Transformation_v_0.1.9.zip" todir="dist" />
+
+		<zip destfile="Aggregationv1.0.zip" basedir="MST-instances/MetadataServicesToolkit" includes="services/Aggregation/**" /> 
+		<move file="Aggregationv1.0.zip" todir="dist" />
+			
+		<delete dir="dist/MST-instances" />
+	</target>
+	-->
+	
+
+</project>

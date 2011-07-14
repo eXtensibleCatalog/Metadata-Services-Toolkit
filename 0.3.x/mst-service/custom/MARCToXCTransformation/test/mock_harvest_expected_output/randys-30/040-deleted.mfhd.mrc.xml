@@ -1,0 +1,20 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-02-25T11:25:37Z</responseDate>
+  <request from="2011-02-25T16:25:16Z" metadataPrefix="xc" until="2011-02-25T16:25:37Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <ListRecords>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/41</identifier>
+        <datestamp>2011-02-25T16:25:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:marctoxctransformation/97</identifier>
+        <datestamp>2011-02-25T16:25:24Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+    </record>
+  </ListRecords>
+</OAI-PMH>
