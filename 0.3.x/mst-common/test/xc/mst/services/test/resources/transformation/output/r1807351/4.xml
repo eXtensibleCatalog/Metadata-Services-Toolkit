@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="holdings" id="oai:URMST:Transformation Service/15473">
-		<xc:location>Sib Music Stacks (Circ)</xc:location>
-		<xc:callNumber>M1621 .S378 1909 Preservation photocopy, 1998. Original in binder's collection (M1620 .S378).</xc:callNumber>
-		<xc:recordID type="NRU">1807351</xc:recordID>
-		<xc:manifestationHeld type="NRU">1188184</xc:manifestationHeld>
-		<xc:link>oai:URMST:Transformation Service/15472</xc:link>
-	</xc:entity>
-</xc:frbr>

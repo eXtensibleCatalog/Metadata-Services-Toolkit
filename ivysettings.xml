@@ -3,7 +3,7 @@
 
 
 <!--
-  * Copyright (c) 2009 University of Rochester
+  * Copyright (c) 2009 eXtensible Catalog Organization
   *
   * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
@@ -14,12 +14,30 @@
 <ivysettings>
  <settings defaultResolver="default" />
  <include url="${ivy.default.settings.dir}/ivysettings-shared.xml"/>
- <include url="${ivy.default.settings.dir}/ivysettings-local.xml"/>
+ <property name="ivy.local.default.root"             value="${ivy.default.ivy.user.dir}/local" override="false"/>
+ <property name="ivy.local.default.ivy.pattern"      value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+ <property name="ivy.local.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+
+ <property name="ivy.ivyrep.default.ivy.root"        value="http://www.extensiblecatalog.org/doc/Ivy/" override="false"/>
+ <property name="ivy.ivyrep.default.ivy.pattern"     value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+ <property name="ivy.ivyrep.default.artifact.root"   value="${ivy.ivyrep.default.ivy.root}" override="false"/>
+ <property name="ivy.ivyrep.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+
+	<resolvers>
+	</resolvers>
+ 
 
  <resolvers>
      <chain name="public">
+		 <filesystem name="local" checkmodified="true" local="true">
+			 <ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+			 <artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+		 </filesystem>
+
          <!-- official maven2 repo -->
          <ibiblio name="maven2" m2compatible="true" />
+
+		 <ivyrep name="xcmetadataservicestoolkit" ivyroot="http://www.extensiblecatalog.org/doc/Ivy/" />
 
          <!-- apache incubating maven2 repo -->
          <ibiblio name="apache-incubating" m2compatible="true"
