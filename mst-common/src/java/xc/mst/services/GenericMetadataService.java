@@ -567,7 +567,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 previouslyPaused = false;
             }
             if (++getRecordLoops % 100 == 0) {
-                TimingLogger.reset();
+                //TODO here is the place to display performance!
+                // processedRecordCount is a sensible count to pass here as the number of records updated.
+                TimingLogger.reset(processedRecordCount);
             }
             for (Record in : records) {
                 // TODO: currently the injected records here only contain ids.
