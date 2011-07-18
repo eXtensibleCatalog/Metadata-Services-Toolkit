@@ -14,3 +14,5 @@ Run command 'ant' which will create the Zip files required for deployment. The Z
 The 'ant' command will download Ivy and required JAR files and so it may take few minutes to complete.
 
 Please follow the MetadataServicsToolkit Installation manual on http://code.google.com/p/xcmetadataservicestoolkit/downloads/list for deploying the build on a server. 
+
+commit to trunk 2011-07-18
