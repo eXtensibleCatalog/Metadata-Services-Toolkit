@@ -8,6 +8,7 @@
   */
 package xc.mst.manager;
 
+import org.apache.log4j.Logger;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -110,6 +111,10 @@ public class BaseService {
 	protected RepositoryDAO repositoryDAO = null;
 	protected MessageDAO messageDAO = null;
 	protected RecordCountsDAO recordCountsDAO = null;
+	
+	public Logger getProdLogger() {
+		return getServerDAO().getProdLogger();
+	} 
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
