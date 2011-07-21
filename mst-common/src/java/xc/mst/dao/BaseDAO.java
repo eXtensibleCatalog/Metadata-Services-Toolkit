@@ -58,6 +58,8 @@ import xc.mst.utils.Util;
 public class BaseDAO {
 	
 	private final static Logger LOG = Logger.getLogger(BaseDAO.class);
+	private final static Logger PROD_LOGGER = Logger.getLogger("prodDebug");
+	public Logger getProdLogger() {return PROD_LOGGER;}
 	
 	protected DataSource dataSource = null;
 	protected MSTConfiguration config;

@@ -392,12 +392,13 @@ public class Scheduler extends BaseService implements Runnable {
 				}
 			}
 
-			// Sleep until the next hour begins
 			try {
 				if(LOG.isDebugEnabled()) {
 					//LOG.debug("Scheduler Thread sleeping for 1 minute.");
 				}
+				getProdLogger().debug("going to zzzz");
 				Thread.sleep(1000);
+				getProdLogger().debug("cocka-doodle-doo");
 			} catch(InterruptedException e) {
 				if(LOG.isDebugEnabled())
 					LOG.debug("Caught InteruptedException while sleeping in Scheduler Thread.");

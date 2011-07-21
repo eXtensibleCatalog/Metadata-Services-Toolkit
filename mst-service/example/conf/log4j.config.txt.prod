@@ -10,6 +10,7 @@ log4j.logger.validation=INFO, validation
 log4j.logger.processing=INFO, processing
 log4j.logger.harvestOut=INFO, harvestOut
 log4j.logger.harvestOut=INFO, harvestOut
+log4j.logger.prodDebug=DEBUG, prodDebug
 log4j.logger.xc.mst.utils.TimingLogger=DEBUG, timing
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
@@ -49,12 +50,21 @@ log4j.appender.harvestOut.MaxBackupIndex=20
 log4j.appender.harvestOut.layout=org.apache.log4j.PatternLayout
 log4j.appender.harvestOut.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
+# Timing 
 log4j.appender.timing=org.apache.log4j.RollingFileAppender
 log4j.appender.timing.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_timing_log.txt
 log4j.appender.timing.MaxFileSize=100MB
 log4j.appender.timing.MaxBackupIndex=20
 log4j.appender.timing.layout=org.apache.log4j.PatternLayout
 log4j.appender.timing.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
+
+# prodDebug
+log4j.appender.prodDebug=org.apache.log4j.RollingFileAppender
+log4j.appender.prodDebug.File=${mst.root.dir}/MST-instances/MetadataServicesToolkit/logs/MST_prodDebug_log.txt
+log4j.appender.prodDebug.MaxFileSize=100KB
+log4j.appender.prodDebug.MaxBackupIndex=1
+log4j.appender.prodDebug.layout=org.apache.log4j.PatternLayout
+log4j.appender.prodDebug.layout.ConversionPattern=%d{DATE} %5p [%t] - %m%n
 
 # Setup the root logger to use the INFO level and the appender named "file"
 log4j.rootLogger=INFO, file
