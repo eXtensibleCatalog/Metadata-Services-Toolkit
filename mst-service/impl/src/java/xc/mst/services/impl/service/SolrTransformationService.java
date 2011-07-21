@@ -753,9 +753,9 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      */
     protected AggregateXCRecord process100(SaxMarcXmlRecord transformMe,
             AggregateXCRecord transformInto) {
-        // Create an xc:creator based on the 100 abcdegq values
+        // Create an xc:creator based on the 100 values
         return processFieldWithAuthorityIgnoreRoles(transformMe, transformInto,
-                100, "abcdegq", "creator", AggregateXCRecord.XC_NAMESPACE,
+                100, "abcdgq", "creator", AggregateXCRecord.XC_NAMESPACE,
                 FrbrLevel.WORK);
     }
 
@@ -4274,6 +4274,26 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 773, "agit3", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE,
                 subfieldToAttribute, FrbrLevel.MANIFESTATION);
+    }
+
+    /**
+     * Processes the 774 field from the SaxMarcXmlRecord we're transforming.
+     * The agitwxz3 subfields become the dcterms:hasPart field with a dcterms:ISSN equal to the 774's $x value and a dcterms:ISBN equal to the 774's $z value at the expression FRBR level.
+     *
+     * @param transformMe
+     *            The MARC XML record we're transforming
+     * @param transformInto
+     *            The XC record which will store the transformed version of the record
+     * @return A reference to transformInto after this transformation step has been completed.
+     */
+    protected AggregateXCRecord process774(SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto) {
+        // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute and the $z subfield to a dcterms:ISBN attribute
+        HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
+        subfieldToAttribute.put('x', new Attribute("ISSN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+        subfieldToAttribute.put('z', new Attribute("ISBN", "", AggregateXCRecord.DCTERMS_NAMESPACE));
+
+        // Create an dcterms:hasPart based on the 774 agit4 values with a dcterms:ISSN based on the correosponding 774 $x value and a dcterms:ISBN based on the corrosponding 774 $z value
+        return processFieldAttributeFromSubfield(transformMe, transformInto, 774, "agit4", "hasPart", AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute, FrbrLevel.MANIFESTATION);
     }
 
     /**

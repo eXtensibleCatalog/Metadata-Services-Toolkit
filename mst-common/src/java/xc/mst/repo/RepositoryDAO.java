@@ -1868,10 +1868,11 @@ public class RepositoryDAO extends BaseDAO {
 				"idx_"+RECORDS_TABLE+"_format_id", RECORDS_TABLE,
 				"idx_"+RECORD_UPDATES_TABLE+"_date_updated", RECORD_UPDATES_TABLE,
 				"idx_"+RECORD_UPDATES_TABLE+"_record_id", RECORD_UPDATES_TABLE,
-				"idx_"+RECORDS_SETS_TABLE+"_record_id", RECORDS_SETS_TABLE,
-				"idx_"+RECORDS_SETS_TABLE+"_set_id", RECORDS_SETS_TABLE,
-				"idx_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
-				"idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
+				//, You shouldn't drop these.  They might be needed (eg reprocessing)
+				//"idx_"+RECORDS_SETS_TABLE+"_record_id", RECORDS_SETS_TABLE,
+				//"idx_"+RECORDS_SETS_TABLE+"_set_id", RECORDS_SETS_TABLE,
+				//"idx_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
+				//"idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
 		};
 		for (int i=0; i<indicies2drop.length; i+=2) {
 			try {
@@ -1984,8 +1985,8 @@ public class RepositoryDAO extends BaseDAO {
 					 
 					//"alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
 					//"alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
-					"create index idx__record_predecessors_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
-					"create index idx_record_predecessors_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
+					"create index idx_"+RECORD_PREDECESSORS_TABLE+"_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (record_id)",
+					"create index idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id on "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" (pred_record_id)",
 
 			};
 			for (String i2c : indicies2create) {

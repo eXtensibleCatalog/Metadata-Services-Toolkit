@@ -1236,7 +1236,7 @@ public class DefaultRecordService extends RecordService
 						if(set == null && provider != null) {
 							set = new Set();
 							set.setSetSpec(currentSetSpec);
-							set.setDisplayName(set.getDisplayName());
+							set.setDisplayName(currentSetSpec);
 							set.setIsProviderSet(false);
 							set.setIsRecordSet(true);
 							TimingLogger.start("setDao.insertForProvider");
