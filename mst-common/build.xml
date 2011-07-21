@@ -110,7 +110,7 @@ commands (mc.help)
 		</copy>
 	</target>
 
-	<target name="mc.jar" depends="mc.copy-resources, mc.copy-resources.nodep, mc.compile.test"/>
+	<target name="mc.jar" depends="mc.copy-resources, mc.compile.test, mc.jar.nodep"/>
 
 	<target name="mc.jar.nodep" depends="mc.copy-resources.nodep">
 		<jar destfile="${mc.build.dir}/${mc.project-name}-${mc.version}.jar"
