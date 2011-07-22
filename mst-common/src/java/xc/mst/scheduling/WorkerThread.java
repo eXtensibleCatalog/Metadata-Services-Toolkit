@@ -23,7 +23,7 @@ import xc.mst.repo.Repository;
 public abstract class WorkerThread extends BaseManager implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
+
 	protected ReentrantLock running = new ReentrantLock();
 	protected Repository repo = null;
 
@@ -36,21 +36,21 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	abstract public String getDetailedStatus();
 	abstract public long getRecordsProcessedThisRun();
 	abstract public long getRecords2ProcessThisRun();
-	
-    // yes, this is asinine, but less so then putting it in the http session (which is where it was).  
+
+    // yes, this is asinine, but less so then putting it in the http session (which is where it was).
     public static String serviceBarDisplay = null;
-	
+
 	protected String type = null;
 
 	protected Status status = null;
-	
+
 	protected Semaphore setupComplete = null;
-	
+
 	public WorkerThread() {
 		setupComplete = new Semaphore(1);
 		setupComplete.acquireUninterruptibly();
 	}
-	
+
 	public void waitForSetupCompletion() {
 		if (setupComplete != null) {
 			setupComplete.acquireUninterruptibly();
@@ -58,7 +58,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			setupComplete = null;
 		}
 	}
-	
+
 	// only call after setup has run
 	public boolean isSetupHappy() {
 		return true;
@@ -97,6 +97,11 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			LOG.debug("before finish workDelegate.getName(): "+getName());
 			finish(success);
 			LOG.debug("after finish workDelegate.getName(): "+getName());
+            getProdLogger().debug("after finish workDelegate.getName(): "+getName());
+            if (running.isHeldByCurrentThread()) {
+                LOG.error("*** Warning:  WorkerThread "+this.getName()+" held the running lock, unlocked it now on exit.");
+                running.unlock();
+            }
 			this.status = Status.NOT_RUNNING;
 		}
 	}
@@ -109,7 +114,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	public Status getJobStatus() {
 		return status;
 	}
-	
+
 	public void setJobStatus(Status status) {
 		this.status = status;
 	}
@@ -120,7 +125,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 	public void setIncomingRecordCounts(RecordCounts incomingRecordCounts) {
 		this.incomingRecordCounts = incomingRecordCounts;
 	}
-	
+
 	public RecordCounts getOutgoingRecordCounts() {
 		return outgoingRecordCounts;
 	}
@@ -134,12 +139,12 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 
 	public final void cancel() {
 		waitForSetupCompletion();
-		running.lock(); 
+		running.lock();
 		running.unlock();
 		this.status = Status.CANCELED;
 	}
 	public void cancelInner() {}
-	
+
 	public final void finish(boolean success) {
 		LOG.debug("finish-1");
 		waitForSetupCompletion();
@@ -159,7 +164,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			LOG.debug("after repo.processComplete");
 		}
 	}
-	
+
 	public final void pause()  {
 		waitForSetupCompletion();
 		this.status = Status.PAUSING;
@@ -173,7 +178,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 			repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
 		}
 	}
-	
+
 	public final void proceed() {
 		waitForSetupCompletion();
 		proceedInner();

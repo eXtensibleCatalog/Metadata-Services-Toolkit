@@ -49,25 +49,26 @@ import xc.mst.utils.TimingLogger;
  * @author Eric Osisek
  */
 public class Scheduler extends BaseService implements Runnable {
-	
+
 	private final static Logger LOG = Logger.getLogger(Scheduler.class);
-	
+
 	protected boolean killed = false;
-	
+
 	protected WorkerThread runningJob;
 	protected Thread runningThread;
 	protected Job previousJob = null;
 	protected boolean pausedManually = false;
+	private final Object lock = new Object();
 
 	public void init() {
 		LOG.info("init");
 		new Thread(this).start();
 	}
-	
+
 	public WorkerThread getRunningJob() {
 		return runningJob;
 	}
-	
+
 	public void run() {
 		LOG.info("Scheduler.run");
 		if (!config.getPropertyAsBoolean("runScheduler", true)) {
@@ -94,13 +95,13 @@ public class Scheduler extends BaseService implements Runnable {
 			// Check whether service has been 'updated' with later file(s),
 			// if so delete service harvest history, then re-process
 			//
-			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {				
+			if (MSTConfiguration.getInstance().isCheckingForUpdatedServiceFiles()) {
 				final List<Service> servicesList = getServicesService().getAllServices();
 				for (Service s : servicesList) {
 					if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
 						LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
 						getServicesService().updateServiceLastModifiedTime(s.getName(), s);
-						
+
 						// now must persist it
 						getServicesService().updateService(s);
 
@@ -117,7 +118,7 @@ public class Scheduler extends BaseService implements Runnable {
 								for (ProcessingDirective procDirective : procDirectives) {
 
 									Job job = new Job(s, 0, Constants.THREAD_SERVICE);
-									job.setOrder(getJobService().getMaxOrder() + 1); 
+									job.setOrder(getJobService().getMaxOrder() + 1);
 									job.setProcessingDirective(procDirective);
 									LOG.debug("Creating new job THREAD_SERVICE, processing directive= "+procDirective);
 									getJobService().insertJob(job);
@@ -176,11 +177,11 @@ public class Scheduler extends BaseService implements Runnable {
 				if(!alreadyRanThisMinute) {
 					if(LOG.isDebugEnabled())
 						LOG.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
-	
+
 					// Add job to database queue
 					try {
 						Job job = new Job(scheduleToRun, Constants.THREAD_REPOSITORY);
-						job.setOrder(getJobService().getMaxOrder() + 1); 
+						job.setOrder(getJobService().getMaxOrder() + 1);
 						getJobService().insertJob(job);
 						lastRunDate.put(scheduleToRun.getId(), thisMinute);
 					} catch (DatabaseConfigException dce) {
@@ -204,9 +205,9 @@ public class Scheduler extends BaseService implements Runnable {
 					if (previousJob != null) {
 						LOG.debug("previousJob: "+previousJob);
 						getJobService().deleteJob(previousJob);
-						
+
 						TimingLogger.reset();
-						
+
 						Repository previousRepo = null;
 						List<ProcessingDirective> processingDirectives = null;
 						LOG.debug("previousJob.getHarvestSchedule(): "+previousJob.getHarvestSchedule());
@@ -234,7 +235,7 @@ public class Scheduler extends BaseService implements Runnable {
 							getServiceDAO().update(service);
 						}
 						LOG.debug("processingDirectives: "+processingDirectives);
-						
+
 						if (previousRepo != null) {
 							if (previousRepo instanceof DefaultRepository) {
 								LOG.debug("sleepUntilReady...start");
@@ -242,7 +243,7 @@ public class Scheduler extends BaseService implements Runnable {
 								LOG.debug("sleepUntilReady...finished");
 							}
 						}
-						
+
 						if (processingDirectives != null) {
 							try {
 								for (ProcessingDirective pd : processingDirectives) {
@@ -255,14 +256,14 @@ public class Scheduler extends BaseService implements Runnable {
 									if (pd.getTriggeringFormats() != null) {
 										for (Format f : pd.getTriggeringFormats()) {
 											if (previousJob.getHarvestSchedule().getFormats() != null) {
-												
+
 											}
 											if (f.getId().equals(previousJob.getHarvestSchedule().getFormats()))
 										}
 									}
 									*/
 
-									
+
 									//Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
 									Job job = new Job();
 									job.setService(pd.getService());
@@ -271,14 +272,14 @@ public class Scheduler extends BaseService implements Runnable {
 									job.setJobType(Constants.THREAD_SERVICE);
 									job.setOrder(getJobService().getMaxOrder() + 1);
 									job.setProcessingDirective(pd);
-									getJobService().insertJob(job);	
+									getJobService().insertJob(job);
 								}
 							} catch (DatabaseConfigException dce) {
 								LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
 							}
 						}
 					}
-					
+
 					Job jobToStart = getJobService().getNextJobToExecute();
 					if (jobToStart != null)
 						LOG.debug("jobToStart: "+jobToStart);
@@ -289,7 +290,7 @@ public class Scheduler extends BaseService implements Runnable {
 							solrThread.start();
 						} else {
 							if (!pausedManually)
-								solrWorkerThread.proceed();	
+								solrWorkerThread.proceed();
 						}
 						runningJob = solrWorkerThread;
 						runningJob.type = Constants.SOLR_INDEXER;
@@ -307,7 +308,7 @@ public class Scheduler extends BaseService implements Runnable {
 						runningThread = null;
 						TimingLogger.reset();
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
-						
+
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
 							HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 							hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
@@ -321,10 +322,10 @@ public class Scheduler extends BaseService implements Runnable {
 							msm.setOutputSet(getSetDAO().getById(jobToStart.getOutputSetId()));
 							Repository incomingRepo = null;
 							if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
-								incomingRepo = 
+								incomingRepo =
 									getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
 								if (!incomingRepo.ready4harvest()) {
-									
+
 									getJobService().deleteJob(jobToStart);
 									runningJob = null;
 									previousJob = null;
@@ -397,7 +398,9 @@ public class Scheduler extends BaseService implements Runnable {
 					//LOG.debug("Scheduler Thread sleeping for 1 minute.");
 				}
 				getProdLogger().debug("going to zzzz");
-				Thread.sleep(1000);
+				synchronized (lock) {
+	                lock.wait(1000);
+				}
 				getProdLogger().debug("cocka-doodle-doo");
 			} catch(InterruptedException e) {
 				if(LOG.isDebugEnabled())
@@ -407,7 +410,7 @@ public class Scheduler extends BaseService implements Runnable {
 			}
 		}
 	}
-	
+
 	public void kill() {
 		if (runningJob != null) {
 			runningJob.cancel();
@@ -418,7 +421,7 @@ public class Scheduler extends BaseService implements Runnable {
 	public void cancelRunningJob(){
 		runningJob.cancel();
 	}
-	
+
 	public boolean wasPausedManually() {
 		return pausedManually;
 	}
@@ -430,7 +433,7 @@ public class Scheduler extends BaseService implements Runnable {
 		pausedManually = true;
 		runningJob.pause();
 	}
-	
+
 	public void resumePausedJob(){
 		pausedManually = false;
 		runningJob.proceed();
