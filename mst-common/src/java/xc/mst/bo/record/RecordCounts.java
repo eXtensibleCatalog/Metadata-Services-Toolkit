@@ -82,6 +82,7 @@ public class RecordCounts {
 		this.counts = new HashMap<String, Map<String, AtomicInteger>>();
 		this.harvestStartDate = harvestStartDate;
 		this.incomingOutgoing = incomingOutgoing;
+		getCountsByType(RecordCounts.TOTALS);
 	}
 
 	public String getIncomingOutgoing() {

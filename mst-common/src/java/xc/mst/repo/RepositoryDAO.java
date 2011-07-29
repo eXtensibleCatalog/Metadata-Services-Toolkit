@@ -721,7 +721,7 @@ public class RepositoryDAO extends BaseDAO {
 			}
 			return true;
 		} else {
-			return false;
+			return force;
 		}
 	}
 	
