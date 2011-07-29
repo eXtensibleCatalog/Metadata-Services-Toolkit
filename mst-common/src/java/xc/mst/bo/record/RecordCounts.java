@@ -82,7 +82,8 @@ public class RecordCounts {
 		this.counts = new HashMap<String, Map<String, AtomicInteger>>();
 		this.harvestStartDate = harvestStartDate;
 		this.incomingOutgoing = incomingOutgoing;
-	}
+		getCountsByType(RecordCounts.TOTALS);
+    }
 
 	public String getIncomingOutgoing() {
 		return incomingOutgoing;
@@ -198,7 +199,7 @@ public class RecordCounts {
 
 	public String toString(String repoName) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		// This is for the purpose of making the totals appear last
 		List<String> keys = new ArrayList<String>();
 		for (String type : counts.keySet()) {

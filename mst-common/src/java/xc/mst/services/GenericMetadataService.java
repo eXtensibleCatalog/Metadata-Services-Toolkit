@@ -729,20 +729,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                                     "GenericMetadataService-unable to print record counts, null harvest start date!");
                 } else if (mostRecentIncomingRecordCounts.getHarvestStartDate()
                         .getTime() >= (startTime - 1000)) {
-                    for (RecordCounts rc : new RecordCounts[] {
-                            mostRecentIncomingRecordCounts,
-                            getRecordCountsDAO().getTotalIncomingRecordCounts(
-                                    getRepository().getName()),
-                            getRecordCountsDAO()
-                                    .getMostRecentOutgoingRecordCounts(
-                                            getRepository().getName()),
-                            getRecordCountsDAO().getTotalOutgoingRecordCounts(
-                                    getRepository().getName()) }) {
-                        LogWriter.addInfo(service.getServicesLogFileName(),
-                                rc.toString(getRepository().getName()));
-                    }
-                    LogWriter.addInfo(service.getServicesLogFileName(),
-                            getRepository().getRecordStatsByType());
+                    processServiceRecordCounts(mostRecentIncomingRecordCounts);
                 }
             } catch (Throwable t) {
                 LOG.error("*** HarvestManager.finishInner: exception " + t);
@@ -752,6 +739,30 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
         }
         setStatus(Status.NOT_RUNNING);
+    }
+
+    protected void processServiceRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+        for (RecordCounts rc : new RecordCounts[] {
+                mostRecentIncomingRecordCounts,
+                getRecordCountsDAO().getTotalIncomingRecordCounts(
+                        getRepository().getName()),
+                getRecordCountsDAO()
+                        .getMostRecentOutgoingRecordCounts(
+                                getRepository().getName()),
+                getRecordCountsDAO().getTotalOutgoingRecordCounts(
+                        getRepository().getName()) }) {
+            LogWriter.addInfo(service.getServicesLogFileName(),
+                    rc.toString(getRepository().getName()));
+        }
+        LogWriter.addInfo(service.getServicesLogFileName(),
+                getRepository().getRecordStatsByType());
+        applyRulesToRecordCounts(mostRecentIncomingRecordCounts);
+    }
+
+
+    //TODO do calcs. here + get prior step record counts to compare to, and use as part of calc.
+    // TODO (cont'd) need to have this as part of normalization and transformation as rules are service-dependent!
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
     }
 
     protected boolean isSolrIndexer() {

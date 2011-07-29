@@ -18,12 +18,16 @@ import org.apache.commons.lang.StringUtils;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.ServiceValidationException;
@@ -145,7 +149,7 @@ public class NormalizationService extends GenericMetadataService {
 		}
 		return super.getServiceStatus();
 	}
-	
+
 	@Override
 	public void setup() {
 		LOG.info("NormalizationService.setup");
@@ -158,7 +162,7 @@ public class NormalizationService extends GenericMetadataService {
 			LOG.error("Error validating service:",e);
 			LogWriter.addInfo(service.getServicesLogFileName(), "** Error validating service - service will not run "+ e.getMessage()+ " **");
 			sendReportEmail("Error validating service: "+e.getMessage());
-			
+
 			// in case the WorkerThread code addition causes issues, simply uncomment the below:
 			// throw new RuntimeException(e);
 		}
@@ -2349,6 +2353,34 @@ public class NormalizationService extends GenericMetadataService {
 
 	protected String getOrganizationCode() {
 		return enabledSteps.getProperty("OrganizationCode");
+	}
+
+	//TODO do calcs. here + get prior step record counts to compare to, and use as part of calc.
+	// TODO (cont'd) need to have this as part of normalization and transformation as rules are service-dependent!
+	protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+	    List<ProcessingDirective> procDirectives = null;
+        try {
+            procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(this.getService().getId());
+        } catch (DatabaseConfigException e) {
+            // TODO Auto-generated catch block
+            LOG.error("", e);
+        }
+	    if (procDirectives == null || procDirectives.size() < 1) {
+	        LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
+	    }
+	    else {
+	        try {   // now must re-process
+	            for (ProcessingDirective procDirective : procDirectives) {
+	                Service service = procDirective.getSourceService();
+	                Provider provider = procDirective.getSourceProvider();
+	                // may need to get Repository?
+	                // repo.getRecordStatsByType()
+
+	            }
+	        }    catch (Exception dce) {
+	            LOG.error("", dce);
+	        }
+	    }
 	}
 
 }

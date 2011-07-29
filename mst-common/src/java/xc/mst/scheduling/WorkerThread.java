@@ -69,7 +69,9 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
 		try {
 			this.status = Status.RUNNING;
 			setup();
-			setupComplete.release();
+			if (setupComplete != null) {
+	            setupComplete.release();
+			}
 			boolean keepGoing = isSetupHappy();
 			if (!keepGoing) {
 				WorkerThread.serviceBarDisplay = "abort";

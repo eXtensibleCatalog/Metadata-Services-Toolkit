@@ -62,7 +62,7 @@ public class Scheduler extends BaseService implements Runnable {
 
 	public void init() {
 		LOG.info("init");
-		new Thread(this).start();
+		new Thread(this, "Scheduler").start();
 	}
 
 	public WorkerThread getRunningJob() {
@@ -145,11 +145,12 @@ public class Scheduler extends BaseService implements Runnable {
 		if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
 			LOG.info("solr.index.whenIdle is true");
 			solrWorkerThread = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
-			solrThread = new Thread(solrWorkerThread);
+			solrThread = new Thread(solrWorkerThread, "SolrWorkDelegate");
 			LOG.debug("solrWorkerThread: "+solrWorkerThread);
 		} else {
 			LOG.info("solr.index.whenIdle is false");
 		}
+        HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
 
 		while(!killed) {
 			Calendar now = Calendar.getInstance();
@@ -310,12 +311,13 @@ public class Scheduler extends BaseService implements Runnable {
 						TimingLogger.log("starting job: "+jobToStart.getJobType());
 
 						if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-							HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+						    //TODO perhaps consider for future whether it is more correct to getBean each time here (would be new instance each harvest)
 							hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
 							runningJob = hm;
 							runningJob.type = Constants.THREAD_REPOSITORY;
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
-							MetadataServiceManager msm = new MetadataServiceManager();
+							MetadataServiceManager msm = (MetadataServiceManager)config.getBean("MetadataServiceManager");
+
 							Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
 							msm.setMetadataService(s.getMetadataService());
 							runningJob = msm;
@@ -361,7 +363,8 @@ public class Scheduler extends BaseService implements Runnable {
 							*/
 						} else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
 							LOG.debug("**** Scheduler - THREAD_MARK_PROVIDER_DELETED!");
-							RepositoryDeletionManager rdm = new RepositoryDeletionManager();
+							RepositoryDeletionManager rdm = (RepositoryDeletionManager)config.getBean("RepositoryDeletionManager");
+
 							runningJob = rdm;
 
 							Repository incomingRepo = null;
@@ -377,7 +380,7 @@ public class Scheduler extends BaseService implements Runnable {
 
 						if (runningJob != null) {
 							LOG.debug("runningJob.start()");
-							runningThread = new Thread(runningJob);
+							runningThread = new Thread(runningJob, jobToStart.getJobType()+"_"+thisMinute);
 							runningThread.start();
 						}
 						else {
