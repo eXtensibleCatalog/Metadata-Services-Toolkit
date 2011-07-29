@@ -21,19 +21,21 @@ import xc.mst.dao.BaseDAO;
 import xc.mst.manager.BaseService;
 import xc.mst.oai.Facade;
 import xc.mst.repo.Repository;
+import xc.mst.scheduling.WorkerThread;
 
 public class MSTScopeMetadataResolver extends MSTAutoBeanHelper implements ScopeMetadataResolver {
-	
+
 	private static final Logger LOG = Logger.getLogger(MSTScopeMetadataResolver.class);
-	
+
 	@SuppressWarnings("unchecked")
 	protected List<Class> prototypeScopes = null;
-	
+
 	@SuppressWarnings("unchecked")
 	public MSTScopeMetadataResolver() {
 		prototypeScopes = new ArrayList<Class>();
 		prototypeScopes.add(Repository.class);
 		prototypeScopes.add(Facade.class);
+		prototypeScopes.add(WorkerThread.class);
 	}
 
 	@SuppressWarnings("unchecked")

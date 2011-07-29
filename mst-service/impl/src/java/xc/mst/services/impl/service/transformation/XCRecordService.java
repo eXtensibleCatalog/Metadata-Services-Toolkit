@@ -456,9 +456,28 @@ public class XCRecordService extends GenericMetadataServiceService {
     }
 
     /**
+     * Version of getSplitXCRecordXML which uses supplied work and expression ids
+     *
+     * @param transformationService
+     * @return
+     */
+    private List<OutputRecord> getSplitXCRecordXML(Repository repo,
+            AggregateXCRecord ar,
+            Long manifestationId,
+            Long a_expressionId,
+            Long a_workId)
+            throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
+        //Bridget method
+        return getSplitXCRecordXML(repo,
+                ar, manifestationId);
+        //TODO make this method public, utilize a_expressionId, a_workId
+    }
+
+    /**
      * Gets a list of documents that represent the output of transformation
      * service. Each document in the list represents a FRBR level with its own
      * OAI id.
+     * (this one does not appear to be used anywhere!)
      *
      * @param transformationService
      * @return

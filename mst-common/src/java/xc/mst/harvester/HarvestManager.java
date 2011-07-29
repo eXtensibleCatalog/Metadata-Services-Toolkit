@@ -168,7 +168,7 @@ public class HarvestManager extends WorkerThread {
             LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null harvest start date!");
         }
-        else if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+        else if (recordsProcessedThisRun > 0) {
             for (RecordCounts rc : new RecordCounts[] {
                     mostRecentIncomingRecordCounts,
                     getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
@@ -179,8 +179,15 @@ public class HarvestManager extends WorkerThread {
                 LOG.debug("rc: "+rc);
                 LOG.debug("repo: "+repo);
                 LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
+                //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), " %************************%");
             }
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
+            //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(),     " &&&&&&&&&&&&&&&&&&&&&&&&&&");
+
+            //TODO do calculations here-don't need to get any prior record counts for a prior stage cause harvest is the start!
+        }
+        else {
+            LOG.debug("HarvestManager will not write record counts to harvest log because recordsProcessThisRun="+recordsProcessedThisRun);
         }
     }
 
@@ -452,7 +459,6 @@ public class HarvestManager extends WorkerThread {
                 }
             }
             if (requestsSent4Step % 10 == 0) {
-                //TODO here is the place to show performance!
                 long num = (recordsProcessedThisRun / ( requestsSent4Step/10));
                 LOG.debug("**** Reset with performance, requestsSent4Step="+requestsSent4Step+ " recordsProcessedThisRun="+num);
                 TimingLogger.reset(num);
