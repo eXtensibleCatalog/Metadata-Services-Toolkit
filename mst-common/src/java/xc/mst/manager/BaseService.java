@@ -111,10 +111,14 @@ public class BaseService {
 	protected RepositoryDAO repositoryDAO = null;
 	protected MessageDAO messageDAO = null;
 	protected RecordCountsDAO recordCountsDAO = null;
-	
+
 	public Logger getProdLogger() {
 		return getServerDAO().getProdLogger();
-	} 
+	}
+
+    public Logger getRulesLogger() {
+        return getServerDAO().getRulesLogger();
+    }
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
@@ -123,7 +127,7 @@ public class BaseService {
 	public void setConfig(MSTConfiguration config) {
 		this.config = config;
 	}
-	
+
 	public Util getUtil() {
 		// BDA - was having problems because Repository is sometimes created by Spring, sometimes
 		//       by RepositoryDAO.  This is not purist, but who cares right now.
@@ -374,7 +378,7 @@ public class BaseService {
 	public void setRecordDAO(RecordDAO recordDAO) {
 		this.recordDAO = recordDAO;
 	}
-	
+
 	public RepositoryDAO getRepositoryDAO() {
 		return repositoryDAO;
 	}

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -31,11 +32,13 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.bo.service.Service;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.manager.IndexException;
 import xc.mst.services.impl.service.SolrTransformationService;
 import xc.mst.services.transformation.dao.TransformationDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
@@ -585,7 +588,7 @@ public class TransformationService extends SolrTransformationService {
 		transformedRecord = process810(originalRecord, transformedRecord);
 		transformedRecord = process811(originalRecord, transformedRecord);
 		transformedRecord = process830(originalRecord, transformedRecord);
-		transformedRecord = process852(originalRecord, transformedRecord, record);  //TODO
+		transformedRecord = process852(originalRecord, transformedRecord, record);
 		transformedRecord = process856(originalRecord, transformedRecord);
 		transformedRecord = process866(originalRecord, transformedRecord);
 		transformedRecord = process867(originalRecord, transformedRecord);
@@ -638,9 +641,124 @@ public class TransformationService extends SolrTransformationService {
 		*/
 	}
 
-    //TODO do calcs. here + get prior step record counts to compare to, and use as part of calc.
-    // TODO (cont'd) need to have this as part of normalization and transformation as rules are service-dependent!
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+
+        if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {
+            final Logger LOG2 = getRulesLogger();
+
+            try {
+                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1",1);
+                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.2",2);
+                RecordCounts rc1, rc2 = null;
+
+                try {
+                    Service s1 = getServicesService().getServiceById(serviceNum1);
+                    if (s1==null) {
+                        LOG2.error("*** can not calculate record counts, no service found");
+                        return;
+                    }
+                    Service s2 = getServicesService().getServiceById(serviceNum2);
+                    if (s2==null) {
+                        LOG2.error("*** can not calculate record counts, no 2nd service found");
+                        return;
+                    }
+                    rc1 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s1.getName());
+                    if (rc1 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: "+ s1.getName());
+                        return;
+                    }
+                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s2.getName());
+                    if (rc2 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: "+ s2.getName());
+                        return;
+                    }
+                } catch (Exception e) {
+                    LOG2.error("*** can not calculate record counts: ",e);
+                    return;
+                }
+                // TODO: bug fix? all UNEXPECTED_ERROR retrieved counts are null!
+                Map<String, AtomicInteger> counts4typeN_tot = rc1.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeN_b = rc1.getCounts().get("b");
+                Map<String, AtomicInteger> counts4typeN_h = rc1.getCounts().get("h");
+                Map<String, AtomicInteger> counts4typeT_t = rc2.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeT_e = rc2.getCounts().get("expression");
+                Map<String, AtomicInteger> counts4typeT_w = rc2.getCounts().get("work");
+                Map<String, AtomicInteger> counts4typeT_m = rc2.getCounts().get("manifestation");
+                Map<String, AtomicInteger> counts4typeT_h = rc2.getCounts().get("holdings");
+
+                //TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
+                LOG2.info("%%%");
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderTransformation"));
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBA_eq_TMA"));// = Normalization Bibs Active = Transformation Manifestations Active
+                String result = "";
+                if (counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE)+ ", TMA="+counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
+
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBD_eq_TMD"));// = Normalization Bibs Deleted = Transformation Manifestations Deleted
+                if (counts4typeN_b.get(RecordCounts.NEW_DELETE).get() == counts4typeT_m.get(RecordCounts.NEW_DELETE).get()) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("NBD="+counts4typeN_b.get(RecordCounts.NEW_DELETE)+ ", TMD="+counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNHA_leq_THA_THH"));// = Normalization Holdings Active <= Transformation Holdings Active + Transformation Holdings Held
+                final int n_h_a = counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get();
+                final int t_h_a = counts4typeT_h.get(RecordCounts.NEW_ACTIVE).get();
+                final int t_h_h = counts4typeT_h.get(RecordCounts.NEW_HELD).get();
+                if (n_h_a <= (t_h_a + t_h_h) ) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("NHA="+n_h_a + ", THA=" +t_h_a + ", THH="+t_h_h + result);
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_eq_TWA"));// = Transformation Expressions Active = Transformation Works Active
+                if (counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("TEA="+counts4typeT_e.get(RecordCounts.NEW_ACTIVE)+ ", TWA="+counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
+
+                final int t_m_a = counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get();
+                final int t_w_a = counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get();
+                final int t_e_a = counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get();
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTWA_geq_TMA"));// = Transformation Works Active >= Transformation Manifestations Active
+                if (t_w_a >= (t_m_a) ) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("TWA="+ t_w_a + ", TMA="+t_m_a + result);
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_geq_TMA"));// = Transformation Expressions Active >= Transformation Manifestations Active
+                if (t_e_a >= (t_m_a) ) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("TWA="+ t_e_a + ", TMA="+t_m_a + result);
+
+                LOG2.info("%%%");
+
+            } catch (Exception e) {
+                LOG.error("",e);
+                LOG2.error("",e);
+            }
+        }
     }
 
 }

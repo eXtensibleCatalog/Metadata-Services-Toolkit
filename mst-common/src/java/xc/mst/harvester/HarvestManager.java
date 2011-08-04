@@ -18,10 +18,13 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang.StringUtils;
@@ -184,7 +187,11 @@ public class HarvestManager extends WorkerThread {
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
             //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(),     " &&&&&&&&&&&&&&&&&&&&&&&&&&");
 
-            //TODO do calculations here-don't need to get any prior record counts for a prior stage cause harvest is the start!
+            // in case you find a reason to do record count calculations here, uncomment this, grab the desired type data from the map
+            // below, and make your calculations.
+            //
+            //RecordCounts rc = getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName());
+            //Map<String, AtomicInteger> counts4type = rc.getCounts().get(RecordCounts.TOTALS);
         }
         else {
             LOG.debug("HarvestManager will not write record counts to harvest log because recordsProcessThisRun="+recordsProcessedThisRun);
@@ -639,7 +646,7 @@ public class HarvestManager extends WorkerThread {
                 if (record.getSets() != null && record.getSets().size() > 1) {
                     for (Set s : record.getSets()) {
                         if (s.getSetSpec().contains(":")) {
-                            incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+                            incomingRecordCounts.incr(s.getSetTypeShort(), record.getStatus(), prevStatus);
                         }
                     }
                 } else {
