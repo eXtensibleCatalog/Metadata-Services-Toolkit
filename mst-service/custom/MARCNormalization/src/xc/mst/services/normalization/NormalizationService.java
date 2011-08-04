@@ -11,14 +11,16 @@ package xc.mst.services.normalization;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
-import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
@@ -30,9 +32,11 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.repo.Repository;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.utils.LogWriter;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
@@ -2355,32 +2359,97 @@ public class NormalizationService extends GenericMetadataService {
 		return enabledSteps.getProperty("OrganizationCode");
 	}
 
-	//TODO do calcs. here + get prior step record counts to compare to, and use as part of calc.
-	// TODO (cont'd) need to have this as part of normalization and transformation as rules are service-dependent!
 	protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
-	    List<ProcessingDirective> procDirectives = null;
-        try {
-            procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(this.getService().getId());
-        } catch (DatabaseConfigException e) {
-            // TODO Auto-generated catch block
-            LOG.error("", e);
-        }
-	    if (procDirectives == null || procDirectives.size() < 1) {
-	        LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
-	    }
-	    else {
-	        try {   // now must re-process
-	            for (ProcessingDirective procDirective : procDirectives) {
-	                Service service = procDirective.getSourceService();
-	                Provider provider = procDirective.getSourceProvider();
-	                // may need to get Repository?
-	                // repo.getRecordStatsByType()
+	    /*
+	    rule_checking_enabled=true
+	    # id's of providers and services to use in rule processing
+	    ruleset1.provider.1= 1
+	    ruleset1.service.1 = 1
+	    ruleset1.service.2 = 2
+	     */
+	    // need to get repository record counts (incoming are all that exist) and normalization outgoing record counts, and run rules.
+	    if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {
+	        final Logger LOG2 = getRulesLogger();
 
+	        try {
+	            int providerNum = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.provider.1",1);
+	            int serviceNum = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1",1);
+	            RecordCounts rc1;
+                RecordCounts rc2;
+                try {
+                    Service s = getServicesService().getServiceById(serviceNum);
+                    if (s==null) {
+                        LOG2.error("*** can not calculate record counts, no service found");
+                        return;
+                    }
+                    Provider provider = getProviderService().getProviderById(providerNum);
+                    if (provider==null) {
+                        LOG2.error("*** can not calculate record counts, no provider found");
+                        return;
+                    }
+                    Repository r = getRepositoryService().getRepository(provider);
+                    if (r == null) {
+                        LOG2.error("*** can not calculate record counts, no repository found");
+                        return;
+                    }
+                    rc1 = getRecordCountsDAO().getTotalIncomingRecordCounts(r.getName());
+                    if (rc1 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for repository: "+ r.getName());
+                        return;
+                    }
+                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s.getName());
+                    if (rc2 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: "+ s.getName());
+                        return;
+                    }
+                } catch (Exception e) {
+                    LOG2.error("*** can not calculate record counts: ",e);
+                    return;
+                }
+
+                // TODO:  Bug?: The UNEXPECTED_ERROR counts retrieved can be null!
+                Map<String, AtomicInteger> counts4typeR_t = rc1.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeR_b = rc1.getCounts().get("b");
+	            Map<String, AtomicInteger> counts4typeR_h = rc1.getCounts().get("h");
+                Map<String, AtomicInteger> counts4typeN_t = rc2.getCounts().get(RecordCounts.TOTALS);
+	            Map<String, AtomicInteger> counts4typeN_b = rc2.getCounts().get("b");
+	            Map<String, AtomicInteger> counts4typeN_h = rc2.getCounts().get("h");
+
+	            //TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
+                LOG2.info("%%%");
+	            LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderNormalization"));// = Rules for Normalization:
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHTA_eq_NTA"));// = Harvest Total Active = Normalization Total Active
+                String result = "";
+                if (counts4typeR_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("HTA="+counts4typeR_t.get(RecordCounts.NEW_ACTIVE)+ ", NTA="+counts4typeN_t.get(RecordCounts.NEW_ACTIVE) + result);
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHBA_eq_NBA"));// = Harvest Bibs Active = Normalization Bibs Active
+	            if (counts4typeR_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                    result = " ** PASS **";
 	            }
-	        }    catch (Exception dce) {
-	            LOG.error("", dce);
+	            else {
+                    result = " ** FAIL **";
+	            }
+                LOG2.info("HBA="+counts4typeR_b.get(RecordCounts.NEW_ACTIVE)+ ", NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + result);
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHHA_eq_NHA"));// = Harvest Holdings Active = Normalization Holdings Active
+                if (counts4typeR_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get()) {
+                    result = " ** PASS **";
+                }
+                else {
+                    result = " ** FAIL **";
+                }
+                LOG2.info("HHA="+counts4typeR_h.get(RecordCounts.NEW_ACTIVE)+ ", NHA="+counts4typeN_h.get(RecordCounts.NEW_ACTIVE) + result);
+                LOG2.info("%%%");
+	        } catch (Exception e) {
+	            LOG.error("",e);
+                LOG2.error("",e);
 	        }
 	    }
 	}
-
 }

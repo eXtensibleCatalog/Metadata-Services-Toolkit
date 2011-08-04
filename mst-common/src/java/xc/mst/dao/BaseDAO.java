@@ -56,36 +56,38 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
 public class BaseDAO {
-	
+
 	private final static Logger LOG = Logger.getLogger(BaseDAO.class);
 	private final static Logger PROD_LOGGER = Logger.getLogger("prodDebug");
 	public Logger getProdLogger() {return PROD_LOGGER;}
-	
+    private final static Logger RULES_LOGGER = Logger.getLogger("mstRules");
+    public Logger getRulesLogger() {return RULES_LOGGER;}
+
 	protected DataSource dataSource = null;
 	protected MSTConfiguration config;
-	
+
 	protected NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 	protected HibernateTemplate hibernateTemplate = null;
 	protected JdbcTemplate jdbcTemplate = null;
 	protected SimpleJdbcTemplate simpleJdbcTemplate = null;
-	
+
 	protected Util util = null;
-	
+
 	public void init() {}
-	
+
 	public void execute(String sql) {
 		this.jdbcTemplate.execute(sql);
 	}
-	
+
 	public void setConfig(MSTConfiguration config) {
 		this.config = config;
 	}
 
-	
+
 	public void createSchema(String name) {
 		createSchema(name, false);
 	}
-	
+
 	public void createSchema(String name, boolean dropIfExists) {
 		name = getUtil().getDBSchema(name);
 		// this is potentially dangerous, but necessary for now
@@ -95,18 +97,18 @@ public class BaseDAO {
 		if (!schemasExists(name))
 			this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
 	}
-	
+
 	public void deleteSchema(String name) {
 		String sql = "drop database "+getUtil().getDBSchema(name);
 		LOG.debug("executing: "+sql);
 		this.jdbcTemplate.execute(sql);
 		this.jdbcTemplate.execute("delete from repos where repo_name = '"+getUtil().getDBSchema(name)+"'");
 	}
-	
+
 	public List<String> getSchemas() {
 		return this.jdbcTemplate.queryForList("show databases", String.class);
 	}
-	
+
 	public boolean schemasExists(String name) {
 		name = name.toUpperCase();
 		List<String> dbs = getSchemas();
@@ -117,7 +119,7 @@ public class BaseDAO {
 		}
 		return false;
 	}
-	
+
 	protected boolean tableExists(List<String> allTables, String tableName) {
 		List<String> allTablesUpper = new ArrayList<String>();
 		for (String table : allTables) {
@@ -127,19 +129,19 @@ public class BaseDAO {
 		LOG.debug("allTablesUpper: "+allTablesUpper);
 		LOG.debug("name: "+tableName);
 		LOG.debug(ret+":tableExists("+tableName+")");
-		return ret;	
+		return ret;
 	}
-	
+
 	protected boolean tableExists(String repoName, String tableName) {
 		List<String> allTables = this.jdbcTemplate.queryForList("show tables from "+getUtil().normalizeName(repoName), String.class);
 		return tableExists(allTables, tableName);
 	}
-	
+
 	protected boolean tableExists(String tableName) {
 		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
 		return tableExists(allTables, tableName);
 	}
-	
+
 	public List<String> getTablesWithPrefix(String prefix) {
 		List<String> tablesWithPrefix = new ArrayList<String>();
 		try {
@@ -156,7 +158,7 @@ public class BaseDAO {
 		}
 		return tablesWithPrefix;
 	}
-	
+
 	public void executeServiceDBScripts(String fileName) {
 		List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
 		LOG.debug("allTables: "+allTables);
@@ -200,18 +202,18 @@ public class BaseDAO {
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
 		this.simpleJdbcTemplate = new SimpleJdbcTemplate(jdbcTemplate);
 	}
-	
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
-	
+
 	public Util getUtil() {
 		return util;
 	}
 	public void setUtil(Util util) {
 		this.util = util;
 	}
-	
+
 	public RecordService getRecordService() {
 		return (RecordService)config.getBean("RecordService");
 	}

@@ -504,20 +504,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
             Set outputSet) {
         startTime = new Date().getTime();
         processedRecordCount = 0;
-        if (!(this instanceof SolrIndexService)) {
-            setStatus(Status.RUNNING);
-            LOG.info("getClass(): " + getClass());
-            LOG.info("inputFormat: " + inputFormat);
-            LOG.info("inputSet: " + inputSet);
-            LOG.info("outputSet: " + outputSet);
-            LOG.info(getClass().getName() + ".process(" + repo.getName() + ", "
-                    + (inputFormat == null ? "null" : inputFormat.getName())
-                    + ", "
-                    + (inputSet == null ? "null" : inputSet.getDisplayName())
-                    + ", "
-                    + (outputSet == null ? "null" : outputSet.getDisplayName())
-                    + ")");
-        }
+        processStatusDisplay(repo, inputFormat, inputSet, outputSet);
         running.acquireUninterruptibly();
         if (!isSolrIndexer() && preserveStatuses) {
             previousStatuses.clear();
@@ -727,8 +714,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
                             .addInfo(
                                     service.getServicesLogFileName(),
                                     "GenericMetadataService-unable to print record counts, null harvest start date!");
-                } else if (mostRecentIncomingRecordCounts.getHarvestStartDate()
+                } /*else if (mostRecentIncomingRecordCounts.getHarvestStartDate()
                         .getTime() >= (startTime - 1000)) {
+                    processServiceRecordCounts(mostRecentIncomingRecordCounts);
+                } */else if (atLeastOneRecordProcessed) {
                     processServiceRecordCounts(mostRecentIncomingRecordCounts);
                 }
             } catch (Throwable t) {
@@ -739,6 +728,21 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
         }
         setStatus(Status.NOT_RUNNING);
+    }
+
+    protected void processStatusDisplay(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
+        setStatus(Status.RUNNING);
+        LOG.info("getClass(): " + getClass());
+        LOG.info("inputFormat: " + inputFormat);
+        LOG.info("inputSet: " + inputSet);
+        LOG.info("outputSet: " + outputSet);
+        LOG.info(getClass().getName() + ".process(" + repo.getName() + ", "
+                + (inputFormat == null ? "null" : inputFormat.getName())
+                + ", "
+                + (inputSet == null ? "null" : inputSet.getDisplayName())
+                + ", "
+                + (outputSet == null ? "null" : outputSet.getDisplayName())
+                + ")");
     }
 
     protected void processServiceRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
@@ -760,10 +764,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     }
 
 
-    //TODO do calcs. here + get prior step record counts to compare to, and use as part of calc.
-    // TODO (cont'd) need to have this as part of normalization and transformation as rules are service-dependent!
-    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
-    }
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {}
 
     protected boolean isSolrIndexer() {
         boolean ret = getRepository() == null;
