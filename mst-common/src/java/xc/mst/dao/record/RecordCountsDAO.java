@@ -136,8 +136,10 @@ public class RecordCountsDAO extends RepositoryDAO {
 				sb.append(
 						"update "+getTableName(repoName, tableName) +" set ");
 
+				boolean updateRequired  = false;
 				Map<String, AtomicInteger> counts4Type = countsKeyedByType.get(type);
 				for (String updateType : counts4Type.keySet()) {
+				    updateRequired = true;
 					sb.append(updateType);
 					sb.append(" = ");
 					sb.append(updateType);
@@ -147,16 +149,18 @@ public class RecordCountsDAO extends RepositoryDAO {
 					paramMap.put(updateType, counts4Type.get(updateType).get());
 				}
 
-				sb.deleteCharAt(sb.length()-1);
-				sb.append(" where harvest_start_date = :harvest_start_date and type_name = :type_name ");
-				paramMap.put("harvest_start_date", d1);
-				paramMap.put("type_name", type);
+				if (updateRequired) {
+    				sb.deleteCharAt(sb.length()-1);
+    				sb.append(" where harvest_start_date = :harvest_start_date and type_name = :type_name ");
+    				paramMap.put("harvest_start_date", d1);
+    				paramMap.put("type_name", type);
 
-				LOG.debug("paramMap!!!");
-				for (Map.Entry<String, Object> me : paramMap.entrySet()) {
-					LOG.debug(me.getKey()+": "+me.getValue());
+    				LOG.debug("paramMap!!!");
+    				for (Map.Entry<String, Object> me : paramMap.entrySet()) {
+    					LOG.debug(me.getKey()+": "+me.getValue());
+    				}
+    				this.namedParameterJdbcTemplate.update(sb.toString(), paramMap);
 				}
-				this.namedParameterJdbcTemplate.update(sb.toString(), paramMap);
 			}
 		}
 	}

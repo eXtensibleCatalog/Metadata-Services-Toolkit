@@ -8,6 +8,7 @@
   */
 package xc.mst.repo;
 
+import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongObjectHashMap;
 import gnu.trove.TLongObjectProcedure;
@@ -44,13 +45,13 @@ import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
 public class TestRepository extends BaseService implements Repository {
-	
+
 	private static final Logger LOG = Logger.getLogger(TestRepository.class);
-	
+
 	public final static String INPUT_RECORDS_DIR = "../test/input_records";
 	public final static String EXPECTED_OUTPUT_RECORDS = "../test/expected_output_records";
 	public final static String ACTUAL_OUTPUT_RECORDS = "test/actual_output_records";
-	
+
 	protected java.util.Set<String> inputFileNames = new TreeSet<String>();
 	//protected int inputFilesIterator = 0;
 	protected Iterator inputFilesIterator = null;
@@ -63,26 +64,26 @@ public class TestRepository extends BaseService implements Repository {
 	protected String basePath = null;
 	protected String currentFile = null;
 	protected XmlHelper xmlHelper = new XmlHelper();
-	
+
 	public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {}
-	
+
 	public Date getLastModified() {
 		return null;
 	}
-	
+
 	public int getNumRecords() {
 		return -1;
 	}
-	
+
 	protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	
+
 	public String getName() {
 		return this.folderName;
 	}
 	public void setName(String folderName) {
 		this.folderName = folderName;
 		basePath = new File(".").getAbsolutePath();
-		
+
 		try {
 			File folder = new File(INPUT_RECORDS_DIR+"/"+folderName);
 			for (String fileName : folder.list()) {
@@ -95,7 +96,7 @@ public class TestRepository extends BaseService implements Repository {
 			Util.getUtil().throwIt(t);
 		}
 	}
-	
+
 	public int getSize() {
 		return 0;
 	}
@@ -104,7 +105,7 @@ public class TestRepository extends BaseService implements Repository {
 			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
 		return commitIfNecessary(force);
 	}
-	
+
 	public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
 		return commitIfNecessary(force);
 	}
@@ -189,11 +190,11 @@ public class TestRepository extends BaseService implements Repository {
 		}
 		return false;
 	}
-	
+
 	public void installOrUpdateIfNecessary() {
 		throw new RuntimeException("not implemented");
 	}
-	
+
 	public void addRecord(Record r) {
 		for (InputRecord ir : r.getPredecessors()) {
 			LOG.debug("((Record)ir).getOaiIdentifier(): "+((Record)ir).getOaiIdentifier());
@@ -216,9 +217,9 @@ public class TestRepository extends BaseService implements Repository {
 		LOG.debug("r.getStatus(): "+r.getStatus());
 		getOutputRecords().add(r);
 	}
-	
+
 	public void commitRecords() {}
-	
+
 	protected List<Record> getOutputRecords() {
 		List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
 		if (outputRecordsInFile == null) {
@@ -233,11 +234,11 @@ public class TestRepository extends BaseService implements Repository {
 			addRecord(r);
 		}
 	}
-	
+
 	public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {}
 	public void incrementUnexpectedProcessingErrors(String type) {}
-	
-	public List<Record> getRecords(Date from, Date until, Long startingId, 
+
+	public List<Record> getRecords(Date from, Date until, Long startingId,
 			xc.mst.bo.provider.Format inputFormat,  xc.mst.bo.provider.Set inputSet) {
 		if (inputFilesIterator == null) {
 			inputFilesIterator = inputFileNames.iterator();
@@ -254,7 +255,7 @@ public class TestRepository extends BaseService implements Repository {
 				LOG.debug("file2process: "+file2process);
 				SAXBuilder builder = new SAXBuilder();
 				Document doc = builder.build(new FileInputStream(file2process));
-				
+
 				Element records = doc.getRootElement();
 				LOG.debug("records: "+records);
 				Element listRecords = records.getChild("ListRecords", records.getNamespace());
@@ -290,19 +291,19 @@ public class TestRepository extends BaseService implements Repository {
 		}
 
 	}
-	
+
 	public Record getRecord(String oaiId) {
 		return (Record)repo.get(Long.parseLong(oaiId.split(":")[3]));
 	}
-	
+
 	public Record getRecord(long id) {
 		return (Record)repo.get(id);
 	}
-	
+
 	public List<Record> getPredecessors(Record r) {
 		throw new RuntimeException("not implemented");
 	}
-	
+
 	public void injectSuccessors(Record r) {
 		List<Record> succs = successorMap.get(r.getOaiIdentifier());
 		if (succs != null) {
@@ -328,28 +329,28 @@ public class TestRepository extends BaseService implements Repository {
 	public void installOrUpdateIfNecessary(String previousVersion,
 			String currentVersion) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setProvider(Provider p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setService(Service s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, xc.mst.bo.provider.Set inputSet) {
-		
+
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Get number of records that satisfy the given criteria
-	 * 
+	 *
 	 * @param from
 	 * @param until
 	 * @param startingId
@@ -361,18 +362,18 @@ public class TestRepository extends BaseService implements Repository {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	public void populatePredecessors(TLongHashSet predecessors) {
 		//do nothing
 	}
-	
+
 	public void injectSuccessorIds(Record r) {
 		List<Record> succs = successorMap.get(r.getHarvestedOaiIdentifier());
 		if (succs != null) {
 			for (Record succ : succs) {
 				Record out = new Record();
 				out.setId(succ.getId());
-				r.getSuccessors().add(out);	
+				r.getSuccessors().add(out);
 			}
 		}
 	}
@@ -388,7 +389,7 @@ public class TestRepository extends BaseService implements Repository {
 				Record prevRecord = getRecord(fid);
 				r.setService(prevRecord.getService());
 				r.setOaiXmlEl(prevRecord.getOaiXmlEl());
-				addRecord(r);	
+				addRecord(r);
 			}
 		}
 	}
@@ -435,20 +436,20 @@ public class TestRepository extends BaseService implements Repository {
 		r.setOaiXmlEl(pr.getOaiXmlEl());
 		addRecord(r);
 	}
-	
+
 
 	public void processComplete() {}
-	
+
 	public boolean ready4harvest() {
 		return true;
 	}
-	
+
 	public void injectHarvestInfo(Record r) {}
-	
+
 	public String getPersistentProperty(String key) {return null;}
 	public int getPersistentPropertyAsInt(String key, int def) {return def;}
 	public long getPersistentPropertyAsLong(String key, long def) {return def;}
-	
+
 	public void setPersistentProperty(String key, int value) {}
 	public void setPersistentProperty(String key, long value) {}
 	public void setPersistentProperty(String key, String value) {}
@@ -457,5 +458,8 @@ public class TestRepository extends BaseService implements Repository {
 	public String getRecordStatsByType() {
 		return null;
 	}
-	
+
+	public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service) {}
+	public void persistPreviousStatuses(TLongByteHashMap previousStatuses) {}
+
 }
