@@ -450,15 +450,17 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			if (getRepository().commitIfNecessary(
 					force,
 					processedRecordCount,
-					getMetadataServiceManager().getIncomingRecordCounts(),
-					getMetadataServiceManager().getOutgoingRecordCounts())) {
+					getMetadataServiceManager() == null ? null : getMetadataServiceManager().getIncomingRecordCounts(),
+					getMetadataServiceManager() == null ? null : getMetadataServiceManager().getOutgoingRecordCounts())) {
 
-				getMetadataServiceManager().getIncomingRecordCounts().clear();
-				getMetadataServiceManager().getOutgoingRecordCounts().clear();
+				if (!isTestRepository()) {
+    				getMetadataServiceManager().getIncomingRecordCounts().clear();
+    				getMetadataServiceManager().getOutgoingRecordCounts().clear();
+				}
 
-				getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
+				getRepository().persistPreviousStatuses(tempPreviousStatuses);
 				tempPreviousStatuses.clear();
-				
+
 				getMessageDAO().deleteMessagesByRecordId(getService().getId(), messages2deleteByRecordId);
 				messages2deleteByRecordId.clear();
 				getMessageDAO().deleteMessages(messages2delete);
@@ -500,7 +502,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			previousStatuses.ensureCapacity(repo.getSize());
 			LOG.debug("previousStatuses.ensureCapacity("+repo.getSize()+");");
 			tempPreviousStatuses.ensureCapacity(MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000));
-			getRepositoryDAO().populatePreviousStatuses(getRepository().getName(), previousStatuses, true);
+			getRepository().populatePreviousStatuses(previousStatuses, true);
 		}
 
 		LOG.debug("gettingServiceHarvest");
@@ -557,7 +559,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					if (!isSolrIndexer()) {
 						previousStatuses.put(in.getId(), (byte)in.getStatus());
 					}
-					tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());	
+					tempPreviousStatuses.put(in.getId(), (byte)in.getStatus());
 				}
 				Map<Long, OutputRecord> origSuccessorMap = new HashMap<Long, OutputRecord>();
 				if (in.getSuccessors() != null && in.getSuccessors().size() > 0) {
@@ -575,7 +577,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					LOG.error("error processing record w/ id: "+in.getId(), t);
 				}
 				TimingLogger.stop(getServiceName()+".process");
-				if (!isSolrIndexer()) {
+				if (!isSolrIndexer() && !isTestRepository()) {
 					if (in.getType() != null) {
 						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), in.getStatus(), in.getPreviousStatus());
 					} else {
@@ -583,12 +585,14 @@ public abstract class GenericMetadataService extends SolrMetadataService
 					}
 					getMetadataServiceManager().getIncomingRecordCounts().incr(null, in.getStatus(), in.getPreviousStatus());
 				}
-					
-				if (unexpectedError && !isSolrIndexer()) {
-					if (in.getType() != null) {
-						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
+
+				if (unexpectedError) {
+					if (!isSolrIndexer() && !isTestRepository()) {
+    					if (in.getType() != null) {
+    						getMetadataServiceManager().getIncomingRecordCounts().incr(in.getType(), RecordCounts.UNEXPECTED_ERROR);
+    					}
+    					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
 					}
-					getMetadataServiceManager().getIncomingRecordCounts().incr(null, RecordCounts.UNEXPECTED_ERROR);
 				} else {
 					processedRecordCount++;
 					if (out != null) {
@@ -601,12 +605,14 @@ public abstract class GenericMetadataService extends SolrMetadataService
 							LOG.debug("rout2.getIndexedObjectType(): "+rout2.getType()+
 									" rout2.getStatus(): "+rout2.getStatus()+
 									" rout2.getPreviousStatus(): "+rout2.getPreviousStatus());
-							if (rout2.getType() != null) {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
-							} else {
-								getMetadataServiceManager().getOutgoingRecordCounts().incr(RecordCounts.OTHER, rout2.getStatus(), rout2.getPreviousStatus());
+							if (!isTestRepository()) {
+    							if (rout2.getType() != null) {
+    								getMetadataServiceManager().getOutgoingRecordCounts().incr(rout2.getType(), rout2.getStatus(), rout2.getPreviousStatus());
+    							} else {
+    								getMetadataServiceManager().getOutgoingRecordCounts().incr(RecordCounts.OTHER, rout2.getStatus(), rout2.getPreviousStatus());
+    							}
+    							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							}
-							getMetadataServiceManager().getOutgoingRecordCounts().incr(null, rout2.getStatus(), rout2.getPreviousStatus());
 							rout2.addPredecessor(in);
 							rout2.setService(getService());
 							if (rout2.getId() == -1) {
@@ -651,7 +657,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 			running.release();
 		}
 
-		if (!isSolrIndexer()) {
+		if (!isSolrIndexer() && !isTestRepository()) {
 			RecordCounts mostRecentIncomingRecordCounts =
 				getRecordCountsDAO().getMostRecentIncomingRecordCounts(getRepository().getName());
 			// I'm subtracting 1s from startTime because they might actually be equal by the second
@@ -688,7 +694,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
 		LOG.debug("ret: "+ret);
 		return ret;
 	}
-	
+
+	protected boolean isTestRepository() {
+		return getRepository() != null && getRepository() instanceof TestRepository;
+	}
+
 	protected void updateService(List<OutputRecord> outputRecords, ServiceHarvest sh) {
 		if (!isSolrIndexer() && !(getRepository() instanceof TestRepository)) {
 			// Set number of input and output records.

@@ -30,9 +30,9 @@ import xc.mst.utils.XmlHelper;
 
 
 public class ProcessFilesTest extends BaseMetadataServiceTest {
-	
+
 	private static final Logger LOG = Logger.getLogger(ProcessFilesTest.class);
-	
+
 	@Test
 	public void testFiles() {
 		try {
@@ -41,15 +41,15 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 			String inFolderStr = System.getenv("test.folder");
 			LOG.debug("folderStr: "+inFolderStr);
 			LOG.debug("serviceName: "+serviceName);
-			
+
 			Map<String, String> testFailures = new HashMap<String, String>();
-	
-			
+
+
 			File inputRecordsDir = new File(TestRepository.INPUT_RECORDS_DIR);
 			LOG.debug("inputRecordsDir: "+inputRecordsDir);
 			LOG.debug("new File(\".\").getAbsolutePath(): "+new File(".").getAbsolutePath());
 			List<String> folderStrs = new ArrayList<String>();
-			
+
 			if (!StringUtils.isEmpty(inFolderStr)) {
 				folderStrs.add(inFolderStr);
 			} else {
@@ -72,16 +72,16 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 					List<String> tables = getJdbcTemplate().queryForList("show tables", String.class);
 					LOG.debug("tables: "+tables);
 				} catch (Throwable t) {
-					LOG.error("moving on from: ", t);
+					LOG.debug("moving on from: ", t);
 				}
-				
+
 				ServicesService ss = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
-				
+
 				Service s = ss.getServiceByName(serviceName);
 				ss.addNewService(serviceName);
 				s = ss.getServiceByName(serviceName);
 				GenericMetadataService ms = (GenericMetadataService)s.getMetadataService();
-				
+
 				long id = getRepositoryDAO().resetIdSequence(1);
 				Repository repo = (TestRepository)MSTConfiguration.getInstance().getBean("TestRepository");
 				LOG.debug("testRepo: "+repo);
@@ -96,7 +96,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 				} catch (Throwable t) {
 					LOG.error("couldn't delete service", t);
 				}
-				
+
 				File expectedOutputFolder = new File(TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr);
 				if (expectedOutputFolder.exists()) {
 					Set<String> expectedOutputFiles = new HashSet<String>();
@@ -105,7 +105,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 							expectedOutputFiles.add(ef);
 						}
 					}
-					
+
 					File actualOutputFolder  = new File(TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr);
 					for (String af : actualOutputFolder.list()) {
 						if (af.contains("byRecordIds")) {
@@ -115,7 +115,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 						if (expectedOutputFiles.contains(af)) {
 							expectedOutputFiles.remove(af);
 							if (new XmlHelper().diffXmlFiles(
-									TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr+"/"+af, 
+									TestRepository.ACTUAL_OUTPUT_RECORDS+"/"+folderStr+"/"+af,
 									TestRepository.EXPECTED_OUTPUT_RECORDS+"/"+folderStr+"/"+af)) {
 								testFailures.put(folderStr+"/"+af, "files differ");
 							}
@@ -126,7 +126,7 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 					for (String ef : expectedOutputFiles) {
 						testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
 					}
-					
+
 					StringBuilder sb = new StringBuilder();
 					for (String key : testFailures.keySet()) {
 						String value = testFailures.get(key);
@@ -134,14 +134,14 @@ public class ProcessFilesTest extends BaseMetadataServiceTest {
 
 						sb.append(s2);
 					}
-					
+
 					if (sb.length() > 0) {
 						LOG.error(sb.toString());
 						throw new RuntimeException(sb.toString());
 					}
 				}
 			}
-			
+
 		} catch (Throwable t) {
 			getUtil().throwIt(t);
 		}
