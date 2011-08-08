@@ -49,6 +49,7 @@ note: help on the ant commands within particular service subprojects can be foun
           self.addMappedName("MARCNormalization/@{subdir}/"+source);
           self.addMappedName("MARCToXCTransformation/@{subdir}/"+source);
           self.addMappedName("DCToXCTransformation/@{subdir}/"+source);
+          self.addMappedName("MARCAggregation/@{subdir}/"+source);
         </scriptmapper>
         <!--
           self.addMappedName("aggregation/@{subdir}/"+source);
@@ -79,6 +80,7 @@ note: help on the ant commands within particular service subprojects can be foun
       <ant dir="${mst-service}/custom/MARCNormalization" target="@{target}" inheritAll="false" />
       <ant dir="${mst-service}/custom/MARCToXCTransformation" target="@{target}" inheritAll="false" />
       <ant dir="${mst-service}/custom/DCToXCTransformation" target="@{target}" inheritAll="false" />
+      <ant dir="${mst-service}/custom/MARCAggregation" target="@{target}" inheritAll="false" />
     </sequential>
   </macrodef>
 
