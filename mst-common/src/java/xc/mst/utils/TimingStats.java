@@ -296,7 +296,7 @@ public class TimingStats {
             if (batchSize != 0l) {
                 final long millisecInAnHour = 3600000l;
                 double avg = ((batchSize * millisecInAnHour ) / timeSinceLastReset) /* / 1000000l */;  // in terms of (x) million records/hour
-                LOG.debug("performance for the last "+ batchSize + " commits: "+ avg +" / hr");
+                LOG.debug("performance for the last "+ batchSize + " commits: "+ avg +" records/hr.");
             }
         }
     }

@@ -18,6 +18,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.manager.IndexException;
@@ -28,15 +29,15 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 public class SolrIndexService extends GenericMetadataService  {
-	
+
 	private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
 	protected int loops = 1;
-	
+
 	Repository incomingRepository = null;
 	protected int recordsProcessedSinceCommit;
-	
+
 	protected String name4progressBar = null;
-	
+
 	public String getName4progressBar() {
 		return name4progressBar;
 	}
@@ -44,7 +45,7 @@ public class SolrIndexService extends GenericMetadataService  {
 	@Override
 	protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
 			TimingLogger.start("getRecordsWSets");
-			List<Record> rs =  
+			List<Record> rs =
 				((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
 			TimingLogger.stop("getRecordsWSets");
 			/*
@@ -55,7 +56,7 @@ public class SolrIndexService extends GenericMetadataService  {
 			*/
 			return rs;
 	}
-	
+
 	@Override
 	protected boolean commitIfNecessary(boolean force, long processedRecords) {
 		if (force || this.recordsProcessedSinceCommit >=
@@ -68,17 +69,17 @@ public class SolrIndexService extends GenericMetadataService  {
 				return true;
 			} catch (Throwable t) {
 				getUtil().throwIt(t);
-			}	
+			}
 		}
 		return false;
 	}
-	
+
 	public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
 		this.incomingRepository = repo;
 		this.preserveStatuses = false;
 		super.process(repo, inputFormat, inputSet, outputSet);
 	}
-	
+
 	public List<OutputRecord> process(InputRecord ri) {
 		recordsProcessedSinceCommit++;
 		this.name4progressBar = "indexing "+incomingRepository.getName();
@@ -106,14 +107,14 @@ public class SolrIndexService extends GenericMetadataService  {
 		} else {
 			doc.addField(RecordService.FIELD_FORMAT_ID, 0);
 		}
-		
+
 		if (r.getSets() != null) {
 			for (Set s : r.getSets()) {
 				doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
 				doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
 			}
 		}
-		
+
 		if (this.incomingRepository.getProvider() != null) {
 			doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
 			doc.addField("provider_name", this.incomingRepository.getProvider().getName());
@@ -127,13 +128,13 @@ public class SolrIndexService extends GenericMetadataService  {
 			doc.addField(RecordService.FIELD_SERVICE_ID, 0);
 		}
 		if (r.getStatus() == Record.ACTIVE) {
-			doc.addField("status", "active");	
+			doc.addField("status", "active");
 		} else if (r.getStatus() == Record.HELD) {
 			doc.addField("status", "held");
 		} else if (r.getStatus() == Record.DELETED) {
 			doc.addField("status", "deleted");
 		}
-		
+
 		if (r.getMessages() != null) {
 			for (RecordMessage m : r.getMessages()) {
 				try {
@@ -145,7 +146,7 @@ public class SolrIndexService extends GenericMetadataService  {
 				}
 			}
 		}
-		
+
 		try {
 			getSolrIndexManager().addDoc(doc);
 		} catch (IndexException ie) {
@@ -158,5 +159,5 @@ public class SolrIndexService extends GenericMetadataService  {
 	public void runTests() {
 		//do nothing
 	}
-
+    protected void processStatusDisplay(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {}
 }

@@ -18,10 +18,13 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.lang.StringUtils;
@@ -168,7 +171,7 @@ public class HarvestManager extends WorkerThread {
             LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null harvest start date!");
         }
-        else if (mostRecentIncomingRecordCounts.getHarvestStartDate().getTime() >= (startTime - 1000)) {
+        else if (recordsProcessedThisRun > 0) {
             for (RecordCounts rc : new RecordCounts[] {
                     mostRecentIncomingRecordCounts,
                     getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
@@ -179,8 +182,19 @@ public class HarvestManager extends WorkerThread {
                 LOG.debug("rc: "+rc);
                 LOG.debug("repo: "+repo);
                 LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
+                //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), " %************************%");
             }
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
+            //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(),     " &&&&&&&&&&&&&&&&&&&&&&&&&&");
+
+            // in case you find a reason to do record count calculations here, uncomment this, grab the desired type data from the map
+            // below, and make your calculations.
+            //
+            //RecordCounts rc = getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName());
+            //Map<String, AtomicInteger> counts4type = rc.getCounts().get(RecordCounts.TOTALS);
+        }
+        else {
+            LOG.debug("HarvestManager will not write record counts to harvest log because recordsProcessThisRun="+recordsProcessedThisRun);
         }
     }
 
@@ -452,7 +466,6 @@ public class HarvestManager extends WorkerThread {
                 }
             }
             if (requestsSent4Step % 10 == 0) {
-                //TODO here is the place to show performance!
                 long num = (recordsProcessedThisRun / ( requestsSent4Step/10));
                 LOG.debug("**** Reset with performance, requestsSent4Step="+requestsSent4Step+ " recordsProcessedThisRun="+num);
                 TimingLogger.reset(num);
@@ -633,7 +646,7 @@ public class HarvestManager extends WorkerThread {
                 if (record.getSets() != null && record.getSets().size() > 1) {
                     for (Set s : record.getSets()) {
                         if (s.getSetSpec().contains(":")) {
-                            incomingRecordCounts.incr(s.getSetSpec(), record.getStatus(), prevStatus);
+                            incomingRecordCounts.incr(s.getSetTypeShort(), record.getStatus(), prevStatus);
                         }
                     }
                 } else {

@@ -9,6 +9,7 @@
 
 package xc.mst.repo;
 
+import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	protected Provider provider = null;
 	protected Service service = null;
-	
+
 	public Map<String, Long> getCompletListSizeMap() {
 		return this.completeListSizeMap;
 	}
@@ -80,7 +81,7 @@ public class DefaultRepository extends BaseService implements Repository {
 	public int getNumRecords() {
 		return getRepositoryDAO().getNumRecords(name);
 	}
-	
+
 	public String getRecordStatsByType() {
 		return getRepositoryDAO().getRecordStatsByType(name);
 	}
@@ -220,16 +221,16 @@ public class DefaultRepository extends BaseService implements Repository {
 		return records;
 	}
 
-	public long getRecordCount(final Date from, final Date until, 
+	public long getRecordCount(final Date from, final Date until,
 			final Format inputFormat, final Set inputSet) {
-		final String key = "from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet; 
+		final String key = "from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet;
 		LOG.debug(key);
 		if (completeListSizeMap.containsKey(key)) {
 			LOG.debug("found recordCount in cache");
 			return completeListSizeMap.get(key);
 		} else {
 			long recordCount = getRepositoryDAO().getRecordCount(name, from, until, inputFormat, inputSet, false);
-			completeListSizeMap.put(key, recordCount);			
+			completeListSizeMap.put(key, recordCount);
 			if (recordCount == -1) {
 				new Thread() {
 					public void run() {
@@ -380,6 +381,14 @@ public class DefaultRepository extends BaseService implements Repository {
 
 	public void injectHarvestInfo(Record r) {
 		getRepositoryDAO().injectHarvestInfo(name, r);
+	}
+
+	public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service) {
+		getRepositoryDAO().populatePreviousStatuses(name, previousStatuses, service);
+	}
+
+	public void persistPreviousStatuses(TLongByteHashMap previousStatuses) {
+		getRepositoryDAO().persistPreviousStatuses(name, previousStatuses);
 	}
 
 }

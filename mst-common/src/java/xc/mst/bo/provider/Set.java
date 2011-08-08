@@ -9,6 +9,10 @@
 
 package xc.mst.bo.provider;
 
+import java.util.StringTokenizer;
+
+import org.apache.log4j.Logger;
+
 /**
  * Represents a set
  *
@@ -16,6 +20,8 @@ package xc.mst.bo.provider;
  */
 public class Set
 {
+    private static Logger LOG = Logger.getLogger(Set.class);
+
 	/**
 	 * The set's ID
 	 */
@@ -116,15 +122,31 @@ public class Set
 		return setSpec;
 	} // end method getSetSpec()
 
-	/**
-	 * Sets the set's setSpec
-	 *
-	 * @param setSpec The set's new setSpec
-	 */
-	public void setSetSpec(String setSpec)
-	{
-		this.setSpec = setSpec;
-	} // end method setSetSpec(String)
+    /**
+     */
+    public String getSetTypeShort()
+    {
+        if (getSetSpec().contains(":")) {
+            StringTokenizer st = new StringTokenizer(getSetSpec(),":");
+            st.nextToken();
+            String s = st.nextToken();
+            return s.substring(0,1);
+        }
+        else {
+            return setSpec;
+        }
+    }
+
+    /**
+     * Sets the set's setSpec
+     *
+     * @param setSpec The set's new setSpec
+     */
+    public void setSetSpec(String setSpec)
+    {
+        this.setSpec = setSpec;
+    } // end method setSetSpec(String)
+
 
 	// TODO: BDA - this (providerSet) should be removed - it's not used anywhere.
 	/**
@@ -179,11 +201,11 @@ public class Set
 
         if( ( setSpec!= null && !setSpec.equals(other.getSetSpec()) ) ||
                 ( setSpec == null && other.getSetSpec() != null ) ) return false;
-        
+
         return true;
 
 	} // end method equals(Object)
-	
+
     /**
      * @see java.lang.Object#hashCode()
      */
@@ -193,14 +215,14 @@ public class Set
             value += setSpec == null ? 0 : setSpec.hashCode();
             return value;
     }
-    
+
     @Override
     public String toString() {
     	StringBuffer b = new StringBuffer();
     	b.append("{Id="+id);
     	b.append(" name="+displayName);
     	b.append(" setSpec="+setSpec + "]");
-    	
+
     	return b.toString();
     }
 
