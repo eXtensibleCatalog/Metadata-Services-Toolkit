@@ -77,9 +77,9 @@ set keymodel=startsel,stopsel
 set ruler
 set selection=exclusive
 set selectmode=mouse,key
-set shiftwidth=4
+set shiftwidth=2
 set noswapfile
-set tabstop=4
+set tabstop=2
 set visualbell
 set whichwrap=b,s,<,>,[,]
 set window=77
@@ -87,7 +87,6 @@ set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd C:\dev\xc\mst\svn\branches\0.3.x
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -149,7 +148,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -197,7 +196,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -212,7 +211,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -300,8 +299,7 @@ exe s:l
 normal! zt
 109
 normal! 023l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\scripts\env\170.sh
+tabedit scripts\env\170.sh
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -345,7 +343,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'sh'
 setlocal filetype=sh
 endif
@@ -393,7 +391,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -408,7 +406,7 @@ setlocal synmaxcol=3000
 if &syntax != 'sh'
 setlocal syntax=sh
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -422,10 +420,9 @@ exe s:l
 normal! zt
 14
 normal! 032l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\scripts\env\170.pass.sh
+edit scripts\env\170.pass.sh
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -450,7 +447,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'sh'
 setlocal filetype=sh
 endif
@@ -498,7 +495,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -513,7 +510,7 @@ setlocal synmaxcol=3000
 if &syntax != 'sh'
 setlocal syntax=sh
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -527,10 +524,9 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\scripts\gen_randys_30.sh
+edit scripts\gen_randys_30.sh
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -555,7 +551,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'sh'
 setlocal filetype=sh
 endif
@@ -603,7 +599,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -618,7 +614,7 @@ setlocal synmaxcol=3000
 if &syntax != 'sh'
 setlocal syntax=sh
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -638,14 +634,13 @@ exe s:l
 normal! zt
 40
 normal! 098l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe '1resize ' . ((&lines * 38 + 39) / 78)
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe '2resize ' . ((&lines * 37 + 39) / 78)
 exe 'vert 2resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 3resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\MST-instances\build.xml
+tabedit MST-instances\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -682,7 +677,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -730,7 +725,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -745,7 +740,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -759,10 +754,9 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\MST-instances\build.xml
+edit MST-instances\build.xml
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -787,7 +781,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -835,7 +829,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -850,7 +844,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -864,11 +858,10 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\build.xml
+tabedit 0.3.x\mst-common\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -912,7 +905,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -960,7 +953,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -975,7 +968,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -995,10 +988,9 @@ exe s:l
 normal! zt
 65
 normal! 039l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\ivy.xml
+edit mst-common\ivy.xml
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1023,7 +1015,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'xml'
 setlocal filetype=xml
 endif
@@ -1071,7 +1063,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1086,7 +1078,7 @@ setlocal synmaxcol=3000
 if &syntax != 'xml'
 setlocal syntax=xml
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1118,10 +1110,9 @@ exe s:l
 normal! zt
 267
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-common\build.properties
+edit mst-common\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1146,7 +1137,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'jproperties'
 setlocal filetype=jproperties
 endif
@@ -1194,7 +1185,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1209,7 +1200,7 @@ setlocal synmaxcol=3000
 if &syntax != 'jproperties'
 setlocal syntax=jproperties
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1223,14 +1214,13 @@ exe s:l
 normal! zt
 15
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 133 + 134) / 268)
 exe '2resize ' . ((&lines * 38 + 39) / 78)
 exe 'vert 2resize ' . ((&columns * 134 + 134) / 268)
 exe '3resize ' . ((&lines * 37 + 39) / 78)
 exe 'vert 3resize ' . ((&columns * 134 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-platform\build.xml
+tabedit mst-platform\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1267,7 +1257,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -1315,7 +1305,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1330,7 +1320,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1354,10 +1344,9 @@ exe s:l
 normal! zt
 86
 normal! 036l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-platform\build.properties
+edit mst-platform\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1382,7 +1371,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'jproperties'
 setlocal filetype=jproperties
 endif
@@ -1430,7 +1419,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1445,7 +1434,7 @@ setlocal synmaxcol=3000
 if &syntax != 'jproperties'
 setlocal syntax=jproperties
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1459,11 +1448,10 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\impl\build.xml
+tabedit mst-service\impl\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1500,7 +1488,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -1548,7 +1536,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1563,7 +1551,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1599,10 +1587,9 @@ exe s:l
 normal! zt
 82
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\impl\build.properties
+edit mst-service\impl\build.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1627,7 +1614,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'jproperties'
 setlocal filetype=jproperties
 endif
@@ -1675,7 +1662,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1690,7 +1677,7 @@ setlocal synmaxcol=3000
 if &syntax != 'jproperties'
 setlocal syntax=jproperties
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1704,11 +1691,10 @@ exe s:l
 normal! zt
 20
 normal! 02l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\example\build.xml
+tabedit mst-service\example\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -1745,7 +1731,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -1793,7 +1779,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -1808,7 +1794,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -1932,10 +1918,9 @@ exe s:l
 normal! zt
 235
 normal! 01l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\example\custom.properties
+edit mst-service\example\custom.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -1960,7 +1945,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'jproperties'
 setlocal filetype=jproperties
 endif
@@ -2008,7 +1993,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -2023,7 +2008,7 @@ setlocal synmaxcol=3000
 if &syntax != 'jproperties'
 setlocal syntax=jproperties
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -2037,11 +2022,10 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\custom\MARCNormalization\build.xml
+tabedit mst-service\custom\MARCNormalization\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -2078,7 +2062,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'ant'
 setlocal filetype=ant
 endif
@@ -2126,7 +2110,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -2141,7 +2125,7 @@ setlocal synmaxcol=3000
 if &syntax != 'ant'
 setlocal syntax=ant
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -2273,10 +2257,9 @@ exe s:l
 normal! zt
 238
 normal! 022l
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 argglobal
-edit C:\dev\xc\mst\svn\branches\0.3.x\mst-service\custom\MARCNormalization\custom.properties
+edit mst-service\custom\MARCNormalization\custom.properties
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -2301,7 +2284,7 @@ setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
-setlocal noexpandtab
+setlocal expandtab
 if &filetype != 'jproperties'
 setlocal filetype=jproperties
 endif
@@ -2349,7 +2332,7 @@ setlocal noreadonly
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=4
+setlocal shiftwidth=2
 setlocal noshortname
 setlocal nosmartindent
 setlocal softtabstop=0
@@ -2364,7 +2347,7 @@ setlocal synmaxcol=3000
 if &syntax != 'jproperties'
 setlocal syntax=jproperties
 endif
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal tags=
 setlocal textwidth=0
 setlocal thesaurus=
@@ -2378,7 +2361,6 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd C:\dev\xc\mst\svn\branches\0.3.x
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)

@@ -1,1 +1,0 @@
-mysql -h ${REMOTE_BOX_NAME} -u ${MYSQL_USER} --password=${MYSQL_PASS} -D ${REPO} -e "delete from record_predecessors; delete from record_sets; delete from record_updates; delete from records; delete from records_xml;"

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="holdings" id="oai:URMST:Transformation Service/15657">
-		<xc:location>Rhees Stacks</xc:location>
-		<xc:callNumber>HB139 .E345 2007</xc:callNumber>
-		<xc:recordID type="NRU">4164761</xc:recordID>
-		<xc:manifestationHeld type="NRU">3949333</xc:manifestationHeld>
-		<xc:link>oai:URMST:Transformation Service/15656</xc:link>
-	</xc:entity>
-</xc:frbr>
