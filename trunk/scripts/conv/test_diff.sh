@@ -1,0 +1,1 @@
+TortoiseMerge ./mst-service/custom/MARCToXCTransformation/test/expected_output_records/orig-186/oai-mst.rochester.edu-MetadataServicesToolkit\ MARCNormalization\ ${1}.xml ./mst-service/custom/MARCToXCTransformation/build/test/actual_output_records/orig-186/oai-mst.rochester.edu-MetadataServicesToolkit\ MARCNormalization\ ${1}.xml 

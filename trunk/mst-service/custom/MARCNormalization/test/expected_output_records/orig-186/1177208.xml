@@ -1,0 +1,290 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/11</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:11</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>03117cjm a2200565 a 45 A</marc:leader>
+      <marc:controlfield tag="001">1177208</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="005">20080105200043.0</marc:controlfield>
+      <marc:controlfield tag="007">st psnemba  ed</marc:controlfield>
+      <marc:controlfield tag="008">930120s1991    xx mun              N/A d</marc:controlfield>
+      <marc:datafield tag="033" ind1="0" ind2=" ">
+        <marc:subfield code="a">19910614</marc:subfield>
+        <marc:subfield code="b">3804</marc:subfield>
+        <marc:subfield code="c">R6</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)27295669</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="9">01126533</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">RES</marc:subfield>
+        <marc:subfield code="c">RES</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="047" ind1=" " ind2=" ">
+        <marc:subfield code="a">pm</marc:subfield>
+        <marc:subfield code="a">or</marc:subfield>
+        <marc:subfield code="a">pt</marc:subfield>
+        <marc:subfield code="a">sy</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RESR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">DM</marc:subfield>
+        <marc:subfield code="a">318</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="099" ind1=" " ind2=" ">
+        <marc:subfield code="a">DM 318</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Eastman School of Music Trombone Alumni Concert</marc:subfield>
+        <marc:subfield code="h">[sound recording]</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="c">June 14, 1991.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">1 sound tape reel :</marc:subfield>
+        <marc:subfield code="b">digital, 2 track, stereo ;</marc:subfield>
+        <marc:subfield code="c">12 in.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Program / Eastman School of Music, University of Rochester ;</marc:subfield>
+        <marc:subfield code="v">1991-92</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="500" ind1=" " ind2=" ">
+        <marc:subfield code="a">"PD format, 48 kHz."</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="505" ind1="0" ind2=" ">
+        <marc:subfield code="a">O sacred head now wounded / J. S. Bach ; arr. Howard Hanson (6:20) (Neill Humfeld, conductor) -- Largo / Warren Benson (13:48) -- Achieved is the glorius work / Joseph Haydn ; arr. Don Miller (3:45) -- Adoramus te Christe / Quirino Gasparini ; arr. Don Miller (2:30) -- Adagio / Camille St. Saëns ; arr. Ken Murley (5:19) -- Sonara for trombone choir and percussion (World premiere) / Sal Scarpa (7:25) -- Passacaglia in c minor / J. S. Bach ; arr. Don Hunsberger (7:07) (Donald Hunsberger, conductor) -- I'm getting sentimental over you / Ned Washington ; arr. Rob Boone (4:47) (Tom Ervin, soloist) -- Wolf eyes / Paul Winter ; arr. Mark Lusk (4:19) (Mark Lust, soloist) -- Sweet Georgia Brown / arr. Steve Mortenson (6:29) (Bionic Bones with Jim Pugh, soloist ; Bill Dobbins, piano ; Bill Campbell, bass ; Rich Thompson, drums) -- Stardust for the chief / Rayburn Wright (6:10) (John Beck, drums, Alec Brinkman, bass ; Donald Hunsberger, conductor).</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="511" ind1="0" ind2=" ">
+        <marc:subfield code="a">Various performers ; Donald Hunsberger, Neill Humfeld, conductors.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="518" ind1=" " ind2=" ">
+        <marc:subfield code="a">Recorded in the Eastman Theatre, June 14, 1991.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Trombone music.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="650" ind1=" " ind2="0">
+        <marc:subfield code="a">Oratorios</marc:subfield>
+        <marc:subfield code="v">Excerpts, Arranged.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Hunsberger, Donald.</marc:subfield>
+        <marc:subfield code="4">cnd.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Humfeld, Neill Hamilton,</marc:subfield>
+        <marc:subfield code="d">1928-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Boone, Rob.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Lusk, Mark.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Mortenson, Steve.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Bach, Johann Sebastian,</marc:subfield>
+        <marc:subfield code="d">1685-1750.</marc:subfield>
+        <marc:subfield code="t">Matthäuspassion.</marc:subfield>
+        <marc:subfield code="p">O Haupt voll Blut und Wunden;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+        <marc:subfield code="8">1\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Benson, Warren,</marc:subfield>
+        <marc:subfield code="d">1924-2005.</marc:subfield>
+        <marc:subfield code="t">Largo tah.</marc:subfield>
+        <marc:subfield code="8">2\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Haydn, Joseph,</marc:subfield>
+        <marc:subfield code="d">1732-1809.</marc:subfield>
+        <marc:subfield code="t">Schöpfung.</marc:subfield>
+        <marc:subfield code="p">Vollendet ist das grosse Werk;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+        <marc:subfield code="8">3\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Gasparini, Quirino,</marc:subfield>
+        <marc:subfield code="d">1721-1778.</marc:subfield>
+        <marc:subfield code="t">Adoramus te;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+        <marc:subfield code="8">4\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="2" ind2="2">
+        <marc:subfield code="a">Saint-Saëns, Camille,</marc:subfield>
+        <marc:subfield code="d">1835-1921.</marc:subfield>
+        <marc:subfield code="t">Symphonies,</marc:subfield>
+        <marc:subfield code="n">no. 3, op. 78,</marc:subfield>
+        <marc:subfield code="r">C minor.</marc:subfield>
+        <marc:subfield code="p">Adagio;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+        <marc:subfield code="8">5\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Scarpa, Sal.</marc:subfield>
+        <marc:subfield code="t">Sonara.</marc:subfield>
+        <marc:subfield code="8">6\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Bach, Johann Sebastian,</marc:subfield>
+        <marc:subfield code="d">1685-1750.</marc:subfield>
+        <marc:subfield code="t">Passacaglia,</marc:subfield>
+        <marc:subfield code="m">organ,</marc:subfield>
+        <marc:subfield code="n">BWV 582,</marc:subfield>
+        <marc:subfield code="r">C minor;</marc:subfield>
+        <marc:subfield code="o">arr.</marc:subfield>
+        <marc:subfield code="8">7\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Bassman, George,</marc:subfield>
+        <marc:subfield code="d">1914-1997.</marc:subfield>
+        <marc:subfield code="t">I'm gettin' sentimental over you.</marc:subfield>
+        <marc:subfield code="8">8\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Winter, Paul.</marc:subfield>
+        <marc:subfield code="t">Wolf eyes.</marc:subfield>
+        <marc:subfield code="8">9\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2="2">
+        <marc:subfield code="a">Wright, Rayburn.</marc:subfield>
+        <marc:subfield code="t">Stardust for the chief.</marc:subfield>
+        <marc:subfield code="8">10\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">Sweet Georgia Brown.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">Stardust for the chief.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">Wolf eyes.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="740" ind1="0" ind2=" ">
+        <marc:subfield code="a">I'm getting sentimental over you.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="810" ind1="2" ind2=" ">
+        <marc:subfield code="a">Eastman School of Music.</marc:subfield>
+        <marc:subfield code="t">Program ;</marc:subfield>
+        <marc:subfield code="v">1991-92.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="910" ind1=" " ind2=" ">
+        <marc:subfield code="a">951118</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="911" ind1=" " ind2=" ">
+        <marc:subfield code="a">p</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="966" ind1=" " ind2=" ">
+        <marc:subfield code="l">ESMREC</marc:subfield>
+        <marc:subfield code="m">ESMNC</marc:subfield>
+        <marc:subfield code="s">DM 318</marc:subfield>
+        <marc:subfield code="b">39087012653996</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Musical sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound recording</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="934" ind1=" " ind2=" ">
+        <marc:subfield code="a">Sound-tape reel</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)1177208</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">Eastman School of Music Trombone Alumni Concert</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="a">Oratorios</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Excerpts, Arranged.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Bach, Johann Sebastian,</marc:subfield>
+        <marc:subfield code="d">1685-1750.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">1\c</marc:subfield>
+        <marc:subfield code="8">7\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Benson, Warren,</marc:subfield>
+        <marc:subfield code="d">1924-2005.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">2\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Haydn, Joseph,</marc:subfield>
+        <marc:subfield code="d">1732-1809.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">3\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Gasparini, Quirino,</marc:subfield>
+        <marc:subfield code="d">1721-1778.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">4\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="2" ind2="2">
+        <marc:subfield code="a">Saint-Saëns, Camille,</marc:subfield>
+        <marc:subfield code="d">1835-1921.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">5\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Scarpa, Sal.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">6\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Bassman, George,</marc:subfield>
+        <marc:subfield code="d">1914-1997.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">8\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Winter, Paul.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">9\c</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="959" ind1="1" ind2="2">
+        <marc:subfield code="a">Wright, Rayburn.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+        <marc:subfield code="8">10\c</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

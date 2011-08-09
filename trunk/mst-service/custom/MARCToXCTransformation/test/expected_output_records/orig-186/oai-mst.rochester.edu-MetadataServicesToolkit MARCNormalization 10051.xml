@@ -1,0 +1,85 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/195</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/195">
+        <dcterms:subject xsi:type="dcterms:LCC">QA76.9.D3</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">005.74</dcterms:subject>
+        <rdarole:author>International Conference on Information and Knowledge Management.</rdarole:author>
+        <rdvocab:titleOfWork>Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Database management-Congresses.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Knowledge representation (Information theory)-Congresses.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Information storage and retrieval systems-Congresses.</xc:subject>
+        <dcterms:replaces>International Conference on Information and Knowledge Management. Information and knowledge management</dcterms:replaces>
+        <dcterms:isReplacedBy>ACM International Conference on Information and Knowledge Management. Proceedings of the ... ACM International Conference on Information &amp; Knowledge Management</dcterms:isReplacedBy>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Database management</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Knowledge representation (Information theory)</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Information storage and retrieval systems</xc:subject>
+        <xc:type xsi:type="dcterms:LCSH">Congresses.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/196</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/196">
+        <xc:titleOfExpression>Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill., maps ;</rdvocab:illustrationContent>
+        <dcterms:description>Vols. for &lt;-1998&gt; sponsored by the Association for Computing Machinery's Special Interest Group on Information Retrieval (SIGIR) and Special Interest Group on Management Information Systems (SIGMIS).</dcterms:description>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Association for Computing Machinery. Special Interest Group on Information Retrieval.</xc:contributor>
+        <xc:contributor>Association for Computing Machinery. Special Interest Group on Management Information Systems.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/195</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/194</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:52</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/194">
+        <xc:recordID type="LCCN">00238118</xc:recordID>
+        <xc:recordID type="OCoLC">38095179</xc:recordID>
+        <xc:recordID type="NRU">1707227</xc:recordID>
+        <dcterms:title>Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</dcterms:title>
+        <rdvocab:placeOfProduction>New York, N.Y. :</rdvocab:placeOfProduction>
+        <dcterms:publisher>ACM Press</dcterms:publisher>
+        <dcterms:extent>v. :</dcterms:extent>
+        <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+        <rdvocab:frequency>Annual</rdvocab:frequency>
+        <rdvocab:numberingOfSerials>Began with 2nd (1993).</rdvocab:numberingOfSerials>
+        <rdvocab:numberingOfSerials>- 7th (1998).</rdvocab:numberingOfSerials>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Serial</rdvocab:modeOfIssuance>
+        <dcterms:issued>1993-1997</dcterms:issued>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/196</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -1,0 +1,73 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/509</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/509">
+        <dcterms:subject xsi:type="dcterms:LCC">M3</dcterms:subject>
+        <rdarole:composer>Mahler, Gustav, 1860-1911.</rdarole:composer>
+        <rdvocab:titleOfWork>Works.</rdvocab:titleOfWork>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/510</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/510">
+        <xc:titleOfExpression>Works. 1960</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <xc:contributor>Internationale Gustav Mahler Gesellschaft.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/509</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/508</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:171</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/508">
+        <xc:recordID type="LCCN">m  61000295 /M/r86</xc:recordID>
+        <rdvocab:plateNumber>U.E. 2931</rdvocab:plateNumber>
+        <rdvocab:plateNumber>CFK 9256</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">15082670</xc:recordID>
+        <xc:recordID type="NRU">852960</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Gustav Mahler ; herausgegeben von der Internationalen Gustav Mahler Gesellschaft, Wien.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Sämtliche Werke : kritische Gesamtausgabe /</dcterms:title>
+        <rdvocab:placeOfProduction>Wien :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Universal Edition,</dcterms:publisher>
+        <dcterms:issued>c1960-</dcterms:issued>
+        <dcterms:extent>v. ;</dcterms:extent>
+        <rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+        <dcterms:description>Publisher varies.</dcterms:description>
+        <dcterms:description>Pl. no.: U.E. 2931/</dcterms:description>
+        <dcterms:tableOfContents>Bd. 1. Symphonie Nr. 1 -- Bd. 2. Symphonie Nr. 2 -- Bd. 3. Symphonie Nr. 3 -- Bd. 4. Symphonie Nr. 4 in vier Sätzen -- Bd. 5. Symphonie Nr. 5 -- Bd. 6. Symphonie Nr. 6 -- Bd. 7. Symphonie Nr. 7 -- Bd. 8. Symphonie Nr. 8 -- Bd. 9. Das Lied von der Erde -- Bd. 10. Symphony Nr. 9 -- Bd. 11a. Adagio aus der Symphonie Nr. 10 -- Bd. 12. Das klagende Lied -- Bd. 13. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Klavier ; Teilbd. 2a. Neun Lieder und Gesänge aus "Des Knaben Wunderhorn" : für Singstimme (hoch) und Klavier ; Teilbd. 2a. Lieder eines fahrenden Gesellen : für Singstimme (tief) und Klavier ; Teilbd. 2b. Fünfzehn Lieder, Humoresken und Balladen aus Des Knaben Wunderhorn für Singstimme und Klavier ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Klavier ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Klavier ; Teilbd. 5. Verschiedene Lieder -- Bd. 14. Teilbd. 1. Lieder eines fahrenden Gesellen : für eine Singstimme mit Orchester ; Teilbd. 2. Des Knaben Wunderhorn ; Teilbd. 3. Kindertotenlieder : für eine Singstimme mit Orchester ; Teilbd. 4. Lieder nach Texten von Friedrich Rückert : für eine Singstimme mit Orchester.</dcterms:tableOfContents>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/510</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

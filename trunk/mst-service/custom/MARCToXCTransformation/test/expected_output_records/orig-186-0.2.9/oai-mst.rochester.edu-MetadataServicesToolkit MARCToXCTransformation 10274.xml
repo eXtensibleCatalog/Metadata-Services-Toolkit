@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10274">
+		<dcterms:subject xsi:type="dcterms:LCC">Z678.93.X54</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:LCC">Z678.93*</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">005.7/2</dcterms:subject>
+		<rdvocab:titleOfWork>XML in libraries /</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">XML (Document markup language)</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Libraries-Data processing.</xc:subject>
+		<xc:subject type="rvm">XML (Langage de balisage)</xc:subject>
+		<xc:subject type="rvm">Bibliothèques-Automatisation.</xc:subject>
+		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Libraries</xc:subject>
+		<xc:subject type="rvm">Bibliothèques</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Data processing.</xc:subject>
+		<xc:subject type="rvm">Automatisation.</xc:subject></xc:entity>
+</xc:frbr>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:101</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>01305cas a2200277   45 A</marc:leader>
+        <marc:controlfield tag="001">29692</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20080730154223.0</marc:controlfield>
+        <marc:controlfield tag="007">cr|cn ---|||||</marc:controlfield>
+        <marc:controlfield tag="008">930113c18879999nyu r         0    0eng d</marc:controlfield>
+        <marc:datafield tag="130" ind1="0" ind2=" ">
+          <marc:subfield code="a">Bulletin (New York State Museum)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin of the New York State Museum.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin of the New York State Museum,</marc:subfield>
+          <marc:subfield code="f">no.1 (1887)-no.46 (1901)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin (New York State Museum : 1901),</marc:subfield>
+          <marc:subfield code="f">47 (1901)-118 (1908)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Museum bulletin (New York State Museum),</marc:subfield>
+          <marc:subfield code="f">119 (1908)-[179] (1915)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">New York State Museum bulletin,</marc:subfield>
+          <marc:subfield code="f">[no. 181] (1916)-no. 337 (1944)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin (New York State Museum : 1945),</marc:subfield>
+          <marc:subfield code="f">no. 338 (1945)-no. 351 (1956)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin (New York State Museum and Science Service),</marc:subfield>
+          <marc:subfield code="f">no. 352 (1956)-no. 424 (1974)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">Bulletin (New York State Museum : 1976),</marc:subfield>
+          <marc:subfield code="f">no. 425 (1976)-no. 490 (1997)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="1" ind2="0">
+          <marc:subfield code="a">New York State Museum bulletin (1998),</marc:subfield>
+          <marc:subfield code="f">no. 491 (1998)-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Albany.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="362" ind1="0" ind2=" ">
+          <marc:subfield code="a">1887-</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">This series has undergone several changes of title and changes in the name of the issuing body since its inception in 1887.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="515" ind1=" " ind2=" ">
+          <marc:subfield code="a">Numbers 468, 472, 479 and 480 never published, per NYS Museum.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="856" ind1="4" ind2="1">
+          <marc:subfield code="u">http://purl.org/net/nysl/nysdocs/bulletin</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="999" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text data RCL Govdoc</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Language material</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Text</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Serial</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)29692</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Electronic resource</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="934" ind1=" " ind2=" ">
+          <marc:subfield code="a">Remote</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="937" ind1=" " ind2=" ">
+          <marc:subfield code="a">Non-Fiction</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="939" ind1=" " ind2=" ">
+          <marc:subfield code="a">1887-    </marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

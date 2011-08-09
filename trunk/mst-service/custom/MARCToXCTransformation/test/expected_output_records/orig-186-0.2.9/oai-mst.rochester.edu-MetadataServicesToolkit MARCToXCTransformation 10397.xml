@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10397">
+		<dcterms:subject xsi:type="dcterms:LCC">PS3553</dcterms:subject>
+		<rdarole:author>Cussler, Clive.</rdarole:author>
+		<rdvocab:titleOfWork>Raise the Titanic!</rdvocab:titleOfWork>
+		<xc:subject xsi:type="dcterms:LCSH">Titanic (Steamship)-Fiction.</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Pitt, Dirk (Fictitious character)-Fiction.</xc:subject>
+		<rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent>
+		<xc:subject xsi:type="dcterms:LCSH">Pitt, Dirk (Fictitious character)</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Titanic (Steamship)</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Fiction.</xc:type></xc:entity>
+</xc:frbr>

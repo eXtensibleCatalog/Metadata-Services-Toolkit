@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:46</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00979cjm a2200289Ia 45e0</marc:leader>
+        <marc:controlfield tag="001">1583206</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">20010525195625.0</marc:controlfield>
+        <marc:controlfield tag="007">sdubmmenn---ne</marc:controlfield>
+        <marc:controlfield tag="008">770909s1966    xxu  n              eng  </marc:controlfield>
+        <marc:datafield tag="010" ind1=" " ind2=" ">
+          <marc:subfield code="a">r  66003522 </marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(OCoLC)3253167</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">1583206</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">DLC</marc:subfield>
+          <marc:subfield code="c">KSU</marc:subfield>
+          <marc:subfield code="d">BUN</marc:subfield>
+          <marc:subfield code="d">RES</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="028" ind1="0" ind2="2">
+          <marc:subfield code="a">RF 13</marc:subfield>
+          <marc:subfield code="b">RBF Records</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">LP 17,136</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RESM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="4">
+          <marc:subfield code="a">The real calypso.</marc:subfield>
+          <marc:subfield code="h">[sound recording]</marc:subfield>
+          <marc:subfield code="c">Compiled and edited by Samuel Charters.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">[s.l.] :</marc:subfield>
+          <marc:subfield code="b">RBF Records</marc:subfield>
+          <marc:subfield code="c">[1966]</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">1 sound disc :</marc:subfield>
+          <marc:subfield code="b">33 1/3 rpm, microgroove ;</marc:subfield>
+          <marc:subfield code="c">12 in.</marc:subfield>
+          <marc:subfield code="e">mono.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="511" ind1="0" ind2=" ">
+          <marc:subfield code="a">Sung by various performers.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="518" ind1=" " ind2=" ">
+          <marc:subfield code="a">Recorded in Trinidad, 1927-46.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="520" ind1=" " ind2=" ">
+          <marc:subfield code="a">A collection of Calypso music from the period 1927-1946.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="500" ind1=" " ind2=" ">
+          <marc:subfield code="a">Program notes by the compiler and texts of the songs (6 p.) inserted in slipcase.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Popular music</marc:subfield>
+          <marc:subfield code="z">Trinidad and Tobago.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="0">
+          <marc:subfield code="a">Calypso (Music)</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="700" ind1="1" ind2=" ">
+          <marc:subfield code="a">Charters, Samuel Barclay.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="932" ind1=" " ind2=" ">
+          <marc:subfield code="a">Musical sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="935" ind1=" " ind2=" ">
+          <marc:subfield code="a">Monograph/Item</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="931" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="933" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound recording</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="934" ind1=" " ind2=" ">
+          <marc:subfield code="a">Sound disk</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="941" ind1=" " ind2=" ">
+          <marc:subfield code="a">eng</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="943" ind1=" " ind2=" ">
+          <marc:subfield code="a">English</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="a">(NRU)1583206</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="130" ind1="0" ind2=" ">
+          <marc:subfield code="a">Real calypso.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="965" ind1=" " ind2="0">
+          <marc:subfield code="a">Popular music</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="967" ind1=" " ind2="0">
+          <marc:subfield code="z">Trinidad and Tobago.</marc:subfield>
+          <marc:subfield code="5">NRU</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="246" ind1="3" ind2="0">
+          <marc:subfield code="a">Real calypso.</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

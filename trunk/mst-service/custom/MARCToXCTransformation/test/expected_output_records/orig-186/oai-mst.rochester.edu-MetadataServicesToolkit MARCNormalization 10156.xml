@@ -1,0 +1,32 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/477</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:157</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/477">
+        <xc:location>SibBJrnl</xc:location>
+        <xc:callNumber>ML1 .N531b</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">Scattered holdings:</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1, 1919 (Sibley has: no. 1-4, 6, 7, 9)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 2, 1920/1921 (Sibley has: no. 2, 3, 12)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 3, 1921/1922 (Sibley has: no. 8, 11)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 4, 1922/1923 (Sibley lacks: no. 7, 11)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 5, 1923/1924 (Sibley lacks: no. 5-7)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 6, 1924/1925 (Sibley has: no. 1, 3, 5-8)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 7, 1925/1926 (Sibley has: no. 1, 6, 8-12)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 8, 1926/1927 (Sibley lacks: no. 11)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 9, 1927/1928 (Sibley lacks: no. 6, 12)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 15 1933/34 (complete)</xc:textualHoldings>
+        <xc:recordID type="NRU">560760</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/466</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

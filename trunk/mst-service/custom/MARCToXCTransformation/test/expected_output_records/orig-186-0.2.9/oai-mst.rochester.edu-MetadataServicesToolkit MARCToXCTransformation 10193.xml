@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10193">
+		<xc:location>ArtMusicRR</xc:location>
+		<xc:callNumber>RCD 2345</xc:callNumber>
+		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10191</xc:manifestationHeld>
+	</xc:entity>
+</xc:frbr>

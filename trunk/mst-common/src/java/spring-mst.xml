@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  * Copyright (c) 2009 eXtensible Catalog Organization
+  *
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+  * website http://www.extensiblecatalog.org/.
+  *
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+		default-init-method="init">
+
+	<bean name="MSTConfiguration" class="xc.mst.utils.MSTConfiguration" scope="singleton">
+		<property name="locations">
+			<list>
+				<value>classpath:default.properties</value>
+				<value>classpath:env.properties</value>
+				<value>classpath:install.properties</value>
+			</list>
+		</property>
+		<property name="ignoreResourceNotFound" value="true" />
+	</bean>
+
+	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" scope="singleton">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="${DatabaseUrl}/${Database}?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+		<property name="username" value="${DatabaseUsername}"/>
+		<property name="password" value="${DatabasePassword}"/>
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="0" />
+		<property name="maxActive" value="10" />
+		<property name="validationQuery" value="select 1" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnReturn" value="true" />
+	</bean>
+	
+	<bean id="SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" scope="singleton">
+		<property name="dataSource" ref="DataSource"/>
+		<property name="mappingResources">
+			<list>
+				<value>mst.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="TransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" scope="singleton">
+		<property name="dataSource" ref="DataSource"/>
+	</bean>
+	
+	<bean name="Util" class="xc.mst.utils.Util" scope="singleton" />
+
+	<context:component-scan base-package="xc.mst"
+			use-default-filters="false"
+			name-generator="xc.mst.spring.MSTBeanNameGenerator"
+			scope-resolver="xc.mst.spring.MSTScopeMetadataResolver">
+		<context:include-filter type="custom" expression="xc.mst.spring.DAOTypeFilter" />
+	</context:component-scan>
+	
+	<bean name="HarvestManager" class="xc.mst.harvester.HarvestManager" scope="prototype" />
+	<bean name="SingleThreaded" class="xc.mst.utils.index.SolrIndexManager" scope="singleton" />
+	<bean name="MultiThreaded" class="xc.mst.utils.index.ThreadedSolrIndexManager" scope="singleton" />
+	
+	<context:component-scan base-package="xc.mst"
+			use-default-filters="false"
+			name-generator="xc.mst.spring.MSTBeanNameGenerator"
+			scope-resolver="xc.mst.spring.MSTScopeMetadataResolver">
+		<context:include-filter type="custom" expression="xc.mst.spring.ServiceTypeFilter" />
+	</context:component-scan>
+
+	<alias name="${record.service}" alias="RecordService" />
+
+	<alias name="${SOLRIndexer}" alias="SolrIndexManager" />
+	
+	<bean class="xc.mst.spring.MSTBeanPostProcessor"/>
+
+</beans>

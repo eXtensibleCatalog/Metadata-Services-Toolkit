@@ -1,0 +1,22 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/453</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:145</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/453">
+        <xc:location>Offsite1</xc:location>
+        <xc:callNumber>QL801 .J865</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v.52 (1931)-v.54 (1932/1933),v.56 (1934),v.58 (1935)-v.59 (1936),v.61 (1937)-v.62 (1938),v.73 (1943)-v.210 (1991)</xc:textualHoldings>
+        <xc:recordID type="NRU">4714</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/332</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

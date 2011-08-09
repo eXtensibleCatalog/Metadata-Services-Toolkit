@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="expression" id="oai:URMST:Transformation Service/18118">
+		
+		<rdvocab:performerNarratorAndOrPresenter>Wiener Philharmoniker ; Christoph von Dohnányi, conductor.</rdvocab:performerNarratorAndOrPresenter>
+		<rdvocab:placeAndDateOfCapture>Recorded at the Sofiensaal, Vienna, Sept./Oct. 1979.</rdvocab:placeAndDateOfCapture>
+		<dcterms:type xsi:type="dcterms:DCMIType">Sound</dcterms:type>
+		<rdarole:performer>Dohnányi, Christoph von.</rdarole:performer>
+		<rdarole:performer>Wiener Philharmoniker.</rdarole:performer>
+		<rdvocab:titleOfExpression>Portrék. </rdvocab:titleOfExpression>
+		<xc:link>oai:URMST:Transformation Service/18117</xc:link>
+	</xc:entity>
+</xc:frbr>

@@ -1,0 +1,81 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/7</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/7">
+        <dcterms:subject xsi:type="dcterms:LCC">ML3502.5</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:LCC">ML3502.5.B458</dcterms:subject>
+        <rdarole:author>Bender, Wolfgang.</rdarole:author>
+        <rdvocab:titleOfWork>Sweet mother.</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Popular music-Africa-History and criticism.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Popular music</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">History and criticism.</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">Africa</xc:spatial>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/8</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/8">
+        <xc:titleOfExpression>Sweet mother. English</xc:titleOfExpression>
+        <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/7</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/6</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:3</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/6">
+        <xc:recordID type="LCCN">90020316 /MN</xc:recordID>
+        <xc:recordID type="OCoLC">22629928</xc:recordID>
+        <xc:recordID type="NRU">1045129</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>Sweet mother : modern African music /</dcterms:title>
+        <rdvocab:placeOfProduction>Chicago :</rdvocab:placeOfProduction>
+        <dcterms:publisher>University of Chicago Press,</dcterms:publisher>
+        <dcterms:issued>c1991.</dcterms:issued>
+        <dcterms:extent>xx, 235 p. :</dcterms:extent>
+        <rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+        <dcterms:description>Translation of: Sweet mother.</dcterms:description>
+        <dcterms:description>Includes bibliographical references (p. 205-213).</dcterms:description>
+        <dcterms:description>Discography: p. 215-235.</dcterms:description>
+        <dcterms:isPartOf>Chicago studies in ethnomusicology</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">0226042537</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0226042545</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/8</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10039">
+		<xc:recordID type="OCoLC">27295669</xc:recordID>
+		<xc:recordID type="NRU">1177208</xc:recordID>
+		<dcterms:title>Eastman School of Music Trombone Alumni Concert</dcterms:title>
+		<dcterms:issued>June 14, 1991.</dcterms:issued>
+		<dcterms:extent>1 sound tape reel :</dcterms:extent>
+		<rdvocab:soundCharacteristics>digital, 2 track, stereo ;</rdvocab:soundCharacteristics>
+		<rdvocab:dimensions>12 in.</rdvocab:dimensions>
+		<dcterms:description>"PD format, 48 kHz."</dcterms:description>
+		<dcterms:tableOfContents>O sacred head now wounded / J. S. Bach ; arr. Howard Hanson (6:20) (Neill Humfeld, conductor) -- Largo / Warren Benson (13:48) -- Achieved is the glorius work / Joseph Haydn ; arr. Don Miller (3:45) -- Adoramus te Christe / Quirino Gasparini ; arr. Don Miller (2:30) -- Adagio / Camille St. Saëns ; arr. Ken Murley (5:19) -- Sonara for trombone choir and percussion (World premiere) / Sal Scarpa (7:25) -- Passacaglia in c minor / J. S. Bach ; arr. Don Hunsberger (7:07) (Donald Hunsberger, conductor) -- I'm getting sentimental over you / Ned Washington ; arr. Rob Boone (4:47) (Tom Ervin, soloist) -- Wolf eyes / Paul Winter ; arr. Mark Lusk (4:19) (Mark Lust, soloist) -- Sweet Georgia Brown / arr. Steve Mortenson (6:29) (Bionic Bones with Jim Pugh, soloist ; Bill Dobbins, piano ; Bill Campbell, bass ; Rich Thompson, drums) -- Stardust for the chief / Rayburn Wright (6:10) (John Beck, drums, Alec Brinkman, bass ; Donald Hunsberger, conductor).</dcterms:tableOfContents>
+		<dcterms:alternative>Sweet Georgia Brown.</dcterms:alternative>
+		<dcterms:alternative>Stardust for the chief.</dcterms:alternative>
+		<dcterms:alternative>Wolf eyes.</dcterms:alternative>
+		<dcterms:alternative>I'm getting sentimental over you.</dcterms:alternative>
+		<dcterms:isPartOf>Eastman School of Music. Program ; 1991-92.</dcterms:isPartOf>
+		<xc:typeLeader06>Musical sound recording</xc:typeLeader06>
+		<xc:type007>Sound recording</xc:type007>
+		<xc:typeSMD>Sound-tape reel</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10018</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10020</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10022</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10024</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10026</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10028</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10030</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10032</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10034</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10036</xc:expressionManifested>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10038</xc:expressionManifested></xc:entity>
+</xc:frbr>

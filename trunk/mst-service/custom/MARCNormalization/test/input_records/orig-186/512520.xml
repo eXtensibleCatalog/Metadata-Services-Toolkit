@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+  <record>
+    <header>
+      <identifier>oai:mst.rochester.edu:153</identifier>
+    </header>
+    <metadata>
+      <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+        <marc:leader>00950cam a22002890  45 A</marc:leader>
+        <marc:controlfield tag="001">512520</marc:controlfield>
+        <marc:controlfield tag="003">NRU</marc:controlfield>
+        <marc:controlfield tag="005">  950906        </marc:controlfield>
+        <marc:controlfield tag="008">790621s1978    ne a          001 0 eng d</marc:controlfield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">072040665X (vol.).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="020" ind1=" " ind2=" ">
+          <marc:subfield code="a">0720442508 (series).</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="b">ocl</marc:subfield>
+          <marc:subfield code="a">05090524</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="035" ind1=" " ind2=" ">
+          <marc:subfield code="9">00434744</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="040" ind1=" " ind2=" ">
+          <marc:subfield code="a">GIS</marc:subfield>
+          <marc:subfield code="c">GIS</marc:subfield>
+          <marc:subfield code="d">VVD</marc:subfield>
+          <marc:subfield code="d">RNM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="049" ind1=" " ind2=" ">
+          <marc:subfield code="a">RNMM</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="096" ind1=" " ind2=" ">
+          <marc:subfield code="a">QH 205 P895 v.7 1978</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="099" ind1=" " ind2=" ">
+          <marc:subfield code="a">QH 205 P895 v.7 1978</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="100" ind1="1" ind2=" ">
+          <marc:subfield code="a">Misell, D. L.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="245" ind1="1" ind2="0">
+          <marc:subfield code="a">Image analysis, enhancement and interpretation /</marc:subfield>
+          <marc:subfield code="c">D. L. Misell.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="260" ind1=" " ind2=" ">
+          <marc:subfield code="a">Amsterdam ;</marc:subfield>
+          <marc:subfield code="a">New York :</marc:subfield>
+          <marc:subfield code="b">North-Holland Publishing Co.,</marc:subfield>
+          <marc:subfield code="c">1978.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="300" ind1=" " ind2=" ">
+          <marc:subfield code="a">xv, 305 p. :</marc:subfield>
+          <marc:subfield code="b">ill. ;</marc:subfield>
+          <marc:subfield code="c">23 cm.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="490" ind1="1" ind2=" ">
+          <marc:subfield code="a">Practical methods in electron microscopy ;</marc:subfield>
+          <marc:subfield code="v">v. 7</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="504" ind1=" " ind2=" ">
+          <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="650" ind1=" " ind2="2">
+          <marc:subfield code="a">Microscopy, Electron</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="830" ind1=" " ind2="0">
+          <marc:subfield code="a">Practical methods in electron microscopy ;</marc:subfield>
+          <marc:subfield code="v">v. 7</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="911" ind1=" " ind2=" ">
+          <marc:subfield code="a">p</marc:subfield>
+        </marc:datafield>
+        <marc:datafield tag="966" ind1=" " ind2=" ">
+          <marc:subfield code="l">Stack*</marc:subfield>
+          <marc:subfield code="m">MMON  </marc:subfield>
+          <marc:subfield code="s">QH205 .P895 v.7 1978</marc:subfield>
+          <marc:subfield code="b">39087004692812</marc:subfield>
+        </marc:datafield>
+      </marc:record>
+    </metadata>
+  </record>
+</records>

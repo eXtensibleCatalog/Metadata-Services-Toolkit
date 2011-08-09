@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10318">
+		<xc:recordID type="OCoLC">24370489</xc:recordID>
+		<xc:recordID type="NRU">27810</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>Prepared for reading in the introductory survey course of history, Amherst College, 1925.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>Constantinople and Byzantine civilization, 300-1200 ...</dcterms:title>
+		<rdvocab:placeOfProduction>Ann Arbor, Mich.,</rdvocab:placeOfProduction>
+		<dcterms:publisher>Edwards Bros.</dcterms:publisher>
+		<dcterms:issued>[1925?]</dcterms:issued>
+		<dcterms:extent>56 numb. l.</dcterms:extent>
+		<rdvocab:dimensions>28 cm.</rdvocab:dimensions>
+		<dcterms:description>Mimeographed.</dcterms:description>
+		<dcterms:description>Bibliography: l. 56.</dcterms:description>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10317</xc:expressionManifested></xc:entity>
+</xc:frbr>

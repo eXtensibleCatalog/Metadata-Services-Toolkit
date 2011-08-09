@@ -1,0 +1,23 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="replaced">
+    <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/example/2</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <bar xmlns="foo:bar">you've been barred: french fries</bar>
+  </metadata>
+</record>
+<record>
+  <header status="deleted">
+    <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/example/2</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:bib:2</predecessor>
+    </predecessors>
+  </header>
+</record>
+</records>

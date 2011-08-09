@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="holdings" id="oai:URMST:Transformation Service/16034">
+		<xc:locationGroup>Rhees Rare Books 225 (Non-circulating)</xc:locationGroup>
+		<xc:callNumber>F130.2.P74 R63 2006</xc:callNumber>
+		<xc:link>oai:URMST:Transformation Service/16032</xc:link>
+	</xc:entity>
+</xc:frbr>

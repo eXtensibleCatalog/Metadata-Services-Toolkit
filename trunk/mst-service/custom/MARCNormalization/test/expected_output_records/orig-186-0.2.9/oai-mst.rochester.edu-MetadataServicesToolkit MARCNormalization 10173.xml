@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+
+	<marc:leader>00783ncm a22002770  45 A</marc:leader>
+	<marc:controlfield tag="001">891566</marc:controlfield>
+	<marc:controlfield tag="008">881209s1798    fr zzz         n    N/A d</marc:controlfield>
+
+	<marc:datafield tag="028" ind1="2" ind2="0">
+		<marc:subfield code="a">364</marc:subfield>
+		<marc:subfield code="b">Pleyel</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		
+		<marc:subfield code="a">(OCoLC)18864725</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="035" ind1=" " ind2=" ">
+		<marc:subfield code="9">00833425</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="040" ind1=" " ind2=" ">
+		<marc:subfield code="a">RER</marc:subfield>
+		<marc:subfield code="c">RER</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="048" ind1=" " ind2=" ">
+		<marc:subfield code="a">sa02</marc:subfield>
+		<marc:subfield code="a">sb01</marc:subfield>
+		<marc:subfield code="a">sc01</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="049" ind1=" " ind2=" ">
+		<marc:subfield code="a">RERA</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="090" ind1=" " ind2=" ">
+		<marc:subfield code="a">M452</marc:subfield>
+		<marc:subfield code="b">.M386.1</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="099" ind1=" " ind2=" ">
+		<marc:subfield code="a">M452 .M386.1</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="100" ind1="1" ind2=" ">
+		<marc:subfield code="a">Martinn, J.,</marc:subfield>
+		<marc:subfield code="d">1775-1836.</marc:subfield>
+		<marc:subfield code="4">cmp</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="240" ind1="1" ind2="0">
+		<marc:subfield code="a">Quartets,</marc:subfield>
+		<marc:subfield code="m">strings,</marc:subfield>
+		<marc:subfield code="n">op. 1</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="245" ind1="0" ind2="0">
+		<marc:subfield code="a">Trois quatuors pour deux violons, alto et basse, oeuvre 1.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="260" ind1=" " ind2=" ">
+		<marc:subfield code="a">Paris,</marc:subfield>
+		<marc:subfield code="b">Pleyel</marc:subfield>
+		<marc:subfield code="c">[ca. 1798]</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="300" ind1=" " ind2=" ">
+		<marc:subfield code="a">4 parts.</marc:subfield>
+		<marc:subfield code="c">34 cm.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="500" ind1=" " ind2=" ">
+		<marc:subfield code="a">Engraved.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="590" ind1=" " ind2=" ">
+		<marc:subfield code="a">Sibley Music Library accession no.: 567611.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="650" ind1=" " ind2="0">
+		<marc:subfield code="a">String quartets</marc:subfield>
+		<marc:subfield code="x">Parts.</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="910" ind1=" " ind2=" ">
+		<marc:subfield code="a">950805</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="911" ind1=" " ind2=" ">
+		<marc:subfield code="a">u</marc:subfield>
+	</marc:datafield>
+
+	<marc:datafield tag="966" ind1=" " ind2=" ">
+		<marc:subfield code="l">/Rare</marc:subfield>
+		<marc:subfield code="m">SRARE</marc:subfield>
+		<marc:subfield code="s">M452 .M386.1</marc:subfield>
+		<marc:subfield code="c">1</marc:subfield>
+		<marc:subfield code="b">39087009444243</marc:subfield>
+	</marc:datafield>
+
+<marc:datafield tag="931" ind1=" " ind2=" ">
+	<marc:subfield code="a">Image</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="932" ind1=" " ind2=" ">
+	<marc:subfield code="a">Notated music</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="933" ind1=" " ind2=" ">
+	<marc:subfield code="a">Notated music</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="935" ind1=" " ind2=" ">
+	<marc:subfield code="a">Monograph/Item</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:controlfield tag="003">NRU</marc:controlfield>
+
+<marc:datafield tag="035" ind1=" " ind2=" ">
+	<marc:subfield code="a">(NRU)891566</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1=" " ind2="0">
+	<marc:subfield code="a">String quartets</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+<marc:datafield tag="965" ind1=" " ind2="0">
+	<marc:subfield code="x">Parts.</marc:subfield>
+	<marc:subfield code="5">NRU</marc:subfield>
+</marc:datafield>
+
+</marc:record>

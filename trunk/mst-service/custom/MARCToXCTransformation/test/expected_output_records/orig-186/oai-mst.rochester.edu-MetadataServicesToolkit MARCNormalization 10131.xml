@@ -1,0 +1,87 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/424</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:132</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/424">
+        <dcterms:subject xsi:type="dcterms:LCC">BX4700.C567</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">271/.9</dcterms:subject>
+        <dcterms:subject xsi:type="dcterms:DDC">B</dcterms:subject>
+        <rdvocab:titleOfWork>Life of Christina of Markyate /</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Christina, of Markyate, Saint, b. ca. 1096.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Christian women saints-England-Biography.</xc:subject>
+        <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+        <xc:subject xsi:type="dcterms:LCSH">Christian women saints</xc:subject>
+        <xc:spatial xsi:type="dcterms:LCSH">England</xc:spatial>
+        <xc:type xsi:type="dcterms:LCSH">Biography.</xc:type>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/425</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:132</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/425">
+        <xc:titleOfExpression>Life of Christina of Markyate /</xc:titleOfExpression>
+        <rdvocab:illustrationContent>map ;</rdvocab:illustrationContent>
+        <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+        <dcterms:language>English</dcterms:language>
+        <xc:contributor>Fanous, Samuel, 1962-</xc:contributor>
+        <xc:contributor>Leyser, Henrietta.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/424</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/423</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:132</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/423">
+        <xc:recordID type="LCCN">2007035102</xc:recordID>
+        <xc:identifier type="bnb">GBA785807</xc:identifier>
+        <xc:identifier type="Uk">014199404</xc:identifier>
+        <xc:identifier type="YBP">99820880389</xc:identifier>
+        <xc:recordID type="OCoLC">171150763</xc:recordID>
+        <xc:recordID type="NRU">3848194</xc:recordID>
+        <rdvocab:statementOfResponsibilityRelatingToTitle>translated by C.H. Talbot ; revised with an introduction and notes by Samuel Fanous and Henrietta Leyser.</rdvocab:statementOfResponsibilityRelatingToTitle>
+        <dcterms:title>The life of Christina of Markyate /</dcterms:title>
+        <rdvocab:placeOfProduction>Oxford ;</rdvocab:placeOfProduction>
+        <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+        <dcterms:publisher>Oxford University Press,</dcterms:publisher>
+        <dcterms:issued>c2008.</dcterms:issued>
+        <dcterms:extent>xxxi, 100 p. :</dcterms:extent>
+        <rdvocab:dimensions>20 cm.</rdvocab:dimensions>
+        <dcterms:description>Includes bibliographical references (p. 89-97) and index.</dcterms:description>
+        <dcterms:description>Translated from the Latin.</dcterms:description>
+        <dcterms:isPartOf>Oxford world's classics (Oxford University Press)</dcterms:isPartOf>
+        <xc:typeLeader06>Language material</xc:typeLeader06>
+        <xc:type007>Text</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <dcterms:identifier type="ISBN">9780192806772</dcterms:identifier>
+        <dcterms:identifier type="ISBN">0192806777</dcterms:identifier>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/425</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

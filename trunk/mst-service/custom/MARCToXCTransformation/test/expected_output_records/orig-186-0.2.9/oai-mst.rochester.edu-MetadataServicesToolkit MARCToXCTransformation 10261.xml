@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10261">
+		<xc:identifier type="VideoNr">99247</xc:identifier>
+		<xc:recordID type="OCoLC">48448172</xc:recordID>
+		<xc:recordID type="NRU">2386823</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>a Brad Grey Television production ; producer, Martin Bruestle, Allen Coulter, Ilene S. Landress ; directed by Allen Coulter, John Patterson.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>The Sopranos [Second season] /</dcterms:title>
+		<dcterms:alternative>Sopranos, the complete second season</dcterms:alternative>
+		<rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+		<dcterms:publisher>HBO Home Video,</dcterms:publisher>
+		<dcterms:issued>[2001]</dcterms:issued>
+		<dcterms:extent>4 videodiscs (696 min.) :</dcterms:extent>
+		<xc:otherPhysicalDetails>sd., col. ;</xc:otherPhysicalDetails>
+		<rdvocab:dimensions>4 3/4 in.</rdvocab:dimensions>
+		<dcterms:tableOfContents>Episode 1. Guy walks into a psychiatrit's office -- Episode 2. Do not resuscitate -- Episode 3. Toodle-fucking-do -- Episode 4. Commendatori -- Episode 5. Big girls don't cry -- Episode 6. the happy wanderer -- Episode 7. D-girl -- Episode 8. Full leather jacket -- Episode 9. From where to eternity -- Episode 10. Bust out -- Episode 11. House arrest -- Episode 12. The knight in white satin armor -- Episode 13. Funhouse -- The Sopranos special features (2 featurettes).</dcterms:tableOfContents>
+		<dcterms:description>English Dolby 5.1, Spanish and French stereo ; closed captioned.</dcterms:description>
+		<xc:typeLeader06>Projected medium</xc:typeLeader06>
+		<xc:type007>Video recording</xc:type007>
+		<xc:typeSMD>Videodisc</xc:typeSMD>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<dcterms:identifier type="ISBN">0783119364</dcterms:identifier>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10260</xc:expressionManifested></xc:entity>
+</xc:frbr>

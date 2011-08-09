@@ -1,0 +1,32 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/540</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:184</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="holdings" id="oai:mst.rochester.edu:marctoxctransformation/540">
+        <xc:location>MinerSer</xc:location>
+        <xc:callNumber>Serial</xc:callNumber>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1315 (1996)-v. 1317 (1996), v. 1360 (1997)-v. 1362 (1997), v. 1406 (1998)-v. 1408 (1998), v. 1453 (1999)-v. 1455 (1999), v. 1500 (2000)-v. 1502 (2000), v. 1535 (2000/01)- v. 1537 (2001), v. 1586 (2002)- v. 1588 (2002), v. 1637 (2003)- v. 1639 (2003), v. 1688 (2004)- v. 1690 (2004), v. 1739 (2004/05)- v. 1741 (2005), v. 1762 (2006), v. 1772 (2007)-</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 1 (Jan. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 2 (Feb. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 3 (Mar. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 4 (Apr. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 5 (May 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 6 (June 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 7-8 (July-Aug. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 9 (Sept. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 10 (Oct. 2008)</xc:textualHoldings>
+        <xc:textualHoldings type="Basic Bibliographic Unit">v. 1782, no. 11 (Nov. 2008)</xc:textualHoldings>
+        <xc:recordID type="NRU">97034</xc:recordID>
+        <xc:manifestationHeld>oai:mst.rochester.edu:marctoxctransformation/491</xc:manifestationHeld>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

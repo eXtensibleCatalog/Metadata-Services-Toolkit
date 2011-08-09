@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10299">
+		<dcterms:subject xsi:type="dcterms:DDC">791.43/72</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:LCC">PN1997</dcterms:subject>
+		<rdvocab:titleOfWork>On the waterfront</rdvocab:titleOfWork>
+		<dcterms:abstract>An ex-fighter gets a job working on the gang-ridden waterfront under a crooked gangster boss.</dcterms:abstract>
+		<dcterms:audience>Not rated.</dcterms:audience>
+		<xc:subject xsi:type="dcterms:LCSH">Stevedores-Labor unions-Corrupt practices-Drama.</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Gangster films.</xc:type>
+		<xc:type xsi:type="dcterms:LCSH">Feature films.</xc:type>
+		<xc:type xsi:type="dcterms:LCSH">Video recordings for the hearing impaired.</xc:type>
+		<dcterms:audience>General</dcterms:audience>
+		<xc:subject xsi:type="dcterms:LCSH">Stevedores</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Labor unions</xc:subject>
+		<xc:subject xsi:type="dcterms:LCSH">Corrupt practices</xc:subject>
+		<xc:type xsi:type="dcterms:LCSH">Drama.</xc:type></xc:entity>
+</xc:frbr>

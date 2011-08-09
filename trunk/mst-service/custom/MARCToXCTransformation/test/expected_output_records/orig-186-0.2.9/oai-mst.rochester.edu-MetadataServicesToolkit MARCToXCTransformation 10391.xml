@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10391">
+		<dcterms:subject xsi:type="dcterms:LCC">PG3485.8.D77</dcterms:subject>
+		<dcterms:subject xsi:type="dcterms:DDC">891.7/3/5</dcterms:subject>
+		<rdarole:author>Sadur, Nina, 1950-</rdarole:author>
+		<rdarole:author>Садур, Нина, 1950-</rdarole:author>
+		<rdvocab:titleOfWork>Igolka li︠u︡bvi :</rdvocab:titleOfWork>
+		<rdvocab:natureOfContent>Fiction</rdvocab:natureOfContent></xc:entity>
+</xc:frbr>

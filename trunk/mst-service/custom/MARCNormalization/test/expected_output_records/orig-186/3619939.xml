@@ -1,0 +1,189 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marcnormalization/119</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:119</predecessor>
+    </predecessors>
+    <setSpec>MARCXML Bibliographic Records</setSpec>
+  </header>
+  <metadata>
+    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+      <marc:leader>01427cam a2200409Ia 4500</marc:leader>
+      <marc:controlfield tag="001">3619939</marc:controlfield>
+      <marc:controlfield tag="003">NRU</marc:controlfield>
+      <marc:controlfield tag="005">20080107170343.0</marc:controlfield>
+      <marc:controlfield tag="008">071027s2007    enk      be   001 0 eng d</marc:controlfield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(OCoLC)146449285</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">3619939</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="040" ind1=" " ind2=" ">
+        <marc:subfield code="a">IXA</marc:subfield>
+        <marc:subfield code="c">IXA</marc:subfield>
+        <marc:subfield code="d">BAKER</marc:subfield>
+        <marc:subfield code="d">UX0</marc:subfield>
+        <marc:subfield code="d">YDXCP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="020" ind1=" " ind2=" ">
+        <marc:subfield code="a">9780415320948</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="020" ind1=" " ind2=" ">
+        <marc:subfield code="a">0415320941</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="024" ind1="7" ind2=" ">
+        <marc:subfield code="a">99818175263</marc:subfield>
+        <marc:subfield code="2">YBP</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="029" ind1="1" ind2=" ">
+        <marc:subfield code="a">NZ1</marc:subfield>
+        <marc:subfield code="b">10846983</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="049" ind1=" " ind2=" ">
+        <marc:subfield code="a">RRRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="082" ind1="0" ind2="4">
+        <marc:subfield code="a">947.086</marc:subfield>
+        <marc:subfield code="2">22</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="090" ind1=" " ind2=" ">
+        <marc:subfield code="a">DK510.32</marc:subfield>
+        <marc:subfield code="b">.E53 2007b</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="245" ind1="0" ind2="0">
+        <marc:subfield code="a">Encyclopedia of contemporary Russian culture /</marc:subfield>
+        <marc:subfield code="c">edited by Tatiana Smorodinskaya, Karen Evans-Romaine and Helena Goscilo.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="260" ind1=" " ind2=" ">
+        <marc:subfield code="a">London :</marc:subfield>
+        <marc:subfield code="a">New York :</marc:subfield>
+        <marc:subfield code="b">Routledge,</marc:subfield>
+        <marc:subfield code="c">2007.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="300" ind1=" " ind2=" ">
+        <marc:subfield code="a">lxv, 727 p. ;</marc:subfield>
+        <marc:subfield code="c">26 cm.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="490" ind1="1" ind2=" ">
+        <marc:subfield code="a">Encyclopedias of contemporary culture series</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="504" ind1=" " ind2=" ">
+        <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="651" ind1=" " ind2="0">
+        <marc:subfield code="a">Russia (Federation)</marc:subfield>
+        <marc:subfield code="x">Civilization</marc:subfield>
+        <marc:subfield code="v">Encyclopedias.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="651" ind1=" " ind2="0">
+        <marc:subfield code="a">Soviet Union</marc:subfield>
+        <marc:subfield code="x">Civilization</marc:subfield>
+        <marc:subfield code="v">Encyclopedias.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Smorodinskaya, Tatiana,</marc:subfield>
+        <marc:subfield code="d">1961-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Evans-Romaine, Karen.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="700" ind1="1" ind2=" ">
+        <marc:subfield code="a">Goscilo, Helena,</marc:subfield>
+        <marc:subfield code="d">1945-</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="830" ind1=" " ind2="0">
+        <marc:subfield code="a">Encyclopedias of contemporary culture series.</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="938" ind1=" " ind2=" ">
+        <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+        <marc:subfield code="b">BKTY</marc:subfield>
+        <marc:subfield code="c">180.00</marc:subfield>
+        <marc:subfield code="d">180.00</marc:subfield>
+        <marc:subfield code="i">0415320941</marc:subfield>
+        <marc:subfield code="n">0006763599</marc:subfield>
+        <marc:subfield code="s">active</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="938" ind1=" " ind2=" ">
+        <marc:subfield code="a">YBP Library Services</marc:subfield>
+        <marc:subfield code="b">YANK</marc:subfield>
+        <marc:subfield code="n">2401060</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="949" ind1=" " ind2=" ">
+        <marc:subfield code="b">39087029172816</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="980" ind1=" " ind2=" ">
+        <marc:subfield code="a">2007-11-06</marc:subfield>
+        <marc:subfield code="b">180</marc:subfield>
+        <marc:subfield code="e">151.2</marc:subfield>
+        <marc:subfield code="f">263510</marc:subfield>
+        <marc:subfield code="g">1</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="994" ind1=" " ind2=" ">
+        <marc:subfield code="a">92</marc:subfield>
+        <marc:subfield code="b">RRR</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="931" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="932" ind1=" " ind2=" ">
+        <marc:subfield code="a">Language material</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="933" ind1=" " ind2=" ">
+        <marc:subfield code="a">Text</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="935" ind1=" " ind2=" ">
+        <marc:subfield code="a">Monograph/Item</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="937" ind1=" " ind2=" ">
+        <marc:subfield code="a">Non-Fiction</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="941" ind1=" " ind2=" ">
+        <marc:subfield code="a">eng</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="943" ind1=" " ind2=" ">
+        <marc:subfield code="a">English</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">9780415320948</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="947" ind1=" " ind2=" ">
+        <marc:subfield code="a">0415320941</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="035" ind1=" " ind2=" ">
+        <marc:subfield code="a">(NRU)3619939</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="130" ind1="0" ind2=" ">
+        <marc:subfield code="a">Encyclopedia of contemporary Russian culture /</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="965" ind1=" " ind2="0">
+        <marc:subfield code="x">Civilization</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="0">
+        <marc:subfield code="a">Russia (Federation)</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="967" ind1=" " ind2="0">
+        <marc:subfield code="a">Soviet Union</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+      <marc:datafield tag="969" ind1=" " ind2="0">
+        <marc:subfield code="v">Encyclopedias.</marc:subfield>
+        <marc:subfield code="5">NRU</marc:subfield>
+      </marc:datafield>
+    </marc:record>
+  </metadata>
+</record>
+</records>

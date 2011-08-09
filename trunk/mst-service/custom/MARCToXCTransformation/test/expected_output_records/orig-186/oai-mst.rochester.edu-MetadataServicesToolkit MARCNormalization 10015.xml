@@ -1,0 +1,76 @@
+<records xmlns="http://www.openarchives.org/OAI/2.0/">
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/64</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:16</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="work" id="oai:mst.rochester.edu:marctoxctransformation/64">
+        <dcterms:subject xsi:type="dcterms:LCC">M1620</dcterms:subject>
+        <rdarole:composer>Schreker, Franz, 1878-1934.</rdarole:composer>
+        <rdvocab:titleOfWork>Lieder auf den Tod eines Kindes</rdvocab:titleOfWork>
+        <xc:subject xsi:type="dcterms:LCSH">Holm, Mia, 1845-1912-Musical settings.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Songs (Medium voice) with piano.</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Holm, Mia,</xc:subject>
+        <xc:subject xsi:type="dcterms:LCSH">Musical settings.</xc:subject>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/65</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:16</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="expression" id="oai:mst.rochester.edu:marctoxctransformation/65">
+        <xc:titleOfExpression>Lieder auf den Tod eines Kindes</xc:titleOfExpression>
+        <dcterms:type xsi:type="dcterms:DCMIType">Image</dcterms:type>
+        <dcterms:language>German</dcterms:language>
+        <xc:contributor>Holm, Mia, 1845-1912.</xc:contributor>
+        <xc:workExpressed>oai:mst.rochester.edu:marctoxctransformation/64</xc:workExpressed>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+<record>
+  <header status="active">
+    <identifier>oai:mst.rochester.edu:marctoxctransformation/63</identifier>
+    <datestamp />
+    <predecessors>
+      <predecessor>oai:mst.rochester.edu:16</predecessor>
+    </predecessors>
+  </header>
+  <metadata>
+    <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+      <xc:entity type="manifestation" id="oai:mst.rochester.edu:marctoxctransformation/63">
+        <rdvocab:publisherNumber>3873</rdvocab:publisherNumber>
+        <rdvocab:plateNumber>J.E. 906</rdvocab:plateNumber>
+        <xc:recordID type="OCoLC">27722384</xc:recordID>
+        <xc:recordID type="NRU">1188191</xc:recordID>
+        <dcterms:title>Zwei Lieder auf den Tod eines Kindes, op. 5.</dcterms:title>
+        <rdvocab:placeOfProduction>Wien,</rdvocab:placeOfProduction>
+        <dcterms:publisher>Josef Eberle</dcterms:publisher>
+        <dcterms:issued>[190-]</dcterms:issued>
+        <dcterms:extent>score (5 p.)</dcterms:extent>
+        <rdvocab:dimensions>34cm.</rdvocab:dimensions>
+        <dcterms:description>Publisher's no.: Universal-Edition No. 3873.</dcterms:description>
+        <dcterms:tableOfContents>O Glocken, böse Glocken (Holm).--Dass er ganz ein Engel werde (Holm).</dcterms:tableOfContents>
+        <dcterms:description>Sibley Music Library copy bound with Schreker, Fünf Gesänge (1909).</dcterms:description>
+        <xc:typeLeader06>Notated music</xc:typeLeader06>
+        <xc:type007>Notated music</xc:type007>
+        <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+        <xc:expressionManifested>oai:mst.rochester.edu:marctoxctransformation/65</xc:expressionManifested>
+      </xc:entity>
+    </xc:frbr>
+  </metadata>
+</record>
+</records>

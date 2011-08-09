@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
+	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10005">
+		<xc:recordID type="LCCN">90020316 /MN</xc:recordID>
+		<xc:recordID type="OCoLC">22629928</xc:recordID>
+		<xc:recordID type="NRU">1045129</xc:recordID>
+		<rdvocab:statementOfResponsibilityRelatingToTitle>Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</rdvocab:statementOfResponsibilityRelatingToTitle>
+		<dcterms:title>Sweet mother : modern African music /</dcterms:title>
+		<rdvocab:placeOfProduction>Chicago :</rdvocab:placeOfProduction>
+		<dcterms:publisher>University of Chicago Press,</dcterms:publisher>
+		<dcterms:issued>c1991.</dcterms:issued>
+		<dcterms:extent>xx, 235 p. :</dcterms:extent>
+		<rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+		<dcterms:description>Translation of: Sweet mother.</dcterms:description>
+		<dcterms:description>Includes bibliographical references (p. 205-213).</dcterms:description>
+		<dcterms:description>Discography: p. 215-235.</dcterms:description>
+		<dcterms:isPartOf>Chicago studies in ethnomusicology</dcterms:isPartOf>
+		<xc:typeLeader06>Language material</xc:typeLeader06>
+		<xc:type007>Text</xc:type007>
+		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+		<dcterms:identifier type="ISBN">0226042537</dcterms:identifier>
+		<dcterms:identifier type="ISBN">0226042545</dcterms:identifier>
+		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10004</xc:expressionManifested></xc:entity>
+</xc:frbr>

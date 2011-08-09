@@ -1,0 +1,85 @@
+Aggregation Service # The name of the service
+1.0 # The version of the service
+AggregationService.jar # The .jar file containing the service
+xc.mst.services.aggregation.AggregationService # The class within the .jar file that represents the service.  This class must extend xc.mst.services.MetadataService
+Aggregation # The service's identifier which will be used in constructing 'local-identifier' part in record's OAI identifier. This should NOT be changed once service is added. Change to this will result in inconsistent record identifiers. Make sure it is unique within a MST instance.
+
+#-----------------------------------------
+INPUT FORMATS
+#-----------------------------------------
+name: xc # The name of the xc format, which the Aggregation Service accepts as input
+schema location: http://www.extensiblecatalog.info/Elements # The location of the xc schema
+namespace: http://www.extensiblecatalog.info/Elements # The namespace of the xc schema
+
+#-----------------------------------------
+OUTPUT FORMATS
+#-----------------------------------------
+name: xc # The name of the xc format, which the Aggregation Service can output
+schema location: http://www.extensiblecatalog.info/Elements # The location of the xc schema
+namespace: http://www.extensiblecatalog.info/Elements # The namespace of the xc schema
+
+#-----------------------------------------
+#-----------------------------------------
+ERROR MESSAGES
+#-----------------------------------------
+#-----------------------------------------
+
+#-----------------------------------------
+#-----------------------------------------
+SERVICE CONFIG
+#-----------------------------------------
+#-----------------------------------------
+
+#-----------------------------------------
+MANIFESTATION MERGE FIELDS
+#-----------------------------------------
+
+#*****************************************
+# Whether or not to merge two manifestation elements
+# if they match on the field provided
+#*****************************************
+
+# 1 to merge works with the same OCoLC recordID
+merge_OCoLCRecordID = 1
+
+# 1 to merge works with the same LCCN recordID
+merge_LCCNRecordID = 1
+
+# 1 to merge works with the same ISBN recordID
+merge_ISBNRecordID = 1
+
+# 1 to merge works with the same ISSN recordID
+merge_ISSNRecordID = 1
+
+# 1 to merge works with the same recordID if
+# the type isn't covered by the above options
+merge_recordID = 1
+
+#-----------------------------------------
+WORK MERGE FIELDS
+#-----------------------------------------
+
+#*****************************************
+# Whether or not to merge two work elements
+# if they match on the field provided
+#*****************************************
+
+# 1 to merge works with the same identifierForTheWork
+merge_identifierForTheWork = 1
+
+#-----------------------------------------
+MANIFESTATION BASE RECORD TO MERGE INTO
+#-----------------------------------------
+
+# 1 to choose record with maximum number of elements 
+Number_of_elements = 1
+	
+# 1 to choose record with maximum number of characters
+Record_Length = 1
+	
+# 1 to choose record with high priority institution code	
+Provenance = 1
+
+# Priority based on institution code
+Provenance_Priority =  NRU, DLC, CUL, *	
+
