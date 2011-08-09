@@ -18,11 +18,11 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
 	@Override
 	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getFooBarFormat()};
+		return new Format[] {getMarc21Format()};
 	}
 
 	public Format getHarvestOutFormat() throws Exception {
-		return getFooBarFormat();
+		return getMarc21Format();
 	}
 
 	@Override

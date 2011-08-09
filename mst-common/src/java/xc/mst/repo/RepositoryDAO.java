@@ -57,7 +57,7 @@ import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
-import xc.mst.cache.DynMap;
+import xc.mst.cache.DynKeyLongMap;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
 import xc.mst.dao.record.MessageDAO;
@@ -110,8 +110,8 @@ public class RepositoryDAO extends BaseDAO {
 		LOG.debug("RepositoryDAO.init()");
 		try {
 			if (!tableExists(REPOS_TABLE)) {
-				for (String file : new String[] {"xc/mst/repo/sql/create_repo_platform.sql",
-							"xc/mst/repo/sql/create_oai_id_seq.sql"}) {
+				for (String file : new String[] {"sql/create_repo_platform.sql",
+							"sql/create_oai_id_seq.sql"}) {
 					executeServiceDBScripts(file);
 				}
 			} else {
@@ -736,7 +736,7 @@ public class RepositoryDAO extends BaseDAO {
 		return rowList;
 	}
 
-	public void populateHarvestCache(String name, DynMap harvestCache) {
+	public void populateHarvestCache(String name, DynKeyLongMap harvestCache) {
 		TimingLogger.start("populateHarvestCache");
 		int page = 0;
 		List<Map<String, Object>> rowList = getHarvestCache(name, page);
@@ -881,11 +881,11 @@ public class RepositoryDAO extends BaseDAO {
 	}
 
 	public void createTables(Repository repo) {
-		runSql(repo, "xc/mst/repo/sql/create_repo.sql");
+		runSql(repo, "sql/create_repo.sql");
 		if (repo.getProvider() != null) {
-			runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");
+			runSql(repo, "sql/create_harvest_repo.sql");
 		} else if (repo.getService() != null) {
-			runSql(repo, "xc/mst/repo/sql/create_service_repo.sql");
+			runSql(repo, "sql/create_service_repo.sql");
 		}
 	}
 

@@ -7,9 +7,9 @@ import gnu.trove.THash;
 import gnu.trove.TLongLongHashMap;
 import gnu.trove.TObjectLongHashMap;
 
-public class DynMap {
+public class DynKeyLongMap {
 	
-	private static final Logger LOG = Logger.getLogger(DynMap.class);
+	private static final Logger LOG = Logger.getLogger(DynKeyLongMap.class);
 	
 	protected TObjectLongHashMap stringKeyedMap = new TObjectLongHashMap();
 	protected TLongLongHashMap longKeyedMap = new TLongLongHashMap();

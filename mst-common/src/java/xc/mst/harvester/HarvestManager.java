@@ -43,7 +43,7 @@ import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
-import xc.mst.cache.DynMap;
+import xc.mst.cache.DynKeyLongMap;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -74,7 +74,7 @@ public class HarvestManager extends WorkerThread {
         UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
     }
     //        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
-    protected DynMap oaiIdCache = new DynMap();
+    protected DynKeyLongMap oaiIdCache = new DynKeyLongMap();
     protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
 
     // The is public and static simply for the MockHarvestTest
