@@ -848,6 +848,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     protected void addMessage(InputRecord record, int code, char level,
             String detail) {
+        if (!isMessageEnabled(code, level)) {
+            LOG.debug("Will not addMessage, because the message is disabled. level="+level+" code="+code);
+            return;
+        }
         Record r = (Record) record;
         RecordMessage rm = new RecordMessage();
         getMessageDAO().injectId(rm);
@@ -861,13 +865,21 @@ public abstract class GenericMetadataService extends SolrMetadataService
         messages2insert.add(rm);
     }
 
-    public String getMessage(int code) {
-        return getMessage(code, RecordMessage.ERROR);
-    }
+//    public String getMessage(int code) {
+//        //TODO is this really unused now?
+//        return getMessage(code, RecordMessage.ERROR);
+//    }
 
     public String getMessage(int code, char type) {
         // don't use type as part of message retrieval...yet.
-        return config.getProperty("error." + code + ".text");
+        String s = config.getProperty("error." + code + ".text");
+        if (s == null) {
+            LOG.error("ERROR with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
+        }
+        else {
+            LOG.debug("INFO with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
+        }
+        return s;
     }
 
     // look for an entry like error.852.enabled=true
