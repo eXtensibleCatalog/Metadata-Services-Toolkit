@@ -224,6 +224,33 @@ INSERT INTO logs(warnings,
                  log_file_location)
 VALUES (0,
         0,
+        "General MST",
+        "logs/MST_General_log.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Record Count Rules and Results",
+        "logs/MST_rules_log.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
+        "Timing Information",
+        "logs/MST_timing_log.txt");
+
+INSERT INTO logs(warnings,
+                 errors,
+                 log_file_name,
+                 log_file_location)
+VALUES (0,
+        0,
         "Repository Management",
         "logs/general/repositoryManagement.txt");
 

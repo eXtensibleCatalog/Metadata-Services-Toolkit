@@ -17,27 +17,26 @@ public class MessageService extends BaseService {
     }
 
     public void injectMessageMessage(Record r) {
-	for (RecordMessage m : r.getMessages()) {
-	    try {
-		final MetadataService service = getServicesService()
-			.getServiceById(m.getServiceId()).getMetadataService();
-		final int code = m.getCode();
-		if (m.isInfoRecord()) {
-		    if (service.isMessageEnabled(code, RecordMessage.INFO)) {
-			m.setMessage(service.getMessage(code, RecordMessage.INFO));
-		    }
-		} else if (m.isWarnRecord()) {
-		    if (service.isMessageEnabled(code, RecordMessage.WARN)) {
-			m.setMessage(service.getMessage(code, RecordMessage.WARN));
-		    }
-		} else { // default == "error" record
-		    if (service.isMessageEnabled(code, RecordMessage.ERROR)) {
-			m.setMessage(service.getMessage(code, RecordMessage.ERROR));
-		    }
-		}
-	    } catch (Throwable t) {
-		LOG.error("", t);
-	    }
-	}
+        for (RecordMessage m : r.getMessages()) {
+            try {
+                final MetadataService service = getServicesService().getServiceById(m.getServiceId()).getMetadataService();
+                final int code = m.getCode();
+                if (m.isInfoRecord()) {
+                    if (service.isMessageEnabled(code, RecordMessage.INFO)) {
+                        m.setMessage(service.getMessage(code, RecordMessage.INFO));
+                    }
+                } else if (m.isWarnRecord()) {
+                    if (service.isMessageEnabled(code, RecordMessage.WARN)) {
+                        m.setMessage(service.getMessage(code, RecordMessage.WARN));
+                    }
+                } else { // default == "error" record
+                    if (service.isMessageEnabled(code, RecordMessage.ERROR)) {
+                        m.setMessage(service.getMessage(code, RecordMessage.ERROR));
+                    }
+                }
+            } catch (Throwable t) {
+                LOG.error("", t);
+            }
+        }
     }
 }
