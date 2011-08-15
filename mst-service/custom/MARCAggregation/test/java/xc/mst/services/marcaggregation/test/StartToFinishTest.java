@@ -8,19 +8,9 @@
   */
 package xc.mst.services.marcaggregation.test;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.common.SolrDocumentList;
-import org.jdom.Element;
 
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.record.Record;
-import xc.mst.repo.DefaultRepository;
-import xc.mst.utils.XmlHelper;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
 	
@@ -42,5 +32,16 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 	public Format getHarvestOutFormat() throws Exception {
 		return getDCFormat();
 	}
+
+    @Override
+    protected void finalTest() throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void testHarvestOut() {
+        // TODO Auto-generated method stub
+    }
 
 }

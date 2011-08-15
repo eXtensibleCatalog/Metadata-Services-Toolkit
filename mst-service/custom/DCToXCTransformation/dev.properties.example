@@ -1,11 +1,14 @@
-service.name=DCToXCTransformation
+service.name=example
 #mst.root.dir=
 test.memory=700M
 
 # This only applies to your local testing.  If you're bundling your service
 # to be plopped in an mst server, don't worry about changing these properties
 # because they will be ignored anyways
-mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.5
+mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.1
+cygwin.bash.exe=c:/dev/cygwin/bin/bash.exe
+base.src.url=http://code.google.com/p/xcmetadataservicestoolkit/source/browse/branches/bens_perma_branch/
+
 DatabaseUrl=jdbc:mysql://localhost:3306
 Database=MetadataServicesToolkit
 DatabaseUsername=root

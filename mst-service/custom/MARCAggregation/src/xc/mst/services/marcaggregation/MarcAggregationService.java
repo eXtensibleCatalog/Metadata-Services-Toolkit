@@ -20,7 +20,6 @@ import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.services.impl.service.GenericMetadataService;
-import xc.mst.services.service.FooService;
 
 public class MarcAggregationService extends GenericMetadataService {
 	
