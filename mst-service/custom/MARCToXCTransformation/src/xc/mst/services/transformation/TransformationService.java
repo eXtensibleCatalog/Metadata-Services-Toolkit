@@ -691,66 +691,88 @@ public class TransformationService extends SolrTransformationService {
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderTransformation"));
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBA_eq_TMA"));// = Normalization Bibs Active = Transformation Manifestations Active
                 String result = "";
-                if (counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
-                    result = " ** PASS **";
+                try {
+                    if (counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE)+ ", TMA="+counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE)+ ", TMA="+counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
 
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBD_eq_TMD"));// = Normalization Bibs Deleted = Transformation Manifestations Deleted
-                if (counts4typeN_b.get(RecordCounts.NEW_DELETE).get() == counts4typeT_m.get(RecordCounts.NEW_DELETE).get()) {
-                    result = " ** PASS **";
+                try {
+                    if (counts4typeN_b.get(RecordCounts.NEW_DELETE).get() == counts4typeT_m.get(RecordCounts.NEW_DELETE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("NBD="+counts4typeN_b.get(RecordCounts.NEW_DELETE)+ ", TMD="+counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("NBD="+counts4typeN_b.get(RecordCounts.NEW_DELETE)+ ", TMD="+counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNHA_leq_THA_THH"));// = Normalization Holdings Active <= Transformation Holdings Active + Transformation Holdings Held
-                final int n_h_a = counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get();
-                final int t_h_a = counts4typeT_h.get(RecordCounts.NEW_ACTIVE).get();
-                final int t_h_h = counts4typeT_h.get(RecordCounts.NEW_HELD).get();
-                if (n_h_a <= (t_h_a + t_h_h) ) {
-                    result = " ** PASS **";
+                try {
+                    final int n_h_a = counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_h_a = counts4typeT_h.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_h_h = counts4typeT_h.get(RecordCounts.NEW_HELD).get();
+                    if (n_h_a <= (t_h_a + t_h_h) ) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("NHA="+n_h_a + ", THA=" +t_h_a + ", THH="+t_h_h + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("NHA="+n_h_a + ", THA=" +t_h_a + ", THH="+t_h_h + result);
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_eq_TWA"));// = Transformation Expressions Active = Transformation Works Active
-                if (counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
-                    result = " ** PASS **";
+                try {
+                    if (counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("TEA="+counts4typeT_e.get(RecordCounts.NEW_ACTIVE)+ ", TWA="+counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("TEA="+counts4typeT_e.get(RecordCounts.NEW_ACTIVE)+ ", TWA="+counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
 
-                final int t_m_a = counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get();
-                final int t_w_a = counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get();
-                final int t_e_a = counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get();
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTWA_geq_TMA"));// = Transformation Works Active >= Transformation Manifestations Active
-                if (t_w_a >= (t_m_a) ) {
-                    result = " ** PASS **";
-                }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("TWA="+ t_w_a + ", TMA="+t_m_a + result);
+                int t_m_a;
+                int t_e_a;
+                try {
+                    t_m_a = counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_w_a = counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get();
+                    t_e_a = counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get();
+                    if (t_w_a >= (t_m_a) ) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("TWA="+ t_w_a + ", TMA="+t_m_a + result);
 
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_geq_TMA"));// = Transformation Expressions Active >= Transformation Manifestations Active
-                if (t_e_a >= (t_m_a) ) {
-                    result = " ** PASS **";
+                    LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_geq_TMA"));// = Transformation Expressions Active >= Transformation Manifestations Active
+                    if (t_e_a >= (t_m_a) ) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("TWA="+ t_e_a + ", TMA="+t_m_a + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("TWA="+ t_e_a + ", TMA="+t_m_a + result);
 
                 LOG2.info("%%%");
 

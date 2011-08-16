@@ -21,19 +21,19 @@ import xc.mst.utils.MSTConfiguration;
 public interface MetadataService {
 
 	public void install();
-	
+
 	public void uninstall();
-	
+
 	public void update(String currentVersion);
-	
+
 	//public void process(Record r);
-	
+
 	public Repository getRepository();
-	
+
 	/**
 	 * This method not only creates new records (inserts), but it can
 	 * also update records and delete records.
-	 * 
+	 *
 	 * @param repo
 	 * @param inputFormat
 	 * @param inputSet
@@ -48,10 +48,11 @@ public interface MetadataService {
 	public Service getService();
 	public void setService(Service service);
 	public String getServiceName();
-	public String getMessage(int code);
 	public String getMessage(int code, char type);
+    public String getMessage(int code, char type, String[] args);
+
 	public boolean isMessageEnabled(int code, char type);
-	
+
 	// leftover methods that I think can be eventually deleted
 	public void runService(int serviceId, int outputSetId);
 	public void setStatus(Status status);
@@ -64,7 +65,7 @@ public interface MetadataService {
 	public List<String> getUnprocessedErrorRecordIdentifiers();
 	public void setUnprocessedErrorRecordIdentifiers(List<String> l);
 	public MSTConfiguration getConfig();
-	
+
 	public MetadataServiceManager getMetadataServiceManager();
 	public void setMetadataServiceManager(MetadataServiceManager msm);
 }
