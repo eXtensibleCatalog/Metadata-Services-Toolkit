@@ -1682,7 +1682,7 @@ public class RepositoryDAO extends BaseDAO {
 			long startTime = System.currentTimeMillis();
 			TimingLogger.start("activateRecords");
 			String sql = "update "+getTableName(name, RepositoryDAO.RECORDS_TABLE)+
-				" set status='"+Record.ACTIVE+"'"+
+				" set status='"+Record.ACTIVE+"', prev_status='"+Record.HELD+"' "+  //in future may need flex. to pass in prev_status;true today though
 				" where record_id = ?";
 			final TLongIterator it = recordIds.iterator();
 			int[] updateCount = jdbcTemplate.batchUpdate(

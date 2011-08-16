@@ -865,14 +865,22 @@ public abstract class GenericMetadataService extends SolrMetadataService
         messages2insert.add(rm);
     }
 
-//    public String getMessage(int code) {
-//        //TODO is this really unused now?
-//        return getMessage(code, RecordMessage.ERROR);
-//    }
-
     public String getMessage(int code, char type) {
+        return getMessage(code, type, new String[] {});
+    }
+
+    public String getMessage(int code, char type, String[] args) {
         // don't use type as part of message retrieval...yet.
-        String s = config.getProperty("error." + code + ".text");
+        final String prop = "error." + code + ".text";
+        String s;
+
+        if (args.length > 0) {
+            s= MSTConfiguration.getMSTString(prop, args);
+        }
+        else {
+            s= config.getProperty(prop);
+        }
+
         if (s == null) {
             LOG.error("ERROR with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
         }

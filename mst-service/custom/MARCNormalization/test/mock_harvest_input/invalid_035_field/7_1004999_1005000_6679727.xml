@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2011-03-30T15:12:42Z</responseDate>
+	<request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
+
+<ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2011-03-30T14:44:50Z</datestamp><setSpec>bib</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+  <marc:leader>01202cam a22003490  4500</marc:leader>
+  <marc:controlfield tag="001">2</marc:controlfield>
+  <marc:controlfield tag="003">NRU</marc:controlfield>
+  <marc:controlfield tag="005">20090625140938.0</marc:controlfield>
+  <marc:controlfield tag="008">760302s1976    nyu      s    001 0 eng  </marc:controlfield>
+  <marc:datafield ind1=" " ind2=" " tag="010">
+    <marc:subfield code="a">76007005</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="020">
+    <marc:subfield code="a">0393011305</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="035">
+    <marc:subfield code="b">ocl</marc:subfield>
+    <marc:subfield code="a">02089674</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="035">
+    <marc:subfield code="9">00000005</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="040">
+    <marc:subfield code="a">DLC</marc:subfield>
+    <marc:subfield code="c">DLC</marc:subfield>
+    <marc:subfield code="d">CHS</marc:subfield>
+    <marc:subfield code="d">RRR</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="049">
+    <marc:subfield code="a">RRRR</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="050">
+    <marc:subfield code="a">RC514</marc:subfield>
+    <marc:subfield code="b">.H34 1976</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="096">
+    <marc:subfield code="a">WM 203 H323 1976</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="099">
+    <marc:subfield code="a">RC514 .H34 1976</marc:subfield>
+    <marc:subfield code="a">WM 203 H323 1976</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="2" tag="245">
+    <marc:subfield code="a">A Harry Stack Sullivan case seminar :</marc:subfield>
+    <marc:subfield code="b">treatment of a young male schizophrenic /</marc:subfield>
+    <marc:subfield code="c">with comment, twenty-five years later, by John C. Dillingham ... [et al.] ; Robert G. Kvarnes, editor, Gloria H. Parloff, assistant editor.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="250">
+    <marc:subfield code="a">1st ed.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="260">
+    <marc:subfield code="a">New York :</marc:subfield>
+    <marc:subfield code="b">Norton,</marc:subfield>
+    <marc:subfield code="c">c1976.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="300">
+    <marc:subfield code="a">xvii, 241 p. ;</marc:subfield>
+    <marc:subfield code="c">22 cm.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="500">
+    <marc:subfield code="a">Includes index.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="1" ind2="0" tag="600">
+    <marc:subfield code="a">Sullivan, Harry Stack,</marc:subfield>
+    <marc:subfield code="d">1892-1949.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2="0" tag="650">
+    <marc:subfield code="a">Schizophrenia</marc:subfield>
+    <marc:subfield code="x">Case studies.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2="2" tag="650">
+    <marc:subfield code="a">Schizophrenia</marc:subfield>
+    <marc:subfield code="x">case studies.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="1" ind2=" " tag="700">
+    <marc:subfield code="a">Sullivan, Harry Stack,</marc:subfield>
+    <marc:subfield code="d">1892-1949.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="1" ind2=" " tag="700">
+    <marc:subfield code="a">Dillingham, John C.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="1" ind2=" " tag="700">
+    <marc:subfield code="a">Kvarnes, Robert G.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="1" ind2=" " tag="700">
+    <marc:subfield code="a">Parloff, Gloria H.</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="911">
+    <marc:subfield code="a">p</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="966">
+    <marc:subfield code="l">Stack*</marc:subfield>
+    <marc:subfield code="m">MMON</marc:subfield>
+    <marc:subfield code="s">WM 203 H323 1976</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="966">
+    <marc:subfield code="l">Ref</marc:subfield>
+    <marc:subfield code="m">RJCIRC</marc:subfield>
+    <marc:subfield code="s">RC514 .H34 1976</marc:subfield>
+    <marc:subfield code="b">39087007145107</marc:subfield>
+  </marc:datafield>
+</marc:record>
+
+
+</metadata></record></ListRecords>
+</OAI-PMH>

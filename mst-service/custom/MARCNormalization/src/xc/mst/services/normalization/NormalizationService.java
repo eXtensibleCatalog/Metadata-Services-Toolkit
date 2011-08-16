@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
-import xc.mst.bo.processing.ProcessingDirective;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Provider;
 import xc.mst.bo.provider.Set;
@@ -856,7 +855,7 @@ public class NormalizationService extends GenericMetadataService {
 			if(smdVocab == null)
 			{
 				if(LOG.isDebugEnabled())
-					LOG.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML.");
+					LOG.debug("Cannot find an 007 Vocab mapping for the 007 offset 00 value of " + field007offset00 + ", returning the unmodified MARCXML."+ "field007==>"+field007+"<--");
 
 				addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO);
 				//addMessage(marcXml.getInputRecord(), 104, RecordMessage.INFO, "Invalid value in Control Field 007 offset 00: " + field007offset00);
@@ -889,6 +888,7 @@ public class NormalizationService extends GenericMetadataService {
 		// The value of field 007
 		String field007 = marcXml.getField007();
 
+		// If don't have an 007 will get "  ", and subsequently won't try to continue processing.
 		// The character at offsets 00 and 01 of the 007 field
 		String field007offset00and01 = ((field007 != null && field007.length() >= 3) ? field007.substring(0, 2) : "  ");
 
@@ -1376,25 +1376,26 @@ public class NormalizationService extends GenericMetadataService {
 			// Iterate over the subfields to find the $a and $b subfields
 			for(Element subfield : subfields)
 			{
+			    StringBuilder err_sb = new StringBuilder("");
 				// Initialize the aSubfield if we found the $a
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
 
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b")) {
+                    err_sb.append(" subfield b");
 					bSubfield = subfield;
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO,
-					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield");
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
 				}
 
 				// Initialize the subfield9 if we found the $9
 				if(subfield.getAttribute("code").getValue().equals("9")) {
+				    err_sb.append(" subfield 9");
 					subfield9 = subfield;
-					addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR,
-					//		"Invalid 035 Data Field (035s should not contain a $" + subfield.getAttribute("code").getValue() + " subfield)");
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
 				}
+				// for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+                addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
 
 			} // end loop over 035 subfields
 
@@ -2421,31 +2422,43 @@ public class NormalizationService extends GenericMetadataService {
 	            LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderNormalization"));// = Rules for Normalization:
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHTA_eq_NTA"));// = Harvest Total Active = Normalization Total Active
                 String result = "";
-                if (counts4typeR_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_t.get(RecordCounts.NEW_ACTIVE).get()) {
-                    result = " ** PASS **";
+                try {
+                    if (counts4typeR_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("HTA="+counts4typeR_t.get(RecordCounts.NEW_ACTIVE)+ ", NTA="+counts4typeN_t.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e2) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("HTA="+counts4typeR_t.get(RecordCounts.NEW_ACTIVE)+ ", NTA="+counts4typeN_t.get(RecordCounts.NEW_ACTIVE) + result);
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHBA_eq_NBA"));// = Harvest Bibs Active = Normalization Bibs Active
-	            if (counts4typeR_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get()) {
-                    result = " ** PASS **";
-	            }
-	            else {
-                    result = " ** FAIL **";
-	            }
-                LOG2.info("HBA="+counts4typeR_b.get(RecordCounts.NEW_ACTIVE)+ ", NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + result);
+	            try {
+                    if (counts4typeR_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("HBA="+counts4typeR_b.get(RecordCounts.NEW_ACTIVE)+ ", NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e1) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHHA_eq_NHA"));// = Harvest Holdings Active = Normalization Holdings Active
-                if (counts4typeR_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get()) {
-                    result = " ** PASS **";
+                try {
+                    if (counts4typeR_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    }
+                    else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("HHA="+counts4typeR_h.get(RecordCounts.NEW_ACTIVE)+ ", NHA="+counts4typeN_h.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
                 }
-                else {
-                    result = " ** FAIL **";
-                }
-                LOG2.info("HHA="+counts4typeR_h.get(RecordCounts.NEW_ACTIVE)+ ", NHA="+counts4typeN_h.get(RecordCounts.NEW_ACTIVE) + result);
                 LOG2.info("%%%");
 	        } catch (Exception e) {
 	            LOG.error("",e);
