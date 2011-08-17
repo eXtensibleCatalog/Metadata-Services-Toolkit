@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/mst-common"/>
 	<classpathentry kind="lib" path="build/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/antlr-2.7.6.jar"/>
@@ -80,6 +79,7 @@
 	<classpathentry kind="lib" path="build/lib/struts2-core-2.2.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/xwork-core-2.2.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/trove-2.1.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/mst-common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/mst-service-impl"/>
 	<classpathentry kind="output" path="build/zip/META-INF/classes"/>
 </classpath>
