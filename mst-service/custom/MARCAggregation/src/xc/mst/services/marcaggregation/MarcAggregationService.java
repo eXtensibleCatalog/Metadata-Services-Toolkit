@@ -21,6 +21,10 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.services.impl.service.GenericMetadataService;
 
+/**
+ * @author Benjamin D. Anderson
+ *
+ */
 public class MarcAggregationService extends GenericMetadataService {
 	
 	private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);

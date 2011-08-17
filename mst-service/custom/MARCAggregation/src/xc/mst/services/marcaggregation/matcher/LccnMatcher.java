@@ -12,48 +12,42 @@ package xc.mst.services.marcaggregation.matcher;
 
 import gnu.trove.TLongLongHashMap;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 
 /**
- * The System control number corresponds to the 
- * <a href="http://www.loc.gov/marc/bibliographic/bd035.html">MARC 035 field</a>
- *
+ * 
+ * The Library of Congress Control Number corresponds to the 
+ * <a href="http://www.loc.gov/marc/bibliographic/bd010.html">MARC 010 field</a>
+ * 
  * @author Benjamin D. Anderson
  *
  */
-public class SystemControlNumberMatcher extends FieldMatcherService {
-
-    protected Map<String, Long> prefixIds = new HashMap<String, Long>();
-    protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
+public class LccnMatcher extends FieldMatcherService {
     
-    protected long getPrefixId(String s) {
-        // return the prefix String
+    protected TLongLongHashMap lccn2outputIds = new TLongLongHashMap();
+    
+    protected long getUniqueId(String s) {
+        // http://www.loc.gov/marc/bibliographic/bd010.html
+        // find the first numeric value and return it
+        // This was determined by Jennifer in a phone conversation.
         return 0l;
     }
-      
-    protected long getNumericId(String s) {
-        // return the numeric portion
-        return 0l;
-    }
-      
-    protected long getMapId(String s) {
-        return (getNumericId(s)*1000)+getPrefixId(s);
-    }
+
 
     public List<Long> getMatchingOutputIds(InputRecord ir) {
-        //String s = ir.getMARC().getDataFields().get(35).get('a');
-        //return lccn2outputIds.get(getMapId(s));
+        // String s = r.getMARC().getDataFields().get(10).get('a');
+        // long[] ids = lccn2outputIds.get(getUniqueId(s));
+        // return new ArrayList<Long>(ids);
+
         return null;
     }
 
     public void addRecordToMatcher(Record r) {
-        // String s = r.getMARC().getDataFields().get(35).get('a');
-        // lccn2outputIds.add(r.getId(), getMapId(s));
+        // String s = r.getMARC().getDataFields().get(10).get('a');
+        // lccn2outputIds.add(r.getId(), getUniqueId(s));
     }
 
     public List<Long> getPreviousMatchPoint(long inputId) {
@@ -68,9 +62,9 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     public void loadFromDB() {
         // TODO Auto-generated method stub
     }
-    
+
     public void unload() {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stub       
     }
 
 }
