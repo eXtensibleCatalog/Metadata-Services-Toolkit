@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="build/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/antlr-2.7.6.jar"/>
@@ -79,7 +80,6 @@
 	<classpathentry kind="lib" path="build/lib/xercesImpl-2.8.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/xwork-core-2.2.1.jar"/>
 	<classpathentry kind="lib" path="ivy/ivy-2.2.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/mst-common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/mst-service-impl"/>
 	<classpathentry kind="output" path="build/MST-instances/MetadataServicesToolkit/services/example/META-INF/classes"/>
