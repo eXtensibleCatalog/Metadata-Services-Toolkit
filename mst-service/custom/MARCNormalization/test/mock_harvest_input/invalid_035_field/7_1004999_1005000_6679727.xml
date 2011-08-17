@@ -5,107 +5,338 @@
 	<responseDate>2011-03-30T15:12:42Z</responseDate>
 	<request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
 
-<ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2011-03-30T14:44:50Z</datestamp><setSpec>bib</setSpec></header><metadata>
-<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
-  <marc:leader>01202cam a22003490  4500</marc:leader>
-  <marc:controlfield tag="001">2</marc:controlfield>
-  <marc:controlfield tag="003">NRU</marc:controlfield>
-  <marc:controlfield tag="005">20090625140938.0</marc:controlfield>
-  <marc:controlfield tag="008">760302s1976    nyu      s    001 0 eng  </marc:controlfield>
-  <marc:datafield ind1=" " ind2=" " tag="010">
-    <marc:subfield code="a">76007005</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="020">
-    <marc:subfield code="a">0393011305</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="035">
-    <marc:subfield code="b">ocl</marc:subfield>
-    <marc:subfield code="a">02089674</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="035">
-    <marc:subfield code="9">00000005</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="040">
-    <marc:subfield code="a">DLC</marc:subfield>
-    <marc:subfield code="c">DLC</marc:subfield>
-    <marc:subfield code="d">CHS</marc:subfield>
-    <marc:subfield code="d">RRR</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="049">
-    <marc:subfield code="a">RRRR</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="050">
-    <marc:subfield code="a">RC514</marc:subfield>
-    <marc:subfield code="b">.H34 1976</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="096">
-    <marc:subfield code="a">WM 203 H323 1976</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="099">
-    <marc:subfield code="a">RC514 .H34 1976</marc:subfield>
-    <marc:subfield code="a">WM 203 H323 1976</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="0" ind2="2" tag="245">
-    <marc:subfield code="a">A Harry Stack Sullivan case seminar :</marc:subfield>
-    <marc:subfield code="b">treatment of a young male schizophrenic /</marc:subfield>
-    <marc:subfield code="c">with comment, twenty-five years later, by John C. Dillingham ... [et al.] ; Robert G. Kvarnes, editor, Gloria H. Parloff, assistant editor.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="250">
-    <marc:subfield code="a">1st ed.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="260">
-    <marc:subfield code="a">New York :</marc:subfield>
-    <marc:subfield code="b">Norton,</marc:subfield>
-    <marc:subfield code="c">c1976.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="300">
-    <marc:subfield code="a">xvii, 241 p. ;</marc:subfield>
-    <marc:subfield code="c">22 cm.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="500">
-    <marc:subfield code="a">Includes index.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="1" ind2="0" tag="600">
-    <marc:subfield code="a">Sullivan, Harry Stack,</marc:subfield>
-    <marc:subfield code="d">1892-1949.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2="0" tag="650">
-    <marc:subfield code="a">Schizophrenia</marc:subfield>
-    <marc:subfield code="x">Case studies.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2="2" tag="650">
-    <marc:subfield code="a">Schizophrenia</marc:subfield>
-    <marc:subfield code="x">case studies.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="1" ind2=" " tag="700">
-    <marc:subfield code="a">Sullivan, Harry Stack,</marc:subfield>
-    <marc:subfield code="d">1892-1949.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="1" ind2=" " tag="700">
-    <marc:subfield code="a">Dillingham, John C.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="1" ind2=" " tag="700">
-    <marc:subfield code="a">Kvarnes, Robert G.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1="1" ind2=" " tag="700">
-    <marc:subfield code="a">Parloff, Gloria H.</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="911">
-    <marc:subfield code="a">p</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="966">
-    <marc:subfield code="l">Stack*</marc:subfield>
-    <marc:subfield code="m">MMON</marc:subfield>
-    <marc:subfield code="s">WM 203 H323 1976</marc:subfield>
-  </marc:datafield>
-  <marc:datafield ind1=" " ind2=" " tag="966">
-    <marc:subfield code="l">Ref</marc:subfield>
-    <marc:subfield code="m">RJCIRC</marc:subfield>
-    <marc:subfield code="s">RC514 .H34 1976</marc:subfield>
-    <marc:subfield code="b">39087007145107</marc:subfield>
-  </marc:datafield>
-</marc:record>
+	<ListRecords>
+          <record>
+            <header>
+              <identifier>oai:library.rochester.edu:URVoyager1/1005000</identifier>
+              <datestamp>2011-03-23T15:43:35Z</datestamp>
+              <setSpec>bib</setSpec>
+         </header>
+	<metadata>
 
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <!-- This record has no 007 field - it should not generate an error -->
+	  <marc:leader>01287nam a22003250  4500</marc:leader>
+	  <marc:controlfield tag="001">3</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">19980202172253.0</marc:controlfield>
+	  <marc:controlfield tag="008">760518s1976    ne       b    101 0 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">76017583</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0720405068</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="b">ocl</marc:subfield>
+	    <marc:subfield code="a">02297000</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="9">00000019</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRP</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="050">
+	    <marc:subfield code="a">QC174.45.A1</marc:subfield>
+	    <marc:subfield code="b">A5</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="099">
+	    <marc:subfield code="a">QC174.45.A1 A5</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="245">
+	    <marc:subfield code="a">Analyse structurale des amplitudes de collision =</marc:subfield>
+	    <marc:subfield code="b">Structural analysis of collision amplitudes : Les Houches, June Institute, 2-27 June 1975 /</marc:subfield>
+	    <marc:subfield code="c">edite´ par Roger Balian et Daniel Iagolnitzer.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Amsterdam :</marc:subfield>
+	    <marc:subfield code="b">North-Holland Pub. Co. ;</marc:subfield>
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">American Elsevier Pub. Co.,</marc:subfield>
+	    <marc:subfield code="c">[1976]</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">xix, 637 p. :</marc:subfield>
+	    <marc:subfield code="b">ill. ;</marc:subfield>
+	    <marc:subfield code="c">23 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Lectures delivered at Les Houches, E´cole d'e´te´ de physique the´orique.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographies and index.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Quantum field theory</marc:subfield>
+	    <marc:subfield code="x">Congresses.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">S-matrix theory</marc:subfield>
+	    <marc:subfield code="x">Congresses.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Regge theory</marc:subfield>
+	    <marc:subfield code="x">Congresses.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Balian, Roger.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Iagolnitzer, Daniel.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">Universite´ de Grenoble.</marc:subfield>
+	    <marc:subfield code="b">E´cole d'e´te´ de physique the´orique,Les Houches.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="740">
+	    <marc:subfield code="a">Structural analysis of collision amplitudes.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="911">
+	    <marc:subfield code="a">p</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">Stack</marc:subfield>
+	    <marc:subfield code="m">RMON</marc:subfield>
+	    <marc:subfield code="s">QC174.45.A1 A5</marc:subfield>
+	    <marc:subfield code="b">39087000582157</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+       </metadata>
+     </record>
+     
+     <record>
+      <header>
+       <identifier>oai:library.rochester.edu:URVoyager1/1005001</identifier>
+       <datestamp>2011-03-23T15:43:35Z</datestamp>
+       <setSpec>bib</setSpec>
+      </header>
+      <metadata>
 
-</metadata></record></ListRecords>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <!-- This record has no 007 field - it should not generate an error -->
+	  <marc:leader>01367nam a22003618  4500</marc:leader>
+	  <marc:controlfield tag="001">7</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">19950701000000.0</marc:controlfield>
+	  <marc:controlfield tag="008">760506s1976    mau      b    001 0aeng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">   76008758 </marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0870232177 :</marc:subfield>
+	    <marc:subfield code="c">$8.00</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="b">ocl</marc:subfield>
+	    <marc:subfield code="a">02224945</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="9">00000176</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">n-us---</marc:subfield>
+	    <marc:subfield code="a">n-cn---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="050">
+	    <marc:subfield code="a">E99.M8</marc:subfield>
+	    <marc:subfield code="b">W54 1976</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="090">
+	    <marc:subfield code="a">E87</marc:subfield>
+	    <marc:subfield code="b">.W72Ar 1976</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="099">
+	    <marc:subfield code="a">E87 .W72Ar 1976</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Williams, John,</marc:subfield>
+	    <marc:subfield code="d">1664-1729.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="240">
+	    <marc:subfield code="a">Redeemed captive returning to Zion</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="4" tag="245">
+	    <marc:subfield code="a">The redeemed captive /</marc:subfield>
+	    <marc:subfield code="c">John Williams ; edited by Edward W. Clark.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Amherst :</marc:subfield>
+	    <marc:subfield code="b">University of Massachusetts Press,</marc:subfield>
+	    <marc:subfield code="c">1976.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">137 p. :</marc:subfield>
+	    <marc:subfield code="b">map ;</marc:subfield>
+	    <marc:subfield code="c">23 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Based on the editor's critical text taken from the first three editions of The Redeemed captive, first published in 1707.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Derived from Clark's dissertation, University of Wisconsin, 1972.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Indian captivities.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="651">
+	    <marc:subfield code="a">Deerfield (Mass.)</marc:subfield>
+	    <marc:subfield code="x">History</marc:subfield>
+	    <marc:subfield code="y">Colonial period, ca. 1600-1775.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="651">
+	    <marc:subfield code="a">United States</marc:subfield>
+	    <marc:subfield code="x">History</marc:subfield>
+	    <marc:subfield code="y">Queen Anne's War, 1702-1713</marc:subfield>
+	    <marc:subfield code="x">Personal narratives.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Clark, Edward W.,</marc:subfield>
+	    <marc:subfield code="d">1943-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="911">
+	    <marc:subfield code="a">p</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">Stack </marc:subfield>
+	    <marc:subfield code="m">RMON  </marc:subfield>
+	    <marc:subfield code="s">E87 .W72Ar 1976</marc:subfield>
+	    <marc:subfield code="b">39087002949636</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">GenStk</marc:subfield>
+	    <marc:subfield code="m">DIVMTH</marc:subfield>
+	    <marc:subfield code="s">E99.M8 W54 1976</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+       </metadata>
+     </record>
+
+     <record>
+      <header>
+       <identifier>oai:library.rochester.edu:URVoyager1/1005002</identifier>
+       <datestamp>2011-03-23T15:43:35Z</datestamp>
+       <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <!-- This record has no 007 field - it should not generate an error -->
+	  <marc:leader>01199cam a22003370  4500</marc:leader>
+	  <marc:controlfield tag="001">17</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20070116200042.0</marc:controlfield>
+	  <marc:controlfield tag="008">721019s1973    mdua     b    000 0 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">   72004013 </marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0801814316</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="b">ocl</marc:subfield>
+	    <marc:subfield code="a">00488222</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="9">00000793</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="050">
+	    <marc:subfield code="a">BF692</marc:subfield>
+	    <marc:subfield code="b">.A5 1973</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="060">
+	    <marc:subfield code="a">W1 AM7299 1971</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="099">
+	    <marc:subfield code="a">BF692 .A5 1973 </marc:subfield>
+	    <marc:subfield code="a">HQ 21 A512c 1971</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="110">
+	    <marc:subfield code="a">American Psychopathological Association.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Contemporary sexual behavior:</marc:subfield>
+	    <marc:subfield code="b">critical issues in the 1970s.</marc:subfield>
+	    <marc:subfield code="c">Edited by Joseph Zubin and John Money.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Baltimore,</marc:subfield>
+	    <marc:subfield code="b">Johns Hopkins University Press</marc:subfield>
+	    <marc:subfield code="c">[c1973]</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">xix, 468 p.</marc:subfield>
+	    <marc:subfield code="b">illus.</marc:subfield>
+	    <marc:subfield code="c">24 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">"Based on the proceedings of the sixty-first annual meeting of the American Psychopathological Association."</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographies.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Sex (Psychology)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="2" tag="650">
+	    <marc:subfield code="a">Sex Behavior</marc:subfield>
+	    <marc:subfield code="x">congresses.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Zubin, Joseph,</marc:subfield>
+	    <marc:subfield code="d">1900-1990</marc:subfield>
+	    <marc:subfield code="e">ed.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Money, John,</marc:subfield>
+	    <marc:subfield code="e">ed.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="911">
+	    <marc:subfield code="a">p</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">Stack </marc:subfield>
+	    <marc:subfield code="m">RMON  </marc:subfield>
+	    <marc:subfield code="s">BF692 .A5 1973</marc:subfield>
+	    <marc:subfield code="b">39087006719480</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">Stack*</marc:subfield>
+	    <marc:subfield code="m">MMON  </marc:subfield>
+	    <marc:subfield code="s">HQ 21 A512c 1971</marc:subfield>
+	    <marc:subfield code="b">39087004476547</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="966">
+	    <marc:subfield code="l">GenStk</marc:subfield>
+	    <marc:subfield code="m">DIVMTH</marc:subfield>
+	    <marc:subfield code="s">BF692 .A5 1973</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+       </metadata>
+     </record>
+
+    </ListRecords>
 </OAI-PMH>
