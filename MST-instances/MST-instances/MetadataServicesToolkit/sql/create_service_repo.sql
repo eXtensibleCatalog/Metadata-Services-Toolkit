@@ -12,4 +12,4 @@ create table repo_name.prev_incoming_record_statuses (
 	status           char(1)      not null,
 
 	primary key (record_id)
-)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
