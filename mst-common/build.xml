@@ -8,216 +8,218 @@
   -->
 <project name="mc" default="mc.help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<target name="mc.help">
-		<echo>
+  <target name="mc.help">
+    <echo>
 commands (mc.help)
 
     mc.deploy
         compiles src, creates jar, and pushes it to all other subprojects and tomcat
 
     mc.test
-	    executes the testng tests.  It will run all tests unless you specify a test parameter.
-		eg: ant -Dtest=Generic mc.test
-		</echo>
-	</target>
+      executes the testng tests.  It will run all tests unless you specify a test parameter.
+    eg: ant -Dtest=Generic mc.test
+    </echo>
+  </target>
 
-	<dirname property="mc.dir" file="${ant.file.mc}" />
-	
-	<property file="${mc.dir}/build.properties" />
-	<property file="${mc.src.java}/default.properties" />
+  <dirname property="mc.dir" file="${ant.file.mc}" />
+  
+  <property file="${mc.dir}/build.properties" />
+  <property file="${mc.src.java}/default.properties" />
 
-	<path id="mc.classpath.compile">
-		<fileset dir="${mc.build.lib}">
-			<include name="*.jar" />
-		</fileset>
-	</path>
+  <path id="mc.classpath.compile">
+    <fileset dir="${mc.build.lib}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
 
-	<path id="mc.classpath.test.compile">
-		<fileset dir="${mc.build.lib}">
-			<include name="*.jar" />
-		</fileset>
-		<pathelement path="${mc.build.classes}" />
-	</path>
+  <path id="mc.classpath.test.compile">
+    <fileset dir="${mc.build.lib}">
+      <include name="*.jar" />
+    </fileset>
+    <pathelement path="${mc.build.classes}" />
+  </path>
 
-	<target name="mc.clean">
-		<delete dir="${mc.build.dir}" />
-	</target>
+  <target name="mc.clean">
+    <delete dir="${mc.build.dir}" />
+  </target>
 
-	<target name="mc.clean.classes">
-		<delete dir="${mc.build.classes}" />
-	</target>
+  <target name="mc.clean.classes">
+    <delete dir="${mc.build.classes}" />
+  </target>
 
-	<target name="mc.clean.lib">
-		<delete dir="${mc.build.lib}" />
-	</target>
+  <target name="mc.clean.lib">
+    <delete dir="${mc.build.lib}" />
+  </target>
 
-	<target name="mc.echo">
-		<echo>
-			mst-common help
-			mc.src.dir: ${mc.src.dir}
-			mc.src.java: ${mc.src.java}
-			mc.build.dir: ${mc.build.dir}
-			mc.build.ivy.report: ${mc.build.ivy.report}
-			env.java.home: ${env.JAVA_HOME}
-		</echo>
-	</target>
+  <target name="mc.echo">
+    <echo>
+      mst-common help
+      mc.src.dir: ${mc.src.dir}
+      mc.src.java: ${mc.src.java}
+      mc.build.dir: ${mc.build.dir}
+      mc.build.ivy.report: ${mc.build.ivy.report}
+      env.java.home: ${env.JAVA_HOME}
+    </echo>
+  </target>
 
-	<target name="mc.init" depends="init">
-		<mkdir dir="${mc.build.test.classes}" />
-		<mkdir dir="${mc.build.classes}" />
-		<mkdir dir="${mc.build.lib}" />
-		<mkdir dir="${mc.build.javadoc}" />
-	</target>
+  <target name="mc.init" depends="init">
+    <mkdir dir="${mc.build.test.classes}" />
+    <mkdir dir="${mc.build.classes}" />
+    <mkdir dir="${mc.build.lib}" />
+    <mkdir dir="${mc.build.javadoc}" />
+  </target>
 
-	<target name="mc.resolve" depends="mc.init">
-		<ivy:resolve file="${mc.dir}/ivy.xml"/>
-	</target>
+  <target name="mc.resolve" depends="mc.init">
+    <ivy:resolve file="${mc.dir}/ivy.xml"/>
+  </target>
 
-	<target name="mc.ivy-report" depends="mc.resolve"
-			description="--> report the resolve actions">
-		<mkdir dir="${mc.build.ivy.report}" />
-		<ivy:report todir="${mc.build.ivy.report}" />
-	</target>
+  <target name="mc.ivy-report" depends="mc.resolve"
+      description="--> report the resolve actions">
+    <mkdir dir="${mc.build.ivy.report}" />
+    <ivy:report todir="${mc.build.ivy.report}" />
+  </target>
 
-	<target name="mc.retrieve" depends="mc.ivy-report">
-		<ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact]-[revision].[ext]"/>
-	</target>
+  <target name="mc.retrieve" depends="mc.ivy-report">
+    <ivy:retrieve sync="true" pattern="${mc.build.lib}/[artifact]-[revision].[ext]"/>
+  </target>
 
-	<target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
+  <target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
 
-	<target name="mc.compile.nodep" depends="mc.init">
-		<javac 
-			includeantruntime="false"
-			destdir="${mc.build.classes}"
-			classpathref="mc.classpath.compile"
-			debug="on"
-			deprecation="on"
-			debuglevel="lines,vars,source">
-			<src path="${mc.src.java}" />
-			<src path="${mc.test.dir}" />
-		</javac>
-	</target>
+  <target name="mc.compile.nodep" depends="mc.init">
+    <javac 
+      includeantruntime="false"
+      destdir="${mc.build.classes}"
+      classpathref="mc.classpath.compile"
+      debug="on"
+      deprecation="on"
+      debuglevel="lines,vars,source">
+      <src path="${mc.src.java}" />
+      <src path="${mc.test.dir}" />
+    </javac>
+  </target>
 
-	<target name="mc.copy-resources" depends="mc.compile, mc.copy-resources.nodep" />
+  <target name="mc.copy-resources" depends="mc.compile, mc.copy-resources.nodep" />
 
-	<target name="mc.copy-resources.nodep" depends="mc.compile.nodep">
-		<copy todir="${mc.build.classes}">
-			<fileset dir="${mc.src.java}">
-				<include name="default.properties" />
-				<include name="**/*.xml" />
-				<include name="**/*.sql" />
-			</fileset>
-		</copy>
-	</target>
+  <target name="mc.copy-resources.nodep" depends="mc.compile.nodep">
+    <copy todir="${mc.build.classes}">
+      <fileset dir="${mc.src.java}">
+        <include name="default.properties" />
+        <include name="**/*.xml" />
+        <include name="**/*.sql" />
+      </fileset>
+    </copy>
+  </target>
 
-	<target name="mc.jar" depends="mc.copy-resources, mc.compile.test, mc.jar.nodep"/>
+  <target name="mc.jar" depends="mc.copy-resources, mc.compile.test, mc.jar.nodep"/>
 
-	<target name="mc.jar.nodep" depends="mc.copy-resources.nodep">
-		<jar destfile="${mc.build.dir}/${mc.project-name}-${mc.version}.jar"
-			basedir="${mc.build.classes}" />
-	</target>
+  <target name="mc.jar.nodep" depends="mc.copy-resources.nodep">
+    <jar destfile="${mc.build.dir}/${mc.project-name}-${mc.version}.jar"
+      basedir="${mc.build.classes}" />
+  </target>
 
-	<target name="mc.publish" depends="mc.jar, mc.publish.nodep"/>
+  <target name="mc.publish" depends="mc.jar, mc.publish.nodep"/>
 
-	<target name="mc.publish.nodep" depends="mc.jar.nodep">
-		<ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true" update="true" forcedeliver="true">
-			<artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
-		</ivy:publish>
-	</target>
+  <target name="mc.publish.nodep" depends="mc.jar.nodep">
+    <ivy:publish resolver="local" pubrevision="${mc.version}" overwrite="true" update="true" forcedeliver="true">
+      <artifacts pattern="${mc.build.dir}/${mc.project-name}-${mc.version}.[ext]" />
+    </ivy:publish>
+  </target>
 
-	<target name="mc.deploy" depends="mc.compile.test,mc.jar.nodep">
-		<copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
-			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-		<copy todir="${mp.build.lib}" 
-			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-		<copy todir="${ms.build.lib}" 
-			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-		<copy todir="${mst-service}/example/build/lib" 
-			file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-		<copy-to-custom-services subdir="build/lib">
-			<macro-file-set>
-				<fileset dir="${mc.build.dir}">
-					<include name="${mc.project-name}-${mc.version}.jar" />
-				</fileset>
-			</macro-file-set>
-		</copy-to-custom-services>
-	</target>
+  <target name="mc.deploy" depends="mc.compile.test,mc.jar.nodep">
+    <copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
+      file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+    <copy todir="${mp.build.lib}" 
+      file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+    <copy todir="${ms.build.lib}" 
+      file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+    <copy todir="${mst-service}/example/build/lib" 
+      file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
+    <copy-to-custom-services subdir="build/lib">
+      <macro-file-set>
+        <fileset dir="${mc.build.dir}">
+          <include name="${mc.project-name}-${mc.version}.jar" />
+        </fileset>
+      </macro-file-set>
+    </copy-to-custom-services>
+  </target>
 
-	<target name="mc.compile.test" depends="mc.copy-resources.nodep">
-		<javac srcdir="${mc.test.dir}"
-			destdir="${mc.build.test.classes}"
-			classpathref="mc.classpath.test.compile"
-			debug="on"
-			deprecation="on"
-			debuglevel="lines,vars,source"/>
-	</target>
+  <target name="mc.compile.test" depends="mc.copy-resources.nodep">
+    <javac srcdir="${mc.test.dir}"
+      destdir="${mc.build.test.classes}"
+      classpathref="mc.classpath.test.compile"
+      debug="on"
+      deprecation="on"
+      debuglevel="lines,vars,source"/>
+  </target>
 
-	<target name="mc.init.test" unless="${test}">
-		<property name="test" value="" />
-	</target>
+  <target name="mc.init.test" unless="${test}">
+    <property name="test" value="" />
+  </target>
 
-	<target name="mc.javadoc" depends="mc.compile">
-		<javadoc
-			   destdir="${mc.build.javadoc}"
-			   author="true"
-			   version="true"
-			   use="true"
-			   windowtitle="Metadata Services Toolkit">
+  <target name="mc.javadoc" depends="mc.compile">
+    <javadoc
+         destdir="${mc.build.javadoc}"
+         author="true"
+         version="true"
+         use="true"
+         windowtitle="Metadata Services Toolkit">
 
-			<fileset dir="${mc.src.java}" defaultexcludes="yes">
-				<include name="xc/mst/bo/**"/>
-			</fileset>
+      <fileset dir="${mc.src.java}" defaultexcludes="yes">
+        <include name="xc/mst/bo/**"/>
+      </fileset>
 
-			<doctitle>
-				<![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
-			</doctitle>
-			<bottom>
-				<![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
-			</bottom>
-			<tag name="todo" scope="all" description="To do:"/>
-			<link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
-				packagelistLoc="${env.JAVA_HOME}\bin"/>
-		</javadoc>
-	</target>
+      <doctitle>
+        <![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
+      </doctitle>
+      <bottom>
+        <![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
+      </bottom>
+      <tag name="todo" scope="all" description="To do:"/>
+      <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
+        packagelistLoc="${env.JAVA_HOME}\bin"/>
+    </javadoc>
+  </target>
 
-	<target name="mc.install-mst" depends="mc.init">
-		<delete dir="${mc.build.mst-instances.dir}" />
-		<unzip src="${mc.build.lib}/MST-instances-${mi.version}.jar"
-			dest="${mc.build.dir}" />
-		<copy todir="${mc.build.mst-instance.dir}" overwrite="true">
-			<fileset dir="${mc.test.dir}">
-				<include name="**/log4j.config.txt" />
-				<include name="**/install.properties" />
-			</fileset>
-		</copy>
-		<exec executable="${mysql.home}/bin/mysql" 
-				input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
-			<arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
-		</exec>
-	</target>
+  <target name="mc.install-mst" depends="mc.init">
+    <delete dir="${mc.build.mst-instances.dir}" />
+    <unzip src="${mc.build.lib}/MST-instances-${mi.version}.jar"
+      dest="${mc.build.dir}" />
+    <copy todir="${mc.build.mst-instance.dir}" overwrite="true">
+      <fileset dir="${mc.test.dir}">
+        <include name="**/log4j.config.txt" />
+        <include name="**/install.properties" />
+      </fileset>
+    </copy>
+    <echo>running sql script</echo>
+    <exec executable="${mysql.home}/bin/mysql" 
+        input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
+      <arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
+    </exec>
+    <echo>finished sql script</echo>
+  </target>
 
-	<target name="mc.test" depends="mc.install-mst, mc.test.nodep" />
-	<target name="mc.test.nodep" depends="mc.compile.test, mc.init.test">
-		<property name="abs.build.dir" location="${mc.build.dir}" />
-		<path id="mc.classpath.test.run">
-			<fileset dir="${mc.build.lib}">
-				<include name="*.jar" />
-			</fileset>
-			<pathelement path="${mc.build.classes}" />
-			<pathelement path="${mc.build.test.classes}" />
-		</path>
-		<taskdef name="testng" classpathref="mc.classpath.compile"
-			classname="org.testng.TestNGAntTask" />
+  <target name="mc.test" depends="mc.install-mst, mc.test.nodep" />
+  <target name="mc.test.nodep" depends="mc.compile.test, mc.init.test">
+    <property name="abs.build.dir" location="${mc.build.dir}" />
+    <path id="mc.classpath.test.run">
+      <fileset dir="${mc.build.lib}">
+        <include name="*.jar" />
+      </fileset>
+      <pathelement path="${mc.build.classes}" />
+      <pathelement path="${mc.build.test.classes}" />
+    </path>
+    <taskdef name="testng" classpathref="mc.classpath.compile"
+      classname="org.testng.TestNGAntTask" />
 
-		<testng classpathref="mc.classpath.test.run" outputdir="${mc.build.test}">
-			<env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
-			<env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
-			<jvmarg value="-Xms${test.memory}" />
-			<jvmarg value="-Xmx${test.memory}" />
-			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9001" />
-			<classfileset dir="${mc.build.test.classes}" includes="**/*${test}*.class"/>
-		</testng>
-	</target>
+    <testng classpathref="mc.classpath.test.run" outputdir="${mc.build.test}">
+      <env key="MST_SERVICE_TEST_FOLDER" value="${test.folder}" />
+      <env key="MST_ROOT_DIR" value="${abs.build.dir}/" />
+      <jvmarg value="-Xms${test.memory}" />
+      <jvmarg value="-Xmx${test.memory}" />
+      <jvmarg value="-Xdebug" />
+      <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9001" />
+      <classfileset dir="${mc.build.test.classes}" includes="**/*${test}*.class"/>
+    </testng>
+  </target>
 
 </project>
