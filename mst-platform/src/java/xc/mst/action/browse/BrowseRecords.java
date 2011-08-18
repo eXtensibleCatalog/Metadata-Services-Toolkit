@@ -378,7 +378,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 	}
 
 	/**
-     * View error description
+     * View error description  (additional help file)
      */
 	public String viewErrorDescription()  {
 

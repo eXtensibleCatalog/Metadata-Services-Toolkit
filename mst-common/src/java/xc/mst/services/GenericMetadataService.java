@@ -871,11 +871,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     public String getMessage(int code, char type, String[] args) {
         // don't use type as part of message retrieval...yet.
+        // also, don't use args as part of message retrieval yet (need to debug it more) but:
+        //    think it is useful to be able to build messages with variable parts included in them,
+        //    that is what the args are for.
+
         final String prop = "error." + code + ".text";
         String s;
-
+/*
         if (args.length > 0) {
-            s= MSTConfiguration.getMSTString(prop, args);
+            s= MSTConfiguration.getMSTString(prop, args);   //TODO problem with this method.  Returns null?
         }
         else {
             s= config.getProperty(prop);
@@ -884,9 +888,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
         if (s == null) {
             LOG.error("ERROR with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
         }
-        else {
-            LOG.debug("INFO with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
-        }
+*/
+        s= config.getProperty(prop);
         return s;
     }
 

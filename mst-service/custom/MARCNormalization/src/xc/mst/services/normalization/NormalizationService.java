@@ -1372,11 +1372,11 @@ public class NormalizationService extends GenericMetadataService {
 
 			// Get the control fields
 			List<Element> subfields = field035.getChildren("subfield", marcNamespace);
+            StringBuilder err_sb = new StringBuilder("");
 
 			// Iterate over the subfields to find the $a and $b subfields
 			for(Element subfield : subfields)
 			{
-			    StringBuilder err_sb = new StringBuilder("");
 				// Initialize the aSubfield if we found the $a
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
@@ -1394,10 +1394,13 @@ public class NormalizationService extends GenericMetadataService {
 					subfield9 = subfield;
 					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
 				}
-				// for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
-                addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
 
 			} // end loop over 035 subfields
+
+			if (bSubfield != null || subfield9 != null) {
+	            // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+	            addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
+			}
 
 			// Execute only if Fix035 step is enabled
 			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
