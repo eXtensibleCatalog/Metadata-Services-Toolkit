@@ -32,7 +32,7 @@ public class DynMap {
             if (l == 0) {
                 return null;
             } else {
-                return (Long)l;
+                return (Long) l;
             }
         } catch (NumberFormatException nfe) {
             return stringKeyedMap.get(k);
@@ -40,7 +40,7 @@ public class DynMap {
     }
 
     public void ensureCapacity(int desiredCapacity) {
-        LOG.debug("desiredCapacity: "+desiredCapacity);
+        LOG.debug("desiredCapacity: " + desiredCapacity);
         longKeyedMap.ensureCapacity(desiredCapacity);
         stringKeyedMap.ensureCapacity(desiredCapacity);
     }

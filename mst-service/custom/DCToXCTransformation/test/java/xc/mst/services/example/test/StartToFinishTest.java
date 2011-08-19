@@ -10,12 +10,12 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 
     @Override
     protected Format[] getIncomingFormats() throws Exception {
-        return new Format[] {getDCTermsFormat()};
+        return new Format[] { getDCTermsFormat() };
     }
 
     @Override
     protected long getNumberOfRecordsToHarvest() {
-        //return Integer.MAX_VALUE;
+        // return Integer.MAX_VALUE;
         return 1000;
     }
 

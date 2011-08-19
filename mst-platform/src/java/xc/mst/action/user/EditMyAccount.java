@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.user;
 
@@ -19,13 +19,13 @@ import xc.mst.dao.DataException;
 
 /**
  * Action to edit user account
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class EditMyAccount extends BaseActionSupport implements UserAware {
 
-    /** Generated id  */
+    /** Generated id */
     private static final long serialVersionUID = 1117303971697447644L;
 
     /** A reference to the logger for this class */
@@ -54,8 +54,8 @@ public class EditMyAccount extends BaseActionSupport implements UserAware {
      */
     @Override
     public String execute() throws DataException {
-        firstName =  user.getFirstName();
-        lastName =  user.getLastName();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
         email = user.getEmail();
 
         return SUCCESS;
@@ -63,28 +63,28 @@ public class EditMyAccount extends BaseActionSupport implements UserAware {
 
     /**
      * Save user account information
-     *
+     * 
      * @return
      */
     public String saveMyAccount() {
 
-        log.debug(EditMyAccount.class + ":" + "saveMyAccount()" );
+        log.debug(EditMyAccount.class + ":" + "saveMyAccount()");
 
         try {
-                User userWithEmail = getUserService().getUserByEmail(email, user.getServer());
-                if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
-                    user.setFirstName(firstName);
-                    user.setLastName(lastName);
-                    user.setEmail(email);
+            User userWithEmail = getUserService().getUserByEmail(email, user.getServer());
+            if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
 
-                    getUserService().updateUser(user);
-                    errorType = "info";
-                    message = "Account information saved.";
-                } else {
-                    addFieldError("emailExist", "Email already exists - " + email);
-                    errorType = "error";
-                    return INPUT;
-                }
+                getUserService().updateUser(user);
+                errorType = "info";
+                message = "Account information saved.";
+            } else {
+                addFieldError("emailExist", "Email already exists - " + email);
+                errorType = "error";
+                return INPUT;
+            }
         } catch (Exception e) {
             log.error("Exception occured while saving user account information", e);
             addFieldError("dataError", e.getMessage());
@@ -93,8 +93,6 @@ public class EditMyAccount extends BaseActionSupport implements UserAware {
         }
         return SUCCESS;
     }
-
-
 
     public User getUser() {
         return user;
@@ -139,6 +137,5 @@ public class EditMyAccount extends BaseActionSupport implements UserAware {
     public String getMessage() {
         return message;
     }
-
 
 }

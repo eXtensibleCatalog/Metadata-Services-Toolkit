@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.manager;
 
 import org.apache.log4j.Logger;
@@ -130,9 +130,10 @@ public class BaseService {
 
     public Util getUtil() {
         // BDA - was having problems because Repository is sometimes created by Spring, sometimes
-        //       by RepositoryDAO.  This is not purist, but who cares right now.
+        // by RepositoryDAO. This is not purist, but who cares right now.
         return Util.getUtil();
     }
+
     public void setUtil(Util util) {
         this.util = util;
     }
@@ -382,9 +383,11 @@ public class BaseService {
     public RepositoryDAO getRepositoryDAO() {
         return repositoryDAO;
     }
+
     public void setRepositoryDAO(RepositoryDAO repositoryDAO) {
         this.repositoryDAO = repositoryDAO;
     }
+
     public MessageDAO getMessageDAO() {
         return messageDAO;
     }
@@ -396,86 +399,112 @@ public class BaseService {
     public RecordCountsDAO getRecordCountsDAO() {
         return recordCountsDAO;
     }
+
     public void setRecordCountsDAO(RecordCountsDAO recordCountsDAO) {
         this.recordCountsDAO = recordCountsDAO;
     }
 
     public EmailConfigService getEmailConfigService() {
-        return (EmailConfigService)config.getBean("EmailConfigService");
+        return (EmailConfigService) config.getBean("EmailConfigService");
     }
+
     public ScheduleService getScheduleService() {
-        return (ScheduleService)config.getBean("ScheduleService");
+        return (ScheduleService) config.getBean("ScheduleService");
     }
+
     public LogService getLogService() {
-        return (LogService)config.getBean("LogService");
+        return (LogService) config.getBean("LogService");
     }
+
     public JobService getJobService() {
-        return (JobService)config.getBean("JobService");
+        return (JobService) config.getBean("JobService");
     }
+
     public ProcessingDirectiveService getProcessingDirectiveService() {
-        return (ProcessingDirectiveService)config.getBean("ProcessingDirectiveService");
+        return (ProcessingDirectiveService) config.getBean("ProcessingDirectiveService");
     }
+
     public ServicesService getServicesService() {
-        return (ServicesService)config.getBean("ServicesService");
+        return (ServicesService) config.getBean("ServicesService");
     }
+
     public BrowseRecordService getBrowseRecordService() {
-        return (BrowseRecordService)config.getBean("BrowseRecordService");
+        return (BrowseRecordService) config.getBean("BrowseRecordService");
     }
+
     public ExpressionService getExpressionService() {
-        return (ExpressionService)config.getBean("ExpressionService");
+        return (ExpressionService) config.getBean("ExpressionService");
     }
+
     public HoldingsService getHoldingsService() {
-        return (HoldingsService)config.getBean("HoldingsService");
+        return (HoldingsService) config.getBean("HoldingsService");
     }
+
     public ItemService getItemService() {
-        return (ItemService)config.getBean("ItemService");
+        return (ItemService) config.getBean("ItemService");
     }
+
     public ManifestationService getManifestationService() {
-        return (ManifestationService)config.getBean("ManifestationService");
+        return (ManifestationService) config.getBean("ManifestationService");
     }
+
     public WorkService getWorkService() {
-        return (WorkService)config.getBean("WorkService");
+        return (WorkService) config.getBean("WorkService");
     }
+
     public FormatService getFormatService() {
-        return (FormatService)config.getBean("FormatService");
+        return (FormatService) config.getBean("FormatService");
     }
+
     public ProviderService getProviderService() {
-        return (ProviderService)config.getBean("ProviderService");
+        return (ProviderService) config.getBean("ProviderService");
     }
+
     public SetService getSetService() {
-        return (SetService)config.getBean("SetService");
+        return (SetService) config.getBean("SetService");
     }
+
     public GroupService getGroupService() {
-        return (GroupService)config.getBean("GroupService");
+        return (GroupService) config.getBean("GroupService");
     }
+
     public PermissionService getPermissionService() {
-        return (PermissionService)config.getBean("PermissionService");
+        return (PermissionService) config.getBean("PermissionService");
     }
+
     public ServerService getServerService() {
-        return (ServerService)config.getBean("ServerService");
+        return (ServerService) config.getBean("ServerService");
     }
+
     public UserGroupUtilService getUserGroupUtilService() {
-        return (UserGroupUtilService)config.getBean("UserGroupUtilService");
+        return (UserGroupUtilService) config.getBean("UserGroupUtilService");
     }
+
     public UserService getUserService() {
-        return (UserService)config.getBean("UserService");
+        return (UserService) config.getBean("UserService");
     }
+
     public RecordService getRecordService() {
-        return (RecordService)config.getBean("RecordService");
+        return (RecordService) config.getBean("RecordService");
     }
+
     public MSTSolrService getMSTSolrService() {
-        return (MSTSolrService)config.getBean("MSTSolrService");
+        return (MSTSolrService) config.getBean("MSTSolrService");
     }
+
     public Scheduler getScheduler() {
-        return (Scheduler)config.getBean("Scheduler");
+        return (Scheduler) config.getBean("Scheduler");
     }
+
     public RepositoryService getRepositoryService() {
-        return (RepositoryService)config.getBean("RepositoryService");
+        return (RepositoryService) config.getBean("RepositoryService");
     }
+
     public MessageService getMessageService() {
-        return (MessageService)config.getBean("MessageService");
+        return (MessageService) config.getBean("MessageService");
     }
+
     public Emailer getEmailer() {
-        return (Emailer)config.getBean("Emailer");
+        return (Emailer) config.getBean("Emailer");
     }
 }

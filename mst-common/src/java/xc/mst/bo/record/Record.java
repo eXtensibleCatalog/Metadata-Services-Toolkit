@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.bo.record;
 
@@ -31,7 +31,7 @@ import xc.mst.utils.XmlHelper;
 
 /**
  * Represents a record
- *
+ * 
  * @author Eric Osisek
  */
 public class Record implements InputRecord, OutputRecord, Comparable<Record> {
@@ -135,13 +135,13 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
     protected String harvestScheduleName = null;
 
     /**
-     * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate  the other FRBR elements to which they are linked.
+     * This is not used by the Record class, but classes extending it which represent the individual FRBR levels can use this to indicate the other FRBR elements to which they are linked.
      * BDA - 2010-09-10 - unless I'm missing something, these aren't actually used anywhere.
      */
     protected List<String> upLinks = new ArrayList<String>();
 
     /**
-     * The record's traits.  These are used by the aggregation service for matching
+     * The record's traits. These are used by the aggregation service for matching
      */
     protected List<String> traits = new ArrayList<String>();
 
@@ -254,8 +254,8 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
     public Element getOaiXmlEl() {
         if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
             throw new RuntimeException(
-                    "This record is not set to JDOM_MODE.  You must explicitly "+
-                    "call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
+                    "This record is not set to JDOM_MODE.  You must explicitly " +
+                            "call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
         }
         if (this.oaiXmlEl != null) {
             this.oaiXmlEl.detach();
@@ -267,8 +267,8 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
     public void setOaiXmlEl(Element oaiXmlEl) {
         if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(JDOM_MODE)) {
             throw new RuntimeException(
-                    "This record is not set to JDOM_MODE.  You must explicitly "+
-                    "call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
+                    "This record is not set to JDOM_MODE.  You must explicitly " +
+                            "call Record.setMode(Recrod.JDOM_MODE) before calling this method.");
         }
         this.mode = JDOM_MODE;
         this.oaiXmlEl = oaiXmlEl;
@@ -284,61 +284,58 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's ID
-     *
+     * 
      * @return The record's ID
      */
-    public long getId()
-    {
+    public long getId() {
         return id;
     } // end method getId()
 
     /**
      * Sets the record's ID
-     *
-     * @param id The record's new ID
+     * 
+     * @param id
+     *            The record's new ID
      */
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     } // end method setRecordId(long)
 
     /**
      * Gets the time when the record was created
-     *
+     * 
      * @return The time when the record was created
      */
-    public Date getCreatedAt()
-    {
+    public Date getCreatedAt() {
         return createdAt;
     } // end method getCreatedAt()
 
     /**
      * Sets the time when the record was created
-     *
-     * @param createdAt The new time when the record was created
+     * 
+     * @param createdAt
+     *            The new time when the record was created
      */
-    public void setCreatedAt(Date createdAt)
-    {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     } // end method setCreatedAt(Date)
 
     /**
      * Gets the time when the record was last updated
-     *
+     * 
      * @return The new time when the record was last updated
      */
-    public Date getUpdatedAt()
-    {
+    public Date getUpdatedAt() {
         return updatedAt;
     } // end method getUpdatedAt()
 
     /**
      * Sets the time when the record was last updated
-     *
-     * @param updatedAt The new time when the record was last updated
+     * 
+     * @param updatedAt
+     *            The new time when the record was last updated
      */
-    public void setUpdatedAt(Date updatedAt)
-    {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     } // end method setUpdatedAt(Date)
 
@@ -354,78 +351,75 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's format
-     *
+     * 
      * @return The record's format
      */
-    public Format getFormat()
-    {
+    public Format getFormat() {
         return format;
     } // end method getFormat()
 
     /**
      * Sets the record's format
-     *
-     * @param format The record's new format
+     * 
+     * @param format
+     *            The record's new format
      */
-    public void setFormat(Format format)
-    {
+    public void setFormat(Format format) {
         this.format = format;
     } // end method setFormat(Format)
 
     /**
      * Gets the provider from which the record was harvested
-     *
+     * 
      * @return The provider from which the record was harvested, or null if the record wasn't harvested
      */
-    public Provider getProvider()
-    {
+    public Provider getProvider() {
         return provider;
     } // end method getProvider()
 
     /**
      * Sets the provider from which the record was harvested
-     *
-     * @param provider The new provider from which the record was harvested, or null if the record wasn't harvested
+     * 
+     * @param provider
+     *            The new provider from which the record was harvested, or null if the record wasn't harvested
      */
-    public void setProvider(Provider provider)
-    {
+    public void setProvider(Provider provider) {
         this.provider = provider;
     } // end method setProvider(Provider)
 
     /**
      * Gets the service which created the record
-     *
+     * 
      * @return The service that create the record, or null if the record was not created by a service
      */
-    public Service getService()
-    {
+    public Service getService() {
         return service;
     } // end method getService()
 
     /**
      * Sets the service that create the record
-     *
-     * @param service The new service that create the record, or null if the record was not created by a service
+     * 
+     * @param service
+     *            The new service that create the record, or null if the record was not created by a service
      */
-    public void setService(Service service)
-    {
+    public void setService(Service service) {
         this.service = service;
     } // end method setService(Service)
 
     /**
      * Gets the harvest which the record was harvested by
-     *
+     * 
      * @return The harvest which the record was harvested by, or null if the record did not come from a harvest
      */
-    public Harvest getHarvest()
-    {
+    public Harvest getHarvest() {
         return harvest;
     } // end method getHarvest()
 
     /**
      * Sets the harvest which the record was harvested by
-     *
-     * @param harvest The new harvest which the record was harvested by, or null if the record did not come from a harvest
+     * 
+     * @param harvest
+     *            The new harvest which the record was harvested by, or null if the record did not come from a harvest
      */
     public void setHarvest(Harvest harvest) {
         this.harvest = harvest;
@@ -436,7 +430,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
     }
 
     protected String getOaiIdentifier(long id) {
-        return ((RecordService)MSTConfiguration.getInstance().getBean("RecordService")).getOaiIdentifier(
+        return ((RecordService) MSTConfiguration.getInstance().getBean("RecordService")).getOaiIdentifier(
                 id, getProvider(), getService());
     }
 
@@ -450,7 +444,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's OAI datestamp
-     *
+     * 
      * @return The record's OAI datestamp
      */
     public Date getOaiDatestamp() {
@@ -459,8 +453,9 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's OAI datestamp
-     *
-     * @param oaiDatestamp The record's new OAI datestamp
+     * 
+     * @param oaiDatestamp
+     *            The record's new OAI datestamp
      */
     public void setOaiDatestamp(Date oaiDatestamp) {
         this.oaiDatestamp = oaiDatestamp;
@@ -468,35 +463,33 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the the record's OAI header
-     *
+     * 
      * @return The record's OAI header
      */
-    public String getOaiHeader()
-    {
+    public String getOaiHeader() {
         return oaiHeader;
     } // end method getOaiHeader()
 
     /**
      * Sets the record's OAI header
-     *
-     * @param oaiHeader The record's new OAI header
+     * 
+     * @param oaiHeader
+     *            The record's new OAI header
      */
-    public void setOaiHeader(String oaiHeader)
-    {
+    public void setOaiHeader(String oaiHeader) {
         this.oaiHeader = oaiHeader;
     } // end method setOaiHeader(String)
 
     /**
      * Gets the record's OAI XML
-     *
+     * 
      * @return The record's OAI XML
      */
-    public String getOaiXml()
-    {
+    public String getOaiXml() {
         if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
             throw new RuntimeException(
-                    "This record is not set to STRING_MODE.  You must explicitly "+
-                    "call Record.setMode(STRING_MODE) before calling this method.");
+                    "This record is not set to STRING_MODE.  You must explicitly " +
+                            "call Record.setMode(STRING_MODE) before calling this method.");
         }
         this.mode = STRING_MODE;
         return oaiXml;
@@ -504,15 +497,15 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's OAI XML
-     *
-     * @param oaiXml The record's new OAI XML
+     * 
+     * @param oaiXml
+     *            The record's new OAI XML
      */
-    public void setOaiXml(String oaiXml)
-    {
+    public void setOaiXml(String oaiXml) {
         if (!this.mode.equals(MODE_NOT_SET) && !this.mode.equals(STRING_MODE)) {
             throw new RuntimeException(
-                    "This record is not set to STRING_MODE.  You must explicitly "+
-                    "call Record.setMode(STRING_MODE) before calling this method.");
+                    "This record is not set to STRING_MODE.  You must explicitly " +
+                            "call Record.setMode(STRING_MODE) before calling this method.");
         }
         this.mode = STRING_MODE;
         this.oaiXml = oaiXml;
@@ -520,336 +513,329 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the sets the record belongs to
-     *
+     * 
      * @return The record's sets
      */
-    public List<Set> getSets()
-    {
+    public List<Set> getSets() {
         return sets;
     } // end method getSets()
 
     /**
      * Sets the sets the record belongs to
-     *
-     * @param sets A list of sets for the record
+     * 
+     * @param sets
+     *            A list of sets for the record
      */
-    public void setSets(List<Set> sets)
-    {
+    public void setSets(List<Set> sets) {
         this.sets = sets;
     } // end method setSets(List<Set>)
 
     /**
      * Adds a set to the list of sets the record belongs to
-     *
-     * @param set The set to add
+     * 
+     * @param set
+     *            The set to add
      */
-    public void addSet(Set set)
-    {
-        if(!sets.contains(set))
+    public void addSet(Set set) {
+        if (!sets.contains(set))
             sets.add(set);
     } // end method addSet(Set)
 
     /**
      * Removes a set from the list of sets the record belongs to
-     *
-     * @param set The set to remove
+     * 
+     * @param set
+     *            The set to remove
      */
-    public void removeSet(Set set)
-    {
-        if(sets.contains(set))
+    public void removeSet(Set set) {
+        if (sets.contains(set))
             sets.remove(set);
     } // end method removeSet(Set)
 
     /**
      * Gets the records which this record was processed from
-     *
+     * 
      * @return The records which this record was processed from
      */
-    public List<Record> getProcessedFrom()
-    {
+    public List<Record> getProcessedFrom() {
         return processedFrom;
     } // end method getProcessedFrom()
 
     /**
      * Sets the records which this record was processed from
-     *
-     * @param processedFrom A list of records which this record was processed from
+     * 
+     * @param processedFrom
+     *            A list of records which this record was processed from
      */
-    public void setProcessedFrom(List<Record> processedFrom)
-    {
+    public void setProcessedFrom(List<Record> processedFrom) {
         this.processedFrom = processedFrom;
     } // end method setProcessedFrom(List<Record>)
 
     /**
      * Adds a record to the records which this record was processed from
-     *
-     * @param record The record to add to the list of records which this record was processed from
+     * 
+     * @param record
+     *            The record to add to the list of records which this record was processed from
      */
-    public void addProcessedFrom(Record record)
-    {
-        if(!processedFrom.contains(record))
+    public void addProcessedFrom(Record record) {
+        if (!processedFrom.contains(record))
             processedFrom.add(record);
     } // end method addProcessedFrom(Record)
 
     /**
      * Removes a set from the list of records which this record was processed from
-     *
-     * @param record The set to remove from the list of records which this record was processed from
+     * 
+     * @param record
+     *            The set to remove from the list of records which this record was processed from
      */
-    public void removeProcessedFrom(Record record)
-    {
-        if(processedFrom.contains(record))
+    public void removeProcessedFrom(Record record) {
+        if (processedFrom.contains(record))
             processedFrom.remove(record);
     } // end method removeProcessedFrom(Record)
 
     /**
      * Gets the records which were processed from this record
-     *
+     * 
      * @return A list of records which were processed from this record
      */
-    public List<OutputRecord> getSuccessors()
-    {
+    public List<OutputRecord> getSuccessors() {
         return successors;
     } // end method getSuccesors()
 
     /**
      * Sets the records which were processed from this record
-     *
-     * @param successors The new list of records which were processed from this record
+     * 
+     * @param successors
+     *            The new list of records which were processed from this record
      */
-    public void setSuccessors(List<OutputRecord> successors)
-    {
+    public void setSuccessors(List<OutputRecord> successors) {
         this.successors = successors;
     } // end method setSuccessors(List<Record>)
 
     /**
      * Adds a record to the list of records which were processed from this record
-     *
-     * @param successor The new record which was processed from this record
+     * 
+     * @param successor
+     *            The new record which was processed from this record
      */
-    public void addSuccessor(Record successor)
-    {
+    public void addSuccessor(Record successor) {
         this.successors.add(successor);
     } // end method addSuccessor(Record successor)
 
     /**
      * Gets the services which the record is input for
-     *
+     * 
      * @return The services which the record is input for
      */
-    public List<Service> getInputForServices()
-    {
+    public List<Service> getInputForServices() {
         return inputForServices;
     } // end method getInputForServices()
 
     /**
      * Sets the services which the record is input for
-     *
-     * @param inputForServices A list of services which the record is input for
+     * 
+     * @param inputForServices
+     *            A list of services which the record is input for
      */
-    public void setInputForServices(List<Service> inputForServices)
-    {
+    public void setInputForServices(List<Service> inputForServices) {
         this.inputForServices = inputForServices;
     } // end method setInputForServices(List<Service>)
 
     /**
      * Adds a service to the services which the record is input for
-     *
-     * @param service The service to add to the list of services which the record is input for
+     * 
+     * @param service
+     *            The service to add to the list of services which the record is input for
      */
-    public void addInputForService(Service service)
-    {
-        if(!inputForServices.contains(service))
+    public void addInputForService(Service service) {
+        if (!inputForServices.contains(service))
             inputForServices.add(service);
     } // end method addInputForServices(Service)
 
     /**
      * Removes a set from the list of services which the record is input for
-     *
-     * @param service The set to remove from the list of services which the record is input for
+     * 
+     * @param service
+     *            The set to remove from the list of services which the record is input for
      */
-    public void removeInputForService(Service service)
-    {
-        if(inputForServices.contains(service))
+    public void removeInputForService(Service service) {
+        if (inputForServices.contains(service))
             inputForServices.remove(service);
     } // end method removeInputForServices(Service)
 
     /**
      * Gets the services which the record is output for
-     *
+     * 
      * @return The services which the record is output for
      */
-    public List<Service> getProcessedByServices()
-    {
+    public List<Service> getProcessedByServices() {
         return processedByServices;
     } // end method getProcessedByServices()
 
     /**
      * Sets the services which the record is output for
-     *
-     * @param processedByServices A list of services which the record is output for
+     * 
+     * @param processedByServices
+     *            A list of services which the record is output for
      */
-    public void setProcessedByServices(List<Service> processedByServices)
-    {
+    public void setProcessedByServices(List<Service> processedByServices) {
         this.processedByServices = processedByServices;
     } // end method setProcessedByServices(List<Service>)
 
     /**
      * Adds a service to the services which the record is output for
-     *
-     * @param service The service to add to the list of services which the record is output for
+     * 
+     * @param service
+     *            The service to add to the list of services which the record is output for
      */
-    public void addProcessedByService(Service service)
-    {
-        if(!processedByServices.contains(service))
+    public void addProcessedByService(Service service) {
+        if (!processedByServices.contains(service))
             processedByServices.add(service);
     } // end method addProcessedByServices(Service)
 
     /**
      * Removes a set from the list of services which the record is output for
-     *
-     * @param service The set to remove from the list of services which the record is output for
+     * 
+     * @param service
+     *            The set to remove from the list of services which the record is output for
      */
-    public void removeProcessedByService(Service service)
-    {
-        if(processedByServices.contains(service))
+    public void removeProcessedByService(Service service) {
+        if (processedByServices.contains(service))
             processedByServices.remove(service);
     } // end method removeProcessedByServices(Service)
 
     /**
      * Gets the record's traits
-     *
+     * 
      * @return The record's traits
      */
-    public List<String> getTraits()
-    {
+    public List<String> getTraits() {
         return traits;
     } // end method getTraits()
 
     /**
      * Sets the record's traits
-     *
-     * @param traits The record's new traits
+     * 
+     * @param traits
+     *            The record's new traits
      */
-    public void setTraits(List<String> traits)
-    {
+    public void setTraits(List<String> traits) {
         this.traits = traits;
     } // end method setTraits(List<String>)
 
     /**
      * Adds a trait to the record
-     *
-     * @param trait The trait to add to the record
+     * 
+     * @param trait
+     *            The trait to add to the record
      */
-    public void addTrait(String trait)
-    {
-        if(!traits.contains(trait))
+    public void addTrait(String trait) {
+        if (!traits.contains(trait))
             traits.add(trait);
     } // end method addTraits(String)
 
     /**
      * Removes a trait from the record
-     *
-     * @param trait The trait to remove from the record
+     * 
+     * @param trait
+     *            The trait to remove from the record
      */
-    public void removeTrait(String trait)
-    {
-        if(traits.contains(trait))
+    public void removeTrait(String trait) {
+        if (traits.contains(trait))
             traits.remove(trait);
     } // end method removeTrait(String)
 
     /**
      * Gets the record's errors
-     *
+     * 
      * @return The record's errors
      */
-    public List<RecordMessage> getMessages()
-    {
+    public List<RecordMessage> getMessages() {
         return messages;
     } // end method getMessages()
 
     /**
      * Sets the record's errors
-     *
-     * @param errors The record's new errors
+     * 
+     * @param errors
+     *            The record's new errors
      */
-    public void setMessages(List<RecordMessage> messages)
-    {
+    public void setMessages(List<RecordMessage> messages) {
         LOG.debug("Record.setMessages() called");
-        this.messages= messages;
+        this.messages = messages;
     } // end method setMessages(List<RecordMessage>)
 
     /**
      * Adds a error to the record
-     *
-     * @param error The error to add to the record
+     * 
+     * @param error
+     *            The error to add to the record
      */
-    public void addMessage(RecordMessage message)
-    {
-        //LOG.debug("Record.addMessage() called on record.id:"+getId());
-        if(!messages.contains(message))
+    public void addMessage(RecordMessage message) {
+        // LOG.debug("Record.addMessage() called on record.id:"+getId());
+        if (!messages.contains(message))
             messages.add(message);
     } // end method addMessage(RecordMessage)
 
     /**
      * Removes a error from the record
-     *
-     * @param error The error to remove from the record
+     * 
+     * @param error
+     *            The error to remove from the record
      */
-    public void removeMessage(RecordMessage message)
-    {
+    public void removeMessage(RecordMessage message) {
         LOG.debug("Record.removeMessage() called");
-        if(messages.contains(message))
+        if (messages.contains(message))
             messages.remove(message);
     } // end method removeError(RecordMessage)
 
     /**
      * Gets the record's up links
-     *
+     * 
      * @return The record's uplinks
      */
-    public List<String> getUpLinks()
-    {
+    public List<String> getUpLinks() {
         return upLinks;
     } // end method getUpLinks()
 
     /**
      * Sets the record's up links
-     *
-     * @param traits The record's new up links
+     * 
+     * @param traits
+     *            The record's new up links
      */
-    public void setUpLinks(List<String> upLinks)
-    {
+    public void setUpLinks(List<String> upLinks) {
         this.upLinks = upLinks;
     } // end method setUpLinks(List<Record>)
 
     /**
      * Adds an up link to the record
-     *
-     * @param upLink The record to add as an uplink
+     * 
+     * @param upLink
+     *            The record to add as an uplink
      */
-    public void addUpLink(String upLink)
-    {
-        if(!upLinks.contains(upLink))
+    public void addUpLink(String upLink) {
+        if (!upLinks.contains(upLink))
             upLinks.add(upLink);
     } // end method addUpLink(Record)
 
     /**
      * Removes an up link from the record
-     *
-     * @param upLink The record to remove as an up link
+     * 
+     * @param upLink
+     *            The record to remove as an up link
      */
-    public void removeUpLink(String upLink)
-    {
-        if(upLinks.contains(upLink))
+    public void removeUpLink(String upLink) {
+        if (upLinks.contains(upLink))
             upLinks.remove(upLink);
     } // end method removeUpLink(Record)
 
     /**
      * Creates a Record from an existing record with all fields the same except for the
      * record ID
-     *
-     * @param otherRecord The record we're copying fields from
+     * 
+     * @param otherRecord
+     *            The record we're copying fields from
      * @return A record identical to otherRecord except that the record ID is -1.
      */
     public static Record copyRecord(Record otherRecord) {
@@ -858,21 +844,21 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
         // Set all the fields on the new record to match the fields on the other record
         // except for the record ID
-        //record.setCreatedAt(otherRecord.getCreatedAt());
-        //record.setDeleted(otherRecord.getDeleted());
+        // record.setCreatedAt(otherRecord.getCreatedAt());
+        // record.setDeleted(otherRecord.getDeleted());
         record.setFormat(otherRecord.getFormat());
-        //record.setOaiDatestamp(otherRecord.getOaiDatestamp());
-        //record.setOaiHeader(otherRecord.getOaiHeader());
-        //record.setOaiIdentifier(otherRecord.getOaiIdentifier());
+        // record.setOaiDatestamp(otherRecord.getOaiDatestamp());
+        // record.setOaiHeader(otherRecord.getOaiHeader());
+        // record.setOaiIdentifier(otherRecord.getOaiIdentifier());
         if (Record.JDOM_MODE.equals(otherRecord.getMode())) {
             record.setOaiXmlEl(otherRecord.getOaiXmlEl());
         } else {
             record.setOaiXml(otherRecord.getOaiXml());
         }
 
-        //record.setProvider(otherRecord.getProvider());
-        //record.setService(otherRecord.getService());
-        //record.setUpdatedAt(otherRecord.getUpdatedAt());
+        // record.setProvider(otherRecord.getProvider());
+        // record.setService(otherRecord.getService());
+        // record.setUpdatedAt(otherRecord.getUpdatedAt());
 
         // Return the copied record
         return record;
@@ -898,8 +884,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
         }
         buffer.append(" updatedAt=" + updatedAt);
         buffer.append(" sets=" + sets);
-        if (harvest != null)
-        {
+        if (harvest != null) {
             buffer.append(" ScheduleId=" + harvest.getHarvestSchedule().getId());
         }
         buffer.append(" oaiDatestamp=" + oaiDatestamp);
@@ -913,27 +898,25 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Returns the number of predecessors of the record
-     *
+     * 
      * @return The number of predecessors the record has
      */
-    public int getNumberOfPredecessors()
-    {
+    public int getNumberOfPredecessors() {
         return predecessors.size();
     }
 
     /**
      * Returns the number of successors of the record
-     *
+     * 
      * @return The number of successors the record has
      */
-    public int getNumberOfSuccessors()
-    {
+    public int getNumberOfSuccessors() {
         return this.successors.size();
     }
 
     /**
      * Get harvest schedule name
-     *
+     * 
      * @return name of schedule
      */
     public String getHarvestScheduleName() {
@@ -942,8 +925,9 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Set harvest schedule name
-     *
-     * @param harvestScheduleName name of schedule
+     * 
+     * @param harvestScheduleName
+     *            name of schedule
      */
     public void setHarvestScheduleName(String harvestScheduleName) {
         this.harvestScheduleName = harvestScheduleName;
@@ -957,7 +941,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
         this.numberOfSuccessors = numberOfSuccessors;
     }
 
-    public void removeSucessor(Record successor){
+    public void removeSucessor(Record successor) {
         this.successors.remove(successor);
     }
 
@@ -995,7 +979,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
         if (o == null) {
             return false;
         } else {
-            Record r = (Record)o;
+            Record r = (Record) o;
             if (r.getId() == -1 && getId() == -1) {
                 return super.equals(o);
             } else if (r.getId() == -1) {

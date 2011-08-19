@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.common.test;
 
@@ -40,38 +40,37 @@ public class GenericTest extends BaseTest {
             System.out.println("beluga");
             LOG.error("beluga");
 
-            //problem
-            //2750000,250000
+            // problem
+            // 2750000,250000
 
             // this works
-            //int offset = 2750000;
-            //int incr = 25000;
+            // int offset = 2750000;
+            // int incr = 25000;
 
             // this doesn't work
-            //int offset = 2750000;
-            //int incr = 250000;
+            // int offset = 2750000;
+            // int incr = 250000;
 
             // this doesn't work
             int offset = 2750000;
             int incr = 250000;
 
-            for (int i=0; (offset+(incr*i))<=3000000; i++) {
-                String sql = "select record_id, oai_id from  xc_rochester_137.record_oai_ids limit "+(offset+(incr*i))+","+incr;
-                LOG.error("sql: "+sql);
+            for (int i = 0; (offset + (incr * i)) <= 3000000; i++) {
+                String sql = "select record_id, oai_id from  xc_rochester_137.record_oai_ids limit " + (offset + (incr * i)) + "," + incr;
+                LOG.error("sql: " + sql);
                 List<Map<String, Object>> rowList = getJdbcTemplate().queryForList(sql);
-                LOG.error("rowList.size(): "+rowList.size());
-                int j=0;
+                LOG.error("rowList.size(): " + rowList.size());
+                int j = 0;
                 for (Map<String, Object> row : rowList) {
                     if (j++ % 10000 == 0) {
-                        LOG.error("record_id: "+row.get("record_id"));
-                        LOG.error("oai_id: "+row.get("oai_id"));
+                        LOG.error("record_id: " + row.get("record_id"));
+                        LOG.error("oai_id: " + row.get("oai_id"));
                     }
                 }
                 LOG.error("done.");
             }
             /*
             */
-
 
             /*
             String[] rtSplit = "|||xc|13360453".split("\\\\|");
@@ -118,8 +117,6 @@ public class GenericTest extends BaseTest {
                 System.out.println("u: "+u2);
             }
             */
-
-
 
             /*
             Record r = getRepositoryDAO().getRecord("test_repo", 1000);

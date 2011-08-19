@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.services.transformation;
 
@@ -45,7 +45,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
  * record from the data in the unprocessed record.
- *
+ * 
  * @author Eric Osisek
  * @author Benjamin D. Anderson
  */
@@ -55,9 +55,9 @@ public class TransformationService extends SolrTransformationService {
 
     protected XmlHelper xmlHelper = new XmlHelper();
 
-    //TODO - these datastructures need to be read in and they need to be persisted.
+    // TODO - these datastructures need to be read in and they need to be persisted.
     // which begs the question about the lack of transactions... I need a way to
-    // rollback if something bad happens.  Probably the easiest thing to do is just to delete
+    // rollback if something bad happens. Probably the easiest thing to do is just to delete
     // records with some id higher than something.
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
@@ -117,7 +117,7 @@ public class TransformationService extends SolrTransformationService {
     public void init() {
         super.init();
         // Initialize the XC format
-        try  {
+        try {
             xcFormat = getFormatService().getFormatByName("xc");
         } catch (DatabaseConfigException e) {
             LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
@@ -147,7 +147,7 @@ public class TransformationService extends SolrTransformationService {
             if (l == 0) {
                 return null;
             } else {
-                return (Long)l;
+                return (Long) l;
             }
         } catch (NumberFormatException nfe) {
             return stringLongMap.get(s);
@@ -184,6 +184,7 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsProcessedStringIdMap),
                 s);
     }
+
     protected void addManifestationId4BibProcessed(String orgCode, String s, Long l) {
         add2Map(
                 getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
@@ -192,6 +193,7 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsProcessedStringIdAddedMap),
                 s, l);
     }
+
     protected void removeManifestationId4BibProcessed(String orgCode, String s) {
         removeFromMap(
                 getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
@@ -200,12 +202,14 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsProcessedStringIdRemovedMap),
                 s);
     }
+
     protected Long getManifestationId4BibYet2Arrive(String orgCode, String s) {
         return getLongFromMap(
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
                 s);
     }
+
     protected void addManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
         add2Map(
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
@@ -214,6 +218,7 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdAddedMap),
                 s, l);
     }
+
     protected void removeManifestationId4BibYet2Arrive(String orgCode, String s) {
         removeFromMap(
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
@@ -250,7 +255,7 @@ public class TransformationService extends SolrTransformationService {
 
             previouslyHeldManifestationIds.forEach(new TLongProcedure() {
                 public boolean execute(long recordId) {
-                    LOG.debug("previouslyHeldManifestationId: "+recordId+"");
+                    LOG.debug("previouslyHeldManifestationId: " + recordId + "");
                     return true;
                 }
             });
@@ -258,7 +263,7 @@ public class TransformationService extends SolrTransformationService {
             getTransformationDAO().getHoldingIdsToActivate(previouslyHeldManifestationIds).forEach(
                     new TLongProcedure() {
                         public boolean execute(long recordId) {
-                            LOG.debug("getRepository().activateRecord("+recordId+")");
+                            LOG.debug("getRepository().activateRecord(" + recordId + ")");
                             getRepository().activateRecord("holdings", recordId);
                             return true;
                         }
@@ -296,11 +301,11 @@ public class TransformationService extends SolrTransformationService {
 
     @Override
     public List<OutputRecord> process(InputRecord record) {
-        //addErrorToInput(record, 12, RecordMessage.WARN);
-        //addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
-        LOG.debug("getHarvestedOaiIdentifier(): "+((Record)record).getHarvestedOaiIdentifier());
-        LOG.debug("getOaiIdentifier(): "+((Record)record).getOaiIdentifier());
-        LOG.debug("getId(): "+((Record)record).getId());
+        // addErrorToInput(record, 12, RecordMessage.WARN);
+        // addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
+        LOG.debug("getHarvestedOaiIdentifier(): " + ((Record) record).getHarvestedOaiIdentifier());
+        LOG.debug("getOaiIdentifier(): " + ((Record) record).getOaiIdentifier());
+        LOG.debug("getId(): " + ((Record) record).getId());
         try {
             List<OutputRecord> results = new ArrayList<OutputRecord>();
 
@@ -339,16 +344,16 @@ public class TransformationService extends SolrTransformationService {
                 orgCode = originalRecord.getOrgCode();
                 if (orgCode.equals("")) {
                     // Add error
-                    //record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+                    // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
                 }
 
                 boolean isBib = false;
                 boolean isHolding = false;
 
                 char leader06 = originalRecord.getLeader().charAt(6);
-                if("abcdefghijkmnoprt".contains(""+leader06)) {
+                if ("abcdefghijkmnoprt".contains("" + leader06)) {
                     isBib = true;
-                } else if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+                } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
                     isHolding = true;
                 } else { // If leader 6th character is invalid, then log error and do not process that record.
                     logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
@@ -357,11 +362,11 @@ public class TransformationService extends SolrTransformationService {
 
                 AggregateXCRecord ar = new AggregateXCRecord();
                 if (isBib) {
-                    ((Record)record).setType("bib");
+                    ((Record) record).setType("bib");
                     processBibliographicRecord(ar, originalRecord, record);
                 } else if (isHolding) {
                     processHoldingRecord(ar, originalRecord, record);
-                    ((Record)record).setType("hold");
+                    ((Record) record).setType("hold");
                 }
 
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
@@ -424,7 +429,7 @@ public class TransformationService extends SolrTransformationService {
                             Long manifestationId = getManifestationId4BibProcessed(
                                     originalRecord.getOrgCode(), ref001);
 
-                            LOG.debug("input "+record.getId()+ "manifestationId: "+manifestationId);
+                            LOG.debug("input " + record.getId() + "manifestationId: " + manifestationId);
                             if (manifestationId == null) {
                                 manifestationId = getManifestationId4BibYet2Arrive(
                                         originalRecord.getOrgCode(), ref001);
@@ -443,11 +448,11 @@ public class TransformationService extends SolrTransformationService {
 
                         if (holdingsRecords != null) {
                             for (OutputRecord r : holdingsRecords) {
-                                //addErrorToOutput(r, 16, RecordMessage.INFO);
-                                //addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
-                                if (status ==  Record.HELD) {
+                                // addErrorToOutput(r, 16, RecordMessage.INFO);
+                                // addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
+                                if (status == Record.HELD) {
                                     for (Long mid : manifestationIds) {
-                                        heldHoldings.add(new long[] {r.getId(), mid});
+                                        heldHoldings.add(new long[] { r.getId(), mid });
                                     }
                                 }
                                 r.setStatus(status);
@@ -458,12 +463,12 @@ public class TransformationService extends SolrTransformationService {
                         }
                     }
                 }
-                //update service accordingly w/ new record counts
+                // update service accordingly w/ new record counts
             }
             TimingLogger.add("output records", results.size());
             for (OutputRecord or : results) {
                 if (!or.getDeleted()) {
-                    String type = getXCRecordService().getType((Record)or);
+                    String type = getXCRecordService().getType((Record) or);
                     or.setType(type);
                 }
                 or.setFormat(xcFormat);
@@ -473,7 +478,7 @@ public class TransformationService extends SolrTransformationService {
             }
             return results;
         } catch (Throwable t) {
-            LOG.error("error processing record with id:"+((Record)record).getId(), t);
+            LOG.error("error processing record with id:" + ((Record) record).getId(), t);
             addMessage(record, 102, RecordMessage.ERROR);
         }
         return null;
@@ -485,7 +490,7 @@ public class TransformationService extends SolrTransformationService {
     protected void processBibliographicRecord(
             AggregateXCRecord transformedRecord, SaxMarcXmlRecord originalRecord, InputRecord record)
                 throws DataException, DatabaseConfigException, TransformerConfigurationException,
-                    IndexException, TransformerException{
+                    IndexException, TransformerException {
 
         // Run the transformation steps
         // Each one processes a different MARC XML field and adds the appropriate
@@ -621,7 +626,7 @@ public class TransformationService extends SolrTransformationService {
             AggregateXCRecord transformedRecord,
             SaxMarcXmlRecord originalRecord,
             InputRecord record)
-                throws  DatabaseConfigException, TransformerConfigurationException,
+                throws DatabaseConfigException, TransformerConfigurationException,
                     IndexException, TransformerException, DataException {
 
         // Run the transformation steps
@@ -647,33 +652,33 @@ public class TransformationService extends SolrTransformationService {
             final Logger LOG2 = getRulesLogger();
 
             try {
-                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1",1);
-                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.2",2);
+                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1", 1);
+                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.2", 2);
                 RecordCounts rc1, rc2 = null;
 
                 try {
                     Service s1 = getServicesService().getServiceById(serviceNum1);
-                    if (s1==null) {
+                    if (s1 == null) {
                         LOG2.error("*** can not calculate record counts, no service found");
                         return;
                     }
                     Service s2 = getServicesService().getServiceById(serviceNum2);
-                    if (s2==null) {
+                    if (s2 == null) {
                         LOG2.error("*** can not calculate record counts, no 2nd service found");
                         return;
                     }
                     rc1 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s1.getName());
                     if (rc1 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: "+ s1.getName());
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s1.getName());
                         return;
                     }
                     rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s2.getName());
                     if (rc2 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: "+ s2.getName());
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s2.getName());
                         return;
                     }
                 } catch (Exception e) {
-                    LOG2.error("*** can not calculate record counts: ",e);
+                    LOG2.error("*** can not calculate record counts: ", e);
                     return;
                 }
                 // TODO: bug fix? all UNEXPECTED_ERROR retrieved counts are null!
@@ -686,7 +691,7 @@ public class TransformationService extends SolrTransformationService {
                 Map<String, AtomicInteger> counts4typeT_m = rc2.getCounts().get("manifestation");
                 Map<String, AtomicInteger> counts4typeT_h = rc2.getCounts().get("holdings");
 
-                //TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
+                // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
                 LOG2.info("%%%");
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderTransformation"));
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBA_eq_TMA"));// = Normalization Bibs Active = Transformation Manifestations Active
@@ -694,25 +699,22 @@ public class TransformationService extends SolrTransformationService {
                 try {
                     if (counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NBA="+counts4typeN_b.get(RecordCounts.NEW_ACTIVE)+ ", TMA="+counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("NBA=" + counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + ", TMA=" + counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
-
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBD_eq_TMD"));// = Normalization Bibs Deleted = Transformation Manifestations Deleted
                 try {
                     if (counts4typeN_b.get(RecordCounts.NEW_DELETE).get() == counts4typeT_m.get(RecordCounts.NEW_DELETE).get()) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NBD="+counts4typeN_b.get(RecordCounts.NEW_DELETE)+ ", TMD="+counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
+                    LOG2.info("NBD=" + counts4typeN_b.get(RecordCounts.NEW_DELETE) + ", TMD=" + counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
@@ -722,13 +724,12 @@ public class TransformationService extends SolrTransformationService {
                     final int n_h_a = counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get();
                     final int t_h_a = counts4typeT_h.get(RecordCounts.NEW_ACTIVE).get();
                     final int t_h_h = counts4typeT_h.get(RecordCounts.NEW_HELD).get();
-                    if (n_h_a <= (t_h_a + t_h_h) ) {
+                    if (n_h_a <= (t_h_a + t_h_h)) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NHA="+n_h_a + ", THA=" +t_h_a + ", THH="+t_h_h + result);
+                    LOG2.info("NHA=" + n_h_a + ", THA=" + t_h_a + ", THH=" + t_h_h + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
@@ -737,15 +738,13 @@ public class TransformationService extends SolrTransformationService {
                 try {
                     if (counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("TEA="+counts4typeT_e.get(RecordCounts.NEW_ACTIVE)+ ", TWA="+counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("TEA=" + counts4typeT_e.get(RecordCounts.NEW_ACTIVE) + ", TWA=" + counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
-
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTWA_geq_TMA"));// = Transformation Works Active >= Transformation Manifestations Active
                 int t_m_a;
@@ -754,22 +753,20 @@ public class TransformationService extends SolrTransformationService {
                     t_m_a = counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get();
                     final int t_w_a = counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get();
                     t_e_a = counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get();
-                    if (t_w_a >= (t_m_a) ) {
+                    if (t_w_a >= (t_m_a)) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("TWA="+ t_w_a + ", TMA="+t_m_a + result);
+                    LOG2.info("TWA=" + t_w_a + ", TMA=" + t_m_a + result);
 
                     LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_geq_TMA"));// = Transformation Expressions Active >= Transformation Manifestations Active
-                    if (t_e_a >= (t_m_a) ) {
+                    if (t_e_a >= (t_m_a)) {
                         result = " ** PASS **";
-                    }
-                    else {
+                    } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("TWA="+ t_e_a + ", TMA="+t_m_a + result);
+                    LOG2.info("TWA=" + t_e_a + ", TMA=" + t_m_a + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
@@ -777,8 +774,8 @@ public class TransformationService extends SolrTransformationService {
                 LOG2.info("%%%");
 
             } catch (Exception e) {
-                LOG.error("",e);
-                LOG2.error("",e);
+                LOG.error("", e);
+                LOG2.error("", e);
             }
         }
     }

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.user;
 
@@ -17,13 +17,12 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
- * Data access object for permissions belonging to a group.  These are taken from the
+ * Data access object for permissions belonging to a group. These are taken from the
  * top_level_tab and group_to_top_level_tab tables.
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class PermissionDAO extends BaseDAO
-{
+public abstract class PermissionDAO extends BaseDAO {
     /**
      * The Object managing the database connection
      */
@@ -66,36 +65,43 @@ public abstract class PermissionDAO extends BaseDAO
 
     /**
      * Gets all possible permissions.
-     *
+     * 
      * @return A list of all possible permissions
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<Permission> getAll() throws DatabaseConfigException;
 
     /**
      * Gets the permissions belonging to a group.
-     *
-     * @param groupId The ID of the group to get permissions for
+     * 
+     * @param groupId
+     *            The ID of the group to get permissions for
      * @return A list of permissions belonging to the group
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException;
 
     /**
      * Returns a permission object based on the ID passed
-     *
-     * @param permissionId permission ID
+     * 
+     * @param permissionId
+     *            permission ID
      * @return The Permission with the passed ID
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Permission getPermissionById(int permissionId) throws DatabaseConfigException;
 
     /**
      * Returns all permissions for user sorted by ascending order of tab order
-     *
-     * @param userId User ID
+     * 
+     * @param userId
+     *            User ID
      * @return All permissions for user sorted by ascending order of tab order
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<Permission> getPermissionsForUserByTabOrderAsc(int userId) throws DatabaseConfigException;
 } // end class PermissionDAO

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.repo;
 
@@ -39,7 +39,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
     private static final Logger LOG = Logger.getLogger(DefaultRepository.class);
 
-    // This is meant only to be a cache of what is not yet in the DB.  This will not
+    // This is meant only to be a cache of what is not yet in the DB. This will not
     // keep all pred-succs in memory.
     protected Map<Long, java.util.Set<Record>> predSuccMap = new HashMap<Long, java.util.Set<Record>>();
 
@@ -91,7 +91,7 @@ public class DefaultRepository extends BaseService implements Repository {
         this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
-                    LOG.debug("config.getProperty(\"version\"): "+config.getProperty("version"));
+                    LOG.debug("config.getProperty(\"version\"): " + config.getProperty("version"));
                     if (previousVersion == null &&
                             currentVersion != null &&
                             currentVersion.startsWith("0.3.")) {
@@ -146,9 +146,11 @@ public class DefaultRepository extends BaseService implements Repository {
     public boolean commitIfNecessary(boolean force) {
         return commitIfNecessary(force, 0);
     }
+
     public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         return commitIfNecessary(force, processedRecordsCount, null, null);
     }
+
     public boolean commitIfNecessary(boolean force, long processedRecordsCount,
             RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
         if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
@@ -158,7 +160,7 @@ public class DefaultRepository extends BaseService implements Repository {
             getRepositoryDAO().activateRecords(name, recordsToActivate);
             for (Map.Entry<String, AtomicInteger> me : recordCountsToActivateByType.entrySet()) {
                 int num = me.getValue().get();
-                for (int i=0; i<num; i++) {
+                for (int i = 0; i < num; i++) {
                     outgoingRecordCounts.incr(me.getKey(), Record.ACTIVE, Record.HELD);
                     if (me.getKey() != null && !RecordCounts.TOTALS.equals(me.getKey())) {
                         outgoingRecordCounts.incr(null, Record.ACTIVE, Record.HELD);
@@ -207,23 +209,24 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-        return getRecords(from, until, startingId, inputFormat, inputSet, new char[] {Record.ACTIVE, Record.DELETED});
+        return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE, Record.DELETED });
     }
+
     public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet, char[] statuses) {
-        LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
+        LOG.debug("from:" + from + " until:" + until + " startingId:" + startingId + " inputFormat:" + inputFormat + " inputSet:" + inputSet);
         List<Record> records = getRepositoryDAO().getRecordsWSets(name, from, until, startingId, inputFormat, inputSet, statuses);
-        //List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet, statuses);
+        // List<Record> records = getRepositoryDAO().getRecords(name, from, until, startingId, inputFormat, inputSet, statuses);
         if (records == null) {
             LOG.debug("no records found");
         } else {
-            LOG.debug("records.size(): "+records.size());
+            LOG.debug("records.size(): " + records.size());
         }
         return records;
     }
 
     public long getRecordCount(final Date from, final Date until,
             final Format inputFormat, final Set inputSet) {
-        final String key = "from:"+from+" until:"+until+ " inputFormat:"+inputFormat+" inputSet:"+inputSet;
+        final String key = "from:" + from + " until:" + until + " inputFormat:" + inputFormat + " inputSet:" + inputSet;
         LOG.debug(key);
         if (completeListSizeMap.containsKey(key)) {
             LOG.debug("found recordCount in cache");
@@ -244,14 +247,13 @@ public class DefaultRepository extends BaseService implements Repository {
         }
     }
 
-
     public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
-        LOG.debug("from:"+from+" until:"+until+ " startingId:"+startingId+" inputFormat:"+inputFormat+" inputSet:"+inputSet);
+        LOG.debug("from:" + from + " until:" + until + " startingId:" + startingId + " inputFormat:" + inputFormat + " inputSet:" + inputSet);
         List<Record> records = getRepositoryDAO().getRecordHeader(name, from, until, startingId, inputFormat, inputSet);
         if (records == null) {
             LOG.debug("no records found");
         } else {
-            LOG.debug("records.size(): "+records.size());
+            LOG.debug("records.size(): " + records.size());
         }
         return records;
     }
@@ -285,10 +287,10 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     /**
-     *  I slightly future dated the timestamp of the records so that a record will always
-     *  have been available from it's update_date forward.  We need to wait for that
-     *  future dating to become present before moving on here.  Otherwise, the next service
-     *  will not pick up all the records that were just inserted.
+     * I slightly future dated the timestamp of the records so that a record will always
+     * have been available from it's update_date forward. We need to wait for that
+     * future dating to become present before moving on here. Otherwise, the next service
+     * will not pick up all the records that were just inserted.
      */
     public void sleepUntilReady() {
         boolean keepSleeping = true;
@@ -313,7 +315,7 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     public void addLink(long fromRecordId, long toRecordId) {
-        uplinks.add(new long[] {fromRecordId, toRecordId});
+        uplinks.add(new long[] { fromRecordId, toRecordId });
     }
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {
@@ -368,11 +370,11 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     public void setPersistentProperty(String key, int value) {
-        getRepositoryDAO().setPersistentProperty(name, key, value+"");
+        getRepositoryDAO().setPersistentProperty(name, key, value + "");
     }
 
     public void setPersistentProperty(String key, long value) {
-        getRepositoryDAO().setPersistentProperty(name, key, value+"");
+        getRepositoryDAO().setPersistentProperty(name, key, value + "");
     }
 
     public void setPersistentProperty(String key, String value) {

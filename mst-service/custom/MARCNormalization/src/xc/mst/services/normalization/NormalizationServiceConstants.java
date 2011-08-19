@@ -1,25 +1,24 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.services.normalization;
 
 /**
  * This class defines several constants as public static final variables
  * which may be used throughout the NormalizationService
- *
+ * 
  * @author Eric Osisek
  */
-public class NormalizationServiceConstants
-{
-    //*******************************************************************
+public class NormalizationServiceConstants {
+    // *******************************************************************
     // Normalization Step names (to check whether or not a step is enabled)
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * Parameter for looking up the whether or not the RemoveOCoLC003 normalization step is enabled.
@@ -134,12 +133,12 @@ public class NormalizationServiceConstants
     /**
      * Parameter for looking up the whether or not the RoleComposer normalization step is enabled.
      */
-    public static final String CONFIG_ENABLED_ROLE_COMPOSER= "RoleComposer";
+    public static final String CONFIG_ENABLED_ROLE_COMPOSER = "RoleComposer";
 
     /**
      * Parameter for looking up the whether or not the CreatorDisplay normalization step is enabled.
      */
-    public static final String CONFIG_ENABLED_CREATOR_DISPLAY= "CreatorDisplay";
+    public static final String CONFIG_ENABLED_CREATOR_DISPLAY = "CreatorDisplay";
 
     /**
      * Parameter for looking up the whether or not the UniformTitle normalization step is enabled.
@@ -266,9 +265,9 @@ public class NormalizationServiceConstants
      */
     public static final String CONFIG_ENABLED_FIX_035_CODE_9 = "Fix035Code9";
 
-    //*******************************************************************
+    // *******************************************************************
     // Properties file names
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * Properties file configuring normalization steps are enabled
@@ -303,7 +302,7 @@ public class NormalizationServiceConstants
     /**
      * Properties file mapping the 007 offset 00 and 01 values to the full type
      */
-    public static final String PROPERTIES_007_00_007_FULL_TYPE_MAPPING= "field007Offset00ToFullType.properties";
+    public static final String PROPERTIES_007_00_007_FULL_TYPE_MAPPING = "field007Offset00ToFullType.properties";
 
     /**
      * Properties file mapping the 007 offset 00 and 01 values to an SMD type
@@ -325,9 +324,9 @@ public class NormalizationServiceConstants
      */
     public static final String PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM = "locationCodeToLocation.properties";
 
-    //*******************************************************************
+    // *******************************************************************
     // 9xx fields
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * The 9xx field for the DCMI Type
@@ -449,9 +448,9 @@ public class NormalizationServiceConstants
      */
     public static final String FIELD_9XX_SEPERATE_NAME = "959";
 
-    //*******************************************************************
+    // *******************************************************************
     // Other
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * The location of the configuration directory.

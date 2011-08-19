@@ -1,12 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
-
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils;
 
@@ -26,9 +25,9 @@ import xc.mst.constants.Constants;
 
 /**
  * Configuration for Metadata services toolkit
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class MSTConfiguration extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
 
@@ -48,20 +47,20 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     public static String serviceBeingLoaded = null;
 
-    /** File separator according to OS. \ for windows  / for unix. */
+    /** File separator according to OS. \ for windows / for unix. */
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 
     /** The logger object */
     protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**  Indicates whether MST instance folder exist */
+    /** Indicates whether MST instance folder exist */
     public static boolean mstInstanceFolderExist = false;
 
-    /**  Name of MST instance */
+    /** Name of MST instance */
     public static String instanceName;
 
-    /**  Indicates whether instance folder for this instance exist */
-    public static  boolean currentInstanceFolderExist = false;
+    /** Indicates whether instance folder for this instance exist */
+    public static boolean currentInstanceFolderExist = false;
 
     /** Default constructor */
     public MSTConfiguration() {
@@ -73,12 +72,12 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
     /**
      * Gets the singleton instance of the LuceneIndexManager
      */
-    public static MSTConfiguration getInstance()
-    {
+    public static MSTConfiguration getInstance() {
         return instance;
     }
 
     protected boolean resolvePlaceholderVisited = false;
+
     @Override
     protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
         if ("normalized.service.name".equals(placeholder)) {
@@ -96,11 +95,11 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
                 if ("service.name".equals(keyStr)) {
                     properties.put("normalized.service.name", getUtil().normalizeName(pval));
                     properties.put(keyStr, getUtil().normalizeName(pval));
-                    log.info("key: (normalized.)service.name val: "+getUtil().normalizeName(pval));
+                    log.info("key: (normalized.)service.name val: " + getUtil().normalizeName(pval));
                 } else {
                     properties.put(keyStr, pval);
                     if (!key.toString().contains("Password")) {
-                        log.info("key: "+key+" val: "+pval);
+                        log.info("key: " + key + " val: " + pval);
                     }
                 }
             }
@@ -114,7 +113,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
      */
     public void init2() {
         if (applicationContext instanceof WebApplicationContext) {
-            String urlPath = ((WebApplicationContext)applicationContext).getServletContext().getContextPath();
+            String urlPath = ((WebApplicationContext) applicationContext).getServletContext().getContextPath();
             // Remove the / in '/MetadataServicesToolkit'
             urlPath = urlPath.substring(1, urlPath.length());
             instanceName = urlPath;
@@ -122,16 +121,16 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
             instanceName = "MetadataServicesToolkit";
         }
 
-        File mstInstances = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME));
+        File mstInstances = new File(rootDir + "/" + getProperty(Constants.INSTANCES_FOLDER_NAME));
         if (mstInstances.exists()) {
             mstInstanceFolderExist = true;
         }
 
-        File currentInstance = new File(rootDir+"/"+getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName);
+        File currentInstance = new File(rootDir + "/" + getProperty(Constants.INSTANCES_FOLDER_NAME) + FILE_SEPARATOR + instanceName);
         if (currentInstance.exists()) {
             currentInstanceFolderExist = true;
         }
-        urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) +  FILE_SEPARATOR + instanceName;
+        urlPath = rootDir + getProperty(Constants.INSTANCES_FOLDER_NAME) + FILE_SEPARATOR + instanceName;
     }
 
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -148,8 +147,9 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get value of given property
-     *
-     * @param name name of property
+     * 
+     * @param name
+     *            name of property
      * @return value of property
      */
     public String getProperty(String name) {
@@ -169,7 +169,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     public boolean getPropertyAsBoolean(String name, boolean def) {
         String value = getProperty(name);
-        LOG.debug("value: "+value);
+        LOG.debug("value: " + value);
         if (value == null) {
             return def;
         } else {
@@ -179,7 +179,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
             } else if ("FALSE".equals(value) || "OFF".equals(value) || "OFF".equals(value)) {
                 return false;
             } else {
-                log.error("property '"+name+"' value not understood: "+value);
+                log.error("property '" + name + "' value not understood: " + value);
                 return def;
             }
         }
@@ -199,9 +199,11 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get property value as int
-     *
-     * @param name name of property to retrieve
-     * @param def default value
+     * 
+     * @param name
+     *            name of property to retrieve
+     * @param def
+     *            default value
      * @return Value defined in configuration file
      */
     public int getPropertyAsInt(String name, int def) {
@@ -217,7 +219,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get relative path from tomcat working directory to MST configuration folder
-     *
+     * 
      * @return path to MST configuration folder
      */
     public static String getUrlPath() {
@@ -233,7 +235,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
     }
 
     protected Util getUtil() {
-        return (Util)instance.getBean("Util");
+        return (Util) instance.getBean("Util");
     }
 
     public void setProperties(Properties properties) {
@@ -242,12 +244,12 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     public boolean isPerformanceTestingMode() {
         try {
-                String ptMode = getProperty("PerformanceTestingMode");
-                if (ptMode != null && "true".equals(ptMode)) {
-                        return true;
-                }
+            String ptMode = getProperty("PerformanceTestingMode");
+            if (ptMode != null && "true".equals(ptMode)) {
+                return true;
+            }
         } catch (Throwable t) {
-                //do nothing
+            // do nothing
         }
         return false;
     }
@@ -257,12 +259,12 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
     }
 
     public String getServicePath() {
-        return getUrlPath()+"/services/";
+        return getUrlPath() + "/services/";
     }
 
     // messageArguments injected into the given String mstPropertyName
     // i.e. for the following String:
-    // message.processingRuleInUse = Processing occurring on Processing Rule  {0}. Cannot delete Processing Rule.
+    // message.processingRuleInUse = Processing occurring on Processing Rule {0}. Cannot delete Processing Rule.
     // - the messageArgument[0] populates {0} in the String
     //
     public static String getMSTString(String mstPropertyName, Object[] messageArguments) {

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.services.normalization;
 
@@ -24,12 +24,11 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.constants.Constants;
 import xc.mst.utils.TimingLogger;
 
-
 /**
- * This class is used to manage a MARC XML record.  When constructed,
+ * This class is used to manage a MARC XML record. When constructed,
  * it parses out fields likely to be needed by the Normalization service,
  * and contains methods to add, remove, modify, and deduplicate a field.
- *
+ * 
  * @author Eric Osisek
  */
 public class MarcXmlManager {
@@ -49,14 +48,15 @@ public class MarcXmlManager {
      */
     protected HashSet<String> usedLinkingFields = new HashSet<String>();
 
-
     /**
      * Constructs a MarcXmlManager based on a MARC XML record.
      * This constructor will initialize all cached fields by iterating over
      * the MARC XML record's fields exactly once.
-     *
-     * @param marcXml The MARC XML record we're managing
-     * @param organizationCode The organization code from the configuration file
+     * 
+     * @param marcXml
+     *            The MARC XML record we're managing
+     * @param organizationCode
+     *            The organization code from the configuration file
      */
     @SuppressWarnings("unchecked")
     public MarcXmlManager(Element marcXml, String organizationCode) {
@@ -68,7 +68,7 @@ public class MarcXmlManager {
         // Get the MARC XML's leader
         leader = this.marcXml.getChildText("leader", marcNamespace);
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Found the value of the leader to be " + leader + ".");
 
         // Initialize the MARC XML control fields
@@ -78,10 +78,9 @@ public class MarcXmlManager {
         initializeMarcDataFields();
 
         // Initialize the used linking fields
-        try
-        {
+        try {
             // Use XPATH to get a list of all linking fields currently
-            // in the MARC XML records.  These are the values of the $8
+            // in the MARC XML records. These are the values of the $8
             // subfield of any datafield
             List<Element> elements = null;
             TimingLogger.start("MarcXmlManager.xpath");
@@ -93,7 +92,7 @@ public class MarcXmlManager {
             } else {
                 elements = new ArrayList<Element>();
                 for (Object o : marcXml.getChildren("subfield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     if ("8".equals(e.getAttributeValue("code"))) {
                         elements.add(e);
                     }
@@ -104,27 +103,24 @@ public class MarcXmlManager {
 
             // Add all existing linking fields to the set of
             // initial linking fields
-            for(Element element : elements)
-                if(!usedLinkingFields.contains(element.getText()))
+            for (Element element : elements)
+                if (!usedLinkingFields.contains(element.getText()))
                     usedLinkingFields.add(element.getText());
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred while getting the current linking fields on the MARC XML record.", e);
         }
         TimingLogger.stop("MarcXmlManager()");
 
     } // end constructor
 
-
     /**
      * Tests whether or not the MARC XML record contains the passed linking field.
-     *
-     * @param linkingField The value of the linking field we're testing for duplicates.
+     * 
+     * @param linkingField
+     *            The value of the linking field we're testing for duplicates.
      * @return true iff the MARC XML record contained the passed linking field.
      */
-    public boolean isLinkingFieldUsed(String linkingField)
-    {
+    public boolean isLinkingFieldUsed(String linkingField) {
         return usedLinkingFields.contains(linkingField);
     }
 
@@ -137,16 +133,16 @@ public class MarcXmlManager {
 
     /**
      * Checks whether or not a String is a value indicating a role when
-     * found in a $4 subfield.  If it is, the parent datafield should be
+     * found in a $4 subfield. If it is, the parent datafield should be
      * ignored for certain operations.
-     *
-     * @param valueToTest The value of a $4 subfield
+     * 
+     * @param valueToTest
+     *            The value of a $4 subfield
      * @return true if valueToTest appearing in a $4 subfield means we
      *         should ignore the parent datafield for operations which
      *         ignore roles.
      */
-    public static boolean shouldIgnore4Subfield(String valueToTest)
-    {
+    public static boolean shouldIgnore4Subfield(String valueToTest) {
         return ignore4subfields.contains(valueToTest);
     }
 
@@ -157,8 +153,7 @@ public class MarcXmlManager {
     private HashMap<String, List<Element>> tagTo880s = new HashMap<String, List<Element>>();
 
     // Initialize ignore4subfields
-    static
-    {
+    static {
         ignore4subfields.add("aut");
         ignore4subfields.add("lbt");
         ignore4subfields.add("lyr");
@@ -182,9 +177,9 @@ public class MarcXmlManager {
     }
 
     /**
-     * The value of the next linking field we will use.  This value starts at 1 for each record we're
+     * The value of the next linking field we will use. This value starts at 1 for each record we're
      * normalizing, and increments every time a linking field is used in that record.
-     *
+     * 
      * We'll initialize it to 0 since we'll increment it before using it.
      */
     private int nextLinkingField = 0;
@@ -192,28 +187,26 @@ public class MarcXmlManager {
     /**
      * Calculates the next available linking field by incrementing
      * nextLinkingField until it hits a value which does not exist
-     * on the current MARC XML record.  Since most MARC XML records
+     * on the current MARC XML record. Since most MARC XML records
      * will not use linking fields, this typically only increments
      * nextLinkingField.
-     *
+     * 
      * @return The value of the next linking field to be used with this MARC XML record.
      */
-    public String getNextLinkingField()
-    {
+    public String getNextLinkingField() {
         // Increment nextLinkingField until it
         // hits a value which isn't used in the
         // current MARC XML record
-        do
-        {
+        do {
             nextLinkingField++;
-        }while(isLinkingFieldUsed(nextLinkingField+"\\c"));
+        } while (isLinkingFieldUsed(nextLinkingField + "\\c"));
 
         // Return the value of the next linking field
-        return nextLinkingField+"\\c";
+        return nextLinkingField + "\\c";
     }
 
     /**
-     * A list of the language codes we've added using this MarcXmlManager.  Because
+     * A list of the language codes we've added using this MarcXmlManager. Because
      * the Normalization Service may have to access this list after adding them, we'll
      * save time by caching the values in this list.
      */
@@ -221,10 +214,12 @@ public class MarcXmlManager {
 
     /**
      * Gets a list of the language codes we've added using this MarcXmlManager.
-     *
+     * 
      * @return A list of the language codes we've added using this MarcXmlManager.
      */
-    public ArrayList<String> getAddedLanguageCodes() { return addedLanguageCodes; }
+    public ArrayList<String> getAddedLanguageCodes() {
+        return addedLanguageCodes;
+    }
 
     /**
      * The organization code from the configuration file
@@ -232,9 +227,9 @@ public class MarcXmlManager {
     private String organizationCode = null;
 
     // The following variables are cached values for the commonly accessed MARC XML fields.
-    // They are initialized in the constructor.  Each variable will be named either fieldNNN
+    // They are initialized in the constructor. Each variable will be named either fieldNNN
     // to represent the $a subfield of field NNN, or fieldNNNsubfieldM to represent the M
-    // subfield of field NNN.  There is also a leader variable, which contains the value of
+    // subfield of field NNN. There is also a leader variable, which contains the value of
     // the MARC XML leader.
 
     /**
@@ -244,10 +239,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the leader field
-     *
+     * 
      * @return the MARC XML's leader
      */
-    public String getLeader() { return leader; }
+    public String getLeader() {
+        return leader;
+    }
 
     public InputRecord getInputRecord() {
         return inputRecord;
@@ -264,10 +261,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 001 field
-     *
+     * 
      * @return the MARC XML's 001 field
      */
-    public String getField001() { return field001; }
+    public String getField001() {
+        return field001;
+    }
 
     /**
      * The value of the 003 field
@@ -276,10 +275,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 003 field
-     *
+     * 
      * @return the MARC XML's 003 field
      */
-    public String getField003() { return field003; }
+    public String getField003() {
+        return field003;
+    }
 
     /**
      * The value of the 006 field
@@ -288,10 +289,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 006 field
-     *
+     * 
      * @return the MARC XML's 006 field
      */
-    public String getField006() { return field006; }
+    public String getField006() {
+        return field006;
+    }
 
     /**
      * The value of the 007 field
@@ -300,10 +303,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 007 field
-     *
+     * 
      * @return the MARC XML's 007 field
      */
-    public String getField007() { return field007; }
+    public String getField007() {
+        return field007;
+    }
 
     /**
      * The value of the 008 field
@@ -312,10 +317,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 008 field
-     *
+     * 
      * @return the MARC XML's 008 field
      */
-    public String getField008() { return field008; }
+    public String getField008() {
+        return field008;
+    }
 
     /**
      * The value of the 020 field
@@ -324,10 +331,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 020 field
-     *
+     * 
      * @return the MARC XML's 020 field
      */
-    public ArrayList<String> getField020() { return field020; }
+    public ArrayList<String> getField020() {
+        return field020;
+    }
 
     /**
      * The value of the 041 $a value
@@ -336,10 +345,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 041 $a value
-     *
+     * 
      * @return the MARC XML's 041 $a value
      */
-    public ArrayList<String> getField041subfieldA() { return field041subfieldA; }
+    public ArrayList<String> getField041subfieldA() {
+        return field041subfieldA;
+    }
 
     /**
      * The value of the 041 $d value
@@ -348,10 +359,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 041 $d value
-     *
+     * 
      * @return the MARC XML's 041 $d value
      */
-    public ArrayList<String> getField041subfieldD() { return field041subfieldD; }
+    public ArrayList<String> getField041subfieldD() {
+        return field041subfieldD;
+    }
 
     /**
      * The value of the 502 field
@@ -360,10 +373,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 502 field
-     *
+     * 
      * @return the MARC XML's 502 field
      */
-    public ArrayList<String> getField502() { return field502; }
+    public ArrayList<String> getField502() {
+        return field502;
+    }
 
     /**
      * The 100 field's element
@@ -372,10 +387,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 100 field's element
-     *
+     * 
      * @return the MARC XML's 100 field's element
      */
-    public ArrayList<Element> getField100Element() { return field100element; }
+    public ArrayList<Element> getField100Element() {
+        return field100element;
+    }
 
     /**
      * The 110 field's element
@@ -384,10 +401,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 110 field's element
-     *
+     * 
      * @return the MARC XML's 110 field's element
      */
-    public ArrayList<Element> getField110Element() { return field110element; }
+    public ArrayList<Element> getField110Element() {
+        return field110element;
+    }
 
     /**
      * The 111 field's element
@@ -396,10 +415,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 111 field's element
-     *
+     * 
      * @return the MARC XML's 111 field's element
      */
-    public ArrayList<Element> getField111Element() { return field111element; }
+    public ArrayList<Element> getField111Element() {
+        return field111element;
+    }
 
     /**
      * The value of the 100 $4 value
@@ -408,10 +429,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 100 $4 value
-     *
+     * 
      * @return the MARC XML's 100 $4 value
      */
-    public String getField100subfield4() { return field100subfield4; }
+    public String getField100subfield4() {
+        return field100subfield4;
+    }
 
     /**
      * The value of the 110 $4 value
@@ -420,10 +443,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 110 $4 value
-     *
+     * 
      * @return the MARC XML's 110 $4 value
      */
-    public String getField110subfield4() { return field110subfield4; }
+    public String getField110subfield4() {
+        return field110subfield4;
+    }
 
     /**
      * The value of the 111 $4 value
@@ -432,10 +457,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 111 $4 value
-     *
+     * 
      * @return the MARC XML's 111 $4 value
      */
-    public String getField111subfield4() { return field111subfield4; }
+    public String getField111subfield4() {
+        return field111subfield4;
+    }
 
     /**
      * The value of the 130 field
@@ -444,10 +471,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 130 field
-     *
+     * 
      * @return the MARC XML's 130 field
      */
-    public String getField130() { return field130; }
+    public String getField130() {
+        return field130;
+    }
 
     /**
      * The 240 field's element
@@ -456,10 +485,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 240 field's element
-     *
+     * 
      * @return the MARC XML's 240 field's element
      */
-    public ArrayList<Element> getField240Element() { return field240element; }
+    public ArrayList<Element> getField240Element() {
+        return field240element;
+    }
 
     /**
      * The value of the 240 field
@@ -468,10 +499,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 240 field
-     *
+     * 
      * @return the MARC XML's 240 field
      */
-    public String getField240() { return field240; }
+    public String getField240() {
+        return field240;
+    }
 
     /**
      * The value of the 243 field
@@ -480,10 +513,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 243 field
-     *
+     * 
      * @return the MARC XML's 243 field
      */
-    public String getField243() { return field243; }
+    public String getField243() {
+        return field243;
+    }
 
     /**
      * The 243 field's element
@@ -492,10 +527,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 243 field's element
-     *
+     * 
      * @return the MARC XML's 243 field's element
      */
-    public ArrayList<Element> getField243Element() { return field243element; }
+    public ArrayList<Element> getField243Element() {
+        return field243element;
+    }
 
     /**
      * The value of the 245 field
@@ -504,10 +541,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 245 field
-     *
+     * 
      * @return the MARC XML's 245 field
      */
-    public String getField245() { return field245; }
+    public String getField245() {
+        return field245;
+    }
 
     /**
      * The 440 field's element
@@ -516,10 +555,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 440 field's element
-     *
+     * 
      * @return the MARC XML's 440 field's element
      */
-    public ArrayList<Element> getField440Elements() { return field440elements; }
+    public ArrayList<Element> getField440Elements() {
+        return field440elements;
+    }
 
     /**
      * The 600 field's element
@@ -528,10 +569,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 600 field's element
-     *
+     * 
      * @return the MARC XML's 600 field's element
      */
-    public ArrayList<Element> getField600Elements() { return field600elements; }
+    public ArrayList<Element> getField600Elements() {
+        return field600elements;
+    }
 
     /**
      * The 610 field's element
@@ -540,10 +583,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 610 field's element
-     *
+     * 
      * @return the MARC XML's 610 field's element
      */
-    public ArrayList<Element> getField610Elements() { return field610elements; }
+    public ArrayList<Element> getField610Elements() {
+        return field610elements;
+    }
 
     /**
      * The 611 field's element
@@ -552,10 +597,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 611 field's element
-     *
+     * 
      * @return the MARC XML's 611 field's element
      */
-    public ArrayList<Element> getField611Elements() { return field611elements; }
+    public ArrayList<Element> getField611Elements() {
+        return field611elements;
+    }
 
     /**
      * The 630 field's element
@@ -564,10 +611,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 630 field's element
-     *
+     * 
      * @return the MARC XML's 630 field's element
      */
-    public ArrayList<Element> getField630Elements() { return field630elements; }
+    public ArrayList<Element> getField630Elements() {
+        return field630elements;
+    }
 
     /**
      * The 650 field's element
@@ -576,10 +625,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 650 field's element
-     *
+     * 
      * @return the MARC XML's 650 field's element
      */
-    public ArrayList<Element> getField650Elements() { return field650elements; }
+    public ArrayList<Element> getField650Elements() {
+        return field650elements;
+    }
 
     /**
      * The 655 field's element
@@ -588,10 +639,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 655 field's element
-     *
+     * 
      * @return the MARC XML's 655 field's element
      */
-    public ArrayList<Element> getField655Elements() { return field655elements; }
+    public ArrayList<Element> getField655Elements() {
+        return field655elements;
+    }
 
     /**
      * The 700 field's element
@@ -600,10 +653,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 700 field's element
-     *
+     * 
      * @return the MARC XML's 700 field's element
      */
-    public ArrayList<Element> getField700Elements() { return field700elements; }
+    public ArrayList<Element> getField700Elements() {
+        return field700elements;
+    }
 
     /**
      * The 710 field's element
@@ -612,10 +667,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 710 field's element
-     *
+     * 
      * @return the MARC XML's 710 field's element
      */
-    public ArrayList<Element> getField710Elements() { return field710elements; }
+    public ArrayList<Element> getField710Elements() {
+        return field710elements;
+    }
 
     /**
      * The 711 field's element
@@ -624,10 +681,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 711 field's element
-     *
+     * 
      * @return the MARC XML's 711 field's element
      */
-    public ArrayList<Element> getField711Elements() { return field711elements; }
+    public ArrayList<Element> getField711Elements() {
+        return field711elements;
+    }
 
     /**
      * The 730 field's element
@@ -636,10 +695,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 730 field's element
-     *
+     * 
      * @return the MARC XML's 730 field's element
      */
-    public ArrayList<Element> getField730Elements() { return field730elements; }
+    public ArrayList<Element> getField730Elements() {
+        return field730elements;
+    }
 
     /**
      * The 800 field's element
@@ -648,10 +709,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 800 field's element
-     *
+     * 
      * @return the MARC XML's 800 field's element
      */
-    public ArrayList<Element> getField800Elements() { return field800elements; }
+    public ArrayList<Element> getField800Elements() {
+        return field800elements;
+    }
 
     /**
      * The 810 field's element
@@ -660,10 +723,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 810 field's element
-     *
+     * 
      * @return the MARC XML's 810 field's element
      */
-    public ArrayList<Element> getField810Elements() { return field810elements; }
+    public ArrayList<Element> getField810Elements() {
+        return field810elements;
+    }
 
     /**
      * The 811 field's element
@@ -672,10 +737,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 811 field's element
-     *
+     * 
      * @return the MARC XML's 811 field's element
      */
-    public ArrayList<Element> getField811Elements() { return field811elements; }
+    public ArrayList<Element> getField811Elements() {
+        return field811elements;
+    }
 
     /**
      * The value of the 852 $b value
@@ -684,10 +751,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 852 $b value
-     *
+     * 
      * @return the MARC XML's 852 $b value
      */
-    public ArrayList<String> getField852subfieldBs() { return field852subfieldBs; }
+    public ArrayList<String> getField852subfieldBs() {
+        return field852subfieldBs;
+    }
 
     /**
      * The value of the 945 $l value
@@ -696,10 +765,12 @@ public class MarcXmlManager {
 
     /**
      * Gets the 945 $l value
-     *
+     * 
      * @return the MARC XML's 945 $l value
      */
-    public ArrayList<String> getField945subfieldLs() { return field945subfieldLs; }
+    public ArrayList<String> getField945subfieldLs() {
+        return field945subfieldLs;
+    }
 
     /**
      * A list of the original 035 fields for the MARC XML
@@ -707,40 +778,41 @@ public class MarcXmlManager {
     private ArrayList<Element> original035fields = new ArrayList<Element>();
 
     /**
-     * Gets a list of the original 035 fields for the MARC XML.  Any changes
+     * Gets a list of the original 035 fields for the MARC XML. Any changes
      * made to the elements in this list will be reflected in the corrosponding
      * 035 fields on the MARC XML records.
-     *
+     * 
      * @return A list of the original 035 fields for the MARC XML
      */
-    public ArrayList<Element> getOriginal035Fields() { return original035fields; }
+    public ArrayList<Element> getOriginal035Fields() {
+        return original035fields;
+    }
 
     /**
      * Gets the MARC XML resulting from the modifications which have been made through this MarcXmlManager
-     *
+     * 
      * @return The modified MARC XML record.
      */
-    public Element getModifiedMarcXml()
-    {
+    public Element getModifiedMarcXml() {
         return marcXml;
     } // end method getModifiedMarcXml
 
     /**
      * Returns true if the passed tag contains the passed subfield
-     *
-     * @param tag The tag we're checking
-     * @param subfield The subfield we're checking for
+     * 
+     * @param tag
+     *            The tag we're checking
+     * @param subfield
+     *            The subfield we're checking for
      * @return true if the passed tag contains the passed subfield
      */
-    public boolean doesSubfieldExist(String tag, String subfield)
-    {
+    public boolean doesSubfieldExist(String tag, String subfield) {
         TimingLogger.start("doesSubFieldExist:709");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Checking if tag " + tag + " contains subfield $" + subfield + ".");
 
         // Check if the subfield exists for the passed tag
-        try
-        {
+        try {
             boolean ret = false;
             if (useXpath) {
                 TimingLogger.start("doesSubFieldExist.xpath");
@@ -757,10 +829,10 @@ public class MarcXmlManager {
                 TimingLogger.start("doesSubFieldExist.noxpath");
                 TimingLogger.start("noxpath");
                 for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     if (tag.equals(e.getAttributeValue("tag"))) {
                         for (Object o2 : e.getChildren("subfield", marcXml.getNamespace())) {
-                            Element e2 = (Element)o2;
+                            Element e2 = (Element) o2;
                             if (subfield.equals(e2.getAttributeValue("code"))) {
                                 ret = true;
                                 break;
@@ -776,9 +848,7 @@ public class MarcXmlManager {
             }
             TimingLogger.stop("doesSubFieldExist:709");
             return ret;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred while checking if tag " + tag + " contains subfield $" + subfield + ".", e);
             TimingLogger.stop("doesSubFieldExist:709");
             return false;
@@ -789,61 +859,54 @@ public class MarcXmlManager {
      * Initializes the MARC XML control fields' cached values.
      */
     @SuppressWarnings("unchecked")
-    private void initializeMarcControlFields()
-    {
+    private void initializeMarcControlFields() {
         TimingLogger.start("initializeMarcControlFields");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Initializing MARC XML control fields.");
 
         // Get the control fields
         List<Element> controlFields = marcXml.getChildren("controlfield", marcNamespace);
         // Iterate over the fields and find the 001, 003, 007, and 008 control fields.
         // Initialize their cached values as we find them.
-        for(Element controlField : controlFields)
-        {
+        for (Element controlField : controlFields) {
             TimingLogger.start("initializeMarcControlFields.for");
             // Initialize the 001 field if we found it
-            if(controlField.getAttribute("tag").getValue().equals("001"))
-            {
+            if (controlField.getAttribute("tag").getValue().equals("001")) {
                 field001 = controlField.getText();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 001 to be " + field001 + ".");
             } // end if (001 found)
 
             // Initialize the 003 field if we found it
-            else if(controlField.getAttribute("tag").getValue().equals("003"))
-            {
+            else if (controlField.getAttribute("tag").getValue().equals("003")) {
                 field003 = controlField.getText();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 003 to be " + field003 + ".");
             } // end if (003 found)
 
             // Initialize the 006 field if we found it
-            else if(controlField.getAttribute("tag").getValue().equals("006"))
-            {
+            else if (controlField.getAttribute("tag").getValue().equals("006")) {
                 field006 = controlField.getText();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 006 to be " + field006 + ".");
             } // end if (006 found)
 
             // Initialize the 007 field if we found it
-            else if(controlField.getAttribute("tag").getValue().equals("007"))
-            {
+            else if (controlField.getAttribute("tag").getValue().equals("007")) {
                 field007 = controlField.getText();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 007 to be " + field007 + ".");
             } // end if (007 found)
 
             // Initialize the 008 field if we found it
-            else if(controlField.getAttribute("tag").getValue().equals("008"))
-            {
+            else if (controlField.getAttribute("tag").getValue().equals("008")) {
                 field008 = controlField.getText();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 008 to be " + field008 + ".");
             } // end if (008 found)
             TimingLogger.stop("initializeMarcControlFields.for");
@@ -855,34 +918,30 @@ public class MarcXmlManager {
      * Initializes the MARC XML data fields' cached values.
      */
     @SuppressWarnings("unchecked")
-    private void initializeMarcDataFields()
-    {
+    private void initializeMarcDataFields() {
         TimingLogger.start("initializeMarcDataFields");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Initializing MARC XML data fields.");
 
         // Get the data fields
         List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
         // Iterate over the fields and find the one with the correct tag
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             TimingLogger.start("initializeMarcDataFields.for");
-            String tag  = field.getAttributeValue("tag");
+            String tag = field.getAttributeValue("tag");
 
             // If the tag is "880", treat it like the tag from its $6 subfield
-            if(tag.equals("880"))
-            {
+            if (tag.equals("880")) {
                 List<String> realTags = getSubfieldOfField(field, '6');
 
-                if(realTags.size() > 0)
+                if (realTags.size() > 0)
                     tag = realTags.get(0).substring(0, 3);
 
-                for(String realTag : realTags)
-                {
+                for (String realTag : realTags) {
                     String tagValue = realTag.substring(0, 3);
 
-                    if(!tagTo880s.containsKey(tagValue))
+                    if (!tagTo880s.containsKey(tagValue))
                         tagTo880s.put(tagValue, new ArrayList<Element>());
 
                     tagTo880s.get(tagValue).add(field);
@@ -890,8 +949,7 @@ public class MarcXmlManager {
             }
 
             // If the current field is 020, get its subfields
-            if(tag.equals("020"))
-            {
+            if (tag.equals("020")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
@@ -900,12 +958,11 @@ public class MarcXmlManager {
             } // end if (020 found)
 
             // If the current field is 035, get its subfields
-            else if(tag.equals("035"))
+            else if (tag.equals("035"))
                 original035fields.add(field);
 
             // If the current field is 041, get its subfields
-            else if(tag.equals("041"))
-            {
+            else if (tag.equals("041")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
@@ -920,87 +977,79 @@ public class MarcXmlManager {
             } // end if (041 found)
 
             // If the current field is 100, get its subfields
-            else if(tag.equals("100"))
-            {
+            else if (tag.equals("100")) {
                 // Get the $4 subfields
                 List<String> subfields = getSubfieldValuesOfField(field, '4');
 
                 // Set the 100 $4 value
-                field100subfield4 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field100subfield4 = (subfields.size() > 0 ? subfields.get(0) : null);
 
                 // Set the 100 field element
                 field100element.add(field);
             } // end if (100 found)
 
             // If the current field is 110, get its subfields
-            else if(tag.equals("110"))
-            {
+            else if (tag.equals("110")) {
                 // Get the $4 subfields
                 List<String> subfields = getSubfieldValuesOfField(field, '4');
 
                 // Set the 110 $4 value
-                field110subfield4 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field110subfield4 = (subfields.size() > 0 ? subfields.get(0) : null);
 
                 // Set the 110 field element
                 field110element.add(field);
             } // end if (110 found)
 
             // If the current field is 111, get its subfields
-            else if(tag.equals("111"))
-            {
+            else if (tag.equals("111")) {
                 // Get the $4 subfields
                 List<String> subfields = getSubfieldValuesOfField(field, '4');
 
                 // Set the 111 $4 value
-                field111subfield4 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field111subfield4 = (subfields.size() > 0 ? subfields.get(0) : null);
 
                 // Set the 111 field element
                 field111element.add(field);
             } // end if (111 found)
 
             // If the current field is 130, get its subfields
-            else if(tag.equals("130"))
-            {
+            else if (tag.equals("130")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
                 // Set the 130 $a subfield
-                field130 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field130 = (subfields.size() > 0 ? subfields.get(0) : null);
             } // end if (130 found)
 
             // If the current field is 240, get its subfields
-            else if(tag.equals("240"))
-            {
+            else if (tag.equals("240")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
                 // Set the 240 $a subfield
-                field240 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field240 = (subfields.size() > 0 ? subfields.get(0) : null);
             } // end if (240 found)
 
             // If the current field is 243, get its subfields
-            else if(tag.equals("243"))
-            {
+            else if (tag.equals("243")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
                 // Set the 243 $a subfield
-                field243 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field243 = (subfields.size() > 0 ? subfields.get(0) : null);
             } // end if (243 found)
 
             // If the current field is 245, get its subfields
-            else if(tag.equals("245"))
-            {
+            else if (tag.equals("245")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
                 // Set the 245 $a subfield
-                field245 = (subfields.size() > 0 ?subfields.get(0) : null);
+                field245 = (subfields.size() > 0 ? subfields.get(0) : null);
             } // end if (245 found)
 
             // If the current field is 502, get its subfields
-            else if(tag.equals("502"))
-            {
+            else if (tag.equals("502")) {
                 // Get the $a subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'a');
 
@@ -1009,64 +1058,63 @@ public class MarcXmlManager {
             } // end if (502 found)
 
             // If the current field is 440, get its subfields
-            else if(tag.equals("440"))
+            else if (tag.equals("440"))
                 field440elements.add(field);
 
             // If the current field is 600, get its subfields
-            else if(tag.equals("600"))
+            else if (tag.equals("600"))
                 field600elements.add(field);
 
             // If the current field is 610, get its subfields
-            else if(tag.equals("610"))
+            else if (tag.equals("610"))
                 field610elements.add(field);
 
             // If the current field is 611, get its subfields
-            else if(tag.equals("611"))
+            else if (tag.equals("611"))
                 field611elements.add(field);
 
             // If the current field is 630, get its subfields
-            else if(tag.equals("630"))
+            else if (tag.equals("630"))
                 field630elements.add(field);
 
             // If the current field is 650, get its subfields
-            else if(tag.equals("650"))
+            else if (tag.equals("650"))
                 field650elements.add(field);
 
             // If the current field is 655, get its subfields
-            else if(tag.equals("655"))
+            else if (tag.equals("655"))
                 field655elements.add(field);
 
             // If the current field is 700, get its subfields
-            else if(tag.equals("700"))
+            else if (tag.equals("700"))
                 field700elements.add(field);
 
             // If the current field is 710, get its subfields
-            else if(tag.equals("710"))
+            else if (tag.equals("710"))
                 field710elements.add(field);
 
             // If the current field is 711, get its subfields
-            else if(tag.equals("711"))
+            else if (tag.equals("711"))
                 field711elements.add(field);
 
             // If the current field is 730, get its subfields
-            else if(tag.equals("730"))
+            else if (tag.equals("730"))
                 field730elements.add(field);
 
             // If the current field is 800, get its subfields
-            else if(tag.equals("800"))
+            else if (tag.equals("800"))
                 field800elements.add(field);
 
             // If the current field is 810, get its subfields
-            else if(tag.equals("810"))
+            else if (tag.equals("810"))
                 field810elements.add(field);
 
             // If the current field is 811, get its subfields
-            else if(tag.equals("811"))
+            else if (tag.equals("811"))
                 field811elements.add(field);
 
             // If the current field is 852, get its subfields
-            else if(tag.equals("852"))
-            {
+            else if (tag.equals("852")) {
                 // Get the $b subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'b');
 
@@ -1075,8 +1123,7 @@ public class MarcXmlManager {
             } // end if (852 found)
 
             // If the current field is 945, get its subfields
-            else if(tag.equals("945"))
-            {
+            else if (tag.equals("945")) {
                 // Get the $b subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'l');
 
@@ -1089,29 +1136,32 @@ public class MarcXmlManager {
     } // end method initializeMarcDataFields
 
     /**
-     * Adds a new datafield to the MARC XML record and returns the result.  The tag will have
+     * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicaters empty and the $a subfield will be set to the specified value.
-     *
-     * @param tag The tag we're adding (i.e. 931)
-     * @param subfieldAValue The value of the $a subfield of the tag we're adding
+     * 
+     * @param tag
+     *            The tag we're adding (i.e. 931)
+     * @param subfieldAValue
+     *            The value of the $a subfield of the tag we're adding
      */
-    public void addMarcXmlField(String tag, String subfieldAValue)
-    {
+    public void addMarcXmlField(String tag, String subfieldAValue) {
         addMarcXmlField(tag, subfieldAValue, null);
     }
 
     /**
-     * Adds a new datafield to the MARC XML record and returns the result.  The tag will have
+     * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicaters empty and the $a subfield will be set to the specified value.
-     *
-     * @param tag The tag we're adding (i.e. 931)
-     * @param subfieldAValue The value of the $a subfield of the tag we're adding
-     * @param linkingField The value of the $8 subfield of the field we're adding, or null if we do not need a $8 subfield
+     * 
+     * @param tag
+     *            The tag we're adding (i.e. 931)
+     * @param subfieldAValue
+     *            The value of the $a subfield of the tag we're adding
+     * @param linkingField
+     *            The value of the $8 subfield of the field we're adding, or null if we do not need a $8 subfield
      */
-    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField)
-    {
+    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField) {
         TimingLogger.start("addMarcXmlField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Adding a new datafield to the MARC XML record with tag " + tag + " and value " + subfieldAValue + (linkingField == null ? "." : " with linking field " + linkingField + "."));
 
         // Add a MARC XML field with the specified tag
@@ -1130,8 +1180,7 @@ public class MarcXmlManager {
         newFieldElement.addContent("\n\t").addContent(newFieldASubfield).addContent("\n");
 
         // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
-        if(tag.startsWith("9"))
-        {
+        if (tag.startsWith("9")) {
             // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
             Element newField5Subfield = new Element("subfield", marcNamespace);
             newField5Subfield.setAttribute("code", "5");
@@ -1141,9 +1190,8 @@ public class MarcXmlManager {
             newFieldElement.addContent("\t").addContent(newField5Subfield).addContent("\n");
         }
 
-        // Add a $8 subfield with the specified linkingField  if it is not null
-        if(linkingField != null)
-        {
+        // Add a $8 subfield with the specified linkingField if it is not null
+        if (linkingField != null) {
             // Add the $8 subfield to the new MARC XML field with the specified linking field
             Element newField8Subfield = new Element("subfield", marcNamespace);
             newField8Subfield.setAttribute("code", "8");
@@ -1152,7 +1200,7 @@ public class MarcXmlManager {
             // Add the $8 subfield to the new datafield
             newFieldElement.addContent("\t").addContent(newField8Subfield).addContent("\n");
 
-            if(!usedLinkingFields.contains(linkingField))
+            if (!usedLinkingFields.contains(linkingField))
                 usedLinkingFields.add(linkingField);
         }
 
@@ -1160,16 +1208,15 @@ public class MarcXmlManager {
         marcXml.addContent(newFieldElement).addContent("\n\n");
 
         // If we just added a language code, add it to the list of new language codes we're maintaining
-        if(tag.equals(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT))
-        {
-            if(log.isDebugEnabled())
+        if (tag.equals(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT)) {
+            if (log.isDebugEnabled())
                 log.debug("Added the language code " + subfieldAValue + ".");
 
             addedLanguageCodes.add(subfieldAValue.toLowerCase());
         } // end if (added language code)
 
         // If we just added a 243 element, cache the new element
-        else if(tag.equals("243"))
+        else if (tag.equals("243"))
             field243element.add(newFieldElement);
 
         TimingLogger.stop("addMarcXmlField");
@@ -1177,14 +1224,16 @@ public class MarcXmlManager {
 
     /**
      * Adds a new controlfield to the MARC XML record and returns the result.
-     *
-     * @param tag The tag we're adding (i.e. 931)
-     * @param value The value of the tag we're adding
+     * 
+     * @param tag
+     *            The tag we're adding (i.e. 931)
+     * @param value
+     *            The value of the tag we're adding
      */
-    public void addMarcXmlControlField(String tag, String value){
+    public void addMarcXmlControlField(String tag, String value) {
 
-        if(log.isDebugEnabled())
-            log.debug("Adding a new controlfield to the MARC XML record with tag " + tag + " and value " +value + ".");
+        if (log.isDebugEnabled())
+            log.debug("Adding a new controlfield to the MARC XML record with tag " + tag + " and value " + value + ".");
 
         // Add a MARC XML field with the specified tag
         // Both of its indicators will be empty
@@ -1199,16 +1248,17 @@ public class MarcXmlManager {
 
     /**
      * Copies one marcXml tag into another marcXml tag
-     *
-     * @param copyFromTag The tag we're copying from
-     * @param copyToTag The tag we're copying into
+     * 
+     * @param copyFromTag
+     *            The tag we're copying from
+     * @param copyToTag
+     *            The tag we're copying into
      */
     @SuppressWarnings("unchecked")
-    public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2, boolean skipAPrefix)
-    {
+    public void copyMarcXmlField(String copyFromTag, String copyToTag, String subfieldsToCopy, String newInd1, String newInd2, boolean skipAPrefix) {
         TimingLogger.start("copyMarcXmlField");
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Copying the MARC XML tag " + copyFromTag + " subfields " + subfieldsToCopy + " into the MARC XML tag " + copyToTag);
 
         // Get the data fields
@@ -1220,19 +1270,14 @@ public class MarcXmlManager {
         Element newField = null;
 
         // Iterate over the fields and find the one with the tag we're to copy from
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the correct tag, clone it into newField and change it's tag attribute to the correct value
-            if(field.getAttribute("tag").getValue().equals(copyFromTag))
-            {
+            if (field.getAttribute("tag").getValue().equals(copyFromTag)) {
                 // Get the number of leading characters to skip from the 2nd indicator
                 int skip = 0;
-                try
-                {
+                try {
                     skip = Integer.parseInt(field.getAttribute("ind2").getValue());
-                }
-                catch(NumberFormatException e)
-                {
+                } catch (NumberFormatException e) {
 
                 }
 
@@ -1245,26 +1290,22 @@ public class MarcXmlManager {
 
                 // Loop over the field's subfields and copy over the requested ones
                 List<Element> subfields = field.getChildren("subfield", marcNamespace);
-                for(Element subfield : subfields)
-                {
-                    if(subfieldsToCopy.contains(subfield.getAttributeValue("code")))
-                    {
-                        newField.addContent("\n\t").addContent((Element)subfield.clone());
+                for (Element subfield : subfields) {
+                    if (subfieldsToCopy.contains(subfield.getAttributeValue("code"))) {
+                        newField.addContent("\n\t").addContent((Element) subfield.clone());
 
-                        if((skipAPrefix && skip > 0) && (subfield.getAttributeValue("code").equals("a")))
-                        {
+                        if ((skipAPrefix && skip > 0) && (subfield.getAttributeValue("code").equals("a"))) {
                             // Get the control fields
                             List<Element> subfieldsOfNewfield = getSubfieldsOfField(newField, 'a');
 
                             // Iterate over the subfields to find the target subfield
-                            for(Element subfieldOfNewfield : subfieldsOfNewfield)
-                            {
+                            for (Element subfieldOfNewfield : subfieldsOfNewfield) {
                                 // Get the current text of the subfield
                                 String currentText = subfieldOfNewfield.getText();
 
                                 // This check is required for bad records (like the 245 of the UR voyager record #1493362
-                                if (currentText.length() > skip+1) {
-                                    subfieldOfNewfield.setText(currentText.substring(skip, skip+1).toUpperCase() + currentText.substring(skip+1));
+                                if (currentText.length() > skip + 1) {
+                                    subfieldOfNewfield.setText(currentText.substring(skip, skip + 1).toUpperCase() + currentText.substring(skip + 1));
                                 }
                             } // end loop over the target field's subfields
                         }
@@ -1279,11 +1320,11 @@ public class MarcXmlManager {
         newField.addContent("\n");
 
         // Add the new field to the end of the MARC XML if we found the field to copy from
-        if(newField != null)
+        if (newField != null)
             marcXml.addContent(newField).addContent("\n\n");
 
         // If we created a new 240 tag as a result of the copy, save it
-        if(copyToTag.equals("240") && field240element.size() == 0)
+        if (copyToTag.equals("240") && field240element.size() == 0)
             field240element.add(newField);
 
         TimingLogger.stop("copyMarcXmlField");
@@ -1293,19 +1334,21 @@ public class MarcXmlManager {
      * Used to split the 4 categories of information contained in 6XX tags.
      * If any of the required subfields exist in a target datafield, all
      * subfields in that datafield are copied into the copy into field until the
-     * first occurrence of a required field.  In addition, the $2 is copied into the
+     * first occurrence of a required field. In addition, the $2 is copied into the
      * resulting field, even if it occurred after a stop field
-     *
-     * @param targetFields The fields which are to be split
-     * @param copyIntoField The field to copy the target fields into
-     * @param requiredSubfields At least one of these subfields must exist in a datafield for it to be split
-     *                          Nothing after or including these fields should be copied except for a $2
+     * 
+     * @param targetFields
+     *            The fields which are to be split
+     * @param copyIntoField
+     *            The field to copy the target fields into
+     * @param requiredSubfields
+     *            At least one of these subfields must exist in a datafield for it to be split
+     *            Nothing after or including these fields should be copied except for a $2
      */
     @SuppressWarnings("unchecked")
-    public void splitField(List<String> targetFields, String copyIntoField, String requiredSubfields)
-    {
+    public void splitField(List<String> targetFields, String copyIntoField, String requiredSubfields) {
         TimingLogger.start("splitField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before " + requiredSubfields);
 
         // Get the data fields
@@ -1314,15 +1357,13 @@ public class MarcXmlManager {
         // The copied field with the correct tag
         Element newField = null;
 
-        // A list of the elements to add.  We can't add them in the loop or we'll get a ConcurrentModificationException
+        // A list of the elements to add. We can't add them in the loop or we'll get a ConcurrentModificationException
         ArrayList<Element> newFields = new ArrayList<Element>();
 
         // Iterate over the fields and find the one with the tag we're to copy from
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the correct tag, clone it into newField and change it's tag attribute to the correct value
-            if(targetFields.contains(field.getAttribute("tag").getValue()))
-            {
+            if (targetFields.contains(field.getAttribute("tag").getValue())) {
                 // Create the new field
                 newField = new Element("datafield", marcNamespace);
                 newField.setAttribute("tag", copyIntoField);
@@ -1335,16 +1376,13 @@ public class MarcXmlManager {
 
                 // Iterate over the subfields, and append each one to the subject display if it
                 // is in the list of subfields to copy
-                for(Element subfield : subfields)
-                {
+                for (Element subfield : subfields) {
                     // If we hit a subfield we're supposed to split on, add a new field and then setup another one
-                    if(requiredSubfields.contains(subfield.getAttribute("code").getValue()))
-                    {
+                    if (requiredSubfields.contains(subfield.getAttribute("code").getValue())) {
                         // If the datafield contained a $2, copy that as well
                         List<String> subfield2s = getSubfieldOfField(field, '2');
 
-                        if(subfield2s.size() > 0)
-                        {
+                        if (subfield2s.size() > 0) {
                             // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
                             Element newField2Subfield = new Element("subfield", marcNamespace);
                             newField2Subfield.setAttribute("code", "2");
@@ -1355,11 +1393,9 @@ public class MarcXmlManager {
                         }
 
                         // Add the new field if we added any subfields to it
-                        if(newField.getChildren("subfield", marcNamespace).size() > 0)
-                        {
+                        if (newField.getChildren("subfield", marcNamespace).size() > 0) {
                             // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
-                            if(copyIntoField.startsWith("9"))
-                            {
+                            if (copyIntoField.startsWith("9")) {
                                 // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
                                 Element newField5Subfield = new Element("subfield", marcNamespace);
                                 newField5Subfield.setAttribute("code", "5");
@@ -1391,7 +1427,7 @@ public class MarcXmlManager {
         } // end loop over data fields
 
         // Add all the new elements
-        for(Element addMe : newFields)
+        for (Element addMe : newFields)
             marcXml.addContent(addMe).addContent("\n\n");
 
         TimingLogger.stop("splitField");
@@ -1400,18 +1436,20 @@ public class MarcXmlManager {
     /**
      * Used to split the 4 categories of information contained in 6XX tags.
      * Copies only the specified subfield into the copy into field, each into
-     * its own field.  In addition, the $2 is copied into the resulting fields
-     *
-     * @param targetFields The fields which are to be split
-     * @param copyIntoField The field to copy the target fields into
-     * @param copyOnlySubfield The subfield to copy
+     * its own field. In addition, the $2 is copied into the resulting fields
+     * 
+     * @param targetFields
+     *            The fields which are to be split
+     * @param copyIntoField
+     *            The field to copy the target fields into
+     * @param copyOnlySubfield
+     *            The subfield to copy
      */
     @SuppressWarnings("unchecked")
-    public void splitField(List<String> targetFields, String copyIntoField, char copyOnlySubfield)
-    {
+    public void splitField(List<String> targetFields, String copyIntoField, char copyOnlySubfield) {
         TimingLogger.start("splitField");
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfield " + copyOnlySubfield);
 
         // Get the data fields
@@ -1420,15 +1458,13 @@ public class MarcXmlManager {
         // The copied field with the correct tag
         Element newField = null;
 
-        // A list of the elements to add.  We can't add them in the loop or we'll get a ConcurrentModificationException
+        // A list of the elements to add. We can't add them in the loop or we'll get a ConcurrentModificationException
         ArrayList<Element> newFields = new ArrayList<Element>();
 
         // Iterate over the fields and find the one with the tag we're to copy from
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the correct tag, clone it into newField and change it's tag attribute to the correct value
-            if(targetFields.contains(field.getAttribute("tag").getValue()))
-            {
+            if (targetFields.contains(field.getAttribute("tag").getValue())) {
                 // Get the subfields
                 List<String> subfields = getSubfieldOfField(field, copyOnlySubfield);
 
@@ -1438,8 +1474,7 @@ public class MarcXmlManager {
 
                 // Iterate over the subfields, and append each one to the subject display if it
                 // is in the list of subfields to copy
-                for(String subfield : subfields)
-                {
+                for (String subfield : subfields) {
                     // Reset the new field
                     newField = new Element("datafield", marcNamespace);
                     newField.setAttribute("tag", copyIntoField);
@@ -1456,8 +1491,7 @@ public class MarcXmlManager {
                     newField.addContent("\t").addContent(newFieldSubfield).addContent("\n");
 
                     // Add the $2 subfield to the new MARC XML field with the value of the user's organization code
-                    if(subfield2 != null && subfield2.length() > 0)
-                    {
+                    if (subfield2 != null && subfield2.length() > 0) {
                         Element newField2Subfield = new Element("subfield", marcNamespace);
                         newField2Subfield.setAttribute("code", "2");
                         newField2Subfield.setText(subfield2);
@@ -1467,8 +1501,7 @@ public class MarcXmlManager {
                     }
 
                     // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
-                    if(copyIntoField.startsWith("9"))
-                    {
+                    if (copyIntoField.startsWith("9")) {
                         // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
                         Element newField5Subfield = new Element("subfield", marcNamespace);
                         newField5Subfield.setAttribute("code", "5");
@@ -1484,7 +1517,7 @@ public class MarcXmlManager {
         } // end loop over data fields
 
         // Add all the new elements
-        for(Element addMe : newFields)
+        for (Element addMe : newFields)
             marcXml.addContent(addMe).addContent("\n\n");
 
         TimingLogger.stop("splitField");
@@ -1493,17 +1526,18 @@ public class MarcXmlManager {
     /**
      * Used to pull name information out of 6XX tags. If the $t subfield exists in
      * a target datafield, all subfields in that datafield are copied into the copy
-     * into field until the first occurrence of a $t field.  In addition, the $4
+     * into field until the first occurrence of a $t field. In addition, the $4
      * is copied into the resulting field, even if it occurred after a $t
-     *
-     * @param targetFields The fields which are to be split
-     * @param copyIntoField The field to copy the target fields into
+     * 
+     * @param targetFields
+     *            The fields which are to be split
+     * @param copyIntoField
+     *            The field to copy the target fields into
      */
     @SuppressWarnings("unchecked")
-    public void seperateNames(List<String> targetFields, String copyIntoField)
-    {
+    public void seperateNames(List<String> targetFields, String copyIntoField) {
         TimingLogger.start("seperateNames");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before the $t.");
 
         // Get the data fields
@@ -1512,15 +1546,13 @@ public class MarcXmlManager {
         // The copied field with the correct tag
         Element newField = null;
 
-        // A list of the elements to add.  We can't add them in the loop or we'll get a ConcurrentModificationException
+        // A list of the elements to add. We can't add them in the loop or we'll get a ConcurrentModificationException
         ArrayList<Element> newFields = new ArrayList<Element>();
 
         // Iterate over the fields and find the one with the tag we're to copy from
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the correct tag, clone it into newField and change it's tag attribute to the correct value
-            if(targetFields.contains(field.getAttribute("tag").getValue()) && field.getAttribute("ind2").getValue().equals("2"))
-            {
+            if (targetFields.contains(field.getAttribute("tag").getValue()) && field.getAttribute("ind2").getValue().equals("2")) {
                 // Create the new field
                 newField = new Element("datafield", marcNamespace);
                 newField.setAttribute("tag", copyIntoField);
@@ -1533,17 +1565,14 @@ public class MarcXmlManager {
 
                 // Iterate over the subfields, and append each one to the subject display if it
                 // is in the list of subfields to copy
-                for(Element subfield : subfields)
-                {
+                for (Element subfield : subfields) {
                     // If the current subfield matches the required subfield, add the new field
                     // and then setup the next one
-                    if(subfield.getAttributeValue("code").equals("t"))
-                    {
+                    if (subfield.getAttributeValue("code").equals("t")) {
                         // If the datafield contained a $4, copy that as well
                         List<String> subfield4s = getSubfieldOfField(field, '4');
 
-                        if(subfield4s.size() > 0)
-                        {
+                        if (subfield4s.size() > 0) {
                             // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
                             Element newField4Subfield = new Element("subfield", marcNamespace);
                             newField4Subfield.setAttribute("code", "4");
@@ -1554,11 +1583,9 @@ public class MarcXmlManager {
                         }
 
                         // Add the new field if we added any subfields to it
-                        if(newField.getChildren("subfield", marcNamespace).size() > 0)
-                        {
+                        if (newField.getChildren("subfield", marcNamespace).size() > 0) {
                             // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
-                            if(copyIntoField.startsWith("9"))
-                            {
+                            if (copyIntoField.startsWith("9")) {
                                 // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
                                 Element newField5Subfield = new Element("subfield", marcNamespace);
                                 newField5Subfield.setAttribute("code", "5");
@@ -1583,9 +1610,9 @@ public class MarcXmlManager {
                         // Clone the subfield when we add it to the original field because we can't
                         // add the same Element to the root jdom Document twice
                         newField.addContent("\t").addContent(newField8Subfield).addContent("\n");
-                        field.addContent("\t").addContent((Element)newField8Subfield.clone()).addContent("\n");
+                        field.addContent("\t").addContent((Element) newField8Subfield.clone()).addContent("\n");
 
-                        if(!usedLinkingFields.contains(linkingField))
+                        if (!usedLinkingFields.contains(linkingField))
                             usedLinkingFields.add(linkingField);
 
                         // Stop iterating over subfields since we hit a stop field
@@ -1607,7 +1634,7 @@ public class MarcXmlManager {
         } // end loop over data fields
 
         // Add all the new elements
-        for(Element addMe : newFields)
+        for (Element addMe : newFields)
             marcXml.addContent(addMe).addContent("\n\n");
 
         TimingLogger.stop("seperateNames");
@@ -1616,16 +1643,16 @@ public class MarcXmlManager {
     /**
      * Removes duplicate values for MARC XML fields with a given tag.
      * Two fields are considered duplicates if they have the same subfields
-     * in the same order with the same values.  If one or more duplicate
+     * in the same order with the same values. If one or more duplicate
      * fields are found with the specified tag, all but one of them are removed.
-     *
-     * @param tag The tag whose fields should be deduplicated.
+     * 
+     * @param tag
+     *            The tag whose fields should be deduplicated.
      */
     @SuppressWarnings("unchecked")
-    public void deduplicateMarcXmlField(String tag)
-    {
+    public void deduplicateMarcXmlField(String tag) {
         TimingLogger.start("deduplicateMarcXmlField");
-        LOG.debug("deduping tag: "+tag);
+        LOG.debug("deduping tag: " + tag);
         // A list of values we've currently seen on target fields
         HashSet<String> currentValues = new HashSet<String>();
 
@@ -1636,9 +1663,8 @@ public class MarcXmlManager {
         ArrayList<Element> toRemove = new ArrayList<Element>();
 
         // Iterate over the fields and find the one with the correct tag
-        for(Element field : fields)
-        {
-            LOG.debug("field: "+field);
+        for (Element field : fields) {
+            LOG.debug("field: " + field);
             // A string which is unique for each distinct field
             StringBuilder value = new StringBuilder();
 
@@ -1647,35 +1673,33 @@ public class MarcXmlManager {
 
             // Get the 2nd indicator and append it to the field's value
             String ind2 = getIndicatorOfField(field, "2");
-            value.append("ind2"+ind2);
+            value.append("ind2" + ind2);
 
             // Loop over each subfield and add the values of each to the datafield's value.
-            for(Element subfield : subfields)
+            for (Element subfield : subfields)
                 value.append(subfield.getText().toLowerCase());
 
             // Remove an ending period since this should not effect whether or not fields are considered duplicates
-            if(value.charAt(value.length()-1) == '.')
-                value.setCharAt(value.length()-1, ' ');
+            if (value.charAt(value.length() - 1) == '.')
+                value.setCharAt(value.length() - 1, ' ');
 
             String valueStr = value.toString().trim();
 
             // If we've already seen the value of the current field, remove the
-            // current field as it is a duplicate.  Otherwise, add its value to
+            // current field as it is a duplicate. Otherwise, add its value to
             // the list of values we've seen.
-            LOG.debug("valueStr: "+valueStr);
-            if(currentValues.contains(valueStr))
-            {
-                if(log.isDebugEnabled())
+            LOG.debug("valueStr: " + valueStr);
+            if (currentValues.contains(valueStr)) {
+                if (log.isDebugEnabled())
                     log.debug("Removing duplicate " + tag + " field with value " + valueStr + ".");
 
                 toRemove.add(field);
-            }
-            else
+            } else
                 currentValues.add(valueStr);
         } // end loop over data fields
 
         // Remove the fields we found to be duplicates
-        for(Element removeMe : toRemove)
+        for (Element removeMe : toRemove)
             marcXml.removeContent(removeMe);
 
         TimingLogger.stop("deduplicateMarcXmlField");
@@ -1684,14 +1708,13 @@ public class MarcXmlManager {
     /**
      * Removes duplicate values for MARC XML 959 fields.
      * Two fields are considered duplicates if they have the same subfields
-     * in the same order with the same values.  If one or more duplicate
+     * in the same order with the same values. If one or more duplicate
      * fields are found with the specified tag, all but one of them are removed.
-     *
+     * 
      * 959 fields have a seperate dedup method since they have to handle linking fields
      */
     @SuppressWarnings("unchecked")
-    public void deduplicateMarcXml959Field()
-    {
+    public void deduplicateMarcXml959Field() {
         TimingLogger.start("deduplicateMarcXml959Field");
 
         // A Map from the values we've currently seen on target fields
@@ -1708,8 +1731,7 @@ public class MarcXmlManager {
         ArrayList<Element> current8s = new ArrayList<Element>();
 
         // Iterate over the fields and find the one with the correct tag
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // A string which is unique for each distinct field
             StringBuilder value = new StringBuilder();
 
@@ -1721,80 +1743,82 @@ public class MarcXmlManager {
 
             // Get the 2nd indicator and append it to the field's value
             String ind2 = getIndicatorOfField(field, "2");
-            value.append("ind2"+ind2);
+            value.append("ind2" + ind2);
 
             // Loop over each subfield and add the values of each to the datafield's value.
             // Don't include the $8 linking field.
-            for(Element subfield : subfields)
-            {
-                if(!subfield.getAttribute("code").getValue().equals("8"))
+            for (Element subfield : subfields) {
+                if (!subfield.getAttribute("code").getValue().equals("8"))
                     value.append(subfield.getText().toLowerCase());
                 else
                     current8s.add(subfield);
             }
 
             // Remove an ending period since this should not effect whether or not fields are considered duplicates
-            if(value.charAt(value.length()-1) == '.')
-                value.setCharAt(value.length()-1, ' ');
+            if (value.charAt(value.length() - 1) == '.')
+                value.setCharAt(value.length() - 1, ' ');
 
             String valueStr = value.toString().trim();
 
             // If we've already seen the value of the current field, remove the
-            // current field as it is a duplicate.  Otherwise, add its value to
+            // current field as it is a duplicate. Otherwise, add its value to
             // the list of values we've seen.
-            if(currentValuesTo959.containsKey(valueStr))
-            {
-                if(log.isDebugEnabled())
+            if (currentValuesTo959.containsKey(valueStr)) {
+                if (log.isDebugEnabled())
                     log.debug("Removing duplicate 959 field with value " + valueStr + ".");
 
                 toRemove.add(field);
 
                 Element duplicateOf = currentValuesTo959.get(valueStr);
 
-                for(Element current8 : current8s)
-                    duplicateOf.addContent("\t").addContent(((Element)current8.clone())).addContent("\n");
-            }
-            else
+                for (Element current8 : current8s)
+                    duplicateOf.addContent("\t").addContent(((Element) current8.clone())).addContent("\n");
+            } else
                 currentValuesTo959.put(valueStr, field);
         } // end loop over data fields
 
         // Remove the fields we found to be duplicates
-        for(Element removeMe : toRemove)
+        for (Element removeMe : toRemove)
             marcXml.removeContent(removeMe);
 
         TimingLogger.stop("deduplicateMarcXml959Field");
     } // end method deduplicateMarcXmlField
 
     /**
-     * Sets the value for a specified subfield of a specified field.  If the requested
-     * field does not exist this method will do nothing.  If there are more than one
+     * Sets the value for a specified subfield of a specified field. If the requested
+     * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the first one only.
-     *
-     * @param targetField The tag of the field to set the subfield for.
-     * @param targetSubfield The subfield to set.
-     * @param value The value to set the subfield to.
+     * 
+     * @param targetField
+     *            The tag of the field to set the subfield for.
+     * @param targetSubfield
+     *            The subfield to set.
+     * @param value
+     *            The value to set the subfield to.
      */
-    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value)
-    {
+    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value) {
         setMarcXmlSubfield(targetField, targetSubfield, value, null);
     }
 
     /**
-     * Sets the value for a specified subfield of a specified field.  If the requested
-     * field does not exist this method will do nothing.  If there are more than one
+     * Sets the value for a specified subfield of a specified field. If the requested
+     * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the first one only.
-     *
-     * @param targetField The tag of the field to set the subfield for.
-     * @param targetSubfield The subfield to set.
-     * @param value The value to set the subfield to.
-     * @param oldValue The old value of the field, or null if we don't care what the old value was
+     * 
+     * @param targetField
+     *            The tag of the field to set the subfield for.
+     * @param targetSubfield
+     *            The subfield to set.
+     * @param value
+     *            The value to set the subfield to.
+     * @param oldValue
+     *            The old value of the field, or null if we don't care what the old value was
      */
     @SuppressWarnings("unchecked")
-    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, String oldValue)
-    {
+    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, String oldValue) {
         TimingLogger.start("setMarcXmlSubfield");
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Setting " + targetField + " $" + targetSubfield + " to " + value + (oldValue == null ? "." : " where the old value was " + oldValue + "."));
 
         // true only when we set the value
@@ -1807,22 +1831,18 @@ public class MarcXmlManager {
         Element addSubfieldToMe = null;
 
         // Iterate over the fields and find the one with the correct tag
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the target field, get its subfields
-            if(field.getAttribute("tag").getValue().equals(targetField))
-            {
+            if (field.getAttribute("tag").getValue().equals(targetField)) {
                 // Get the control fields
                 List<Element> subfields = getSubfieldsOfField(field, targetSubfield.charAt(0));
 
                 // Iterate over the subfields to find the target subfield
-                for(Element subfield : subfields)
-                {
+                for (Element subfield : subfields) {
                     // Set the value of the subfield if it is the target subfield
                     // If the oldValue was specified (not null,) only set the subfield if it's current value equals oldValue.
-                    if((oldValue == null || subfield.getText().equals(oldValue)))
-                    {
-                        if(log.isDebugEnabled())
+                    if ((oldValue == null || subfield.getText().equals(oldValue))) {
+                        if (log.isDebugEnabled())
                             log.debug("Found " + targetField + " $" + targetSubfield + ", setting its value to " + value + ".");
 
                         subfield.setText(value);
@@ -1832,8 +1852,7 @@ public class MarcXmlManager {
                 } // end loop over the target field's subfields
 
                 // If we couldn't find the specified subfield, we need to add it to the current field.
-                if(!setValue && oldValue == null)
-                {
+                if (!setValue && oldValue == null) {
                     addSubfieldToMe = field;
                     break;
                 }
@@ -1841,9 +1860,8 @@ public class MarcXmlManager {
         } // end loop over data fields
 
         // If the target subfield did not exist, add it to the target field
-        if(addSubfieldToMe != null && !setValue)
-        {
-            if(log.isDebugEnabled())
+        if (addSubfieldToMe != null && !setValue) {
+            if (log.isDebugEnabled())
                 log.debug("Adding $" + targetSubfield + " to " + targetField + " with value " + value + ".");
 
             // Add the subfield to the field with the specified value
@@ -1857,21 +1875,24 @@ public class MarcXmlManager {
     } // end method setMarcXmlSubfield
 
     /**
-     * Sets the value for a specified subfield of a specified field.  If the requested
-     * field does not exist this method will do nothing.  If there are more than one
+     * Sets the value for a specified subfield of a specified field. If the requested
+     * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the nth one only.
-     *
-     * @param targetField The tag of the field to set the subfield for.
-     * @param targetSubfield The subfield to set.
-     * @param value The value to set the subfield to.
-     * @param n The index of the target subfield relative to the subfields matching the targetField tag
+     * 
+     * @param targetField
+     *            The tag of the field to set the subfield for.
+     * @param targetSubfield
+     *            The subfield to set.
+     * @param value
+     *            The value to set the subfield to.
+     * @param n
+     *            The index of the target subfield relative to the subfields matching the targetField tag
      */
     @SuppressWarnings("unchecked")
-    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, int n)
-    {
+    public void setMarcXmlSubfield(String targetField, String targetSubfield, String value, int n) {
         TimingLogger.start("setMarcXmlSubfield2");
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Setting " + targetField + " $" + targetSubfield + " to " + value + " where the index is " + n + ".");
 
         // true only when we set the value
@@ -1887,13 +1908,10 @@ public class MarcXmlManager {
         int occurrence = 0;
 
         // Iterate over the fields and find the one with the correct tag
-        for(Element field : fields)
-        {
+        for (Element field : fields) {
             // If the current field is the target field, get its subfields
-            if(field.getAttribute("tag").getValue().equals(targetField))
-            {
-                if(occurrence == n)
-                {
+            if (field.getAttribute("tag").getValue().equals(targetField)) {
+                if (occurrence == n) {
                     addSubfieldToMe = field;
                     break;
                 } // end if (the correct occurrence was found)
@@ -1903,9 +1921,8 @@ public class MarcXmlManager {
         } // end loop over data fields
 
         // If the target subfield did not exist, add it to the target field
-        if(addSubfieldToMe != null && !setValue)
-        {
-            if(log.isDebugEnabled())
+        if (addSubfieldToMe != null && !setValue) {
+            if (log.isDebugEnabled())
                 log.debug("Adding $" + targetSubfield + " to " + targetField + " with value " + value + ".");
 
             // Add the subfield to the field with the specified value
@@ -1921,20 +1938,20 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     *
-     * @param datafield The Element we're getting the subfield of
-     * @param subfield The subfield to get
+     * 
+     * @param datafield
+     *            The Element we're getting the subfield of
+     * @param subfield
+     *            The subfield to get
      * @return The value of the requested subfield of the datafield
      */
     @SuppressWarnings("unchecked")
-    public List<Element> getSubfieldsOfField(Element datafield, char subfield)
-    {
+    public List<Element> getSubfieldsOfField(Element datafield, char subfield) {
         TimingLogger.start("getSubfieldsOfField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the " + subfield + " of the passed datafield.");
 
-        try
-        {
+        try {
             List nodes = null;
             TimingLogger.start("xpath");
             TimingLogger.start("getSubfieldsOfField.xpath");
@@ -1947,8 +1964,8 @@ public class MarcXmlManager {
             } else {
                 nodes = new ArrayList<Element>();
                 for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
-                    Element e = (Element)o;
-                    if ((subfield+"").equals(e.getAttributeValue("code"))) {
+                    Element e = (Element) o;
+                    if ((subfield + "").equals(e.getAttributeValue("code"))) {
                         nodes.add(e);
                     }
                 }
@@ -1957,36 +1974,33 @@ public class MarcXmlManager {
             TimingLogger.stop("getSubfieldsOfField.xpath");
             TimingLogger.stop("getSubfieldsOfField");
             return nodes;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
             TimingLogger.stop("getSubfieldsOfField");
             return new ArrayList<Element>();
         }
 
-
     }
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     *
-     * @param datafield The Element we're getting the subfield of
-     * @param subfield The subfield to get
+     * 
+     * @param datafield
+     *            The Element we're getting the subfield of
+     * @param subfield
+     *            The subfield to get
      * @return The value of the requested subfield of the datafield
      */
     @SuppressWarnings("unchecked")
-    public List<String> getSubfieldValuesOfField(Element datafield, char subfield)
-    {
+    public List<String> getSubfieldValuesOfField(Element datafield, char subfield) {
         TimingLogger.start("getSubfieldValuesOfField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the " + subfield + " of the passed datafield.");
 
         // Holds the results
         ArrayList<String> results = new ArrayList<String>();
 
-        try
-        {
+        try {
             List<Element> elements = null;
 
             TimingLogger.start("getSubfieldValuesOfField.xpath");
@@ -2002,8 +2016,8 @@ public class MarcXmlManager {
                 elements = new ArrayList<Element>();
                 List children = datafield.getChildren("subfield", datafield.getNamespace());
                 for (Object o : children) {
-                    Element e = (Element)o;
-                    if ((subfield+"").equals(e.getAttributeValue("code"))) {
+                    Element e = (Element) o;
+                    if ((subfield + "").equals(e.getAttributeValue("code"))) {
                         elements.add(e);
                     }
                 }
@@ -2011,26 +2025,21 @@ public class MarcXmlManager {
             TimingLogger.stop("getSubfieldValuesOfField.xpath");
             TimingLogger.stop("xpath");
 
-
             // Return the empty list if there were no matching subfields
-            if(elements.size() == 0)
-            {
-                if(log.isDebugEnabled())
+            if (elements.size() == 0) {
+                if (log.isDebugEnabled())
                     log.debug("The passed datafield did not have a $" + subfield + " subfield.");
 
                 TimingLogger.stop("getSubfieldValuesOfField");
                 return results;
-            }
-            else
-            {
+            } else {
                 // Loop over the elements with the correct field and subfield, and add value of
                 // each to the list of results
-                for(Element element : elements)
-                {
+                for (Element element : elements) {
                     // The value of the requested control field
                     String value = element.getText();
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found a $" + subfield + " subfield with a value of " + value + ".");
 
                     results.add(value);
@@ -2039,9 +2048,7 @@ public class MarcXmlManager {
                 TimingLogger.stop("getSubfieldValuesOfField");
                 return results;
             }
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
             TimingLogger.stop("getSubfieldValuesOfField");
             return results;
@@ -2050,20 +2057,20 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified indicator of that Element
-     *
-     * @param datafield The Element we're getting the indicator of
-     * @param indicator The indicator to get
+     * 
+     * @param datafield
+     *            The Element we're getting the indicator of
+     * @param indicator
+     *            The indicator to get
      * @return The value of the requested indicator of the datafield
      */
     @SuppressWarnings("unchecked")
-    public String getIndicatorOfField(Element datafield, String indicator)
-    {
+    public String getIndicatorOfField(Element datafield, String indicator) {
         TimingLogger.start("getIndicatorOfField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the ind" + indicator + " of the passed datafield.");
 
-        try
-        {
+        try {
             Attribute ind = null;
             TimingLogger.start("getIndicatorOfField.xpath");
             TimingLogger.start("xpath");
@@ -2079,34 +2086,29 @@ public class MarcXmlManager {
                     ind = attributes.get(0);
                 }
             } else {
-                ind = datafield.getAttribute("ind"+indicator);
+                ind = datafield.getAttribute("ind" + indicator);
             }
             TimingLogger.stop("getIndicatorOfField.xpath");
             TimingLogger.stop("xpath");
 
             // Return the empty list if there were no matching subfields
-            if(ind == null)
-            {
-                if(log.isDebugEnabled())
+            if (ind == null) {
+                if (log.isDebugEnabled())
                     log.debug("The passed datafield did not have a ind" + indicator + ".");
 
                 TimingLogger.stop("getIndicatorOfField");
                 return null;
-            }
-            else
-            {
+            } else {
                 // The value of the requested control field
                 String value = ind.getValue();
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found a ind" + indicator + " with a value of " + value + ".");
 
                 TimingLogger.stop("getIndicatorOfField");
                 return value;
             }
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the ind" + indicator + " of the passed datafield.", e);
             TimingLogger.stop("getIndicatorOfField");
             return null;
@@ -2115,19 +2117,18 @@ public class MarcXmlManager {
 
     /**
      * Gets all MARC XML data fields with a given tag
-     *
-     * @param targetField The tag of the data fields to retrieve (for example, "035")
+     * 
+     * @param targetField
+     *            The tag of the data fields to retrieve (for example, "035")
      * @return A list of all data fields with the requested tag
      */
     @SuppressWarnings("unchecked")
-    public List<Element> getDataFields(String targetField)
-    {
+    public List<Element> getDataFields(String targetField) {
         TimingLogger.start("getDataFields");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the " + targetField + " fields.");
 
-        try
-        {
+        try {
             List<Element> potentialResults = null;
             TimingLogger.start("getDataFields.xpath");
             TimingLogger.start("xpath");
@@ -2140,7 +2141,7 @@ public class MarcXmlManager {
             } else {
                 potentialResults = new ArrayList<Element>();
                 for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     if (targetField.equals(e.getAttributeValue("tag"))) {
                         potentialResults.add(e);
                     }
@@ -2149,37 +2150,32 @@ public class MarcXmlManager {
             TimingLogger.stop("getDataFields.xpath");
             TimingLogger.stop("xpath");
 
-            // Get the data fields.  If the target field was not a 9xx field we can return the entire
+            // Get the data fields. If the target field was not a 9xx field we can return the entire
             // list, otherwise we need to filter out those results with the wrong organization code.
-            if(!targetField.startsWith("9"))
-            {
+            if (!targetField.startsWith("9")) {
                 List<Element> results = potentialResults;
 
                 // Get the 880 fields that match the requested tag
-                if(tagTo880s.containsKey(targetField))
+                if (tagTo880s.containsKey(targetField))
                     results.addAll(tagTo880s.get(targetField));
 
                 TimingLogger.stop("getDataFields");
                 return results;
-            }
-            else
-            {
+            } else {
                 ArrayList<Element> results = new ArrayList<Element>();
 
                 // Get the 880 fields that match the requested tag
-                if(tagTo880s.containsKey(targetField))
+                if (tagTo880s.containsKey(targetField))
                     potentialResults.addAll(tagTo880s.get(targetField));
 
-                for(Element potentialResult : potentialResults)
-                    if(getSubfieldOfField(potentialResult, '5').contains(this.organizationCode))
+                for (Element potentialResult : potentialResults)
+                    if (getSubfieldOfField(potentialResult, '5').contains(this.organizationCode))
                         results.add(potentialResult);
 
                 TimingLogger.stop("getDataFields");
                 return results;
             }
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the " + targetField + " fields.", e);
             TimingLogger.stop("getDataFields");
             return new ArrayList<Element>();
@@ -2188,23 +2184,23 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     *
-     * @param datafield The Element we're getting the subfield of
-     * @param subfield The subfield to get
+     * 
+     * @param datafield
+     *            The Element we're getting the subfield of
+     * @param subfield
+     *            The subfield to get
      * @return The value of the requested subfield of the datafield
      */
     @SuppressWarnings("unchecked")
-    public static List<String> getSubfieldOfField(Element datafield, char subfield)
-    {
+    public static List<String> getSubfieldOfField(Element datafield, char subfield) {
         TimingLogger.start("getSubfieldOfField");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the " + subfield + " of the passed datafield.");
 
         // Holds the results
         ArrayList<String> results = new ArrayList<String>();
 
-        try
-        {
+        try {
             List<Element> elements = null;
             TimingLogger.start("getSubfieldOfField.xpath");
             TimingLogger.start("xpath");
@@ -2218,8 +2214,8 @@ public class MarcXmlManager {
             } else {
                 elements = new ArrayList<Element>();
                 for (Object o : datafield.getChildren("subfield", datafield.getNamespace())) {
-                    Element e = (Element)o;
-                    if ((subfield+"").equals(e.getAttributeValue("code"))) {
+                    Element e = (Element) o;
+                    if ((subfield + "").equals(e.getAttributeValue("code"))) {
                         elements.add(e);
                     }
                 }
@@ -2228,24 +2224,20 @@ public class MarcXmlManager {
             TimingLogger.stop("xpath");
 
             // Return the empty list if there were no matching subfields
-            if(elements.size() == 0)
-            {
-                if(log.isDebugEnabled())
+            if (elements.size() == 0) {
+                if (log.isDebugEnabled())
                     log.debug("The passed datafield did not have a $" + subfield + " subfield.");
 
                 TimingLogger.stop("getSubfieldOfField");
                 return results;
-            }
-            else
-            {
+            } else {
                 // Loop over the elements with the correct field and subfield, and add value of
                 // each to the list of results
-                for(Element element : elements)
-                {
+                for (Element element : elements) {
                     // The value of the requested control field
                     String value = element.getText();
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found a $" + subfield + " subfield with a value of " + value + ".");
 
                     results.add(value);
@@ -2254,9 +2246,7 @@ public class MarcXmlManager {
                 TimingLogger.stop("getSubfieldOfField");
                 return results;
             }
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the $" + subfield + " subfields of the passed datafields.", e);
             TimingLogger.stop("getSubfieldOfField");
             return results;
@@ -2265,18 +2255,16 @@ public class MarcXmlManager {
 
     /**
      * Gets all MARC XML datafields containing linking fields ($8 subfields for any tag)
-     *
+     * 
      * @return A list of all datafields containing linking fields in the MARCXML document
      */
     @SuppressWarnings("unchecked")
-    public List<Element> getLinkingFieldsParents()
-    {
+    public List<Element> getLinkingFieldsParents() {
         TimingLogger.start("getLinkingFieldsParents");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the linking fields.");
 
-        try
-        {
+        try {
             TimingLogger.start("getLinkingFieldsParents.xpath");
             TimingLogger.start("xpath");
             List<Element> results = null;
@@ -2294,9 +2282,9 @@ public class MarcXmlManager {
             } else {
                 results = new ArrayList<Element>();
                 for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     for (Object o2 : e.getChildren("subfield", e.getNamespace())) {
-                        Element e2 = (Element)o2;
+                        Element e2 = (Element) o2;
                         if ("8".equals(e2.getAttributeValue("code"))) {
                             results.add(e);
                             break;
@@ -2308,9 +2296,7 @@ public class MarcXmlManager {
             TimingLogger.stop("xpath");
             TimingLogger.stop("getLinkingFieldsParents");
             return results;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the linking fields.", e);
             TimingLogger.stop("getLinkingFieldsParents");
             return new ArrayList<Element>();
@@ -2319,16 +2305,15 @@ public class MarcXmlManager {
 
     /**
      * Gets the value of a MARC XML control field
-     *
-     * @param targetField The control field to retrieve (for example, "008")
+     * 
+     * @param targetField
+     *            The control field to retrieve (for example, "008")
      */
     @SuppressWarnings("unchecked")
-    public void removeControlField(String targetField)
-    {
+    public void removeControlField(String targetField) {
         TimingLogger.start("removeControlField");
-        try
-        {
-            if(log.isDebugEnabled())
+        try {
+            if (log.isDebugEnabled())
                 log.debug("Removing the control field " + targetField);
 
             TimingLogger.start("removeControlField.xpath");
@@ -2339,12 +2324,12 @@ public class MarcXmlManager {
                 XPath xpath = XPath.newInstance(".//marc:controlfield[@tag='" + targetField + "']");
                 xpath.addNamespace(marcNamespace);
 
-                // Get the control field.  There should not be more than one Element in this list.
+                // Get the control field. There should not be more than one Element in this list.
                 elements = xpath.selectNodes(marcXml);
             } else {
                 elements = new ArrayList<Element>();
                 for (Object o : marcXml.getChildren("controlfield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     if (targetField.equals(e.getAttributeValue("tag"))) {
                         elements.add(e);
                     }
@@ -2353,33 +2338,28 @@ public class MarcXmlManager {
             TimingLogger.stop("removeControlField.xpath");
             TimingLogger.stop("xpath");
 
-            if(elements.size() == 0)
-            {
-                if(log.isDebugEnabled())
+            if (elements.size() == 0) {
+                if (log.isDebugEnabled())
                     log.debug("The " + targetField + " control field did not exist in the MARC XML record.");
-            }
-            else
-            {
+            } else {
                 // Remove the control field
                 marcXml.removeContent(elements.get(0));
 
-                if(targetField.equals("003"))
+                if (targetField.equals("003"))
                     field003 = null;
-                else if(targetField.equals("001"))
+                else if (targetField.equals("001"))
                     field001 = null;
-                else if(targetField.equals("006"))
+                else if (targetField.equals("006"))
                     field006 = null;
-                else if(targetField.equals("007"))
+                else if (targetField.equals("007"))
                     field007 = null;
-                else if(targetField.equals("008"))
+                else if (targetField.equals("008"))
                     field008 = null;
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Removed the " + targetField + " control field.");
             }
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting control field " + targetField);
         }
         TimingLogger.stop("removeControlField");
@@ -2388,18 +2368,16 @@ public class MarcXmlManager {
     /**
      * Gets data field 945. Separate method is used for 945 because it needs to return
      * field 945 irrespective of $5 subfield value being organization code.
-     *
+     * 
      * @return A list of all data fields with the requested tag
      */
     @SuppressWarnings("unchecked")
-    public List<Element> getField945()
-    {
+    public List<Element> getField945() {
         TimingLogger.start("getField945");
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting the " + 945 + " fields.");
 
-        try
-        {
+        try {
             TimingLogger.start("getField945.xpath");
             List<Element> elements = null;
             if (useXpath) {
@@ -2411,7 +2389,7 @@ public class MarcXmlManager {
             } else {
                 elements = new ArrayList<Element>();
                 for (Object o : marcXml.getChildren("datafield", marcXml.getNamespace())) {
-                    Element e = (Element)o;
+                    Element e = (Element) o;
                     if ("945".equals(e.getAttributeValue("tag"))) {
                         elements.add(e);
                     }
@@ -2420,9 +2398,7 @@ public class MarcXmlManager {
             TimingLogger.stop("getField945.xpath");
             TimingLogger.stop("getField945");
             return elements;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             log.error("An error occurred getting the " + 945 + " fields.", e);
             TimingLogger.stop("getField945");
             return new ArrayList<Element>();
@@ -2431,9 +2407,9 @@ public class MarcXmlManager {
 
     public void remove945(Element element) {
 
-//		List<Element> children = marcXml.getRootElement().getChildren();
-//		Element entityElement = ((Element)(children.get(0)));
-//		entityElement.getChildren().remove(element);
+        // List<Element> children = marcXml.getRootElement().getChildren();
+        // Element entityElement = ((Element)(children.get(0)));
+        // entityElement.getChildren().remove(element);
 
         TimingLogger.start("remove945");
         // Remove the control field

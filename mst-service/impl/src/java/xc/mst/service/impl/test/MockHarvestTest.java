@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.service.impl.test;
 
 import java.io.File;
@@ -31,7 +31,6 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 import xc.mst.utils.XmlHelper;
 
-
 public abstract class MockHarvestTest extends StartToFinishTest {
 
     private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
@@ -54,7 +53,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
     }
 
     public String getProviderUrl() {
-        return "file://"+INPUT_FOLDER+"/"+getFolder();
+        return "file://" + INPUT_FOLDER + "/" + getFolder();
     }
 
     public void incrementalHarvestTest(String lastOaiRequest) {
@@ -72,20 +71,21 @@ public abstract class MockHarvestTest extends StartToFinishTest {
         } else {
             fileStrs.add(testFolder);
         }
-        LOG.debug("fileStrs: "+fileStrs);
+        LOG.debug("fileStrs: " + fileStrs);
         return fileStrs;
     }
 
     protected String folderName = null;
+
     protected final String getFolder() {
         return folderName;
     }
 
     @Test
-    public void startToFinish() throws Exception  {
+    public void startToFinish() throws Exception {
         LOG.info("in startToFinish");
         for (String folderStr : getFolders()) {
-            LOG.info("folderStr: "+folderStr);
+            LOG.info("folderStr: " + folderStr);
             getRepositoryDAO().resetIdSequence(1);
             this.provider = null;
             this.folderName = folderStr;
@@ -94,12 +94,12 @@ public abstract class MockHarvestTest extends StartToFinishTest {
             LOG.info("after dropOldSchemas");
 
             installService();
-            //getServicesService().addNewService(getServiceName());
+            // getServicesService().addNewService(getServiceName());
             LOG.info("after installService");
 
             installProvider();
             LOG.info("after installProvider");
-            LOG.debug("this.folderName: "+this.folderName);
+            LOG.debug("this.folderName: " + this.folderName);
 
             configureProcessingRules();
             LOG.info("after configureProcessingRules");
@@ -112,8 +112,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
                 LOG.debug("waitUntilFinished()-1");
                 waitUntilFinished();
                 LOG.debug("waitUntilFinished()-2");
-                LOG.debug("previousLastOaiRequest: "+previousLastOaiRequest);
-                LOG.debug("HarvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
+                LOG.debug("previousLastOaiRequest: " + previousLastOaiRequest);
+                LOG.debug("HarvestManager.lastOaiRequest: " + HarvestManager.lastOaiRequest);
                 if (HarvestManager.lastOaiRequest == null || (
                         previousLastOaiRequest != null && previousLastOaiRequest.equals(HarvestManager.lastOaiRequest))) {
                     break;
@@ -134,7 +134,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
         StringBuilder sb = new StringBuilder();
         for (String key : testFailures.keySet()) {
             String value = testFailures.get(key);
-            String s2 = "\n"+key+": "+value;
+            String s2 = "\n" + key + ": " + value;
 
             sb.append(s2);
         }
@@ -148,7 +148,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 
     @Override
     public void harvestOutRecordsFromMST() throws Exception {
-        HarvestManager harvestManager = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+        HarvestManager harvestManager = (HarvestManager) MSTConfiguration.getInstance().getBean("HarvestManager");
         if (harvestOutUntil != null) {
             harvestOutFrom = harvestOutUntil;
         } else {
@@ -157,8 +157,8 @@ public abstract class MockHarvestTest extends StartToFinishTest {
         }
         harvestOutUntil = new Date();
 
-        LOG.debug("harvestOutFrom: "+harvestOutFrom);
-        LOG.debug("harvestOutUntil: "+harvestOutUntil);
+        LOG.debug("harvestOutFrom: " + harvestOutFrom);
+        LOG.debug("harvestOutUntil: " + harvestOutUntil);
 
         OaiRequestBean bean = new OaiRequestBean();
 
@@ -170,14 +170,14 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 
         Service service = getServicesService().getServiceByName(getServiceName());
         bean.setServiceId(service.getId());
-        bean.setRequest("http://localhost:8080/MetadataServicesToolkit/"+getServiceName()+"-Service/oaiRepository?verb=ListRecords");
+        bean.setRequest("http://localhost:8080/MetadataServicesToolkit/" + getServiceName() + "-Service/oaiRepository?verb=ListRecords");
 
         Facade facade = (Facade) MSTConfiguration.getInstance().getBean("Facade");
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        LOG.debug("harvestManager: "+harvestManager);
-        LOG.debug("harvestManager.lastOaiRequest: "+HarvestManager.lastOaiRequest);
+        LOG.debug("harvestManager: " + harvestManager);
+        LOG.debug("harvestManager.lastOaiRequest: " + HarvestManager.lastOaiRequest);
         stringBuilder.append(facade.execute(bean));
 
         harvestOutResponse = stringBuilder.toString();
@@ -186,11 +186,11 @@ public abstract class MockHarvestTest extends StartToFinishTest {
 
         Element oaipmhEl = doc.getRootElement();
         List records = oaipmhEl.getChild("ListRecords", oaipmhEl.getNamespace()).
-            getChildren("record", oaipmhEl.getNamespace());
+                getChildren("record", oaipmhEl.getNamespace());
 
         for (String folderStr : new String[] {
-                ACTUAL_OUTPUT_FOLDER+"/"+getFolder(),
-                ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/byRecordIds"}) {
+                ACTUAL_OUTPUT_FOLDER + "/" + getFolder(),
+                ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds" }) {
             File outFolder = new File(folderStr);
             if (!outFolder.exists()) {
                 outFolder.mkdir();
@@ -198,29 +198,29 @@ public abstract class MockHarvestTest extends StartToFinishTest {
         }
 
         for (Object rObj : records) {
-            Element rEl = (Element)rObj;
+            Element rEl = (Element) rObj;
             String oaiId = rEl.getChild("header", oaipmhEl.getNamespace())
-                .getChildText("identifier", oaipmhEl.getNamespace());
+                    .getChildText("identifier", oaipmhEl.getNamespace());
             int lastIndexOf = oaiId.lastIndexOf('/');
-            oaiId = oaiId.substring(lastIndexOf+1);
-            Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/byRecordIds/"+
-                    oaiId+"-"+HarvestManager.lastOaiRequest, xmlHelper.getStringPretty(rEl));
+            oaiId = oaiId.substring(lastIndexOf + 1);
+            Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds/" +
+                    oaiId + "-" + HarvestManager.lastOaiRequest, xmlHelper.getStringPretty(rEl));
         }
 
         LOG.debug("XML response");
         LOG.debug(harvestOutResponse);
-        File outputFolder = new File(ACTUAL_OUTPUT_FOLDER+"/"+getFolder());
+        File outputFolder = new File(ACTUAL_OUTPUT_FOLDER + "/" + getFolder());
         if (!outputFolder.exists()) {
             outputFolder.mkdir();
         }
-        Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER+"/"+getFolder()+"/"+
+        Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/" +
                 HarvestManager.lastOaiRequest, harvestOutResponse);
     }
 
     public void compareAgainstExpectedOutput() {
         String folderStr = getFolder();
 
-        File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER+"/"+folderStr);
+        File expectedOutputFolder = new File(EXPECTED_OUTPUT_FOLDER + "/" + folderStr);
         Set<String> expectedOutputFiles = new HashSet<String>();
         if (expectedOutputFolder.list() != null) {
             for (String ef : expectedOutputFolder.list()) {
@@ -229,29 +229,29 @@ public abstract class MockHarvestTest extends StartToFinishTest {
                 }
             }
 
-            File actualOutputFolder  = new File(ACTUAL_OUTPUT_FOLDER+"/"+folderStr);
+            File actualOutputFolder = new File(ACTUAL_OUTPUT_FOLDER + "/" + folderStr);
             if (!actualOutputFolder.exists()) {
                 testFailures.put(folderStr, "folder expected, but wasn't produced.");
                 return;
             }
             for (String af : actualOutputFolder.list()) {
-                LOG.debug("af: "+af);
+                LOG.debug("af: " + af);
                 if (af.contains("byRecordIds")) {
                     continue;
                 }
                 if (expectedOutputFiles.contains(af)) {
                     expectedOutputFiles.remove(af);
                     if (new XmlHelper().diffXmlFiles(
-                            ACTUAL_OUTPUT_FOLDER+"/"+folderStr+"/"+af,
-                            EXPECTED_OUTPUT_FOLDER+"/"+folderStr+"/"+af)) {
-                        testFailures.put(folderStr+"/"+af, "files differ");
+                            ACTUAL_OUTPUT_FOLDER + "/" + folderStr + "/" + af,
+                            EXPECTED_OUTPUT_FOLDER + "/" + folderStr + "/" + af)) {
+                        testFailures.put(folderStr + "/" + af, "files differ");
                     }
                 } else {
-                    testFailures.put(folderStr+"/"+af, "file exists in actual, but not expected.");
+                    testFailures.put(folderStr + "/" + af, "file exists in actual, but not expected.");
                 }
             }
             for (String ef : expectedOutputFiles) {
-                testFailures.put(folderStr+"/"+ef, "file expected, but wasn't produced.");
+                testFailures.put(folderStr + "/" + ef, "file expected, but wasn't produced.");
             }
         }
     }

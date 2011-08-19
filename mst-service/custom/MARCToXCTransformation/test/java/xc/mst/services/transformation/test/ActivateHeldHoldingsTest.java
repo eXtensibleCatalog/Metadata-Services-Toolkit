@@ -17,7 +17,7 @@ public class ActivateHeldHoldingsTest extends MockHarvestTest {
     public void finalTest() throws Exception {
         RecordCounts serviceMostRecentOutgoingRecordCounts = getRecordCountsDAO().getMostRecentOutgoingRecordCounts(getServiceName());
 
-        testCounts(new int[] {6,2,0, 2,0,0, 0,2,0, 0,0,0, 0,0,0}, serviceMostRecentOutgoingRecordCounts);
+        testCounts(new int[] { 6, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }, serviceMostRecentOutgoingRecordCounts);
 
         createHarvestSchedule();
         waitUntilFinished();

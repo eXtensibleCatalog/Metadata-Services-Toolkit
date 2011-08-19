@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.service.impl.test;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import xc.mst.utils.MSTConfiguration;
 
 /**
  * Tests example service by processing records from a repository through example service.
- *
+ * 
  * @author Ben Anderson
  * @author Sharmila Ranaganathan
  */
@@ -44,11 +44,19 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
     /** XML response of harvest out */
     protected String harvestOutResponse = null;
 
-    protected long getNumberOfRecordsToHarvest() {return 50;}
+    protected long getNumberOfRecordsToHarvest() {
+        return 50;
+    }
+
     protected abstract String getRepoName();
+
     protected abstract String getProviderUrl();
+
     protected abstract Format[] getIncomingFormats() throws Exception;
-    protected void testProvider() throws Exception {}
+
+    protected void testProvider() throws Exception {
+    }
+
     protected abstract void finalTest() throws Exception;
 
     /**
@@ -66,7 +74,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
     protected abstract void testHarvestOut();
 
     protected Repository getHarvestRepository() throws Exception {
-        Repository r = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+        Repository r = (Repository) MSTConfiguration.getInstance().getBean("Repository");
         r.setName(getRepoName());
         return r;
     }
@@ -76,7 +84,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
     }
 
     @Test
-    public void startToFinish() throws Exception  {
+    public void startToFinish() throws Exception {
         printClassPath();
 
         dropOldSchemas();
@@ -114,7 +122,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         }
         try {
             // This is now being done in MetadataServiceSpecificTest
-            //getRepositoryDAO().deleteSchema(getServiceName());
+            // getRepositoryDAO().deleteSchema(getServiceName());
         } catch (Throwable t) {
         }
         for (String ps : getPriorServices()) {
@@ -135,7 +143,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         provider = new Provider();
 
         provider.setName(getRepoName());
-        LOG.debug("getRepoName(): "+getRepoName());
+        LOG.debug("getRepoName(): " + getRepoName());
         provider.setDescription("Repository used in TestNG tests");
         provider.setOaiProviderUrl(getProviderUrl());
         provider.setCreatedAt(new java.util.Date());
@@ -144,14 +152,14 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
             getProviderService().insertProvider(provider);
         } catch (Exception e) {
             // adding this try/catch because ran a test where exception was thrown, nothing seen in log, hard to debug error.
-            LOG.error("error trying to insert provider! "+e);
+            LOG.error("error trying to insert provider! " + e);
             throw new RuntimeException(e);
         }
 
         if (shouldValidateRepo)
             getValidateRepository().validate(provider.getId());
 
-        repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+        repo = (Repository) MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(provider.getName());
 
         testProvider();
@@ -165,7 +173,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
             getServicesService().addNewService(ps);
         }
         // This is now being done in MetadataServiceSpecificTest
-        //getServicesService().addNewService(getServiceName());
+        // getServicesService().addNewService(getServiceName());
     }
 
     protected void createProcessingRule(Service srcService, String fromRepo, String serviceName) throws Exception {
@@ -216,10 +224,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
         }
         allServices2Run.add(getServiceName());
 
-        for (int i=0; i < allServices2Run.size(); i++) {
+        for (int i = 0; i < allServices2Run.size(); i++) {
             if (i > 0) {
-                createProcessingRule(getServicesService().getServiceByName(allServices2Run.get(i-1)),
-                        allServices2Run.get(i-1), allServices2Run.get(i));
+                createProcessingRule(getServicesService().getServiceByName(allServices2Run.get(i - 1)),
+                        allServices2Run.get(i - 1), allServices2Run.get(i));
             } else {
                 createProcessingRule(null, null, allServices2Run.get(i));
             }
@@ -244,14 +252,14 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
     public void createHarvestSchedule(String name) throws Exception {
         HarvestSchedule schedule = new HarvestSchedule();
         Calendar nowCal = Calendar.getInstance();
-        nowCal.setTime(new Date(System.currentTimeMillis()+2000));
+        nowCal.setTime(new Date(System.currentTimeMillis() + 2000));
         schedule.setScheduleName(name);
         schedule.setDayOfWeek(nowCal.get(Calendar.DAY_OF_WEEK));
         for (Format f : getIncomingFormats()) {
             schedule.addFormat(f);
         }
 
-        LOG.debug("getSetSpec(): "+getSetSpec());
+        LOG.debug("getSetSpec(): " + getSetSpec());
         if (getSetSpec() != null) {
             Set s = getSetService().getSetBySetSpec(getSetSpec());
             if (s == null) {
@@ -261,7 +269,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
                 getSetService().insertSet(s);
             }
             s = getSetService().getSetBySetSpec(getSetSpec());
-            LOG.debug("s: "+s);
+            LOG.debug("s: " + s);
             schedule.addSet(s);
         }
 
@@ -284,7 +292,7 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 
     /**
      * To test harvesting records from MST using OAI PMH
-     *
+     * 
      * @throws Exception
      */
     public void harvestOutRecordsFromMST() throws Exception {
@@ -311,11 +319,10 @@ public abstract class StartToFinishTest extends BaseMetadataServiceTest {
 
     /**
      * Get harvest out response
-     *
+     * 
      * @return
      */
     public String getHarvestOutResponse() {
         return harvestOutResponse;
     }
 }
-

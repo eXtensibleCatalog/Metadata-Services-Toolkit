@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.processing;
 
@@ -19,11 +19,10 @@ import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Utility class for manipulating the sets that trigger a processing directive
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class ProcessingDirectiveInputSetUtilDAO extends BaseDAO
-{
+public abstract class ProcessingDirectiveInputSetUtilDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -51,34 +50,40 @@ public abstract class ProcessingDirectiveInputSetUtilDAO extends BaseDAO
 
     /**
      * Inserts a row in the database assigning a set as input to a processing directive.
-     *
-     * @param processingDirectiveId The ID of the processing directive the set is input for
-     * @param setId The ID of the set that is input for the processing directive
+     * 
+     * @param processingDirectiveId
+     *            The ID of the processing directive the set is input for
+     * @param setId
+     *            The ID of the set that is input for the processing directive
      * @return True on success, false on failure
      */
     public abstract boolean insert(int processingDirectiveId, int setId);
 
     /**
      * Deletes the row in the database assigning a set as input to a processing directive
-     *
-     * @param processingDirectiveId The ID of the processing directive the set is no longer input for
-     * @param setId The ID of the set that is no longer input for the processing directive
+     * 
+     * @param processingDirectiveId
+     *            The ID of the processing directive the set is no longer input for
+     * @param setId
+     *            The ID of the set that is no longer input for the processing directive
      * @return True on success, false on failure
      */
     public abstract boolean delete(int processingDirectiveId, int setId);
 
     /**
      * Gets the IDs of all sets which are input to the processing directive
-     *
-     * @param processingDirectiveId The ID of the processing directive whose input set IDs should be returned
+     * 
+     * @param processingDirectiveId
+     *            The ID of the processing directive whose input set IDs should be returned
      * @return A list of set IDs for the sets that are input for the processing directive
      */
     public abstract List<Integer> getInputSetsForProcessingDirective(int processingDirectiveId);
 
     /**
      * Deletes all input sets assignments for a processing directive
-     *
-     * @param processingDirectiveId The ID of the processing directive whose input sets should be removed
+     * 
+     * @param processingDirectiveId
+     *            The ID of the processing directive whose input sets should be removed
      * @return True on success, false on failure
      */
     public abstract boolean deleteInputSetsForProcessingDirective(int processingDirectiveId);

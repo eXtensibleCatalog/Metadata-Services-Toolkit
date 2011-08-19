@@ -35,12 +35,10 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 */
 
-
 import java.io.File;
 import java.util.Date;
 
 import xc.mst.utils.MSTConfiguration;
-
 
 public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartToFinishTest {
 
@@ -52,15 +50,15 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
         return fileStrs;
     }
 
-//	@Override
-//	public String getProviderUrl() {
-//		LOG.debug("**** getProviderUrl() SUBCLASS ");
-//		return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
-//	}
+    // @Override
+    // public String getProviderUrl() {
+    // LOG.debug("**** getProviderUrl() SUBCLASS ");
+    // return "http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do";
+    // }
 
     @Override
     @Test
-    public void startToFinish() throws Exception  {
+    public void startToFinish() throws Exception {
         printClassPath();
 
         dropOldSchemas();
@@ -94,12 +92,12 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
             Service service = getServicesService().getServiceByName(getServiceName());
 
             // should just have written latest time into db at service install time.
-            if ( servicesService.doesServiceFileTimeNeedUpdate(service) ) {
+            if (servicesService.doesServiceFileTimeNeedUpdate(service)) {
                 throw new RuntimeException("ERROR:should just have written latest time into db at service install time.");
             }
 
             // find the config file and update the file time!
-            File configFile = new File(MSTConfiguration.getUrlPath()+"/services/MARCNormalization/META-INF/classes/service.xccfg");
+            File configFile = new File(MSTConfiguration.getUrlPath() + "/services/MARCNormalization/META-INF/classes/service.xccfg");
 
             if (configFile.exists()) {
 
@@ -107,18 +105,17 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
                 configFile.setLastModified(current.getTime());
 
                 // now after a file was 'updated' service file time needs updating
-                if (! servicesService.doesServiceFileTimeNeedUpdate(service) ) {
+                if (!servicesService.doesServiceFileTimeNeedUpdate(service)) {
                     throw new RuntimeException("ERROR:should NEED update, just touched a service file.");
                 }
-            }
-            else {
+            } else {
                 LOG.info("*** Could not find config file for test to modify!");
             }
 
             // we already proved that file time is/can be written correctly,
             // but let's do it again then kick off a reprocessing.
             servicesService.updateServiceLastModifiedTime(getServiceName(), service);
-            if ( servicesService.doesServiceFileTimeNeedUpdate(service) ) {
+            if (servicesService.doesServiceFileTimeNeedUpdate(service)) {
                 throw new RuntimeException("ERROR:should just have written latest time into db.");
             }
 
@@ -127,17 +124,16 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
             List<ProcessingDirective> procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(service.getId());
             if (procDirectives == null || procDirectives.size() < 1) {
                 LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
-            }
-            else {
-                try {	// now must re-process
-                    // this mimics the code in Scheduler to reprocess.  Ideally it is broken into a method both can
+            } else {
+                try { // now must re-process
+                    // this mimics the code in Scheduler to reprocess. Ideally it is broken into a method both can
                     // call, i.e. morph DefaultServicesService.reprocessService(Service) into this.
                     for (ProcessingDirective procDirective : procDirectives) {
 
                         Job job = new Job(service, 0, Constants.THREAD_SERVICE);
                         job.setOrder(getJobService().getMaxOrder() + 1);
                         job.setProcessingDirective(procDirective);
-                        LOG.debug("Creating new job THREAD_SERVICE, processing directive= "+procDirective);
+                        LOG.debug("Creating new job THREAD_SERVICE, processing directive= " + procDirective);
                         getJobService().insertJob(job);
                     }
                 } catch (DatabaseConfigException dce) {
@@ -146,21 +142,19 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
                 }
             }
             if (getScheduler().getRunningJob() != null) {
-                LOG.debug("scheduler.getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
-                LOG.debug("scheduler.getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
+                LOG.debug("scheduler.getRunningJob().getJobStatus(): " + getScheduler().getRunningJob().getJobStatus());
+                LOG.debug("scheduler.getRunningJob().getJobName(): " + getScheduler().getRunningJob().getJobName());
                 // hmm when I ran my test solr job was still running, so this test passed, but really I want to
                 // see to it that THREAD_SERVICE job makes it into queue and runs.
                 // That is a TBD.
-            }
-            else {
+            } else {
                 throw new RuntimeException("ERROR:should now be a job running.");
             }
 
             waitUntilFinished();
             // in a way, returning from waitUntilFinished proved we successfully inserted/ran a job.
             LOG.info("after waitUntilFinished (AGAIN)");
-        }
-        catch (Throwable t) {
+        } catch (Throwable t) {
             LOG.error("Exception occured when running ServiceUpdateTest!", t);
             getUtil().throwIt(t);
         }
@@ -168,7 +162,7 @@ public class ServiceUpdateTest extends xc.mst.services.normalization.test.StartT
 
     @Override
     public void postFinalTestTests() throws Exception {
-//		super.postFinalTestTests();
+        // super.postFinalTestTests();
     }
 
 }

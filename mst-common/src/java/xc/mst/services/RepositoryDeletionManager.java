@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services;
 
 import java.util.Date;
@@ -27,15 +27,15 @@ import xc.mst.utils.TimingLogger;
 
 /**
  * @author JohnB
- *
+ * 
  */
 public class RepositoryDeletionManager extends WorkerThread {
 
     private final static Logger LOG = Logger.getLogger(RepositoryDeletionManager.class);
-    private HarvestSchedule     m_harvestSchedule = null;
+    private HarvestSchedule m_harvestSchedule = null;
 
-    protected int               m_processedRecordCount = 0;
-    protected Repository        m_incomingRepository = null;
+    protected int m_processedRecordCount = 0;
+    protected Repository m_incomingRepository = null;
 
     public Repository getIncomingRepository() {
         return m_incomingRepository;
@@ -60,7 +60,7 @@ public class RepositoryDeletionManager extends WorkerThread {
 
     @Override
     public String getName() {
-        return "RepositoryDeletionManager-repos="+m_incomingRepository;
+        return "RepositoryDeletionManager-repos=" + m_incomingRepository;
     }
 
     private List<Record> getMoreRecords(Repository r, long id) {
@@ -68,12 +68,12 @@ public class RepositoryDeletionManager extends WorkerThread {
     }
 
     public boolean doSomeWork() {
-        LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method "+getName());
+        LOG.debug("**** RepositoryDeletionManager.doSomeWork() begin method " + getName());
         if (m_incomingRepository != null) {
             long id = 0;
             long numRecordsProcess = 0;
             List<Record> records = getMoreRecords(m_incomingRepository, id);
-            while ( records != null && records.size() > 0 && this.status != Status.CANCELED) {
+            while (records != null && records.size() > 0 && this.status != Status.CANCELED) {
                 for (Record r : records) {
                     if (r.getSets() != null) {
                         for (Set s : r.getSets()) {
@@ -101,9 +101,8 @@ public class RepositoryDeletionManager extends WorkerThread {
             // and now, since harvest schedule doesn't seem to get auto-deleted, proceed to delete it...
             deleteHarvestSchedule();
 
-            LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed "+ m_processedRecordCount+ " records. lastID="+id);
-        }
-        else {
+            LOG.debug("RepositoryDeletionManager.doSomeWork() end of method processed " + m_processedRecordCount + " records. lastID=" + id);
+        } else {
             LOG.debug("RepositoryDeletionManager.doSomeWork() end of method - no records to process, incomingRepository = NULL!");
         }
         return false;
@@ -112,20 +111,18 @@ public class RepositoryDeletionManager extends WorkerThread {
     private void deleteHarvestSchedule() {
         try {
             if (m_harvestSchedule != null) {
-                ScheduleService service = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
+                ScheduleService service = (ScheduleService) MSTConfiguration.getInstance().getBean("ScheduleService");
                 if (service != null) {
-                     service.deleteSchedule(m_harvestSchedule);
-                     LOG.debug("RepositoryDeletionManager.doSomeWork() deleted harvestSchedule");
+                    service.deleteSchedule(m_harvestSchedule);
+                    LOG.debug("RepositoryDeletionManager.doSomeWork() deleted harvestSchedule");
+                } else {
+                    LOG.error("NOTICE: Unable to delete harvestSchedule (NULL ScheduleService)!");
                 }
-                else {
-                     LOG.error("NOTICE: Unable to delete harvestSchedule (NULL ScheduleService)!");
-                }
-            }
-            else {
-                 LOG.debug("NOTICE: harvestSchedule NULL!");
+            } else {
+                LOG.debug("NOTICE: harvestSchedule NULL!");
             }
         } catch (DataException e) {
-            LOG.error("ERROR: RepositoryDeletionManager.doSomeWork() exception deleting harvestSchedule",e);
+            LOG.error("ERROR: RepositoryDeletionManager.doSomeWork() exception deleting harvestSchedule", e);
         }
     }
 

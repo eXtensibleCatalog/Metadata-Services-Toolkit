@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.harvest;
 
@@ -28,15 +28,12 @@ import xc.mst.constants.Constants;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
-
-
 /**
  * Action to add/edit a schedule
- *
+ * 
  * @author Sharmila Ranganathan
  */
-public class AddSchedule extends BaseActionSupport implements ServletRequestAware
-{
+public class AddSchedule extends BaseActionSupport implements ServletRequestAware {
     /** Eclipse generated id */
     private static final long serialVersionUID = 4317442764979283556L;
 
@@ -82,7 +79,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
     /** Recurrence day of week to run schedule */
     private int dayOfWeek;
 
-    /**  Hour at which the schedule should run every week */
+    /** Hour at which the schedule should run every week */
     private int hour;
 
     /** Minutes at which the schedule should run every hour */
@@ -94,7 +91,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
     /** End date for schedule to stop */
     private String endDate;
 
-    /** End date for schedule  */
+    /** End date for schedule */
     private String endDateDisplayFormat;
 
     /** Start date for schedule */
@@ -108,12 +105,11 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Overriding default implementation to view add schedule.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
+    public String execute() {
         if (log.isDebugEnabled()) {
             log.debug("In Add schedule Execute()");
         }
@@ -124,7 +120,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             request.getSession().setAttribute("schedule", schedule);
 
             SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-            startDateDisplayFormat = format.format(new  java.util.Date());
+            startDateDisplayFormat = format.format(new java.util.Date());
         } catch (DatabaseConfigException dce) {
             log.error(dce.getMessage(), dce);
             errorType = "error";
@@ -137,7 +133,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Add new schedule
-     *
+     * 
      * @return
      * @throws DataException
      */
@@ -152,8 +148,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         repository = getProviderService().getProviderById(repositoryId);
 
         schedule.setProvider(repository);
-        if (scheduleName == null)
-        {
+        if (scheduleName == null) {
             scheduleName = repository.getName() + " " + recurrence;
         }
         schedule.setScheduleName(scheduleName);
@@ -181,7 +176,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
                 schedule.setDayOfWeek(dayOfWeek);
                 schedule.setHour(hour);
 
-                //Reset other values
+                // Reset other values
                 schedule.setMinute(0);
             }
         }
@@ -193,7 +188,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
             errorType = "error";
             repositories = getProviderService().getAllProviders();
-               endDateDisplayFormat = endDate;
+            endDateDisplayFormat = endDate;
             startDateDisplayFormat = startDate;
             return INPUT;
         }
@@ -208,7 +203,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
             errorType = "error";
             repositories = getProviderService().getAllProviders();
-               endDateDisplayFormat = endDate;
+            endDateDisplayFormat = endDate;
             startDateDisplayFormat = startDate;
             return INPUT;
         }
@@ -216,7 +211,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         // Check if schedule exist for this provider
         HarvestSchedule otherSchedule = null;
         List<HarvestSchedule> schedules = getScheduleService().getAllSchedules();
-        for(HarvestSchedule harvestSchedule:schedules) {
+        for (HarvestSchedule harvestSchedule : schedules) {
             if (harvestSchedule.getProvider().getId() == repositoryId) {
                 otherSchedule = harvestSchedule;
                 break;
@@ -243,16 +238,16 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Update schedule
-     *
+     * 
      * @return
      * @throws DataException
      */
-    public String updateSchedule() throws DataException{
+    public String updateSchedule() throws DataException {
 
         if (log.isDebugEnabled()) {
             log.debug("In update schedule updateSchedule()");
         }
-        //schedule = scheduleService.getScheduleById(scheduleId);
+        // schedule = scheduleService.getScheduleById(scheduleId);
         schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -263,7 +258,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             addFieldError("invalidStartDate", "Invalid format for start date. Please enter in the format mm/dd/yyyy");
             errorType = "error";
             repositories = getProviderService().getAllProviders();
-               endDateDisplayFormat = endDate;
+            endDateDisplayFormat = endDate;
             startDateDisplayFormat = startDate;
             return INPUT;
         }
@@ -278,14 +273,14 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             addFieldError("invalidEndDate", "Invalid format for end date. Please enter in the format mm/dd/yyyy");
             errorType = "error";
             repositories = getProviderService().getAllProviders();
-               endDateDisplayFormat = endDate;
+            endDateDisplayFormat = endDate;
             startDateDisplayFormat = startDate;
             return INPUT;
         }
 
         schedule.setRecurrence(recurrence);
 
-         if (recurrence != null) {
+        if (recurrence != null) {
             if (recurrence.equalsIgnoreCase("Daily")) {
                 schedule.setHour(dailyHour);
                 schedule.setMinute(dailyMinute);
@@ -306,7 +301,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
                 schedule.setDayOfWeek(dayOfWeek);
                 schedule.setHour(hour);
 
-                //Reset other values
+                // Reset other values
                 schedule.setMinute(0);
             }
         }
@@ -317,7 +312,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         // Check if schedule exist for this provider
         HarvestSchedule otherSchedule = null;
         List<HarvestSchedule> schedules = getScheduleService().getAllSchedules();
-        for(HarvestSchedule harvestSchedule:schedules) {
+        for (HarvestSchedule harvestSchedule : schedules) {
             if (harvestSchedule.getProvider().getId() == repositoryId) {
                 otherSchedule = harvestSchedule;
                 break;
@@ -335,7 +330,8 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
             if (schedule.getEndDate() != null) {
                 endDateDisplayFormat = format.format(schedule.getEndDate());
-            }   startDateDisplayFormat = format.format(schedule.getStartDate());
+            }
+            startDateDisplayFormat = format.format(schedule.getStartDate());
             return INPUT;
         }
 
@@ -345,7 +341,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Add/update sets and formats for schedule
-     *
+     * 
      * @return
      * @throws DataException
      */
@@ -363,11 +359,11 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         schedule.removeAllSets();
 
         if (selectedSetIds != null) {
-            if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
+            if (selectedSetIds.length == 1 && selectedSetIds[0] == 0) {
                 // Remove all set and keep it empty. Removing because if any single set was added previously
                 schedule.setSets(new ArrayList<Set>());
             } else {
-                for (int setId:selectedSetIds) {
+                for (int setId : selectedSetIds) {
                     Set set = getSetService().getSetById(setId);
                     schedule.addSet(set);
                 }
@@ -375,18 +371,16 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         }
 
         if (selectedFormatIds != null) {
-            for (int formatId:selectedFormatIds) {
+            for (int formatId : selectedFormatIds) {
                 Format format = getFormatService().getFormatById(formatId);
                 schedule.addFormat(format);
             }
         }
 
-
         // CHeck if a schedule with same name exist
         HarvestSchedule otherSchedule = getScheduleService().getScheduleByName(scheduleName);
 
         if (otherSchedule == null || otherSchedule.getId() == schedule.getId()) {
-
 
             if (schedule.getId() > 0) {
                 // Add schedule
@@ -402,14 +396,12 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             return INPUT;
         }
 
-
-
         return SUCCESS;
     }
 
     /**
      * Add/update sets and formats for schedule
-     *
+     * 
      * @return
      * @throws DataException
      */
@@ -419,7 +411,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
             log.debug("AddSchedule::addSetFormatForSchedule():: scheduleId=" + scheduleId);
         }
 
-        //schedule = scheduleService.getScheduleById(scheduleId);
+        // schedule = scheduleService.getScheduleById(scheduleId);
         schedule = (HarvestSchedule) request.getSession().getAttribute("schedule");
 
         schedule.setNotifyEmail(notifyEmail);
@@ -428,11 +420,11 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         schedule.removeAllSets();
 
         if (selectedSetIds != null) {
-            if (selectedSetIds.length == 1 && selectedSetIds[0] ==0) {
+            if (selectedSetIds.length == 1 && selectedSetIds[0] == 0) {
                 // Remove all set and keep it empty. Removing because if any single set was added previously
                 schedule.setSets(new ArrayList<Set>());
             } else {
-                for (int setId:selectedSetIds) {
+                for (int setId : selectedSetIds) {
                     Set set = getSetService().getSetById(setId);
                     schedule.addSet(set);
                 }
@@ -440,12 +432,11 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
         }
 
         if (selectedFormatIds != null) {
-            for (int formatId:selectedFormatIds) {
+            for (int formatId : selectedFormatIds) {
                 Format format = getFormatService().getFormatById(formatId);
                 schedule.addFormat(format);
             }
         }
-
 
         // CHeck if a schedule with same name exist
         HarvestSchedule otherSchedule = getScheduleService().getScheduleByName(scheduleName);
@@ -463,7 +454,6 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
             repositories = getProviderService().getAllProviders();
 
-
         } else {
             addFieldError("scheduleNameExist", "Schedule name already exists - " + scheduleName);
             repository = schedule.getProvider();
@@ -477,7 +467,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * To view the edit page for add schedule
-     *
+     * 
      * @return
      */
     public String viewEdit() {
@@ -516,7 +506,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get schedule
-     *
+     * 
      * @return
      */
     public HarvestSchedule getSchedule() {
@@ -525,7 +515,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set schedule
-     *
+     * 
      * @param schedule
      */
     public void setSchedule(HarvestSchedule schedule) {
@@ -534,7 +524,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get repositories
-     *
+     * 
      * @return
      */
     public List<Provider> getRepositories() {
@@ -543,7 +533,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set repository id
-     *
+     * 
      * @param repositoryId
      */
     public void setRepositoryId(int repositoryId) {
@@ -552,7 +542,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get repository
-     *
+     * 
      * @return
      */
     public Provider getRepository() {
@@ -561,7 +551,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get format ids
-     *
+     * 
      * @return
      */
     public int[] getSelectedFormatIds() {
@@ -570,8 +560,9 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set format ids
-     *
-     * @param selectedFormatIds Format ids selected
+     * 
+     * @param selectedFormatIds
+     *            Format ids selected
      */
     public void setSelectedFormatIds(int[] selectedFormatIds) {
         this.selectedFormatIds = selectedFormatIds;
@@ -579,7 +570,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set set ids
-     *
+     * 
      * @param selectedSetIds
      */
     public void setSelectedSetIds(int[] selectedSetIds) {
@@ -588,7 +579,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get schedule id
-     *
+     * 
      * @return
      */
     public int getScheduleId() {
@@ -597,7 +588,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set schedule id
-     *
+     * 
      * @param scheduleId
      */
     public void setScheduleId(int scheduleId) {
@@ -606,7 +597,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Get daily hour
-     *
+     * 
      * @return
      */
     public int getDailyHour() {
@@ -615,7 +606,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set daily hour
-     *
+     * 
      * @param dailyHour
      */
     public void setDailyHour(int dailyHour) {
@@ -624,7 +615,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set notify email
-     *
+     * 
      * @param notifyEmail
      */
     public void setNotifyEmail(String notifyEmail) {
@@ -633,7 +624,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set schedule name
-     *
+     * 
      * @param scheduleName
      */
     public void setScheduleName(String scheduleName) {
@@ -642,7 +633,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set recurrence type
-     *
+     * 
      * @param recurrence
      */
     public void setRecurrence(String recurrence) {
@@ -651,7 +642,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set day of week
-     *
+     * 
      * @param dayOfWeek
      */
     public void setDayOfWeek(int dayOfWeek) {
@@ -660,7 +651,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set hour
-     *
+     * 
      * @param hour
      */
     public void setHour(int hour) {
@@ -669,7 +660,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set minute
-     *
+     * 
      * @param minute
      */
     public void setMinute(int minute) {
@@ -678,7 +669,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set start date
-     *
+     * 
      * @param startDate
      */
     public void setStartDate(String startDate) {
@@ -687,7 +678,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set end date
-     *
+     * 
      * @param endDate
      */
     public void setEndDate(String endDate) {
@@ -712,7 +703,7 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
 
     /**
      * Set the servlet request.
-     *
+     * 
      * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
      */
     public void setServletRequest(HttpServletRequest request) {
@@ -726,6 +717,5 @@ public class AddSchedule extends BaseActionSupport implements ServletRequestAwar
     public void setDailyMinute(int dailyMinute) {
         this.dailyMinute = dailyMinute;
     }
-
 
 }

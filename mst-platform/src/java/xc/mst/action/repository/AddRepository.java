@@ -1,12 +1,11 @@
-
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.repository;
 
@@ -18,12 +17,11 @@ import xc.mst.constants.Constants;
 
 /**
  * This method is for adding a new repository to the database.
- *
- * @author  Tejaswi Haramurali
+ * 
+ * @author Tejaswi Haramurali
  */
 
-public class AddRepository extends BaseActionSupport
-{
+public class AddRepository extends BaseActionSupport {
 
     /** Serial id */
     private static final long serialVersionUID = -2353352472168477475L;
@@ -31,14 +29,13 @@ public class AddRepository extends BaseActionSupport
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-
     /** Represents the Name of the Repository that should be added */
     private String repositoryName;
 
-    /**Represents the UR of the repository that should be added */
+    /** Represents the UR of the repository that should be added */
     private String repositoryURL;
 
-    /**The ID of the repository to be added */
+    /** The ID of the repository to be added */
     private int repositoryId;
 
     /** Number of records to harvest */
@@ -49,16 +46,15 @@ public class AddRepository extends BaseActionSupport
 
     /**
      * The method is used to add a repository
-     *
+     * 
      * @return returns the status of the add operation
      */
-    public String addRepository()
-    {
+    public String addRepository() {
         Provider p = new Provider();
         String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
         if (error != null) {
             errorType = "error";
-            this.addFieldError("editRepository",error);
+            this.addFieldError("editRepository", error);
             return INPUT;
         } else {
             setRepositoryId(p.getId());
@@ -67,9 +63,9 @@ public class AddRepository extends BaseActionSupport
 
     }
 
-     /**
+    /**
      * Returns error type
-      *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -78,75 +74,74 @@ public class AddRepository extends BaseActionSupport
 
     /**
      * Sets error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;
     }
 
-     /**
+    /**
      * Sets the ID of the repository to be added
-     *
-     * @param repositoryId repository ID
+     * 
+     * @param repositoryId
+     *            repository ID
      */
-    public void setRepositoryId(int repositoryId)
-    {
+    public void setRepositoryId(int repositoryId) {
         this.repositoryId = repositoryId;
     }
 
     /**
      * Returns the ID of the repository to be added
-     *
+     * 
      * @return ID of the repository
      */
-    public int getRepositoryId()
-    {
+    public int getRepositoryId() {
         return repositoryId;
     }
+
     /**
      * Sets the Repository Name to the specified value
-     *
-     * @param repoName The name to be assigned to the repository
+     * 
+     * @param repoName
+     *            The name to be assigned to the repository
      */
-    public void setRepositoryName(String repoName)
-    {
+    public void setRepositoryName(String repoName) {
         repositoryName = repoName.trim();
     }
 
     /**
      * Gets the name of the repository
-     *
+     * 
      * @return returns the name of the repository
      */
-    public String getRepositoryName()
-    {
+    public String getRepositoryName() {
         return repositoryName;
     }
 
     /**
      * Sets the URL of the repository to the specified value
-     *
-     * @param repoURL The URL value to be assigned to the repository
+     * 
+     * @param repoURL
+     *            The URL value to be assigned to the repository
      */
-    public void setRepositoryURL(String repoURL)
-    {
+    public void setRepositoryURL(String repoURL) {
         repositoryURL = repoURL.trim();
     }
 
     /**
      * Gets the URL of the repository
-     *
+     * 
      * @return returns URL of the repository
      */
-    public String getRepositoryURL()
-    {
+    public String getRepositoryURL() {
         return repositoryURL;
     }
 
     /**
      * Gets the number of records to harvest
-     *
+     * 
      * @return number of records to harvest
      */
     public int getNumberOfRecordsToHarvest() {
@@ -155,12 +150,12 @@ public class AddRepository extends BaseActionSupport
 
     /**
      * Sets the number of records to harvest
-     *
-     * @param numberOfRecordsToHarvest number of records to harvest
+     * 
+     * @param numberOfRecordsToHarvest
+     *            number of records to harvest
      */
     public void setNumberOfRecordsToHarvest(int numberOfRecordsToHarvest) {
         this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
     }
-
 
 }

@@ -33,7 +33,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC
  * schema record from the data in the unprocessed record.
- *
+ * 
  * @author Eric Osisek
  */
 public abstract class SolrTransformationService extends GenericMetadataService {
@@ -117,7 +117,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 010 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:recordID field with a type of LCCN at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -138,7 +138,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 015 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type equal to the 015's $2
      * value at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -161,7 +161,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 016 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type equal to the 016's $2
      * value at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -184,7 +184,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 022 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type of LCCN at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -210,7 +210,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 024 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type based on the 1st
      * indicator at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -241,7 +241,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 028 field from the SaxMarcXmlRecord we're transforming.
      * This becomes a field with a name and type attribute based on the 1st
      * indicator at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -329,7 +329,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 030 fields from the SaxMarcXmlRecord we're transforming.
      * These become the xc:identifier fields with a type of CODEN at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -350,7 +350,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 035 fields from the SaxMarcXmlRecord we're transforming.
      * These become the recordID fields with a type equal to the organization
      * code for the 035 field at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -409,7 +409,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 037 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type equal to the 037's $b
      * value at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -477,7 +477,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 050 fields from the SaxMarcXmlRecord we're transforming.
      * These become the xc:subject fields with a type of dcterms:LCC at the work
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -535,7 +535,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 055 field from the SaxMarcXmlRecord we're transforming.
      * Each one with a 1st indicator between 0 and 5 becomes a xc:subject field
      * with a type of dcterms:LCC at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -573,7 +573,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 060 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the dcterms:subject field with a type of dcterms:NLM at the
      * work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -596,7 +596,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 074 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with a type of GPOItem at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -618,7 +618,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 082 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the dcterms:subject field with an xsi:type of dcterms:DDC at
      * the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -641,7 +641,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 084 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with an type of NDC8 at the work FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -675,7 +675,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 086 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:identifier field with an type of SuDoc at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -697,7 +697,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 090 fields from the SaxMarcXmlRecord we're transforming.
      * These becomes the xc:subject fields with a type of dcterms:LCC at the
      * work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -720,7 +720,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 092 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the dcterms:subject field with an xsi:type of dcterms:DDC at
      * the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -742,7 +742,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 100 field from the SaxMarcXmlRecord we're transforming. The
      * abcdegq subfields become the xc:creator field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -762,7 +762,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 110 field from the SaxMarcXmlRecord we're transforming. The
      * abcdeg subfields become the xc:creator field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -782,7 +782,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 111 field from the SaxMarcXmlRecord we're transforming. The
      * acdegjq subfields become the xc:creator field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -804,7 +804,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * adfghklmnoprst0 subfields become both the rdvocab:workTitle field at the
      * work FRBR level and the xc:expressionTitle field at the expression FRBR
      * level
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -952,7 +952,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 210 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $b become the dcterms:alternative field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -973,7 +973,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 222 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $b become the dcterms:alternative field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -996,7 +996,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * The adfghklmnoprs subfields become the rdvocab:workTitle field at the
      * work FRBR level. and the xc:expressionTitle field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1149,7 +1149,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * The adfghklmnoprs subfields become the rdvocab:workTitle field at the
      * work FRBR level. and the xc:expressionTitle field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1300,7 +1300,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * $c becomes the xc:titleAnnotation field at the manifestation FRBR level.
      * The abfgknps subfields become the dc:title field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1327,7 +1327,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 246 field from the SaxMarcXmlRecord we're transforming. The
      * abfnp subfields become the dcterms:alternative field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1424,7 +1424,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 247 field from the SaxMarcXmlRecord we're transforming. The
      * abfnp subfields become the dcterms:alternative field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1446,7 +1446,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * ab subfields become the rdvocab:edition field at the manifestation FRBR
      * level. The $a subfield becomes the rdvocab:version field at the
      * expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1473,7 +1473,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * $a subfields become the rdvocab:edition field at the manifestation FRBR
      * level. The $a subfield becomes the rdvocab:version field at the
      * expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1519,7 +1519,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 255 field from the SaxMarcXmlRecord we're transforming. The
      * abcdefg subfields become the rdvocab:scale field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1542,7 +1542,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * FRBR level. The $b and $f become dc:publisher fields at the manifestation
      * FRBR level. The $c and $g become dcterms:issued fields at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1590,7 +1590,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * level. The $b subfields become rdvocab:illustration fields at the
      * expression FRBR level. The $c subfields become rdvocab:dimensions fields
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1639,7 +1639,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 310 field from the SaxMarcXmlRecord we're transforming. The
      * ab subfields become the rdvocab:frequency field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1660,7 +1660,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 321 field from the SaxMarcXmlRecord we're transforming. The
      * ab subfields become the rdvocab:frequency field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1681,7 +1681,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 362 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $z become the rdvocab:numbering field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1701,7 +1701,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 440 field from the SaxMarcXmlRecord we're transforming. The
      * anpv subfields become the xc:isPartOf field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1722,7 +1722,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 490 field from the SaxMarcXmlRecord we're transforming. The
      * av subfields become the dcterms:isPartOf field at the manifestation FRBR
      * level. The x subfield becomes the dcterms:ISSN attribute on the field.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1749,7 +1749,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 500 field from the SaxMarcXmlRecord we're transforming. The
      * a3 subfields become the dc:description field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1769,7 +1769,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 501 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dc:relation fields at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1789,7 +1789,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 502 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become rdvocab:academicDegree fields at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1811,7 +1811,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 504 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $b become the dc:description field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1832,7 +1832,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 505 field from the SaxMarcXmlRecord we're transforming. The
      * agrtu subfields become dcterms:tableOfContents fields at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1853,7 +1853,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 506 field from the SaxMarcXmlRecord we're transforming. The
      * abcdefu3 subfields become the dc:rights field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1873,7 +1873,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 507 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $b become the dc:scale field at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1894,7 +1894,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 508 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become rdvocab:artisticCredits fields at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1916,7 +1916,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 510 field from the SaxMarcXmlRecord we're transforming. The
      * abc3 subfields become the dcterms:isReferencedBy field with a
      * dcterms:ISSN equal to the 510's $x value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1940,7 +1940,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 511 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become rdarole:performer fields at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1961,7 +1961,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 513 field from the SaxMarcXmlRecord we're transforming. The
      * $a and $b become the dcterms:temporal field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -1981,7 +1981,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 515 field from the SaxMarcXmlRecord we're transforming. The
      * $a becomes the rdvocab:numbering field at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2002,7 +2002,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 518 field from the SaxMarcXmlRecord we're transforming. The
      * a3 subfields become the rdvocab:captureDetail field at the expression
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2022,7 +2022,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 520 field from the SaxMarcXmlRecord we're transforming. The
      * abcu3 subfields become the dcterms:abstract field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2042,7 +2042,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 521 field from the SaxMarcXmlRecord we're transforming. The
      * ab3 subfields become the dcterms:audience field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2062,7 +2062,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 522 field from the SaxMarcXmlRecord we're transforming. The
      * $a becomes the dcterms:spatial field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2082,7 +2082,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 525 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:relation field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2103,7 +2103,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 530 field from the SaxMarcXmlRecord we're transforming. The
      * abcdu3 subfields become the dcterms:hasFormat field at the expression
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2124,7 +2124,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 533 field from the SaxMarcXmlRecord we're transforming. The
      * abcdefmn3 subfields become the dcterms:hasFormat field at the expression
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2145,7 +2145,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 534 field from the SaxMarcXmlRecord we're transforming. The
      * abc3 subfields become the dcterms:isFormatOf field with a dcterms:ISSN
      * equal to the 510's $x value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2169,7 +2169,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 538 field from the SaxMarcXmlRecord we're transforming. The
      * aiu3 subfields become the dcterms:requires field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2190,7 +2190,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 540 field from the SaxMarcXmlRecord we're transforming. The
      * abcdu3 subfields become the dc:rights field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2211,7 +2211,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 544 field from the SaxMarcXmlRecord we're transforming. The
      * abcden3 subfields become the dc:description field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2232,7 +2232,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 546 field from the SaxMarcXmlRecord we're transforming. The
      * ab3 subfields become the dcterms:language field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2253,7 +2253,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 547 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dc:description fields at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2273,7 +2273,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 550 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the dc:description field at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2295,7 +2295,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * the leader 08 value is not 'a' no processing will occur for this field
      * Otherwise the abcdu3 subfields become the dc:description field at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2319,7 +2319,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 580 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dc:relation fields at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2340,7 +2340,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 586 field from the SaxMarcXmlRecord we're transforming. The
      * a3 subfields become the rdvocab:awards field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2361,7 +2361,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 59X field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dc:description fields at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2427,7 +2427,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 600 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2462,7 +2462,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 610 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2497,7 +2497,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 611 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2532,7 +2532,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 630 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2567,7 +2567,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 648 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2602,7 +2602,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 650 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2637,7 +2637,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 651 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2672,7 +2672,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 653 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the dcterms:subject field with a type of LCCN at the work
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2693,7 +2693,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 654 field from the SaxMarcXmlRecord we're transforming. The
      * abcevyz034 subfields become the dcterms:subject field at the work FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2715,7 +2715,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 655 field from the SaxMarcXmlRecord we're transforming.
      * This becomes the xc:subject field with a type based on the 2nd indicator
      * at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -2756,7 +2756,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * and a 2nd indicator that is 2, a separate work based on the $8 subfield
      * (the linking tag) is created with a creator containing the abcdeg4
      * subfields and a title containing the klmnoprst subfields.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -3120,7 +3120,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 710 field from the SaxMarcXmlRecord we're transforming. For
      * each 710 element with a $t subfield, the $0 subfields become the
      * rdvocab:identifierForTheWork field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -3481,7 +3481,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Each 711 element becomes its own work element within the XC record. The
      * abcdeg4 subfields become the creator and the klmnoprst subfields become
      * the title.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -3841,7 +3841,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 720 field from the SaxMarcXmlRecord we're transforming. The
      * ae4 subfields become the dc:contributor field at the expression FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -3863,7 +3863,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Each 730 element becomes its own work element within the XC record. The
      * abcdeg4 subfields become the creator and the klmnoprst subfields become
      * the title.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4085,7 +4085,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 740 field from the SaxMarcXmlRecord we're transforming. The
      * anpv subfields become the dcterms:alternative field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4106,7 +4106,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 752 field from the SaxMarcXmlRecord we're transforming. The
      * abcdfgh0 subfields become the dcterms:coverage field at the work FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4127,7 +4127,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 760 field from the SaxMarcXmlRecord we're transforming. The
      * agit3 subfields become the dcterms:isPartOf field with a dcterms:ISSN
      * equal to the 760's $x value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4152,7 +4152,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit3 subfields become the dcterms:isVersionOf field with a dcterms:ISSN
      * equal to the 765's $x value and a dcterms:ISBN equal to the 765's $z
      * value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4185,7 +4185,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dc:relation field with a dcterms:ISSN equal to
      * the 770's $x value and a dcterms:ISBN equal to the 770's $z value at the
      * work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4217,7 +4217,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dc:relation field with a dcterms:ISSN equal to
      * the 772's $x value and a dcterms:ISBN equal to the 772's $z value at the
      * work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4249,7 +4249,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agitwxz3 subfields become the dcterms:isPartOf field with a dcterms:ISSN
      * equal to the 773's $x value and a dcterms:ISBN equal to the 772's $z
      * value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4279,7 +4279,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 774 field from the SaxMarcXmlRecord we're transforming.
      * The agitwxz3 subfields become the dcterms:hasPart field with a dcterms:ISSN equal to the 774's $x value and a dcterms:ISBN equal to the 774's $z value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4301,7 +4301,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dc:relation field with a dcterms:ISSN equal to
      * the 775's $x value and a dcterms:ISBN equal to the 775's $z value at the
      * expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4333,7 +4333,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dcterms:isFormatOf field with a dcterms:ISSN
      * equal to the 776's $x value and a dcterms:ISBN equal to the 776's $z
      * value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4364,7 +4364,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 777 field from the SaxMarcXmlRecord we're transforming. The
      * agit subfields become the dc:relation field with a dcterms:ISSN equal to
      * the 777's $x value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4393,7 +4393,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agitxz subfields become the dcterms:replaces field at the work FRBR
      * level. The x subfield becomes the dcterms:ISSN attribute on the field.
      * The z subfield becomes the dcterms:ISBN attribute on the field.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4424,7 +4424,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agitxz subfields become the dcterms:isReplacedBy field at the work FRBR
      * level. The x subfield becomes the dcterms:ISSN attribute on the field.
      * The z subfield becomes the dcterms:ISBN attribute on the field.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4456,7 +4456,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dcterms:isVersionOf field with a dcterms:ISSN
      * equal to the 786's $x value and a dcterms:ISBN equal to the 786's $z
      * value at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4489,7 +4489,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * agit subfields become the dc:relation field with a dcterms:ISSN equal to
      * the 787's $x value and a dcterms:ISBN equal to the 787's $z value at the
      * expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4520,7 +4520,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 800 field from the SaxMarcXmlRecord we're transforming. The
      * abcdegq4 subfields become the dcterms:isPartOf field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4544,7 +4544,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 810 field from the SaxMarcXmlRecord we're transforming. The
      * abcdeg4 subfields become the dcterms:isPartOf field at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4568,7 +4568,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 811 field from the SaxMarcXmlRecord we're transforming. The
      * acdefgjklnpqstv4 subfields become the dcterms:isPartOf field at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4592,7 +4592,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 830 field from the SaxMarcXmlRecord we're transforming. The
      * adfgklmnoprst subfields become the dcterms:isPartOf field at the
      * manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4635,7 +4635,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * abcefg subfields become the xc:location field at the holdings FRBR level.
      * The hijklm subfields become the xc:callNumber field at the holdings FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4883,7 +4883,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * manifestation level dcterms:identifier If 2nd indicator is 1, map to
      * expression level dcterms:hasVersion If 2nd indicator is 2, map to
      * expression level dc:relation
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -4998,7 +4998,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 866 field from the SaxMarcXmlRecord we're transforming. The
      * az subfields become the xc:textualHoldings field at the holdings FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5030,7 +5030,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 867 field from the SaxMarcXmlRecord we're transforming. The
      * az subfields become the xc:textualHoldings field at the holdings FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5062,7 +5062,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 868 field from the SaxMarcXmlRecord we're transforming. The
      * az subfields become the xc:textualHoldings field at the holdings FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5092,7 +5092,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 931 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dcterms:type fields at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5114,7 +5114,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 932 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become xc:typeLeader06 fields at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5134,7 +5134,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 933 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become xc:type007 fields at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5154,7 +5154,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 934 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become xc:typeSMD fields at the manifestation FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5175,7 +5175,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 935 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become rdvocab:modeOfIssuance fields at the manifestation
      * FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5196,7 +5196,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 937 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become rdvocab:natureOfContent fields at the work FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5217,7 +5217,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 939 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dcterms:issued fields at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5237,7 +5237,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 943 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dcterms:language fields at the expression FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5259,7 +5259,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * $a subfields become dcterms:audience fields at the work FRBR level. The
      * $ab subfields become xc:callNumber fields at the Holding FRBR level. The
      * $l subfields become xc:location fields at the Holding FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5385,7 +5385,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 947 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become dcterms:identifier fields at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5406,7 +5406,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 959 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfields become xc:creator fields in a work element specific to the
      * 959 element's linking field.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5528,7 +5528,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 963 field from the SaxMarcXmlRecord we're transforming. The
      * ay subfields becomes the xc:temporal field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5561,7 +5561,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 965 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfield becomes the xc:subject field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5594,7 +5594,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 967 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfield becomes the xc:spatial field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5627,7 +5627,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Processes the 969 field from the SaxMarcXmlRecord we're transforming. The
      * $a subfield becomes the xc:type field at the work FRBR level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5661,7 +5661,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Adds an xc:recordId with the value from the 001. If the 003 existed, its
      * value is used as the type attribute, otherwise the type is set to the
      * organization code from the configuration file.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5713,7 +5713,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Processes the 506 field from the SaxMarcXmlRecord we're transforming. The
      * abcdefu3 subfields become the dc:rights field at the manifestation FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5735,7 +5735,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * b subfields become the xc:location field at the holdings FRBR level. The
      * hijklm subfields become the xc:callNumber field at the holdings FRBR
      * level.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -5924,7 +5924,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * abcdfhijklmnopqrstuvyz23 subfields become the a different field depending
      * on the 2nd indicator. If 2nd indicator is 0, blank, or 8, map to holdings
      * level dcterms:identifier
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6010,7 +6010,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformInto
      *            The XC record which will store the transformed version of the
      *            record
@@ -6057,7 +6057,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6122,7 +6122,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * create the specified XC record field based on the datafield's value. If
      * there is only one subfield to map, the processFieldBasic method taking a
      * char as the 4th parameter should be used instead of this one.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6217,7 +6217,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value.
      * Subfield codes are replaced with dashes
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6312,7 +6312,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6406,7 +6406,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6519,7 +6519,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6639,7 +6639,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6741,7 +6741,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value. All
      * data fields for which the $4 subfield is a known role are not processed.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -6848,7 +6848,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value. All
      * data fields for which the $4 subfield is a known role are not processed.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -7005,7 +7005,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value. All
      * data fields for which the $4 subfield is a known role are not processed.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -7131,7 +7131,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value. All
      * data fields for which the $4 subfield is a known role are not processed.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -7327,7 +7327,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -7434,7 +7434,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * create the specified XC record field based on the datafield's value. A
      * datafield for which the target indicator does not match the required
      * value will not be processed.
-     *
+     * 
      * @param transformMe
      *            The MARC XML record we're transforming
      * @param transformInto
@@ -7557,7 +7557,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Given a tag and its $0 value, return an authority Attribute for the field
      * mapped from the tag
-     *
+     * 
      * @param tag
      *            The tag we're mapping
      * @param valueOf0
@@ -7648,7 +7648,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      * Given a tag and its $0 value, return an authority Attribute for the field
      * mapped from the tag. This method is intended to be used by 7XX fields
      * with a 2nd indicator that is not 2
-     *
+     * 
      * @param tag
      *            The tag we're mapping
      * @param valueOf0
@@ -7708,7 +7708,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     /**
      * Given a tag and its $0 value, return an authority Attribute for the field
      * mapped from the tag
-     *
+     * 
      * @param transformMe
      *            The MARCXML record we're transforming
      * @param transformInto

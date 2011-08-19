@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.configuration;
 
@@ -22,11 +22,10 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * This class is used to add a new LDAP server to the system
- *
+ * 
  * @author Tejaswi Haramurali
  */
-public class AddLDAP extends BaseActionSupport
-{
+public class AddLDAP extends BaseActionSupport {
     /**
      * Eclipse generated id
      */
@@ -35,13 +34,13 @@ public class AddLDAP extends BaseActionSupport
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**The display name used for the LDAP server **/
+    /** The display name used for the LDAP server **/
     private String displayName;
 
     /** The URL of the LDAP server */
     private String serverURL;
 
-    /**The port number on the LDAP server **/
+    /** The port number on the LDAP server **/
     private String port;
 
     /** The user name attribute */
@@ -50,10 +49,10 @@ public class AddLDAP extends BaseActionSupport
     /** Start Location */
     private String startLocation;
 
-    /**This is a temporary server object that is used to pre-fill JSP form fields */
+    /** This is a temporary server object that is used to pre-fill JSP form fields */
     private Server server = new Server();
 
-    /**Provides the status of the add Operation in the JSP page */
+    /** Provides the status of the add Operation in the JSP page */
     private String message;
 
     /** Error type */
@@ -65,35 +64,28 @@ public class AddLDAP extends BaseActionSupport
     /** URL to forward the user to get forgot password */
     private String forgotPasswordUrl;
 
-
-     /**
+    /**
      * Overrides default implementation to add an LDAP server.
-      *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
-                List<Server> serverList = getServerService().getAll();
-                Iterator<Server> iter = serverList.iterator();
+    public String execute() {
+        try {
+            List<Server> serverList = getServerService().getAll();
+            Iterator<Server> iter = serverList.iterator();
 
-                while(iter.hasNext())
-                   {
-                       Server tempServer = (Server)iter.next();
-                       if(tempServer.getType()!=Server.ServerType.LOCAL)
-                       {
-                           setServer(tempServer);
-                           break;
-                       }
+            while (iter.hasNext()) {
+                Server tempServer = (Server) iter.next();
+                if (tempServer.getType() != Server.ServerType.LOCAL) {
+                    setServer(tempServer);
+                    break;
+                }
 
-                   }
-                return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+            }
+            return SUCCESS;
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("addLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
@@ -102,31 +94,26 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * The method that does the actual task of adding a new LDAP server.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String addLDAP()
-    {
-        try
-        {
+    public String addLDAP() {
+        try {
             boolean serverExists = false;
 
             List<Server> serverList = getServerService().getAll();
             Iterator<Server> iter = serverList.iterator();
 
-            while(iter.hasNext())
-            {
-                Server tempServer = (Server)iter.next();
-                if(tempServer.getType()!=Server.ServerType.LOCAL)
-                {
+            while (iter.hasNext()) {
+                Server tempServer = (Server) iter.next();
+                if (tempServer.getType() != Server.ServerType.LOCAL) {
                     serverExists = true;
                     setServer(tempServer);
                     break;
                 }
 
             }
-            if(serverExists==false)
-            {
+            if (serverExists == false) {
                 server.setName(getDisplayName());
                 server.setUrl(getServerURL());
                 server.setPort(Integer.parseInt(getPort()));
@@ -141,20 +128,15 @@ public class AddLDAP extends BaseActionSupport
                     server.setForgotPasswordUrl(null);
                     server.setShowForgotPasswordLink(false);
                 }
-                if(displayName.equalsIgnoreCase("local"))
-                {
+                if (displayName.equalsIgnoreCase("local")) {
                     this.addFieldError("addLDAPError", "Cannot add a server with name 'Local'. Please choose a different name");
                     errorType = "error";
                     return SUCCESS;
-                }
-                else
-                {
+                } else {
                     getServerService().insertServer(server);
                 }
 
-            }
-            else
-            {
+            } else {
                 server.setName(getDisplayName());
                 server.setUrl(getServerURL());
                 server.setPort(Integer.parseInt(getPort()));
@@ -169,14 +151,11 @@ public class AddLDAP extends BaseActionSupport
                     server.setForgotPasswordUrl(null);
                     server.setShowForgotPasswordLink(false);
                 }
-                if(displayName.equalsIgnoreCase("local"))
-                {
+                if (displayName.equalsIgnoreCase("local")) {
                     this.addFieldError("addLDAPError", "Cannot update a server with name 'Local'. Please choose a different name");
                     errorType = "error";
                     return SUCCESS;
-                }
-                else
-                {
+                } else {
                     getServerService().updateServer(server);
                 }
             }
@@ -184,17 +163,13 @@ public class AddLDAP extends BaseActionSupport
             message = "LDAP Server Information Saved.";
             errorType = "info";
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("addLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("addLDAPError", "Error occurred while adding LDAP Server. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -202,108 +177,104 @@ public class AddLDAP extends BaseActionSupport
         }
     }
 
-     /**
+    /**
      * Sets the display name of the LDAP server
-     * @param displayName display name of server
+     * 
+     * @param displayName
+     *            display name of server
      */
-    public void setDisplayName(String displayName)
-    {
+    public void setDisplayName(String displayName) {
         this.displayName = displayName.trim();
     }
 
     /**
      * Returns the display name of the LDAP server
+     * 
      * @return display name
      */
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return this.displayName;
     }
 
     /**
      * Sets the URL of the server to the specified value
-     *
-     * @param serverURL URL of the server
+     * 
+     * @param serverURL
+     *            URL of the server
      */
-    public void setServerURL(String serverURL)
-    {
+    public void setServerURL(String serverURL) {
         this.serverURL = serverURL.trim();
     }
 
     /**
      * Returns the server URL
-     *
+     * 
      * @return URL of the server
      */
-    public String getServerURL()
-    {
+    public String getServerURL() {
         return this.serverURL;
     }
 
     /**
      * Sets the port number of the LDAP server to the specified value
-     *
-     * @param port port number
+     * 
+     * @param port
+     *            port number
      */
-    public void setPort(String port)
-    {
+    public void setPort(String port) {
         this.port = port;
     }
 
     /**
      * Returns the port number of the LDAP server
-     *
+     * 
      * @return port number
      */
-    public String getPort()
-    {
+    public String getPort() {
         return port;
     }
 
     /**
      * Sets the user name attribute
-     *
-     * @param userNameAttribute username attribute
+     * 
+     * @param userNameAttribute
+     *            username attribute
      */
-    public void setUserNameAttribute(String userNameAttribute)
-    {
+    public void setUserNameAttribute(String userNameAttribute) {
         this.userNameAttribute = userNameAttribute;
     }
 
     /**
      * Returns the user name attribute
-     *
+     * 
      * @return username attribute
      */
-    public String getUserNameAttribute()
-    {
+    public String getUserNameAttribute() {
         return this.userNameAttribute;
     }
 
     /**
      * Sets the start location
-     *
-     * @param startLocation start location
+     * 
+     * @param startLocation
+     *            start location
      */
-    public void setStartLocation(String startLocation)
-    {
+    public void setStartLocation(String startLocation) {
         this.startLocation = startLocation;
     }
 
     /**
      * Returns the start location
-     *
+     * 
      * @return start location
      */
-    public String getStartLocation()
-    {
+    public String getStartLocation() {
         return this.startLocation;
     }
 
-
     /**
      * Returns the status of the add operation
-     *
+     * 
      * @return information message
      */
     public String getMessage() {
@@ -312,8 +283,9 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * Sets the status of the add operation
-     *
-     * @param message information message
+     * 
+     * @param message
+     *            information message
      */
     public void setMessage(String message) {
         this.message = message;
@@ -321,7 +293,7 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * Returns the temporary server object that is used to display details on the JSP
-     *
+     * 
      * @return server object
      */
     public Server getServer() {
@@ -330,8 +302,9 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * Sets the temporary server object which is used to display details on the JSP
-     *
-     * @param server object
+     * 
+     * @param server
+     *            object
      */
     public void setServer(Server server) {
         this.server = server;
@@ -339,7 +312,7 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * Returns error type
-     *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -348,8 +321,9 @@ public class AddLDAP extends BaseActionSupport
 
     /**
      * Sets error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;

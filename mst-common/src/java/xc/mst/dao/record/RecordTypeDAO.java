@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.record;
 
@@ -21,9 +21,10 @@ import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
 /**
- *  Data Access Object for the record types table
+ * Data Access Object for the record types table
+ * 
  * @author vinaykumarb
- *
+ * 
  */
 public abstract class RecordTypeDAO extends BaseDAO {
 
@@ -57,58 +58,67 @@ public abstract class RecordTypeDAO extends BaseDAO {
      */
     protected final static String COL_PROCESSING_ORDER = "processing_order";
 
-
     /**
      * Gets all record types in the database
-     *
+     * 
      * @return A list of all record types in the database
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<RecordType> getAll() throws DatabaseConfigException;
 
     /**
      * Gets the record type from the database with the passed ID
-     *
-     * @param id The ID of the record type to get
+     * 
+     * @param id
+     *            The ID of the record type to get
      * @return The record type with the passed ID
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract RecordType getById(long id) throws DatabaseConfigException;
 
-
     /**
      * Gets the record type from the database with the passed processing order
-     *
-     * @param token The processing order of the record type to get
+     * 
+     * @param token
+     *            The processing order of the record type to get
      * @return The record type with the passed processing order
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract RecordType getByPorcessingOrder(int processingOrder) throws DatabaseConfigException;
 
     /**
      * Inserts a record type from the database
-     *
-     * @param recordType The record type to insert
+     * 
+     * @param recordType
+     *            The record type to insert
      * @return True if the record type was inserted successfully, false otherwise
-     * @throws DataException If the fields on the passed record type were not valid for inserting
+     * @throws DataException
+     *             If the fields on the passed record type were not valid for inserting
      */
     public abstract boolean insert(RecordType recordType) throws DataException;
 
     /**
      * Updates a record type in the database
-     *
-     * @param recordType The record type to update
+     * 
+     * @param recordType
+     *            The record type to update
      * @return True if the record type was updated successfully, false otherwise
-     * @throws DataException If the fields on the passed record type were not valid for updating
+     * @throws DataException
+     *             If the fields on the passed record type were not valid for updating
      */
     public abstract boolean update(RecordType recordType) throws DataException;
 
     /**
      * Deletes a record type from the database
-     *
-     * @param recordType The record type to delete
+     * 
+     * @param recordType
+     *            The record type to delete
      * @return True if the record type was deleted successfully, false otherwise
-     * @throws DataException If the fields on the passed resumption token were not valid for deleting
+     * @throws DataException
+     *             If the fields on the passed resumption token were not valid for deleting
      */
     public abstract boolean delete(RecordType recordType) throws DataException;
 

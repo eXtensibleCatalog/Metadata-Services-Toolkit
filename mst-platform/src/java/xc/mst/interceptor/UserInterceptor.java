@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.interceptor;
 
@@ -22,11 +22,11 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
  * Gets user from Session and sets in the action
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
-public class UserInterceptor extends AbstractInterceptor implements StrutsStatics{
+public class UserInterceptor extends AbstractInterceptor implements StrutsStatics {
 
     /**
      * Eclipse generated id
@@ -38,7 +38,7 @@ public class UserInterceptor extends AbstractInterceptor implements StrutsStatic
 
     /**
      * Gets the user and sets them in the session.
-     *
+     * 
      * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
      */
     public String intercept(ActionInvocation invocation) throws Exception {
@@ -59,14 +59,12 @@ public class UserInterceptor extends AbstractInterceptor implements StrutsStatic
         }
 
         if (action instanceof UserAware) {
-            if( user != null )
-            {
+            if (user != null) {
                 ((UserAware) action).setUser(user);
             }
         }
 
         return invocation.invoke();
     }
-
 
 }

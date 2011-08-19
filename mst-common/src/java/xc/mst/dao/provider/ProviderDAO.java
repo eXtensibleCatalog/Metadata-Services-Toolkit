@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.provider;
 
@@ -25,11 +25,10 @@ import xc.mst.manager.IndexException;
 
 /**
  * Accesses providers in the database
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class ProviderDAO extends BaseDAO
-{
+public abstract class ProviderDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -233,8 +232,7 @@ public abstract class ProviderDAO extends BaseDAO
     protected static Set<String> sortableColumns = new HashSet<String>();
 
     // Initialize the list of sortable columns
-    static
-    {
+    static {
         sortableColumns.add(COL_PROVIDER_ID);
         sortableColumns.add(COL_CREATED_AT);
         sortableColumns.add(COL_UPDATED_AT);
@@ -274,170 +272,190 @@ public abstract class ProviderDAO extends BaseDAO
 
     /**
      * Gets all providers in the database
-     *
+     * 
      * @return A list containing all providers in the database
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<Provider> getAll() throws DatabaseConfigException;
 
     /**
      * Gets all providers in the database sorted by their names
-     *
-     * @param asc True to sort in ascending order, false to sort in descending order
-     * @param columnName determines the name of the column on which the rows should be sorted
+     * 
+     * @param asc
+     *            True to sort in ascending order, false to sort in descending order
+     * @param columnName
+     *            determines the name of the column on which the rows should be sorted
      * @return A list containing all providers in the database sorted by their names
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
-    public abstract List<Provider> getSorted(boolean asc,String columnName) throws DatabaseConfigException;
+    public abstract List<Provider> getSorted(boolean asc, String columnName) throws DatabaseConfigException;
 
     /**
      * Gets a provider by it's ID
-     *
-     * @param providerId The ID of the provider to get
+     * 
+     * @param providerId
+     *            The ID of the provider to get
      * @return The provider with the passed ID, or null if there was no provider with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Provider getById(int providerId) throws DatabaseConfigException;
 
     /**
      * Gets a provider by it's name
-     *
-     * @param name The name of the provider to get
+     * 
+     * @param name
+     *            The name of the provider to get
      * @return The provider with the passed name, or null if there is no provider associated with that name.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Provider getByName(String name) throws DatabaseConfigException;
 
     /**
      * Gets a provider by it's URL
-     *
-     * @param providerURL The URL of the provider to get
+     * 
+     * @param providerURL
+     *            The URL of the provider to get
      * @return The provider with the passed URL, or null if there is no provider associated with that URL.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Provider getByURL(String providerURL) throws DatabaseConfigException;
+
     /**
-     * Gets a provider by it's ID.  Does not set the list of sets or formats on the returned provider.
-     *
-     * @param providerId The ID of the provider to get
+     * Gets a provider by it's ID. Does not set the list of sets or formats on the returned provider.
+     * 
+     * @param providerId
+     *            The ID of the provider to get
      * @return The provider with the passed ID, or null if there was no provider with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Provider loadBasicProvider(int providerId) throws DatabaseConfigException;
 
     /**
      * Inserts a provider into the database
-     *
-     * @param provider The provider to insert
+     * 
+     * @param provider
+     *            The provider to insert
      * @return True on success, false on failure
-     * @throws DataException if the passed provider was not valid for inserting
+     * @throws DataException
+     *             if the passed provider was not valid for inserting
      */
     public abstract boolean insert(Provider provider) throws DataException;
 
     /**
      * Updates a provider in the database
-     *
-     * @param provider The provider to update
+     * 
+     * @param provider
+     *            The provider to update
      * @return True on success, false on failure
-     * @throws DataException if the passed provider was not valid for updating
+     * @throws DataException
+     *             if the passed provider was not valid for updating
      */
     public abstract boolean update(Provider provider) throws DataException;
+
     public abstract boolean update(Provider provider, boolean revalidate) throws DataException;
 
     /**
      * Deletes a provider from the database
-     *
-     * @param provider The provider to delete
+     * 
+     * @param provider
+     *            The provider to delete
      * @return True on success, false on failure
-     * @throws DataException if the passed provider was not valid for deleting
+     * @throws DataException
+     *             if the passed provider was not valid for deleting
      */
     public abstract boolean delete(Provider provider) throws DataException, IndexException;
 
     /**
      * Validates the fields on the passed Provider Object
-     *
-     * @param provider The provider to validate
-     * @param validateId true if the ID field should be validated
-     * @param validateNonId true if the non-ID fields should be validated
-     * @throws DataException If one or more of the fields on the passed provider were invalid
+     * 
+     * @param provider
+     *            The provider to validate
+     * @param validateId
+     *            true if the ID field should be validated
+     * @param validateNonId
+     *            true if the non-ID fields should be validated
+     * @throws DataException
+     *             If one or more of the fields on the passed provider were invalid
      */
-    protected void validateFields(Provider provider, boolean validateId, boolean validateNonId) throws DataException
-    {
+    protected void validateFields(Provider provider, boolean validateId, boolean validateNonId) throws DataException {
         StringBuilder errorMessage = new StringBuilder();
 
         // Check the ID field if we're supposed to
-        if(validateId)
-        {
-            if(log.isDebugEnabled())
+        if (validateId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the ID");
 
-            if(provider.getId() < 0)
+            if (provider.getId() < 0)
                 errorMessage.append("The provider_id is invalid. ");
         } // end if(we should validate the ID field)
 
         // Check the non-ID fields if we're supposed to
-        if(validateNonId)
-        {
-            if(log.isDebugEnabled())
+        if (validateNonId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the non-ID fields");
 
-            if(provider.getCreatedAt() == null)
+            if (provider.getCreatedAt() == null)
                 errorMessage.append("The created_at field is invalid. ");
 
-            if(provider.getName() != null && provider.getName().length() > 255)
+            if (provider.getName() != null && provider.getName().length() > 255)
                 errorMessage.append("The name field is invalid. ");
 
-            if(provider.getOaiProviderUrl() == null || provider.getOaiProviderUrl().length() <= 0 || provider.getOaiProviderUrl().length() > 255)
+            if (provider.getOaiProviderUrl() == null || provider.getOaiProviderUrl().length() <= 0 || provider.getOaiProviderUrl().length() > 255)
                 errorMessage.append("The OAI_provider_url field is invalid. ");
 
-            if(provider.getType() != null && provider.getType().length() > 11)
+            if (provider.getType() != null && provider.getType().length() > 11)
                 errorMessage.append("The type field is invalid. ");
 
-            if(provider.getFormat() != null && provider.getFormat().length() > 63)
+            if (provider.getFormat() != null && provider.getFormat().length() > 63)
                 errorMessage.append("The format field is invalid. ");
 
-            if(provider.getLanguage() != null && provider.getLanguage().length() > 15)
+            if (provider.getLanguage() != null && provider.getLanguage().length() > 15)
                 errorMessage.append("The language field is invalid. ");
 
-            if(provider.getTitle() != null && provider.getTitle().length() > 127)
+            if (provider.getTitle() != null && provider.getTitle().length() > 127)
                 errorMessage.append("The title field is invalid. ");
 
-            if(provider.getCreator() != null && provider.getCreator().length() > 127)
+            if (provider.getCreator() != null && provider.getCreator().length() > 127)
                 errorMessage.append("The creator field is invalid. ");
 
-            if(provider.getSubject() != null && provider.getSubject().length() > 63)
+            if (provider.getSubject() != null && provider.getSubject().length() > 63)
                 errorMessage.append("The subject field is invalid. ");
 
-            if(provider.getPublisher() != null && provider.getPublisher().length() > 127)
+            if (provider.getPublisher() != null && provider.getPublisher().length() > 127)
                 errorMessage.append("The publisher field is invalid. ");
 
-            if(provider.getContributors() != null && provider.getContributors().length() > 511)
+            if (provider.getContributors() != null && provider.getContributors().length() > 511)
                 errorMessage.append("The contributors field is invalid. ");
 
-            if(provider.getRelation() != null && provider.getRelation().length() > 255)
+            if (provider.getRelation() != null && provider.getRelation().length() > 255)
                 errorMessage.append("The relation field is invalid. ");
 
-            if(provider.getCoverage() != null && provider.getCoverage().length() > 255)
+            if (provider.getCoverage() != null && provider.getCoverage().length() > 255)
                 errorMessage.append("The coverage field is invalid. ");
 
-            if(provider.getRights() != null && provider.getRights().length() > 255)
+            if (provider.getRights() != null && provider.getRights().length() > 255)
                 errorMessage.append("The rights field is invalid. ");
 
-            if(provider.getProtocolVersion() != null && provider.getProtocolVersion().length() > 7)
+            if (provider.getProtocolVersion() != null && provider.getProtocolVersion().length() > 7)
                 errorMessage.append("The protocol_version field is invalid. ");
 
-            if(provider.getLogFileName() != null && provider.getLogFileName().length() > 355)
+            if (provider.getLogFileName() != null && provider.getLogFileName().length() > 355)
                 errorMessage.append("The log file name is invalid. ");
 
-            if(provider.getGranularity() != null &&
+            if (provider.getGranularity() != null &&
                     !Provider.DAY_GRANULARITY.equals(provider.getGranularity()) &&
                     !Provider.SECOND_GRANULARITY.equals(provider.getGranularity()))
-                errorMessage.append("Invalid granularity: "+provider.getGranularity());
+                errorMessage.append("Invalid granularity: " + provider.getGranularity());
         } // end if(we should validate the non-ID fields)
 
         // Log the error and throw the exception if any fields are invalid
-        if(errorMessage.length() > 0)
-        {
+        if (errorMessage.length() > 0) {
             String errors = errorMessage.toString();
             log.error("The following errors occurred: " + errors);
             throw new DataException(errors);

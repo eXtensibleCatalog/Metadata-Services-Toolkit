@@ -38,16 +38,16 @@ public class CompleteListSizeTest extends BaseTest {
 
             Date d1 = new Date(0);
             Date d2 = new Date(millisInDay);
-            Date d3 = new Date(millisInDay*2);
-            Date d4 = new Date(millisInDay*3);
+            Date d3 = new Date(millisInDay * 2);
+            Date d4 = new Date(millisInDay * 3);
 
             String repoName = "complete_list_size";
-            Repository repo = (Repository)getConfig().getBean("Repository");
+            Repository repo = (Repository) getConfig().getBean("Repository");
             repo.setName(repoName);
 
             List<Record> records = new ArrayList<Record>();
             int numRecordsInserted = 10000;
-            for (int i=0; i<numRecordsInserted; i++) {
+            for (int i = 0; i < numRecordsInserted; i++) {
                 Record r = new Record();
                 r.setId(i);
                 r.setUpdatedAt(d2);
@@ -57,26 +57,26 @@ public class CompleteListSizeTest extends BaseTest {
             }
             deleteAndCreateRepo(repo);
             repo.addRecords(records);
-            ((DefaultRepository)repo).commitIfNecessary(true);
+            ((DefaultRepository) repo).commitIfNecessary(true);
             TimingLogger.reset();
 
             MSTConfiguration.getInstance().setProperty(
                     "harvestProvider.estimateCompleteListSizeThreshold", "5000");
             MSTConfiguration.getInstance().setProperty("harvestProvider.maxExplain", "1000");
 
-            //get all
+            // get all
             getRepositoryDAO().lastCompleteListSizeMethod = -1;
             long count = repo.getRecordCount(d1, d3, getMarc21Format(), null);
             Assert.assertEquals(count, numRecordsInserted);
             Assert.assertEquals(getRepositoryDAO().lastCompleteListSizeMethod, 1);
 
-            //same request, but check that it's a cache hit
+            // same request, but check that it's a cache hit
             getRepositoryDAO().lastCompleteListSizeMethod = -1;
             count = repo.getRecordCount(d1, d3, getMarc21Format(), null);
             Assert.assertEquals(count, numRecordsInserted);
             Assert.assertEquals(getRepositoryDAO().lastCompleteListSizeMethod, -1);
 
-            //get all using bibSet
+            // get all using bibSet
             getRepositoryDAO().lastCompleteListSizeMethod = -1;
             count = repo.getRecordCount(d1, d3, getMarc21Format(), bibSet);
             Assert.assertEquals(count, numRecordsInserted);
@@ -100,7 +100,7 @@ public class CompleteListSizeTest extends BaseTest {
             Assert.assertEquals(count, 0);
             Assert.assertEquals(getRepositoryDAO().lastCompleteListSizeMethod, 3);
 
-            ((DefaultRepository)repo).getCompletListSizeMap().clear();
+            ((DefaultRepository) repo).getCompletListSizeMap().clear();
             MSTConfiguration.getInstance().setProperty(
                     "harvestProvider.estimateCompleteListSizeThreshold", "10000");
             MSTConfiguration.getInstance().setProperty("harvestProvider.maxExplain", "5000");

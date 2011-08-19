@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.repo;
 
@@ -35,7 +35,7 @@ public class RepositoryTest extends BaseTest {
     @BeforeClass
     public void setup() {
         LOG.debug("setup()");
-        repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+        repo = (Repository) MSTConfiguration.getInstance().getBean("Repository");
         repoName = "r1";
         repo.setName(repoName);
     }
@@ -72,7 +72,7 @@ public class RepositoryTest extends BaseTest {
             RecordIfc previousRecord = getRecordService().createRecord();
             Service s = new Service();
             s.setId(1);
-            for (int i=0; i<10; i++) {
+            for (int i = 0; i < 10; i++) {
                 /*
                 Record record = recordService.createSuccessor(previousRecord, s);
                 record.setMode(Record.STRING_MODE);
@@ -93,8 +93,8 @@ public class RepositoryTest extends BaseTest {
     public void findRecords() {
         try {
             Record r = repo.getRecord(lastRecordId);
-            LOG.debug("r.getId(): "+r.getId());
-            //LOG.debug("r.getXml(): "+r.getXml());
+            LOG.debug("r.getId(): " + r.getId());
+            // LOG.debug("r.getXml(): "+r.getXml());
         } catch (Throwable t) {
             t.printStackTrace(System.out);
         }

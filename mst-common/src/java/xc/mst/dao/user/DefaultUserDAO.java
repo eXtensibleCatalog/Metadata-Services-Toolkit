@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.user;
 
@@ -28,11 +28,10 @@ import xc.mst.utils.LogWriter;
 
 /**
  * MySQL implementation of the Data Access Object for the users table
- *
+ * 
  * @author Eric Osisek
  */
-public class DefaultUserDAO extends UserDAO
-{
+public class DefaultUserDAO extends UserDAO {
     /**
      * The repository management log file name
      */
@@ -128,29 +127,23 @@ public class DefaultUserDAO extends UserDAO
      */
     private static Object psDeleteLock = new Object();
 
-    public void init()
-    {
+    public void init() {
 
-        try
-        {
+        try {
             logObj = getLogDAO().getById(Constants.LOG_ID_USER_MANAGEMENT);
-        }
-        catch(DatabaseConfigException e)
-        {
+        } catch (DatabaseConfigException e) {
             log.error("Unable to connect to the database using the parameters from the configuration file.", e);
         }
     }
 
     @Override
-    public List<User> getAll() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<User> getAll() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all users");
 
             // The ResultSet from the SQL query
@@ -159,11 +152,9 @@ public class DefaultUserDAO extends UserDAO
             // A list to hold the results of the query
             ArrayList<User> users = new ArrayList<User>();
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get all users was not defined, create it
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_USER_ID + ", " +
                                                    COL_USERNAME + ", " +
@@ -177,7 +168,7 @@ public class DefaultUserDAO extends UserDAO
                                                    COL_FAILED_LOGIN_ATTEMPTS + " " +
                                        "FROM " + USERS_TABLE_NAME;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all users\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -191,8 +182,7 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // If any results were returned
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the user
                     User user = new User();
 
@@ -209,29 +199,26 @@ public class DefaultUserDAO extends UserDAO
                     user.setFailedLoginAttempts(results.getInt(10));
 
                     // Get the groups for the user
-                    for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+                    for (Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
                         user.addGroup(getGroupDAO().getById(groupId));
 
                     // Return the user
                     users.add(user);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + users.size() + " users in the database.");
 
                 return users;
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the users", e);
                 return users;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -239,35 +226,31 @@ public class DefaultUserDAO extends UserDAO
 
     /**
      * returns the number of LDAP users in the system
-     *
+     * 
      * @return number of LDAP users
      * @throws DatabaseConfigException
      */
-    public int getLDAPUserCount() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public int getLDAPUserCount() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psLDAPUserCountLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psLDAPUserCountLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the count for all LDAP members ");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get users by group ID wasn't defined, create it
-                if(psLDAPUserCount == null || dbConnectionManager.isClosed(psLDAPUserCount))
-                {
+                if (psLDAPUserCount == null || dbConnectionManager.isClosed(psLDAPUserCount)) {
                     // SQL to get the rows
                     String selectSql = "SELECT COUNT(" + COL_USER_ID + ") " +
                                        "FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_SERVER_ID + "<> 1";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"LDAP user count\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -281,45 +264,40 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psLDAPUserCount);
 
                 // Return the result
-                if(results.next())
+                if (results.next())
                     return results.getInt(1);
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Did not find count of " + " number of LDAP users in the system.");
 
                 return 0;
 
             } // end try (get and return the group IDs which the user belongs to)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the number of LDAP users in the system", e);
 
                 return 0;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getLDAPUserCount();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally
         }
     }
 
     @Override
-    public List<User> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<User> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Getting all users sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
 
         // Validate the column we're trying to sort on
-        if(!sortableColumns.contains(columnSorted))
-        {
+        if (!sortableColumns.contains(columnSorted)) {
             log.error("An attempt was made to sort on the invalid column " + columnSorted);
             return getAll();
         } // end if(sort column invalid)
@@ -333,8 +311,7 @@ public class DefaultUserDAO extends UserDAO
         // A list to hold the results of the query
         List<User> users = new ArrayList<User>();
 
-        try
-        {
+        try {
 
             // SQL to get the rows
             String selectSql = "SELECT " + COL_USER_ID + ", " +
@@ -350,7 +327,7 @@ public class DefaultUserDAO extends UserDAO
                                "FROM " + USERS_TABLE_NAME + " " +
                                "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 
-            if(log.isDebugEnabled())
+            if (log.isDebugEnabled())
                 log.debug("Creating the \"get all users sorted\" Statement from the SQL " + selectSql);
 
             // A statement to run the select SQL
@@ -362,8 +339,7 @@ public class DefaultUserDAO extends UserDAO
             results = getSorted.executeQuery(selectSql);
 
             // If any results were returned
-            while(results.next())
-            {
+            while (results.next()) {
                 // The Object which will contain data on the user
                 User user = new User();
 
@@ -380,52 +356,47 @@ public class DefaultUserDAO extends UserDAO
                 user.setFailedLoginAttempts(results.getInt(10));
 
                 // Get the groups for the user
-                for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+                for (Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
                     user.addGroup(getGroupDAO().getById(groupId));
 
                 // Return the user
                 users.add(user);
             } // end loop over results
 
-            if(log.isDebugEnabled())
+            if (log.isDebugEnabled())
                 log.debug("Found " + users.size() + " users in the database.");
 
             return users;
         } // end try
-        catch(SQLException e)
-        {
+        catch (SQLException e) {
             log.error("A SQLException occurred while getting the users sorted in ascending order.", e);
 
             return users;
         } // end catch(SQLException)
-        finally
-        {
+        finally {
             dbConnectionManager.closeResultSet(results);
 
-            try
-            {
-                if(getSorted != null)
+            try {
+                if (getSorted != null)
                     getSorted.close();
             } // end try(close the Statement)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
             } // end catch(DataException)
         } // end finally(close ResultSet)
     } // end method getSorted(boolean, String)
 
     @Override
-    public User getById(int userId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public User getById(int userId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Get the basic user
         User user = loadBasicUser(userId);
 
         // Get the groups for the user
-        for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+        for (Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
             user.addGroup(getGroupDAO().getById(groupId));
 
         // Return the result
@@ -433,25 +404,21 @@ public class DefaultUserDAO extends UserDAO
     } // end method getById(int)
 
     @Override
-    public User loadBasicUser(int userId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public User loadBasicUser(int userId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the user with ID " + userId);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a user by ID was not defined, create it
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_USER_ID + ", " +
                                                    COL_USERNAME + ", " +
@@ -466,7 +433,7 @@ public class DefaultUserDAO extends UserDAO
                                        "FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_USER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get user by ID\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -483,8 +450,7 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the user
                     User user = new User();
 
@@ -500,7 +466,7 @@ public class DefaultUserDAO extends UserDAO
                     user.setAccountCreated(results.getDate(9));
                     user.setFailedLoginAttempts(results.getInt(10));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the user with ID " + userId + " in the database.");
 
                     // Return the user
@@ -508,49 +474,42 @@ public class DefaultUserDAO extends UserDAO
                 } // end if(user found)
                 else // There were no rows in the database, the user could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The user with ID " + userId + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the user with ID " + userId, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return loadBasicUser(userId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method loadBasicUser(int)
 
     @Override
-    public User getUserByName(String userName) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public User getUserByName(String userName) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByUserNameLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByUserNameLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the user with user name " + userName);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a user by user name was not defined, create it
-                if(psGetByUserName == null || dbConnectionManager.isClosed(psGetByUserName))
-                {
+                if (psGetByUserName == null || dbConnectionManager.isClosed(psGetByUserName)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_USER_ID + ", " +
                                                    COL_USERNAME + ", " +
@@ -565,7 +524,7 @@ public class DefaultUserDAO extends UserDAO
                                        "FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_USERNAME + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get user by user name\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -582,8 +541,7 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psGetByUserName);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the user
                     User user = new User();
 
@@ -600,10 +558,10 @@ public class DefaultUserDAO extends UserDAO
                     user.setFailedLoginAttempts(results.getInt(10));
 
                     // Get the groups for the user
-                    for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+                    for (Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
                         user.addGroup(getGroupDAO().getById(groupId));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the user with name " + userName + " in the database.");
 
                     // Return the user
@@ -611,49 +569,42 @@ public class DefaultUserDAO extends UserDAO
                 } // end if(user found)
                 else // There were no rows in the database, the user could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The user with name " + userName + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the user with name " + userName, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getUserByName(userName);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getUserByName(int)
 
     @Override
-    public User getUserByUserName(String userName, Server server) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public User getUserByUserName(String userName, Server server) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByUserNameAndServerLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByUserNameAndServerLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the user with user name " + userName + " and server id : " + server.getId());
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a user by user name was not defined, create it
-                if(psGetByUserNameAndServer == null || dbConnectionManager.isClosed(psGetByUserNameAndServer))
-                {
+                if (psGetByUserNameAndServer == null || dbConnectionManager.isClosed(psGetByUserNameAndServer)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_USER_ID + ", " +
                                                    COL_USERNAME + ", " +
@@ -668,7 +619,7 @@ public class DefaultUserDAO extends UserDAO
                                        "FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_USERNAME + "=?" + " AND " + COL_SERVER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get user by user name\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -686,8 +637,7 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psGetByUserNameAndServer);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the user
                     User user = new User();
 
@@ -704,10 +654,10 @@ public class DefaultUserDAO extends UserDAO
                     user.setFailedLoginAttempts(results.getInt(10));
 
                     // Get the groups for the user
-                    for(Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
+                    for (Integer groupId : getUserGroupUtilDAO().getGroupsForUser(user.getId()))
                         user.addGroup(getGroupDAO().getById(groupId));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the user with name " + userName + " in the database.");
 
                     // Return the user
@@ -715,49 +665,42 @@ public class DefaultUserDAO extends UserDAO
                 } // end if(user found)
                 else // There were no rows in the database, the user could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The user with name " + userName + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the user with name " + userName, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getUserByUserName(userName, server);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getUserByName(int)
 
     @Override
-    public User getUserByEmail(String email, Server server) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public User getUserByEmail(String email, Server server) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByEmailLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByEmailLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the user with email " + email);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a user by email was not defined, create it
-                if(psGetByEmail == null || dbConnectionManager.isClosed(psGetByEmail))
-                {
+                if (psGetByEmail == null || dbConnectionManager.isClosed(psGetByEmail)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_USER_ID + ", " +
                                                    COL_USERNAME + ", " +
@@ -772,7 +715,7 @@ public class DefaultUserDAO extends UserDAO
                                        "FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_EMAIL + "=?" + " AND " + COL_SERVER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get user by email\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -790,8 +733,7 @@ public class DefaultUserDAO extends UserDAO
                 results = dbConnectionManager.executeQuery(psGetByEmail);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the user
                     User user = new User();
 
@@ -807,7 +749,7 @@ public class DefaultUserDAO extends UserDAO
                     user.setAccountCreated(results.getDate(9));
                     user.setFailedLoginAttempts(results.getInt(10));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the user with email " + email + " in the database.");
 
                     // Return the user
@@ -815,56 +757,49 @@ public class DefaultUserDAO extends UserDAO
                 } // end if(user found)
                 else // There were no rows in the database, the user could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The user with email " + email + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the user with email " + email, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getUserByEmail(email, server);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getUserByEmail(int)
 
     @Override
-    public boolean insert(User user) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insert(User user) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the user are valid
         validateFields(user, false, true);
 
         // insert the server if it hasn't already been inserted
-        if(user.getServer().getId() < 0)
+        if (user.getServer().getId() < 0)
             getServerDAO().insert(user.getServer());
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new user with username " + user.getUsername());
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to insert a user was not defined, create it
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + USERS_TABLE_NAME + " (" + COL_USERNAME + ", " +
                                                                             COL_FIRST_NAME + ", " +
@@ -877,7 +812,7 @@ public class DefaultUserDAO extends UserDAO
                                                                             COL_FAILED_LOGIN_ATTEMPTS + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert user\" PreparedStatement from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -897,8 +832,7 @@ public class DefaultUserDAO extends UserDAO
                 psInsert.setInt(9, user.getFailedLoginAttempts());
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated user ID and set it correctly on this User Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -906,15 +840,14 @@ public class DefaultUserDAO extends UserDAO
                         user.setId(rs.getInt(1));
 
                     // Add the user to the correct groups
-                    for(Group group : user.getGroups())
+                    for (Group group : user.getGroups())
                         getUserGroupUtilDAO().insert(user.getId(), group.getId());
 
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new user with the username " + user.getUsername());
 
                     return true;
                 } // end if(insert succeeded)
-                else
-                {
+                else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -923,8 +856,7 @@ public class DefaultUserDAO extends UserDAO
                     return false;
                 }
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new user with username " + user.getUsername(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new user with the username " + user.getUsername());
@@ -934,37 +866,31 @@ public class DefaultUserDAO extends UserDAO
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(user);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method insert(User)
 
     @Override
-    public boolean update(User user) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean update(User user) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the user are valid
         validateFields(user, true, true);
 
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the user with ID " + user.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to update a user was not defined, create it
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + USERS_TABLE_NAME + " SET " + COL_USERNAME + "=?, " +
                                                                           COL_FIRST_NAME + "=?, " +
@@ -977,7 +903,7 @@ public class DefaultUserDAO extends UserDAO
                                                                           COL_FAILED_LOGIN_ATTEMPTS + "=? " +
                                        "WHERE " + COL_USER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update user\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -995,7 +921,7 @@ public class DefaultUserDAO extends UserDAO
                 psUpdate.setDate(7, user.getLastLogin());
                 psUpdate.setDate(8, user.getAccountCreated());
                 psUpdate.setInt(9, user.getFailedLoginAttempts());
-                psUpdate.setInt(10,user.getId());
+                psUpdate.setInt(10, user.getId());
 
                 // Execute the update statement and return the result
                 boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
@@ -1004,13 +930,12 @@ public class DefaultUserDAO extends UserDAO
                 getUserGroupUtilDAO().deleteGroupsForUser(user.getId());
 
                 // Add the user to the correct groups
-                for(Group group : user.getGroups())
+                for (Group group : user.getGroups())
                     success = getUserGroupUtilDAO().insert(user.getId(), group.getId()) && success;
 
-                if(success)
+                if (success)
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the user with the username " + user.getUsername());
-                else
-                {
+                else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -1019,8 +944,7 @@ public class DefaultUserDAO extends UserDAO
 
                 return success;
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the user with ID " + user.getId(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the user with the username " + user.getUsername());
@@ -1030,7 +954,7 @@ public class DefaultUserDAO extends UserDAO
 
                 return false;
             } // end catch(SQLException
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(user);
             }
@@ -1038,30 +962,26 @@ public class DefaultUserDAO extends UserDAO
     } // end method update(User)
 
     @Override
-    public boolean delete(User user) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean delete(User user) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the ID field on the user are valid
         validateFields(user, true, false);
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the user with ID " + user.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete a user was not defined, create it
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
                     String deleteSql = "DELETE FROM " + USERS_TABLE_NAME + " " +
                                        "WHERE " + COL_USER_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete user\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -1075,10 +995,9 @@ public class DefaultUserDAO extends UserDAO
                 // Execute the delete statement and return the result
                 boolean success = dbConnectionManager.execute(psDelete);
 
-                if(success)
+                if (success)
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the user with the username " + user.getUsername());
-                else
-                {
+                else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -1087,8 +1006,7 @@ public class DefaultUserDAO extends UserDAO
 
                 return success;
             } // end try(delete the user)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the user with ID " + user.getId(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the user with the username " + user.getUsername());
@@ -1098,7 +1016,7 @@ public class DefaultUserDAO extends UserDAO
 
                 return false;
             } // end catch(SQLException
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(user);
             }

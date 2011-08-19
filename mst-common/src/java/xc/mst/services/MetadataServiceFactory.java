@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.services;
 
@@ -24,8 +24,9 @@ import xc.mst.utils.ServiceUtil;
 
 /**
  * Factory class that creates a new instance of a Metadata Service.
+ * 
  * @author vinaykumarb
- *
+ * 
  */
 public class MetadataServiceFactory {
 
@@ -36,16 +37,17 @@ public class MetadataServiceFactory {
 
     /**
      * Runs the service with the passed ID
-     *
-     * @param serviceId The ID of the MetadataService to run
-     * @param outputSetId The ID of the set that records processed by this service should be added to
+     * 
+     * @param serviceId
+     *            The ID of the MetadataService to run
+     * @param outputSetId
+     *            The ID of the set that records processed by this service should be added to
      */
-    public static MetadataService getService(int serviceId )
-    {
-        if(log.isDebugEnabled())
+    public static MetadataService getService(int serviceId) {
+        if (log.isDebugEnabled())
             log.debug("EnteringServiceFactoryegetnService for the service with ID " + serviceId + ".");
 
-        ServiceDAO serviceDAO = (ServiceDAO)MSTConfiguration.getInstance().getBean("ServiceDAO");
+        ServiceDAO serviceDAO = (ServiceDAO) MSTConfiguration.getInstance().getBean("ServiceDAO");
 
         // Get the service
         Service service = null;
@@ -73,13 +75,14 @@ public class MetadataServiceFactory {
             //       This requires more research into Tomcat's class loaders
             URLClassLoader loader = new URLClassLoader(new URL[] { new File(service.getServiceJar()).toURI().toURL() }, serviceLoader);
             Class<?> clazz = loader.loadClass(targetClassName);
-            serviceInstance = (MetadataService)clazz.newInstance();
+
+            serviceInstance = (MetadataService)clazz.newInstance();
 
             if(log.isDebugEnabled())
                 log.debug("Found the MetadataService class named " + targetClassName + ", getting its constructor.");
 
             */
-            serviceInstance = ((ServicesService)MSTConfiguration.getInstance().getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
+            serviceInstance = ((ServicesService) MSTConfiguration.getInstance().getBean("ServicesService")).getServiceByName(service.getName()).getMetadataService();
             return serviceInstance;
 
         }// end try(run the service through reflection)
@@ -114,8 +117,7 @@ public class MetadataServiceFactory {
 
         } // end if(service is not user defined
          */
-        catch(NoClassDefFoundError e)
-        {
+        catch (NoClassDefFoundError e) {
             log.error("Could not find class " + service.getClassName(), e);
 
             // Update database with status of service
@@ -126,12 +128,9 @@ public class MetadataServiceFactory {
             LogWriter.addError(service.getServicesLogFileName(), "Tried to start the " + service.getName() + " Service, but the java class " + service.getClassName() + " could not be found.");
 
             // Load the provider again in case it was updated during the harvest
-            try
-            {
+            try {
                 service = serviceDAO.getById(service.getId());
-            }
-            catch (DatabaseConfigException e1)
-            {
+            } catch (DatabaseConfigException e1) {
                 log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
                 return null;
@@ -140,12 +139,9 @@ public class MetadataServiceFactory {
             // Increase the warning and error counts as appropriate, then update the provider
             service.setServicesErrors(service.getServicesErrors() + 1);
 
-            try
-            {
+            try {
                 serviceDAO.update(service);
-            }
-            catch (DataException e2)
-            {
+            } catch (DataException e2) {
                 log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
             }
 
@@ -190,8 +186,7 @@ public class MetadataServiceFactory {
             return null;
         } // end catch(IllegalAccessException)
         */
-        catch(Exception e)
-        {
+        catch (Exception e) {
             log.error("Exception occurred while invoking the service's processRecords method.", e);
 
             // Update database with status of service
@@ -202,12 +197,9 @@ public class MetadataServiceFactory {
             LogWriter.addError(service.getServicesLogFileName(), "An internal error occurred while trying to start the " + service.getName() + " Service.");
 
             // Load the provider again in case it was updated during the harvest
-            try
-            {
+            try {
                 service = serviceDAO.getById(service.getId());
-            }
-            catch (DatabaseConfigException e1)
-            {
+            } catch (DatabaseConfigException e1) {
                 log.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
                 return null;
@@ -216,12 +208,9 @@ public class MetadataServiceFactory {
             // Increase the warning and error counts as appropriate, then update the provider
             service.setServicesErrors(service.getServicesErrors() + 1);
 
-            try
-            {
+            try {
                 serviceDAO.update(service);
-            }
-            catch (DataException e2)
-            {
+            } catch (DataException e2) {
                 log.warn("Unable to update the service's warning and error counts due to a Data Exception.", e2);
             }
 

@@ -14,7 +14,7 @@ public class TestConnection {
             Class.forName(args[0]);
             try {
                 Connection db_connection =
-                    DriverManager.getConnection (args[1], args[2], args[3]);
+                        DriverManager.getConnection(args[1], args[2], args[3]);
                 db_connection.close();
                 System.out.println("connected successfully");
             } catch (Throwable t) {

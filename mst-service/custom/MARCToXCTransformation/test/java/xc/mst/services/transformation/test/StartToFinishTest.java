@@ -10,8 +10,8 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
 
     @Override
     protected long getNumberOfRecordsToHarvest() {
-        //return Integer.MAX_VALUE;
-        //return 100000;
+        // return Integer.MAX_VALUE;
+        // return 100000;
         return 400;
     }
 
@@ -23,19 +23,18 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
         return "rochester_135:bib";
     }
 
-
     @Override
     protected String[] getPriorServices() {
-        return new String[] {"marcnormalization"};
+        return new String[] { "marcnormalization" };
     }
 
     public String getProviderUrl() {
         return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
-        //return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
+        // return "http://128.151.244.135:8080/OAIToolkit/oai-request.do";
     }
 
     public Format[] getIncomingFormats() throws Exception {
-        return new Format[] {getMarc21Format()};
+        return new Format[] { getMarc21Format() };
     }
 
     public Format getHarvestOutFormat() throws Exception {
@@ -94,7 +93,7 @@ public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTes
         } catch (Throwable t) {
             getUtil().throwIt(t);
         }
-    */
+        */
     }
 
     /*

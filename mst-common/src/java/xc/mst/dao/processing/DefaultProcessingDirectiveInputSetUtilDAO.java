@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.processing;
 
@@ -19,11 +19,10 @@ import xc.mst.dao.DBConnectionResetException;
 
 /**
  * MySQL implementation of the utility class for manipulating the sets that trigger a processing directive
- *
+ * 
  * @author Eric Osisek
  */
-public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirectiveInputSetUtilDAO
-{
+public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirectiveInputSetUtilDAO {
     /**
      * A PreparedStatement to add an input set to a processing directive into the database
      */
@@ -69,28 +68,24 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
     private static Object psDeleteInputSetsForProcessingDirectiveLock = new Object();
 
     @Override
-    public boolean insert(int processingDirectiveId, int inputSetId)
-    {
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean insert(int processingDirectiveId, int inputSetId) {
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Adding the set with ID " + inputSetId + " as input for the processing directive with ID " + processingDirectiveId + ".");
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to add an input set to a processing directive is not defined, create it
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME +
                                                         " (" + COL_PROCESSING_DIRECTIVE_ID + ", " +
                                                                COL_SET_ID + ") " +
                                        "VALUES (?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"add input set to processing directive\" PreparedStatement from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -105,45 +100,38 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
                 // Execute the insert statement and return the result
                 return dbConnectionManager.executeUpdate(psInsert) > 0;
             } // end try (insert the group)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while adding the set with ID " + inputSetId + " as input for the processing directive with ID " + processingDirectiveId + ".", e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(processingDirectiveId, inputSetId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally
         } // end synchronized
     } // end method insert(int, int)
 
     @Override
-    public boolean delete(int processingDirectiveId, int setId)
-    {
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean delete(int processingDirectiveId, int setId) {
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Removing the set with ID " + setId + " as input for the processing directive with ID " + processingDirectiveId + ".");
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete an input set for a processing directive is not defined, create it
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to insert the new row
                     String deleteSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? " +
                                        "AND " + COL_SET_ID + "=? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"remove input set from processing directive\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the insert SQL
@@ -158,29 +146,24 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
                 // Execute the delete statement and return the result
                 return dbConnectionManager.executeUpdate(psDelete) > 0;
             } // end try (delete the group)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while removing the input set with ID " + setId + " from the processing directive with ID " + processingDirectiveId + ".", e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(processingDirectiveId, setId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally
         } // end synchronized
     } // end method delete(int, int)
 
     @Override
-    public List<Integer> getInputSetsForProcessingDirective(int processingDirectiveId)
-    {
-        synchronized(psGetInputSetsForProcessingDirectiveLock)
-        {
-            if(log.isDebugEnabled())
+    public List<Integer> getInputSetsForProcessingDirective(int processingDirectiveId) {
+        synchronized (psGetInputSetsForProcessingDirectiveLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the input sets for the processing directive with ID " + processingDirectiveId);
 
             // The ResultSet from the SQL query
@@ -189,17 +172,15 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
             // The list of groups for the user with the passed ID
             List<Integer> setIds = new ArrayList<Integer>();
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get input sets by processing directive ID wasn't defined, create it
-                if(psGetInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psGetInputSetsForProcessingDirective))
-                {
+                if (psGetInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psGetInputSetsForProcessingDirective)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + " " +
                                        "FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get groups for user\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -216,49 +197,42 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
                 results = dbConnectionManager.executeQuery(psGetInputSetsForProcessingDirective);
 
                 // For each result returned, add a set ID to the list with the returned data
-                while(results.next())
+                while (results.next())
                     setIds.add(new Integer(results.getInt(1)));
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + setIds.size() + " sets that are input to the processing directive with ID " + processingDirectiveId + ".");
 
                 return setIds;
             } // end try (get and return results)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the sets that are input for the processing directive with ID " + processingDirectiveId, e);
 
                 return setIds;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getInputSetsForProcessingDirective(processingDirectiveId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally
         } // end synchronized
     } // end method getInputSetsForProcessingDirective(int)
 
     @Override
-    public boolean deleteInputSetsForProcessingDirective(int processingDirectiveId)
-    {
-        synchronized(psDeleteInputSetsForProcessingDirectiveLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean deleteInputSetsForProcessingDirective(int processingDirectiveId) {
+        synchronized (psDeleteInputSetsForProcessingDirectiveLock) {
+            if (log.isDebugEnabled())
                 log.debug("Removing the input sets from the processing directive with ID " + processingDirectiveId);
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete input sets by processing directive ID wasn't defined, create it
-                if(psDeleteInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psDeleteInputSetsForProcessingDirective))
-                {
+                if (psDeleteInputSetsForProcessingDirective == null || dbConnectionManager.isClosed(psDeleteInputSetsForProcessingDirective)) {
                     // SQL to get the rows
                     String selectSql = "DELETE FROM " + PROCESSING_DIRECTIVES_TO_INPUT_SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_PROCESSING_DIRECTIVE_ID + "=? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"remove input sets from processing directive\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -274,13 +248,12 @@ public class DefaultProcessingDirectiveInputSetUtilDAO extends ProcessingDirecti
                 // Execute the insert statement and return the result
                 return dbConnectionManager.executeUpdate(psDeleteInputSetsForProcessingDirective) > 0;
             } // end try (remove all sets that are input for the processing directive)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the sets that are input for the processing directive with ID ID " + processingDirectiveId, e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return deleteInputSetsForProcessingDirective(processingDirectiveId);
             }

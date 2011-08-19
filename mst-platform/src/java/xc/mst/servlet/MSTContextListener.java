@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.servlet;
 
@@ -21,7 +21,7 @@ public class MSTContextListener implements ServletContextListener {
     protected ContextLoaderListener contextLoaderListener = null;
 
     public void contextInitialized(ServletContextEvent sce) {
-        String path =  sce.getServletContext().getContextPath();
+        String path = sce.getServletContext().getContextPath();
         // Remove the / in '/MetadataServicesToolkit'
         path = path.substring(1, path.length());
         SetupClasspath.setupClasspath(path);
@@ -32,6 +32,5 @@ public class MSTContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         this.contextLoaderListener.contextDestroyed(sce);
     }
-
 
 }

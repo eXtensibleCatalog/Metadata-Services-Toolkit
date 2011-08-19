@@ -20,7 +20,6 @@ import xc.mst.bo.record.marc.Subfield;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.Util;
 
-
 public class SaxMarcXmlRecord implements ContentHandler {
 
     private static final Logger LOG = Logger.getLogger(SaxMarcXmlRecord.class);
@@ -112,7 +111,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
                 }
             }
             if (!orgCodeFail) {
-                List dataFields = (List)marcRecord.getDataFields().get(currentField.getTag());
+                List dataFields = (List) marcRecord.getDataFields().get(currentField.getTag());
                 if (dataFields == null) {
                     dataFields = new ArrayList();
                     marcRecord.getDataFields().put(currentField.getTag(), dataFields);
@@ -129,7 +128,8 @@ public class SaxMarcXmlRecord implements ContentHandler {
         inTextValueField = false;
     }
 
-    public void endPrefixMapping(String prefix) throws SAXException {}
+    public void endPrefixMapping(String prefix) throws SAXException {
+    }
 
     public void ignorableWhitespace(char[] ch, int start, int length)
             throws SAXException {
@@ -164,7 +164,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
                 String tag = atts.getValue("tag");
                 currentField.setTag(Integer.parseInt(tag));
 
-                List controlFields = (List)marcRecord.getControlFields().get(currentField.getTag());
+                List controlFields = (List) marcRecord.getControlFields().get(currentField.getTag());
                 if (controlFields == null) {
                     controlFields = new ArrayList();
                     marcRecord.getDataFields().put(currentField.getTag(), controlFields);
@@ -184,7 +184,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
                 }
 
                 String ind2 = atts.getValue("ind2");
-                if (ind2 != null&& !ind2.equals("")) {
+                if (ind2 != null && !ind2.equals("")) {
                     currentField.setInd2(ind2.charAt(0));
                 }
             } else if (SUB_FIELD.equals(localName)) {
@@ -209,9 +209,9 @@ public class SaxMarcXmlRecord implements ContentHandler {
 
     @SuppressWarnings("unchecked")
     public String getControlField(int target) {
-        List l = (List)marcRecord.getControlFields().get(target);
+        List l = (List) marcRecord.getControlFields().get(target);
         if (l != null && l.size() > 0) {
-            return ((Field)l.get(0)).getContents();
+            return ((Field) l.get(0)).getContents();
         } else {
             return null;
         }
@@ -219,7 +219,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
 
     @SuppressWarnings("unchecked")
     public List<Field> getDataFields(int targetField) {
-        List<Field> fields = (List<Field>)marcRecord.getDataFields().get(targetField);
+        List<Field> fields = (List<Field>) marcRecord.getDataFields().get(targetField);
         if (fields != null)
             return fields;
         else
@@ -228,7 +228,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
 
     @SuppressWarnings("unchecked")
     public List<Field> get945() {
-        List<Field> fields = (List<Field>)marcRecord.getDataFields().get(945);
+        List<Field> fields = (List<Field>) marcRecord.getDataFields().get(945);
         if (fields != null)
             return fields;
         else
@@ -238,8 +238,8 @@ public class SaxMarcXmlRecord implements ContentHandler {
     @SuppressWarnings("unchecked")
     public List<String> getSubfield(int targetField, char targetSubfield) {
         List<String> ret = new ArrayList<String>();
-        List<Field> dataFields = (List)marcRecord.getDataFields().get(targetField);
-        //boolean foundCorrectOrgCode = false;
+        List<Field> dataFields = (List) marcRecord.getDataFields().get(targetField);
+        // boolean foundCorrectOrgCode = false;
         if (dataFields != null) {
             for (Field df : dataFields) {
                 if (df.getSubfields() != null) {
@@ -247,7 +247,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
                         if (sf.getCode() == targetSubfield) {
                             ret.add(sf.getContents());
                             /*
-                        } else if (sf.getCode() == '5' && marcRecord.getOrgCode().equals(sf.getContents())) {
+                            } else if (sf.getCode() == '5' && marcRecord.getOrgCode().equals(sf.getContents())) {
                             foundCorrectOrgCode = true;
                             */
                         }
@@ -289,7 +289,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
     public List<String> get004s() {
         List<String> the004s = new ArrayList<String>();
         if (marcRecord.getControlFields() != null) {
-            List<Field> fields = (List<Field>)marcRecord.getControlFields().get(4);
+            List<Field> fields = (List<Field>) marcRecord.getControlFields().get(4);
             if (fields != null) {
                 for (Field f : fields) {
                     the004s.add(f.getContents());
@@ -304,7 +304,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
         List<String> the014s = new ArrayList<String>();
 
         if (marcRecord.getDataFields() != null) {
-            List<Field> fields = (List<Field>)marcRecord.getDataFields().get(14);
+            List<Field> fields = (List<Field>) marcRecord.getDataFields().get(14);
             if (fields != null) {
                 for (Field f : fields) {
                     if (f.getInd1() == ind) {

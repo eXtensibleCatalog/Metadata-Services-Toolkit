@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.scheduling;
 
@@ -31,10 +31,15 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
     protected RecordCounts outgoingRecordCounts = null;
 
     abstract public void setup();
+
     abstract public String getName();
+
     abstract public boolean doSomeWork();
+
     abstract public String getDetailedStatus();
+
     abstract public long getRecordsProcessedThisRun();
+
     abstract public long getRecords2ProcessThisRun();
 
     // yes, this is asinine, but less so then putting it in the http session (which is where it was).
@@ -80,8 +85,8 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
                 success = false;
             }
             while (keepGoing) {
-                LOG.debug("getName(): "+getName());
-                LOG.debug("status: "+status);
+                LOG.debug("getName(): " + getName());
+                LOG.debug("status: " + status);
                 if (this.status == Status.RUNNING) {
                     serviceBarDisplay = "pause";
                     keepGoing = doSomeWork();
@@ -91,17 +96,17 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
                     Thread.sleep(5000);
                 }
             }
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             LOG.error("", e);
             this.status = Status.ERROR;
             success = false;
         } finally {
-            LOG.debug("before finish workDelegate.getName(): "+getName());
+            LOG.debug("before finish workDelegate.getName(): " + getName());
             finish(success);
-            LOG.debug("after finish workDelegate.getName(): "+getName());
-            getProdLogger().debug("after finish workDelegate.getName(): "+getName());
+            LOG.debug("after finish workDelegate.getName(): " + getName());
+            getProdLogger().debug("after finish workDelegate.getName(): " + getName());
             if (running.isHeldByCurrentThread()) {
-                LOG.error("*** Warning:  WorkerThread "+this.getName()+" held the running lock, unlocked it now on exit.");
+                LOG.error("*** Warning:  WorkerThread " + this.getName() + " held the running lock, unlocked it now on exit.");
                 running.unlock();
             }
             this.status = Status.NOT_RUNNING;
@@ -109,7 +114,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
     }
 
     public String getJobName() {
-        //waitForSetupCompletion();
+        // waitForSetupCompletion();
         return getName();
     }
 
@@ -124,6 +129,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
     public RecordCounts getIncomingRecordCounts() {
         return incomingRecordCounts;
     }
+
     public void setIncomingRecordCounts(RecordCounts incomingRecordCounts) {
         this.incomingRecordCounts = incomingRecordCounts;
     }
@@ -131,6 +137,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
     public RecordCounts getOutgoingRecordCounts() {
         return outgoingRecordCounts;
     }
+
     public void setOutgoingRecordCounts(RecordCounts outgoingRecordCounts) {
         this.outgoingRecordCounts = outgoingRecordCounts;
     }
@@ -145,7 +152,9 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
         running.unlock();
         this.status = Status.CANCELED;
     }
-    public void cancelInner() {}
+
+    public void cancelInner() {
+    }
 
     public final void finish(boolean success) {
         LOG.debug("finish-1");
@@ -158,6 +167,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
         running.unlock();
         LOG.debug("finish-5");
     }
+
     public void finishInner(boolean success) {
         if (repo != null) {
             repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
@@ -167,7 +177,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
         }
     }
 
-    public final void pause()  {
+    public final void pause() {
         waitForSetupCompletion();
         this.status = Status.PAUSING;
         running.lock();
@@ -175,6 +185,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
         running.unlock();
         this.status = Status.PAUSED;
     }
+
     public void pauseInner() {
         if (repo != null) {
             repo.commitIfNecessary(true, 0, this.incomingRecordCounts, this.outgoingRecordCounts);
@@ -186,5 +197,7 @@ public abstract class WorkerThread extends BaseManager implements Runnable {
         proceedInner();
         this.status = Status.RUNNING;
     }
-    public void proceedInner() {}
+
+    public void proceedInner() {
+    }
 }

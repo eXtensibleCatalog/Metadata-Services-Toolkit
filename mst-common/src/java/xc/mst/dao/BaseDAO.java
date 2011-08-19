@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao;
 
@@ -59,9 +59,16 @@ public class BaseDAO {
 
     private final static Logger LOG = Logger.getLogger(BaseDAO.class);
     private final static Logger PROD_LOGGER = Logger.getLogger("prodDebug");
-    public Logger getProdLogger() {return PROD_LOGGER;}
+
+    public Logger getProdLogger() {
+        return PROD_LOGGER;
+    }
+
     private final static Logger RULES_LOGGER = Logger.getLogger("mstRules");
-    public Logger getRulesLogger() {return RULES_LOGGER;}
+
+    public Logger getRulesLogger() {
+        return RULES_LOGGER;
+    }
 
     protected DataSource dataSource = null;
     protected MSTConfiguration config;
@@ -73,7 +80,8 @@ public class BaseDAO {
 
     protected Util util = null;
 
-    public void init() {}
+    public void init() {
+    }
 
     public void execute(String sql) {
         this.jdbcTemplate.execute(sql);
@@ -82,7 +90,6 @@ public class BaseDAO {
     public void setConfig(MSTConfiguration config) {
         this.config = config;
     }
-
 
     public void createSchema(String name) {
         createSchema(name, false);
@@ -95,14 +102,14 @@ public class BaseDAO {
             deleteSchema(name);
         }
         if (!schemasExists(name))
-            this.jdbcTemplate.execute("create database "+name+" character set=utf8;");
+            this.jdbcTemplate.execute("create database " + name + " character set=utf8;");
     }
 
     public void deleteSchema(String name) {
-        String sql = "drop database "+getUtil().getDBSchema(name);
-        LOG.debug("executing: "+sql);
+        String sql = "drop database " + getUtil().getDBSchema(name);
+        LOG.debug("executing: " + sql);
         this.jdbcTemplate.execute(sql);
-        this.jdbcTemplate.execute("delete from repos where repo_name = '"+getUtil().getDBSchema(name)+"'");
+        this.jdbcTemplate.execute("delete from repos where repo_name = '" + getUtil().getDBSchema(name) + "'");
     }
 
     public List<String> getSchemas() {
@@ -126,14 +133,14 @@ public class BaseDAO {
             allTablesUpper.add(table.toUpperCase());
         }
         boolean ret = allTablesUpper.contains(tableName.toUpperCase());
-        LOG.debug("allTablesUpper: "+allTablesUpper);
-        LOG.debug("name: "+tableName);
-        LOG.debug(ret+":tableExists("+tableName+")");
+        LOG.debug("allTablesUpper: " + allTablesUpper);
+        LOG.debug("name: " + tableName);
+        LOG.debug(ret + ":tableExists(" + tableName + ")");
         return ret;
     }
 
     protected boolean tableExists(String repoName, String tableName) {
-        List<String> allTables = this.jdbcTemplate.queryForList("show tables from "+getUtil().normalizeName(repoName), String.class);
+        List<String> allTables = this.jdbcTemplate.queryForList("show tables from " + getUtil().normalizeName(repoName), String.class);
         return tableExists(allTables, tableName);
     }
 
@@ -149,7 +156,7 @@ public class BaseDAO {
             List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
             for (String table : allTables) {
                 String upperTable = table.toUpperCase();
-                if (upperTable.startsWith(prefix+"_")) {
+                if (upperTable.startsWith(prefix + "_")) {
                     tablesWithPrefix.add(table);
                 }
             }
@@ -161,7 +168,7 @@ public class BaseDAO {
 
     public void executeServiceDBScripts(String fileName) {
         List<String> allTables = this.jdbcTemplate.queryForList("show tables", String.class);
-        LOG.debug("allTables: "+allTables);
+        LOG.debug("allTables: " + allTables);
         String createTablesContents = getUtil().slurp(fileName);
         if (createTablesContents != null) {
             StringBuilder replacedContents = new StringBuilder();
@@ -183,7 +190,7 @@ public class BaseDAO {
                 replacedContents.append(line.replaceAll(currentDelimiter, replaceWith));
                 replacedContents.append("\n");
             }
-            LOG.debug("replacedContents: "+replacedContents);
+            LOG.debug("replacedContents: " + replacedContents);
             String[] stmts = replacedContents.toString().split("END_OF_STMT");
             for (String sql : stmts) {
                 if (StringUtils.isEmpty(StringUtils.trim(sql))) {
@@ -192,7 +199,7 @@ public class BaseDAO {
                 this.jdbcTemplate.execute(sql);
             }
         } else {
-            LOG.info("file is empty or doesn't exist: "+fileName);
+            LOG.info("file is empty or doesn't exist: " + fileName);
         }
     }
 
@@ -210,96 +217,125 @@ public class BaseDAO {
     public Util getUtil() {
         return util;
     }
+
     public void setUtil(Util util) {
         this.util = util;
     }
 
     public RecordService getRecordService() {
-        return (RecordService)config.getBean("RecordService");
+        return (RecordService) config.getBean("RecordService");
     }
+
     public HarvestDAO getHarvestDAO() {
-        return (HarvestDAO)config.getBean("HarvestDAO");
+        return (HarvestDAO) config.getBean("HarvestDAO");
     }
+
     public HarvestRecordUtilDAO getHarvestRecordUtilDAO() {
-        return (HarvestRecordUtilDAO)config.getBean("HarvestRecordUtilDAO");
+        return (HarvestRecordUtilDAO) config.getBean("HarvestRecordUtilDAO");
     }
+
     public HarvestScheduleDAO getHarvestScheduleDAO() {
-        return (HarvestScheduleDAO)config.getBean("HarvestScheduleDAO");
+        return (HarvestScheduleDAO) config.getBean("HarvestScheduleDAO");
     }
+
     public HarvestScheduleStepDAO getHarvestScheduleStepDAO() {
-        return (HarvestScheduleStepDAO)config.getBean("HarvestScheduleStepDAO");
+        return (HarvestScheduleStepDAO) config.getBean("HarvestScheduleStepDAO");
     }
+
     public LogDAO getLogDAO() {
-        return (LogDAO)config.getBean("LogDAO");
+        return (LogDAO) config.getBean("LogDAO");
     }
+
     public JobDAO getJobDAO() {
-        return (JobDAO)config.getBean("JobDAO");
+        return (JobDAO) config.getBean("JobDAO");
     }
+
     public ProcessingDirectiveDAO getProcessingDirectiveDAO() {
-        return (ProcessingDirectiveDAO)config.getBean("ProcessingDirectiveDAO");
+        return (ProcessingDirectiveDAO) config.getBean("ProcessingDirectiveDAO");
     }
+
     public ProcessingDirectiveInputFormatUtilDAO getProcessingDirectiveInputFormatUtilDAO() {
-        return (ProcessingDirectiveInputFormatUtilDAO)config.getBean("ProcessingDirectiveInputFormatUtilDAO");
+        return (ProcessingDirectiveInputFormatUtilDAO) config.getBean("ProcessingDirectiveInputFormatUtilDAO");
     }
+
     public ProcessingDirectiveInputSetUtilDAO getProcessingDirectiveInputSetUtilDAO() {
-        return (ProcessingDirectiveInputSetUtilDAO)config.getBean("ProcessingDirectiveInputSetUtilDAO");
+        return (ProcessingDirectiveInputSetUtilDAO) config.getBean("ProcessingDirectiveInputSetUtilDAO");
     }
+
     public FormatDAO getFormatDAO() {
-        return (FormatDAO)config.getBean("FormatDAO");
+        return (FormatDAO) config.getBean("FormatDAO");
     }
+
     public ProviderDAO getProviderDAO() {
-        return (ProviderDAO)config.getBean("ProviderDAO");
+        return (ProviderDAO) config.getBean("ProviderDAO");
     }
+
     public ProviderFormatUtilDAO getProviderFormatUtilDAO() {
-        return (ProviderFormatUtilDAO)config.getBean("ProviderFormatUtilDAO");
+        return (ProviderFormatUtilDAO) config.getBean("ProviderFormatUtilDAO");
     }
+
     public SetDAO getSetDAO() {
-        return (SetDAO)config.getBean("SetDAO");
+        return (SetDAO) config.getBean("SetDAO");
     }
+
     public RecordTypeDAO getRecordTypeDAO() {
-        return (RecordTypeDAO)config.getBean("RecordTypeDAO");
+        return (RecordTypeDAO) config.getBean("RecordTypeDAO");
     }
+
     public XcIdentifierForFrbrElementDAO getXcIdentifierForFrbrElementDAO() {
-        return (XcIdentifierForFrbrElementDAO)config.getBean("XcIdentifierForFrbrElementDAO");
+        return (XcIdentifierForFrbrElementDAO) config.getBean("XcIdentifierForFrbrElementDAO");
     }
+
     public ErrorCodeDAO getErrorCodeDAO() {
-        return (ErrorCodeDAO)config.getBean("ErrorCodeDAO");
+        return (ErrorCodeDAO) config.getBean("ErrorCodeDAO");
     }
+
     public OaiIdentifierForServiceDAO getOaiIdentifierForServiceDAO() {
-        return (OaiIdentifierForServiceDAO)config.getBean("OaiIdentifierForServiceDAO");
+        return (OaiIdentifierForServiceDAO) config.getBean("OaiIdentifierForServiceDAO");
     }
+
     public ServiceDAO getServiceDAO() {
-        return (ServiceDAO)config.getBean("ServiceDAO");
+        return (ServiceDAO) config.getBean("ServiceDAO");
     }
+
     public ServiceInputFormatUtilDAO getServiceInputFormatUtilDAO() {
-        return (ServiceInputFormatUtilDAO)config.getBean("ServiceInputFormatUtilDAO");
+        return (ServiceInputFormatUtilDAO) config.getBean("ServiceInputFormatUtilDAO");
     }
+
     public ServiceOutputFormatUtilDAO getServiceOutputFormatUtilDAO() {
-        return (ServiceOutputFormatUtilDAO)config.getBean("ServiceOutputFormatUtilDAO");
+        return (ServiceOutputFormatUtilDAO) config.getBean("ServiceOutputFormatUtilDAO");
     }
+
     public ServiceOutputSetUtilDAO getServiceOutputSetUtilDAO() {
-        return (ServiceOutputSetUtilDAO)config.getBean("ServiceOutputSetUtilDAO");
+        return (ServiceOutputSetUtilDAO) config.getBean("ServiceOutputSetUtilDAO");
     }
+
     public GroupDAO getGroupDAO() {
-        return (GroupDAO)config.getBean("GroupDAO");
+        return (GroupDAO) config.getBean("GroupDAO");
     }
+
     public GroupPermissionUtilDAO getGroupPermissionUtilDAO() {
-        return (GroupPermissionUtilDAO)config.getBean("GroupPermissionUtilDAO");
+        return (GroupPermissionUtilDAO) config.getBean("GroupPermissionUtilDAO");
     }
+
     public PermissionDAO getPermissionDAO() {
-        return (PermissionDAO)config.getBean("PermissionDAO");
+        return (PermissionDAO) config.getBean("PermissionDAO");
     }
+
     public ServerDAO getServerDAO() {
-        return (ServerDAO)config.getBean("ServerDAO");
+        return (ServerDAO) config.getBean("ServerDAO");
     }
+
     public UserDAO getUserDAO() {
-        return (UserDAO)config.getBean("UserDAO");
+        return (UserDAO) config.getBean("UserDAO");
     }
+
     public UserGroupUtilDAO getUserGroupUtilDAO() {
-        return (UserGroupUtilDAO)config.getBean("UserGroupUtilDAO");
+        return (UserGroupUtilDAO) config.getBean("UserGroupUtilDAO");
     }
+
     public MessageDAO getMessageDAO() {
-        return (MessageDAO)config.getBean("MessageDAO");
+        return (MessageDAO) config.getBean("MessageDAO");
     }
 
 }

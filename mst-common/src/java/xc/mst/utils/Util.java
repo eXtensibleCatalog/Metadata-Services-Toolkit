@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.utils;
 
 import gnu.trove.TLongHashSet;
@@ -42,10 +42,11 @@ public class Util {
         UTC_DAY_FORMATTER = ISODateTimeFormat.date();
         UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
     }
+
     public String printDateTime(Date d) {
         try {
             String s = UTC_SECOND_FORMATTER.print(d.getTime());
-            s = s.substring(0, s.length()-5)+"Z";
+            s = s.substring(0, s.length() - 5) + "Z";
             return s;
         } catch (Throwable t) {
             return null;
@@ -84,12 +85,12 @@ public class Util {
     protected ThreadLocal<ClassLoader> currentClassLoader = new ThreadLocal<ClassLoader>();
 
     public static Util getUtil() {
-        return (Util)MSTConfiguration.getInstance().getBean("Util");
+        return (Util) MSTConfiguration.getInstance().getBean("Util");
     }
 
     public String getDBSchema(String name) {
         if (!name.startsWith(MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")))
-            return MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix")+normalizeName(name);
+            return MSTConfiguration.getInstance().getProperty("dbRepoTablesPrefix") + normalizeName(name);
         else
             return name;
     }
@@ -108,7 +109,7 @@ public class Util {
         try {
             return slurp(new FileInputStream(file));
         } catch (FileNotFoundException t) {
-            LOG.error(file.getAbsolutePath()+" does not exist");
+            LOG.error(file.getAbsolutePath() + " does not exist");
         } catch (Throwable t) {
             LOG.error("", t);
         }
@@ -148,7 +149,7 @@ public class Util {
         try {
             return slurp(new ClassPathResource(classpathResource, cl).getInputStream());
         } catch (FileNotFoundException t) {
-            LOG.debug(classpathResource+" does not exist");
+            LOG.debug(classpathResource + " does not exist");
         } catch (Throwable t) {
             LOG.error("", t);
         }
@@ -182,7 +183,7 @@ public class Util {
         boolean anyNulls = false;
         boolean allNulls = true;
         int length = -1;
-        for (int i=0; i<arrs.length; i++) {
+        for (int i = 0; i < arrs.length; i++) {
             if (arrs[i] == null) {
                 anyNulls = true;
             } else {
@@ -203,7 +204,7 @@ public class Util {
 
     public void throwIt(Throwable t) {
         if (t instanceof RuntimeException) {
-            throw (RuntimeException)t;
+            throw (RuntimeException) t;
         } else {
             throw new RuntimeException(t);
         }
@@ -216,7 +217,7 @@ public class Util {
         sb.append(" ");
         tlohm.forEach(new TLongProcedure() {
             public boolean execute(long value) {
-                sb.append(value+", ");
+                sb.append(value + ", ");
                 return true;
             }
         });
@@ -224,6 +225,7 @@ public class Util {
     }
 
     protected List<String> redundantTokens = null;
+
     public String getNonRedundantOaiId(String oaiId) {
         if (redundantTokens == null) {
             redundantTokens = MSTConfiguration.getInstance().getPropertyAsList("harvest.redundantToken");
@@ -237,9 +239,9 @@ public class Util {
     public long getLongPrim(Object numObj) {
         long numLongPrim = -1;
         if (numObj instanceof Integer) {
-            numLongPrim = (Integer)numObj;
+            numLongPrim = (Integer) numObj;
         } else if (numObj instanceof Long) {
-            numLongPrim = (Long)numObj;
+            numLongPrim = (Long) numObj;
         }
         return numLongPrim;
     }

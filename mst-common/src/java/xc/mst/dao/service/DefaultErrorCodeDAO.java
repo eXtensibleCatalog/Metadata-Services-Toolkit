@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.service;
 
@@ -21,8 +21,7 @@ import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
-public class DefaultErrorCodeDAO extends ErrorCodeDAO
-{
+public class DefaultErrorCodeDAO extends ErrorCodeDAO {
 
     /**
      * A PreparedStatement to get all error codes in the database
@@ -85,15 +84,13 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
     private static Object psDeleteLock = new Object();
 
     @Override
-    public List<ErrorCode> getAll() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<ErrorCode> getAll() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all error codes");
 
             // The ResultSet from the SQL query
@@ -102,11 +99,9 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
             // The list of all services
             List<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get all error codes if it hasn't already been created
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
                                                    COL_ERROR_CODE + ", " +
@@ -114,7 +109,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                                                    COL_SERVICE_ID + " " +
                                        "FROM " + ERROR_CODES_TABLE_NAME;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all error codes\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -128,8 +123,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // For each result returned, add a Service object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the error code
                     ErrorCode errorCode = new ErrorCode();
 
@@ -143,48 +137,41 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                     errorCodes.add(errorCode);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + errorCodes.size() + " error codes in the database.");
 
                 return errorCodes;
             } // end try(get error codes)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the error codes.", e);
 
                 return errorCodes;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     }
 
     @Override
-    public ErrorCode getById(int id) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public ErrorCode getById(int id) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting an error codes by ID");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get all error codes if it hasn't already been created
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
                                                    COL_ERROR_CODE + ", " +
@@ -193,7 +180,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                                        "FROM " + ERROR_CODES_TABLE_NAME + " " +
                                        "WHERE " + COL_ERROR_CODE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get error code by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -210,8 +197,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // For each result returned, add a Service object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the error code
                     ErrorCode errorCode = new ErrorCode();
 
@@ -221,55 +207,48 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                     errorCode.setErrorDescriptionFile(results.getString(3));
                     errorCode.setService(getServiceDAO().getById(results.getInt(4)));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the error code with ID " + id + " in the database.");
 
                     // Add the service to the list
                     return errorCode;
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the error code with ID " + id + " in the database.");
 
                 return null;
             } // end try(get error codes)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the error code with ID " + id + ".", e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getById(id);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     }
 
     @Override
-    public ErrorCode loadBasicErrorCode(int id) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public ErrorCode loadBasicErrorCode(int id) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting an error codes by ID");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get all error codes if it hasn't already been created
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
                                                    COL_ERROR_CODE + ", " +
@@ -278,7 +257,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                                        "FROM " + ERROR_CODES_TABLE_NAME + " " +
                                        "WHERE " + COL_ERROR_CODE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get error code by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -295,8 +274,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // For each result returned, add a Service object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the error code
                     ErrorCode errorCode = new ErrorCode();
 
@@ -305,55 +283,48 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                     errorCode.setErrorCode(results.getString(2));
                     errorCode.setErrorDescriptionFile(results.getString(3));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the error code with ID " + id + " in the database.");
 
                     // Add the service to the list
                     return errorCode;
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the error code with ID " + id + " in the database.");
 
                 return null;
             } // end try(get error codes)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the error code with ID " + id + ".", e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return loadBasicErrorCode(id);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     }
 
     @Override
-    public ErrorCode getByErrorCodeAndService(String errorCode, Service service) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public ErrorCode getByErrorCodeAndService(String errorCode, Service service) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByNameAndServiceLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByNameAndServiceLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting an error codes by ID");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get all error codes if it hasn't already been created
-                if(psGetByNameAndService == null || dbConnectionManager.isClosed(psGetByNameAndService))
-                {
+                if (psGetByNameAndService == null || dbConnectionManager.isClosed(psGetByNameAndService)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_ERROR_CODE_ID + ", " +
                                                    COL_ERROR_CODE + ", " +
@@ -363,7 +334,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                                        "WHERE " + COL_ERROR_CODE + "=? " +
                                        "AND " + COL_SERVICE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get error code by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -381,8 +352,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 results = dbConnectionManager.executeQuery(psGetByNameAndService);
 
                 // For each result returned, add a Service object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the error code
                     ErrorCode errorCodeObj = new ErrorCode();
 
@@ -392,65 +362,58 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                     errorCodeObj.setErrorDescriptionFile(results.getString(3));
                     errorCodeObj.setService(getServiceDAO().getById(results.getInt(4)));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the error code with error code " + errorCode + " and service ID" + service.getId() + " in the database.");
 
                     // Add the service to the list
                     return errorCodeObj;
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the error code with error code " + errorCode + " and service ID" + service.getId() + " in the database.");
 
                 return null;
             } // end try(get error codes)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the error code with error code " + errorCode + " and service ID" + service.getId() + " in the database.");
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getByErrorCodeAndService(errorCode, service);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     }
 
     @Override
-    public boolean insert(ErrorCode errorCode) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insert(ErrorCode errorCode) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the service are valid
         validateFields(errorCode, false, true);
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new error code with the error code " + errorCode.getErrorCode());
 
             // The result set returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // Build the PreparedStatement to insert a service if it wasn't already created
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + ERROR_CODES_TABLE_NAME + " (" + COL_ERROR_CODE + ", " +
                                                                                           COL_ERROR_DESCRIPTION_FILE + ", " +
                                                                                           COL_SERVICE_ID + ") " +
                                        "VALUES (?, ?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert error code\" PreparedStatemnt from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -464,8 +427,7 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 psInsert.setInt(3, errorCode.getService().getId());
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated resource identifier ID and set it correctly on this Service Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -476,51 +438,43 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 } // end if(insert succeeded)
                 else
                     return false;
-            }
-            catch(SQLException e)
-            {
+            } catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new error code with the error code " + errorCode.getErrorCode(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(errorCode);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally(close ResultSet)
         } // end synchronized
     }
 
     @Override
-    public boolean update(ErrorCode errorCode) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean update(ErrorCode errorCode) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the error code are valid
         validateFields(errorCode, true, true);
 
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the service with ID " + errorCode.getId());
 
-            try
-            {
+            try {
                 // Create a PreparedStatement to update a service if it wasn't already created
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + ERROR_CODES_TABLE_NAME + " SET " + COL_ERROR_CODE + "=?, " +
                                                                           COL_ERROR_DESCRIPTION_FILE + "=?, " +
                                                                           COL_SERVICE_ID + "=? " +
                                        "WHERE " + COL_ERROR_CODE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update error code\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -537,13 +491,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psUpdate) > 0;
             } // end try(update error code)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the error code with ID " + errorCode.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(errorCode);
             }
@@ -551,30 +504,26 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
     }
 
     @Override
-    public boolean delete(ErrorCode errorCode) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean delete(ErrorCode errorCode) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the ID field on the service are valid
         validateFields(errorCode, true, false);
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the service with ID " + errorCode.getId());
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to delete a error code if it wasn't already defined
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
                     String deleteSql = "DELETE FROM " + ERROR_CODES_TABLE_NAME + " " +
                                        "WHERE " + COL_ERROR_CODE_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete error code\" PreparedStatement the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -588,13 +537,12 @@ public class DefaultErrorCodeDAO extends ErrorCodeDAO
                 // Execute the delete statement and return the result
                 return dbConnectionManager.execute(psDelete);
             } // end try(delete the error code)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the error code with ID " + errorCode.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(errorCode);
             }

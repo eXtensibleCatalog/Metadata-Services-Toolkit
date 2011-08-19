@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.bo.processing;
 
 import xc.mst.bo.harvest.HarvestSchedule;
@@ -13,7 +13,7 @@ import xc.mst.bo.service.Service;
 
 /**
  * Represents a job in queue
- *
+ * 
  * @author Sharmila Ranganathan
  */
 public class Job {
@@ -116,12 +116,12 @@ public class Job {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("[ Id="+id);
-        sb.append(" Service="+service);
-        sb.append(" Processing directive="+processingDirective);
-        sb.append(" harvestSchedule="+harvestSchedule);
-        sb.append(" order="+order+"]");
-        sb.append(" jobType="+jobType+"]");
+        sb.append("[ Id=" + id);
+        sb.append(" Service=" + service);
+        sb.append(" Processing directive=" + processingDirective);
+        sb.append(" harvestSchedule=" + harvestSchedule);
+        sb.append(" order=" + order + "]");
+        sb.append(" jobType=" + jobType + "]");
 
         return sb.toString();
 

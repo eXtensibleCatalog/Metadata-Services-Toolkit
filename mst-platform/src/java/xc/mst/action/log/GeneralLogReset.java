@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.log;
 
@@ -25,16 +25,15 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Resets the details of the General log files.
- *
+ * 
  * @author Tejaswi Haramurali
  */
 @SuppressWarnings("serial")
-public class GeneralLogReset extends BaseActionSupport
-{
+public class GeneralLogReset extends BaseActionSupport {
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-    /**The ID of the general Log file */
+    /** The ID of the general Log file */
     private int logId;
 
     /** Error Type */
@@ -42,17 +41,14 @@ public class GeneralLogReset extends BaseActionSupport
 
     /**
      * Resets the general log file corresponding to the given log ID
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
+    public String execute() {
+        try {
             Log logs = getLogService().getById(logId);
-            if(logs==null)
-            {
+            if (logs == null) {
                 this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
@@ -66,25 +62,19 @@ public class GeneralLogReset extends BaseActionSupport
             PrintWriter printWriter = new PrintWriter(filename);
             printWriter.close();
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("generalLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
-        }
-        catch(FileNotFoundException fe)
-        {
-            log.error(fe.getMessage(),fe);
+        } catch (FileNotFoundException fe) {
+            log.error(fe.getMessage(), fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting general log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -94,18 +84,15 @@ public class GeneralLogReset extends BaseActionSupport
 
     /**
      * Resets all the general log files
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String resetAll()
-    {
-        try
-        {
+    public String resetAll() {
+        try {
             List<Log> logList = getLogService().getAll();
             Iterator<Log> logIter = logList.iterator();
-            while(logIter.hasNext())
-            {
-                Log logs = (Log)logIter.next();
+            while (logIter.hasNext()) {
+                Log logs = (Log) logIter.next();
                 logs.setErrors(0);
                 logs.setLastLogReset(new Date());
                 logs.setWarnings(0);
@@ -115,25 +102,19 @@ public class GeneralLogReset extends BaseActionSupport
                 printWriter.close();
             }
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("generalLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
-        }
-        catch(FileNotFoundException fe)
-        {
-            log.error(fe.getMessage(),fe);
+        } catch (FileNotFoundException fe) {
+            log.error(fe.getMessage(), fe);
             this.addFieldError("generalLogReset", "Error Occurred while resetting all general logs. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -141,29 +122,28 @@ public class GeneralLogReset extends BaseActionSupport
         }
     }
 
-     /**
+    /**
      * Sets the log ID
-     *
-     * @param logId ID of the log
+     * 
+     * @param logId
+     *            ID of the log
      */
-    public void setLogId(int logId)
-    {
+    public void setLogId(int logId) {
         this.logId = logId;
     }
 
     /**
      * Returns the log ID
-     *
+     * 
      * @return log ID
      */
-    public int getLogId()
-    {
+    public int getLogId() {
         return this.logId;
     }
 
-     /**
+    /**
      * Returns error type
-      *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -172,8 +152,9 @@ public class GeneralLogReset extends BaseActionSupport
 
     /**
      * Sets error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;

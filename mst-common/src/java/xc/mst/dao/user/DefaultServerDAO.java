@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.user;
 
@@ -23,8 +23,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.utils.LogWriter;
 
-public class DefaultServerDAO extends ServerDAO
-{
+public class DefaultServerDAO extends ServerDAO {
 
     /**
      * The repository management log file name
@@ -91,28 +90,22 @@ public class DefaultServerDAO extends ServerDAO
      */
     private static Object psDeleteLock = new Object();
 
-    public void init()
-    {
-        try
-        {
+    public void init() {
+        try {
             logObj = getLogDAO().getById(Constants.LOG_ID_AUTHENTICATION_SERVER_MANAGEMENT);
-        }
-        catch(DatabaseConfigException e)
-        {
+        } catch (DatabaseConfigException e) {
             log.error("Unable to connect to the database using the parameters from the configuration file.", e);
         }
     }
 
     @Override
-    public List<Server> getAll() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Server> getAll() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all servers");
 
             // The ResultSet from the SQL query
@@ -121,11 +114,9 @@ public class DefaultServerDAO extends ServerDAO
             // A list to hold the results of the query
             List<Server> servers = new ArrayList<Server>();
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get all servers was not defined, create it
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SERVER_ID + ", " +
                                                    COL_URL + ", " +
@@ -140,7 +131,7 @@ public class DefaultServerDAO extends ServerDAO
                                                    COL_SHOW_FORGOT_PASSWORD_LINK + " " +
                                        "FROM " + SERVERS_TABLE_NAME;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all servers\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -154,8 +145,7 @@ public class DefaultServerDAO extends ServerDAO
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // If any results were returned
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the server
                     Server server = new Server();
 
@@ -164,12 +154,9 @@ public class DefaultServerDAO extends ServerDAO
                     server.setUrl(results.getString(2));
                     server.setName(results.getString(3));
 
-                    try
-                    {
+                    try {
                         server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
-                    }
-                    catch ( ArrayIndexOutOfBoundsException e )
-                    {
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         server.setType(Server.ServerType.UNDEFINED);
                     }
 
@@ -185,48 +172,41 @@ public class DefaultServerDAO extends ServerDAO
                     servers.add(server);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + servers.size() + " servers in the database.");
 
                 return servers;
             } // end try(get and return all servers)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the servers", e);
 
                 return servers;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getAll()
 
     @Override
-    public Server getById(int serverId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public Server getById(int serverId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the server with ID " + serverId);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a server by ID was not defined, create it
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_SERVER_ID + ", " +
                                                    COL_URL + ", " +
@@ -242,7 +222,7 @@ public class DefaultServerDAO extends ServerDAO
                                        "FROM " + SERVERS_TABLE_NAME + " " +
                                        "WHERE " + COL_SERVER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get server by ID\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -259,8 +239,7 @@ public class DefaultServerDAO extends ServerDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the server
                     Server server = new Server();
 
@@ -269,12 +248,9 @@ public class DefaultServerDAO extends ServerDAO
                     server.setUrl(results.getString(2));
                     server.setName(results.getString(3));
 
-                    try
-                    {
+                    try {
                         server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
-                    }
-                    catch ( ArrayIndexOutOfBoundsException e )
-                    {
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         server.setType(Server.ServerType.UNDEFINED);
                     }
 
@@ -286,7 +262,7 @@ public class DefaultServerDAO extends ServerDAO
                     server.setForgotPasswordLabel(results.getString(10));
                     server.setShowForgotPasswordLink(results.getBoolean(11));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the server with ID " + serverId + " in the database.");
 
                     // Return the page
@@ -294,49 +270,42 @@ public class DefaultServerDAO extends ServerDAO
                 } // end if (there was a result)
                 else // There were no rows in the database, the server could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The server with ID " + serverId + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try (get and return server)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the server with ID " + serverId, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getById(serverId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getById(int)
 
     @Override
-    public Server getByName(String name) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public Server getByName(String name) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByNameLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByNameLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the server with the name " + name);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a server by ID was not defined, create it
-                if(psGetByName == null || dbConnectionManager.isClosed(psGetByName))
-                {
+                if (psGetByName == null || dbConnectionManager.isClosed(psGetByName)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_SERVER_ID + ", " +
                                                    COL_URL + ", " +
@@ -352,7 +321,7 @@ public class DefaultServerDAO extends ServerDAO
                                        "FROM " + SERVERS_TABLE_NAME + " " +
                                        "WHERE " + COL_NAME + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get server by name\" PreparedSatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -369,8 +338,7 @@ public class DefaultServerDAO extends ServerDAO
                 results = dbConnectionManager.executeQuery(psGetByName);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the server
                     Server server = new Server();
 
@@ -379,12 +347,9 @@ public class DefaultServerDAO extends ServerDAO
                     server.setUrl(results.getString(2));
                     server.setName(results.getString(3));
 
-                    try
-                    {
+                    try {
                         server.setType(Server.ServerType.class.getEnumConstants()[results.getInt(4)]);
-                    }
-                    catch ( ArrayIndexOutOfBoundsException e )
-                    {
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         server.setType(Server.ServerType.UNDEFINED);
                     }
 
@@ -396,7 +361,7 @@ public class DefaultServerDAO extends ServerDAO
                     server.setForgotPasswordLabel(results.getString(10));
                     server.setShowForgotPasswordLink(results.getBoolean(11));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the server with the name " + name + " in the database.");
 
                     // Return the page
@@ -404,52 +369,45 @@ public class DefaultServerDAO extends ServerDAO
                 } // end if (there was a result)
                 else // There were no rows in the database, the server could not be found
                 {
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("The server with the name " + name + " was not found in the database.");
 
                     return null;
                 } // end else
             } // end try (get and return server)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the server with the name " + name, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getByName(name);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method getByName(String)
 
     @Override
-    public boolean insert(Server server) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insert(Server server) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the server are valid
         validateFields(server, false, true);
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new sever with the url " + server.getUrl());
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to insert a server was not defined, create it
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + SERVERS_TABLE_NAME + " (" + COL_URL + ", " +
                                                                                     COL_NAME + ", " +
@@ -463,7 +421,7 @@ public class DefaultServerDAO extends ServerDAO
                                                                                     COL_SHOW_FORGOT_PASSWORD_LINK + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert server\" PreparedStatement from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -484,8 +442,7 @@ public class DefaultServerDAO extends ServerDAO
                 psInsert.setBoolean(10, server.getShowForgotPasswordLink());
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated user ID and set it correctly on this Page Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -495,9 +452,7 @@ public class DefaultServerDAO extends ServerDAO
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Added a new authentication server with the name " + server.getName());
 
                     return true;
-                }
-                else
-                {
+                } else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -506,8 +461,7 @@ public class DefaultServerDAO extends ServerDAO
                     return false;
                 }
             } // end try(insert the server)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new server with the URL " + server.getUrl(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while adding a new authentication server with the name " + server.getName());
@@ -517,37 +471,31 @@ public class DefaultServerDAO extends ServerDAO
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(server);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally (close ResultSet)
         } // end synchronized
     } // end method insert(Server)
 
     @Override
-    public boolean update(Server server) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean update(Server server) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the server are valid
         validateFields(server, true, true);
 
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the server with ID " + server.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to update a server was not defined, create it
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + SERVERS_TABLE_NAME + " SET " + COL_URL + "=?, " +
                                                                                   COL_NAME + "=?, " +
@@ -561,7 +509,7 @@ public class DefaultServerDAO extends ServerDAO
                                                                                   COL_SHOW_FORGOT_PASSWORD_LINK + "=? " +
                                        "WHERE " + COL_SERVER_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update server\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -585,10 +533,9 @@ public class DefaultServerDAO extends ServerDAO
                 // Execute the update statement and return the result
                 boolean success = dbConnectionManager.executeUpdate(psUpdate) > 0;
 
-                if(success)
+                if (success)
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Updated the authentication server with the name " + server.getName());
-                else
-                {
+                else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -596,8 +543,7 @@ public class DefaultServerDAO extends ServerDAO
                 }
                 return success;
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the server with ID " + server.getId(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while updating the authentication server with the name " + server.getName());
@@ -607,7 +553,7 @@ public class DefaultServerDAO extends ServerDAO
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(server);
             }
@@ -615,30 +561,26 @@ public class DefaultServerDAO extends ServerDAO
     } // end method update(Server)
 
     @Override
-    public boolean delete(Server server) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean delete(Server server) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the ID field on the server are valid
         validateFields(server, true, false);
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the server with ID " + server.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete a server was not defined, create it
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
-                    String deleteSql = "DELETE FROM "+ SERVERS_TABLE_NAME + " " +
+                    String deleteSql = "DELETE FROM " + SERVERS_TABLE_NAME + " " +
                                        "WHERE " + COL_SERVER_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete server\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -652,10 +594,9 @@ public class DefaultServerDAO extends ServerDAO
                 // Execute the delete statement and return the result
                 boolean success = dbConnectionManager.execute(psDelete);
 
-                if(success)
+                if (success)
                     LogWriter.addInfo(logObj.getLogFileLocation(), "Deleted the authentication server with the name " + server.getName());
-                else
-                {
+                else {
                     LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
 
                     logObj.setErrors(logObj.getErrors() + 1);
@@ -664,8 +605,7 @@ public class DefaultServerDAO extends ServerDAO
 
                 return success;
             } // end try
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the server with ID " + server.getId(), e);
 
                 LogWriter.addError(logObj.getLogFileLocation(), "An error occurrred while deleting the authentication server with the name " + server.getName());
@@ -675,7 +615,7 @@ public class DefaultServerDAO extends ServerDAO
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(server);
             }

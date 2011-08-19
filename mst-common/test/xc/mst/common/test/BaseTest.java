@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.common.test;
 
@@ -93,20 +93,19 @@ public class BaseTest {
     }
 
     protected void printClassPath() {
-        //Get the System Classloader
+        // Get the System Classloader
         ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
 
-        //Get the URLs
-        URL[] urls = ((URLClassLoader)sysClassLoader).getURLs();
+        // Get the URLs
+        URL[] urls = ((URLClassLoader) sysClassLoader).getURLs();
 
-        for(int i=0; i< urls.length; i++) {
+        for (int i = 0; i < urls.length; i++) {
             LOG.debug(urls[i].getFile());
         }
     }
 
-
     protected void testCounts(int[] ec, RecordCounts rc) {
-        int i=0;
+        int i = 0;
         if (ec.length == 9) {
             Assert.assertEquals(rc.getCount(RecordCounts.TOTALS, RecordCounts.NEW_ACTIVE), ec[i++]);
             Assert.assertEquals(rc.getCount(RecordCounts.TOTALS, RecordCounts.NEW_DELETE), ec[i++]);
@@ -145,43 +144,43 @@ public class BaseTest {
     }
 
     protected Format getDCFormat() throws Exception {
-        return getFormat(new String[] {"oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"});
+        return getFormat(new String[] { "oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd" });
     }
 
     protected Format getDCTermsFormat() throws Exception {
-        return getFormat(new String[] {"dcterms", "http://dublincore.org/documents/dcmi-terms/", "http://dublincore.org/schemas/xmls/qdc/dcterms.xsd"});
+        return getFormat(new String[] { "dcterms", "http://dublincore.org/documents/dcmi-terms/", "http://dublincore.org/schemas/xmls/qdc/dcterms.xsd" });
     }
 
     protected Format getOaiMarcFormat() throws Exception {
-        return getFormat(new String[] {"oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc.xsd"});
+        return getFormat(new String[] { "oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc", "http://www.openarchives.org/OAI/1.1/oai_marc.xsd" });
     }
 
     protected Format getMarcXmlFormat() throws Exception {
-        return getFormat(new String[] {"marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
+        return getFormat(new String[] { "marcxml", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd" });
     }
 
     protected Format getMarc21Format() throws Exception {
-        return getFormat(new String[] {"marc21", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd"});
+        return getFormat(new String[] { "marc21", "http://www.loc.gov/MARC21/slim", "http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd" });
     }
 
     protected Format getFooBarFormat() throws Exception {
-        return getFormat(new String[] {"foobar", "foo:bar", "http://foo.com/bar"});
+        return getFormat(new String[] { "foobar", "foo:bar", "http://foo.com/bar" });
     }
 
     protected Format getRfc1807Format() throws Exception {
-        return getFormat(new String[] {"rfc1807", "http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1807.txt", "http://www.openarchives.org/OAI/1.1/rfc1807.xsd"});
+        return getFormat(new String[] { "rfc1807", "http://info.internet.isi.edu:80/in-notes/rfc/files/rfc1807.txt", "http://www.openarchives.org/OAI/1.1/rfc1807.xsd" });
     }
 
     protected Format getModsFormat() throws Exception {
-        return getFormat(new String[] {"mods", "http://www.loc.gov/mods/v3", "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"});
+        return getFormat(new String[] { "mods", "http://www.loc.gov/mods/v3", "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd" });
     }
 
     protected Format getHtmlFormat() throws Exception {
-        return getFormat(new String[] {"html", "http://www.w3.org/TR/REC-html40", "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"});
+        return getFormat(new String[] { "html", "http://www.w3.org/TR/REC-html40", "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd" });
     }
 
     protected Format getXCFormat() throws Exception {
-        return getFormat(new String[] {"xc", "http://www.extensiblecatalog.info/Elements", "http://www.extensiblecatalog.info/Elements"});
+        return getFormat(new String[] { "xc", "http://www.extensiblecatalog.info/Elements", "http://www.extensiblecatalog.info/Elements" });
     }
 
     protected Format getFormat(String[] arr) throws Exception {
@@ -198,103 +197,103 @@ public class BaseTest {
     }
 
     protected ProviderDAO getProviderDAO() {
-        return (ProviderDAO)getBean("ProviderDAO");
+        return (ProviderDAO) getBean("ProviderDAO");
     }
 
     public RepositoryService getRepositoryService() {
-        return (RepositoryService)getBean("RepositoryService");
+        return (RepositoryService) getBean("RepositoryService");
     }
 
     public JobService getJobService() {
-        return (JobService)getBean("JobService");
+        return (JobService) getBean("JobService");
     }
 
     public ServicesService getServicesService() {
-        return (ServicesService)getBean("ServicesService");
+        return (ServicesService) getBean("ServicesService");
     }
 
     protected RepositoryDAO getRepositoryDAO() {
-        return (RepositoryDAO)getBean("RepositoryDAO");
+        return (RepositoryDAO) getBean("RepositoryDAO");
     }
 
     protected RecordCountsDAO getRecordCountsDAO() {
-        return (RecordCountsDAO)getBean("RecordCountsDAO");
+        return (RecordCountsDAO) getBean("RecordCountsDAO");
     }
 
     protected ServiceDAO getServiceDAO() {
-        return (ServiceDAO)getBean("ServiceDAO");
+        return (ServiceDAO) getBean("ServiceDAO");
     }
 
     protected FormatDAO getFormatDAO() {
-        return (FormatDAO)getBean("FormatDAO");
+        return (FormatDAO) getBean("FormatDAO");
     }
 
     protected SetDAO getSetDAO() {
-        return (SetDAO)getBean("SetDAO");
+        return (SetDAO) getBean("SetDAO");
     }
 
     protected MessageDAO getMessageDAO() {
-        return (MessageDAO)getBean("MessageDAO");
+        return (MessageDAO) getBean("MessageDAO");
     }
 
     protected SetService getSetService() {
-        return (SetService)getBean("SetService");
+        return (SetService) getBean("SetService");
     }
 
     protected SolrIndexManager getSolrIndexManager() {
-        return (SolrIndexManager)getBean("SolrIndexManager");
+        return (SolrIndexManager) getBean("SolrIndexManager");
     }
 
     protected Util getUtil() {
-        return (Util)MSTConfiguration.getInstance().getBean("Util");
+        return (Util) MSTConfiguration.getInstance().getBean("Util");
     }
 
     protected RecordService getRecordService() {
-        return (RecordService)getBean("RecordService");
+        return (RecordService) getBean("RecordService");
     }
 
     protected ProviderService getProviderService() {
-        return (ProviderService)getBean("ProviderService");
+        return (ProviderService) getBean("ProviderService");
     }
 
     protected ScheduleService getScheduleService() {
-        return (ScheduleService)getBean("ScheduleService");
+        return (ScheduleService) getBean("ScheduleService");
     }
 
     protected FormatService getFormatService() {
-        return (FormatService)getBean("FormatService");
+        return (FormatService) getBean("FormatService");
     }
 
     protected UserService getUserService() {
-        return (UserService)getBean("UserService");
+        return (UserService) getBean("UserService");
     }
 
     protected ServerService getServerService() {
-        return (ServerService)getBean("ServerService");
+        return (ServerService) getBean("ServerService");
     }
 
     protected ValidateRepository getValidateRepository() {
-        return (ValidateRepository)getBean("ValidateRepository");
+        return (ValidateRepository) getBean("ValidateRepository");
     }
 
     protected HarvestScheduleDAO getHarvestScheduleDAO() {
-        return (HarvestScheduleDAO)getBean("HarvestScheduleDAO");
+        return (HarvestScheduleDAO) getBean("HarvestScheduleDAO");
     }
 
     protected HarvestDAO getHarvestDAO() {
-        return (HarvestDAO)getBean("HarvestDAO");
+        return (HarvestDAO) getBean("HarvestDAO");
     }
 
     protected ProcessingDirectiveDAO getProcessingDirectiveDAO() {
-        return (ProcessingDirectiveDAO)getBean("ProcessingDirectiveDAO");
+        return (ProcessingDirectiveDAO) getBean("ProcessingDirectiveDAO");
     }
 
     protected Scheduler getScheduler() {
-        return (Scheduler)getBean("Scheduler");
+        return (Scheduler) getBean("Scheduler");
     }
 
     protected JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate((DataSource)getBean("DataSource"));
+        return new JdbcTemplate((DataSource) getBean("DataSource"));
     }
 
     protected MSTConfiguration getConfig() {

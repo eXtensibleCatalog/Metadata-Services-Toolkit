@@ -2,7 +2,7 @@ package xc.mst.bo.record.marc;
 
 public class Subfield {
 
-    protected char code = (char)-1;
+    protected char code = (char) -1;
 
     protected String contents = null;
 

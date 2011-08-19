@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.manager.test;
 
@@ -27,12 +27,11 @@ import xc.mst.manager.repository.SetService;
 import xc.mst.manager.user.ServerService;
 import xc.mst.manager.user.UserService;
 
-
 /**
  * Test for schedule
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 @Test(groups = { "baseTests" }, enabled = true)
 public class ScheduleServiceTest extends BaseTest {
@@ -41,26 +40,24 @@ public class ScheduleServiceTest extends BaseTest {
         getScheduleService();
     }
 
- /**
-  * Test creating schedule
-  *
-  * @throws DataException
-  */
- public void addScheduleTest() throws DataException
- {
+    /**
+     * Test creating schedule
+     * 
+     * @throws DataException
+     */
+    public void addScheduleTest() throws DataException {
 
-        ProviderService providerService = (ProviderService)getBean("ProviderService");
+        ProviderService providerService = (ProviderService) getBean("ProviderService");
 
-        ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
+        ScheduleService scheduleService = (ScheduleService) getBean("ScheduleService");
 
-        FormatService formatService = (FormatService)getBean("FormatService");
+        FormatService formatService = (FormatService) getBean("FormatService");
 
-        SetService setService = (SetService)getBean("SetService");
+        SetService setService = (SetService) getBean("SetService");
 
-        UserService userService = (UserService)getBean("UserService");
-  try
-        {
-              ServerService serverService = (ServerService)getBean("ServerService");
+        UserService userService = (UserService) getBean("UserService");
+        try {
+            ServerService serverService = (ServerService) getBean("ServerService");
 
             Provider provider = new Provider();
 
@@ -81,7 +78,6 @@ public class ScheduleServiceTest extends BaseTest {
             set.setSetSpec("setSpec");
             setService.insertSet(set);
 
-
             HarvestSchedule schedule = new HarvestSchedule();
             schedule.setScheduleName("scheduleName");
             schedule.setDayOfWeek(1);
@@ -101,14 +97,14 @@ public class ScheduleServiceTest extends BaseTest {
             HarvestSchedule scheduleCopy = scheduleService.getScheduleById(schedule.getId());
             assert scheduleCopy.getScheduleName().equals(schedule.getScheduleName()) : "Name should be scheduleName";
             assert scheduleCopy.getDayOfWeek() == schedule.getDayOfWeek() : "Day of week should be 1";
-            assert scheduleCopy.getEndDate() != null: "End date does not match";
+            assert scheduleCopy.getEndDate() != null : "End date does not match";
             assert scheduleCopy.getFormats().get(0).equals(format) : "Format does not match";
             assert scheduleCopy.getSets().get(0).equals(set) : "Set does not match";
             assert scheduleCopy.getHour() == schedule.getHour() : "Hour should be 5";
             assert scheduleCopy.getId() == schedule.getId() : "Id should be 111";
             assert scheduleCopy.getMinute() == schedule.getMinute() : "Minute should be 5";
             assert scheduleCopy.getNotifyEmail().equals(schedule.getNotifyEmail()) : "Email should be email@yahoo.com";
-            assert scheduleCopy.getProvider().getId()== provider.getId() : "Provider should be same" ;
+            assert scheduleCopy.getProvider().getId() == provider.getId() : "Provider should be same";
             assert scheduleCopy.getStartDate() != null : "Start date does not match";
             assert scheduleCopy.getRecurrence().equals(schedule.getRecurrence()) : "Recurrence should be Daily";
 
@@ -116,11 +112,9 @@ public class ScheduleServiceTest extends BaseTest {
             providerService.deleteProvider(provider);
             formatService.deleteFormat(format);
             setService.deleteSet(set);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
- }
+    }
 
 }

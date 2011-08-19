@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.record;
 
@@ -56,14 +56,14 @@ public class RecordDAO extends BaseDAO {
             }
             if (recordsInsertXmlPS == null) {
                 String sql =
-                    "insert into records_xml (xml) values (?)";
+                        "insert into records_xml (xml) values (?)";
                 recordsInsertXmlPS = conn.prepareStatement(sql);
             }
 
             if (recordsInsertPS == null) {
                 String sql =
-                    "insert into records (service_id, identifier_full, identifier_1, identifier_2, datestamp, setSpec) "+
-                        " values (?, ?, ?, ?, current_timestamp, null)";
+                        "insert into records (service_id, identifier_full, identifier_1, identifier_2, datestamp, setSpec) " +
+                                " values (?, ?, ?, ?, current_timestamp, null)";
                 recordsInsertPS = conn.prepareStatement(sql);
             }
 
@@ -76,7 +76,7 @@ public class RecordDAO extends BaseDAO {
             try {
                 serviceId = record.getService().getId();
             } catch (Throwable t) {
-                //do nothing
+                // do nothing
             }
             recordsInsertPS.setInt(i++, serviceId);
 
@@ -96,7 +96,7 @@ public class RecordDAO extends BaseDAO {
                     recordsInsertPS.setString(i++, record.getOaiIdentifier());
                 } else {
                     recordsInsertPS.setString(i++, null);
-                    TimingLogger.log("record.getOaiIdentifier(): "+record.getOaiIdentifier());
+                    TimingLogger.log("record.getOaiIdentifier(): " + record.getOaiIdentifier());
                 }
                 recordsInsertPS.setString(i++, null);
                 recordsInsertPS.setString(i++, null);
@@ -176,17 +176,17 @@ public class RecordDAO extends BaseDAO {
 
                 if (shouldUpdate) {
                     PreparedStatement ps1 = conn.prepareStatement(
-                        "update records set process_complete = 'Y' "+
-                        "where service_id = "+oldServiceId+" "+
-                        "and process_complete = 'N' "+
-                        "limit "+readsAtOnce
-                    );
+                            "update records set process_complete = 'Y' " +
+                                    "where service_id = " + oldServiceId + " " +
+                                    "and process_complete = 'N' " +
+                                    "limit " + readsAtOnce
+                            );
                     TimingLogger.start("DBRecordDao.commit.updateLimit");
                     ps1.executeUpdate();
                     TimingLogger.stop("DBRecordDao.commit.updateLimit");
                     shouldUpdate = false;
                 }
-                if (recordsUpdatePS != null ) {
+                if (recordsUpdatePS != null) {
                     TimingLogger.start("DBRecordDao.commit.updateRecord");
                     recordsUpdatePS.executeBatch();
                     TimingLogger.stop("DBRecordDao.commit.updateRecord");
@@ -214,21 +214,21 @@ public class RecordDAO extends BaseDAO {
             previousServiceId = 99;
         }
         String sql =
-            "select rx.xml, r.id, r.identifier_1, r.identifier_2, r.datestamp, r.setSpec " +
-            "from records r, records_xml rx  "+
-            "where r.id = rx.id "+
-            "and r.service_id = "+previousServiceId+" "+
-            "and process_complete = 'N' "+
-            "limit "+readsAtOnce;
-            //"limit "+offset+","+readsAtOnce;
+                "select rx.xml, r.id, r.identifier_1, r.identifier_2, r.datestamp, r.setSpec " +
+                        "from records r, records_xml rx  " +
+                        "where r.id = rx.id " +
+                        "and r.service_id = " + previousServiceId + " " +
+                        "and process_complete = 'N' " +
+                        "limit " + readsAtOnce;
+        // "limit "+offset+","+readsAtOnce;
 
-        TimingLogger.log("sql: "+sql);
+        TimingLogger.log("sql: " + sql);
         Connection conn = null;
         try {
             conn = MySqlConnectionManager.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            //ps.setInt(1, serviceId);
+            // ps.setInt(1, serviceId);
 
             TimingLogger.start("DBRecordDao ps.executeQuery");
             TimingLogger.start("DBRecordDao create List");
@@ -239,7 +239,7 @@ public class RecordDAO extends BaseDAO {
                 r.setOaiXml(rs.getString("rx.xml"));
                 String id1 = rs.getString("r.identifier_1");
                 String id2 = rs.getString("r.identifier_2");
-                String id = "oai:library.rochester.edu:"+id1+":"+id2;
+                String id = "oai:library.rochester.edu:" + id1 + ":" + id2;
                 r.setId(rs.getLong("r.id"));
                 r.setUpdatedAt(rs.getDate("r.datestamp"));
 

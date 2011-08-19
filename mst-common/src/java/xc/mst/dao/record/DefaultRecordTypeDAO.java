@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.record;
 
@@ -22,7 +22,7 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * MySQL implementation of the Data Access Object for the record type table
- *
+ * 
  * @author Vinaykumar Bangera
  */
 
@@ -88,16 +88,14 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
      */
     private static Object psDeleteLock = new Object();
 
-
     @Override
     public List<RecordType> getAll() throws DatabaseConfigException {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all resumption tokens");
 
             // The ResultSet from the SQL query
@@ -106,11 +104,9 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
             // The list of all resumption tokens
             List<RecordType> recordTypes = new ArrayList<RecordType>();
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get all resumption tokens was not defined, create it
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_ID + ", " +
                                                    COL_NAME + ", " +
@@ -118,7 +114,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                                        "FROM " + RECORD_TYPES_TABLE_NAME +
                                        " ORDER BY " + COL_PROCESSING_ORDER;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all record types\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -132,8 +128,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // For each result returned, add a ResumptionToken object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the resumption token
                     RecordType recordType = new RecordType();
 
@@ -146,23 +141,20 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                     recordTypes.add(recordType);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + recordTypes.size() + " resumption tokens in the database.");
 
                 return recordTypes;
             } // end try(get the records
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the resumption tokens.", e);
 
                 return recordTypes;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed in getAll() method of RecordTypeDAO ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -171,24 +163,20 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
     @Override
     public RecordType getById(long id) throws DatabaseConfigException {
 
-
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the resumption token with ID " + id);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a resumption token by ID was not defined, create it
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_ID + ", " +
                                         COL_NAME + ", " +
@@ -196,7 +184,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                                         "FROM " + RECORD_TYPES_TABLE_NAME +
                                        "WHERE " + COL_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get resumption token by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -208,13 +196,11 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
                 psGetById.setLong(1, id);
 
-
                 // Execute the query
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the resumption token
                     RecordType recordType = new RecordType();
 
@@ -223,30 +209,27 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                     recordType.setName(results.getString(2));
                     recordType.setProcessingOrder(results.getInt(3));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the resumption token with ID " + id + " in the database.");
 
                     // Return the resumption token
                     return recordType;
                 } // end if(result found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("The resumption token with ID " + id + " was not found in the database.");
 
                 return null;
             } // end try(get the resumption token)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the resumption token with ID " + id, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getById(id);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -254,23 +237,20 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
     @Override
     public RecordType getByPorcessingOrder(int processingOrder) throws DatabaseConfigException {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByProcessingOrderLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByProcessingOrderLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the record type with processing Order " + processingOrder);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get a resumption token by token was not defined, create it
-                if(psGetByProcessingOrder == null || dbConnectionManager.isClosed(psGetByProcessingOrder))
-                {
+                if (psGetByProcessingOrder == null || dbConnectionManager.isClosed(psGetByProcessingOrder)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_ID + ", " +
                                         COL_NAME + ", " +
@@ -278,7 +258,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                                         "FROM " + RECORD_TYPES_TABLE_NAME +
                                         "WHERE " + COL_PROCESSING_ORDER + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get resumption token by toeken\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -295,8 +275,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                 results = dbConnectionManager.executeQuery(psGetByProcessingOrder);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the resumption token
                     RecordType recordType = new RecordType();
 
@@ -305,30 +284,27 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                     recordType.setName(results.getString(2));
                     recordType.setProcessingOrder(results.getInt(3));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the resumption token with token " + processingOrder + " in the database.");
 
                     // Return the resumption token
                     return recordType;
                 } // end if(result found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("The resumption token with token " + processingOrder + " was not found in the database.");
 
                 return null;
             } // end try(get the resumption token)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the resumption token with token " + processingOrder, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed in getByPorcessingOrder() method of RecordTypeDAO.");
                 return getByPorcessingOrder(processingOrder);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -336,28 +312,25 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
     @Override
     public boolean insert(RecordType recordType) throws DataException {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new resumption token with name " + recordType.getName());
 
             // The ResultSet returned by the query
             ResultSet rs = null;
-            try
-            {
+            try {
                 // If the PreparedStatement to insert a resumption token was not defined, create it
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + RECORD_TYPES_TABLE_NAME + " (" + COL_NAME + ", " +
                                                                                         COL_PROCESSING_ORDER + ") " +
                                                                                         "VALUES (?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert resumption token\" PreparedStatement from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -370,8 +343,7 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                 psInsert.setInt(2, recordType.getProcessingOrder());
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated resource identifier ID and set it correctly on this ResumptionToken Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -383,18 +355,15 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
                 return false;
             } // end try(insert the resumption token)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new resumption token with offset " + recordType.getName(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(recordType);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -402,27 +371,23 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
     @Override
     public boolean update(RecordType recordType) throws DataException {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the resumption token with ID " + recordType.getName());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to update a resumption token was not defined, create it
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + RECORD_TYPES_TABLE_NAME + " SET " + COL_NAME + "=?, " +
                                                                           COL_PROCESSING_ORDER + "=? " +
                                        "WHERE " + COL_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update resumption token\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -438,13 +403,12 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psUpdate) > 0;
             } // end try(update the record)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the resumption token with ID " + recordType.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(recordType);
             }
@@ -453,25 +417,22 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
 
     @Override
     public boolean delete(RecordType recordType) throws DataException {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the resumption token with ID " + recordType.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete a resumption token was not defined, create it
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
-                    String deleteSql = "DELETE FROM "+ RECORD_TYPES_TABLE_NAME + " " +
+                    String deleteSql = "DELETE FROM " + RECORD_TYPES_TABLE_NAME + " " +
                                        "WHERE " + COL_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete resumption token\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -485,13 +446,12 @@ public class DefaultRecordTypeDAO extends RecordTypeDAO {
                 // Execute the delete statement and return the result
                 return dbConnectionManager.execute(psDelete);
             } // end try(delete the record)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the resumption token with ID " + recordType.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(recordType);
             }

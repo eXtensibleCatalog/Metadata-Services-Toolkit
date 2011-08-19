@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.service;
 
@@ -19,11 +19,10 @@ import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Utility class for manipulating the formats a service can accept as output
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class ServiceOutputFormatUtilDAO extends BaseDAO
-{
+public abstract class ServiceOutputFormatUtilDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -52,9 +51,11 @@ public abstract class ServiceOutputFormatUtilDAO extends BaseDAO
     /**
      * Inserts a row in the database showing that a service can output
      * a format.
-     *
-     * @param serviceId The ID of the service which can output the format
-     * @param outputFormatId The ID of the format the service can output
+     * 
+     * @param serviceId
+     *            The ID of the service which can output the format
+     * @param outputFormatId
+     *            The ID of the format the service can output
      * @return True on success, false on failure
      */
     public abstract boolean insert(int serviceId, int formatId);
@@ -62,25 +63,29 @@ public abstract class ServiceOutputFormatUtilDAO extends BaseDAO
     /**
      * Deletes the row in the database showing that a service can output
      * a format.
-     *
-     * @param serviceId The service to remove from the output format
-     * @param outputFormatId The output format to remove the service from
+     * 
+     * @param serviceId
+     *            The service to remove from the output format
+     * @param outputFormatId
+     *            The output format to remove the service from
      * @return True on success, false on failure
      */
     public abstract boolean delete(int serviceId, int formatId);
 
     /**
      * Gets all formats which a service can output
-     *
-     * @param serviceId The ID of the service whose output formats should be returned
+     * 
+     * @param serviceId
+     *            The ID of the service whose output formats should be returned
      * @return A list of format IDs for the formats the service can output
      */
     public abstract List<Integer> getOutputFormatsForService(int serviceId);
 
     /**
      * Deletes all output formats assignments for a service
-     *
-     * @param serviceId The ID of the service whose output format assignments should be removed
+     * 
+     * @param serviceId
+     *            The ID of the service whose output format assignments should be removed
      * @return True on success, false on failure
      */
     public abstract boolean deleteOutputFormatsForService(int serviceId);

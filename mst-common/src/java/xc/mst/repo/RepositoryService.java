@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.repo;
 
 import java.sql.Timestamp;
@@ -36,7 +36,7 @@ public class RepositoryService extends BaseService {
         try {
             List<Repository> repos = getRepositoryDAO().getAll();
             List<Repository> repos4real = new ArrayList<Repository>();
-            for (int i=0; i<repos.size(); i++) {
+            for (int i = 0; i < repos.size(); i++) {
                 Repository r = repos.get(i);
                 if (r.getService() != null) {
                     r = getServicesService().getServiceById(r.getService().getId()).getMetadataService().getRepository();
@@ -48,7 +48,7 @@ public class RepositoryService extends BaseService {
                         repos4real.add(r);
                 }
             }
-            LOG.debug("repos4real: "+repos4real);
+            LOG.debug("repos4real: " + repos4real);
             return repos4real;
         } catch (Throwable t) {
             util.throwIt(t);
@@ -70,7 +70,7 @@ public class RepositoryService extends BaseService {
     }
 
     public Repository getRepository(Provider p) {
-        Repository repo = (Repository)config.getBean("Repository");
+        Repository repo = (Repository) config.getBean("Repository");
         repo.setProvider(p);
         repo.setName(p.getName());
         return repo;
@@ -91,7 +91,7 @@ public class RepositoryService extends BaseService {
                         rec.setProvider(r.getProvider());
                         r.injectHarvestInfo(rec);
                     } else {
-                        LOG.error("neither service or provider set on r.getName(): "+r.getName());
+                        LOG.error("neither service or provider set on r.getName(): " + r.getName());
                     }
                     return rec;
                 }
@@ -111,18 +111,18 @@ public class RepositoryService extends BaseService {
     public void injectPredecessors(Record rec) {
         List<Long> preds = new ArrayList<Long>();
         for (Repository r : getAll()) {
-            LOG.debug("checking "+r.getName()+ " for preds of "+rec.getId());
+            LOG.debug("checking " + r.getName() + " for preds of " + rec.getId());
             List<Long> tempPreds = r.getPredecessorIds(rec);
             if (tempPreds != null) {
                 preds.addAll(tempPreds);
             }
         }
-        LOG.debug("preds: "+preds);
+        LOG.debug("preds: " + preds);
         for (Repository r : getAll()) {
             for (Long id : preds) {
                 Record pred = r.getRecord(id);
                 if (pred != null) {
-                    LOG.debug("pred: "+pred);
+                    LOG.debug("pred: " + pred);
                     rec.getPredecessors().add(pred);
                 }
             }
@@ -137,7 +137,7 @@ public class RepositoryService extends BaseService {
             } else if (provider.getId() != -1) {
                 update = true;
                 provider = getProviderService().getProviderById(provider.getId());
-                if(provider == null) {
+                if (provider == null) {
                     getUserService().sendEmailErrorReport();
                     return "Error occurred while editing repository. An email has been sent to the administrator.";
                 }
@@ -148,7 +148,7 @@ public class RepositoryService extends BaseService {
             provider.setOaiProviderUrl(repositoryURL);
 
             boolean urlChanged = false;
-            if(update && provider.getOaiProviderUrl().equalsIgnoreCase(repositoryURL)) {
+            if (update && provider.getOaiProviderUrl().equalsIgnoreCase(repositoryURL)) {
                 urlChanged = false;
             } else {
                 urlChanged = true;
@@ -158,10 +158,10 @@ public class RepositoryService extends BaseService {
             Provider repositorySameURL = getProviderService().getProviderByURL(repositoryURL);
 
             if (repositorySameName != null && repositorySameName.getId() != provider.getId()) {
-                return "Repository with Name '"+repositoryName+"' already exists";
+                return "Repository with Name '" + repositoryName + "' already exists";
             }
-            if (repositorySameURL != null && repositorySameURL.getId()!=provider.getId()) {
-                return "Repository with URL '"+repositoryURL+"' already exists";
+            if (repositorySameURL != null && repositorySameURL.getId() != provider.getId()) {
+                return "Repository with URL '" + repositoryURL + "' already exists";
             }
 
             Pattern p = Pattern.compile("[^A-Za-z0-9_ ]");
@@ -176,12 +176,12 @@ public class RepositoryService extends BaseService {
                 return "Repository name must be 25 characters or less";
             }
 
-            provider.setUpdatedAt( new Timestamp(new Date().getTime()));
+            provider.setUpdatedAt(new Timestamp(new Date().getTime()));
             if (!update) {
                 provider.setCreatedAt(new Date());
                 getProviderService().insertProvider(provider);
             } else {
-                if (urlChanged) { //perform revalidation because repository URL has been changed
+                if (urlChanged) { // perform revalidation because repository URL has been changed
                     provider.setIdentify(false);
                     provider.setListFormats(false);
                     provider.setListSets(false);
@@ -192,7 +192,7 @@ public class RepositoryService extends BaseService {
             }
             if (!update || urlChanged) {
                 provider.setLastValidationDate(new Date());
-                ValidateRepository vr = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+                ValidateRepository vr = (ValidateRepository) MSTConfiguration.getInstance().getBean("ValidateRepository");
                 try {
                     vr.validate(provider.getId());
                 } catch (Throwable t) {
@@ -200,15 +200,15 @@ public class RepositoryService extends BaseService {
                 }
             }
             return null;
-        } catch(DataException e) {
-            LOG.error(e.getMessage(),e);
+        } catch (DataException e) {
+            LOG.error(e.getMessage(), e);
             return "Unable to access the database to get Repository information. There may be problem with database configuration.";
         }
     }
 
     public List<String[]> getIncomingHarvestRecords() {
         List<String[]> table = new ArrayList<String[]>();
-        table.add(new String[] {"harvest_name-set", "active records", "updates", "deleted records"});
+        table.add(new String[] { "harvest_name-set", "active records", "updates", "deleted records" });
         List<Repository> repos = getAll();
         for (Repository repo : repos) {
             if (repo.ready4harvest() && repo.getProvider() != null) {
@@ -222,7 +222,7 @@ public class RepositoryService extends BaseService {
                         int idx0 = dbRow[0].indexOf("-");
                         String key = repo.getName();
                         if (idx0 > -1) {
-                            key = dbRow[0].substring(idx0+1);
+                            key = dbRow[0].substring(idx0 + 1);
                         }
                         String[] displayRow = displayRows.get(key);
                         if (displayRow == null) {
@@ -249,7 +249,7 @@ public class RepositoryService extends BaseService {
 
     public List<String[]> getIncomingServiceRecords() {
         List<String[]> table = new ArrayList<String[]>();
-        table.add(new String[] {"service_name-type", "active records", "updates", "deleted records", "unknown errors"});
+        table.add(new String[] { "service_name-type", "active records", "updates", "deleted records", "unknown errors" });
         List<Repository> repos = getAll();
         for (Repository repo : repos) {
             if (repo.ready4harvest() && repo.getService() != null) {
@@ -263,13 +263,13 @@ public class RepositoryService extends BaseService {
                         int idx0 = dbRow[0].indexOf("-");
                         String key = "";
                         if (idx0 > -1) {
-                            key = dbRow[0].substring(idx0+1);
+                            key = dbRow[0].substring(idx0 + 1);
                         }
                         String[] displayRow = displayRows.get(key);
                         if (displayRow == null) {
                             displayRow = new String[5];
                             if (!key.equals("")) {
-                                displayRow[0] = repo.getName()+"-"+key;
+                                displayRow[0] = repo.getName() + "-" + key;
                             } else {
                                 displayRow[0] = repo.getName();
                             }
@@ -296,7 +296,7 @@ public class RepositoryService extends BaseService {
 
     public List<String[]> getOutgoingServiceRecords() {
         List<String[]> table = new ArrayList<String[]>();
-        table.add(new String[] {"service_name-type", "active records", "updates", "deleted records"});
+        table.add(new String[] { "service_name-type", "active records", "updates", "deleted records" });
         List<Repository> repos = getAll();
         for (Repository repo : repos) {
             if (repo.ready4harvest() && repo.getService() != null) {
@@ -310,13 +310,13 @@ public class RepositoryService extends BaseService {
                         int idx0 = dbRow[0].indexOf("-");
                         String key = "";
                         if (idx0 > -1) {
-                            key = dbRow[0].substring(idx0+1);
+                            key = dbRow[0].substring(idx0 + 1);
                         }
                         String[] displayRow = displayRows.get(key);
                         if (displayRow == null) {
                             displayRow = new String[4];
                             if (!key.equals("")) {
-                                displayRow[0] = repo.getName()+"-"+key;
+                                displayRow[0] = repo.getName() + "-" + key;
                             } else {
                                 displayRow[0] = repo.getName();
                             }

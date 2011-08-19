@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils;
 
@@ -38,7 +38,7 @@ public class SetupClasspath {
 
             // BDA: install.properties doesn't really work and env.properties is only for development purposes
             for (String fStr : new String[] {
-                    "install.properties", "env.properties"}) {
+                    "install.properties", "env.properties" }) {
                 if (rootDir == null) {
                     try {
                         InputStream reader = SetupClasspath.class.getClassLoader().getResourceAsStream(fStr);
@@ -70,25 +70,24 @@ public class SetupClasspath {
                 rootDir += "/";
             }
             MSTConfiguration.rootDir = rootDir;
-            System.out.println("rootDir: "+rootDir);
+            System.out.println("rootDir: " + rootDir);
             String fileProto = "file:";
             if (!rootDir.startsWith("/")) {
-                fileProto = fileProto+"/";
+                fileProto = fileProto + "/";
             }
-            String url = fileProto+rootDir+"MST-instances/"+dir+"/";
+            String url = fileProto + rootDir + "MST-instances/" + dir + "/";
             url = url.replaceAll("\\\\", "/");
-            System.out.println("url: "+url);
+            System.out.println("url: " + url);
             addURL(new URL(url));
 
             System.setProperty("mst.root.dir", rootDir);
             System.setProperty("mst.instance.dir", dir);
 
-            PropertyConfigurator.configure(rootDir+"MST-instances/"+dir+"/log4j.config.txt");
+            PropertyConfigurator.configure(rootDir + "MST-instances/" + dir + "/log4j.config.txt");
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
     }
-
 
     @SuppressWarnings("unchecked")
     public static void addURL(URL u) {
@@ -97,13 +96,13 @@ public class SetupClasspath {
         Class sysclass = URLClassLoader.class;
 
         for (URL u2 : sysloader.getURLs()) {
-            //System.out.println("u: "+u2);
+            // System.out.println("u: "+u2);
         }
 
         try {
-            Method method = sysclass.getDeclaredMethod("addURL",  new Class[]{URL.class});
+            Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
             method.setAccessible(true);
-            method.invoke(sysloader, new Object[]{u});
+            method.invoke(sysloader, new Object[] { u });
         } catch (Throwable t) {
             t.printStackTrace();
             throw new RuntimeException("Error, could not add URL to system classloader");

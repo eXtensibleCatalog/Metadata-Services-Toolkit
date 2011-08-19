@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.services;
 
@@ -24,20 +24,19 @@ import xc.mst.dao.service.ServiceDAO;
 
 /**
  * This action is used to display all the services that are part of the MST
- *
+ * 
  * @author Tejaswi Haramurali
  */
 
-public class ListServices extends BaseActionSupport implements ServletRequestAware
-{
+public class ListServices extends BaseActionSupport implements ServletRequestAware {
 
     /** Serial id */
     private static final long serialVersionUID = 5867719363631588555L;
 
-    /** Determines whether the rows are to be sorted in ascending or descending order*/
+    /** Determines whether the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder = true;
 
-    /** The coumn on which the rows are sorted*/
+    /** The coumn on which the rows are sorted */
     private String columnSorted = "ServiceName";
 
     /** The list of services that are part of the MST */
@@ -57,33 +56,26 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
 
     /**
      * Overrides default implementation to list all services
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
-           baseURL = "http://" + servletRequest.getServerName() + ":" +  servletRequest.getServerPort() + servletRequest.getContextPath() + "/pub/" + "SERVICE_NAME" + "/oaiRepository";
-           if(columnSorted.equalsIgnoreCase("ServiceName"))
-            {
-                    ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
-            }
-            else
-            {
-               ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
+    public String execute() {
+        try {
+            baseURL = "http://" + servletRequest.getServerName() + ":" + servletRequest.getServerPort() + servletRequest.getContextPath() + "/pub/" + "SERVICE_NAME" + "/oaiRepository";
+            if (columnSorted.equalsIgnoreCase("ServiceName")) {
+                ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
+            } else {
+                ServicesList = getServicesService().getAllServicesSorted(isAscendingOrder, ServiceDAO.COL_SERVICE_NAME);
             }
             setServices(ServicesList);
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
             return SUCCESS;
 
-        }
-        catch(DatabaseConfigException dce)
-        {
+        } catch (DatabaseConfigException dce) {
             errorType = "error";
-            log.error(dce.getMessage(),dce);
+            log.error(dce.getMessage(), dce);
             this.addFieldError("listServicesError", "Unable to connect to the database. Database configuration may be incorrect");
             return INPUT;
         }
@@ -92,87 +84,82 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
 
     /**
      * Sets the List of services that are part of the MST
-     *
-     * @param ServicesList list of services
+     * 
+     * @param ServicesList
+     *            list of services
      */
-    public void setServices(List<Service> ServicesList)
-    {
+    public void setServices(List<Service> ServicesList) {
         this.ServicesList = ServicesList;
     }
 
     /**
      * Returns the list of services that are part of the MST
-     *
+     * 
      * @return list of services
      */
-    public List<Service> getServices()
-    {
+    public List<Service> getServices() {
         return ServicesList;
     }
 
-     /**
+    /**
      * Sets the boolean value which determines if the rows are to be sorted in ascending order
-     *
+     * 
      * @param isAscendingOrder
      */
-    public void setIsAscendingOrder(boolean isAscendingOrder)
-    {
+    public void setIsAscendingOrder(boolean isAscendingOrder) {
         this.isAscendingOrder = isAscendingOrder;
     }
 
     /**
      * Gets the boolean value which determines if the rows are to be sorted in ascending order
-     *
+     * 
      * @param isAscendingOrder
      */
-    public boolean getIsAscendingOrder()
-    {
+    public boolean getIsAscendingOrder() {
         return this.isAscendingOrder;
     }
 
     /**
      * Sets the name of the column on which the sorting should be performed
-     *
-     * @param columnSorted name of the column
+     * 
+     * @param columnSorted
+     *            name of the column
      */
-    public void setColumnSorted(String columnSorted)
-    {
+    public void setColumnSorted(String columnSorted) {
         this.columnSorted = columnSorted;
     }
 
     /**
      * Returns the name of the column on which sorting should be performed
-     *
+     * 
      * @return column name
      */
-    public String getColumnSorted()
-    {
+    public String getColumnSorted() {
         return this.columnSorted;
     }
 
     /**
      * Sets the base URL
-     *
-     * @param Base URL
+     * 
+     * @param Base
+     *            URL
      */
-    public void setBaseURL(String baseURL)
-    {
+    public void setBaseURL(String baseURL) {
         this.baseURL = baseURL;
     }
 
     /**
      * Returns base URL
-     *
+     * 
      * @return base URL
      */
-    public String getBaseURL()
-    {
+    public String getBaseURL() {
         return this.baseURL;
     }
 
     /**
      * Returns error type
-      *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -181,8 +168,9 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
 
     /**
      * Sets error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;

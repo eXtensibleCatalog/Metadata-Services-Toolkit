@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.bo.record;
 
@@ -14,11 +14,10 @@ import java.util.List;
 
 /**
  * Represents a record in the "Work" bucket used by the Aggregation Service
- *
+ * 
  * @author Eric Osisek
  */
-public class Work extends Record
-{
+public class Work extends Record {
     /**
      * The type of indexed Object this is
      */
@@ -35,102 +34,101 @@ public class Work extends Record
     public final static String TRAIT_IDENTIFIER_FOR_THE_WORK = "identifierForTheWork";
 
     /**
-     * Get's the indexed object type of this class.  This is used to differentiate between
+     * Get's the indexed object type of this class. This is used to differentiate between
      * different types of objects stored in the index.
-     *
+     * 
      * @return The type of indexed object for this Object
      */
-    public String getType()
-    {
+    public String getType() {
         return Work.indexedObjectType;
     } // end method getIndexedObjectType()
 
     /**
      * Gets whether or not the work has been processed
-     *
+     * 
      * @return True if the work has been processed, false otherwise
      */
-    public boolean getProcessed()
-    {
+    public boolean getProcessed() {
         return processed;
     } // end method getProcessed()
 
     /**
      * Sets whether or not the work has been processed
-     *
-     * @param processed True if the work has been processed, false otherwise
+     * 
+     * @param processed
+     *            True if the work has been processed, false otherwise
      */
-    public void setProcessed(boolean processed)
-    {
+    public void setProcessed(boolean processed) {
         this.processed = processed;
     } // end method setProcessed(boolean)
 
     /**
      * Adds an identifierForTheWork trait to the work
-     *
-     * @param type The type attribute of the identifierForTheWork element
-     * @param value The value of the identifierForTheWork element
+     * 
+     * @param type
+     *            The type attribute of the identifierForTheWork element
+     * @param value
+     *            The value of the identifierForTheWork element
      */
-    public void addIdentifierForTheWork(String type, String value)
-    {
+    public void addIdentifierForTheWork(String type, String value) {
         addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
     } // end method addIdentifierForTheWork(String, String)
 
     /**
      * Adds an identifierForTheWork trait to the work
-     *
-     * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
+     * 
+     * @param identifierForTheWork
+     *            The identifierForTheWork element in the format (<type>)<value>
      */
-    public void addIdentifierForTheWork(String identifierForTheWork)
-    {
+    public void addIdentifierForTheWork(String identifierForTheWork) {
         addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
     } // end method addIdentifierForTheWork(String)
 
     /**
      * Removes an identifierForTheWork trait from the work
-     *
-     * @param type The type attribute of the identifierForTheWork element
-     * @param value The value of the identifierForTheWork element
+     * 
+     * @param type
+     *            The type attribute of the identifierForTheWork element
+     * @param value
+     *            The value of the identifierForTheWork element
      */
-    public void removeIdentifierForTheWork(String type, String value)
-    {
+    public void removeIdentifierForTheWork(String type, String value) {
         removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
     } // end method removeIdentifierForTheWork(String, String)
 
     /**
      * Removes an identifierForTheWork trait from the work
-     *
-     * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
+     * 
+     * @param identifierForTheWork
+     *            The identifierForTheWork element in the format (<type>)<value>
      */
-    public void removeIdentifierForTheWork(String identifierForTheWork)
-    {
+    public void removeIdentifierForTheWork(String identifierForTheWork) {
         removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
     } // end method removeIdentifierForTheWork(String)
 
     /**
      * Gets a list of xc:identifierForTheWork traits on the work
-     *
+     * 
      * @returns A list of xc:identifierForTheWork elements for this work
      */
-    public List<String> getIdentifierForTheWorks()
-    {
+    public List<String> getIdentifierForTheWorks() {
         List<String> results = new ArrayList<String>();
 
-        for(String trait : getTraits())
-            if(trait.startsWith(TRAIT_IDENTIFIER_FOR_THE_WORK))
-                results.add(trait.substring(trait.indexOf(':')+1));
+        for (String trait : getTraits())
+            if (trait.startsWith(TRAIT_IDENTIFIER_FOR_THE_WORK))
+                results.add(trait.substring(trait.indexOf(':') + 1));
 
         return results;
     } // end method getIdentifierForTheWorks()
 
     /**
      * Builds a Work with the same fields as the passed Record
-     *
-     * @param record The Record to copy
+     * 
+     * @param record
+     *            The Record to copy
      * @return A work with the same fields as the passed Record
      */
-    public static Work buildWorkFromRecord(Record record)
-    {
+    public static Work buildWorkFromRecord(Record record) {
         Work work = new Work();
 
         work.setCreatedAt(record.getCreatedAt());

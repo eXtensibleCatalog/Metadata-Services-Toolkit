@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.browse;
 
@@ -44,9 +44,9 @@ import xc.mst.utils.XmlHelper;
 
 /**
  * Browse records
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class BrowseRecords extends Pager implements ServletResponseAware {
 
@@ -75,7 +75,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     private String selectedFacetNames = "";
 
     /** Facet values separated by | */
-    private String selectedFacetValues ="";
+    private String selectedFacetValues = "";
 
     /** Search text entered by user */
     private String query = "";
@@ -127,32 +127,32 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     }
 
     protected void addFilterQuery(SolrQuery solrQuery, String name, String value) {
-        RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
+        RepositoryService repositoryService = (RepositoryService) MSTConfiguration.getInstance().getBean("RepositoryService");
         if ("successor".equals(name) || "processed_from".equals(name)) {
             Record r = repositoryService.getRecord(Long.parseLong(value));
             List<Record> records = new ArrayList<Record>();
             if ("successor".equals(name)) {
-                List<InputRecord> irs = ((Record)r).getPredecessors();
+                List<InputRecord> irs = ((Record) r).getPredecessors();
                 if (irs != null) {
                     for (InputRecord ir : irs) {
-                        records.add((Record)ir);
+                        records.add((Record) ir);
                     }
                 }
             } else {
-                List<OutputRecord> ors = ((Record)r).getSuccessors();
+                List<OutputRecord> ors = ((Record) r).getSuccessors();
                 if (ors != null) {
                     for (OutputRecord or : ors) {
-                        records.add((Record)or);
+                        records.add((Record) or);
                     }
                 }
             }
-            name="record_id";
+            name = "record_id";
             StringBuilder sb = new StringBuilder();
-            for (int i=0; i<records.size(); i++) {
+            for (int i = 0; i < records.size(); i++) {
                 Record r2 = records.get(i);
                 sb.append("record_id:");
-                sb.append(r2.getId()+"");
-                if (i < records.size()-1) {
+                sb.append(r2.getId() + "");
+                if (i < records.size() - 1) {
                     sb.append(" OR ");
                 }
             }
@@ -166,9 +166,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
      * Search for records
      */
     public String browse() {
-        RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
-        if (log.isDebugEnabled()){
-            log.debug("User entered query::"+query);
+        RecordService recordService = (RecordService) MSTConfiguration.getInstance().getBean("RecordService");
+        if (log.isDebugEnabled()) {
+            log.debug("User entered query::" + query);
         }
         try {
             SolrQuery solrQuery = new SolrQuery();
@@ -176,9 +176,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             // If Query is empty retrieve all records
             if ((query == null) || (query.equals(""))) {
                 solrQuery.setQuery("*:*");
-            }	else {
+            } else {
                 if (searchXML) {
-                    solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + RecordService.FIELD_ALL+":" + query.replaceAll(":", "\\\\:"));
+                    solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + RecordService.FIELD_ALL + ":" + query.replaceAll(":", "\\\\:"));
                 } else {
                     solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
                 }
@@ -201,17 +201,15 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 selectedFacetValues = selectedFacetValues + "|" + addFacetValue;
             }
 
-
-
             // Remove selected facet from query
             if (removeFacetName != null && removeFacetName.length() > 0) {
                 solrQuery.removeFilterQuery(removeFacetName + ":\"" + removeFacetValue.replaceAll(":", "\\\\:") + "\"");
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("Query after adding/removing facet ::"+query);
-                log.debug("After Adding facet names ::"+selectedFacetNames);
-                log.debug("After Adding facet values ::"+selectedFacetValues);
+                log.debug("Query after adding/removing facet ::" + query);
+                log.debug("After Adding facet names ::" + selectedFacetNames);
+                log.debug("After Adding facet values ::" + selectedFacetValues);
             }
             // Create facet names and values List
             StringTokenizer facetNameTokenizer = new StringTokenizer(selectedFacetNames, "|");
@@ -219,7 +217,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
             StringTokenizer facetValueTokenizer = new StringTokenizer(selectedFacetValues, "|");
             List<String> facetValuesList = new ArrayList<String>();
-
 
             StringBuffer newSelectedFacetNames = new StringBuffer();
             StringBuffer newSelectedFacetValues = new StringBuffer();
@@ -230,7 +227,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 myValueToken = facetValueTokenizer.nextToken();
                 if (removeFacetName != null && removeFacetName.length() > 0) {
                     // Create facet names String separated by |
-                    if (!(removeFacetName.equalsIgnoreCase(myNameToken) &&  removeFacetValue.equalsIgnoreCase(myValueToken))) {
+                    if (!(removeFacetName.equalsIgnoreCase(myNameToken) && removeFacetValue.equalsIgnoreCase(myValueToken))) {
                         newSelectedFacetNames.append("|");
                         newSelectedFacetNames.append(myNameToken);
                         facetNamesList.add(myNameToken);
@@ -251,8 +248,8 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("After removing facet names(final):"+selectedFacetNames);
-                log.debug("After removing facet values(final):"+selectedFacetValues);
+                log.debug("After removing facet names(final):" + selectedFacetNames);
+                log.debug("After removing facet values(final):" + selectedFacetValues);
             }
 
             // Query formation
@@ -294,34 +291,33 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 solrQuery.setRows(numberOfResultsToShow);
                 if (idExactMatch != null) {
                     if (rowStart < 2) {
-                        solrQuery.setRows(numberOfResultsToShow-1);
+                        solrQuery.setRows(numberOfResultsToShow - 1);
                     } else {
-                        solrQuery.setStart(rowStart-1);
+                        solrQuery.setStart(rowStart - 1);
                     }
                 }
             }
-            BrowseRecordService browseRecordService = (BrowseRecordService)MSTConfiguration.getInstance().getBean("BrowseRecordService");
+            BrowseRecordService browseRecordService = (BrowseRecordService) MSTConfiguration.getInstance().getBean("BrowseRecordService");
             result = browseRecordService.search(solrQuery);
 
             if (idExactMatch != null) {
                 if (rowStart < 2) {
                     result.getRecords().add(0, idExactMatch);
                 }
-                result.setTotalNumberOfResults(result.getTotalNumberOfResults()+1);
+                result.setTotalNumberOfResults(result.getTotalNumberOfResults() + 1);
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("Search result::"+result);
+                log.debug("Search result::" + result);
             }
 
-            if((result != null) && (rowEnd > result.getTotalNumberOfResults()))
-            {
+            if ((result != null) && (rowEnd > result.getTotalNumberOfResults())) {
                 rowEnd = result.getTotalNumberOfResults();
             }
 
             // Add facet name and value list to SolrBrowseResult(result) object for display in UI
             if (result != null) {
-                for(int i = 0; i < facetNamesList.size(); i++) {
+                for (int i = 0; i < facetNamesList.size(); i++) {
                     // Get successor/predecessor of the record to display its information
                     if (facetNamesList.get(i).equalsIgnoreCase("successor")) {
                         successorRecord = recordService.getById(Long.parseLong(facetValuesList.get(i)));
@@ -346,7 +342,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             return INPUT;
         }
 
-
         return SUCCESS;
     }
 
@@ -360,14 +355,14 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
         }
 
         try {
-            RepositoryService repositoryService = (RepositoryService)MSTConfiguration.getInstance().getBean("RepositoryService");
+            RepositoryService repositoryService = (RepositoryService) MSTConfiguration.getInstance().getBean("RepositoryService");
             record = repositoryService.getRecord(recordId);
             recordXML = record.getOaiXml();
             if (recordXML != null) {
                 XmlHelper xh = new XmlHelper();
                 recordXML = StringEscapeUtils.escapeHtml(xh.getStringPretty(xh.getJDomDocument(recordXML).getRootElement()));
             }
-        }  catch (Throwable t) {
+        } catch (Throwable t) {
             log.error("", t);
             errorType = "error";
             addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
@@ -380,30 +375,30 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     /**
      * View error description
      */
-    public String viewErrorDescription()  {
+    public String viewErrorDescription() {
 
         if (log.isDebugEnabled()) {
             log.debug("viewErrorDescription: error to view : " + error);
         }
 
         try {
-            ServicesService servicesService = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
+            ServicesService servicesService = (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
             // at this point we don't have much to go on, as far as I can tell, we only know the message text (error)
             // ,one negative of this new workaround way is if 2 services contain same error text, we'll grab 1st one we find,
-            //   and its associated help file,
+            // and its associated help file,
             Service service = null;
             String fileName = null;
             String errorCode = error.substring(0, error.indexOf(":"));
             for (Service s : servicesService.getAllServices()) {
-                    String codez = s.getMetadataService().getConfig().getProperty("error."+errorCode+".text");
-                    log.info("Error= "+error+ " errorCode="+errorCode+" this service's text="+codez+ " tried prop:"+"error."+errorCode+".text");
-                    if (codez != null) {
-                        if (error.indexOf(codez) > -1) {
-                            service = s;
-                            fileName = s.getMetadataService().getConfig().getProperty("error."+errorCode+".descriptionFile");
-                            break;
-                        }
+                String codez = s.getMetadataService().getConfig().getProperty("error." + errorCode + ".text");
+                log.info("Error= " + error + " errorCode=" + errorCode + " this service's text=" + codez + " tried prop:" + "error." + errorCode + ".text");
+                if (codez != null) {
+                    if (error.indexOf(codez) > -1) {
+                        service = s;
+                        fileName = s.getMetadataService().getConfig().getProperty("error." + errorCode + ".descriptionFile");
+                        break;
                     }
+                }
             }
             if (service != null && fileName != null) {
                 // Get error code
@@ -414,14 +409,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 BufferedReader br = new BufferedReader(new InputStreamReader(dis));
                 StringBuffer buffer = new StringBuffer();
                 String strLine;
-                //Read File Line By Line
+                // Read File Line By Line
                 while ((strLine = br.readLine()) != null) {
                     buffer.append(strLine);
                 }
                 errorDescription = buffer.toString();
-            }
-            else {
-                log.debug("No errorDescription found for "+error);
+            } else {
+                log.debug("No errorDescription found for " + error);
                 errorDescription = "No further information is available for this error.";
             }
         } catch (DatabaseConfigException dce) {
@@ -442,76 +436,61 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
         return result;
     }
 
-
     public void setResult(SolrBrowseResult result) {
         this.result = result;
     }
-
 
     public String getRemoveFacetName() {
         return removeFacetName;
     }
 
-
     public void setRemoveFacetName(String removeFacetName) {
         this.removeFacetName = removeFacetName;
     }
-
 
     public String getRemoveFacetValue() {
         return removeFacetValue;
     }
 
-
     public void setRemoveFacetValue(String removeFacetValue) {
         this.removeFacetValue = removeFacetValue;
     }
-
 
     public String getAddFacetName() {
         return addFacetName;
     }
 
-
     public void setAddFacetName(String addFacetName) {
         this.addFacetName = addFacetName;
     }
-
 
     public String getAddFacetValue() {
         return addFacetValue;
     }
 
-
     public void setAddFacetValue(String addFacetValue) {
         this.addFacetValue = addFacetValue;
     }
-
 
     public String getSelectedFacetNames() {
         return selectedFacetNames;
     }
 
-
     public void setSelectedFacetNames(String selectedFacetNames) {
         this.selectedFacetNames = selectedFacetNames;
     }
-
 
     public String getSelectedFacetValues() {
         return selectedFacetValues;
     }
 
-
     public void setSelectedFacetValues(String selectedFacetValues) {
         this.selectedFacetValues = selectedFacetValues;
     }
 
-
     public String getQuery() {
         return query;
     }
-
 
     public void setQuery(String query) {
         this.query = query;
@@ -547,7 +526,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
     /**
      * Returns the total number of hits
-     *
+     * 
      * @see xc.mst.action.browse.Pager#getTotalHits()
      */
     public long getTotalHits() {

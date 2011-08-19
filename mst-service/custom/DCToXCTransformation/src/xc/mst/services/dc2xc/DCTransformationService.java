@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services.dc2xc;
 
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class DCTransformationService extends GenericMetadataService {
      * The namespace for Dubline Core
      */
     protected static Namespace[] dcNamespaces = new Namespace[] {
-        Namespace.getNamespace("dcterms", "http://purl.org/dc/terms"),
-        Namespace.getNamespace("dc", "http://purl.org/dc/elements/1.1/")
+            Namespace.getNamespace("dcterms", "http://purl.org/dc/terms"),
+            Namespace.getNamespace("dc", "http://purl.org/dc/elements/1.1/")
     };
 
     protected XmlHelper xmlHelper = new XmlHelper();
@@ -127,7 +127,7 @@ public class DCTransformationService extends GenericMetadataService {
 
                 java.util.Set<String> keySet = dctermsElements.keySet();
                 Iterator<String> keyItrtr = keySet.iterator();
-                while ( keyItrtr.hasNext() ) {
+                while (keyItrtr.hasNext()) {
                     // Get element
                     String element = keyItrtr.next();
 
@@ -145,9 +145,9 @@ public class DCTransformationService extends GenericMetadataService {
                 } // end loop over data fields
 
                 // Format is different or record is empty
-                if (dcValues.size() == 0 || !isValidate ) {
-                    LOG.debug("dcValues: "+dcValues);
-                    LOG.debug("isValidate: "+isValidate);
+                if (dcValues.size() == 0 || !isValidate) {
+                    LOG.debug("dcValues: " + dcValues);
+                    LOG.debug("isValidate: " + isValidate);
                     addMessage(processMe, 101, RecordMessage.ERROR);
                     return results;
                 }
@@ -197,16 +197,14 @@ public class DCTransformationService extends GenericMetadataService {
             AggregateXCRecord transformedRecord, InputRecord originalRecord) {
         java.util.Set<String> keySet = dctermsElements.keySet();
         Iterator<String> keyItrtr = keySet.iterator();
-        while ( keyItrtr.hasNext() ) {
+        while (keyItrtr.hasNext()) {
             String element = keyItrtr.next();
             String frbrLevel = dctermsElements.get(element);
             transformedRecord = dctermsTransform(transformedRecord, element, frbrLevel);
         }
     }
 
-
-    private AggregateXCRecord dctermsTransform(AggregateXCRecord transformInto, String element, String frbrLevel)
-    {
+    private AggregateXCRecord dctermsTransform(AggregateXCRecord transformInto, String element, String frbrLevel) {
         FrbrLevel level = FrbrLevel.MANIFESTATION;
         if (frbrLevel.equals("work"))
             level = FrbrLevel.WORK;
@@ -216,21 +214,20 @@ public class DCTransformationService extends GenericMetadataService {
         return processFieldBasic(transformInto, dcValues, element, level);
     }
 
-    protected AggregateXCRecord processFieldBasic(AggregateXCRecord transformInto, HashMap<String, List<Element>>dcValues, String elementName, FrbrLevel level)
-    {
+    protected AggregateXCRecord processFieldBasic(AggregateXCRecord transformInto, HashMap<String, List<Element>> dcValues, String elementName, FrbrLevel level) {
         // Get the target elements Dublin Core record
         List<Element> fields = dcValues.get(elementName);
 
         // If there were no matching fields return the unmodified XC record
-        if( fields.isEmpty() || fields == null || fields.size() == 0)
+        if (fields.isEmpty() || fields == null || fields.size() == 0)
             return transformInto;
 
-        for ( Iterator<Element> itr = fields.iterator(); itr.hasNext();) {
+        for (Iterator<Element> itr = fields.iterator(); itr.hasNext();) {
             Element eitr = itr.next();
             String value = eitr.getTextTrim();
 
-            if(LOG.isDebugEnabled())
-                LOG.debug("Adding a " + level + " level " + elementName  + " of \"" + value + "\"");
+            if (LOG.isDebugEnabled())
+                LOG.debug("Adding a " + level + " level " + elementName + " of \"" + value + "\"");
 
             // Setup the attribute list
             ArrayList<Attribute> attributes = new ArrayList<Attribute>();

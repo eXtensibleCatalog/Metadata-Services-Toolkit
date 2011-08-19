@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class SolrWorkDelegate extends WorkerThread {
     private static final Logger LOG = Logger.getLogger(SolrWorkDelegate.class);
 
     protected SolrIndexService solrIndexService = null;
-    //protected ReentrantLock lock = new ReentrantLock();
+    // protected ReentrantLock lock = new ReentrantLock();
     protected Semaphore lock = new Semaphore(1);
 
     public SolrWorkDelegate() {
@@ -34,7 +34,7 @@ public class SolrWorkDelegate extends WorkerThread {
 
     public void setup() {
         LOG.debug("setup");
-        solrIndexService = (SolrIndexService)config.getBean("SolrIndexService");
+        solrIndexService = (SolrIndexService) config.getBean("SolrIndexService");
         Service s2 = new Service();
         s2.setName("solr-indexer");
         solrIndexService.setService(s2);
@@ -96,7 +96,10 @@ public class SolrWorkDelegate extends WorkerThread {
         }
         if (getJobStatus().equals(Status.RUNNING)) {
             setJobStatus(Status.IDLE);
-            try {Thread.sleep(config.getPropertyAsInt("solr.index.sleepBetweenNewRecordsCheck", 10000));} catch (Throwable t) {}
+            try {
+                Thread.sleep(config.getPropertyAsInt("solr.index.sleepBetweenNewRecordsCheck", 10000));
+            } catch (Throwable t) {
+            }
             if (getJobStatus().equals(Status.IDLE)) {
                 setJobStatus(Status.RUNNING);
             }

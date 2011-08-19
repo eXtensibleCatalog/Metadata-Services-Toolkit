@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.user;
 
@@ -25,11 +25,10 @@ import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Accesses users in the database
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class UserDAO extends BaseDAO
-{
+public abstract class UserDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -101,8 +100,7 @@ public abstract class UserDAO extends BaseDAO
     protected static Set<String> sortableColumns = new HashSet<String>();
 
     // Initialize the list of sortable columns
-    static
-    {
+    static {
         sortableColumns.add(COL_USER_ID);
         sortableColumns.add(COL_USERNAME);
         sortableColumns.add(COL_FIRST_NAME);
@@ -117,151 +115,174 @@ public abstract class UserDAO extends BaseDAO
 
     /**
      * Gets all users in the database
-     *
+     * 
      * @return A list containing all users in the database
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<User> getAll() throws DatabaseConfigException;
 
     /**
      * Returns a sorted list of all users
-     *
-     * @param asc Determines if the rows are sorted in the ascending or descending order
-     * @param columnSorted The column on which the rows are sorted
+     * 
+     * @param asc
+     *            Determines if the rows are sorted in the ascending or descending order
+     * @param columnSorted
+     *            The column on which the rows are sorted
      * @return A sorted list of users
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<User> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 
     /**
      * Gets a user by it's ID
-     *
-     * @param userId The ID of the user to get
+     * 
+     * @param userId
+     *            The ID of the user to get
      * @return The user with the passed ID, or null if there was no user with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract User getById(int userId) throws DatabaseConfigException;
 
     /**
-     * Gets a user by it's ID.  Does not set the list of permissions on the returned user.
-     *
-     * @param userId The ID of the user to get
+     * Gets a user by it's ID. Does not set the list of permissions on the returned user.
+     * 
+     * @param userId
+     *            The ID of the user to get
      * @return The user with the passed ID, or null if there was no user with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract User loadBasicUser(int userId) throws DatabaseConfigException;
 
     /**
      * Gets a user by it's user name
-     *
-     * @param userName The user name of the user to get
+     * 
+     * @param userName
+     *            The user name of the user to get
      * @return The user with the passed name, or null if there was no user with that name.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract User getUserByName(String userName) throws DatabaseConfigException;
 
     /**
      * Gets a user by their email
-     *
-     * @param email The email of the user to get
-     * @param server Login server
+     * 
+     * @param email
+     *            The email of the user to get
+     * @param server
+     *            Login server
      * @return The user with the passed email, or null if there was no user with that email.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract User getUserByEmail(String email, Server server) throws DatabaseConfigException;
 
     /**
      * Gets a user by it's user name and server id
-     *
-     * @param userName The user name of the user to get
-     * @param serverId Id of the server
+     * 
+     * @param userName
+     *            The user name of the user to get
+     * @param serverId
+     *            Id of the server
      * @return The user with the passed name and server, or null if there was no user with that name.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract User getUserByUserName(String userName, Server server) throws DatabaseConfigException;
 
     /**
      * returns the number of LDAP users in the system
-     *
+     * 
      * @return number of LDAP users
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract int getLDAPUserCount() throws DatabaseConfigException;
 
     /**
      * Inserts a user into the database
-     *
-     * @param user The user to insert
+     * 
+     * @param user
+     *            The user to insert
      * @return True on success, false on failure
-     * @throws DataException if the passed user was not valid for inserting
+     * @throws DataException
+     *             if the passed user was not valid for inserting
      */
     public abstract boolean insert(User user) throws DataException;
 
     /**
      * Updates a user in the database
-     *
-     * @param user The user to update
+     * 
+     * @param user
+     *            The user to update
      * @return True on success, false on failure
-     * @throws DataException if the passed user was not valid for updating
+     * @throws DataException
+     *             if the passed user was not valid for updating
      */
     public abstract boolean update(User user) throws DataException;
 
     /**
      * Deletes a user from the database
-     *
-     * @param user The user to delete
+     * 
+     * @param user
+     *            The user to delete
      * @return True on success, false on failure
-     * @throws DataException if the passed user was not valid for deleting
+     * @throws DataException
+     *             if the passed user was not valid for deleting
      */
     public abstract boolean delete(User user) throws DataException;
 
     /**
      * Validates the fields on the passed User Object
-     *
-     * @param user The user to validate
-     * @param validateId true if the ID field should be validated
-     * @param validateNonId true if the non-ID fields should be validated
-     * @throws DataException If one or more of the fields on the passed user were invalid
+     * 
+     * @param user
+     *            The user to validate
+     * @param validateId
+     *            true if the ID field should be validated
+     * @param validateNonId
+     *            true if the non-ID fields should be validated
+     * @throws DataException
+     *             If one or more of the fields on the passed user were invalid
      */
-    protected void validateFields(User user, boolean validateId, boolean validateNonId) throws DataException
-    {
+    protected void validateFields(User user, boolean validateId, boolean validateNonId) throws DataException {
         StringBuilder errorMessage = new StringBuilder();
 
         // Check the ID field if we're supposed to
-        if(validateId)
-        {
-            if(log.isDebugEnabled())
+        if (validateId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the ID");
 
-            if(user.getId() < 0)
+            if (user.getId() < 0)
                 errorMessage.append("The user_id is invalid. ");
         } // end if(we should validate the ID)
 
         // Check the non-ID fields if we're supposed to
-        if(validateNonId)
-        {
-            if(log.isDebugEnabled())
+        if (validateNonId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the non-ID fields");
 
-            if(user.getUsername() == null || user.getUsername().length() <= 0 || user.getUsername().length() > 255)
+            if (user.getUsername() == null || user.getUsername().length() <= 0 || user.getUsername().length() > 255)
                 errorMessage.append("The username is invalid. ");
 
-            if(user.getFirstName() != null && user.getFirstName().length() > 255)
+            if (user.getFirstName() != null && user.getFirstName().length() > 255)
                 errorMessage.append("The fullname is invalid. ");
 
-            if(user.getPassword() != null && user.getPassword().length() > 63)
+            if (user.getPassword() != null && user.getPassword().length() > 63)
                 errorMessage.append("The password is invalid. ");
 
-            if(user.getEmail() == null || user.getEmail().length() <= 0 || user.getEmail().length() > 255)
+            if (user.getEmail() == null || user.getEmail().length() <= 0 || user.getEmail().length() > 255)
                 errorMessage.append("The email is invalid.");
 
-            if(user.getServer() == null)
+            if (user.getServer() == null)
                 errorMessage.append("The server is invalid.");
         } // end if(we should validate the non-ID fields)
 
         // Log the error and throw the exception if any fields are invalid
-        if(errorMessage.length() > 0)
-        {
+        if (errorMessage.length() > 0) {
             String errors = errorMessage.toString();
             log.error("The following errors occurred: " + errors);
             throw new DataException(errors);

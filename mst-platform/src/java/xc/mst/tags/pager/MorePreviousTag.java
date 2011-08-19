@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.tags.pager;
 
@@ -19,9 +19,9 @@ import org.apache.log4j.Logger;
 
 /**
  * This tag displays the previous set of pages
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class MorePreviousTag extends SimpleTagSupport {
 
@@ -32,11 +32,10 @@ public class MorePreviousTag extends SimpleTagSupport {
         log.debug("do tag called");
 
         PagerTag pagerTag =
-             (PagerTag)findAncestorWithClass(this,
-                     PagerTag.class);
+                (PagerTag) findAncestorWithClass(this,
+                        PagerTag.class);
 
-        if(pagerTag == null)
-        {
+        if (pagerTag == null) {
             throw new JspTagException("the <ur:morePrevious> tag must"
                     + " be nested within a <ur:PreviousPage> tag");
         }
@@ -51,12 +50,11 @@ public class MorePreviousTag extends SimpleTagSupport {
 
             pageContext.setAttribute("startPageNumberForPreviousSet", startPageNumberForPreviousSet);
 
-            int rowStart = (startPageNumberForPreviousSet * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
+            int rowStart = (startPageNumberForPreviousSet * pagerTag.getNumberOfResultsToShow()) - pagerTag.getNumberOfResultsToShow();
             pageContext.setAttribute("rowStart", rowStart);
 
             if (pagerTag.getStartPageNumber() > 1) {
-                if( body != null )
-                {
+                if (body != null) {
                     body.invoke(null);
                 }
             }

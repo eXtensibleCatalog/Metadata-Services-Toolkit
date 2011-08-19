@@ -13,18 +13,23 @@ public class RecordCounts extends BaseActionSupport {
     public List<String[]> getIncomingHarvestRecords() {
         return incomingHarvestRecords;
     }
+
     public void setIncomingHarvestRecords(List<String[]> incomingHarvestRecords) {
         this.incomingHarvestRecords = incomingHarvestRecords;
     }
+
     public List<String[]> getIncomingServiceRecords() {
         return incomingServiceRecords;
     }
+
     public void setIncomingServiceRecords(List<String[]> incomingServiceRecords) {
         this.incomingServiceRecords = incomingServiceRecords;
     }
+
     public List<String[]> getOutgoingServiceRecords() {
         return outgoingServiceRecords;
     }
+
     public void setOutgoingServiceRecords(List<String[]> outgoingServiceRecords) {
         this.outgoingServiceRecords = outgoingServiceRecords;
     }

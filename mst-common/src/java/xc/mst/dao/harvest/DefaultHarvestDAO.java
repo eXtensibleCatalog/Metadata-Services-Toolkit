@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.harvest;
 
@@ -25,8 +25,7 @@ import xc.mst.dao.DBConnectionResetException;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
-public class DefaultHarvestDAO extends HarvestDAO
-{
+public class DefaultHarvestDAO extends HarvestDAO {
 
     /**
      * A PreparedStatement to get all harvests in the database
@@ -99,15 +98,13 @@ public class DefaultHarvestDAO extends HarvestDAO
     private static Object psGetLatestHarvestEndTimeLock = new Object();
 
     @Override
-    public List<Harvest> getAll() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Harvest> getAll() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all harvests");
 
             // The ResultSet from the SQL query
@@ -116,11 +113,9 @@ public class DefaultHarvestDAO extends HarvestDAO
             // The list of all harvests
             List<Harvest> harvests = new ArrayList<Harvest>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to get all harvests if it wasn't already created
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_HARVEST_ID + ", " +
                                                    COL_START_TIME + ", " +
@@ -131,7 +126,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                                                    COL_PROVIDER_ID + " " +
                                        "FROM " + HARVESTS_TABLE_NAME;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all harvests\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -145,8 +140,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // For each result returned, add a Harvest object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the harvest
                     Harvest harvest = new Harvest();
 
@@ -163,49 +157,42 @@ public class DefaultHarvestDAO extends HarvestDAO
                     harvests.add(harvest);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + harvests.size() + " harvests in the database.");
 
                 return harvests;
             } // end try(get the harvests)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the harvests.", e);
 
                 return harvests;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
 
                 log.info("Re executing the query that failed ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getAll
 
     @Override
-    public Harvest getById(int harvestId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public Harvest getById(int harvestId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the harvest with ID " + harvestId);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to get a harvest by its ID if it hasn't already been defined
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_HARVEST_ID + ", " +
                                                    COL_START_TIME + ", " +
@@ -217,7 +204,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                                        "FROM " + HARVESTS_TABLE_NAME + " " +
                                         "WHERE " + COL_HARVEST_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get harvest by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -234,8 +221,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the set
                     Harvest harvest = new Harvest();
 
@@ -248,55 +234,48 @@ public class DefaultHarvestDAO extends HarvestDAO
                     harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
                     harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the harvest with ID " + harvestId + " in the database.");
 
                     // Return the harvest
                     return harvest;
                 } // end if(result found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("The harvest with ID " + harvestId + " was not found in the database.");
 
                 return null;
             } // end try(get the harvest
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the harvest with ID " + harvestId, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getById(harvestId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getById(int)
 
     @Override
-    public Harvest loadBasicHarvest(int harvestId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public Harvest loadBasicHarvest(int harvestId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the harvest with ID " + harvestId);
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to get a harvest by its ID if it hasn't already been defined
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the row
                     String selectSql = "SELECT " + COL_HARVEST_ID + ", " +
                                                    COL_START_TIME + ", " +
@@ -308,7 +287,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                                        "FROM " + HARVESTS_TABLE_NAME + " " +
                                        "WHERE " + COL_HARVEST_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get harvest by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -325,8 +304,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // If any results were returned
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the set
                     Harvest harvest = new Harvest();
 
@@ -339,45 +317,40 @@ public class DefaultHarvestDAO extends HarvestDAO
                     harvest.setHarvestSchedule(getHarvestScheduleDAO().loadBasicHarvestSchedule(results.getInt(6)));
                     harvest.setProvider(getProviderDAO().getById(results.getInt(7)));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the harvest with ID " + harvestId + " in the database.");
 
                     // Return the harvest
                     return harvest;
                 } // end if(result found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("The harvest with ID " + harvestId + " was not found in the database.");
 
                 return null;
             } // end try(get the harvest
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the harvest with ID " + harvestId, e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return loadBasicHarvest(harvestId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method loadBasicHarvest(int)
 
     @Override
-    public List<Harvest> getHarvestsForSchedule(int harvestScheduleId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Harvest> getHarvestsForSchedule(int harvestScheduleId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByHarvestScheduleIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByHarvestScheduleIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all harvests with harvest schedule ID " + harvestScheduleId);
 
             // The ResultSet from the SQL query
@@ -386,11 +359,9 @@ public class DefaultHarvestDAO extends HarvestDAO
             // The list of all harvests
             List<Harvest> harvests = new ArrayList<Harvest>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to get all harvests for a given harvest schedule if it hasn't already been defined
-                if(psGetByHarvestScheduleId == null || dbConnectionManager.isClosed(psGetByHarvestScheduleId))
-                {
+                if (psGetByHarvestScheduleId == null || dbConnectionManager.isClosed(psGetByHarvestScheduleId)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_HARVEST_ID + ", " +
                                                    COL_START_TIME + ", " +
@@ -402,7 +373,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                                        "FROM " + HARVESTS_TABLE_NAME + " " +
                                        "WHERE " + COL_HARVEST_SCHEDULE_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get harvest by harvest schedule ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -419,8 +390,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                 results = dbConnectionManager.executeQuery(psGetByHarvestScheduleId);
 
                 // For each result returned, add a Harvest object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the harvest
                     Harvest harvest = new Harvest();
 
@@ -437,23 +407,20 @@ public class DefaultHarvestDAO extends HarvestDAO
                     harvests.add(harvest);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + harvests.size() + " harvests with harvest schedule ID " + harvestScheduleId);
 
                 return harvests;
             } // end try(get results)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the harvests with harvest schedule ID " + harvestScheduleId, e);
 
                 return harvests;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
-                return getHarvestsForSchedule(harvestScheduleId) ;
-            }
-            finally
-            {
+                return getHarvestsForSchedule(harvestScheduleId);
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
@@ -462,20 +429,20 @@ public class DefaultHarvestDAO extends HarvestDAO
     public Harvest getLatestHarvestForSchedule(final int harvestScheduleId) throws DatabaseConfigException {
         return this.hibernateTemplate.execute(new HibernateCallback<Harvest>() {
             public Harvest doInHibernate(Session s) {
-                Harvest h = (Harvest)s.createSQLQuery(
+                Harvest h = (Harvest) s.createSQLQuery(
                         "select {h.*} " +
-                        "from harvests h "+
-                        "where h.harvest_schedule_id = :harvestScheduleId "+
-                        "order by harvest_id desc "+
-                        "limit 1")
-                .addEntity("h", Harvest.class)
-                .setInteger("harvestScheduleId", harvestScheduleId)
-                .uniqueResult();
+                                "from harvests h " +
+                                "where h.harvest_schedule_id = :harvestScheduleId " +
+                                "order by harvest_id desc " +
+                                "limit 1")
+                        .addEntity("h", Harvest.class)
+                        .setInteger("harvestScheduleId", harvestScheduleId)
+                        .uniqueResult();
                 if (h != null) {
                     h.getProvider().getName();
                     h.getHarvestSchedule().getScheduleName();
                 }
-                log.debug("h: "+h);
+                log.debug("h: " + h);
                 return h;
             }
         });
@@ -484,14 +451,14 @@ public class DefaultHarvestDAO extends HarvestDAO
     public Timestamp getLatestHarvestEndTimeForSchedule(final int harvestScheduleId) {
         return this.hibernateTemplate.execute(new HibernateCallback<Timestamp>() {
             public Timestamp doInHibernate(Session s) {
-                Provider p = (Provider)s.createSQLQuery(
+                Provider p = (Provider) s.createSQLQuery(
                         "select {p.*} " +
-                        "from providers p, harvest_schedules hs "+
-                        "where p.provider_id = hs.provider_id " +
-                        " and hs.harvest_schedule_id = :harvestScheduleId ")
-                .addEntity("p", Provider.class)
-                .setInteger("harvestScheduleId", harvestScheduleId)
-                .uniqueResult();
+                                "from providers p, harvest_schedules hs " +
+                                "where p.provider_id = hs.provider_id " +
+                                " and hs.harvest_schedule_id = :harvestScheduleId ")
+                        .addEntity("p", Provider.class)
+                        .setInteger("harvestScheduleId", harvestScheduleId)
+                        .uniqueResult();
                 if (p.getLastHarvestEndTime() != null) {
                     return new Timestamp(p.getLastHarvestEndTime().getTime());
                 } else {
@@ -502,30 +469,26 @@ public class DefaultHarvestDAO extends HarvestDAO
     }
 
     @Override
-    public boolean insert(Harvest harvest) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insert(Harvest harvest) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the harvest are valid
         validateFields(harvest, false, true);
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new harvest with request " + harvest.getRequest());
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
-                    // Create the PreparedStatement to insert a harvest if it hasn't already been defined
-                    if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                    {
-                        // SQL to insert the new row
-                        String insertSql = "INSERT INTO " + HARVESTS_TABLE_NAME + " (" + COL_START_TIME + ", " +
+            try {
+                // Create the PreparedStatement to insert a harvest if it hasn't already been defined
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
+                    // SQL to insert the new row
+                    String insertSql = "INSERT INTO " + HARVESTS_TABLE_NAME + " (" + COL_START_TIME + ", " +
                                                                                 COL_END_TIME + ", " +
                                                                                 COL_REQUEST + ", " +
                                                                                 COL_RESULT + ", " +
@@ -533,73 +496,65 @@ public class DefaultHarvestDAO extends HarvestDAO
                                                                                 COL_PROVIDER_ID + ") " +
                                            "VALUES (?, ?, ?, ?, ?, ?)";
 
-                        if(log.isDebugEnabled())
-                            log.debug("Creating the \"insert harvest\" PreparedStatement from the SQL " + insertSql);
+                    if (log.isDebugEnabled())
+                        log.debug("Creating the \"insert harvest\" PreparedStatement from the SQL " + insertSql);
 
-                        // A prepared statement to run the insert SQL
-                        // This should sanitize the SQL and prevent SQL injection
-                        psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
-                    } // end if(insert PreparedStatement not defined)
+                    // A prepared statement to run the insert SQL
+                    // This should sanitize the SQL and prevent SQL injection
+                    psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
+                } // end if(insert PreparedStatement not defined)
 
-                    // Set the parameters on the insert statement
-                    psInsert.setTimestamp(1, harvest.getStartTime());
-                    psInsert.setTimestamp(2, harvest.getEndTime());
-                    psInsert.setString(3, harvest.getRequest());
-                    psInsert.setString(4, harvest.getResult());
-                    psInsert.setInt(5, harvest.getHarvestSchedule().getId());
-                    psInsert.setInt(6, harvest.getProvider().getId());
+                // Set the parameters on the insert statement
+                psInsert.setTimestamp(1, harvest.getStartTime());
+                psInsert.setTimestamp(2, harvest.getEndTime());
+                psInsert.setString(3, harvest.getRequest());
+                psInsert.setString(4, harvest.getResult());
+                psInsert.setInt(5, harvest.getHarvestSchedule().getId());
+                psInsert.setInt(6, harvest.getProvider().getId());
 
-                    // Execute the insert statement and return the result
-                    if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                    {
-                        // Get the auto-generated resource identifier ID and set it correctly on this Harvest Object
-                        rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+                // Execute the insert statement and return the result
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
+                    // Get the auto-generated resource identifier ID and set it correctly on this Harvest Object
+                    rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
-                        if (rs.next())
-                            harvest.setId(rs.getInt(1));
+                    if (rs.next())
+                        harvest.setId(rs.getInt(1));
 
-                        return true;
-                    } // end if(insert succeeded)
+                    return true;
+                } // end if(insert succeeded)
 
-                    return false;
+                return false;
             } // end try(insert harvest)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new harvest with request " + harvest.getRequest(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(harvest);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method insert(Harvest)
 
     @Override
-    public boolean update(Harvest harvest) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean update(Harvest harvest) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the harvest are valid
         validateFields(harvest, true, true);
 
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the harvest with ID " + harvest.getId());
 
-            try
-            {
+            try {
                 // If the PreparedStatement to update a harvest has not been created, create it
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + HARVESTS_TABLE_NAME + " SET " + COL_START_TIME + "=?, " +
                                                                           COL_END_TIME + "=?, " +
@@ -609,7 +564,7 @@ public class DefaultHarvestDAO extends HarvestDAO
                                                                           COL_PROVIDER_ID + "=? " +
                                        "WHERE " + COL_HARVEST_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update harvest\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -629,13 +584,12 @@ public class DefaultHarvestDAO extends HarvestDAO
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psUpdate) > 0;
             } // end try(update harvest)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the harvest with ID " + harvest.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(harvest);
             }
@@ -643,30 +597,26 @@ public class DefaultHarvestDAO extends HarvestDAO
     } // end method update(Harvest)
 
     @Override
-    public boolean delete(Harvest harvest) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean delete(Harvest harvest) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the ID field on the harvest are valid
         validateFields(harvest, true, false);
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the harvest with ID " + harvest.getId());
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to delete a harvest if it hasn't already been created
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
-                    String deleteSql = "DELETE FROM "+ HARVESTS_TABLE_NAME + " " +
+                    String deleteSql = "DELETE FROM " + HARVESTS_TABLE_NAME + " " +
                                        "WHERE " + COL_HARVEST_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete harvest\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -680,13 +630,12 @@ public class DefaultHarvestDAO extends HarvestDAO
                 // Execute the delete statement and return the result
                 return dbConnectionManager.execute(psDelete);
             } // end try(delete row)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the harvest with ID " + harvest.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(harvest);
             }

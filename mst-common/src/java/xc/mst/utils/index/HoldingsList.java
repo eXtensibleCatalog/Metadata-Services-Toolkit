@@ -1,13 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
-
-
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils.index;
 
@@ -26,16 +24,15 @@ import xc.mst.manager.record.HoldingsService;
 import xc.mst.utils.MSTConfiguration;
 
 /**
- * A list of Records resulting from a Lucene query.  This class maps Lucene's
+ * A list of Records resulting from a Lucene query. This class maps Lucene's
  * Hits Object into a Java collection without loading all the Records into memory at
  * once (like an ArrayList would.)
- *
+ * 
  * Records in a HoldingsList are all contained in the "Holdings" bucket used by the Aggregation Service
- *
+ * 
  * @author Eric Osisek
  */
-public class HoldingsList extends AbstractList<Holdings>
-{
+public class HoldingsList extends AbstractList<Holdings> {
     /**
      * The maximum number of results to
      */
@@ -44,7 +41,7 @@ public class HoldingsList extends AbstractList<Holdings>
     /**
      * An Object which manages the Solr index
      */
-    protected SolrIndexManager indexMgr = (SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager");
+    protected SolrIndexManager indexMgr = (SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager");
 
     /**
      * The current offset into the results of the query that are in the document list
@@ -64,7 +61,7 @@ public class HoldingsList extends AbstractList<Holdings>
     /**
      * The service used to get a record from a Lucene document
      */
-    private static HoldingsService service = (HoldingsService)MSTConfiguration.getInstance().getBean("HoldingsService");
+    private static HoldingsService service = (HoldingsService) MSTConfiguration.getInstance().getBean("HoldingsService");
 
     /**
      * The number of elements in the list
@@ -77,13 +74,13 @@ public class HoldingsList extends AbstractList<Holdings>
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-     * Constructs a HoldingsList around a Solr query.  The docs returned by the query
+     * Constructs a HoldingsList around a Solr query. The docs returned by the query
      * are assumed to all be Holdings Objects
-     *
-     * @param query The Solr query for which the HoldingsList was built
+     * 
+     * @param query
+     *            The Solr query for which the HoldingsList was built
      */
-    public HoldingsList(SolrQuery query) throws IndexException
-    {
+    public HoldingsList(SolrQuery query) throws IndexException {
         this.query = query;
         query.setRows(MAX_RESULTS);
         query.setStart(currentOffset);
@@ -92,45 +89,39 @@ public class HoldingsList extends AbstractList<Holdings>
 
     /**
      * Gets the record at a given index
-     *
-     * @param index The index of the Record to get
+     * 
+     * @param index
+     *            The index of the Record to get
      * @return The record at the specified index
      */
-    public Holdings get(int index)
-    {
-        try
-        {
-            if(query == null)
+    public Holdings get(int index) {
+        try {
+            if (query == null)
                 return null;
 
-            if(currentOffset < index && currentOffset + MAX_RESULTS > index)
-            {
-                if(docs == null)
+            if (currentOffset < index && currentOffset + MAX_RESULTS > index) {
+                if (docs == null)
                     return null;
 
-                return (docs.size() > (index-currentOffset) ? service.getHoldingsFromDocument(docs.get(index-currentOffset)) : null);
+                return (docs.size() > (index - currentOffset) ? service.getHoldingsFromDocument(docs.get(index - currentOffset)) : null);
             }
 
             // Truncation will make this the largest multiple of MAX_RESULTS which comes before the requested index
-            currentOffset = (index/MAX_RESULTS)*MAX_RESULTS;
+            currentOffset = (index / MAX_RESULTS) * MAX_RESULTS;
 
             query.setRows(MAX_RESULTS);
             query.setStart(currentOffset);
             docs = indexMgr.getDocumentList(query);
 
-            if(docs == null)
+            if (docs == null)
                 return null;
 
-            return (docs.size() > (index-currentOffset) ? service.getHoldingsFromDocument(docs.get(index-currentOffset)) : null);
-        }
-        catch(DatabaseConfigException e)
-        {
+            return (docs.size() > (index - currentOffset) ? service.getHoldingsFromDocument(docs.get(index - currentOffset)) : null);
+        } catch (DatabaseConfigException e) {
             log.error("Cannot connect to the database with the parameters from the config file.", e);
 
             return null;
-        }
-        catch(IndexException ie)
-        {
+        } catch (IndexException ie) {
             log.error("Cannot connect to Solr Server. Check the port in configuration file.", ie);
 
             return null;
@@ -138,28 +129,26 @@ public class HoldingsList extends AbstractList<Holdings>
     }
 
     /**
-     * The set method is not used because HoldingsLists are read only.  It is
+     * The set method is not used because HoldingsLists are read only. It is
      * only included because it is required to extend the AbstractList class.
-     *
-     * @throws UnsupportedOperationException Whenever this method is called
+     * 
+     * @throws UnsupportedOperationException
+     *             Whenever this method is called
      */
-    public Holdings set(int index, Record element)
-    {
+    public Holdings set(int index, Record element) {
         throw new UnsupportedOperationException("An attempt was made to set an element on a HoldingsList.  HoldingsLists are read only.");
     }
 
     /**
      * Returns the size of the HoldingsList
-     *
+     * 
      * @return The size of the HoldingsList
      */
-    public int size()
-    {
-        if(size >= 0)
+    public int size() {
+        if (size >= 0)
             return size;
 
-        if(query == null)
-        {
+        if (query == null) {
             size = 0;
             return size;
         }
@@ -169,34 +158,26 @@ public class HoldingsList extends AbstractList<Holdings>
         int high = Integer.MAX_VALUE;
         int mid;
 
-        while(low <= high)
-        {
+        while (low <= high) {
             mid = (low + high) / 2;
 
-            if(mid == 0)
+            if (mid == 0)
                 return 0;
 
-            if(get(mid-1) != null)
-            {
-                if(get(mid) == null)
-                {
+            if (get(mid - 1) != null) {
+                if (get(mid) == null) {
                     size = mid;
                     return size;
-                }
-                else
-                    low = mid+1;
-            }
-            else
-            {
-                if(mid == 1)
+                } else
+                    low = mid + 1;
+            } else {
+                if (mid == 1)
                     return 0;
 
-                if(get(mid-2) != null)
-                {
-                    size = mid-1;
+                if (get(mid - 2) != null) {
+                    size = mid - 1;
                     return size;
-                }
-                else
+                } else
                     high = mid;
             }
         }

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action;
 
@@ -31,9 +31,9 @@ import xc.mst.utils.MSTConfiguration;
 
 /**
  * Action class for user login
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class Login extends BaseActionSupport implements ServletRequestAware {
 
@@ -54,7 +54,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
     /** Request */
     private HttpServletRequest request;
 
-    /**The first page that the user has permission to access */
+    /** The first page that the user has permission to access */
     private String forwardLink;
 
     /** List of servers */
@@ -69,23 +69,22 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
     /** Error type */
     private String errorType;
 
-    /**  Object used to read properties from the default configuration file */
+    /** Object used to read properties from the default configuration file */
     protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
 
-    /**  Indicates if error in configuration */
+    /** Indicates if error in configuration */
     public boolean configurationError = false;
-
 
     /**
      * Overriding default implementation to login the user.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
     public String execute() throws DataException {
         try {
             servers = getServerService().getAll();
-        }  catch (DatabaseConfigException dce) {
+        } catch (DatabaseConfigException dce) {
             if (!MSTConfiguration.mstInstanceFolderExist) {
                 addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
                 log.error(defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
@@ -93,7 +92,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
                 int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
                 String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
                 addFieldError("currentInstancesFolderError", instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
-                log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+                log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
             } else {
                 log.error(dce.getMessage(), dce);
                 addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
@@ -176,12 +175,12 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
                 user.setLastLogin(new Date());
                 getUserService().updateUser(user);
 
-                //get Calendar instance
+                // get Calendar instance
                 Calendar now = Calendar.getInstance();
-                //get current TimeZone using getTimeZone method of Calendar class
+                // get current TimeZone using getTimeZone method of Calendar class
                 TimeZone timeZone = now.getTimeZone();
-                //display current TimeZone using getDisplayName() method of TimeZone class
-                request.getSession().setAttribute("timeZone",timeZone.getDisplayName());
+                // display current TimeZone using getDisplayName() method of TimeZone class
+                request.getSession().setAttribute("timeZone", timeZone.getDisplayName());
 
                 List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(completeUserData);
 
@@ -229,7 +228,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Get user name
-     *
+     * 
      * @return
      */
     public String getUserName() {
@@ -238,8 +237,9 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set User name
-     *
-     * @param userName User name of the user logging in
+     * 
+     * @param userName
+     *            User name of the user logging in
      */
     public void setUserName(String userName) {
         this.userName = userName;
@@ -247,7 +247,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Get password
-     *
+     * 
      * @return
      */
     public String getPassword() {
@@ -256,7 +256,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set password
-     *
+     * 
      * @param password
      */
     public void setPassword(String password) {
@@ -265,7 +265,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set the servlet request.
-     *
+     * 
      * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
      */
     public void setServletRequest(HttpServletRequest request) {
@@ -274,19 +274,20 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * sets the link that the user should be forwarded to.
-     * @param forwardLink page link
+     * 
+     * @param forwardLink
+     *            page link
      */
-    public void setForwardLink(String forwardLink)
-    {
+    public void setForwardLink(String forwardLink) {
         this.forwardLink = forwardLink;
     }
 
     /**
      * returns the link that the user should be forwarded to
+     * 
      * @return forward link
      */
-    public String getForwardLink()
-    {
+    public String getForwardLink() {
         return this.forwardLink;
     }
 

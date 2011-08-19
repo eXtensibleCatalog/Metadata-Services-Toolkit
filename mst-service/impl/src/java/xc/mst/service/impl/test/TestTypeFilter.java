@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.service.impl.test;
 
 import java.io.IOException;
@@ -27,9 +27,9 @@ import xc.mst.services.MetadataService;
 import xc.mst.spring.MSTAutoBeanHelper;
 
 /**
- *
+ * 
  * @author Benjamin D. Anderson
- *
+ * 
  */
 public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
 
@@ -46,15 +46,15 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
             ClassMetadata classMetadata = metadataReader.getClassMetadata();
             String className = classMetadata.getClassName();
             Class c = getClassLoader().loadClass(className);
-            LOG.debug("checking class: "+c);
+            LOG.debug("checking class: " + c);
             if (BaseMetadataServiceTest.class.isAssignableFrom(c) &&
                     !BaseMetadataServiceTest.class.equals(c)) {
                 String filter = System.getenv("service.test");
-                LOG.debug("filter: "+filter);
-                LOG.debug("c.getName(): "+c.getName());
+                LOG.debug("filter: " + filter);
+                LOG.debug("c.getName(): " + c.getName());
                 if (StringUtils.isEmpty(filter) || c.getName().toUpperCase().contains(filter.toUpperCase())) {
                     testClasses.add(c);
-                    LOG.debug("adding class to test suite: "+c);
+                    LOG.debug("adding class to test suite: " + c);
                 }
             }
         } catch (Throwable t) {
@@ -71,12 +71,12 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
             TestNG testng = new TestNG();
             Set<Class> testClassesSet = new HashSet<Class>(testClasses);
             for (Class c : testClassesSet) {
-                LOG.info("c: "+c);
+                LOG.info("c: " + c);
                 boolean noSubClasses = true;
                 for (Class c2 : testClasses) {
-                    LOG.info("c2: "+c2);
-                    LOG.info("c.equals(c2): "+c.equals(c2));
-                    LOG.info("c.isAssignableFrom(c2): "+c.isAssignableFrom(c2));
+                    LOG.info("c2: " + c2);
+                    LOG.info("c.equals(c2): " + c.equals(c2));
+                    LOG.info("c.isAssignableFrom(c2): " + c.isAssignableFrom(c2));
                     if (!c.equals(c2) && c.isAssignableFrom(c2)) {
                         noSubClasses = false;
                     }
@@ -85,12 +85,12 @@ public class TestTypeFilter extends MSTAutoBeanHelper implements TypeFilter {
                     testClasses.remove(c);
                 }
             }
-            LOG.info("testClasses: "+testClasses);
-            testng.setTestClasses(testClasses.toArray(new Class[]{}));
+            LOG.info("testClasses: " + testClasses);
+            testng.setTestClasses(testClasses.toArray(new Class[] {}));
             testng.addListener(tla);
             testng.run();
             for (Class c : testClasses) {
-                LOG.info("testing class: "+c);
+                LOG.info("testing class: " + c);
                 /*
                 for (Method m : c.getMethods()) {
                     for (Annotation a : m.getAnnotations()) {

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.manager.record;
 
@@ -21,12 +21,11 @@ import xc.mst.utils.index.RecordList;
 public class DBRecordService extends DefaultRecordService {
 
     @Override
-    public boolean insert(Record record) throws DataException, IndexException
-    {
+    public boolean insert(Record record) throws DataException, IndexException {
         // Check that the non-ID fields on the record are valid
         validateFields(record, false, true);
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Inserting a new " + record.getType());
 
         Date now = new Date();
@@ -63,7 +62,7 @@ public class DBRecordService extends DefaultRecordService {
         // Check that the fields on the record are valid
         // validateFields(record, true, true);
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Updating the record with ID " + record.getId());
 
         return getRecordDAO().update(record);
@@ -73,10 +72,10 @@ public class DBRecordService extends DefaultRecordService {
         // Check that the ID field on the record are valid
         validateFields(record, true, false);
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Deleting the record with ID " + record.getId());
 
-        //return recordDao.delete();
+        // return recordDao.delete();
         return true;
     } // end method delete(Record)
 
@@ -90,7 +89,7 @@ public class DBRecordService extends DefaultRecordService {
     }
 
     @Override
-    public List<Record> getBySetSpec(String setSpec)  {
+    public List<Record> getBySetSpec(String setSpec) {
         return new ArrayList<Record>();
     }
 }

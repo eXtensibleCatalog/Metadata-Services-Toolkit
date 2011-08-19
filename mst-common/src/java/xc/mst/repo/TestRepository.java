@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.repo;
 
 import gnu.trove.TLongByteHashMap;
@@ -53,9 +53,9 @@ public class TestRepository extends BaseService implements Repository {
     public final static String ACTUAL_OUTPUT_RECORDS = "test/actual_output_records";
 
     protected java.util.Set<String> inputFileNames = new TreeSet<String>();
-    //protected int inputFilesIterator = 0;
+    // protected int inputFilesIterator = 0;
     protected Iterator inputFilesIterator = null;
-    //protected Map<Record, String> inputRecordFileNames = new HashMap<Record, String>();
+    // protected Map<Record, String> inputRecordFileNames = new HashMap<Record, String>();
     protected Map<String, List<Record>> outputFiles = new HashMap<String, List<Record>>();
     protected TLongObjectHashMap repo = new TLongObjectHashMap();
     protected Map<String, List<Record>> successorMap = new HashMap<String, List<Record>>();
@@ -65,7 +65,8 @@ public class TestRepository extends BaseService implements Repository {
     protected String currentFile = null;
     protected XmlHelper xmlHelper = new XmlHelper();
 
-    public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {}
+    public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
+    }
 
     public Date getLastModified() {
         return null;
@@ -80,12 +81,13 @@ public class TestRepository extends BaseService implements Repository {
     public String getName() {
         return this.folderName;
     }
+
     public void setName(String folderName) {
         this.folderName = folderName;
         basePath = new File(".").getAbsolutePath();
 
         try {
-            File folder = new File(INPUT_RECORDS_DIR+"/"+folderName);
+            File folder = new File(INPUT_RECORDS_DIR + "/" + folderName);
             for (String fileName : folder.list()) {
                 if (!fileName.contains(".svn")) {
                     fileName = new File(fileName).getName();
@@ -109,17 +111,18 @@ public class TestRepository extends BaseService implements Repository {
     public boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         return commitIfNecessary(force);
     }
+
     public boolean commitIfNecessary(boolean force) {
         if (force) {
             if (!inputFilesIterator.hasNext()) {
                 LOG.debug("endBatch");
-                File outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName);
+                File outFolder = new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName);
                 if (!outFolder.exists()) {
                     outFolder.mkdir();
                 } else {
                     for (String prevOutFile : outFolder.list()) {
-                        LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile);
-                        new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+prevOutFile).delete();
+                        LOG.debug("deleting file: " + ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/" + prevOutFile);
+                        new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/" + prevOutFile).delete();
                     }
                 }
                 for (Map.Entry<String, List<Record>> me : outputFiles.entrySet()) {
@@ -129,57 +132,57 @@ public class TestRepository extends BaseService implements Repository {
                         File outFile = null;
                         PrintWriter pw = null;
                         try {
-                            outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/"+fileName);
-                            LOG.debug("writing outFile: "+outFile);
+                            outFile = new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/" + fileName);
+                            LOG.debug("writing outFile: " + outFile);
                             pw = new PrintWriter(outFile, "UTF-8");
                             pw.println("<records xmlns=\"http://www.openarchives.org/OAI/2.0/\">");
                             for (Record r : records) {
-                                LOG.debug("r.getService(): "+r.getService());
+                                LOG.debug("r.getService(): " + r.getService());
                                 pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
                             }
                             pw.println("</records>");
                         } catch (Throwable t) {
-                            LOG.error("file failed: "+fileName);
+                            LOG.error("file failed: " + fileName);
                             LOG.error("", t);
                         } finally {
                             try {
-                                LOG.debug("closing file: "+fileName);
+                                LOG.debug("closing file: " + fileName);
                                 pw.close();
                             } catch (Throwable t) {
-                                LOG.error("file close failed: "+fileName);
+                                LOG.error("file close failed: " + fileName);
                                 LOG.error("", t);
                             }
                         }
                     }
                 }
-                outFolder = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds");
+                outFolder = new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/byRecordIds");
                 if (!outFolder.exists()) {
                     outFolder.mkdir();
                 } else {
                     for (String prevOutFile : outFolder.list()) {
-                        LOG.debug("deleting file: "+ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile);
-                        new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+prevOutFile).delete();
+                        LOG.debug("deleting file: " + ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/byRecordIds/" + prevOutFile);
+                        new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/byRecordIds/" + prevOutFile).delete();
                     }
                 }
                 repo.forEachValue(new TObjectProcedure() {
                     public boolean execute(Object obj) {
                         File outFile = null;
                         PrintWriter pw = null;
-                        Record r = (Record)obj;
-                        outFile = new File(ACTUAL_OUTPUT_RECORDS+"/"+folderName+"/byRecordIds/"+r.getId()+".xml");
+                        Record r = (Record) obj;
+                        outFile = new File(ACTUAL_OUTPUT_RECORDS + "/" + folderName + "/byRecordIds/" + r.getId() + ".xml");
                         try {
-                            LOG.debug("writing outFile: "+outFile);
+                            LOG.debug("writing outFile: " + outFile);
                             pw = new PrintWriter(outFile, "UTF-8");
                             pw.println(xmlHelper.getStringPretty(getRecordService().createJDomElement(r, null)));
                         } catch (Throwable t) {
-                            LOG.error("file failed: "+r.getId());
+                            LOG.error("file failed: " + r.getId());
                             LOG.error("", t);
                         } finally {
                             try {
-                                LOG.debug("closing file: "+outFile.getName());
+                                LOG.debug("closing file: " + outFile.getName());
                                 pw.close();
                             } catch (Throwable t) {
-                                LOG.error("file close failed: "+outFile.getName());
+                                LOG.error("file close failed: " + outFile.getName());
                                 LOG.error("", t);
                             }
                         }
@@ -197,28 +200,29 @@ public class TestRepository extends BaseService implements Repository {
 
     public void addRecord(Record r) {
         for (InputRecord ir : r.getPredecessors()) {
-            LOG.debug("((Record)ir).getOaiIdentifier(): "+((Record)ir).getOaiIdentifier());
-            LOG.debug("((Record)ir).getHarvestedOaiIdentifier(): "+((Record)ir).getHarvestedOaiIdentifier());
-            List<Record> succs = successorMap.get(((Record)ir).getHarvestedOaiIdentifier());
+            LOG.debug("((Record)ir).getOaiIdentifier(): " + ((Record) ir).getOaiIdentifier());
+            LOG.debug("((Record)ir).getHarvestedOaiIdentifier(): " + ((Record) ir).getHarvestedOaiIdentifier());
+            List<Record> succs = successorMap.get(((Record) ir).getHarvestedOaiIdentifier());
             if (succs == null) {
                 succs = new ArrayList<Record>();
-                successorMap.put(((Record)ir).getHarvestedOaiIdentifier(), succs);
+                successorMap.put(((Record) ir).getHarvestedOaiIdentifier(), succs);
             }
             if (!succs.contains(r)) {
-                LOG.debug("r.getOaiIdentifier(): "+r.getOaiIdentifier());
+                LOG.debug("r.getOaiIdentifier(): " + r.getOaiIdentifier());
                 succs.add(r);
             }
         }
-        Record previousOutputRecord = (Record)repo.get(r.getId());
+        Record previousOutputRecord = (Record) repo.get(r.getId());
         if (previousOutputRecord != null) {
             previousOutputRecord.setStatus(Record.REPLACED);
         }
         repo.put(r.getId(), r);
-        LOG.debug("r.getStatus(): "+r.getStatus());
+        LOG.debug("r.getStatus(): " + r.getStatus());
         getOutputRecords().add(r);
     }
 
-    public void commitRecords() {}
+    public void commitRecords() {
+    }
 
     protected List<Record> getOutputRecords() {
         List<Record> outputRecordsInFile = outputFiles.get(this.currentFile);
@@ -235,52 +239,55 @@ public class TestRepository extends BaseService implements Repository {
         }
     }
 
-    public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {}
-    public void incrementUnexpectedProcessingErrors(String type) {}
+    public void updateIncomingRecordCounts(String type, boolean update, boolean delete) {
+    }
+
+    public void incrementUnexpectedProcessingErrors(String type) {
+    }
 
     public List<Record> getRecords(Date from, Date until, Long startingId,
-            xc.mst.bo.provider.Format inputFormat,  xc.mst.bo.provider.Set inputSet) {
+            xc.mst.bo.provider.Format inputFormat, xc.mst.bo.provider.Set inputSet) {
         if (inputFilesIterator == null) {
             inputFilesIterator = inputFileNames.iterator();
         }
         if (inputFilesIterator.hasNext()) {
-            String fileName = (String)inputFilesIterator.next();
+            String fileName = (String) inputFilesIterator.next();
             List<Record> inputRecords = new ArrayList<Record>();
             if (!fileName.endsWith(".xml")) {
                 return inputRecords;
             }
             try {
                 this.currentFile = fileName;
-                File file2process = new File(INPUT_RECORDS_DIR+"/"+folderName+"/"+fileName);
-                LOG.debug("file2process: "+file2process);
+                File file2process = new File(INPUT_RECORDS_DIR + "/" + folderName + "/" + fileName);
+                LOG.debug("file2process: " + file2process);
                 SAXBuilder builder = new SAXBuilder();
                 Document doc = builder.build(new FileInputStream(file2process));
 
                 Element records = doc.getRootElement();
-                LOG.debug("records: "+records);
+                LOG.debug("records: " + records);
                 Element listRecords = records.getChild("ListRecords", records.getNamespace());
-                LOG.debug("listRecords: "+listRecords);
+                LOG.debug("listRecords: " + listRecords);
                 if (listRecords != null) {
                     records = listRecords;
                 }
                 for (Object recordObj : records.getChildren("record", records.getNamespace())) {
-                    Element record = (Element)recordObj;
+                    Element record = (Element) recordObj;
                     Record in = getRecordService().parse(record);
                     String oaiId = in.getHarvestedOaiIdentifier();
-                    LOG.debug("in.getId(): "+in.getId());
-                    LOG.debug("oaiId: "+oaiId);
+                    LOG.debug("in.getId(): " + in.getId());
+                    LOG.debug("oaiId: " + oaiId);
                     int idx1 = oaiId.lastIndexOf("/");
                     if (idx1 == -1) {
                         idx1 = oaiId.lastIndexOf(":");
                     }
                     if (idx1 != -1) {
-                        LOG.debug("oaiId.substring(idx1+1): "+oaiId.substring(idx1+1));
-                        in.setId(Long.parseLong(oaiId.substring(idx1+1)));
+                        LOG.debug("oaiId.substring(idx1+1): " + oaiId.substring(idx1 + 1));
+                        in.setId(Long.parseLong(oaiId.substring(idx1 + 1)));
                     }
-                    LOG.debug("in.getId(): "+in.getId());
-                    LOG.debug("in.getStatus(): "+in.getStatus());
+                    LOG.debug("in.getId(): " + in.getId());
+                    LOG.debug("in.getStatus(): " + in.getStatus());
                     inputRecords.add(in);
-                    //this.inputRecordFileNames.put(in, fileName);
+                    // this.inputRecordFileNames.put(in, fileName);
                 }
             } catch (Throwable t) {
                 Util.getUtil().throwIt(t);
@@ -293,11 +300,11 @@ public class TestRepository extends BaseService implements Repository {
     }
 
     public Record getRecord(String oaiId) {
-        return (Record)repo.get(Long.parseLong(oaiId.split(":")[3]));
+        return (Record) repo.get(Long.parseLong(oaiId.split(":")[3]));
     }
 
     public Record getRecord(long id) {
-        return (Record)repo.get(id);
+        return (Record) repo.get(id);
     }
 
     public List<Record> getPredecessors(Record r) {
@@ -350,7 +357,7 @@ public class TestRepository extends BaseService implements Repository {
 
     /**
      * Get number of records that satisfy the given criteria
-     *
+     * 
      * @param from
      * @param until
      * @param startingId
@@ -364,7 +371,7 @@ public class TestRepository extends BaseService implements Repository {
     }
 
     public void populatePredecessors(TLongHashSet predecessors) {
-        //do nothing
+        // do nothing
     }
 
     public void injectSuccessorIds(Record r) {
@@ -379,9 +386,9 @@ public class TestRepository extends BaseService implements Repository {
     }
 
     public void activateLinkedRecord(long toRecordId) {
-        LOG.debug("activateLinkedRecord: "+toRecordId);
+        LOG.debug("activateLinkedRecord: " + toRecordId);
         Set<Long> fromIds = links.get(toRecordId);
-        LOG.debug("fromIds: "+fromIds);
+        LOG.debug("fromIds: " + fromIds);
         if (fromIds != null && fromIds.size() > 0) {
             for (Long fid : fromIds) {
                 Record r = new Record();
@@ -396,8 +403,8 @@ public class TestRepository extends BaseService implements Repository {
 
     @Override
     public void addLink(long fromRecordId, long toRecordId) {
-        LOG.debug("fromRecordId: "+fromRecordId);
-        LOG.debug("toRecordId: "+toRecordId);
+        LOG.debug("fromRecordId: " + fromRecordId);
+        LOG.debug("toRecordId: " + toRecordId);
         Set<Long> fromIds = links.get(toRecordId);
         if (fromIds == null) {
             fromIds = new HashSet<Long>();
@@ -421,11 +428,11 @@ public class TestRepository extends BaseService implements Repository {
         Record pr = getRecord(recordId);
         if (pr == null) {
             LOG.debug("record not found");
-            LOG.debug("recordId: "+recordId);
+            LOG.debug("recordId: " + recordId);
             repo.forEachEntry(new TLongObjectProcedure() {
                 public boolean execute(long key, Object val) {
-                    LOG.debug("key: "+key);
-                    LOG.debug("val: "+val);
+                    LOG.debug("key: " + key);
+                    LOG.debug("val: " + val);
                     return true;
                 }
             });
@@ -437,29 +444,46 @@ public class TestRepository extends BaseService implements Repository {
         addRecord(r);
     }
 
-
-    public void processComplete() {}
+    public void processComplete() {
+    }
 
     public boolean ready4harvest() {
         return true;
     }
 
-    public void injectHarvestInfo(Record r) {}
+    public void injectHarvestInfo(Record r) {
+    }
 
-    public String getPersistentProperty(String key) {return null;}
-    public int getPersistentPropertyAsInt(String key, int def) {return def;}
-    public long getPersistentPropertyAsLong(String key, long def) {return def;}
+    public String getPersistentProperty(String key) {
+        return null;
+    }
 
-    public void setPersistentProperty(String key, int value) {}
-    public void setPersistentProperty(String key, long value) {}
-    public void setPersistentProperty(String key, String value) {}
+    public int getPersistentPropertyAsInt(String key, int def) {
+        return def;
+    }
+
+    public long getPersistentPropertyAsLong(String key, long def) {
+        return def;
+    }
+
+    public void setPersistentProperty(String key, int value) {
+    }
+
+    public void setPersistentProperty(String key, long value) {
+    }
+
+    public void setPersistentProperty(String key, String value) {
+    }
 
     @Override
     public String getRecordStatsByType() {
         return null;
     }
 
-    public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service) {}
-    public void persistPreviousStatuses(TLongByteHashMap previousStatuses) {}
+    public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service) {
+    }
+
+    public void persistPreviousStatuses(TLongByteHashMap previousStatuses) {
+    }
 
 }

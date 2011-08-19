@@ -23,7 +23,6 @@ public class SolrTest extends BaseTest {
             doc.addField(RecordService.FIELD_RECORD_ID, 100);
             doc.addField(RecordService.FIELD_ALL, "beluga");
 
-
             getSolrIndexManager().addDoc(doc);
             getSolrIndexManager().commitIndex();
 

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.user;
 
@@ -22,11 +22,10 @@ import xc.mst.dao.DBConnectionResetException;
 
 /**
  * MySQL implementation of the utility class for manipulating the permissions assigned to a group
- *
+ * 
  * @author Eric Osisek
  */
-public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
-{
+public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO {
     /**
      * A reference to the logger for this class
      */
@@ -73,28 +72,24 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
     private static Object psDeletePermissionsForGroupLock = new Object();
 
     @Override
-    public boolean insert(int groupId, int topLevelTabId)
-    {
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean insert(int groupId, int topLevelTabId) {
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Adding permission for the group with ID " + groupId + " to access the top level tab with ID " + topLevelTabId);
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to insert a group to Top Level Tab is not defined, create it
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME +
                                                         " (" + COL_GROUP_ID + ", " +
                                                                COL_TOP_LEVEL_TAB_ID + ") " +
                                        "VALUES (?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"add permission for a group\" PreparedStatement from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -109,45 +104,38 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
                 // Execute the insert statement and return the result
                 return dbConnectionManager.executeUpdate(psInsert) > 0;
             } // end try (insert the permission)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while adding permission for the group with ID " + groupId + "to access the top Level tab with ID " + topLevelTabId + ".", e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(groupId, topLevelTabId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally
         } // end synchronized
     } // end method insert(int, int)
 
     @Override
-    public boolean delete(int groupId, int topLevelTabId)
-    {
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean delete(int groupId, int topLevelTabId) {
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Removing permission to access the top level tab with ID " + topLevelTabId + "from the group with ID " + groupId + ".");
 
             // The ResultSet returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // If the PreparedStatement to insert a group to Top Level Tab is not defined, create it
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to insert the new row
                     String deleteSql = "DELETE FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME +
                                        "WHERE " + COL_GROUP_ID + "=? " +
                                        "AND " + COL_TOP_LEVEL_TAB_ID + "=? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"remove permission from a group\" PreparedStatement from the SQL " + deleteSql);
 
                     // A prepared statement to run the insert SQL
@@ -162,29 +150,24 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
                 // Execute the delete statement and return the result
                 return dbConnectionManager.executeUpdate(psDelete) > 0;
             } // end try (delete the permission)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while removing permission to access the top level tab with ID " + topLevelTabId + "from the group with ID " + groupId + ".");
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(groupId, topLevelTabId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally
         } // end synchronized
     } // end method delete(int, int)
 
     @Override
-    public List<Integer> getPermissionsForGroup(int groupId)
-    {
-        synchronized(psGetPermissionsForGroupLock)
-        {
-            if(log.isDebugEnabled())
+    public List<Integer> getPermissionsForGroup(int groupId) {
+        synchronized (psGetPermissionsForGroupLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the permissions for the group with group ID " + groupId);
 
             // The ResultSet from the SQL query
@@ -193,17 +176,15 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
             // The list of permissions for the requested group
             List<Integer> topLevelTabIds = new ArrayList<Integer>();
 
-            try
-            {
+            try {
                 // If the PreparedStatement to get permissions by group ID wasn't defined, create it
-                if(psGetPermissionsForGroup == null || dbConnectionManager.isClosed(psGetPermissionsForGroup))
-                {
+                if (psGetPermissionsForGroup == null || dbConnectionManager.isClosed(psGetPermissionsForGroup)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_TOP_LEVEL_TAB_ID + " " +
                                        "FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME + " " +
                                        "WHERE " + COL_GROUP_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get permissions for group\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -220,49 +201,42 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
                 results = dbConnectionManager.executeQuery(psGetPermissionsForGroup);
 
                 // For each result returned, add a group to Top Level Tab object to the list with the returned data
-                while(results.next())
+                while (results.next())
                     topLevelTabIds.add(new Integer(results.getInt(1)));
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + topLevelTabIds.size() + " top level tab IDs that the group with group ID " + groupId + " has permission to access.");
 
                 return topLevelTabIds;
             } // end try (get and return the top level tab IDs which the group has permission to access)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the permissions for the group with group ID " + groupId, e);
 
                 return topLevelTabIds;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getPermissionsForGroup(groupId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally
         } // end synchronized
     } // end method getPermissionsForGroup(int)
 
     @Override
-    public boolean deletePermissionsForGroup(int groupId)
-    {
-        synchronized(psDeletePermissionsForGroupLock)
-        {
-            if(log.isDebugEnabled())
+    public boolean deletePermissionsForGroup(int groupId) {
+        synchronized (psDeletePermissionsForGroupLock) {
+            if (log.isDebugEnabled())
                 log.debug("Removing the permissions for the group with group ID " + groupId);
 
-            try
-            {
+            try {
                 // If the PreparedStatement to delete permissions by group ID wasn't defined, create it
-                if(psDeletePermissionsForGroup == null || dbConnectionManager.isClosed(psDeletePermissionsForGroup))
-                {
+                if (psDeletePermissionsForGroup == null || dbConnectionManager.isClosed(psDeletePermissionsForGroup)) {
                     // SQL to get the rows
                     String selectSql = "DELETE FROM " + GROUPS_TO_TOP_LEVEL_TABS_TABLE_NAME + " " +
                                        "WHERE " + COL_GROUP_ID + "=? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"remove permissions for group\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -278,13 +252,12 @@ public class DefaultGroupPermissionUtilDAO extends GroupPermissionUtilDAO
                 // Execute the insert statement and return the result
                 return dbConnectionManager.executeUpdate(psDeletePermissionsForGroup) > 0;
             } // end try (remove all permissions from the user
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the permissions for the group with group ID " + groupId, e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return deletePermissionsForGroup(groupId);
             }

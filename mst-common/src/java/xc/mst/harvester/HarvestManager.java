@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.harvester;
 
 import gnu.trove.TLongByteHashMap;
@@ -54,7 +54,6 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
 
-
 public class HarvestManager extends WorkerThread {
 
     /**
@@ -62,7 +61,6 @@ public class HarvestManager extends WorkerThread {
      */
     private static Logger log = Logger.getLogger("harvestIn");
     private static Logger LOG = Logger.getLogger(HarvestManager.class);
-
 
     protected static DateTimeFormatter UTC_SECOND_FORMATTER = null;
     protected static DateTimeFormatter UTC_DAY_FORMATTER = null;
@@ -73,9 +71,9 @@ public class HarvestManager extends WorkerThread {
         UTC_DAY_FORMATTER = ISODateTimeFormat.date();
         UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
     }
-    //        Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
+    // Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
     protected DynMap oaiIdCache = new DynMap();
-    protected TLongByteHashMap previousStatuses= new TLongByteHashMap();
+    protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
 
     // The is public and static simply for the MockHarvestTest
     public static String lastOaiRequest = null;
@@ -94,7 +92,7 @@ public class HarvestManager extends WorkerThread {
 
     public String printDateTime(Date d) {
         String s = UTC_SECOND_FORMATTER.print(d.getTime());
-        s = s.substring(0, s.length()-5)+"Z";
+        s = s.substring(0, s.length() - 5) + "Z";
         return s;
     }
 
@@ -108,18 +106,18 @@ public class HarvestManager extends WorkerThread {
      */
     protected int deletedRecord = -1;
 
-    protected Emailer mailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
+    protected Emailer mailer = (Emailer) MSTConfiguration.getInstance().getBean("Emailer");
 
     public String getName() {
         if (harvestSchedule != null && harvestSchedule.getProvider() != null) {
-            return "harvest-"+harvestSchedule.getProvider().getName();
+            return "harvest-" + harvestSchedule.getProvider().getName();
         } else {
             return "harvest";
         }
     }
 
     public String getDetailedStatus() {
-        return "processed "+this.recordsProcessedThisRun+" of "+this.records2ProcessThisRun;
+        return "processed " + this.recordsProcessedThisRun + " of " + this.records2ProcessThisRun;
     }
 
     public void setHarvestSchedule(HarvestSchedule harvestSchedule) {
@@ -135,7 +133,7 @@ public class HarvestManager extends WorkerThread {
             previousStatuses.clear();
             startTime = new Date().getTime();
             // BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
-            // list of size zero.  The DAO which creates the harvestSchedule doesn't inject steps into it.  So
+            // list of size zero. The DAO which creates the harvestSchedule doesn't inject steps into it. So
             // there's really no other way to tell.
             if (harvestSchedule.getSteps() == null || harvestSchedule.getSteps().size() == 0) {
                 harvestScheduleSteps = getHarvestScheduleStepDAO().getStepsForSchedule(harvestSchedule.getId());
@@ -161,40 +159,36 @@ public class HarvestManager extends WorkerThread {
     public void finishInner(boolean success) {
         super.finishInner(success);
         RecordCounts mostRecentIncomingRecordCounts =
-            getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName());
+                getRecordCountsDAO().getMostRecentIncomingRecordCounts(repo.getName());
         // I'm subtracting 1s from startTime because they might actually be equal by the second
         if (mostRecentIncomingRecordCounts == null) {
             LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts == null!");
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null mostRecentIncomingRecordCounts!");
-        }
-        else if (mostRecentIncomingRecordCounts.getHarvestStartDate() == null) {
+        } else if (mostRecentIncomingRecordCounts.getHarvestStartDate() == null) {
             LOG.error("*** HarvestManager.finishInner: mostRecentIncomingRecordCounts.getHarvestStartDate() == null!");
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), "Harvest Manager - unable to print record counts, null harvest start date!");
-        }
-        else if (recordsProcessedThisRun > 0) {
+        } else if (recordsProcessedThisRun > 0) {
             for (RecordCounts rc : new RecordCounts[] {
                     mostRecentIncomingRecordCounts,
-                    getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName())
-            }) {
-                LOG.debug("harvestSchedule: "+harvestSchedule);
-                LOG.debug("harvestSchedule.getProvider(): "+harvestSchedule.getProvider());
-                LOG.debug("harvestSchedule.getProvider().getLogFileName(): "+harvestSchedule.getProvider().getLogFileName());
-                LOG.debug("rc: "+rc);
-                LOG.debug("repo: "+repo);
+                    getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName()) }) {
+                LOG.debug("harvestSchedule: " + harvestSchedule);
+                LOG.debug("harvestSchedule.getProvider(): " + harvestSchedule.getProvider());
+                LOG.debug("harvestSchedule.getProvider().getLogFileName(): " + harvestSchedule.getProvider().getLogFileName());
+                LOG.debug("rc: " + rc);
+                LOG.debug("repo: " + repo);
                 LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), rc.toString(repo.getName()));
-                //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), " %************************%");
+                // LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), " %************************%");
             }
             LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), repo.getRecordStatsByType());
-            //LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(),     " &&&&&&&&&&&&&&&&&&&&&&&&&&");
+            // LogWriter.addInfo(harvestSchedule.getProvider().getLogFileName(), " &&&&&&&&&&&&&&&&&&&&&&&&&&");
 
             // in case you find a reason to do record count calculations here, uncomment this, grab the desired type data from the map
             // below, and make your calculations.
             //
-            //RecordCounts rc = getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName());
-            //Map<String, AtomicInteger> counts4type = rc.getCounts().get(RecordCounts.TOTALS);
-        }
-        else {
-            LOG.debug("HarvestManager will not write record counts to harvest log because recordsProcessThisRun="+recordsProcessedThisRun);
+            // RecordCounts rc = getRecordCountsDAO().getTotalIncomingRecordCounts(repo.getName());
+            // Map<String, AtomicInteger> counts4type = rc.getCounts().get(RecordCounts.TOTALS);
+        } else {
+            LOG.debug("HarvestManager will not write record counts to harvest log because recordsProcessThisRun=" + recordsProcessedThisRun);
         }
     }
 
@@ -202,7 +196,7 @@ public class HarvestManager extends WorkerThread {
         try {
             log.error(t.getMessage(), t);
             Provider provider = currentHarvest.getProvider();
-            provider.setErrors(provider.getErrors()+1);
+            provider.setErrors(provider.getErrors() + 1);
             getProviderDAO().update(provider);
         } catch (DataException de) {
             throw new RuntimeException(de);
@@ -212,10 +206,10 @@ public class HarvestManager extends WorkerThread {
 
     public void validate(HarvestScheduleStep scheduleStep) throws DataException {
         Provider provider = harvestSchedule.getProvider();
-        // Try to validate the repository.  An exception will be thrown and caught if validation fails.
+        // Try to validate the repository. An exception will be thrown and caught if validation fails.
         // Validate that the repository conforms to the OAI protocol
         TimingLogger.log("about to validate repo");
-        ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+        ValidateRepository validator = (ValidateRepository) MSTConfiguration.getInstance().getBean("ValidateRepository");
 
         validator.validate(harvestSchedule.getProvider().getId());
 
@@ -233,9 +227,9 @@ public class HarvestManager extends WorkerThread {
         Format format = getFormatDAO().getByName(metadataPrefix);
 
         // If the provider no longer supports the requested format we can't harvest it
-        if(!harvestSchedule.getProvider().getFormats().contains(format)) {
+        if (!harvestSchedule.getProvider().getFormats().contains(format)) {
             String errorMsg = "The harvest could not be run because the MetadataFormat " + metadataPrefix +
-                " is no longer supported by the OAI repository " + provider.getOaiProviderUrl() + ".";
+                    " is no longer supported by the OAI repository " + provider.getOaiProviderUrl() + ".";
 
             LogWriter.addError(harvestSchedule.getProvider().getLogFileName(), errorMsg);
             sendReportEmail(errorMsg);
@@ -245,13 +239,13 @@ public class HarvestManager extends WorkerThread {
         String setSpec = null;
 
         // If there was a set, set up the setSpec
-        if(scheduleStep.getSet() != null)
+        if (scheduleStep.getSet() != null)
             setSpec = scheduleStep.getSet().getSetSpec();
 
         // If the provider no longer contains the requested set we can't harvest it
-        if(setSpec != null && !harvestSchedule.getProvider().getSets().contains(getSetDAO().getBySetSpec(setSpec))) {
+        if (setSpec != null && !harvestSchedule.getProvider().getSets().contains(getSetDAO().getBySetSpec(setSpec))) {
             String errorMsg = "The harvest could not be run because the Set " + setSpec +
-                " is no longer supported by the OAI repository " + provider.getOaiProviderUrl() + ".";
+                    " is no longer supported by the OAI repository " + provider.getOaiProviderUrl() + ".";
 
             LogWriter.addError(harvestSchedule.getProvider().getLogFileName(), errorMsg);
             sendReportEmail(errorMsg);
@@ -274,7 +268,7 @@ public class HarvestManager extends WorkerThread {
         }
         */
         requestsSent4Step++;
-        log.debug("harvestScheduleSteps.size(): "+harvestScheduleSteps.size());
+        log.debug("harvestScheduleSteps.size(): " + harvestScheduleSteps.size());
         if (retVal && harvestScheduleStepIndex >= 0 && harvestScheduleStepIndex < harvestScheduleSteps.size()) {
             Provider provider = null;
             try {
@@ -288,9 +282,8 @@ public class HarvestManager extends WorkerThread {
                 String setSpec = null;
 
                 // If there was a set, set up the setSpec
-                if(scheduleStep.getSet() != null)
+                if (scheduleStep.getSet() != null)
                     setSpec = scheduleStep.getSet().getSetSpec();
-
 
                 HarvestSchedule schedule = scheduleStep.getSchedule();
                 String baseURL = currentHarvest.getProvider().getOaiProviderUrl();
@@ -302,21 +295,21 @@ public class HarvestManager extends WorkerThread {
                 Document doc = null;
                 if (baseURL.startsWith("file:")) {
                     File pwd = new File(".");
-                    log.debug("pwd: "+pwd.getAbsolutePath());
+                    log.debug("pwd: " + pwd.getAbsolutePath());
                     pwd = new File(".");
-                    log.debug("pwd: "+pwd.getAbsolutePath());
-                    //pwd = new File(new URI("file://."));
-                    //log.debug("pwd: "+pwd.getAbsolutePath());
+                    log.debug("pwd: " + pwd.getAbsolutePath());
+                    // pwd = new File(new URI("file://."));
+                    // log.debug("pwd: "+pwd.getAbsolutePath());
                     String folderStr = baseURL.substring("file://".length());
-                    log.debug("folderStr: "+folderStr);
+                    log.debug("folderStr: " + folderStr);
                     File folder = new File(folderStr);
                     boolean nextOne = false;
                     File file2harvest = null;
-                    log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
-                    log.debug("provider: "+provider);
-                    log.debug("provider.hashCode(): "+provider.hashCode());
+                    log.debug("provider.getLastOaiRequest(): " + provider.getLastOaiRequest());
+                    log.debug("provider: " + provider);
+                    log.debug("provider.hashCode(): " + provider.hashCode());
                     if (!folder.exists()) {
-                        throw new RuntimeException("folder "+folder.getAbsolutePath()+" does not exist");
+                        throw new RuntimeException("folder " + folder.getAbsolutePath() + " does not exist");
                     }
                     if (folder.listFiles() != null) {
                         if (provider.getLastOaiRequest() != null) {
@@ -332,8 +325,8 @@ public class HarvestManager extends WorkerThread {
                         File[] files = folder.listFiles();
                         files = sortFiles(files);
                         for (File file : files) {
-                            log.debug("file.getName(): "+file.getName());
-                            log.debug("provider.getLastOaiRequest(): "+provider.getLastOaiRequest());
+                            log.debug("file.getName(): " + file.getName());
+                            log.debug("provider.getLastOaiRequest(): " + provider.getLastOaiRequest());
                             if (!file.getName().endsWith(".xml")) {
                                 continue;
                             } else if (nextOne || provider.getLastOaiRequest() == null) {
@@ -346,7 +339,7 @@ public class HarvestManager extends WorkerThread {
                             }
                         }
                     }
-                    log.info("file2harvest: "+file2harvest);
+                    log.info("file2harvest: " + file2harvest);
                     if (file2harvest == null) {
                         return false;
                     }
@@ -360,9 +353,9 @@ public class HarvestManager extends WorkerThread {
                     String baseRequest = null;
 
                     // If this is the first request, setup a ListRecords request with the
-                    // correct metadataPrefix.  If we are supposed harvest a specific set
+                    // correct metadataPrefix. If we are supposed harvest a specific set
                     // or use a known from or until parameter, set them here as well.
-                    //if (hssFirstTime) {
+                    // if (hssFirstTime) {
                     if (resumptionToken == null) {
                         this.recordsProcessedThisRun = 0;
                         this.records2ProcessThisRun = 0;
@@ -372,9 +365,9 @@ public class HarvestManager extends WorkerThread {
                         request += "&metadataPrefix=" + metadataPrefix;
 
                         if (setSpec != null && setSpec.length() > 0) {
-                            //strip off the first part of the setSpec because it's the reponame
+                            // strip off the first part of the setSpec because it's the reponame
                             int idx0 = setSpec.indexOf(':');
-                            request += "&set=" + URLEncoder.encode(setSpec.substring(idx0+1), "UTF-8");
+                            request += "&set=" + URLEncoder.encode(setSpec.substring(idx0 + 1), "UTF-8");
                         }
 
                         baseRequest = request;
@@ -383,16 +376,16 @@ public class HarvestManager extends WorkerThread {
                         // always be passing in a start and end date
                         if (currentHarvest.getStartTime() != null) {
                             if (Provider.DAY_GRANULARITY.equals(provider.getGranularity())) {
-                                request += "&from="+printDate(currentHarvest.getStartTime());
+                                request += "&from=" + printDate(currentHarvest.getStartTime());
                             } else if (Provider.SECOND_GRANULARITY.equals(provider.getGranularity())) {
-                                request += "&from="+printDateTime(currentHarvest.getStartTime());
+                                request += "&from=" + printDateTime(currentHarvest.getStartTime());
                             }
                         }
                         if (currentHarvest.getEndTime() != null) {
                             if (Provider.DAY_GRANULARITY.equals(provider.getGranularity())) {
-                                request += "&until="+printDate(currentHarvest.getEndTime());
+                                request += "&until=" + printDate(currentHarvest.getEndTime());
                             } else if (Provider.SECOND_GRANULARITY.equals(provider.getGranularity())) {
-                                request += "&until="+printDateTime(currentHarvest.getEndTime());
+                                request += "&until=" + printDateTime(currentHarvest.getEndTime());
                             }
                         }
 
@@ -405,7 +398,7 @@ public class HarvestManager extends WorkerThread {
                         try {
                             resumptionToken = URLEncoder.encode(resumptionToken, "utf-8");
                         } catch (UnsupportedEncodingException uee) {
-                            log.error("couldn't encode resumption token: "+resumptionToken);
+                            log.error("couldn't encode resumption token: " + resumptionToken);
                         }
                         request += "?verb=" + verb + "&resumptionToken=" + resumptionToken;
                     }
@@ -431,7 +424,7 @@ public class HarvestManager extends WorkerThread {
 
                 TimingLogger.start("parseRecords");
                 resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
-                log.debug("resumptionToken: "+resumptionToken);
+                log.debug("resumptionToken: " + resumptionToken);
                 TimingLogger.stop("parseRecords");
 
                 getProviderDAO().update(provider, false);
@@ -439,12 +432,12 @@ public class HarvestManager extends WorkerThread {
                 LogWriter.addInfo(scheduleStep.getSchedule().getProvider().getLogFileName(), "Finished harvesting " + baseURL);
                 // + ", " + recordsProcessed + " new records were returned by the OAI provider.");
 
-            } catch(DataException de) {
+            } catch (DataException de) {
                 logError(de);
                 retVal = false;
-            } catch(HttpException he) {
+            } catch (HttpException he) {
                 logError(he);
-            } catch(Throwable t) {
+            } catch (Throwable t) {
                 logError(t);
             }
             hssFirstTime = false;
@@ -466,8 +459,8 @@ public class HarvestManager extends WorkerThread {
                 }
             }
             if (requestsSent4Step % 10 == 0) {
-                long num = (recordsProcessedThisRun / ( requestsSent4Step/10));
-                LOG.debug("**** Reset with performance, requestsSent4Step="+requestsSent4Step+ " recordsProcessedThisRun="+num);
+                long num = (recordsProcessedThisRun / (requestsSent4Step / 10));
+                LOG.debug("**** Reset with performance, requestsSent4Step=" + requestsSent4Step + " recordsProcessedThisRun=" + num);
                 TimingLogger.reset(num);
             }
         } else {
@@ -493,7 +486,7 @@ public class HarvestManager extends WorkerThread {
     // must then sort by token after 2nd _
     // also note that the first file gets the special name, initial.xml
     //
-    // assumptions:  already know files != null
+    // assumptions: already know files != null
     private File[] sortFiles(File[] files) {
         if (files.length < 2) {
             return files;
@@ -504,19 +497,17 @@ public class HarvestManager extends WorkerThread {
             if (st.countTokens() >= 3) {
                 // have at least 2 underscores...can proceed with sorting by token after 2nd underscore.
                 return reallySortFiles(files);
-            }
-            else {
+            } else {
                 return files;
             }
-        }
-        else if (files.length > 1) {
+        } else if (files.length > 1) {
             name = files[1].getName();
             StringTokenizer st = new StringTokenizer(name, "_");
             if (st.countTokens() >= 3) {
                 // have at least 2 underscores...can proceed with sorting by token after 2nd underscore.
                 return reallySortFiles(files);
-            }
-            else return files;
+            } else
+                return files;
         }
         return files;
     }
@@ -529,24 +520,23 @@ public class HarvestManager extends WorkerThread {
     // by earlier method determined we have files containing 2 '_' characters, sort these by int after 2nd underscore.
     private File[] reallySortFiles(File[] files) {
         TreeMap<Long, File> map = new TreeMap<Long, File>();
-        for (File file: files) {
-            if (file.getName().startsWith("initial")) {  // want this one to be 1st.
+        for (File file : files) {
+            if (file.getName().startsWith("initial")) { // want this one to be 1st.
                 map.put(0l, file);
-            }
-            else {
+            } else {
                 StringTokenizer st = new StringTokenizer(file.getName(), "_");
                 try {
-                    st.nextToken(); st.nextToken();
+                    st.nextToken();
+                    st.nextToken();
                 } catch (NoSuchElementException e) {
-                    LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file "+file.toString(), e);
+                    LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file " + file.toString(), e);
                     return files;
                 }
                 try {
                     long tokL = Long.parseLong(st.nextToken());
                     map.put(tokL, file);
-                }
-                catch (NumberFormatException nfe) {
-                    LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file "+file.toString(), nfe);
+                } catch (NumberFormatException nfe) {
+                    LOG.error("HarvestManager, trying to harvest from file, unexpected exception handling file " + file.toString(), nfe);
                     return files;
                 }
             }
@@ -566,21 +556,21 @@ public class HarvestManager extends WorkerThread {
         Element errorEl = root.getChild("error", root.getNamespace());
         if (errorEl != null) {
             String errorCode = errorEl.getAttributeValue("code");
-            log.info("errorCode: "+errorCode+" "+errorEl.getText());
+            log.info("errorCode: " + errorCode + " " + errorEl.getText());
             return null;
-            //throw new RuntimeException("errorCode: "+errorCode+" "+errorEl.getText());
+            // throw new RuntimeException("errorCode: "+errorCode+" "+errorEl.getText());
         }
 
         Element listRecordsEl = null;
-        // Get the verb (ListRecords) element.  Try to get it as though it were the child of
-        // the root element.  If that doesn't work, assume that it is the root element itself
+        // Get the verb (ListRecords) element. Try to get it as though it were the child of
+        // the root element. If that doesn't work, assume that it is the root element itself
         try {
             listRecordsEl = root.getChild("ListRecords", root.getNamespace());
-        } catch (Throwable e){
+        } catch (Throwable e) {
             listRecordsEl = root;
         }
 
-        // Try to get the element containing the first record.  It should be a child of the
+        // Try to get the element containing the first record. It should be a child of the
         // verb element.
         Element recordEl = null;
         try {
@@ -593,7 +583,7 @@ public class HarvestManager extends WorkerThread {
             } catch (Exception e1) {
                 LogWriter.addError(currentHarvest.getProvider().getLogFileName(), "The OAI provider returned an invalid response to the ListRecords request.");
                 sendReportEmail("The OAI provider returned an invalid response to the ListRecords request.");
-                throw new RuntimeException("The data provider returned an invalid response to the ListRecords request: " + e.getMessage());  //exc. e more interesting than e1?
+                throw new RuntimeException("The data provider returned an invalid response to the ListRecords request: " + e.getMessage()); // exc. e more interesting than e1?
             }
 
             // If the response contained the URL, report the error "no records found"
@@ -604,7 +594,7 @@ public class HarvestManager extends WorkerThread {
                 return null;
             }
 
-            // If we got here, the URL element wasn't found.  In this
+            // If we got here, the URL element wasn't found. In this
             // case report the error as "invalid OAI response"
             LogWriter.addError(currentHarvest.getProvider().getLogFileName(), "The OAI provider returned an invalid response to the ListRecords request.");
             sendReportEmail("The OAI provider returned an invalid response to the ListRecords request.");
@@ -613,10 +603,10 @@ public class HarvestManager extends WorkerThread {
 
         // Loop over all records in the OAI response
         List<Element> recordsEl = listRecordsEl.getChildren("record", root.getNamespace());
-        log.debug("recordsEl.size(): "+recordsEl.size());
+        log.debug("recordsEl.size(): " + recordsEl.size());
 
         for (Object recordElObj : recordsEl) {
-            recordEl = (Element)recordElObj;
+            recordEl = (Element) recordElObj;
 
             try {
                 HarvestScheduleStep scheduleStep = harvestScheduleSteps.get(harvestScheduleStepIndex);
@@ -635,11 +625,11 @@ public class HarvestManager extends WorkerThread {
                     getRepositoryDAO().injectId(record);
                 } else {
                     record.setId(recordId);
-                    prevStatus = (char)previousStatuses.get(recordId);
-                    log.debug("found prevStatus: "+prevStatus);
+                    prevStatus = (char) previousStatuses.get(recordId);
+                    log.debug("found prevStatus: " + prevStatus);
                     record.setPreviousStatus(prevStatus);
                 }
-                previousStatuses.put(record.getId(), (byte)record.getStatus());
+                previousStatuses.put(record.getId(), (byte) record.getStatus());
                 oaiIdCache.put(nonRedundantId, record.getId());
 
                 repo.addRecord(record);
@@ -665,11 +655,11 @@ public class HarvestManager extends WorkerThread {
         if (resumptionEl != null) {
             resumption = resumptionEl.getText();
         }
-        log.debug("resumption: "+resumption);
+        log.debug("resumption: " + resumption);
         if (!StringUtils.isEmpty(resumption)) {
             try {
                 this.records2ProcessThisRun = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
-                oaiIdCache.ensureCapacity((int)this.records2ProcessThisRun);
+                oaiIdCache.ensureCapacity((int) this.records2ProcessThisRun);
             } catch (Throwable t) {
                 this.records2ProcessThisRun = -1;
             }
@@ -683,8 +673,9 @@ public class HarvestManager extends WorkerThread {
 
     /**
      * Builds and sends an email report about the harvest to the schedule's notify email address.
-     *
-     * @param problem The problem which prevented the harvest from finishing, or null if the harvest was successful
+     * 
+     * @param problem
+     *            The problem which prevented the harvest from finishing, or null if the harvest was successful
      */
     protected boolean sendReportEmail(String problem) {
         if (harvestSchedule.getNotifyEmail() != null && mailer.isConfigured()) {
@@ -695,13 +686,13 @@ public class HarvestManager extends WorkerThread {
             } catch (UnknownHostException e) {
                 log.error("Host name query failed.", e);
             }
-            String subject = "Results of harvesting " + harvestSchedule.getProvider().getOaiProviderUrl() +" by MST Server on " + addr.getHostName();
+            String subject = "Results of harvesting " + harvestSchedule.getProvider().getOaiProviderUrl() + " by MST Server on " + addr.getHostName();
 
             // The email's body
             StringBuilder body = new StringBuilder();
 
             // First report any problems which prevented the harvest from finishing
-            if(problem != null)
+            if (problem != null)
                 body.append("The harvest failed for the following reason: ").append(problem).append("\n\n");
 
             /*
@@ -715,7 +706,7 @@ public class HarvestManager extends WorkerThread {
         } else {
             // note, after configuring email, seem to have to restart MST for it to work.
             log.debug("HarvestManager.sendReportEmail-mail is not configured right! sendto:" +
-                    harvestSchedule.getNotifyEmail()+ " isConfigured:"+mailer.isConfigured());
+                    harvestSchedule.getNotifyEmail() + " isConfigured:" + mailer.isConfigured());
             return false;
         }
     }

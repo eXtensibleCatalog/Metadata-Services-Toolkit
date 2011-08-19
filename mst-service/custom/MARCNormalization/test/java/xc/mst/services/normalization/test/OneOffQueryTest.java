@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services.normalization.test;
 
 import java.io.File;
@@ -33,31 +33,31 @@ public class OneOffQueryTest extends BaseTest {
 
         XmlHelper x = new XmlHelper();
 
-        for (int i=0; i<500; i++) {
+        for (int i = 0; i < 500; i++) {
             if (i == 200) {
                 TimingLogger.reset();
             }
-            int from = i%10;
-            int to = (i%10)-1;
+            int from = i % 10;
+            int to = (i % 10) - 1;
             if (to == -1) {
-                to=9;
+                to = 9;
             }
-            str = str.replaceAll(from+"", to+"");
+            str = str.replaceAll(from + "", to + "");
             long t0 = System.currentTimeMillis();
             TimingLogger.start("x");
             Document d = x.getJDomDocument(str);
             TimingLogger.stop("x");
             long t1 = System.currentTimeMillis();
-            System.out.println("2 time to execute: "+(t1-t0));
-            System.out.println("d: "+d);
+            System.out.println("2 time to execute: " + (t1 - t0));
+            System.out.println("d: " + d);
 
             t0 = System.currentTimeMillis();
-                TimingLogger.start("y");
+            TimingLogger.start("y");
             str = x.getString(d.detachRootElement());
-                TimingLogger.stop("y");
+            TimingLogger.stop("y");
             t1 = System.currentTimeMillis();
 
-            System.out.println("3 time to execute: "+(t1-t0));
+            System.out.println("3 time to execute: " + (t1 - t0));
 
         }
         TimingLogger.reset();
@@ -66,24 +66,24 @@ public class OneOffQueryTest extends BaseTest {
     public void OneOffQueryTest() {
 
         try {
-            Connection conn = ((DataSource)getBean("DataSource")).getConnection();
+            Connection conn = ((DataSource) getBean("DataSource")).getConnection();
 
             PreparedStatement ps = conn.prepareStatement("select record_id from marcnormalization.record_predecessors where pred_record_id = ?");
 
-            long k=2000000;
+            long k = 2000000;
 
-            for (long i=0; i<1000; i++) {
+            for (long i = 0; i < 1000; i++) {
                 TimingLogger.start("ps query");
                 long t0 = System.currentTimeMillis();
-                ps.setLong(1, k+i);
+                ps.setLong(1, k + i);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     long rid = rs.getLong("record_id");
                     long t1 = System.currentTimeMillis();
-                    System.out.println("time to execute: "+(t1-t0)+"     "+rid);
+                    System.out.println("time to execute: " + (t1 - t0) + "     " + rid);
                 } else {
                     long t1 = System.currentTimeMillis();
-                    System.out.println("time to execute: "+(t1-t0)+"     no record found for "+k+i);
+                    System.out.println("time to execute: " + (t1 - t0) + "     no record found for " + k + i);
                 }
                 TimingLogger.stop("ps query");
             }

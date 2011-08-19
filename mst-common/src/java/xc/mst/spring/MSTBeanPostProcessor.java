@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.spring;
 
@@ -43,28 +43,28 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof BaseDAO) {
             try {
-                ((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("MetadataServiceDataSource"));
+                ((BaseDAO) bean).setDataSource((DataSource) this.applicationContext.getBean("MetadataServiceDataSource"));
             } catch (NoSuchBeanDefinitionException nsbde) {
-                ((BaseDAO)bean).setDataSource((DataSource)this.applicationContext.getBean("DataSource"));
+                ((BaseDAO) bean).setDataSource((DataSource) this.applicationContext.getBean("DataSource"));
             }
             try {
-                ((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));
+                ((BaseDAO) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MetadataServiceMSTConfiguration"));
             } catch (NoSuchBeanDefinitionException nsbde) {
-                ((BaseDAO)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
+                ((BaseDAO) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MSTConfiguration"));
             }
-            ((BaseDAO)bean).setSessionFactory((SessionFactory)this.applicationContext.getBean("SessionFactory"));
-            ((BaseDAO)bean).setUtil((Util)this.applicationContext.getBean("Util"));
+            ((BaseDAO) bean).setSessionFactory((SessionFactory) this.applicationContext.getBean("SessionFactory"));
+            ((BaseDAO) bean).setUtil((Util) this.applicationContext.getBean("Util"));
         } else if (bean instanceof BaseService) {
-            ((BaseService)bean).setUtil((Util)this.applicationContext.getBean("Util"));
+            ((BaseService) bean).setUtil((Util) this.applicationContext.getBean("Util"));
             try {
-                ((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("MetadataServiceTransactionManager"));
+                ((BaseService) bean).setTransactionManager((PlatformTransactionManager) this.applicationContext.getBean("MetadataServiceTransactionManager"));
             } catch (NoSuchBeanDefinitionException nsbde) {
-                ((BaseService)bean).setTransactionManager((PlatformTransactionManager)this.applicationContext.getBean("TransactionManager"));
+                ((BaseService) bean).setTransactionManager((PlatformTransactionManager) this.applicationContext.getBean("TransactionManager"));
             }
             try {
-                ((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MetadataServiceMSTConfiguration"));
+                ((BaseService) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MetadataServiceMSTConfiguration"));
             } catch (NoSuchBeanDefinitionException nsbde) {
-                ((BaseService)bean).setConfig((MSTConfiguration)this.applicationContext.getBean("MSTConfiguration"));
+                ((BaseService) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MSTConfiguration"));
             }
 
             Map<String, Method> serviceSetters = new HashMap<String, Method>();
@@ -82,15 +82,15 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
                     m = serviceSetters.get(s);
                     o = this.applicationContext.getBean(s);
                     try {
-                        o = this.applicationContext.getBean("Generic"+s);
-                        LOG.debug("using Generic"+s+" for "+bean.getClass()+"."+m.getName());
+                        o = this.applicationContext.getBean("Generic" + s);
+                        LOG.debug("using Generic" + s + " for " + bean.getClass() + "." + m.getName());
                     } catch (Throwable t) {
                     }
                     m.invoke(bean, o);
                 } catch (Throwable t) {
-                    LOG.error(bean.getClass()+"."+m.getName());
+                    LOG.error(bean.getClass() + "." + m.getName());
                     if (o != null) {
-                        LOG.error("o: "+o);
+                        LOG.error("o: " + o);
                     }
                     LOG.error("", t);
                 }
@@ -117,7 +117,7 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
                     // I'm filter this one out because it happens everytime the app loads and is
                     // confusing users
                     if (m.getName() != null && !m.getName().equals("setMetadataService")) {
-                        LOG.error(t.getMessage()+" error calling "+bean.getClass()+"."+m.getName());
+                        LOG.error(t.getMessage() + " error calling " + bean.getClass() + "." + m.getName());
                     }
                 }
             }

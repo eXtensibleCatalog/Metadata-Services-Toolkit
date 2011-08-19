@@ -1,21 +1,20 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.bo.user;
 
 /**
  * Represents a server which a user can authenticate against
- *
+ * 
  * @author Eric Osisek
  */
-public class Server
-{
+public class Server {
     /**
      * The server's ID
      */
@@ -74,225 +73,216 @@ public class Server
     /**
      * Enumeration for the different types of servers the MST handles
      */
-    public enum ServerType { UNDEFINED, LDAP, LOCAL }
+    public enum ServerType {
+        UNDEFINED, LDAP, LOCAL
+    }
 
     /**
      * Gets the server's ID
-     *
+     * 
      * @return The server's ID
      */
-    public int getId()
-    {
+    public int getId() {
         return id;
     } // end method getId()
 
     /**
      * Sets the server's ID
-     *
-     * @param id The server's new ID
+     * 
+     * @param id
+     *            The server's new ID
      */
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     } // end method setId(int)
 
     /**
      * Gets the server's port
-     *
+     * 
      * @return The server's port
      */
-    public int getPort()
-    {
+    public int getPort() {
         return port;
     } // end method getPort()
 
     /**
      * Sets the server's port
-     *
-     * @param port The server's new port
+     * 
+     * @param port
+     *            The server's new port
      */
-    public void setPort(int port)
-    {
+    public void setPort(int port) {
         this.port = port;
     } // end method setPort(int)
 
     /**
      * Gets the server's user name attribute
-     *
+     * 
      * @return The server's user name attribute
      */
-    public String getUserNameAttribute()
-    {
+    public String getUserNameAttribute() {
         return usernameAttribute;
     } // end method getUserNameAttribute()
 
     /**
      * Sets the server's user name attribute
-     *
-     * @param usernameAttribute The server's new user name attribute
+     * 
+     * @param usernameAttribute
+     *            The server's new user name attribute
      */
-    public void setUserNameAttribute(String usernameAttribute)
-    {
+    public void setUserNameAttribute(String usernameAttribute) {
         this.usernameAttribute = usernameAttribute;
     } // end method setUserNameAttribute(String)
 
     /**
-     * Gets the server's start location.  Servers which are not LDAP servers have a null start location.
-     *
+     * Gets the server's start location. Servers which are not LDAP servers have a null start location.
+     * 
      * @return The server's start location
      */
-    public String getStartLocation()
-    {
+    public String getStartLocation() {
         return startLocation;
     } // end method getStartLocation()
 
     /**
-     * Sets the server's start location.  Servers which are not LDAP servers must not have a start location
-     *
-     * @param startLocation The server's new start location
+     * Sets the server's start location. Servers which are not LDAP servers must not have a start location
+     * 
+     * @param startLocation
+     *            The server's new start location
      */
-    public void setStartLocation(String startLocation)
-    {
+    public void setStartLocation(String startLocation) {
         this.startLocation = startLocation;
     } // end method setStartLocation(String)
 
     /**
      * Gets the server's URL
-     *
+     * 
      * @return The server's URL
      */
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     } // end method getUrl()
 
     /**
      * Sets the server's URL
-     *
-     * @param url The server's new URL
+     * 
+     * @param url
+     *            The server's new URL
      */
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = url;
     } // end method setUrl(String)
 
     /**
      * Gets the server's name
-     *
+     * 
      * @return The server's name
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     } // end method getName()
 
     /**
      * Sets the server's name
-     *
-     * @param name The server's new name
+     * 
+     * @param name
+     *            The server's new name
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     } // end method setName(String)
 
     /**
      * Gets the server's type
-     *
+     * 
      * @return The server's type
      */
-    public ServerType getType()
-    {
+    public ServerType getType() {
         return type;
     } // end method getType()
 
     /**
      * Sets the server's type.
-     *
-     * @param type The server's new type.  The passed value should be one of the TYPE constants.
+     * 
+     * @param type
+     *            The server's new type. The passed value should be one of the TYPE constants.
      */
-    public void setType(ServerType type)
-    {
+    public void setType(ServerType type) {
         this.type = type;
     } // end method setType(ServerType)
 
     /**
      * Gets the server's institution
-     *
+     * 
      * @return The server's institution
      */
-    public String getInstitution()
-    {
+    public String getInstitution() {
         return institution;
     } // end method getInstitution()
 
     /**
      * Sets the server's institution
-     *
-     * @param institution The server's institution
+     * 
+     * @param institution
+     *            The server's institution
      */
-    public void setInstitution(String institution)
-    {
+    public void setInstitution(String institution) {
         this.institution = institution;
     } // end method setInstitution(String)
 
     /**
      * Gets the URL of the server's forgot password page
-     *
+     * 
      * @return The the URL of the server's forgot password page
      */
-    public String getForgotPasswordUrl()
-    {
+    public String getForgotPasswordUrl() {
         return forgotPasswordUrl;
     } // end method getForgotPasswordUrl()
 
     /**
      * Sets the URL of the server's forgot password page
-     *
-     * @param forgotPasswordUrl The new URL of the server's forgot password page
+     * 
+     * @param forgotPasswordUrl
+     *            The new URL of the server's forgot password page
      */
-    public void setForgotPasswordUrl(String forgotPasswordUrl)
-    {
+    public void setForgotPasswordUrl(String forgotPasswordUrl) {
         this.forgotPasswordUrl = forgotPasswordUrl;
     } // end method setForgotPasswordUrl(String)
 
     /**
      * Gets the label of the server's forgot password page
-     *
+     * 
      * @return The label of the server's forgot password page
      */
-    public String getForgotPasswordLabel()
-    {
+    public String getForgotPasswordLabel() {
         return forgotPasswordLabel;
     } // end method getForgotPasswordLabel()
 
     /**
      * Sets the label of the server's forgot password page
-     *
-     * @param forgotPasswordLabel The new label of the server's forgot password page
+     * 
+     * @param forgotPasswordLabel
+     *            The new label of the server's forgot password page
      */
-    public void setForgotPasswordLabel(String forgotPasswordLabel)
-    {
+    public void setForgotPasswordLabel(String forgotPasswordLabel) {
         this.forgotPasswordLabel = forgotPasswordLabel;
     } // end method setForgotPasswordlabel(String)
 
     /**
      * Gets whether or not the user should be shown the server's forgot password link
-     *
+     * 
      * @return Whether or not the user should be shown the server's forgot password link
      */
-    public boolean getShowForgotPasswordLink()
-    {
+    public boolean getShowForgotPasswordLink() {
         return showForgotPasswordLink;
     } // end method getShowForgotPasswordLink()
 
     /**
      * Sets whether or not the user should be shown the server's forgot password link
-     *
-     * @param showForgotPasswordLink Whether or not the user should be shown the server's forgot password link
+     * 
+     * @param showForgotPasswordLink
+     *            Whether or not the user should be shown the server's forgot password link
      */
-    public void setShowForgotPasswordLink(boolean showForgotPasswordLink)
-    {
+    public void setShowForgotPasswordLink(boolean showForgotPasswordLink) {
         this.showForgotPasswordLink = showForgotPasswordLink;
     } // end method setShowForgotPasswordLink(boolean)
 } // end class Server

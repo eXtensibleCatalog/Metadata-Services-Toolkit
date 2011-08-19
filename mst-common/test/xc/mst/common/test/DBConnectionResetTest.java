@@ -14,10 +14,9 @@ public class DBConnectionResetTest extends BaseTest {
 
     private static final Logger LOG = Logger.getLogger(DBConnectionResetTest.class);
 
-
     public void test1() {
         try {
-            DataSource ds = (DataSource)getBean("DataSource");
+            DataSource ds = (DataSource) getBean("DataSource");
             Connection conn = ds.getConnection();
 
             conn.close();
@@ -40,15 +39,15 @@ public class DBConnectionResetTest extends BaseTest {
             p.setNumberOfRecordsToHarvest(0);
             getProviderDAO().insert(p);
             p = getProviderDAO().loadBasicProvider(p.getId());
-            LOG.debug("p.getId(): "+p.getId());
+            LOG.debug("p.getId(): " + p.getId());
 
             Thread.sleep(6000);
             p = getProviderDAO().loadBasicProvider(p.getId());
-            LOG.debug("p.getId(): "+p.getId());
+            LOG.debug("p.getId(): " + p.getId());
 
             Thread.sleep(6000);
             Set s = getSetDAO().getBySetSpec("MARCXMLbibliographic");
-            LOG.debug("s.getId(): "+s.getId());
+            LOG.debug("s.getId(): " + s.getId());
             /*
             Thread.sleep(7000);
             p = getProviderDAO().loadBasicProvider(p.getId());

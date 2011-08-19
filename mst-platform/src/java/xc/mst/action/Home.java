@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action;
 
@@ -13,9 +13,9 @@ import xc.mst.bo.user.User;
 
 /**
  * This is home action.
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class Home extends BaseActionSupport {
 
@@ -35,11 +35,10 @@ public class Home extends BaseActionSupport {
 
     /**
      * A default implementation that does nothing and returns "success".
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String execute() throws Exception
-    {
+    public String execute() throws Exception {
 
         user = getUserService().getUserById(userId);
 
@@ -49,7 +48,6 @@ public class Home extends BaseActionSupport {
     public User getUser() {
         return user;
     }
-
 
     public void setUser(User user) {
         this.user = user;

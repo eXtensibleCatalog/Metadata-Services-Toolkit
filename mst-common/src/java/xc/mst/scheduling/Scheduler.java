@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.scheduling;
 
@@ -38,14 +38,14 @@ import xc.mst.utils.TimingLogger;
 
 /**
  * A Thread which runs in the background and checks every minute to see
- * if any harvests are scheduled to run.  If they are, the Harvester
+ * if any harvests are scheduled to run. If they are, the Harvester
  * will be invoked for all steps of the harvest schedule which was due to be invoked
  * This class also runs MetadataServices when the Harvester or another Service
  * matches a processing directive requiring the service to be run.
- *
- * This Thread maintains a queue of jobs to be run.  A job may be
+ * 
+ * This Thread maintains a queue of jobs to be run. A job may be
  * either a harvest or a service.
- *
+ * 
  * @author Eric Osisek
  */
 public class Scheduler extends BaseService implements Runnable {
@@ -99,7 +99,7 @@ public class Scheduler extends BaseService implements Runnable {
                 final List<Service> servicesList = getServicesService().getAllServices();
                 for (Service s : servicesList) {
                     if (getServicesService().doesServiceFileTimeNeedUpdate(s)) {
-                        LOG.debug("*** Updated file date found for service: "+s.getName()+ " Reprocessing required! ***");
+                        LOG.debug("*** Updated file date found for service: " + s.getName() + " Reprocessing required! ***");
                         getServicesService().updateServiceLastModifiedTime(s.getName(), s);
 
                         // now must persist it
@@ -112,28 +112,25 @@ public class Scheduler extends BaseService implements Runnable {
                         List<ProcessingDirective> procDirectives = getProcessingDirectiveDAO().getByDestinationServiceId(s.getId());
                         if (procDirectives == null || procDirectives.size() < 1) {
                             LOG.debug("*** Found a service with updated files, but has no applicable processingDirectives, no work to reprocess!");
-                        }
-                        else {
-                            try {	// now must re-process
+                        } else {
+                            try { // now must re-process
                                 for (ProcessingDirective procDirective : procDirectives) {
 
                                     Job job = new Job(s, 0, Constants.THREAD_SERVICE);
                                     job.setOrder(getJobService().getMaxOrder() + 1);
                                     job.setProcessingDirective(procDirective);
-                                    LOG.debug("Creating new job THREAD_SERVICE, processing directive= "+procDirective);
+                                    LOG.debug("Creating new job THREAD_SERVICE, processing directive= " + procDirective);
                                     getJobService().insertJob(job);
                                 }
                             } catch (DatabaseConfigException dce) {
                                 LOG.error("DatabaseConfig exception occured when ading jobs to database", dce);
                             }
                         }
-                    }
-                    else {
-                        LOG.debug("*** No update found for service: "+s.getName()+ " Reprocessing NOT required! ***");
+                    } else {
+                        LOG.debug("*** No update found for service: " + s.getName() + " Reprocessing NOT required! ***");
                     }
                 }
-            }
-            else {
+            } else {
                 LOG.debug("*** Checking for service updates is disabled! ***");
             }
 
@@ -144,18 +141,18 @@ public class Scheduler extends BaseService implements Runnable {
         boolean solrWorkerThreadStarted = false;
         if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
             LOG.info("solr.index.whenIdle is true");
-            solrWorkerThread = (SolrWorkDelegate)config.getBean("SolrWorkDelegate");
+            solrWorkerThread = (SolrWorkDelegate) config.getBean("SolrWorkDelegate");
             solrThread = new Thread(solrWorkerThread, "SolrWorkDelegate");
-            LOG.debug("solrWorkerThread: "+solrWorkerThread);
+            LOG.debug("solrWorkerThread: " + solrWorkerThread);
         } else {
             LOG.info("solr.index.whenIdle is false");
         }
-        HarvestManager hm = (HarvestManager)MSTConfiguration.getInstance().getBean("HarvestManager");
+        HarvestManager hm = (HarvestManager) MSTConfiguration.getInstance().getBean("HarvestManager");
 
-        while(!killed) {
+        while (!killed) {
             Calendar now = Calendar.getInstance();
             List<HarvestSchedule> schedulesToRun = null;
-            String thisMinute = ""+now.get(Calendar.HOUR_OF_DAY)+now.get(Calendar.DAY_OF_WEEK)+now.get(Calendar.MINUTE);
+            String thisMinute = "" + now.get(Calendar.HOUR_OF_DAY) + now.get(Calendar.DAY_OF_WEEK) + now.get(Calendar.MINUTE);
             try {
                 schedulesToRun = getHarvestScheduleDAO().getSchedulesToRun(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.MINUTE));
             } catch (DatabaseConfigException e1) {
@@ -164,19 +161,19 @@ public class Scheduler extends BaseService implements Runnable {
                 schedulesToRun = new ArrayList<HarvestSchedule>();
             }
 
-            for(HarvestSchedule scheduleToRun : schedulesToRun) {
+            for (HarvestSchedule scheduleToRun : schedulesToRun) {
                 boolean alreadyRanThisMinute = false;
                 if (lastRunDate.containsKey(scheduleToRun.getId())) {
                     if (lastRunDate.get(scheduleToRun.getId()).equals(thisMinute)) {
                         alreadyRanThisMinute = true;
                     }
                 }
-                // BDA: The Scheduler was tied to looping every 60 seconds.  I like to test faster
-                //      than that so I changed it to loop every 3 seconds.  This added check is necessary
-                //      because the 60 second loop assured that a job would not be started twice.  Instead
-                //      I'll keep track of the last start time for each job.
-                if(!alreadyRanThisMinute) {
-                    if(LOG.isDebugEnabled())
+                // BDA: The Scheduler was tied to looping every 60 seconds. I like to test faster
+                // than that so I changed it to loop every 3 seconds. This added check is necessary
+                // because the 60 second loop assured that a job would not be started twice. Instead
+                // I'll keep track of the last start time for each job.
+                if (!alreadyRanThisMinute) {
+                    if (LOG.isDebugEnabled())
                         LOG.debug("Creating a Thread to run HarvestSchedule with id " + scheduleToRun.getId());
 
                     // Add job to database queue
@@ -191,33 +188,33 @@ public class Scheduler extends BaseService implements Runnable {
                 }
             }
 
-            //LOG.debug("runningJob: "+runningJob);
+            // LOG.debug("runningJob: "+runningJob);
             if (runningJob != null) {
-                LOG.debug("runningJob: "+runningJob);
-                LOG.debug("runningJob.getType(): "+runningJob.getType());
-                //LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
+                LOG.debug("runningJob: " + runningJob);
+                LOG.debug("runningJob.getType(): " + runningJob.getType());
+                // LOG.debug("runningJob == solrWorkerThread: "+(runningJob == solrWorkerThread));
             }
             if (runningJob == null || !runningThread.isAlive() || runningJob == solrWorkerThread) {
                 if (runningJob != null) {
-                    //LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
+                    // LOG.debug("runningJob.getWorkDelegate(): "+runningJob.getWorkDelegate());
                 }
-                //LOG.debug("previousJob: "+previousJob);
+                // LOG.debug("previousJob: "+previousJob);
                 try {
                     if (previousJob != null) {
-                        LOG.debug("previousJob: "+previousJob);
+                        LOG.debug("previousJob: " + previousJob);
                         getJobService().deleteJob(previousJob);
 
                         TimingLogger.reset();
 
                         Repository previousRepo = null;
                         List<ProcessingDirective> processingDirectives = null;
-                        LOG.debug("previousJob.getHarvestSchedule(): "+previousJob.getHarvestSchedule());
+                        LOG.debug("previousJob.getHarvestSchedule(): " + previousJob.getHarvestSchedule());
                         if (previousJob.getHarvestSchedule() != null) { // was harvest
                             processingDirectives = getProcessingDirectiveDAO().getBySourceProviderId(
                                     previousJob.getHarvestSchedule().getProvider().getId());
                             previousJob.getHarvestSchedule().setStatus(runningJob.getJobStatus());
                             getHarvestScheduleDAO().update(previousJob.getHarvestSchedule(), false);
-                            previousRepo = (Repository)config.getBean("Repository");
+                            previousRepo = (Repository) config.getBean("Repository");
                             previousRepo.setName(previousJob.getHarvestSchedule().getProvider().getName());
                         } else if (previousJob.getService() != null) { // was service
                             processingDirectives = getProcessingDirectiveDAO().getBySourceServiceId(
@@ -225,17 +222,17 @@ public class Scheduler extends BaseService implements Runnable {
                             // Reload service. It is changed during service processing.
                             // TODO check to see if there is better way to do this
                             Service service = getServicesService().getServiceById(previousJob.getService().getId());
-                            //getById(previousJob.getService().getId());
-                            LOG.debug("service: "+service);
-                            LOG.debug("service.getName(): "+service.getName());
-                            LOG.debug("service.getMetadataService(): "+service.getMetadataService());
+                            // getById(previousJob.getService().getId());
+                            LOG.debug("service: " + service);
+                            LOG.debug("service.getName(): " + service.getName());
+                            LOG.debug("service.getMetadataService(): " + service.getMetadataService());
                             previousRepo = service.getMetadataService().getRepository();
                             if (runningJob != null) {
                                 service.setStatus(runningJob.getJobStatus());
                             }
                             getServiceDAO().update(service);
                         }
-                        LOG.debug("processingDirectives: "+processingDirectives);
+                        LOG.debug("processingDirectives: " + processingDirectives);
 
                         if (previousRepo != null) {
                             if (previousRepo instanceof DefaultRepository) {
@@ -264,8 +261,7 @@ public class Scheduler extends BaseService implements Runnable {
                                     }
                                     */
 
-
-                                    //Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
+                                    // Job job = new Job(pd.getService(), pd.getOutputSet().getId(), Constants.THREAD_SERVICE);
                                     Job job = new Job();
                                     job.setService(pd.getService());
                                     if (pd.getOutputSet() != null)
@@ -283,7 +279,7 @@ public class Scheduler extends BaseService implements Runnable {
 
                     Job jobToStart = getJobService().getNextJobToExecute();
                     if (jobToStart != null)
-                        LOG.debug("jobToStart: "+jobToStart);
+                        LOG.debug("jobToStart: " + jobToStart);
                     if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
                         LOG.debug("solrWorkerThead.proceed");
                         if (!solrWorkerThreadStarted) {
@@ -299,24 +295,24 @@ public class Scheduler extends BaseService implements Runnable {
                     }
                     previousJob = jobToStart;
 
-                    //LOG.debug("jobToStart: "+jobToStart);
-                    // If there was a service job in the waiting queue, start it.  Otherwise break from the loop
-                    if(jobToStart != null) {
+                    // LOG.debug("jobToStart: "+jobToStart);
+                    // If there was a service job in the waiting queue, start it. Otherwise break from the loop
+                    if (jobToStart != null) {
                         if (solrWorkerThread != null && solrWorkerThreadStarted) {
                             solrWorkerThread.pause();
                         }
                         runningJob = null;
                         runningThread = null;
                         TimingLogger.reset();
-                        TimingLogger.log("starting job: "+jobToStart.getJobType());
+                        TimingLogger.log("starting job: " + jobToStart.getJobType());
 
                         if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-                            //TODO perhaps consider for future whether it is more correct to getBean each time here (would be new instance each harvest)
+                            // TODO perhaps consider for future whether it is more correct to getBean each time here (would be new instance each harvest)
                             hm.setHarvestSchedule(jobToStart.getHarvestSchedule());
                             runningJob = hm;
                             runningJob.type = Constants.THREAD_REPOSITORY;
                         } else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
-                            MetadataServiceManager msm = (MetadataServiceManager)config.getBean("MetadataServiceManager");
+                            MetadataServiceManager msm = (MetadataServiceManager) config.getBean("MetadataServiceManager");
 
                             Service s = getServicesService().getServiceByName(jobToStart.getService().getName());
                             msm.setMetadataService(s.getMetadataService());
@@ -325,7 +321,7 @@ public class Scheduler extends BaseService implements Runnable {
                             Repository incomingRepo = null;
                             if (jobToStart.getProcessingDirective().getSourceProvider() != null) {
                                 incomingRepo =
-                                    getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
+                                        getRepositoryService().getRepository(jobToStart.getProcessingDirective().getSourceProvider());
                                 if (!incomingRepo.ready4harvest()) {
 
                                     getJobService().deleteJob(jobToStart);
@@ -346,7 +342,7 @@ public class Scheduler extends BaseService implements Runnable {
                             } else {
                                 throw new RuntimeException("error");
                             }
-                            LOG.debug("incomingRepo.getName(): "+incomingRepo.getName());
+                            LOG.debug("incomingRepo.getName(): " + incomingRepo.getName());
                             msm.setIncomingRepository(incomingRepo);
                             msm.setTriggeringFormats(jobToStart.getProcessingDirective().getTriggeringFormats());
                             msm.setTriggeringSets(jobToStart.getProcessingDirective().getTriggeringSets());
@@ -363,7 +359,7 @@ public class Scheduler extends BaseService implements Runnable {
                             */
                         } else if (jobToStart.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
                             LOG.debug("**** Scheduler - THREAD_MARK_PROVIDER_DELETED!");
-                            RepositoryDeletionManager rdm = (RepositoryDeletionManager)config.getBean("RepositoryDeletionManager");
+                            RepositoryDeletionManager rdm = (RepositoryDeletionManager) config.getBean("RepositoryDeletionManager");
 
                             runningJob = rdm;
 
@@ -374,41 +370,39 @@ public class Scheduler extends BaseService implements Runnable {
                             }
                             rdm.setIncomingRepository(incomingRepo);
                             rdm.setHarvestSchedule(jobToStart.getHarvestSchedule());
-                            LOG.debug("jobToStart.getHarvestSchedule(): "+jobToStart.getHarvestSchedule());
+                            LOG.debug("jobToStart.getHarvestSchedule(): " + jobToStart.getHarvestSchedule());
                             runningJob.type = Constants.THREAD_MARK_PROVIDER_DELETED;
                         }
 
                         if (runningJob != null) {
                             LOG.debug("runningJob.start()");
-                            runningThread = new Thread(runningJob, jobToStart.getJobType()+"_"+thisMinute);
+                            runningThread = new Thread(runningJob, jobToStart.getJobType() + "_" + thisMinute);
                             runningThread.start();
-                        }
-                        else {
+                        } else {
                             LOG.debug("**** Scheduler - No valid job found to start! Provided type was " +
                                     jobToStart.getJobType());
                         }
                     }
-                } catch(DataException de) {
+                } catch (DataException de) {
                     LOG.error("DataException occured when getting job from database", de);
-                }
-                catch (Throwable t) {
+                } catch (Throwable t) {
                     LOG.error("** EXCEPTION occured while trying to process next jobtostart !", t);
                 }
             }
 
             try {
-                if(LOG.isDebugEnabled()) {
-                    //LOG.debug("Scheduler Thread sleeping for 1 minute.");
+                if (LOG.isDebugEnabled()) {
+                    // LOG.debug("Scheduler Thread sleeping for 1 minute.");
                 }
-                //getProdLogger().debug("going to zzzz");
+                // getProdLogger().debug("going to zzzz");
                 synchronized (lock) {
                     lock.wait(1000);
                 }
-                //getProdLogger().debug("cocka-doodle-doo");
-            } catch(InterruptedException e) {
-                if(LOG.isDebugEnabled())
+                // getProdLogger().debug("cocka-doodle-doo");
+            } catch (InterruptedException e) {
+                if (LOG.isDebugEnabled())
                     LOG.debug("Caught InteruptedException while sleeping in Scheduler Thread.");
-            } catch(Throwable t) {
+            } catch (Throwable t) {
                 LOG.error("", t);
             }
         }
@@ -421,23 +415,24 @@ public class Scheduler extends BaseService implements Runnable {
         killed = true;
     }
 
-    public void cancelRunningJob(){
+    public void cancelRunningJob() {
         runningJob.cancel();
     }
 
     public boolean wasPausedManually() {
         return pausedManually;
     }
+
     public void setPausedManually(boolean _pausedManually) {
         this.pausedManually = _pausedManually;
     }
 
-    public void pauseRunningJob(){
+    public void pauseRunningJob() {
         pausedManually = true;
         runningJob.pause();
     }
 
-    public void resumePausedJob(){
+    public void resumePausedJob() {
         pausedManually = false;
         runningJob.proceed();
     }

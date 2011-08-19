@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.services.normalization;
 
@@ -31,7 +31,7 @@ public class DBNormalizationService extends NormalizationService {
     public boolean processRecords() {
 
         try {
-            List<Record> inputRecords  = ((DBRecordService)getRecordService()).getInputForServiceToProcess(service.getId(), true);
+            List<Record> inputRecords = ((DBRecordService) getRecordService()).getInputForServiceToProcess(service.getId(), true);
             Record r2 = null;
             Format f = getFormatService().getFormatByName("marcxml");
             Set s = getSetService().getSetBySetSpec("norm_output_set_spec");
@@ -46,20 +46,20 @@ public class DBNormalizationService extends NormalizationService {
                         processRecord(r);
                     } catch (Throwable t) {
                         TimingLogger.log("ouch - problems");
-                        LOG.error("r.getId(): "+r.getId());
+                        LOG.error("r.getId(): " + r.getId());
                         LOG.error("t", t);
                     }
                     getRecordService().update(r);
                     r2 = r;
                 }
-                ((DBRecordService)getRecordService()).commit(service.getId(), true);
-                inputRecords  = getRecordService().getInputForServiceToProcess(service.getId());
+                ((DBRecordService) getRecordService()).commit(service.getId(), true);
+                inputRecords = getRecordService().getInputForServiceToProcess(service.getId());
             }
             if (r2 != null) {
                 checkProcessingDirectives(r2);
             }
-            ((DBRecordService)getRecordService()).commit(service.getId(), true);
-            ((DBRecordService)getRecordService()).reset();
+            ((DBRecordService) getRecordService()).commit(service.getId(), true);
+            ((DBRecordService) getRecordService()).reset();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +72,7 @@ public class DBNormalizationService extends NormalizationService {
     }
 
     public class DBOaiIdentiferForServiceDAO extends DefaultOaiIdentifierForServiceDAO {
-        protected int id=0;
+        protected int id = 0;
 
         @Override
         public long getNextOaiIdForService(int serviceId) {

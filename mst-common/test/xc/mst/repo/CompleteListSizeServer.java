@@ -14,14 +14,14 @@ public class CompleteListSizeServer extends BaseTest {
         try {
             System.out.println("beluga");
             LOG.debug("beluga");
-            Repository repo = (Repository)getConfig().getBean("Repository");
+            Repository repo = (Repository) getConfig().getBean("Repository");
             repo.setName("xc_marctoxctransformation");
 
             long count = repo.getRecordCount(null, null, getXCFormat(), null);
-            LOG.debug("count: "+count);
-            System.out.println("count: "+count);
+            LOG.debug("count: " + count);
+            System.out.println("count: " + count);
 
-            //2011-05-17 05:38:09
+            // 2011-05-17 05:38:09
         } catch (Throwable t) {
             LOG.debug("", t);
         }

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.tags.pager;
 
@@ -17,9 +17,9 @@ import org.apache.log4j.Logger;
 
 /**
  * Simple pager tag.
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class PagerTag extends SimpleTagSupport {
 
@@ -29,8 +29,8 @@ public class PagerTag extends SimpleTagSupport {
     /** The page number to start the display */
     private int startPageNumber;
 
-    /** The page number to end the display with   */
-    private int  endPageNumber;
+    /** The page number to end the display with */
+    private int endPageNumber;
 
     /** Page number that is currently displayed */
     private int currentPageNumber;
@@ -44,7 +44,7 @@ public class PagerTag extends SimpleTagSupport {
     /** number of results to show per page */
     private int numberOfResultsToShow;
 
-    /** number of pages to show  */
+    /** number of pages to show */
     private int numberOfPagesToShow;
 
     /** String to represent more pages */
@@ -64,7 +64,7 @@ public class PagerTag extends SimpleTagSupport {
         if ((startPageNumber + numberOfPagesToShow - 1) <= totalPageNumber) {
             endPageNumber = startPageNumber + numberOfPagesToShow - 1;
         } else {
-            endPageNumber =totalPageNumber;
+            endPageNumber = totalPageNumber;
         }
 
         log.debug("total page number = " + totalPageNumber + " endPageNumber = " + endPageNumber);
@@ -72,8 +72,7 @@ public class PagerTag extends SimpleTagSupport {
         getJspContext().setAttribute("totalPageNumber", totalPageNumber);
         getJspContext().setAttribute("endPageNumber", endPageNumber);
         try {
-            if( body != null )
-            {
+            if (body != null) {
                 body.invoke(null);
             }
 
@@ -146,6 +145,5 @@ public class PagerTag extends SimpleTagSupport {
     public void setNumberOfPagesToShow(int numberOfPagesToShow) {
         this.numberOfPagesToShow = numberOfPagesToShow;
     }
-
 
 }

@@ -1,12 +1,11 @@
-
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.log;
 
@@ -26,21 +25,20 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Resets all the 'Service log' files relating to a Service
- *
+ * 
  * @author Tejaswi Haramurali
  */
-public class ServiceReset extends BaseActionSupport
-{
+public class ServiceReset extends BaseActionSupport {
     /** Serial id */
     private static final long serialVersionUID = -2829550192988572522L;
 
-    /**The name of the log file which needs to be reset **/
+    /** The name of the log file which needs to be reset **/
     private String serviceLogFileName;
 
-    /**ID of the service to be reset */
+    /** ID of the service to be reset */
     private int serviceId;
 
-     /** A reference to the logger for this class */
+    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Error type */
@@ -48,18 +46,15 @@ public class ServiceReset extends BaseActionSupport
 
     /**
      * Overrides default implementation to reset the 'Service Logs' for a service.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
+    public String execute() {
+        try {
 
             Service tempService = getServicesService().getServiceById(serviceId);
-            if(tempService==null)
-            {
+            if (tempService == null) {
                 this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
@@ -74,25 +69,19 @@ public class ServiceReset extends BaseActionSupport
             printWriter.close();
 
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("ServiceLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
-        }
-        catch(FileNotFoundException fe)
-        {
-            log.error(fe.getMessage(),fe);
+        } catch (FileNotFoundException fe) {
+            log.error(fe.getMessage(), fe);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting service log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -102,18 +91,15 @@ public class ServiceReset extends BaseActionSupport
 
     /**
      * Resets all the log files related to services
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String resetAll()
-    {
-        try
-        {
+    public String resetAll() {
+        try {
             List<Service> servicesList = getServicesService().getAllServices();
             Iterator<Service> servIter = servicesList.iterator();
-            while(servIter.hasNext())
-            {
-                Service tempService = (Service)servIter.next();
+            while (servIter.hasNext()) {
+                Service tempService = (Service) servIter.next();
                 tempService.setServicesLastLogReset(new Date());
                 tempService.setServicesWarnings(0);
                 tempService.setServicesErrors(0);
@@ -123,25 +109,19 @@ public class ServiceReset extends BaseActionSupport
                 printWriter.close();
             }
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("ServiceLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting all service logs. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return SUCCESS;
-        }
-        catch(FileNotFoundException fe)
-        {
-            log.error(fe.getMessage(),fe);
+        } catch (FileNotFoundException fe) {
+            log.error(fe.getMessage(), fe);
             this.addFieldError("ServiceLogReset", "Error Occurred while resetting all service logs. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -151,7 +131,7 @@ public class ServiceReset extends BaseActionSupport
 
     /**
      * Returns the error type
-     *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -160,50 +140,49 @@ public class ServiceReset extends BaseActionSupport
 
     /**
      * Sets the error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;
     }
 
-     /**
+    /**
      * Sets the Service ID of the Service whose Service Logs need to be reset
-     *
-     * @param serviceId service ID
+     * 
+     * @param serviceId
+     *            service ID
      */
-    public void setServiceId(int serviceId)
-    {
+    public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
     }
 
     /**
      * Returns the Service ID of the Service whose Service Logs need to be reset
-     *
+     * 
      * @return service ID
      */
-    public int getServiceId()
-    {
+    public int getServiceId() {
         return this.serviceId;
     }
 
     /**
      * Sets the name of the service
-     *
-     * @param serviceName log file name
+     * 
+     * @param serviceName
+     *            log file name
      */
-    public void setServiceLogFileName(String serviceLogFileName)
-    {
+    public void setServiceLogFileName(String serviceLogFileName) {
         this.serviceLogFileName = serviceLogFileName;
     }
 
     /**
      * Returns the name of the Log file for the Service
-     *
+     * 
      * @return log file name
      */
-    public String getServiceLogFileName()
-    {
+    public String getServiceLogFileName() {
         return this.serviceLogFileName;
     }
 }

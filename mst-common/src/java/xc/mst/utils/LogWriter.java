@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils;
 
@@ -17,26 +17,24 @@ import org.apache.log4j.PatternLayout;
 
 /**
  * Utility class to write log statements
- *
+ * 
  * @author Eric Osisek
  */
-public class LogWriter
-{
+public class LogWriter {
     /**
      * Hash table mapping log file names to the Logger that writes to them
      */
     private static HashMap<String, Logger> loggers = new HashMap<String, Logger>();
 
-    public static void addDebug(String logFileLocation, String message)
-    {
+    public static void addDebug(String logFileLocation, String message) {
         // If we already have a logger for the file, use it
-        if(loggers.containsKey(logFileLocation))
+        if (loggers.containsKey(logFileLocation))
             loggers.get(logFileLocation).debug(message);
         else // Otherwise create a new logger for the file and use that
         {
             // Create a new file appender to write to the requested file
             FileAppender appender = new FileAppender();
-            appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+            appender.setFile(MSTConfiguration.getUrlPath() + "/" + logFileLocation);
             appender.setName(logFileLocation);
             appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
             appender.activateOptions();
@@ -55,20 +53,21 @@ public class LogWriter
 
     /**
      * Writes an info level message to the log file
-     *
-     * @param logFileLocation The file to write the message to
-     * @param message The message to write
+     * 
+     * @param logFileLocation
+     *            The file to write the message to
+     * @param message
+     *            The message to write
      */
-    public static void addInfo(String logFileLocation, String message)
-    {
+    public static void addInfo(String logFileLocation, String message) {
         // If we already have a logger for the file, use it
-        if(loggers.containsKey(logFileLocation))
+        if (loggers.containsKey(logFileLocation))
             loggers.get(logFileLocation).info(message);
         else // Otherwise create a new logger for the file and use that
         {
             // Create a new file appender to write to the requested file
             FileAppender appender = new FileAppender();
-            appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+            appender.setFile(MSTConfiguration.getUrlPath() + "/" + logFileLocation);
             appender.setName(logFileLocation);
             appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
             appender.activateOptions();
@@ -87,20 +86,21 @@ public class LogWriter
 
     /**
      * Writes a warning level message to the log file
-     *
-     * @param logFileLocation The file to write the message to
-     * @param message The message to write
+     * 
+     * @param logFileLocation
+     *            The file to write the message to
+     * @param message
+     *            The message to write
      */
-    public static void addWarning(String logFileLocation, String message)
-    {
+    public static void addWarning(String logFileLocation, String message) {
         // If we already have a logger for the file, use it
-        if(loggers.containsKey(logFileLocation))
+        if (loggers.containsKey(logFileLocation))
             loggers.get(logFileLocation).warn(message);
         else // Otherwise create a new logger for the file and use that
         {
             // Create a new file appender to write to the requested file
             FileAppender appender = new FileAppender();
-            appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+            appender.setFile(MSTConfiguration.getUrlPath() + "/" + logFileLocation);
             appender.setName(logFileLocation);
             appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
             appender.activateOptions();
@@ -119,20 +119,21 @@ public class LogWriter
 
     /**
      * Writes an error level message to the log file
-     *
-     * @param logFileLocation The file to write the message to
-     * @param message The message to write
+     * 
+     * @param logFileLocation
+     *            The file to write the message to
+     * @param message
+     *            The message to write
      */
-    public static void addError(String logFileLocation, String message)
-    {
+    public static void addError(String logFileLocation, String message) {
         // If we already have a logger for the file, use it
-        if(loggers.containsKey(logFileLocation))
+        if (loggers.containsKey(logFileLocation))
             loggers.get(logFileLocation).error(message);
         else // Otherwise create a new logger for the file and use that
         {
             // Create a new file appender to write to the requested file
             FileAppender appender = new FileAppender();
-            appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+            appender.setFile(MSTConfiguration.getUrlPath() + "/" + logFileLocation);
             appender.setName(logFileLocation);
             appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
             appender.activateOptions();
@@ -151,20 +152,21 @@ public class LogWriter
 
     /**
      * Writes a fatal error level message to the log file
-     *
-     * @param logFileLocation The file to write the message to
-     * @param message The message to write
+     * 
+     * @param logFileLocation
+     *            The file to write the message to
+     * @param message
+     *            The message to write
      */
-    public static void addFatalError(String logFileLocation, String message)
-    {
+    public static void addFatalError(String logFileLocation, String message) {
         // If we already have a logger for the file, use it
-        if(loggers.containsKey(logFileLocation))
+        if (loggers.containsKey(logFileLocation))
             loggers.get(logFileLocation).fatal(message);
         else // Otherwise create a new logger for the file and use that
         {
             // Create a new file appender to write to the requested file
             FileAppender appender = new FileAppender();
-            appender.setFile(MSTConfiguration.getUrlPath()+"/"+logFileLocation);
+            appender.setFile(MSTConfiguration.getUrlPath() + "/" + logFileLocation);
             appender.setName(logFileLocation);
             appender.setLayout(new PatternLayout("%d{DATE} %5p [%t] - %m%n"));
             appender.activateOptions();

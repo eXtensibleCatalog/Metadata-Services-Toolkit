@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.tags.pager;
 
@@ -19,9 +19,9 @@ import org.apache.log4j.Logger;
 
 /**
  * Displays the previous page
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class PreviousPageTag extends SimpleTagSupport {
 
@@ -31,15 +31,13 @@ public class PreviousPageTag extends SimpleTagSupport {
     public void doTag() throws JspException {
         log.debug("do tag called");
         PagerTag pagerTag =
-             (PagerTag)findAncestorWithClass(this,
-                     PagerTag.class);
+                (PagerTag) findAncestorWithClass(this,
+                        PagerTag.class);
 
-        if(pagerTag == null)
-        {
+        if (pagerTag == null) {
             throw new JspTagException("the <ur:previousPage> tag must"
                     + " be nested within a <ur:pager> tag");
         }
-
 
         JspFragment body = getJspBody();
         PageContext pageContext = (PageContext) getJspContext();
@@ -47,18 +45,14 @@ public class PreviousPageTag extends SimpleTagSupport {
         try {
             if (pagerTag.getCurrentPageNumber() != 1 && pagerTag.getTotalPageNumber() > 1) {
 
-                if( body != null )
-                {
-                    int rowStart = ((pagerTag.getCurrentPageNumber() - 1) * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
+                if (body != null) {
+                    int rowStart = ((pagerTag.getCurrentPageNumber() - 1) * pagerTag.getNumberOfResultsToShow()) - pagerTag.getNumberOfResultsToShow();
                     pageContext.setAttribute("rowStart", rowStart);
 
                     int startPageNumber = 1;
-                    if( pagerTag.getCurrentPageNumber()  == pagerTag.getStartPageNumber() )
-                    {
+                    if (pagerTag.getCurrentPageNumber() == pagerTag.getStartPageNumber()) {
                         startPageNumber = pagerTag.getStartPageNumber() - pagerTag.getNumberOfPagesToShow();
-                    }
-                    else
-                    {
+                    } else {
                         startPageNumber = pagerTag.getStartPageNumber();
                     }
 

@@ -51,7 +51,7 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
             assert hs == null : "there should be a harvestSchedule for the provider";
 
             // - harvest from provider and norm service
-            //   - make sure all records are deleted
+            // - make sure all records are deleted
             ensureAllRecordsMatchStatus(providerRepo, Record.DELETED);
             ensureAllRecordsMatchStatus(serviceRepo, Record.DELETED);
 
@@ -59,12 +59,12 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
             // clear out previous harvest
             getProvider().setLastOaiRequest(null);
             getProviderService().updateProvider(getProvider());
-            createHarvestSchedule();  //you'll end up with active records again...must be from beginning
+            createHarvestSchedule(); // you'll end up with active records again...must be from beginning
             waitUntilFinished();
 
             // - harvest from provider and norm service
-            //   - make sure all records are active again
-            //   - make sure the same ids are used
+            // - make sure all records are active again
+            // - make sure the same ids are used
             ensureAllRecordsMatchStatus(providerRepo, Record.ACTIVE);
             ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 
@@ -78,10 +78,9 @@ public class MarkProviderDeletedTest extends StartToFinishTest {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
         for (Record r : records) {
             if (r.getStatus() != status) {
-                throw new RuntimeException("For repo: "+repo.getName()+",record with id: "+r.getId()+" has status:"+r.getStatus()+" while expecting:"+status);
+                throw new RuntimeException("For repo: " + repo.getName() + ",record with id: " + r.getId() + " has status:" + r.getStatus() + " while expecting:" + status);
             }
         }
     }
 
 }
-

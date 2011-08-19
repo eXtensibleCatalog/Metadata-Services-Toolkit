@@ -24,10 +24,10 @@ public class MetadataServiceSpecificTest extends BaseTest {
                 }
                 getServicesService().addNewService(getServiceName());
             }
-            System.out.println("getServiceName(): "+getServiceName());
+            System.out.println("getServiceName(): " + getServiceName());
             MetadataService ms = getServicesService().getServiceByName(getServiceName()).getMetadataService();
             if (ms instanceof MetadataServiceExtras) {
-                ((MetadataServiceExtras)ms).runTests();
+                ((MetadataServiceExtras) ms).runTests();
             }
             shutdown();
         } catch (Throwable t) {

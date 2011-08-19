@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.harvester;
 
 import java.io.InputStream;
@@ -35,12 +35,12 @@ public class HttpService extends BaseService {
 
     public void init() {
         client = new HttpClient(new SimpleHttpConnectionManager());
-        LOG.debug("client: "+client);
-        LOG.debug("client.getParams(): "+client.getParams());
+        LOG.debug("client: " + client);
+        LOG.debug("client.getParams(): " + client.getParams());
         client.getParams().setParameter("http.socket.timeout",
-                Integer.parseInt(config.getProperty("harvest.socket.timeout", this.timeOutMilliseconds+"")));
+                Integer.parseInt(config.getProperty("harvest.socket.timeout", this.timeOutMilliseconds + "")));
         client.getParams().setParameter("http.connection.timeout",
-                Integer.parseInt(config.getProperty("harvest.connection.timeout", this.timeOutMilliseconds+"")));
+                Integer.parseInt(config.getProperty("harvest.connection.timeout", this.timeOutMilliseconds + "")));
         client.getParams().setParameter("http.protocol.content-charset",
                 config.getProperty("harvest.protocol.content-charset", "utf-16"));
     }
@@ -50,7 +50,7 @@ public class HttpService extends BaseService {
         int numErrorsTolerated = 0;
 
         while (true) {
-            if(LOG.isDebugEnabled())
+            if (LOG.isDebugEnabled())
                 LOG.debug("Sending the OAI request: " + request);
 
             Document doc = null;
@@ -71,27 +71,27 @@ public class HttpService extends BaseService {
                 if (statusCode == 200) {
                     istm = getOaiRequest.getResponseBodyAsStream();
                     long finishOaiRequest = System.currentTimeMillis();
-                    LOG.info("Time taken to get a response from the server " + (finishOaiRequest-startOaiRequest));
+                    LOG.info("Time taken to get a response from the server " + (finishOaiRequest - startOaiRequest));
                     doc = xmlHelper.getJDomDocument(istm);
                 } else {
-                    LOG.error("statusCode: "+statusCode);
-                    LOG.error("response: "+getOaiRequest.getResponseBodyAsString());
+                    LOG.error("statusCode: " + statusCode);
+                    LOG.error("response: " + getOaiRequest.getResponseBodyAsString());
                     if (statusCode == 503) {
                         try {
                             int retryAfter = Integer.parseInt(getOaiRequest.getResponseHeader("Retry-after").getValue());
-                            LOG.info("Retry-after: "+retryAfter);
+                            LOG.info("Retry-after: " + retryAfter);
                             if (retryAfter > 0 && retryAfter <
                                     config.getPropertyAsInt("harvestProvider.maxWaitForRetryAfter", 60)) {
                                 LOG.info("sleeping");
                                 Thread.sleep(retryAfter * 1000);
                             }
                         } catch (Throwable t) {
-                            //do nothing
+                            // do nothing
                         }
                     }
                 }
             } catch (Throwable t) {
-                LOG.debug("request: "+request);
+                LOG.debug("request: " + request);
                 LOG.error("", t);
             } finally {
                 if (istm != null) {
@@ -106,10 +106,10 @@ public class HttpService extends BaseService {
                 return doc;
             }
             if (numErrors2Tolerate == ++numErrorsTolerated) {
-                LOG.error("numErrors2Tolerate: "+numErrors2Tolerate+" numErrorsTolerated:"+numErrorsTolerated);
+                LOG.error("numErrors2Tolerate: " + numErrors2Tolerate + " numErrorsTolerated:" + numErrorsTolerated);
                 break;
             }
         }
-        throw new HttpException("did not receive a successful response for request: "+request);
+        throw new HttpException("did not receive a successful response for request: " + request);
     }
 }

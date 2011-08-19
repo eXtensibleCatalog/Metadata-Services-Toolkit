@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.manager.harvest;
 
@@ -22,18 +22,19 @@ import xc.mst.manager.BaseService;
 
 /**
  * Service to access Schedules
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class DefaultScheduleService extends BaseService implements ScheduleService {
 
-    private static long THIRTY_SIX_HOURS = 1000*60*60*36;
+    private static long THIRTY_SIX_HOURS = 1000 * 60 * 60 * 36;
 
     /**
      * Get schedule having the specified schedule id
-     *
-     * @param scheduleId Id of the schedule
+     * 
+     * @param scheduleId
+     *            Id of the schedule
      * @return Schedule if exist else null
      * @throws DatabaseConfigException
      */
@@ -43,25 +44,29 @@ public class DefaultScheduleService extends BaseService implements ScheduleServi
 
     /**
      * Delete Schedule
-     *
-     * @param schedule schedule to be deleted
-     * @throws DataException Thrown when problem in deleting the schedule
+     * 
+     * @param schedule
+     *            schedule to be deleted
+     * @throws DataException
+     *             Thrown when problem in deleting the schedule
      */
     public void deleteSchedule(HarvestSchedule harvestSchedule) throws DataException {
         harvestScheduleDAO.delete(harvestSchedule);
     }
 
     /**
-     *
-     * @param schedule schedule to inserted into the database
+     * 
+     * @param schedule
+     *            schedule to inserted into the database
      */
     public void insertSchedule(HarvestSchedule harvestSchedule) throws DataException {
         harvestScheduleDAO.insert(harvestSchedule);
     }
 
-     /**
-     *
-     * @param schedule schedule whose details should be updated in the database
+    /**
+     * 
+     * @param schedule
+     *            schedule whose details should be updated in the database
      */
     public void updateSchedule(HarvestSchedule harvestSchedule) throws DataException {
         harvestScheduleDAO.update(harvestSchedule, true);
@@ -69,18 +74,19 @@ public class DefaultScheduleService extends BaseService implements ScheduleServi
 
     /**
      * Get all schedules
-     *
+     * 
      * @return all schedules
      * @throws DatabaseConfigException
      */
-    public List<HarvestSchedule> getAllSchedules() throws DatabaseConfigException  {
+    public List<HarvestSchedule> getAllSchedules() throws DatabaseConfigException {
         return harvestScheduleDAO.getAll();
     }
 
     /**
      * Get a schedule by name
-     *
-     * @param name Name of the schedule
+     * 
+     * @param name
+     *            Name of the schedule
      */
     public HarvestSchedule getScheduleByName(String name) throws DatabaseConfigException {
         return harvestScheduleDAO.getByName(name);
@@ -88,49 +94,49 @@ public class DefaultScheduleService extends BaseService implements ScheduleServi
 
     /**
      * Gets all schedules in the database sorted by their names
-     *
-     * @param asc True to sort in ascending order, false to sort in descending order
+     * 
+     * @param asc
+     *            True to sort in ascending order, false to sort in descending order
      * @return A list containing all schedules in the database sorted by their names
      * @throws DatabaseConfigException
      */
-    public List<HarvestSchedule> getAllSchedulesSorted(boolean sort,String columnSorted) throws DatabaseConfigException
-    {
-        return harvestScheduleDAO.getSorted(sort,columnSorted);
+    public List<HarvestSchedule> getAllSchedulesSorted(boolean sort, String columnSorted) throws DatabaseConfigException {
+        return harvestScheduleDAO.getSorted(sort, columnSorted);
     }
 
     /**
      * Gets harvest schedule for a provider
-     *
-     * @param provider Provider to get the harvest schedule
+     * 
+     * @param provider
+     *            Provider to get the harvest schedule
      * @return Harvest schedule found
      * @throws DatabaseConfigException
      */
-    public HarvestSchedule getScheduleForProvider(Provider provider) throws DatabaseConfigException
-    {
+    public HarvestSchedule getScheduleForProvider(Provider provider) throws DatabaseConfigException {
         return harvestScheduleDAO.getHarvestScheduleForProvider(provider.getId());
     }
 
     /**
-     * Gets harvests for a  schedule
-     *
-     * @param harvestSchedule harvest schedule to get the harvests
+     * Gets harvests for a schedule
+     * 
+     * @param harvestSchedule
+     *            harvest schedule to get the harvests
      * @return List of Harvest found
      * @throws DatabaseConfigException
      */
-    public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule) throws DatabaseConfigException
-    {
+    public List<Harvest> getHarvestsForSchedule(HarvestSchedule harvestSchedule) throws DatabaseConfigException {
         return harvestDAO.getHarvestsForSchedule(harvestSchedule.getId());
     }
 
     /**
      * Get latest harvest end time for given harvest schedule
-     *
-     * @param harvestSchedule harvest schedule
+     * 
+     * @param harvestSchedule
+     *            harvest schedule
      * @return latest harvest end time if found otherwise null
      * @throws DatabaseConfigException
      */
-    public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule) throws DatabaseConfigException
-    {
+    public Timestamp getLatestHarvestEndTime(HarvestSchedule harvestSchedule) throws DatabaseConfigException {
         return harvestDAO.getLatestHarvestEndTimeForSchedule(harvestSchedule.getId());
     }
 

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.provider;
 
@@ -26,11 +26,10 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * MySQL implementation of the data access object for the sets table
- *
+ * 
  * @author Eric Osisek
  */
-public class DefaultSetDAO extends SetDAO
-{
+public class DefaultSetDAO extends SetDAO {
     /**
      * A PreparedStatement to get all sets in the database
      */
@@ -151,15 +150,13 @@ public class DefaultSetDAO extends SetDAO
     }
 
     @Override
-    public List<Set> getAll() throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Set> getAll() throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetAllLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetAllLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting all sets");
 
             // The ResultSet from the SQL query
@@ -168,11 +165,9 @@ public class DefaultSetDAO extends SetDAO
             // The list of all sets
             List<Set> sets = new ArrayList<Set>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get all sets if it hasn't already been created
-                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-                {
+                if (psGetAll == null || dbConnectionManager.isClosed(psGetAll)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -183,7 +178,7 @@ public class DefaultSetDAO extends SetDAO
                                                    COL_PROVIDER_ID + " " +
                                        "FROM " + SETS_TABLE_NAME;
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get all sets\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -197,8 +192,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetAll);
 
                 // For each result returned, add a Set object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -214,51 +208,44 @@ public class DefaultSetDAO extends SetDAO
                     sets.add(set);
                 }
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + sets.size() + " sets in the database.");
 
                 return sets;
             } // end try (get sets)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the sets.", e);
 
                 return sets;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getAll();
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getAll()
 
     @Override
-    public Set getById(int setId) throws DatabaseConfigException
-    {
+    public Set getById(int setId) throws DatabaseConfigException {
         if (this.setMapById.containsKey(setId)) {
             return this.setMapById.get(setId);
         }
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the set with ID " + setId + ".");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -270,7 +257,7 @@ public class DefaultSetDAO extends SetDAO
                                        "FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_SET_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get set by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -287,8 +274,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // For each result returned, add a Set object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -300,7 +286,7 @@ public class DefaultSetDAO extends SetDAO
                     set.setIsProviderSet(results.getBoolean(5));
                     set.setIsRecordSet(results.getBoolean(6));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the set in the database with ID " + setId + ".");
 
                     // Add the set to the list
@@ -308,48 +294,41 @@ public class DefaultSetDAO extends SetDAO
                     return set;
                 } // end if(set found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the set in the database with ID " + setId + ".");
 
                 return null;
             } // end try(get set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the set with ID " + setId + ".", e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getById(setId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getById(int)
 
     @Override
-    public Set loadBasicSet(int setId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public Set loadBasicSet(int setId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the set with ID " + setId + ".");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-                {
+                if (psGetById == null || dbConnectionManager.isClosed(psGetById)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -361,7 +340,7 @@ public class DefaultSetDAO extends SetDAO
                                        "FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_SET_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get set by ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -378,8 +357,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetById);
 
                 // For each result returned, add a Set object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -391,7 +369,7 @@ public class DefaultSetDAO extends SetDAO
                     set.setIsProviderSet(results.getBoolean(5));
                     set.setIsRecordSet(results.getBoolean(6));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the set in the database with ID " + setId + ".");
 
                     addToCache(set);
@@ -399,51 +377,44 @@ public class DefaultSetDAO extends SetDAO
                     return set;
                 } // end if(set found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the set in the database with ID " + setId + ".");
 
                 return null;
             } // end try(get set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the set with ID " + setId + ".", e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return loadBasicSet(setId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method loadBasicSet(int)
 
     @Override
-    public Set getBySetSpec(String setSpec) throws DatabaseConfigException
-    {
+    public Set getBySetSpec(String setSpec) throws DatabaseConfigException {
         if (this.setMapBySetSpec.containsKey(setSpec)) {
             return this.setMapBySetSpec.get(setSpec);
         }
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetBySetSpecLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetBySetSpecLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the set with setSpec " + setSpec + ".");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get a set by it's setSpec if it hasn't already been created
-                if(psGetBySetSpec == null || dbConnectionManager.isClosed(psGetBySetSpec))
-                {
+                if (psGetBySetSpec == null || dbConnectionManager.isClosed(psGetBySetSpec)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -455,7 +426,7 @@ public class DefaultSetDAO extends SetDAO
                                        "FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_SET_SPEC + " LIKE ?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get set by setSpec\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -472,8 +443,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetBySetSpec);
 
                 // For each result returned, add a Set object to the list with the returned data
-                if(results.next())
-                {
+                if (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -485,7 +455,7 @@ public class DefaultSetDAO extends SetDAO
                     set.setIsProviderSet(results.getBoolean(5));
                     set.setIsRecordSet(results.getBoolean(6));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the set in the database with setSpec " + setSpec + ".");
 
                     addToCache(set);
@@ -493,51 +463,43 @@ public class DefaultSetDAO extends SetDAO
                     return set;
                 } // end if(set found)
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Could not find the set in the database with setSpec " + setSpec + ".");
 
                 return null;
             } // end try(get set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the set with setSpec " + setSpec + ".", e);
 
                 return null;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getBySetSpec(setSpec);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getBySetSpec(String)
 
     @Override
-    public List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Set> getSetsForProvider(int providerId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetByProviderIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetByProviderIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the set with provider ID " + providerId + ".");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-
             ArrayList<Set> sets = new ArrayList<Set>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-                if(psGetByProviderId == null || dbConnectionManager.isClosed(psGetByProviderId))
-                {
+                if (psGetByProviderId == null || dbConnectionManager.isClosed(psGetByProviderId)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -549,7 +511,7 @@ public class DefaultSetDAO extends SetDAO
                                        "FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_PROVIDER_ID + "=?" + " and " + COL_PROVIDER_SET + "=true";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get sets by provider ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -566,8 +528,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetByProviderId);
 
                 // For each result returned, add a Set object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -579,7 +540,7 @@ public class DefaultSetDAO extends SetDAO
                     set.setIsProviderSet(results.getBoolean(5));
                     set.setIsRecordSet(results.getBoolean(6));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the set in the database with provider ID " + providerId + ".");
 
                     addToCache(set);
@@ -587,51 +548,43 @@ public class DefaultSetDAO extends SetDAO
                     sets.add(set);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + sets.size() + " sets in the database with provider ID " + providerId + ".");
 
                 return sets;
             } // end try(get sets)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the set with provider ID " + providerId + ".", e);
 
                 return sets;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getSetsForProvider(providerId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getSetsForProvider(int)
 
     @Override
-    public List<Set> getRecordSetsForProvider(int providerId) throws DatabaseConfigException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public List<Set> getRecordSetsForProvider(int providerId) throws DatabaseConfigException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-        synchronized(psGetRecordSetByProviderIdLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psGetRecordSetByProviderIdLock) {
+            if (log.isDebugEnabled())
                 log.debug("Getting the set with provider ID " + providerId + ".");
 
             // The ResultSet from the SQL query
             ResultSet results = null;
 
-
             ArrayList<Set> sets = new ArrayList<Set>();
 
-            try
-            {
+            try {
                 // Create the PreparedStatment to get a set by it's ID if it hasn't already been created
-                if(psGetRecordSetByProviderId == null || dbConnectionManager.isClosed(psGetRecordSetByProviderId))
-                {
+                if (psGetRecordSetByProviderId == null || dbConnectionManager.isClosed(psGetRecordSetByProviderId)) {
                     // SQL to get the rows
                     String selectSql = "SELECT " + COL_SET_ID + ", " +
                                                    COL_DISPLAY_NAME + ", " +
@@ -643,7 +596,7 @@ public class DefaultSetDAO extends SetDAO
                                        "FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_PROVIDER_ID + "=?" + " and " + COL_RECORD_SET + "=true";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"get record sets by provider ID\" PreparedStatement from the SQL " + selectSql);
 
                     // A prepared statement to run the select SQL
@@ -660,8 +613,7 @@ public class DefaultSetDAO extends SetDAO
                 results = dbConnectionManager.executeQuery(psGetRecordSetByProviderId);
 
                 // For each result returned, add a Set object to the list with the returned data
-                while(results.next())
-                {
+                while (results.next()) {
                     // The Object which will contain data on the set
                     Set set = new Set();
 
@@ -673,7 +625,7 @@ public class DefaultSetDAO extends SetDAO
                     set.setIsProviderSet(results.getBoolean(5));
                     set.setIsRecordSet(results.getBoolean(6));
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Found the record set in the database with provider ID " + providerId + ".");
 
                     addToCache(set);
@@ -681,51 +633,44 @@ public class DefaultSetDAO extends SetDAO
                     sets.add(set);
                 } // end loop over results
 
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Found " + sets.size() + " record sets in the database with provider ID " + providerId + ".");
 
                 return sets;
             } // end try(get sets)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while getting the record set with provider ID " + providerId + ".", e);
 
                 return sets;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return getRecordSetsForProvider(providerId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(results);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method getRecordSetsByProvider(int)
 
     @Override
-    public boolean insert(Set set) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insert(Set set) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the set are valid
         validateFields(set, false, true);
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new set with the setSpec " + set.getSetSpec());
 
             // The result set returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // Build the PreparedStatement to insert a set if it wasn't already created
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + SETS_TABLE_NAME + " (" + COL_DISPLAY_NAME + ", " +
                                                                               COL_DESCRIPTION + ", " +
@@ -735,7 +680,7 @@ public class DefaultSetDAO extends SetDAO
                                                                               COL_PROVIDER_ID + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert set\" PreparedStatemnt from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -754,8 +699,7 @@ public class DefaultSetDAO extends SetDAO
                 removeFromCache(set);
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated resource identifier ID and set it correctly on this Set Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -767,46 +711,39 @@ public class DefaultSetDAO extends SetDAO
                 else
                     return false;
             } // end try(insert the set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new set with the setSpec " + set.getSetSpec(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insert(set);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method insert(Set)
 
     @Override
-    public boolean insertForProvider(Set set, int providerId) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean insertForProvider(Set set, int providerId) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the non-ID fields on the set are valid
         validateFields(set, false, true);
 
-        synchronized(psInsertLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psInsertLock) {
+            if (log.isDebugEnabled())
                 log.debug("Inserting a new set with the setSpec " + set.getSetSpec());
 
             // The result set returned by the query
             ResultSet rs = null;
 
-            try
-            {
+            try {
                 // Build the PreparedStatement to insert a set if it wasn't already created
-                if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-                {
+                if (psInsert == null || dbConnectionManager.isClosed(psInsert)) {
                     // SQL to insert the new row
                     String insertSql = "INSERT INTO " + SETS_TABLE_NAME + " (" + COL_DISPLAY_NAME + ", " +
                                                                               COL_DESCRIPTION + ", " +
@@ -816,7 +753,7 @@ public class DefaultSetDAO extends SetDAO
                                                                               COL_PROVIDER_ID + ") " +
                                        "VALUES (?, ?, ?, ?, ?, ?)";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"insert set\" PreparedStatemnt from the SQL " + insertSql);
 
                     // A prepared statement to run the insert SQL
@@ -824,9 +761,9 @@ public class DefaultSetDAO extends SetDAO
                     psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
                 } // end if(insert PreparedStatement not defined)
 
-                log.debug("inserting provider ("+
-                        set.getDisplayName()+", "+set.getDescription()+", "+set.getSetSpec()+", "+set.getIsProviderSet()+", "+
-                        set.getIsRecordSet()+", "+providerId);
+                log.debug("inserting provider (" +
+                        set.getDisplayName() + ", " + set.getDescription() + ", " + set.getSetSpec() + ", " + set.getIsProviderSet() + ", " +
+                        set.getIsRecordSet() + ", " + providerId);
                 // Set the parameters on the insert statement
                 psInsert.setString(1, set.getDisplayName());
                 psInsert.setString(2, set.getDescription());
@@ -837,8 +774,7 @@ public class DefaultSetDAO extends SetDAO
                 removeFromCache(set);
 
                 // Execute the insert statement and return the result
-                if(dbConnectionManager.executeUpdate(psInsert) > 0)
-                {
+                if (dbConnectionManager.executeUpdate(psInsert) > 0) {
                     // Get the auto-generated resource identifier ID and set it correctly on this Set Object
                     rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
@@ -850,50 +786,43 @@ public class DefaultSetDAO extends SetDAO
                 else
                     return false;
             } // end try(insert the set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while inserting a new set with the setSpec " + set.getSetSpec(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return insertForProvider(set, providerId);
-            }
-            finally
-            {
+            } finally {
                 dbConnectionManager.closeResultSet(rs);
             } // end finally(close ResultSet)
         } // end synchronized
     } // end method insert(Set)
 
     @Override
-    public boolean addToProvider(Set set, int providerId) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean addToProvider(Set set, int providerId) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the set are valid
         validateFields(set, true, true);
 
-        synchronized(psAddToProviderLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psAddToProviderLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the set with ID " + set.getId());
 
-            try
-            {
+            try {
                 // Create a PreparedStatement to update a set if it wasn't already created
-                if(psAddToProvider == null || dbConnectionManager.isClosed(psAddToProvider))
-                {
+                if (psAddToProvider == null || dbConnectionManager.isClosed(psAddToProvider)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_PROVIDER_ID + "=?, " +
                                                                                COL_PROVIDER_SET + "=?, " +
                                                                                COL_RECORD_SET + "=? " +
                                        "WHERE " + COL_SET_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"add set to provider\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -911,13 +840,12 @@ public class DefaultSetDAO extends SetDAO
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psAddToProvider) > 0;
             } // end try(update the row)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the set with ID " + set.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return addToProvider(set, providerId);
             }
@@ -925,32 +853,28 @@ public class DefaultSetDAO extends SetDAO
     } // end method addToProvider(Set, int)
 
     @Override
-    public boolean removeFromProvider(Set set, int providerId) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean removeFromProvider(Set set, int providerId) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the set are valid
         validateFields(set, true, true);
 
-        synchronized(psRemoveFromProviderLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psRemoveFromProviderLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the set with ID " + set.getId());
 
-            try
-            {
+            try {
                 // Create a PreparedStatement to update a set if it wasn't already created
-                if(psRemoveFromProvider == null || dbConnectionManager.isClosed(psRemoveFromProvider))
-                {
+                if (psRemoveFromProvider == null || dbConnectionManager.isClosed(psRemoveFromProvider)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_PROVIDER_ID + "=0, " +
                                                                                COL_PROVIDER_SET + "=?, " +
                                                                                COL_RECORD_SET + "=? " +
                                        "WHERE " + COL_SET_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"remove set from provider\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -967,13 +891,12 @@ public class DefaultSetDAO extends SetDAO
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psRemoveFromProvider) > 0;
             } // end try(update the row)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the set with ID " + set.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return removeFromProvider(set, providerId);
             }
@@ -981,25 +904,21 @@ public class DefaultSetDAO extends SetDAO
     } // end method addToProvider(Set, int)
 
     @Override
-    public boolean update(Set set) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean update(Set set) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the fields on the set are valid
         validateFields(set, true, true);
 
-        synchronized(psUpdateLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psUpdateLock) {
+            if (log.isDebugEnabled())
                 log.debug("Updating the set with ID " + set.getId());
 
-            try
-            {
+            try {
                 // Create a PreparedStatement to update a set if it wasn't already created
-                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-                {
+                if (psUpdate == null || dbConnectionManager.isClosed(psUpdate)) {
                     // SQL to update new row
                     String updateSql = "UPDATE " + SETS_TABLE_NAME + " SET " + COL_DISPLAY_NAME + "=?, " +
                                                                           COL_DESCRIPTION + "=?, " +
@@ -1008,7 +927,7 @@ public class DefaultSetDAO extends SetDAO
                                                                           COL_RECORD_SET + "=? " +
                                        "WHERE " + COL_SET_ID + "=?";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"update set\" PreparedStatement from the SQL " + updateSql);
 
                     // A prepared statement to run the update SQL
@@ -1028,13 +947,12 @@ public class DefaultSetDAO extends SetDAO
                 // Execute the update statement and return the result
                 return dbConnectionManager.executeUpdate(psUpdate) > 0;
             } // end try(update the row)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while updating the set with ID " + set.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return update(set);
             }
@@ -1042,30 +960,26 @@ public class DefaultSetDAO extends SetDAO
     } // end method update(Set)
 
     @Override
-    public boolean delete(Set set) throws DataException
-    {
-        // Throw an exception if the connection is null.  This means the configuration file was bad.
-        if(dbConnectionManager.getDbConnection() == null)
+    public boolean delete(Set set) throws DataException {
+        // Throw an exception if the connection is null. This means the configuration file was bad.
+        if (dbConnectionManager.getDbConnection() == null)
             throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
         // Check that the ID field on the set are valid
         validateFields(set, true, false);
 
-        synchronized(psDeleteLock)
-        {
-            if(log.isDebugEnabled())
+        synchronized (psDeleteLock) {
+            if (log.isDebugEnabled())
                 log.debug("Deleting the set with ID " + set.getId());
 
-            try
-            {
+            try {
                 // Create the PreparedStatement to delete a set if it wasn't already defined
-                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-                {
+                if (psDelete == null || dbConnectionManager.isClosed(psDelete)) {
                     // SQL to delete the row from the table
-                    String deleteSql = "DELETE FROM "+ SETS_TABLE_NAME + " " +
+                    String deleteSql = "DELETE FROM " + SETS_TABLE_NAME + " " +
                                        "WHERE " + COL_SET_ID + " = ? ";
 
-                    if(log.isDebugEnabled())
+                    if (log.isDebugEnabled())
                         log.debug("Creating the \"delete set\" PreparedStatement the SQL " + deleteSql);
 
                     // A prepared statement to run the delete SQL
@@ -1080,13 +994,12 @@ public class DefaultSetDAO extends SetDAO
                 // Execute the delete statement and return the result
                 return dbConnectionManager.execute(psDelete);
             } // end try(delete the set)
-            catch(SQLException e)
-            {
+            catch (SQLException e) {
                 log.error("A SQLException occurred while deleting the set with ID " + set.getId(), e);
 
                 return false;
             } // end catch(SQLException)
-            catch (DBConnectionResetException e){
+            catch (DBConnectionResetException e) {
                 log.info("Re executing the query that failed ");
                 return delete(set);
             }

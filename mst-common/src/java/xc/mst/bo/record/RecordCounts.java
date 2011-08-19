@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.bo.record;
 
 import java.text.DecimalFormat;
@@ -51,17 +51,17 @@ public class RecordCounts {
     static {
         UPD_PREV_COLUMN_NAMES = new LinkedHashMap<String, String>();
 
-        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE+""+Record.ACTIVE, "upd_act_prev_act_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE+""+Record.HELD, "upd_act_prev_held_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE+""+Record.DELETED, "upd_act_prev_del_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE + "" + Record.ACTIVE, "upd_act_prev_act_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE + "" + Record.HELD, "upd_act_prev_held_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.ACTIVE + "" + Record.DELETED, "upd_act_prev_del_cnt");
 
-        UPD_PREV_COLUMN_NAMES.put(Record.HELD+""+Record.ACTIVE, "upd_held_prev_act_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.HELD+""+Record.HELD, "upd_held_prev_held_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.HELD+""+Record.DELETED, "upd_held_prev_del_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.HELD + "" + Record.ACTIVE, "upd_held_prev_act_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.HELD + "" + Record.HELD, "upd_held_prev_held_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.HELD + "" + Record.DELETED, "upd_held_prev_del_cnt");
 
-        UPD_PREV_COLUMN_NAMES.put(Record.DELETED+""+Record.ACTIVE, "upd_del_prev_act_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.DELETED+""+Record.HELD, "upd_del_prev_held_cnt");
-        UPD_PREV_COLUMN_NAMES.put(Record.DELETED+""+Record.DELETED, "upd_del_prev_del_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.DELETED + "" + Record.ACTIVE, "upd_del_prev_act_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.DELETED + "" + Record.HELD, "upd_del_prev_held_cnt");
+        UPD_PREV_COLUMN_NAMES.put(Record.DELETED + "" + Record.DELETED, "upd_del_prev_del_cnt");
 
         INCOMING_STATUS_COLUMN_NAMES = new LinkedHashSet<String>();
 
@@ -128,7 +128,7 @@ public class RecordCounts {
     }
 
     public void incr(String type, char newStatus, char prevStatus) {
-        //LOG.debug("incr - type:"+type+" newStatus:"+newStatus+" prevStatus:"+prevStatus);
+        // LOG.debug("incr - type:"+type+" newStatus:"+newStatus+" prevStatus:"+prevStatus);
         if (type == null) {
             type = TOTALS;
         }
@@ -153,13 +153,13 @@ public class RecordCounts {
         try {
             incr(type, col_1);
         } catch (RuntimeException re) {
-            LOG.error("type: "+type);
-            LOG.error("newStatus: "+newStatus);
-            LOG.error("prevStatus: "+prevStatus);
+            LOG.error("type: " + type);
+            LOG.error("newStatus: " + newStatus);
+            LOG.error("prevStatus: " + prevStatus);
             throw re;
         }
         if (prevStatus != 0 && prevStatus != Record.NULL) {
-            getCount(getCountsByType(type), newStatus+""+prevStatus).addAndGet(1);
+            getCount(getCountsByType(type), newStatus + "" + prevStatus).addAndGet(1);
         }
     }
 
@@ -181,7 +181,7 @@ public class RecordCounts {
     public int getCount(String type, char status, char prevStatus) {
         Map<String, AtomicInteger> counts4type = counts.get(type);
         if (counts4type != null) {
-            AtomicInteger ai = counts4type.get(UPD_PREV_COLUMN_NAMES.get(status+""+prevStatus));
+            AtomicInteger ai = counts4type.get(UPD_PREV_COLUMN_NAMES.get(status + "" + prevStatus));
             if (ai != null) {
                 return ai.get();
             }
@@ -215,7 +215,7 @@ public class RecordCounts {
                 continue;
 
             type = StringUtils.rightPad(type, 25);
-            int col=0;
+            int col = 0;
             List<String> colNames = new ArrayList<String>();
             colNames.addAll(INCOMING_STATUS_COLUMN_NAMES);
             if (RecordCounts.OUTGOING.equals(this.incomingOutgoing)) {
@@ -224,23 +224,23 @@ public class RecordCounts {
                 colNames.add(UNEXPECTED_ERROR);
             }
             String date = "all time            ";
-            LOG.debug("TOTALS_DATE.getTime(): "+TOTALS_DATE.getTime());
-            LOG.debug("this.harvestStartDate.getTime(): "+this.harvestStartDate.getTime());
+            LOG.debug("TOTALS_DATE.getTime(): " + TOTALS_DATE.getTime());
+            LOG.debug("this.harvestStartDate.getTime(): " + this.harvestStartDate.getTime());
             if (this.harvestStartDate.getTime() != TOTALS_DATE.getTime()) {
-                LOG.debug("new Util().printDateTime(this.harvestStartDate): "+new Util().printDateTime(this.harvestStartDate));
-                LOG.debug("new Util().printDateTime(TOTALS_DATE): "+new Util().printDateTime(TOTALS_DATE));
+                LOG.debug("new Util().printDateTime(this.harvestStartDate): " + new Util().printDateTime(this.harvestStartDate));
+                LOG.debug("new Util().printDateTime(TOTALS_DATE): " + new Util().printDateTime(TOTALS_DATE));
 
                 date = new Util().printDateTime(this.harvestStartDate);
             }
             for (String updateType : colNames) {
                 if (col == 0)
-                    sb.append("\n"+incomingOutgoing+" "+date+" "+type+" ");
+                    sb.append("\n" + incomingOutgoing + " " + date + " " + type + " ");
                 long num = 0;
                 if (counts4Type.get(updateType) != null) {
                     num = counts4Type.get(updateType).get();
                 }
                 DecimalFormat myFormatter = new DecimalFormat("###,###,###");
-                String line = StringUtils.leftPad(updateType, 25)+": "+StringUtils.leftPad(myFormatter.format(num), 12)+"  ";
+                String line = StringUtils.leftPad(updateType, 25) + ": " + StringUtils.leftPad(myFormatter.format(num), 12) + "  ";
                 sb.append(line);
 
                 if (++col == 3) {

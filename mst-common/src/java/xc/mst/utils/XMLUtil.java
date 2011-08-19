@@ -1,12 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
-
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils;
 
@@ -54,8 +53,11 @@ public class XMLUtil {
 
     /**
      * Validate an XML file
-     * @param xmlFile The xml file to validate
-     * @param schemaFileName The path of the schema file
+     * 
+     * @param xmlFile
+     *            The xml file to validate
+     * @param schemaFileName
+     *            The path of the schema file
      * @return True if the file valid, false if the file invalid
      * @throws ParserConfigurationException
      * @throws IOException
@@ -68,9 +70,13 @@ public class XMLUtil {
 
     /**
      * Validate an XML file
-     * @param xmlFile The xml file to validate
-     * @param schemaFileName The path of the schema file
-     * @param needLogDetail Flag indicating whether to create detailed logs or not
+     * 
+     * @param xmlFile
+     *            The xml file to validate
+     * @param schemaFileName
+     *            The path of the schema file
+     * @param needLogDetail
+     *            Flag indicating whether to create detailed logs or not
      * @return True if the file valid, false if the file invalid
      * @throws ParserConfigurationException
      * @throws IOException
@@ -81,8 +87,8 @@ public class XMLUtil {
             throws ParserConfigurationException, IOException, SAXException {
 
         System.setProperty(
-            "javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
-            "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
+                "javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
+                "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
 
         if (needLogDetail)
             logger.info("Validating against schema file: " + schemaFileName);
@@ -112,13 +118,14 @@ public class XMLUtil {
             throws ParserConfigurationException, IOException, SAXException {
         return validate(xmlContent, schemaFileName, true);
     }
+
     public static boolean validate(String xmlContent, String schemaFileName,
             boolean needLogDetail)
             throws ParserConfigurationException, IOException, SAXException {
 
         System.setProperty(
-            "javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
-            "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
+                "javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
+                "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
 
         if (needLogDetail)
             logger.info("Validating against schema file: " + schemaFileName);
@@ -193,7 +200,7 @@ public class XMLUtil {
         Schema schema;
         try {
             schema = factory.newSchema(schemaLocation);
-        } catch(SAXException ex) {
+        } catch (SAXException ex) {
             logger.error(ex.getMessage());
             return;
         }
@@ -222,7 +229,7 @@ public class XMLUtil {
     /**
      * Create a simple XML tag. For example xmlTag("foo", "bar") creates
      * &lt;foo&gt;bar&lt;/foo&gt;
-     *
+     * 
      * @param tagName
      *            The name of the tag
      * @param content
@@ -237,22 +244,26 @@ public class XMLUtil {
      * Create a simple XML tag with attributes. For example
      * xmlTag("foo", "bar", new String[]{"foo", "bar}) creates
      * &lt;foo foo="bar"&gt;bar&lt;/foo&gt;
-     * @param tagName The name of the tag
-     * @param content The content of the tag
-     * @param attributes The attributes of the element
+     * 
+     * @param tagName
+     *            The name of the tag
+     * @param content
+     *            The content of the tag
+     * @param attributes
+     *            The attributes of the element
      * @return The created XML tag
      */
     public static String xmlTag(String tagName, String content,
             String[] attributes) {
         StringBuffer sb = new StringBuffer();
         sb.append("<").append(tagName);
-        if(attributes != null) {
-            for(int i=0; i<attributes.length; i+=2){
+        if (attributes != null) {
+            for (int i = 0; i < attributes.length; i += 2) {
                 sb.append(" ").append(attributes[i]).append("=\"")
-                    .append(attributes[i+1]).append("\"");
+                        .append(attributes[i + 1]).append("\"");
             }
         }
-        if(content == null || content.length() == 0){
+        if (content == null || content.length() == 0) {
             sb.append(" />");
         } else {
             sb.append(">");
@@ -277,15 +288,15 @@ public class XMLUtil {
     public static Element xmlEl(String elName, String content, String[] attributes,
             Namespace ns) {
         Element el = null;
-        if(ns != null) {
+        if (ns != null) {
             el = new Element(elName, ns);
         } else {
             el = new Element(elName);
         }
         el.addContent(content);
-        if(attributes != null) {
-            for(int i=0; i<attributes.length; i+=2){
-                el.setAttribute(attributes[i], attributes[i+1]);
+        if (attributes != null) {
+            for (int i = 0; i < attributes.length; i += 2) {
+                el.setAttribute(attributes[i], attributes[i + 1]);
             }
         }
         return el;

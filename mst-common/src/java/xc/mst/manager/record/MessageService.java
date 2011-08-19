@@ -22,13 +22,12 @@ public class MessageService extends BaseService {
                 final MetadataService service = getServicesService().getServiceById(m.getServiceId()).getMetadataService();
                 final int code = m.getCode();
                 final String detail = m.getDetail();
-                final String[] details = new String[] {detail};
+                final String[] details = new String[] { detail };
                 if (m.isInfoRecord()) {
                     if (service.isMessageEnabled(code, RecordMessage.INFO)) {
                         if (detail != null) {
                             m.setMessage(service.getMessage(code, RecordMessage.INFO, details));
-                        }
-                        else {
+                        } else {
                             m.setMessage(service.getMessage(code, RecordMessage.INFO));
                         }
                     }
@@ -36,8 +35,7 @@ public class MessageService extends BaseService {
                     if (service.isMessageEnabled(code, RecordMessage.WARN)) {
                         if (detail != null) {
                             m.setMessage(service.getMessage(code, RecordMessage.WARN, details));
-                        }
-                        else {
+                        } else {
                             m.setMessage(service.getMessage(code, RecordMessage.WARN));
                         }
                     }
@@ -45,8 +43,7 @@ public class MessageService extends BaseService {
                     if (service.isMessageEnabled(code, RecordMessage.ERROR)) {
                         if (detail != null) {
                             m.setMessage(service.getMessage(code, RecordMessage.ERROR, details));
-                        }
-                        else {
+                        } else {
                             m.setMessage(service.getMessage(code, RecordMessage.ERROR));
                         }
                     }

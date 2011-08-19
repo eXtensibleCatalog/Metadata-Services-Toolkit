@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.harvest;
 
@@ -24,11 +24,10 @@ import xc.mst.dao.MySqlConnectionManager;
 
 /**
  * Data Access Object for the harvest schedules table
- *
+ * 
  * @author Eric Osisek
  */
-public abstract class HarvestScheduleDAO extends BaseDAO
-{
+public abstract class HarvestScheduleDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -64,12 +63,12 @@ public abstract class HarvestScheduleDAO extends BaseDAO
      */
     public final static String COL_RECURRENCE = "recurrence";
 
-        /**
+    /**
      * The name of the provider ID column
      */
     public final static String COL_PROVIDER_ID = "provider_id";
 
-     /**
+    /**
      * The name of the provider name column
      */
     public final static String COL_PROVIDER_NAME = "name";
@@ -120,8 +119,7 @@ public abstract class HarvestScheduleDAO extends BaseDAO
     public final static String COL_REQUEST = "request";
 
     // Initialize the list of sortable columns
-    static
-    {
+    static {
         sortableColumns.add(COL_HARVEST_SCHEDULE_ID);
         sortableColumns.add(COL_SCHEDULE_NAME);
         sortableColumns.add(COL_RECURRENCE);
@@ -138,160 +136,185 @@ public abstract class HarvestScheduleDAO extends BaseDAO
 
     /**
      * Gets all harvest schedules in the database
-     *
+     * 
      * @return A list containing all harvest schedules in the database
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<HarvestSchedule> getAll() throws DatabaseConfigException;
 
     /**
      * Returns a sorted list of all the harvest schedules
-     *
-     * @param asc Boolean parameter determines if rows are to be sorted in ascending or descending order
-     * @param columnSorted The column on which the rows are sorted
+     * 
+     * @param asc
+     *            Boolean parameter determines if rows are to be sorted in ascending or descending order
+     * @param columnSorted
+     *            The column on which the rows are sorted
      * @return A sorted list of schedules
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<HarvestSchedule> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 
     /**
      * Gets a harvest schedule by it's ID
-     *
-     * @param harvestScheduleId The ID of the harvest schedule to get
+     * 
+     * @param harvestScheduleId
+     *            The ID of the harvest schedule to get
      * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract HarvestSchedule getById(int harvestScheduleId) throws DatabaseConfigException;
 
     /**
      * Gets a harvest schedule by it's ID without loading the schedule's steps
-     *
-     * @param harvestScheduleId The ID of the harvest schedule to get
+     * 
+     * @param harvestScheduleId
+     *            The ID of the harvest schedule to get
      * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract HarvestSchedule loadWithoutSteps(int harvestScheduleId) throws DatabaseConfigException;
 
     /**
      * Gets a harvest schedule by it's name
-     *
-     * @param name The name of the harvest schedule to get
+     * 
+     * @param name
+     *            The name of the harvest schedule to get
      * @return The harvest schedule with the passed name, or null if there was no harvest schedule with that name.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract HarvestSchedule getByName(String name) throws DatabaseConfigException;
 
     /**
      * Gets a harvest schedule by it's ID without getting extra information
-     *
-     * @param harvestScheduleId The ID of the harvest schedule to get
+     * 
+     * @param harvestScheduleId
+     *            The ID of the harvest schedule to get
      * @return The harvest schedule with the passed ID, or null if there was no harvest schedule with that ID.
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract HarvestSchedule loadBasicHarvestSchedule(int harvestScheduleId) throws DatabaseConfigException;
 
     /**
      * Gets all harvest schedules which harvest the provider with the passed ID
-     *
-     * @param providerId The ID of the provider whose schedules we should get
+     * 
+     * @param providerId
+     *            The ID of the provider whose schedules we should get
      * @return A list all harvest schedules which harvest the provider with the passed ID
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract HarvestSchedule getHarvestScheduleForProvider(int providerId) throws DatabaseConfigException;
 
     /**
      * Gets all harvest schedules from the database which should be run at the time specified
      * by the parameters
-     *
-     * @param hour The hour for which to get the harvest schedules to run
-     * @param dayOfWeek The day of the week for which to get the harvest schedules to run
-     * @param minute The minute for which to get the harvest schedules to run
+     * 
+     * @param hour
+     *            The hour for which to get the harvest schedules to run
+     * @param dayOfWeek
+     *            The day of the week for which to get the harvest schedules to run
+     * @param minute
+     *            The minute for which to get the harvest schedules to run
      * @return A list of all HarvestSchedules to be run at the time specified by the parameters
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract List<HarvestSchedule> getSchedulesToRun(int hour, int dayOfWeek, int minute) throws DatabaseConfigException;
 
     /**
      * Inserts a harvest schedule into the database
-     *
-     * @param harvestSchedule The harvest schedule to insert
+     * 
+     * @param harvestSchedule
+     *            The harvest schedule to insert
      * @return True on success, false on failure
-     * @throws DataException if the passed harvest schedule was not valid for inserting
+     * @throws DataException
+     *             if the passed harvest schedule was not valid for inserting
      */
     public abstract boolean insert(HarvestSchedule harvestSchedule) throws DataException;
 
     /**
      * Updates a harvestSchedule in the database
-     *
-     * @param harvestSchedule The harvest schedule to update
-     * @param updateSteps True to update the steps on the schedule, false to maintain them
+     * 
+     * @param harvestSchedule
+     *            The harvest schedule to update
+     * @param updateSteps
+     *            True to update the steps on the schedule, false to maintain them
      * @return True on success, false on failure
-     * @throws DataException if the passed harvest schedule was not valid for updating
+     * @throws DataException
+     *             if the passed harvest schedule was not valid for updating
      */
     public abstract boolean update(HarvestSchedule harvestSchedule, boolean updateSteps) throws DataException;
 
     /**
      * Deletes a harvest schedule from the database
-     *
-     * @param harvestSchedule The harvest schedule to delete
+     * 
+     * @param harvestSchedule
+     *            The harvest schedule to delete
      * @return True on success, false on failure
-     * @throws DataException if the passed harvest schedule was not valid for deleting
+     * @throws DataException
+     *             if the passed harvest schedule was not valid for deleting
      */
     public abstract boolean delete(HarvestSchedule harvestSchedule) throws DataException;
 
     /**
      * Validates the fields on the passed HarvestSchedule Object
-     *
-     * @param schedule The harvest schedule to validate
-     * @param validateId true if the ID field should be validated
-     * @param validateNonId true if the non-ID fields should be validated
-     * @throws DataException If one or more of the fields on the passed harvest schedule were invalid
+     * 
+     * @param schedule
+     *            The harvest schedule to validate
+     * @param validateId
+     *            true if the ID field should be validated
+     * @param validateNonId
+     *            true if the non-ID fields should be validated
+     * @throws DataException
+     *             If one or more of the fields on the passed harvest schedule were invalid
      */
-    protected void validateFields(HarvestSchedule schedule, boolean validateId, boolean validateNonId) throws DataException
-    {
+    protected void validateFields(HarvestSchedule schedule, boolean validateId, boolean validateNonId) throws DataException {
         StringBuilder errorMessage = new StringBuilder();
 
         // Check the ID field if we're supposed to
-        if(validateId)
-        {
-            if(log.isDebugEnabled())
+        if (validateId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the ID");
 
-            if(schedule.getId() < 0)
+            if (schedule.getId() < 0)
                 errorMessage.append("The harvestScheduleId is invalid. ");
         } // end if(we need to check the ID field)
 
         // Check the non-ID fields if we're supposed to
-        if(validateNonId)
-        {
-            if(log.isDebugEnabled())
+        if (validateNonId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the non-ID fields");
 
-            if(schedule.getMinute() > 59)
-                errorMessage.append("The minute is invalid. " );
+            if (schedule.getMinute() > 59)
+                errorMessage.append("The minute is invalid. ");
 
-            if(schedule.getDayOfWeek() > 7)
+            if (schedule.getDayOfWeek() > 7)
                 errorMessage.append("The day_of_week is invalid. ");
 
-            if(schedule.getHour() > 23)
+            if (schedule.getHour() > 23)
                 errorMessage.append("The hour is invalid. ");
 
-            if(schedule.getProvider() == null)
+            if (schedule.getProvider() == null)
                 errorMessage.append("The provider is invalid. ");
 
-            if(schedule.getNotifyEmail() != null && schedule.getNotifyEmail().length() > 255)
+            if (schedule.getNotifyEmail() != null && schedule.getNotifyEmail().length() > 255)
                 errorMessage.append("The notify_email is invalid. ");
 
-            if(schedule.getScheduleName() != null && schedule.getScheduleName().length() > 265)
+            if (schedule.getScheduleName() != null && schedule.getScheduleName().length() > 265)
                 errorMessage.append("The schedule_name is invalid. ");
 
-            if(schedule.getRecurrence() != null && schedule.getRecurrence().length() > 127)
+            if (schedule.getRecurrence() != null && schedule.getRecurrence().length() > 127)
                 errorMessage.append("The recurrence is invalid. ");
         } // end if(we need to check the non-ID fields)
 
         // Log the error and throw the exception if any fields are invalid
-        if(errorMessage.length() > 0)
-        {
+        if (errorMessage.length() > 0) {
             String errors = errorMessage.toString();
             log.error("The following errors occurred: " + errors);
             throw new DataException(errors);

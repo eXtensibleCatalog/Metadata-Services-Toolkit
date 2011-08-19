@@ -17,7 +17,7 @@ public class MessagesTest extends MockHarvestTest {
 
     @Override
     public Format[] getIncomingFormats() throws Exception {
-        return new Format[] {getFooBarFormat()};
+        return new Format[] { getFooBarFormat() };
     }
 
     public Format getHarvestOutFormat() throws Exception {

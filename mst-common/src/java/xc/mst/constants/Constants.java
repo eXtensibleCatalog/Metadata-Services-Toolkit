@@ -1,25 +1,24 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.constants;
 
 /**
  * This class defines several constants as public static final variables
  * which may be used throughout the Metadata Hub
- *
+ * 
  * @author Eric Osisek
  */
-public class Constants
-{
-    //*******************************************************************
+public class Constants {
+    // *******************************************************************
     // Logger Names
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * Logger for the Harvest-in log file
@@ -46,9 +45,9 @@ public class Constants
      */
     public static final String LOGGER_GENERAL = "general";
 
-    //*******************************************************************
+    // *******************************************************************
     // Service Names
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * The name of the normalization service
@@ -65,9 +64,9 @@ public class Constants
      */
     public static final String AGGREGATION_SERVICE_NAME = "Aggregation";
 
-    //******************************************************************
+    // ******************************************************************
     // General log file IDs
-    //******************************************************************
+    // ******************************************************************
 
     /**
      * ID of the repository management log file
@@ -108,9 +107,9 @@ public class Constants
      * ID of the MST Configuration log file
      */
     public static final int LOG_ID_MST_CONFIGURATION = 8;
-    //*******************************************************************
+    // *******************************************************************
     // Configuration Parameters
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * Parameter for looking up the location of the logger configuration file from the MST's configuration file
@@ -225,7 +224,6 @@ public class Constants
      */
     public static final String CONFIG_OAI_REPO_MAX_RECORDS_LENGTH = "OaiRepoMaxRecordsLength";
 
-
     /**
      * Parameter for looking up the threading model used for indexing SOLR
      */
@@ -243,10 +241,9 @@ public class Constants
 
     public static final String INSTANCES_DIR = "InstanceDir";
 
-
-    //*******************************************************************
+    // *******************************************************************
     // Error Messages
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * OAI error signifying bad arguments in the request
@@ -298,9 +295,9 @@ public class Constants
      */
     public static final String ERROR_NO_SET_HIERARCHY = "The repository does not support sets.";
 
-    //*******************************************************************
+    // *******************************************************************
     // OAI Response format
-    //*******************************************************************
+    // *******************************************************************
 
     /**
      * The header and opening tag for the OAI response element
@@ -309,7 +306,7 @@ public class Constants
                                                      "<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"\n" +
                                                      "                 xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
                                                      "                 xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ " +
-                                                     "                                      http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\n"+
+                                                     "                                      http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\n" +
                                                      "                 						http://www.extensiblecatalog.org/xsd/mst/1.0 " +
                                                      "                                      http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd\">\n";
 
@@ -318,9 +315,9 @@ public class Constants
      */
     public static final String OAI_RESPONSE_FOOTER = "</OAI-PMH>";
 
-    //*******************************************************************
+    // *******************************************************************
     // XC Element Name Constants
-    //*******************************************************************
+    // *******************************************************************
 
     public static final String ELEMENT_TITLE_OF_WORK = "titleOfWork";
 
@@ -336,9 +333,9 @@ public class Constants
 
     public static final String ELEMENT_AUTHOR = "author";
 
-    //*******************************************************************
-    // MST Thread type  Constants
-    //*******************************************************************
+    // *******************************************************************
+    // MST Thread type Constants
+    // *******************************************************************
 
     public static final String THREAD_SERVICE = "SERVICE";
 
@@ -354,10 +351,9 @@ public class Constants
 
     public static final String THREAD_MARK_PROVIDER_DELETED = "MARK_PROVIDER_DELETED";
 
-
-    //*******************************************************************
+    // *******************************************************************
     // Groups and Permissions Constants
-    //*******************************************************************
+    // *******************************************************************
 
     public static final String ADMINSTRATOR_GROUP = "Administrator";
 

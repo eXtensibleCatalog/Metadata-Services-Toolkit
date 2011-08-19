@@ -1,12 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
-
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.utils.index;
 
@@ -29,9 +28,9 @@ import xc.mst.utils.LogWriter;
 
 /**
  * Solr Index manager
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class SolrIndexManager extends BaseManager {
 
@@ -45,22 +44,19 @@ public class SolrIndexManager extends BaseManager {
      */
     protected static Log logObj = null;
 
-    public void init()
-    {
-        try
-        {
+    public void init() {
+        try {
             logObj = getLogDAO().getById(Constants.LOG_ID_SOLR_INDEX);
-        }
-        catch(DatabaseConfigException e)
-        {
+        } catch (DatabaseConfigException e) {
             log.error("Cannot connect to the database with the parameters from the config file.", e);
         }
     }
 
     /**
      * Adds a document to the Lucene index
-     *
-     * @param doc The document to add
+     * 
+     * @param doc
+     *            The document to add
      * @return true on success, false on failure
      */
     public boolean addDoc(SolrInputDocument doc) throws IndexException {
@@ -78,10 +74,10 @@ public class SolrIndexManager extends BaseManager {
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the path to solr folder."
                     + se.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.", e);
             }
 
@@ -92,10 +88,10 @@ public class SolrIndexManager extends BaseManager {
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while adding a document to the Solr index. Check the path to solr folder."
                     + ioe.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.", e);
             }
 
@@ -105,40 +101,34 @@ public class SolrIndexManager extends BaseManager {
         return true;
     }
 
-    public boolean deleteByQuery(String query)
-    {
-        try
-        {
+    public boolean deleteByQuery(String query) {
+        try {
             getMSTSolrService().getServer().deleteByQuery(query);
             return true;
-        }
-        catch (SolrServerException se)
-        {
+        } catch (SolrServerException se) {
             log.error("Solr server exception occured when deleting document in the index. Check the path to solr folder.", se);
 
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the path to solr folder."
                     + se.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.", e);
             }
 
             return false;
-        }
-        catch (IOException ioe)
-        {
+        } catch (IOException ioe) {
             log.error("IO exception occured when deleting document in the index. Check the path to solr folder.", ioe);
 
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while deleting document in the index. Check the path to solr folder."
                     + ioe.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.", e);
             }
 
@@ -148,20 +138,18 @@ public class SolrIndexManager extends BaseManager {
 
     /**
      * Makes the calling Thread yield until all add/update/delete jobs have completed.
-     *
+     * 
      * Since SolrIndexManager is single Threaded, this method does nothing
      */
-    public void waitForJobCompletion(long timeout)
-    {
+    public void waitForJobCompletion(long timeout) {
     }
 
     /**
      * Commits data to solr index
-     *
+     * 
      * @return true on success, false on failure
      */
-    public boolean commitIndex() throws IndexException
-    {
+    public boolean commitIndex() throws IndexException {
         if (log.isDebugEnabled()) {
             log.debug("Commit index to Solr - begin");
         }
@@ -180,10 +168,10 @@ public class SolrIndexManager extends BaseManager {
 
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the path to solr folder."
                     + se.getMessage());
-            logObj.setErrors(logObj.getErrors()+1);
+            logObj.setErrors(logObj.getErrors() + 1);
             try {
                 getLogDAO().update(logObj);
-            } catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.");
             }
 
@@ -194,10 +182,10 @@ public class SolrIndexManager extends BaseManager {
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while commiting changes to the Solr index. Check the path to solr folder."
                     + ioe.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.");
             }
 
@@ -212,11 +200,10 @@ public class SolrIndexManager extends BaseManager {
 
     /**
      * Optimize solr index
-     *
+     * 
      * @return true on success, false on failure
      */
-    public boolean optimizeIndex() throws IndexException
-    {
+    public boolean optimizeIndex() throws IndexException {
 
         // Check if solr server is null
         if (getMSTSolrService().getServer() == null) {
@@ -232,10 +219,10 @@ public class SolrIndexManager extends BaseManager {
 
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while optimizing Solr index. Check the path to solr folder."
                     + se.getMessage());
-            logObj.setErrors(logObj.getErrors()+1);
+            logObj.setErrors(logObj.getErrors() + 1);
             try {
                 getLogDAO().update(logObj);
-            } catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.");
             }
 
@@ -246,10 +233,10 @@ public class SolrIndexManager extends BaseManager {
             LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while optimizing the Solr index. Check the path to solr folder."
                     + ioe.getMessage());
 
-            logObj.setErrors(logObj.getErrors()+1);
-            try{
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
                 getLogDAO().update(logObj);
-            }catch(DataException e){
+            } catch (DataException e) {
                 log.error("DataExcepiton while updating the log's error count.");
             }
 
@@ -261,8 +248,9 @@ public class SolrIndexManager extends BaseManager {
 
     /**
      * Method to get search result documents
-     *
-     * @param query Query to perform the search
+     * 
+     * @param query
+     *            Query to perform the search
      * @return Search results
      */
     public SolrDocumentList getDocumentList(SolrQuery query) throws IndexException {
@@ -279,22 +267,22 @@ public class SolrIndexManager extends BaseManager {
             if (log.isDebugEnabled()) {
                 log.debug("Executing Solr Query : " + query);
             }
-            QueryResponse rsp = getMSTSolrService().getServer().query( query );
+            QueryResponse rsp = getMSTSolrService().getServer().query(query);
             docs = rsp.getResults();
 
         } catch (SolrServerException e) {
-                log.error("An error occurred while getting documents from the Solr index. Check the path to solr folder.", e);
+            log.error("An error occurred while getting documents from the Solr index. Check the path to solr folder.", e);
 
-                LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index. Check the path to solr folder."
+            LogWriter.addError(logObj.getLogFileLocation(), "An error occurred while getting documents from the Solr index. Check the path to solr folder."
                         + e.getMessage());
 
-                logObj.setErrors(logObj.getErrors()+1);
-                try{
-                    getLogDAO().update(logObj);
-                }catch(DataException e2){
-                    log.error("DataExcepiton while updating the log's error count.");
-                }
-                throw new IndexException(e.getMessage());
+            logObj.setErrors(logObj.getErrors() + 1);
+            try {
+                getLogDAO().update(logObj);
+            } catch (DataException e2) {
+                log.error("DataExcepiton while updating the log's error count.");
+            }
+            throw new IndexException(e.getMessage());
         }
 
         return docs;

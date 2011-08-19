@@ -12,8 +12,8 @@ public class MarcRecord {
 
     /**
      * The structure is as follows
-     *  tag
-     *    1 ->
+     * tag
+     * 1 ->
      */
     protected TIntObjectHashMap controlFields = new TIntObjectHashMap();
     protected TIntObjectHashMap dataFields = new TIntObjectHashMap();
@@ -21,24 +21,31 @@ public class MarcRecord {
     public String getLeader() {
         return leader;
     }
+
     public void setLeader(String leader) {
         this.leader = leader;
     }
+
     public String getOrgCode() {
         return orgCode;
     }
+
     public void setOrgCode(String orgCode) {
         this.orgCode = orgCode;
     }
+
     public TIntObjectHashMap getControlFields() {
         return controlFields;
     }
+
     public void setControlFields(TIntObjectHashMap controlFields) {
         this.controlFields = controlFields;
     }
+
     public TIntObjectHashMap getDataFields() {
         return dataFields;
     }
+
     public void setDataFields(TIntObjectHashMap dataFields) {
         this.dataFields = dataFields;
     }
@@ -47,17 +54,17 @@ public class MarcRecord {
         final StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append("\n");
-        sb.append(" leader:<"+leader+">");
+        sb.append(" leader:<" + leader + ">");
         sb.append("\n");
         sb.append(" controlFields: [");
         getControlFields().forEachEntry(new TIntObjectProcedure() {
             @SuppressWarnings("unchecked")
             public boolean execute(int key, Object value) {
-                List<Field> l = (List<Field>)value;
+                List<Field> l = (List<Field>) value;
                 for (Field f : l) {
                     sb.append("\n");
-                    sb.append(" tag:"+f.getTag());
-                    sb.append(" contents:<"+f.getContents()+">");
+                    sb.append(" tag:" + f.getTag());
+                    sb.append(" contents:<" + f.getContents() + ">");
                 }
                 return true;
             }
@@ -69,18 +76,18 @@ public class MarcRecord {
         getDataFields().forEachEntry(new TIntObjectProcedure() {
             @SuppressWarnings("unchecked")
             public boolean execute(int key, Object value) {
-                List<Field> l = (List<Field>)value;
+                List<Field> l = (List<Field>) value;
                 for (Field f : l) {
                     sb.append("\n");
-                    sb.append(" tag:"+f.getTag());
-                    sb.append(" ind1:"+f.getInd1());
-                    sb.append(" ind2:"+f.getInd2());
+                    sb.append(" tag:" + f.getTag());
+                    sb.append(" ind1:" + f.getInd1());
+                    sb.append(" ind2:" + f.getInd2());
                     sb.append(" subfields: [");
                     if (f.getSubfields() != null) {
                         for (Subfield sf : f.getSubfields()) {
                             sb.append("\n");
-                            sb.append(" code:"+sf.getCode());
-                            sb.append(" contents:<"+sf.getContents()+">");
+                            sb.append(" code:" + sf.getCode());
+                            sb.append(" contents:<" + sf.getContents() + ">");
                         }
                     }
                     sb.append("\n");

@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.services;
 
@@ -20,12 +20,11 @@ import xc.mst.manager.IndexException;
 
 /**
  * Deletes a service from the MST
- *
+ * 
  * @author Tejaswi Haramurali
  */
-public class DeleteService extends BaseActionSupport
-{
-    /** Serial Id	 */
+public class DeleteService extends BaseActionSupport {
+    /** Serial Id */
     private static final long serialVersionUID = -650419286679050797L;
 
     /** The ID of the service to be deleted */
@@ -48,19 +47,17 @@ public class DeleteService extends BaseActionSupport
 
     /**
      * Overrides default implementation to delete a service.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
+    public String execute() {
         if (log.isDebugEnabled()) {
-          log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
+            log.debug("DeleteService:execute():Service Id to be deleted : " + serviceId);
         }
 
         Service service = null;
-        try
-        {
+        try {
             service = getServicesService().getServiceById(serviceId);
 
             long numberOfRecordsHarvested = getRecordService().getNumberOfRecordsByServiceId(serviceId);
@@ -78,17 +75,14 @@ public class DeleteService extends BaseActionSupport
             }
 
             return SUCCESS;
-       } catch(DataException e)
-        {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
+        } catch (DataException e) {
+            log.error("Exception occured while deleting the service " + ((service != null) ? service.getName() : ""), e);
             this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
             getUserService().sendEmailErrorReport();
             return INPUT;
-        }
-        catch(IndexException ie)
-        {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():"") + " and index. Check the path to solr folder.", ie);
-            this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null)?service.getName():"") + ".Email has been sent to the administrator regarding the error.");
+        } catch (IndexException ie) {
+            log.error("Exception occured while deleting the service " + ((service != null) ? service.getName() : "") + " and index. Check the path to solr folder.", ie);
+            this.addFieldError("viewRepositoryError", "Error occured while deleting the service " + ((service != null) ? service.getName() : "") + ".Email has been sent to the administrator regarding the error.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
             return INPUT;
@@ -97,28 +91,24 @@ public class DeleteService extends BaseActionSupport
 
     /**
      * Delete service and its harvested records
-     *
+     * 
      */
-    public String deleteServiceAndRecords()
-    {
+    public String deleteServiceAndRecords() {
         if (log.isDebugEnabled()) {
             log.debug("DeleteRepository:deleteServiceAndRecords():Service Id to be deleted : " + serviceId);
         }
-         Service service = null;
+        Service service = null;
 
-        try
-        {
+        try {
             service = getServicesService().getServiceById(serviceId);
 
             // Delete service
             getServicesService().deleteService(service);
             // BDA - I don't think we need to schedule this anymore - should be a quick operation.
-               //getServicesService().deleteServiceAndRecordsByJob(service);
+            // getServicesService().deleteServiceAndRecordsByJob(service);
             return SUCCESS;
-        }
-        catch(DataException e)
-        {
-            log.error("Exception occured while deleting the service " + ((service != null)?service.getName():""), e);
+        } catch (DataException e) {
+            log.error("Exception occured while deleting the service " + ((service != null) ? service.getName() : ""), e);
             this.addFieldError("viewRepositoryError", "Error occured while deleting service. Email has been sent to the administrator regarding the error.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -127,10 +117,9 @@ public class DeleteService extends BaseActionSupport
 
     }
 
-
     /**
      * Returns the error message
-     *
+     * 
      * @return error message
      */
     public String getMessage() {
@@ -139,31 +128,29 @@ public class DeleteService extends BaseActionSupport
 
     /**
      * Returns true if service deleted, else false
-     *
+     * 
      * @return Returns true if service deleted, else false
      */
     public boolean isDeleted() {
         return deleted;
     }
 
-
     /**
      * Sets the ID of the service to be deleted
-     *
-     * @param serviceId service ID
+     * 
+     * @param serviceId
+     *            service ID
      */
-    public void setServiceId(int serviceId)
-    {
+    public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
     }
 
     /**
      * Returns the ID of the service to be deleted
-     *
+     * 
      * @return service ID
      */
-    public int getServiceId()
-    {
+    public int getServiceId() {
         return this.serviceId;
     }
 

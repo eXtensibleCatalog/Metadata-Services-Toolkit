@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.manager.repository;
 
@@ -18,16 +18,17 @@ import xc.mst.manager.BaseService;
 
 /**
  * Service to access the sets
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class DefaultSetService extends BaseService implements SetService {
 
     /**
      * Get set having the specified set id
-     *
-     * @param setId Id of the set
+     * 
+     * @param setId
+     *            Id of the set
      * @return Set if exist else null
      * @throws DatabaseConfigException
      */
@@ -37,9 +38,11 @@ public class DefaultSetService extends BaseService implements SetService {
 
     /**
      * Delete Set
-     *
-     * @param set set to be deleted
-     * @throws DataException Thrown when problem in deleting the set
+     * 
+     * @param set
+     *            set to be deleted
+     * @throws DataException
+     *             Thrown when problem in deleting the set
      */
     public void deleteSet(Set set) throws DataException {
         setDAO.delete(set);
@@ -47,8 +50,9 @@ public class DefaultSetService extends BaseService implements SetService {
 
     /**
      * Add a set
-     *
-     * @param set set to inserted into the database
+     * 
+     * @param set
+     *            set to inserted into the database
      */
     public void insertSet(Set set) throws DataException {
         setDAO.insert(set);
@@ -56,7 +60,7 @@ public class DefaultSetService extends BaseService implements SetService {
 
     /**
      * Get all sets
-     *
+     * 
      * @return all sets
      * @throws DatabaseConfigException
      */
@@ -66,13 +70,13 @@ public class DefaultSetService extends BaseService implements SetService {
 
     /**
      * Returns a Set object based on a setSpec value provided
-     *
-     * @param setSpec The set specification value
+     * 
+     * @param setSpec
+     *            The set specification value
      * @return Set Object
      * @throws DatabaseConfigException
      */
-    public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException
-    {
+    public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException {
         return setDAO.getBySetSpec(setSpec);
     }
 

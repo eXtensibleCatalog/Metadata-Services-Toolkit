@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.scheduling;
 
@@ -32,10 +32,10 @@ import xc.mst.utils.index.SolrIndexManager;
 /**
  * A Thread which re process the records through service.
  * When a service is updated, the records need to be re processed.
- *
+ * 
  * @author Sharmila Ranganathan
  */
-public class ServiceReprocessWorkerThread //extends WorkerThread
+public class ServiceReprocessWorkerThread // extends WorkerThread
 {
     /**
      * A reference to the logger for this class
@@ -70,18 +70,16 @@ public class ServiceReprocessWorkerThread //extends WorkerThread
     /**
      * Manager for getting, inserting and updating records
      */
-    private static RecordService recordService = (RecordService)MSTConfiguration.getInstance().getBean("RecordService");
+    private static RecordService recordService = (RecordService) MSTConfiguration.getInstance().getBean("RecordService");
 
     /**
      * Manager for getting, inserting and updating jobs
      */
-    private static JobService jobService = (JobService)MSTConfiguration.getInstance().getBean("JobService");
+    private static JobService jobService = (JobService) MSTConfiguration.getInstance().getBean("JobService");
 
-    public void run()
-    {
-        try
-        {
-            ServicesService serviceManager = (ServicesService)MSTConfiguration.getInstance().getBean("ServicesService");
+    public void run() {
+        try {
+            ServicesService serviceManager = (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
             service = serviceManager.getServiceById(serviceId);
 
             log.info("Starting thread to reprocess service " + service);
@@ -92,30 +90,28 @@ public class ServiceReprocessWorkerThread //extends WorkerThread
             // This will hold the records that has to be processed and is same as the re processing
             // service's record's predecessor.
             List<Record> updatedRecords = new ArrayList<Record>();
-            for(Record record : records)
-            {
+            for (Record record : records) {
                 record.addInputForService(service);
                 updatedRecords.add(record);
             }
 
             List<Service> servicesToRun = new ArrayList<Service>();
 
-            if(!servicesToRun.contains(service))
+            if (!servicesToRun.contains(service))
                 servicesToRun.add(service);
 
             // Mark the records output by the old service as deleted
             records = recordService.getByServiceId(service.getId());
 
-            for(Record record : records)
-            {
+            for (Record record : records) {
                 record.setDeleted(true);
 
                 // Get all its predecessors & remove the current record as successor
-                List<Record> predecessors =  record.getProcessedFrom();
+                List<Record> predecessors = record.getProcessedFrom();
                 for (Record predecessor : predecessors) {
                     int index = updatedRecords.indexOf(predecessor);
                     if (index < 0) {
-                        predecessor =  recordService.getById(predecessor.getId());
+                        predecessor = recordService.getById(predecessor.getId());
                     } else {
                         predecessor = updatedRecords.get(index);
                     }
@@ -127,10 +123,9 @@ public class ServiceReprocessWorkerThread //extends WorkerThread
                 }
                 record.setUpdatedAt(new Date());
 
-                for(Service processingService : record.getProcessedByServices())
-                {
+                for (Service processingService : record.getProcessedByServices()) {
                     record.addInputForService(processingService);
-                    if(!servicesToRun.contains(processingService))
+                    if (!servicesToRun.contains(processingService))
                         servicesToRun.add(processingService);
                 }
 
@@ -138,14 +133,13 @@ public class ServiceReprocessWorkerThread //extends WorkerThread
             }
 
             // Update all predecessor records
-            for (Record updatedRecord:updatedRecords) {
+            for (Record updatedRecord : updatedRecords) {
                 recordService.update(updatedRecord);
             }
 
-            ((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
+            ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).commitIndex();
 
-            for(Service runMe : servicesToRun)
-            {
+            for (Service runMe : servicesToRun) {
                 try {
                     Job job = new Job(runMe, 0, Constants.THREAD_SERVICE);
                     job.setOrder(jobService.getMaxOrder() + 1);
@@ -169,29 +163,25 @@ public class ServiceReprocessWorkerThread //extends WorkerThread
             log.info("Finished reprocessing service " + service);
 
         } catch (DataException de) {
-            log.error("Data Exception occured while reprocessing records through service Id" + serviceId , de);
+            log.error("Data Exception occured while reprocessing records through service Id" + serviceId, de);
         } catch (IndexException ie) {
             log.error("Index Exception occured while reprocessing records through service Id" + serviceId, ie);
         }
     }
 
-    public void cancel()
-    {
+    public void cancel() {
         isCanceled = true;
     }
 
-    public void pause()
-    {
+    public void pause() {
         isPaused = true;
     }
 
-    public void proceed()
-    {
+    public void proceed() {
         isPaused = false;
     }
 
-    public String getJobName()
-    {
+    public String getJobName() {
         return "Deleting old service records and preparing for service reprocess.";
     }
 

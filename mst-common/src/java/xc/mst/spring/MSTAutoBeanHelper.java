@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.spring;
 
 import org.apache.log4j.Logger;
@@ -20,10 +20,10 @@ public class MSTAutoBeanHelper {
     protected ClassLoader getClassLoader() {
         ClassLoader cl = null;
         try {
-            Util util = (Util)MSTConfiguration.getInstance().getBean("Util");
+            Util util = (Util) MSTConfiguration.getInstance().getBean("Util");
             cl = util.getClassLoader();
         } catch (Throwable t) {
-            //LOG.error("", t);
+            // LOG.error("", t);
         }
         if (cl == null) {
             cl = getClass().getClassLoader();
@@ -35,18 +35,18 @@ public class MSTAutoBeanHelper {
         ClassLoader cl = null;
         try {
             // This part checks whether we are currently loading a service ac
-            Util util = (Util)MSTConfiguration.getInstance().getBean("Util");
+            Util util = (Util) MSTConfiguration.getInstance().getBean("Util");
             cl = util.getClassLoader();
             if (cl != null) {
                 return false;
             }
             // This part checks whether a service ac has been loaded and we're in the context
             if (MSTConfiguration.getInstance().getBean("Service") != null) {
-                LOG.debug("MSTConfiguration.getBean(Service): "+MSTConfiguration.getInstance().getBean("Service"));
+                LOG.debug("MSTConfiguration.getBean(Service): " + MSTConfiguration.getInstance().getBean("Service"));
                 return false;
             }
         } catch (Throwable t) {
-            //do nothing
+            // do nothing
         }
         return true;
     }
@@ -69,11 +69,11 @@ public class MSTAutoBeanHelper {
         }
         int idx0 = className.lastIndexOf(".");
         if (idx0 != -1) {
-            className = className.substring(idx0+1);
+            className = className.substring(idx0 + 1);
         }
         idx0 = className.lastIndexOf("Default");
         if (idx0 != -1) {
-            className = className.substring(idx0+"Default".length());
+            className = className.substring(idx0 + "Default".length());
         }
         return className;
     }

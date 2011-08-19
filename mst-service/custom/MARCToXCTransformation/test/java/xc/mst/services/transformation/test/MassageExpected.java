@@ -11,17 +11,17 @@ import xc.mst.repo.TestRepository;
 import xc.mst.service.impl.test.BaseMetadataServiceTest;
 import xc.mst.utils.XmlHelper;
 
-public class MassageExpected  extends BaseMetadataServiceTest {
+public class MassageExpected extends BaseMetadataServiceTest {
 
     @Test
     public void massage() {
         try {
             XmlHelper xmlHelper = new XmlHelper();
 
-            String inputFolderStr = TestRepository.INPUT_RECORDS_DIR+"/orig-186";
-            String origExpectedOutputFolderStr = TestRepository.EXPECTED_OUTPUT_RECORDS+"/orig-186-0.2.9";
-            String newExpectedOutputFolderStr = TestRepository.EXPECTED_OUTPUT_RECORDS+"/orig-186";
-            String actualOutputFolderStr = TestRepository.ACTUAL_OUTPUT_RECORDS+"/orig-186";
+            String inputFolderStr = TestRepository.INPUT_RECORDS_DIR + "/orig-186";
+            String origExpectedOutputFolderStr = TestRepository.EXPECTED_OUTPUT_RECORDS + "/orig-186-0.2.9";
+            String newExpectedOutputFolderStr = TestRepository.EXPECTED_OUTPUT_RECORDS + "/orig-186";
+            String actualOutputFolderStr = TestRepository.ACTUAL_OUTPUT_RECORDS + "/orig-186";
 
             File inputFolder = new File(inputFolderStr);
             File origExpectedOutputFolder = new File(origExpectedOutputFolderStr);
@@ -39,55 +39,54 @@ public class MassageExpected  extends BaseMetadataServiceTest {
             }
             newExpectedOutputFolder.mkdir();
 
-
             String nextFile = null;
-            //for (String fStr : inputFolderFileStrs) {
-            for (int k=0; k<inputFolderFileStrs.length; k++) {
+            // for (String fStr : inputFolderFileStrs) {
+            for (int k = 0; k < inputFolderFileStrs.length; k++) {
                 String previousOrigExpectedManOaiId = null;
                 String previousOrigExpected001 = null;
                 boolean holdingInOutputFile = false;
                 String fStr = inputFolderFileStrs[k];
-                LOG.debug("processing: "+fStr);
+                LOG.debug("processing: " + fStr);
                 if (fStr.contains("svn")) {
                     continue;
                 }
                 boolean manifestationOrHoldingFound = false;
                 boolean manifestationFound = false;
-                String actualContents = getUtil().slurp(actualOutputFolderStr+"/"+fStr);
-                Element rootEl = (Element)xmlHelper.getJDomDocument(actualContents).detachRootElement();
-                Element actRecordEl = (Element)rootEl.getChildren("record", rootEl.getNamespace()).get(0);
-                Element actHeaderEl = (Element)actRecordEl.getChild("header", rootEl.getNamespace());
+                String actualContents = getUtil().slurp(actualOutputFolderStr + "/" + fStr);
+                Element rootEl = (Element) xmlHelper.getJDomDocument(actualContents).detachRootElement();
+                Element actRecordEl = (Element) rootEl.getChildren("record", rootEl.getNamespace()).get(0);
+                Element actHeaderEl = (Element) actRecordEl.getChild("header", rootEl.getNamespace());
                 String status = actHeaderEl.getAttributeValue("status");
                 if ("held".equals(status) || "replaced".equals(status)) {
                     recordId++;
                     continue;
                 }
 
-                String inputContents = getUtil().slurp(inputFolderStr+"/"+fStr);
+                String inputContents = getUtil().slurp(inputFolderStr + "/" + fStr);
                 Element inputRecordsEl = xmlHelper.getJDomDocument(inputContents).detachRootElement();
-                Element inputRecordEl = (Element)inputRecordsEl.getChildren().get(0);
+                Element inputRecordEl = (Element) inputRecordsEl.getChildren().get(0);
                 Element inputMetadataEl = inputRecordEl.getChild("metadata", inputRecordsEl.getNamespace());
-                Element inputMarc = (Element)inputMetadataEl.getChildren().get(0);
+                Element inputMarc = (Element) inputMetadataEl.getChildren().get(0);
                 String leader = inputMarc.getChildText("leader", inputMarc.getNamespace());
                 String the001 = null;
                 for (Object cfObj : inputMarc.getChildren("controlfield", inputMarc.getNamespace())) {
-                    Element cf = (Element)cfObj;
+                    Element cf = (Element) cfObj;
                     if ("001".equals(cf.getAttributeValue("tag"))) {
                         the001 = cf.getText();
                     }
                 }
-                LOG.debug("the001: "+the001);
+                LOG.debug("the001: " + the001);
 
                 String nextInput004 = null;
                 String nextInput001 = null;
-                if (k+1 != inputFolderFileStrs.length) {
-                    String ic = getUtil().slurp(inputFolderStr+"/"+inputFolderFileStrs[k+1]);
+                if (k + 1 != inputFolderFileStrs.length) {
+                    String ic = getUtil().slurp(inputFolderStr + "/" + inputFolderFileStrs[k + 1]);
                     Element irsEl = xmlHelper.getJDomDocument(ic).detachRootElement();
-                    Element irEl = (Element)irsEl.getChildren().get(0);
+                    Element irEl = (Element) irsEl.getChildren().get(0);
                     Element imEl = irEl.getChild("metadata", inputRecordsEl.getNamespace());
-                    Element im = (Element)imEl.getChildren().get(0);
+                    Element im = (Element) imEl.getChildren().get(0);
                     for (Object cfObj : im.getChildren("controlfield", im.getNamespace())) {
-                        Element cf = (Element)cfObj;
+                        Element cf = (Element) cfObj;
                         if ("004".equals(cf.getAttributeValue("tag"))) {
                             nextInput004 = cf.getText();
                         } else if ("001".equals(cf.getAttributeValue("tag"))) {
@@ -95,11 +94,11 @@ public class MassageExpected  extends BaseMetadataServiceTest {
                         }
                     }
                 }
-                LOG.debug("leader: "+leader);
+                LOG.debug("leader: " + leader);
 
                 boolean inputIsHolding = false;
                 char leader06 = leader.charAt(6);
-                if(leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+                if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
                     inputIsHolding = true;
                 }
 
@@ -115,7 +114,7 @@ public class MassageExpected  extends BaseMetadataServiceTest {
                     } else {
                         String oeof = null;
                         while (oeof == null || oeof.contains("svn")) {
-                            LOG.debug("oeofidx-1: "+(oeofidx-1));
+                            LOG.debug("oeofidx-1: " + (oeofidx - 1));
                             if (oeofidx < origExpectedOutputFolderFileStrs.length) {
                                 oeof = origExpectedOutputFolderFileStrs[oeofidx];
                                 oeofidx++;
@@ -127,34 +126,34 @@ public class MassageExpected  extends BaseMetadataServiceTest {
                             LOG.debug("out of oeofidxes");
                             break;
                         }
-                        //LOG.debug("origExpectedOutputFolderStr: "+origExpectedOutputFolderStr);
-                        //LOG.debug("oeof: "+origExpectedOutputFolderStr+"/"+oeof);
-                        contents = getUtil().slurp(origExpectedOutputFolderStr+"/"+oeof);
-                        //LOG.debug("contents: "+contents);
+                        // LOG.debug("origExpectedOutputFolderStr: "+origExpectedOutputFolderStr);
+                        // LOG.debug("oeof: "+origExpectedOutputFolderStr+"/"+oeof);
+                        contents = getUtil().slurp(origExpectedOutputFolderStr + "/" + oeof);
+                        // LOG.debug("contents: "+contents);
                     }
 
-                    Element frbr = (Element)xmlHelper.getJDomDocument(contents).getRootElement().detach();
-                    Element entityEl = (Element)frbr.getChild("entity", frbr.getNamespace());
+                    Element frbr = (Element) xmlHelper.getJDomDocument(contents).getRootElement().detach();
+                    Element entityEl = (Element) frbr.getChild("entity", frbr.getNamespace());
                     String oaiId = entityEl.getAttributeValue("id");
 
                     String type = frbr.getChild("entity", frbr.getNamespace()).getAttributeValue("type");
-                    LOG.debug("type: "+type);
-                    LOG.debug("manifestationFound: "+manifestationOrHoldingFound);
+                    LOG.debug("type: " + type);
+                    LOG.debug("manifestationFound: " + manifestationOrHoldingFound);
                     if (manifestationOrHoldingFound && "work".equals(type)) {
                         nextFile = contents;
                         break;
                     } else if ("holdings".equals(type)) {
                         manifestationOrHoldingFound = true;
-                        LOG.debug("manifestationFound: "+manifestationFound);
-                        LOG.debug("usingPriorInput: "+usingPriorInput);
+                        LOG.debug("manifestationFound: " + manifestationFound);
+                        LOG.debug("usingPriorInput: " + usingPriorInput);
                         if (!manifestationFound && !usingPriorInput) {
                             nextFile = contents;
                             break;
                         }
 
                         String expectedHolding001 = frbr.getChild("entity", frbr.getNamespace()).getChildText("recordID", frbr.getNamespace());
-                        LOG.debug("expectedHolding001: "+expectedHolding001);
-                        LOG.debug("nextInput001: "+nextInput001);
+                        LOG.debug("expectedHolding001: " + expectedHolding001);
+                        LOG.debug("nextInput001: " + nextInput001);
                         if (expectedHolding001 != null && expectedHolding001.equals(nextInput001)) {
                             nextFile = contents;
                             break;
@@ -174,7 +173,7 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 
                     Element identifierEl = new Element("identifier");
                     headerEl.addContent(identifierEl);
-                    identifierEl.setText("oai:mst.rochester.edu:marctoxctransformation/"+recordId++);
+                    identifierEl.setText("oai:mst.rochester.edu:marctoxctransformation/" + recordId++);
 
                     Element dateStampEl = new Element("datestamp");
                     headerEl.addContent(dateStampEl);
@@ -184,19 +183,19 @@ public class MassageExpected  extends BaseMetadataServiceTest {
 
                     Element predecessorEl = new Element("predecessor");
                     predecessorsEl.addContent(predecessorEl);
-                    predecessorEl.setText("oai:mst.rochester.edu:"+inputIdx);
+                    predecessorEl.setText("oai:mst.rochester.edu:" + inputIdx);
 
                     Element metadataEl = new Element("metadata");
                     recordEl.addContent(metadataEl);
                     metadataEl.addContent(frbr);
 
-                    sb.append("\n"+xmlHelper.getStringPretty(recordEl));
+                    sb.append("\n" + xmlHelper.getStringPretty(recordEl));
                     if (oeofidx == origExpectedOutputFolderFileStrs.length) {
                         break;
                     }
                 }
                 sb.append("\n</records>");
-                FileUtils.writeStringToFile(new File(newExpectedOutputFolder+"/"+fStr), sb.toString(), "UTF-8");
+                FileUtils.writeStringToFile(new File(newExpectedOutputFolder + "/" + fStr), sb.toString(), "UTF-8");
                 inputIdx++;
             }
         } catch (Throwable t) {

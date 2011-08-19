@@ -20,7 +20,7 @@ public class DateDBTest extends BaseTest {
                         s = conn.createStatement();
                         s.execute("drop table DateDBTest");
                     } catch (Throwable t2) {
-                        //do nothing
+                        // do nothing
                     } finally {
                         s.close();
                     }

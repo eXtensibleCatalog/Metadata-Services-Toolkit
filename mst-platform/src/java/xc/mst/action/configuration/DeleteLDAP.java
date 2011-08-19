@@ -1,12 +1,11 @@
-
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.configuration;
 
@@ -23,12 +22,11 @@ import xc.mst.dao.DatabaseConfigException;
 
 /**
  * Deletes the LDAP Server
- *
+ * 
  * @author Tejaswi Haramurali
  */
 @SuppressWarnings("serial")
-public class DeleteLDAP extends BaseActionSupport
-{
+public class DeleteLDAP extends BaseActionSupport {
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
@@ -37,20 +35,17 @@ public class DeleteLDAP extends BaseActionSupport
 
     /**
      * Returns a temporary server object which is used to display details in the JSP
-     *
+     * 
      * @return temporary server object
      * @throws xc.mst.dao.DataException
      */
-    public Server getTemporaryServer() throws DataException
-    {
+    public Server getTemporaryServer() throws DataException {
         List<Server> serverList = getServerService().getAll();
         Iterator<Server> iter = serverList.iterator();
         Server finalServer = null;
-        while(iter.hasNext())
-        {
-            Server tempServer = (Server)iter.next();
-            if(tempServer.getType()!=Server.ServerType.LOCAL)
-            {
+        while (iter.hasNext()) {
+            Server tempServer = (Server) iter.next();
+            if (tempServer.getType() != Server.ServerType.LOCAL) {
                 finalServer = tempServer;
                 break;
             }
@@ -58,48 +53,38 @@ public class DeleteLDAP extends BaseActionSupport
         return finalServer;
     }
 
-     /**
+    /**
      * Overrides default implementation to delete an LDAP server.
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
+    public String execute() {
+        try {
             List<Server> serverlist = getServerService().getAll();
             Iterator<Server> serverIter = serverlist.iterator();
 
-            if(getUserService().getLDAPUserCount()==0)
-            {
-                while(serverIter.hasNext())
-                {
-                    Server server = (Server)serverIter.next();
-                    if(server.getType()!=Server.ServerType.LOCAL)
-                    {
+            if (getUserService().getLDAPUserCount() == 0) {
+                while (serverIter.hasNext()) {
+                    Server server = (Server) serverIter.next();
+                    if (server.getType() != Server.ServerType.LOCAL) {
                         getServerService().deleteServer(server);
                     }
                 }
 
                 return SUCCESS;
-            }
-            else
-            {
+            } else {
                 this.addFieldError("deleteLDAPError", "The LDAP Server is associated with one or more users and cannot be deleted");
                 errorType = "error";
                 return INPUT;
             }
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("deleteLDAPError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("deleteLDAPError", "Error occurred while deleting LDAP Server. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -109,7 +94,7 @@ public class DeleteLDAP extends BaseActionSupport
 
     /**
      * Returns error type
-     *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -118,8 +103,9 @@ public class DeleteLDAP extends BaseActionSupport
 
     /**
      * Sets error type
-     *
-     * @param errorType error type
+     * 
+     * @param errorType
+     *            error type
      */
     public void setErrorType(String errorType) {
         this.errorType = errorType;

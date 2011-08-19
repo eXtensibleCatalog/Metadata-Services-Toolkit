@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.dao.service;
 
@@ -25,8 +25,7 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.dao.MySqlConnectionManager;
 
-public abstract class ServiceDAO extends BaseDAO
-{
+public abstract class ServiceDAO extends BaseDAO {
     /**
      * A reference to the logger for this class
      */
@@ -144,8 +143,7 @@ public abstract class ServiceDAO extends BaseDAO
     protected static Set<String> sortableColumns = new HashSet<String>();
 
     // Initialize the list of sortable columns
-    static
-    {
+    static {
         sortableColumns.add(COL_SERVICE_ID);
         sortableColumns.add(COL_SERVICE_NAME);
         sortableColumns.add(COL_CLASS_NAME);
@@ -168,74 +166,90 @@ public abstract class ServiceDAO extends BaseDAO
 
     /**
      * Gets all services from the database
-     *
+     * 
      * @return A list containing all services in the database
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract ArrayList<Service> getAll() throws DatabaseConfigException;
 
     /**
      * Returns a sorted list of services
-     *
-     * @param asc Determines whether the rows are sorted in ascending or descending order
-     * @param columnSorted The coulmn on which rows are sorted
+     * 
+     * @param asc
+     *            Determines whether the rows are sorted in ascending or descending order
+     * @param columnSorted
+     *            The coulmn on which rows are sorted
      * @return A sorted list of services
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
-    public abstract List<Service> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException;
+    public abstract List<Service> getSorted(boolean asc, String columnSorted) throws DatabaseConfigException;
 
     /**
      * Gets the service from the database with the passed service ID
-     *
-     * @param id The ID of the service to get
+     * 
+     * @param id
+     *            The ID of the service to get
      * @return The service with the passed service ID
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Service getById(int serviceId) throws DatabaseConfigException;
 
     /**
      * Gets the service from the database with the passed service ID.
      * This method does not set the input or output formats on the service.
-     *
-     * @param id The ID of the service to get
+     * 
+     * @param id
+     *            The ID of the service to get
      * @return The service with the passed service ID
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Service loadBasicService(int serviceId) throws DatabaseConfigException;
 
     /**
      * Gets the service from the database with the passed name
-     *
-     * @param name The name of the service to get
+     * 
+     * @param name
+     *            The name of the service to get
      * @return The service with the passed service Port
-     * @throws DatabaseConfigException if there was a problem connecting to the database
+     * @throws DatabaseConfigException
+     *             if there was a problem connecting to the database
      */
     public abstract Service getByServiceName(String name) throws DatabaseConfigException;
 
     /**
      * Inserts a service into the database
-     *
-     * @param service The service to insert
+     * 
+     * @param service
+     *            The service to insert
      * @return True on success, false on failure
-     * @throws DataException if the passed Service was not valid for inserting
+     * @throws DataException
+     *             if the passed Service was not valid for inserting
      */
     public abstract boolean insert(Service service) throws DataException;
 
     /**
      * Updates a service in the database
-     *
-     * @param service The service to update
+     * 
+     * @param service
+     *            The service to update
      * @return True on success, false on failure
-     * @throws DataException if the passed Service was not valid for inserting
+     * @throws DataException
+     *             if the passed Service was not valid for inserting
      */
     public abstract boolean update(Service service) throws DataException;
 
     /**
      * Deletes a service from the database
-     *
-     * @param service The service to delete
+     * 
+     * @param service
+     *            The service to delete
      * @return True on success, false on failure
-     * @throws DataException if the passed Service was not valid for inserting
+     * @throws DataException
+     *             if the passed Service was not valid for inserting
      */
     public abstract boolean delete(Service service) throws DataException;
 
@@ -246,49 +260,49 @@ public abstract class ServiceDAO extends BaseDAO
 
     /**
      * Validates the fields on the passed Service Object
-     *
-     * @param service The service to validate
-     * @param validateId true if the ID field should be validated
-     * @param validateNonId true if the non-ID fields should be validated
-     * @throws DataException If one or more of the fields on the passed service were invalid
+     * 
+     * @param service
+     *            The service to validate
+     * @param validateId
+     *            true if the ID field should be validated
+     * @param validateNonId
+     *            true if the non-ID fields should be validated
+     * @throws DataException
+     *             If one or more of the fields on the passed service were invalid
      */
-    protected void validateFields(Service service, boolean validateId, boolean validateNonId) throws DataException
-    {
+    protected void validateFields(Service service, boolean validateId, boolean validateNonId) throws DataException {
         StringBuilder errorMessage = new StringBuilder();
 
         // Check the ID field if we're supposed to
-        if(validateId)
-        {
-            if(log.isDebugEnabled())
+        if (validateId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the ID");
 
-            if(service.getId() < 0)
+            if (service.getId() < 0)
                 errorMessage.append("The service id is invalid. ");
         } // end if(we should validate the ID field)
 
         // Check the non-ID fields if we're supposed to
-        if(validateNonId)
-        {
-            if(log.isDebugEnabled())
+        if (validateNonId) {
+            if (log.isDebugEnabled())
                 log.debug("Checking the non-ID fields");
 
-            if(service.getName() == null || service.getName().length() <= 0 || service.getName().length() > 63)
+            if (service.getName() == null || service.getName().length() <= 0 || service.getName().length() > 63)
                 errorMessage.append("The service name is invalid. ");
 
-            if(service.getClassName() == null || service.getClassName().length() <= 0 || service.getClassName().length() > 63)
+            if (service.getClassName() == null || service.getClassName().length() <= 0 || service.getClassName().length() > 63)
                 errorMessage.append("The class name is invalid. ");
 
-            if(service.getServicesLogFileName() == null || service.getServicesLogFileName().length() <= 0 || service.getServicesLogFileName().length() > 255)
+            if (service.getServicesLogFileName() == null || service.getServicesLogFileName().length() <= 0 || service.getServicesLogFileName().length() > 255)
                 errorMessage.append("The log file name is invalid. ");
 
-            if(service.getHarvestOutLogFileName() == null || service.getHarvestOutLogFileName().length() <= 0 || service.getHarvestOutLogFileName().length() > 255)
+            if (service.getHarvestOutLogFileName() == null || service.getHarvestOutLogFileName().length() <= 0 || service.getHarvestOutLogFileName().length() > 255)
                 errorMessage.append("The harvest out log file name is invalid. ");
 
         } // end if(we should validate the non-ID fields)
 
         // Log the error and throw the exception if any fields are invalid
-        if(errorMessage.length() > 0)
-        {
+        if (errorMessage.length() > 0) {
             String errors = errorMessage.toString();
             log.error("The following errors occurred: " + errors);
             throw new DataException(errors);
@@ -296,7 +310,7 @@ public abstract class ServiceDAO extends BaseDAO
     }
 
     public void persist(ServiceHarvest serviceHarvest) {
-        log.debug("serviceHarvest.getId(): "+serviceHarvest.getId());
+        log.debug("serviceHarvest.getId(): " + serviceHarvest.getId());
         if (serviceHarvest.getId() != null) {
             hibernateTemplate.update(serviceHarvest);
         } else {
@@ -306,9 +320,9 @@ public abstract class ServiceDAO extends BaseDAO
 
     public void deleteServiceHarvests(int serviceId, String repoName) {
         repoName = getUtil().normalizeName(repoName);
-        this.jdbcTemplate.execute("delete from service_harvests "+
-                "where service_id = "+serviceId+
-                " and repo_name = '"+repoName+"'");
+        this.jdbcTemplate.execute("delete from service_harvests " +
+                "where service_id = " + serviceId +
+                " and repo_name = '" + repoName + "'");
     }
 
     @SuppressWarnings("unchecked")
@@ -316,9 +330,9 @@ public abstract class ServiceDAO extends BaseDAO
         List params = new ArrayList();
 
         StringBuilder sb = new StringBuilder(
-                "from xc.mst.bo.service.ServiceHarvest as sh "+
-                "where sh.service.id = ? "+
-                    "and sh.repoName = ? "
+                "from xc.mst.bo.service.ServiceHarvest as sh " +
+                        "where sh.service.id = ? " +
+                        "and sh.repoName = ? "
                 );
         params.add(service.getId());
         params.add(repoName);
@@ -334,7 +348,7 @@ public abstract class ServiceDAO extends BaseDAO
         } else {
             sb.append("and sh.set is null ");
         }
-        List<ServiceHarvest> shs = (List<ServiceHarvest>)this.hibernateTemplate.find(
+        List<ServiceHarvest> shs = (List<ServiceHarvest>) this.hibernateTemplate.find(
                 sb.toString(), params.toArray());
         if (shs == null || shs.size() == 0) {
             return null;
@@ -346,6 +360,6 @@ public abstract class ServiceDAO extends BaseDAO
     }
 
     public Service getService(int id) {
-        return (Service)this.hibernateTemplate.load(Service.class, id);
+        return (Service) this.hibernateTemplate.load(Service.class, id);
     }
 }

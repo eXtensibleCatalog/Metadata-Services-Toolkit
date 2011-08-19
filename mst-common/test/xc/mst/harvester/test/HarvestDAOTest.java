@@ -29,9 +29,9 @@ public class HarvestDAOTest extends BaseTest {
             hs.setProvider(p);
             getHarvestScheduleDAO().insert(hs);
 
-            Date st1 = new Date(1000*60*60*5);  // DST nonsense
-            long st2l = (new Date().getTime()/1000)*1000;
-            LOG.debug("st2l: "+st2l);
+            Date st1 = new Date(1000 * 60 * 60 * 5); // DST nonsense
+            long st2l = (new Date().getTime() / 1000) * 1000;
+            LOG.debug("st2l: " + st2l);
             Date st2 = new Date(st2l);
 
             Harvest h1 = new Harvest();
@@ -47,11 +47,11 @@ public class HarvestDAOTest extends BaseTest {
             getHarvestDAO().insert(h2);
 
             Harvest h = getHarvestDAO().getLatestHarvestForSchedule(1);
-            LOG.debug("h.getStartTime(): "+h.getStartTime());
-            LOG.debug("st2: "+st2);
-            LOG.debug("h.getStartTime().getTime(): "+h.getStartTime().getTime());
-            LOG.debug("st2.getTime(): "+st2.getTime());
-            LOG.debug("h.getStartTime().getTime() == st2.getTime(): "+(h.getStartTime().getTime() == st2.getTime()));
+            LOG.debug("h.getStartTime(): " + h.getStartTime());
+            LOG.debug("st2: " + st2);
+            LOG.debug("h.getStartTime().getTime(): " + h.getStartTime().getTime());
+            LOG.debug("st2.getTime(): " + st2.getTime());
+            LOG.debug("h.getStartTime().getTime() == st2.getTime(): " + (h.getStartTime().getTime() == st2.getTime()));
             assert h.getStartTime().getTime() == st2.getTime();
             assert h.getHarvestSchedule().getScheduleName().equals("hs1");
             assert h.getProvider().getName().equals("p1");

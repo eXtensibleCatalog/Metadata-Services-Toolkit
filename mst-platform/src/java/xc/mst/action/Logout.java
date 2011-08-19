@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action;
 
@@ -17,13 +17,13 @@ import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * Action class for user logout
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class Logout extends ActionSupport implements ServletRequestAware {
 
-    /** Generated id  */
+    /** Generated id */
     private static final long serialVersionUID = 8874524856047656439L;
 
     /** Request */
@@ -31,7 +31,7 @@ public class Logout extends ActionSupport implements ServletRequestAware {
 
     /**
      * Overriding default implementation to logout the user.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     public String execute() throws Exception {
@@ -43,7 +43,7 @@ public class Logout extends ActionSupport implements ServletRequestAware {
 
     /**
      * Set the servlet request.
-     *
+     * 
      * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
      */
     public void setServletRequest(HttpServletRequest request) {

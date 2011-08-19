@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.bo.record;
 
@@ -29,12 +29,11 @@ import xc.mst.utils.MSTConfiguration;
 
 /**
  * This class contains methods to add, update, and get the values of various XC record fields.
- *
+ * 
  * @author Eric Osisek
  * @author Benjamin D. Anderson
  */
-public class AggregateXCRecord
-{
+public class AggregateXCRecord {
     /**
      * The logger object
      */
@@ -72,7 +71,7 @@ public class AggregateXCRecord
     public static final String ITEM = "item";
 
     // BDA 2010-09-10- I'm making some of these instance variables public because I moved a bunch of logic
-    // to XCRecordService and it's either make these public or create a bunch of getters and setters.  Perhaps
+    // to XCRecordService and it's either make these public or create a bunch of getters and setters. Perhaps
     // I'll add the getters/setters later, but for now... public
     /**
      * The element for the work FRBR level
@@ -109,12 +108,12 @@ public class AggregateXCRecord
     /**
      * A list of expression elements for this XC record
      */
-    public ArrayList<Hashtable<String,Element>> subElementsOfExpressionElements = new ArrayList<Hashtable<String,Element>>();
+    public ArrayList<Hashtable<String, Element>> subElementsOfExpressionElements = new ArrayList<Hashtable<String, Element>>();
 
     /**
      * A list of work elements for this XC record
      */
-    public ArrayList<Hashtable<String,Element>> subElementsOfWorkElements = new ArrayList<Hashtable<String,Element>>();
+    public ArrayList<Hashtable<String, Element>> subElementsOfWorkElements = new ArrayList<Hashtable<String, Element>>();
 
     /**
      * Used to ensure that duplicates are not added to the XC record
@@ -154,13 +153,11 @@ public class AggregateXCRecord
 
     /**
      * Gets the xc:recordID's type followed by its value
-     *
+     * 
      * @return The xc:recordID's type followed by its value
      */
-    public String getXcRecordId()
-    {
-        if(xcRecordId == null)
-        {
+    public String getXcRecordId() {
+        if (xcRecordId == null) {
 
         }
 
@@ -209,34 +206,32 @@ public class AggregateXCRecord
 
     /**
      * Return true iff the record contains non-holdings components
-     *
+     * 
      * @return True iff the record contains non-holdings components
      */
-    public boolean getHasBibInfo()
-    {
+    public boolean getHasBibInfo() {
         return hasBibInfo;
     }
 
     /**
      * Constructs an empty XCRecord.
      */
-    public AggregateXCRecord()
-    {
+    public AggregateXCRecord() {
         try {
-            xcFormat = ((FormatService)MSTConfiguration.getInstance().getBean("FormatService")).getFormatByName("xc");
-        } catch(DatabaseConfigException dce) {
+            xcFormat = ((FormatService) MSTConfiguration.getInstance().getBean("FormatService")).getFormatByName("xc");
+        } catch (DatabaseConfigException dce) {
             log.error("Unable to connect to database using the parameters in configuration file.");
         }
     } // end constructor
 
     /**
      * Constructs a XCRecord based on a the passed XML file which follows the XC schema.
-     *
-     * @param xcXml The XC record we're managing
+     * 
+     * @param xcXml
+     *            The XC record we're managing
      */
     @SuppressWarnings("unchecked")
-    public AggregateXCRecord(Document xcXml)
-    {
+    public AggregateXCRecord(Document xcXml) {
         this();
         // True if we've set the main work element, false otherwise
         boolean workSet = false;
@@ -247,35 +242,26 @@ public class AggregateXCRecord
         // Get the content of the xc record
         List<Element> elements = xcXml.getRootElement().getChildren();
 
-        for(Element element : elements)
-        {
+        for (Element element : elements) {
             String frbrLevel = element.getAttributeValue("type");
 
-            if(frbrLevel.equals("work"))
-            {
+            if (frbrLevel.equals("work")) {
                 hasBibInfo = true;
 
-                if(!workSet)
-                {
+                if (!workSet) {
                     xcWorkElement = element;
                     workSet = true;
-                }
-                else
+                } else
                     linkingFieldToWorkElement.put("" + artLinkingField++, element);
-            }
-            else if(frbrLevel.equals("expression"))
-            {
+            } else if (frbrLevel.equals("expression")) {
                 xcExpressionElement = element;
                 hasBibInfo = true;
-            }
-            else if(frbrLevel.equals("manifestation"))
-            {
+            } else if (frbrLevel.equals("manifestation")) {
                 xcManifestationElement = element;
                 hasBibInfo = true;
-            }
-            else if(frbrLevel.equals("item"))
+            } else if (frbrLevel.equals("item"))
                 xcItemElement = element;
-            else if(frbrLevel.equals("holdings"))
+            else if (frbrLevel.equals("holdings"))
                 holdingsElements.add(element);
         }
     } // end constructor

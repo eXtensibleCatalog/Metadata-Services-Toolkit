@@ -35,7 +35,6 @@ public class TimingStats {
     private long batchSize = 0l;
     private boolean displayPerformanceData = false;
 
-
     public void log(String message) {
         log(null, message, false);
     }
@@ -56,7 +55,7 @@ public class TimingStats {
             if (lastTime == null) {
                 lastTime = 0l;
             } else {
-                incrTime = tnow-lastTime;
+                incrTime = tnow - lastTime;
             }
 
             Long beginTime = namedBeginTimes.get(name);
@@ -66,15 +65,15 @@ public class TimingStats {
             }
 
             if (!suppressOutput) {
-                String thisTime = StringUtils.leftPad((incrTime)+"", 6);
-                String totalTime = StringUtils.leftPad((tnow-beginTime)+"", 7);
+                String thisTime = StringUtils.leftPad((incrTime) + "", 6);
+                String totalTime = StringUtils.leftPad((tnow - beginTime) + "", 7);
 
                 StringBuilder sb = getStringBuilder();
-                sb.append("TimingLogger! "+thisTime+" "+totalTime+" : "+message);
+                sb.append("TimingLogger! " + thisTime + " " + totalTime + " : " + message);
                 LOG.debug(sb.toString());
             }
             if (name != DEFAULT) {
-                Timer timer = (Timer)namedTimers.get(name);
+                Timer timer = (Timer) namedTimers.get(name);
                 if (timer == null) {
                     timer = new Timer();
                     namedTimers.put(name, timer);
@@ -98,7 +97,7 @@ public class TimingStats {
         int diff = longestThreadName - threadNameLength;
         StringBuilder sb = new StringBuilder();
         if (diff > 0) {
-            for (int i=0; i<diff; i++) {
+            for (int i = 0; i < diff; i++) {
                 sb.append(" ");
             }
         }
@@ -107,7 +106,7 @@ public class TimingStats {
 
     protected void start(String name) {
         if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
-            Timer timer = (Timer)namedTimers.get(name);
+            Timer timer = (Timer) namedTimers.get(name);
             if (timer == null) {
                 timer = new Timer();
                 namedTimers.put(name, timer);
@@ -128,13 +127,11 @@ public class TimingStats {
         }
     }
 
-
     public void turnOn() {
         if (TimingStats.LOG.isDebugEnabled()) {
             manualShutOff = false;
         }
     }
-
 
     public void turnOff() {
         if (TimingStats.LOG.isDebugEnabled()) {
@@ -145,7 +142,7 @@ public class TimingStats {
     public void add(String name, long val) {
         if (!manualShutOff) {
             indentation.put(name, currentIndent);
-            Timer timer = (Timer)namedTimers.get(name);
+            Timer timer = (Timer) namedTimers.get(name);
             if (timer == null) {
                 timer = new Timer();
                 namedTimers.put(name, timer);
@@ -167,22 +164,22 @@ public class TimingStats {
             System.gc();
         }
         Runtime r = Runtime.getRuntime();
-        long maxMem = r.maxMemory()/1048576;
-        long totalMem = r.totalMemory()/1048576;
+        long maxMem = r.maxMemory() / 1048576;
+        long totalMem = r.totalMemory() / 1048576;
 
         long freeBytes = r.freeMemory();
-        long freeMem = freeBytes/1048576;
+        long freeMem = freeBytes / 1048576;
 
-        long usedMem = totalMem-freeMem;
+        long usedMem = totalMem - freeMem;
         long memIncrease = usedMem - memUsedAtLastReset;
         memUsedAtLastReset = usedMem;
 
         LOG.debug("");
-        LOG.debug("Free  memory: " + StringUtils.leftPad(freeMem+"", 7) + " MB.");
-        LOG.debug("Used  memory: " + StringUtils.leftPad(usedMem+"", 7) + " MB.");
-        LOG.debug("Increased by: " + StringUtils.leftPad(memIncrease+"", 7) + " MB.");
-        LOG.debug("Total memory: " + StringUtils.leftPad(totalMem+"", 7) + " MB.");
-        LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem+"", 7) + " MB.");
+        LOG.debug("Free  memory: " + StringUtils.leftPad(freeMem + "", 7) + " MB.");
+        LOG.debug("Used  memory: " + StringUtils.leftPad(usedMem + "", 7) + " MB.");
+        LOG.debug("Increased by: " + StringUtils.leftPad(memIncrease + "", 7) + " MB.");
+        LOG.debug("Total memory: " + StringUtils.leftPad(totalMem + "", 7) + " MB.");
+        LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem + "", 7) + " MB.");
     }
 
     private void resetIfNecessary(boolean displayPerformanceData) {
@@ -204,51 +201,51 @@ public class TimingStats {
     // come through this one if you DO want to display performance data
     public void reset(long counts) {
         // set the fact that you want to display performance!
-        displayPerformanceData=true;
-        batchSize=counts;
+        displayPerformanceData = true;
+        batchSize = counts;
         resetIfNecessary(true);
     }
 
     // come through this one if you do NOT want to display performance data
     public void reset() {
-        displayPerformanceData=false;
+        displayPerformanceData = false;
         batchSize = 0l;
         resetIfNecessary(false);
     }
 
     protected void reset(String name) {
-        displayPerformanceData=false;
+        displayPerformanceData = false;
         batchSize = 0l;
 
         StringBuilder sb = getStringBuilder();
-        Timer timer = (Timer)namedTimers.get(name);
+        Timer timer = (Timer) namedTimers.get(name);
         if (timer != null) {
-            String totalTime = StringUtils.leftPad(timer.totalTime.get()+"", 10);
+            String totalTime = StringUtils.leftPad(timer.totalTime.get() + "", 10);
             if (indentation.containsKey(name)) {
-                //LOG.debug("indentation.get("+name+"):"+ indentation.get(name));
+                // LOG.debug("indentation.get("+name+"):"+ indentation.get(name));
                 StringBuilder sb2 = new StringBuilder();
-                for (int i=0; i<indentation.get(name); i++) {
+                for (int i = 0; i < indentation.get(name); i++) {
                     sb2.append("  ");
                 }
                 name = sb2.append(name).toString();
             }
             String avgTime = "";
             if (timer.numTimes.get() != 0) {
-                double avg = (0.+timer.totalTime.get())/timer.numTimes.get();
+                double avg = (0. + timer.totalTime.get()) / timer.numTimes.get();
                 avgTime = String.format("%.2f", avg);
             } else {
                 avgTime = "n/a";
             }
             avgTime = StringUtils.leftPad(avgTime, 12);
-            String longestTime = StringUtils.leftPad(timer.longestTime+"", 9);
-            String num = StringUtils.leftPad(timer.numTimes+"", 7);
-            sb.append("TimingLogger! total: "+totalTime+"    avg:"+avgTime+"    longest:"+longestTime+ "    num:"+num+"   "+name);
+            String longestTime = StringUtils.leftPad(timer.longestTime + "", 9);
+            String num = StringUtils.leftPad(timer.numTimes + "", 7);
+            sb.append("TimingLogger! total: " + totalTime + "    avg:" + avgTime + "    longest:" + longestTime + "    num:" + num + "   " + name);
             LOG.debug(sb);
         }
     }
 
     protected void reset(boolean includeDefault) {
-        displayPerformanceData=false;
+        displayPerformanceData = false;
         batchSize = 0l;
         displayResetData(includeDefault, false);
     }
@@ -257,20 +254,20 @@ public class TimingStats {
         synchronized (this) {
             if (TimingStats.LOG.isDebugEnabled() && !manualShutOff) {
                 if (lastReset != 0) {
-                    final long timeSinceLastReset = System.currentTimeMillis()-lastReset;
+                    final long timeSinceLastReset = System.currentTimeMillis() - lastReset;
 
                     lastReset = System.currentTimeMillis();
-                    LOG.debug("timeSinceLastReset: "+timeSinceLastReset);
+                    LOG.debug("timeSinceLastReset: " + timeSinceLastReset);
 
                     if (displayPerformanceData) {
                         printPerformanceData(timeSinceLastReset);
                     }
                 }
-                LOG.debug("namedTimers.size(): "+namedTimers.size());
-                LOG.debug("includeDefault: "+includeDefault);
+                LOG.debug("namedTimers.size(): " + namedTimers.size());
+                LOG.debug("includeDefault: " + includeDefault);
                 OrderedMapIterator omi = namedTimers.orderedMapIterator();
                 while (omi.hasNext()) {
-                    reset((String)omi.next());
+                    reset((String) omi.next());
                 }
                 /*
                 for (String key : namedTimers.keySet()) {
@@ -279,9 +276,9 @@ public class TimingStats {
                  */
                 namedTimers = new ListOrderedMap();
                 Long nullLastTime = namedLastTimes.get(DEFAULT);
-                namedLastTimes =  new TreeMap<String, Long>();
+                namedLastTimes = new TreeMap<String, Long>();
                 Long nullBeginTime = namedBeginTimes.get(DEFAULT);
-                namedBeginTimes =  new TreeMap<String, Long>();
+                namedBeginTimes = new TreeMap<String, Long>();
                 if (!includeDefault) {
                     namedLastTimes.put(DEFAULT, nullLastTime);
                     namedBeginTimes.put(DEFAULT, nullBeginTime);
@@ -291,12 +288,12 @@ public class TimingStats {
     }
 
     private void printPerformanceData(final long timeSinceLastReset) {
-        //final long _batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
+        // final long _batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
         if (displayPerformanceData) {
             if (batchSize != 0l) {
                 final long millisecInAnHour = 3600000l;
-                double avg = ((batchSize * millisecInAnHour ) / timeSinceLastReset) /* / 1000000l */;  // in terms of (x) million records/hour
-                LOG.debug("performance for the last "+ batchSize + " commits: "+ avg +" records/hr.");
+                double avg = ((batchSize * millisecInAnHour) / timeSinceLastReset) /* / 1000000l */; // in terms of (x) million records/hour
+                LOG.debug("performance for the last " + batchSize + " commits: " + avg + " records/hr.");
             }
         }
     }
@@ -305,6 +302,7 @@ public class TimingStats {
         public AtomicLong totalTime = new AtomicLong(0);
         public Long longestTime = 0l;
         public AtomicLong numTimes = new AtomicLong(0);
+
         public void reset() {
             totalTime = new AtomicLong();
             longestTime = 0l;
@@ -313,4 +311,3 @@ public class TimingStats {
     }
 
 }
-

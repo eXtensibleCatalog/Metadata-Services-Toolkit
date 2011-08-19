@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.interceptor;
 
@@ -23,9 +23,9 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
  * Checks the user permission to execute the action
- *
+ * 
  * @author Sharmila Ranganathan
- *
+ * 
  */
 public class MSTRolesInterceptor extends AbstractInterceptor {
 
@@ -44,10 +44,9 @@ public class MSTRolesInterceptor extends AbstractInterceptor {
         List<Group> groups = user.getGroups();
 
         // If permission exist for user then continue executing the target action
-        for(Group group:groups)
-        {
-            for (Permission p: group.getPermissions()) {
-                for (String allowedRole: allowedRoles) {
+        for (Group group : groups) {
+            for (Permission p : group.getPermissions()) {
+                for (String allowedRole : allowedRoles) {
                     if (p.getTabName().equalsIgnoreCase(allowedRole)) {
                         return invocation.invoke();
                     }
@@ -59,8 +58,7 @@ public class MSTRolesInterceptor extends AbstractInterceptor {
 
         // Forward to access denied result if user does not have permission
         return "access-denied";
-     }
-
+    }
 
     /**
      * Splits a string into a List
@@ -68,21 +66,20 @@ public class MSTRolesInterceptor extends AbstractInterceptor {
     @SuppressWarnings("unchecked")
     protected List<String> stringToList(String val) {
         if (val != null) {
-        String[] list = val.split("[ ]*,[ ]*");
-        return Arrays.asList(list);
+            String[] list = val.split("[ ]*,[ ]*");
+            return Arrays.asList(list);
         } else {
-        return Collections.EMPTY_LIST;
+            return Collections.EMPTY_LIST;
         }
     }
 
     /**
      * Set the allowed rules
-     *
+     * 
      * @param roles
      */
     public void setAllowedRoles(String roles) {
-        this .allowedRoles = stringToList(roles);
+        this.allowedRoles = stringToList(roles);
     }
-
 
 }

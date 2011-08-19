@@ -1,12 +1,11 @@
-
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.processingDirective;
 
@@ -26,14 +25,13 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
 /**
- *  This action method is the first step in adding a new processing directive
- *
+ * This action method is the first step in adding a new processing directive
+ * 
  * @author Tejaswi Haramurali
  */
 
-public class AddProcessingDirectiveSetsFormats extends BaseActionSupport implements ServletRequestAware
-{
-    /** Serial ID*/
+public class AddProcessingDirectiveSetsFormats extends BaseActionSupport implements ServletRequestAware {
+    /** Serial ID */
     private static final long serialVersionUID = 8688364366954617970L;
 
     /** The full list of all sets in the system */
@@ -71,118 +69,102 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Overrides default implementation to view the add processing directives (step 2) page.
-     *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
+    public String execute() {
 
-            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            String sourceType = (String)request.getSession().getAttribute("sourceType");
-            if((tempProcDir==null)||(sourceType==null))
-            {
-                this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page. An email has been sent to the administrator.");
-                getUserService().sendEmailErrorReport();
-                errorType = "error";
-                return INPUT;
-            }
-            List<Format> tempFormatList = new ArrayList<Format>();
-            List<Set> tempSetList = null;
-            if(sourceType.equalsIgnoreCase("provider"))
-            {
-                // Loop over the formats the source provider can produce
-                // If the service can accept it as input, add it to the list
-                // of Formats the user can select
-                for(Format tempFormat : tempProcDir.getSourceProvider().getFormats()) {
-                    if(tempProcDir.getService().getInputFormats().contains(tempFormat)) {
-                        tempFormatList.add(tempFormat);
-                    }
+        ProcessingDirective tempProcDir = (ProcessingDirective) request.getSession().getAttribute("temporaryProcessingDirective");
+        String sourceType = (String) request.getSession().getAttribute("sourceType");
+        if ((tempProcDir == null) || (sourceType == null)) {
+            this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error in loading Step 2 of Add Processing Rules page. An email has been sent to the administrator.");
+            getUserService().sendEmailErrorReport();
+            errorType = "error";
+            return INPUT;
+        }
+        List<Format> tempFormatList = new ArrayList<Format>();
+        List<Set> tempSetList = null;
+        if (sourceType.equalsIgnoreCase("provider")) {
+            // Loop over the formats the source provider can produce
+            // If the service can accept it as input, add it to the list
+            // of Formats the user can select
+            for (Format tempFormat : tempProcDir.getSourceProvider().getFormats()) {
+                if (tempProcDir.getService().getInputFormats().contains(tempFormat)) {
+                    tempFormatList.add(tempFormat);
                 }
+            }
 
-                tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
+            tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
 
-                if (tempProcDir.getSourceProvider().getSets() != null &&
+            if (tempProcDir.getSourceProvider().getSets() != null &&
                         tempProcDir.getSourceProvider().getSets().size() > 0) {
-                    tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
-                }
-
+                tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
             }
-            else
-            {
-                // Loop over the formats the source service can produce
-                // If the service can accept it as input, add it to the list
-                // of Formats the user can select
-                for(Format tempFormat : tempProcDir.getSourceService().getOutputFormats())
-                    if(tempProcDir.getService().getInputFormats().contains(tempFormat))
-                        tempFormatList.add(tempFormat);
 
-                tempSetList = tempProcDir.getSourceService().getOutputSets();
-            }
-            setFormatList(tempFormatList);
-            setSetList(tempSetList);
-            log.debug("**** execute:just setSetList, the list size = "+tempSetList.size());
+        } else {
+            // Loop over the formats the source service can produce
+            // If the service can accept it as input, add it to the list
+            // of Formats the user can select
+            for (Format tempFormat : tempProcDir.getSourceService().getOutputFormats())
+                if (tempProcDir.getService().getInputFormats().contains(tempFormat))
+                    tempFormatList.add(tempFormat);
 
-            setTemporaryProcessingDirective(tempProcDir);
-            return SUCCESS;
+            tempSetList = tempProcDir.getSourceService().getOutputSets();
+        }
+        setFormatList(tempFormatList);
+        setSetList(tempSetList);
+        log.debug("**** execute:just setSetList, the list size = " + tempSetList.size());
+
+        setTemporaryProcessingDirective(tempProcDir);
+        return SUCCESS;
 
     }
 
     /**
      * Step 2 in adding new processing directive
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String addProcessingDirectivesSetsFormats()
-    {
-        try
-        {
-            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
-            String sourceType = (String)request.getSession().getAttribute("sourceType");
+    public String addProcessingDirectivesSetsFormats() {
+        try {
+            ProcessingDirective tempProcDir = (ProcessingDirective) request.getSession().getAttribute("temporaryProcessingDirective");
+            String sourceType = (String) request.getSession().getAttribute("sourceType");
 
-            if((tempProcDir==null)||(sourceType==null))
-            {
+            if ((tempProcDir == null) || (sourceType == null)) {
                 this.addFieldError("addProcessingDirectivesSetsFormatsError", "Error occurred when adding Processing Directive. An email has been sent to the administrator.");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
 
-            if(maintainSourceSets==null)
-            {
+            if (maintainSourceSets == null) {
                 tempProcDir.setMaintainSourceSets(false);
-            }
-            else
-            {
+            } else {
                 tempProcDir.setMaintainSourceSets(true);
             }
 
             String[] SetIdList = getSetsSelected();
-            log.debug("**** addProcessingDirectivesSetsFormats:SetIdList, the list size = "+SetIdList.length);
+            log.debug("**** addProcessingDirectivesSetsFormats:SetIdList, the list size = " + SetIdList.length);
             String[] FormatIdList = getFormatsSelected();
             List<Format> tempFormatList = new ArrayList<Format>();
             List<Set> tempSetList = new ArrayList<Set>();
 
-            if(FormatIdList!=null) //setting the triggering formats of the processing Directive
+            if (FormatIdList != null) // setting the triggering formats of the processing Directive
             {
-                for(int i=0;i<FormatIdList.length;i++)
-                {
-                       Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
-                       tempFormatList.add(format);
+                for (int i = 0; i < FormatIdList.length; i++) {
+                    Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
+                    tempFormatList.add(format);
                 }
             }
 
-            if(SetIdList!=null) //setting the triggering sets of the processing directive
+            if (SetIdList != null) // setting the triggering sets of the processing directive
             {
-                for(int i=0;i<SetIdList.length;i++)
-                {
-                    if(Integer.parseInt(SetIdList[i])!=0)
-                    {
+                for (int i = 0; i < SetIdList.length; i++) {
+                    if (Integer.parseInt(SetIdList[i]) != 0) {
                         Set set = getSetService().getSetById(Integer.parseInt(SetIdList[i]));
                         tempSetList.add(set);
-                    }
-                    else
-                    {
+                    } else {
                         /*
                         if(sourceType.equalsIgnoreCase("provider"))
                         {
@@ -199,37 +181,32 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                 }
             }
 
-           tempProcDir.setTriggeringFormats(tempFormatList);
-           tempProcDir.setTriggeringSets(tempSetList);
-           request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
+            tempProcDir.setTriggeringFormats(tempFormatList);
+            tempProcDir.setTriggeringSets(tempSetList);
+            request.getSession().setAttribute("temporaryProcessingDirective", tempProcDir);
 
-           Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
-           if((setExists==null) && (outputSetSpec!=null) && (!outputSetSpec.equals(""))) //output set doesn't already exist
-           {
-               Set tempSet = new Set();
-               tempSet.setDisplayName(outputSetName);
-               tempSet.setSetSpec(outputSetSpec);
-               getSetService().insertSet(tempSet);
-               tempProcDir.setOutputSet(tempSet);
-           }
-           else
-               tempProcDir.setOutputSet(setExists);
+            Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
+            if ((setExists == null) && (outputSetSpec != null) && (!outputSetSpec.equals(""))) // output set doesn't already exist
+            {
+                Set tempSet = new Set();
+                tempSet.setDisplayName(outputSetName);
+                tempSet.setSetSpec(outputSetSpec);
+                getSetService().insertSet(tempSet);
+                tempProcDir.setOutputSet(tempSet);
+            } else
+                tempProcDir.setOutputSet(setExists);
 
-           getProcessingDirectiveService().insertProcessingDirective(tempProcDir);
+            getProcessingDirectiveService().insertProcessingDirective(tempProcDir);
 
-           request.getSession().setAttribute("temporaryProcessingDirective",null);
-           return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+            request.getSession().setAttribute("temporaryProcessingDirective", null);
+            return SUCCESS;
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("listProcessingDirectivesError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return ERROR;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("listProcessingDirectivesError", "Error occurred while adding Processing Rule. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -239,88 +216,68 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Returns to the previous step in the add processing directive operation
-     *
+     * 
      * @return
      */
-    public String addProcessingDirectiveGoBack()
-    {
-         try
-        {
-            ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
+    public String addProcessingDirectiveGoBack() {
+        try {
+            ProcessingDirective tempProcDir = (ProcessingDirective) request.getSession().getAttribute("temporaryProcessingDirective");
 
-            if(tempProcDir==null)
-            {
+            if (tempProcDir == null) {
                 this.addFieldError("listProcessingDirectivesError", "Error occurred while returning to step 1 of Processing Rule. An email has been sent to the administrator.");
                 getUserService().sendEmailErrorReport();
                 errorType = "error";
                 return INPUT;
             }
-            if(maintainSourceSets==null)
-                {
+            if (maintainSourceSets == null) {
 
-                    tempProcDir.setMaintainSourceSets(false);
+                tempProcDir.setMaintainSourceSets(false);
+            } else {
+
+                tempProcDir.setMaintainSourceSets(true);
+            }
+
+            String[] SetIdList = setsSelected;
+            String[] FormatIdList = formatsSelected;
+            List<Format> tempFormatList = new ArrayList<Format>();
+            List<Set> tempSetList = new ArrayList<Set>();
+
+            if (FormatIdList != null) {
+                for (int i = 0; i < FormatIdList.length; i++) {
+                    Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
+                    tempFormatList.add(format);
                 }
-                else
-                {
+            }
 
-                    tempProcDir.setMaintainSourceSets(true);
+            tempProcDir.setTriggeringFormats(tempFormatList);
+            if (SetIdList != null) {
+                for (int i = 0; i < SetIdList.length; i++) {
+                    Set set = getSetService().getSetById(Integer.parseInt(SetIdList[i]));
+                    tempSetList.add(set);
                 }
+            }
 
-                String[] SetIdList = setsSelected;
-                String[] FormatIdList = formatsSelected;
-                List<Format> tempFormatList = new ArrayList<Format>();
-                List<Set> tempSetList = new ArrayList<Set>();
+            tempProcDir.setTriggeringSets(tempSetList);
 
-                if(FormatIdList!=null)
-                {
-                    for(int i=0;i<FormatIdList.length;i++)
-                    {
-                       Format format = getFormatService().getFormatById(Integer.parseInt(FormatIdList[i]));
-                       tempFormatList.add(format);
-                    }
-                }
-
-
-                tempProcDir.setTriggeringFormats(tempFormatList);
-                if(SetIdList!=null)
-                {
-                    for(int i=0;i<SetIdList.length;i++)
-                    {
-                       Set set = getSetService().getSetById(Integer.parseInt(SetIdList[i]));
-                       tempSetList.add(set);
-                    }
-                }
-
-
-                tempProcDir.setTriggeringSets(tempSetList);
-
-                Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
-                if(setExists==null)
-                {
-                    if((outputSetSpec!=null)&&(!outputSetSpec.equalsIgnoreCase("")))
-                    {
-                        Set tempSet = new Set();
-                        tempSet.setDisplayName(outputSetName);
-                        tempSet.setSetSpec(outputSetSpec);
-                        //setService.insertSet(tempSet);
-                        tempProcDir.setOutputSet(tempSet);
-                    }
-                    else
-                    {
-                        tempProcDir.setOutputSet(setExists);
-                    }
-                }
-                else
-                {
+            Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
+            if (setExists == null) {
+                if ((outputSetSpec != null) && (!outputSetSpec.equalsIgnoreCase(""))) {
+                    Set tempSet = new Set();
+                    tempSet.setDisplayName(outputSetName);
+                    tempSet.setSetSpec(outputSetSpec);
+                    // setService.insertSet(tempSet);
+                    tempProcDir.setOutputSet(tempSet);
+                } else {
                     tempProcDir.setOutputSet(setExists);
                 }
+            } else {
+                tempProcDir.setOutputSet(setExists);
+            }
 
-                request.getSession().setAttribute("temporaryProcessingDirective",tempProcDir);
-                return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+            request.getSession().setAttribute("temporaryProcessingDirective", tempProcDir);
+            return SUCCESS;
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             errorType = "error";
             this.addFieldError("addPDGoBackError", "Unable to connect to the Database. Database configuration may be incorrect");
             return INPUT;
@@ -329,20 +286,19 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Cancels the add processing directive operation and returns to the list of processing directives
-     *
+     * 
      * @return
      */
-    public String addProcessingDirectiveCancel()
-    {
+    public String addProcessingDirectiveCancel() {
 
-            request.getSession().setAttribute("temporaryProcessingDirective",null);
-            return SUCCESS;
+        request.getSession().setAttribute("temporaryProcessingDirective", null);
+        return SUCCESS;
 
     }
 
-        /**
+    /**
      * Set the servlet request.
-     *
+     * 
      * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
      */
     public void setServletRequest(HttpServletRequest request) {
@@ -351,169 +307,158 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Sets the name of the output set
-     *
-     * @param outputSetName name of the new output set
+     * 
+     * @param outputSetName
+     *            name of the new output set
      */
-    public void setOutputSetName(String outputSetName)
-    {
+    public void setOutputSetName(String outputSetName) {
         this.outputSetName = outputSetName;
     }
 
     /**
      * Returns value of the output set
-     *
+     * 
      * @return output set name
      */
-    public String getOutputSetName()
-    {
+    public String getOutputSetName() {
         return outputSetName;
     }
 
     /**
      * Sets the specifications of the output set
-     *
-     * @param outputSetSpec output set specifications
+     * 
+     * @param outputSetSpec
+     *            output set specifications
      */
-    public void setOutputSetSpec(String outputSetSpec)
-    {
+    public void setOutputSetSpec(String outputSetSpec) {
         this.outputSetSpec = outputSetSpec;
     }
 
     /**
      * Returns specifications of the output set
-     *
+     * 
      * @return output set specifications
      */
-    public String getOutputSetSpec()
-    {
+    public String getOutputSetSpec() {
         return outputSetSpec;
     }
 
     /**
      * Sets the list of all sets that are relevant to that Provider/Service
-     *
-     * @param setList list of sets
+     * 
+     * @param setList
+     *            list of sets
      */
-    public void setSetList(List<Set> setList)
-    {
+    public void setSetList(List<Set> setList) {
         this.setList = setList;
     }
 
     /**
      * Gets the list of all sets that are relevant to that Provider/Service
-     *
+     * 
      * @return list of all sets
      */
-    public List<Set> getSetList()
-    {
+    public List<Set> getSetList() {
         return setList;
     }
 
     /**
      * Sets the list of all formats that are relevant to that Provider/Service
-     *
-     * @param formatList list of all formats
+     * 
+     * @param formatList
+     *            list of all formats
      */
-    public void setFormatList(List<Format> formatList)
-    {
+    public void setFormatList(List<Format> formatList) {
         this.formatList = formatList;
     }
 
     /**
      * Gets the list of all formats that are relevant to that Provider/Service
-     *
+     * 
      * @return list of all formats
      */
-    public List<Format> getFormatList()
-    {
+    public List<Format> getFormatList() {
         return formatList;
     }
 
     /**
      * Sets the list of sets that the user has selected
-     *
-     * @param setsSelected sets selected
+     * 
+     * @param setsSelected
+     *            sets selected
      */
-    public void setSetsSelected(String[] setsSelected)
-    {
+    public void setSetsSelected(String[] setsSelected) {
         this.setsSelected = setsSelected;
     }
 
     /**
      * Returns the list of sets selected by the user
-     *
+     * 
      * @return list of selected sets
      */
-    public String[] getSetsSelected()
-    {
+    public String[] getSetsSelected() {
         return setsSelected;
     }
 
     /**
      * Sets the list of formats selected by the user
-     *
-     * @param formatsSelected list of formats selected
+     * 
+     * @param formatsSelected
+     *            list of formats selected
      */
-    public void setFormatsSelected(String[] formatsSelected)
-    {
+    public void setFormatsSelected(String[] formatsSelected) {
         this.formatsSelected = formatsSelected;
     }
 
     /**
      * Returns the list of formats selected by the user
-     *
+     * 
      * @return list of formats
      */
-    public String[] getFormatsSelected()
-    {
+    public String[] getFormatsSelected() {
         return formatsSelected;
     }
 
-
     /**
      * Sets the boolean value representing the user's choice to maintain sets
-     *
+     * 
      * @param maintainSets
      */
-    public void setMaintainSourceSets(String[] maintainSourceSets)
-    {
+    public void setMaintainSourceSets(String[] maintainSourceSets) {
 
         this.maintainSourceSets = maintainSourceSets;
     }
 
     /**
      * Returns the boolean value representing the user's choice to maintain sets
-     *
+     * 
      * @return
      */
-    public String[] getMaintainSourceSets()
-    {
+    public String[] getMaintainSourceSets() {
         return maintainSourceSets;
     }
 
     /**
      * Sets the temporary processing Directive object
-     *
+     * 
      * @param temporaryProcessingDirective
      */
-    public void setTemporaryProcessingDirective(ProcessingDirective temporaryProcessingDirective)
-    {
+    public void setTemporaryProcessingDirective(ProcessingDirective temporaryProcessingDirective) {
         this.temporaryProcessingDirective = temporaryProcessingDirective;
     }
 
     /**
      * Returns the temporary processing directive object
-     *
+     * 
      * @return processing directive object
      */
-    public ProcessingDirective getTemporaryProcessingDirective()
-    {
+    public ProcessingDirective getTemporaryProcessingDirective() {
         return this.temporaryProcessingDirective;
     }
 
     /**
      * Returns error type
-     *
+     * 
      * @return error type
      */
     public String getErrorType() {
@@ -522,7 +467,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Sets error type
-     *
+     * 
      * @param errorType
      */
     public void setErrorType(String errorType) {

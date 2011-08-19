@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.service.impl.test;
 
 import java.util.Date;
@@ -47,9 +47,9 @@ public class BaseMetadataServiceTest extends BaseTest {
     @Override
     @BeforeSuite
     public void startup() {
-        jdbcTemplate = new JdbcTemplate((DataSource)((GenericMetadataService)TestTypeFilter.metadataService).
+        jdbcTemplate = new JdbcTemplate((DataSource) ((GenericMetadataService) TestTypeFilter.metadataService).
                 getConfig().getBean("MetadataServiceDataSource"));
-        hibernateTemplate = new HibernateTemplate((SessionFactory)((GenericMetadataService)TestTypeFilter.metadataService).
+        hibernateTemplate = new HibernateTemplate((SessionFactory) ((GenericMetadataService) TestTypeFilter.metadataService).
                 getConfig().getBean("SessionFactory"));
     }
 
@@ -74,14 +74,14 @@ public class BaseMetadataServiceTest extends BaseTest {
                 Thread.sleep(1000);
                 LOG.debug("done sleeping");
                 Date lastModified = getRepositoryService().getLastModified();
-                LOG.debug("lastModified :"+lastModified);
+                LOG.debug("lastModified :" + lastModified);
                 if (lastModified == null || lastModified.after(new Date())) {
                     LOG.debug("Future dated!");
                     continue;
                 }
                 if (getScheduler().getRunningJob() != null) {
-                    LOG.debug("scheduler.getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
-                    LOG.debug("scheduler.getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
+                    LOG.debug("scheduler.getRunningJob().getJobStatus(): " + getScheduler().getRunningJob().getJobStatus());
+                    LOG.debug("scheduler.getRunningJob().getJobName(): " + getScheduler().getRunningJob().getJobName());
                 }
                 if (getScheduler().getRunningJob() == null ||
                         Status.RUNNING != getScheduler().getRunningJob().getJobStatus()) {
@@ -92,7 +92,7 @@ public class BaseMetadataServiceTest extends BaseTest {
                 if (timesNotRunning > 7) {
                     break;
                 }
-                LOG.debug("timeNotRunning: "+timesNotRunning);
+                LOG.debug("timeNotRunning: " + timesNotRunning);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
