@@ -1,12 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
-
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.manager.test;
 
@@ -23,23 +22,20 @@ import xc.mst.manager.user.GroupService;
 
 /**
  * Tests for Groups
- *
+ * 
  * @author Tejaswi Haramurali
  */
 @Test(groups = { "baseTests" }, enabled = true)
-public class GroupsTest extends BaseTest
-{
+public class GroupsTest extends BaseTest {
     /**
      * Method which tests all the functionality related to Groups
-     *
+     * 
      */
-    public void addGroup()
-    {
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
-        try
-        {
-            GroupService groupService = (GroupService)getBean("GroupService");
+    public void addGroup() {
+        // Initialize Solr, database, log before testing
+        TestHelper helper = TestHelper.getInstance();
+        try {
+            GroupService groupService = (GroupService) getBean("GroupService");
             Group group = new Group();
             group.setDescription("New Group Description");
             group.setName("New Group Name");
@@ -52,10 +48,10 @@ public class GroupsTest extends BaseTest
 
             groupService.insertGroup(group);
             Group anotherGroup = groupService.getGroupById(group.getId());
-            assert (anotherGroup.getId()==group.getId()): "";
-            assert (anotherGroup.getDescription().equalsIgnoreCase(group.getDescription())): "The group descriptions should match";
-            assert (anotherGroup.getName().equalsIgnoreCase(group.getName())): "The group names should match";
-            assert (anotherGroup.getPermissions().containsAll(group.getPermissions())): "The permissions that both groups have, should match";
+            assert (anotherGroup.getId() == group.getId()) : "";
+            assert (anotherGroup.getDescription().equalsIgnoreCase(group.getDescription())) : "The group descriptions should match";
+            assert (anotherGroup.getName().equalsIgnoreCase(group.getName())) : "The group names should match";
+            assert (anotherGroup.getPermissions().containsAll(group.getPermissions())) : "The permissions that both groups have, should match";
 
             groupService.deleteGroup(group);
             /*
@@ -69,9 +65,7 @@ public class GroupsTest extends BaseTest
                 }
             }
             * */
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -8,19 +8,19 @@
   -->
 <project name="example-service-custom" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<target name="copy-custom-libs" depends="init">
-		<move todir="${build.zip.lib}">
-			<fileset dir="${build.lib}">
-				<exclude name="**/*.jar" />
-				<!--
-				<include name="mst-service-impl*.jar" />
-				anything jars you've added in your ivy-custom.xml should be included in the zip
-				all the other jars are already loaded into the mst-platform
-				<include name="" />
-				-->
-			</fileset>
-		</move>
-	</target>
+  <target name="copy-custom-libs" depends="init">
+    <move todir="${build.zip.lib}">
+      <fileset dir="${build.lib}">
+        <exclude name="**/*.jar" />
+        <!--
+        <include name="mst-service-impl*.jar" />
+        anything jars you've added in your ivy-custom.xml should be included in the zip
+        all the other jars are already loaded into the mst-platform
+        <include name="" />
+        -->
+      </fileset>
+    </move>
+  </target>
 
 </project>
 

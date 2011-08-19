@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:URMST:Transformation Service/15566">
-		<dcterms:subject xsi:type="dcterms:DDC">782.1</dcterms:subject>
-		
-		<xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts.</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
-		<xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
-		<rdvocab:titleOfWork>Norma. Casta diva. </rdvocab:titleOfWork>
-		<xc:creator>Bellini, Vincenzo, 1801-1835.</xc:creator></xc:entity>
+  <xc:entity type="work" id="oai:URMST:Transformation Service/15566">
+    <dcterms:subject xsi:type="dcterms:DDC">782.1</dcterms:subject>
+
+    <xc:subject xsi:type="dcterms:LCSH">Operas-Excerpts.</xc:subject>
+    <xc:subject xsi:type="dcterms:LCSH">Operas</xc:subject>
+    <xc:type xsi:type="dcterms:LCSH">Excerpts.</xc:type>
+    <rdvocab:titleOfWork>Norma. Casta diva. </rdvocab:titleOfWork>
+    <xc:creator>Bellini, Vincenzo, 1801-1835.</xc:creator></xc:entity>
 </xc:frbr>

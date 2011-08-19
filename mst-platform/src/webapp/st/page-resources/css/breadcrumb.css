@@ -1,17 +1,17 @@
 /*
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   */
- 
+
  .breadcrumb
 {
     color:#292929;
-	font-size:15px;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:15px;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
     height:33px;
     background-color:#e0f2ff;
     border-style:solid;

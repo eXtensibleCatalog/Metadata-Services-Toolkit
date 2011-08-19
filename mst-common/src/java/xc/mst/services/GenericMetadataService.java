@@ -54,7 +54,7 @@ import xc.mst.utils.TimingLogger;
  * may be used, each one of which extends the MetadataService class. The
  * MetadataService class provides a common interface through which the MST can
  * invoke functionality on a Metadata Service.
- *
+ * 
  * @author Benjamin D. Anderson
  */
 
@@ -357,8 +357,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
     }
 
     /**
-     *
-     *
+     * 
+     * 
      * @param r
      *            <b>note: modifying input objects has no effect on the
      *            system</b>
@@ -415,7 +415,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
      *         </ul>
      *         </li>
      *         </ul>
-     *
+     * 
      * @see xc.mst.bo.record.RecordIfc
      * @see xc.mst.bo.record.InputRecord
      * @see xc.mst.bo.record.OutputRecord
@@ -555,7 +555,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 previouslyPaused = false;
             }
             if (++getRecordLoops % 100 == 0) {
-                //TODO here is the place to display performance!
+                // TODO here is the place to display performance!
                 // processedRecordCount is a sensible count to pass here as the number of records updated.
                 TimingLogger.reset(processedRecordCount);
             }
@@ -722,7 +722,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 } /*else if (mostRecentIncomingRecordCounts.getHarvestStartDate()
                         .getTime() >= (startTime - 1000)) {
                     processServiceRecordCounts(mostRecentIncomingRecordCounts);
-                } */else if (atLeastOneRecordProcessed) {
+                  } */else if (atLeastOneRecordProcessed) {
                     processServiceRecordCounts(mostRecentIncomingRecordCounts);
                 }
             } catch (Throwable t) {
@@ -768,8 +768,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
         applyRulesToRecordCounts(mostRecentIncomingRecordCounts);
     }
 
-
-    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {}
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+    }
 
     protected boolean isSolrIndexer() {
         boolean ret = getRepository() == null;
@@ -849,7 +849,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected void addMessage(InputRecord record, int code, char level,
             String detail) {
         if (!isMessageEnabled(code, level)) {
-            LOG.debug("Will not addMessage, because the message is disabled. level="+level+" code="+code);
+            LOG.debug("Will not addMessage, because the message is disabled. level=" + level + " code=" + code);
             return;
         }
         Record r = (Record) record;
@@ -881,12 +881,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
         if (args.length > 0) {
             s= MSTConfiguration.getMSTString(prop, args);   //TODO problem with this method.  Returns null?
         }
-        else {
-            s= config.getProperty(prop);
-        }
 
         if (s == null) {
-            LOG.error("ERROR with getMessage, code="+code+" type="+type+" config type details: "+config.getClass().getName()+" toStr: "+config.toString());
+            LOG.error("ERROR with getMessage, code=" + code + " type=" + type + " config type details: " + config.getClass().getName() + " toStr: " + config.toString());
+        } else {
+            LOG.debug("INFO with getMessage, code=" + code + " type=" + type + " config type details: " + config.getClass().getName() + " toStr: " + config.toString());
         }
 */
         s= config.getProperty(prop);

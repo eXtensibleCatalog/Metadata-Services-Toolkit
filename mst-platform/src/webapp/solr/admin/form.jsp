@@ -29,92 +29,92 @@
 <table>
 <tr>
   <td>
-	<strong>Solr/Lucene Statement</strong>
+  <strong>Solr/Lucene Statement</strong>
   </td>
   <td>
-	<textarea rows="5" cols="60" name="q"><%= defaultSearch %></textarea>
-  </td>
-</tr>
-<tr>
-  <td>
-	<strong>Filter Query</strong>
-  </td>
-  <td>
-	<textarea rows="2" cols="60" name="fq"></textarea>
+  <textarea rows="5" cols="60" name="q"><%= defaultSearch %></textarea>
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Start Row</strong>
+  <strong>Filter Query</strong>
   </td>
   <td>
-	<input name="start" type="text" value="0">
-  </td>
-</tr>
-<tr>
-  <td>
-	<strong>Maximum Rows Returned</strong>
-  </td>
-  <td>
-	<input name="rows" type="text" value="10">
+  <textarea rows="2" cols="60" name="fq"></textarea>
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Fields to Return</strong>
+  <strong>Start Row</strong>
   </td>
   <td>
-	<input name="fl" type="text" value="*,score">
-  </td>
-</tr>
-<tr>
-  <td>
-	<strong>Query Type</strong>
-  </td>
-  <td>
-	<input name="qt" type="text" value="standard">
+  <input name="start" type="text" value="0">
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Output Type</strong>
+  <strong>Maximum Rows Returned</strong>
   </td>
   <td>
-	<input name="wt" type="text" value="standard">
+  <input name="rows" type="text" value="10">
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Debug: enable</strong>
+  <strong>Fields to Return</strong>
   </td>
   <td>
-	<input name="debugQuery" type="checkbox" >
+  <input name="fl" type="text" value="*,score">
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong>Query Type</strong>
+  </td>
+  <td>
+  <input name="qt" type="text" value="standard">
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong>Output Type</strong>
+  </td>
+  <td>
+  <input name="wt" type="text" value="standard">
+  </td>
+</tr>
+<tr>
+  <td>
+  <strong>Debug: enable</strong>
+  </td>
+  <td>
+  <input name="debugQuery" type="checkbox" >
   <em><font size="-1">  Note: you may need to "view source" in your browser to see explain() correctly indented.</font></em>
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Debug: explain others</strong>
+  <strong>Debug: explain others</strong>
   </td>
   <td>
-	<input name="explainOther" type="text" >
+  <input name="explainOther" type="text" >
   <em><font size="-1">  Apply original query scoring to matches of this query to see how they compare.</font></em>
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Enable Highlighting</strong>
+  <strong>Enable Highlighting</strong>
   </td>
   <td>
-	<input name="hl" type="checkbox" >
+  <input name="hl" type="checkbox" >
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Fields to Highlight</strong>
+  <strong>Fields to Highlight</strong>
   </td>
   <td>
-	<input name="hl.fl" type="text" >
+  <input name="hl.fl" type="text" >
   </td>
 </tr>
 <tr>

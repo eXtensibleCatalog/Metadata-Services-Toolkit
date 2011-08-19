@@ -11,9 +11,9 @@ project
 
  .header
 {
-	float: left;
-	margin-top: 20px;
-	width: 100%;
+  float: left;
+  margin-top: 20px;
+  width: 100%;
     clear: both;
 }
 
@@ -21,34 +21,34 @@ project
 .header_logo {
 
     width: 100%;
-	margin-top:10px;
-	font-size:12px;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-	float:left;
+  margin-top:10px;
+  font-size:12px;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  float:left;
 }
 
 .header_logo img {
-	float:left;
+  float:left;
 
 }
 
 .headerMessage {
-	float:right;
-	margin-top:10px;
+  float:right;
+  margin-top:10px;
     position:relative;
     top : 15px;
 
 }
 
 #header .x4 {
-	padding-left: 0px;
+  padding-left: 0px;
     padding-right : 23px;
-	padding-top: 20px;
-	padding-bottom: 0px;
-	font-weight: bold;
-	font-size:28px;
-	width: 100%;
-	clear: both;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  font-weight: bold;
+  font-size:28px;
+  width: 100%;
+  clear: both;
 }
 #header .a
 {
@@ -57,11 +57,11 @@ project
 }
 #header .x5 {
     padding-left: 15px;
-	padding-top: 20px;
-	padding-bottom: 10px;
-	font-size:14px;
-	width: 100%;
-	clear: both;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size:14px;
+  width: 100%;
+  clear: both;
 }
 
 .stepsStructure
@@ -74,7 +74,7 @@ project
     border-color:#ced2d5;
     padding-left:25px;
     margin-bottom:10px;
-   
+
 }
 
 .greybody
@@ -96,7 +96,7 @@ project
     border-top-style:solid;
     border-width:1px;
     border-color:#ced2d5;
- 
+
 
     margin-bottom : 25px;
 }

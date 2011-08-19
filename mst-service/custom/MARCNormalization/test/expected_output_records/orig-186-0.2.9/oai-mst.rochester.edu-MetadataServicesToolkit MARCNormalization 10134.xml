@@ -1,239 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>01974cam a2200493Ja 4500</marc:leader>
-	<marc:controlfield tag="001">3949333</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20081009093244.0</marc:controlfield>
-	<marc:controlfield tag="008">081001s2007    maua     b    010 0 eng  </marc:controlfield>
+  <marc:leader>01974cam a2200493Ja 4500</marc:leader>
+  <marc:controlfield tag="001">3949333</marc:controlfield>
+  <marc:controlfield tag="003">NRU</marc:controlfield>
+  <marc:controlfield tag="005">20081009093244.0</marc:controlfield>
+  <marc:controlfield tag="008">081001s2007    maua     b    010 0 eng  </marc:controlfield>
 
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">  2007050332</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="010" ind1=" " ind2=" ">
+    <marc:subfield code="a">  2007050332</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)183179621</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)183179621</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">BAKER</marc:subfield>
-		<marc:subfield code="d">BTCTA</marc:subfield>
-		<marc:subfield code="d">YDXCP</marc:subfield>
-		<marc:subfield code="d">C#P</marc:subfield>
-		<marc:subfield code="d">BWX</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">DLC</marc:subfield>
+    <marc:subfield code="c">DLC</marc:subfield>
+    <marc:subfield code="d">BAKER</marc:subfield>
+    <marc:subfield code="d">BTCTA</marc:subfield>
+    <marc:subfield code="d">YDXCP</marc:subfield>
+    <marc:subfield code="d">C#P</marc:subfield>
+    <marc:subfield code="d">BWX</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="019" ind1=" " ind2=" ">
-		<marc:subfield code="a">182734087</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="019" ind1=" " ind2=" ">
+    <marc:subfield code="a">182734087</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">9781405180337</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="020" ind1=" " ind2=" ">
+    <marc:subfield code="a">9781405180337</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">1405180331</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="020" ind1=" " ind2=" ">
+    <marc:subfield code="a">1405180331</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="024" ind1="7" ind2=" ">
-		<marc:subfield code="a">99821656819</marc:subfield>
-		<marc:subfield code="2">YBP</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="024" ind1="7" ind2=" ">
+    <marc:subfield code="a">99821656819</marc:subfield>
+    <marc:subfield code="2">YBP</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)183179621</marc:subfield>
-		<marc:subfield code="z">(OCoLC)182734087</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)183179621</marc:subfield>
+    <marc:subfield code="z">(OCoLC)182734087</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="049" ind1=" " ind2=" ">
+    <marc:subfield code="a">RRRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="050" ind1="0" ind2="0">
-		<marc:subfield code="a">HB139</marc:subfield>
-		<marc:subfield code="b">.E345 2007</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="050" ind1="0" ind2="0">
+    <marc:subfield code="a">HB139</marc:subfield>
+    <marc:subfield code="b">.E345 2007</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="082" ind1="0" ind2="0">
-		<marc:subfield code="a">330.01/5195</marc:subfield>
-		<marc:subfield code="2">22</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="082" ind1="0" ind2="0">
+    <marc:subfield code="a">330.01/5195</marc:subfield>
+    <marc:subfield code="2">22</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Economics to econometrics :</marc:subfield>
-		<marc:subfield code="b">contributions in honor of Daniel L. McFadden /</marc:subfield>
-		<marc:subfield code="c">Randall Wright, editor ; Charles F. Manski and Whitney Newey, special guest editors.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="0" ind2="0">
+    <marc:subfield code="a">Economics to econometrics :</marc:subfield>
+    <marc:subfield code="b">contributions in honor of Daniel L. McFadden /</marc:subfield>
+    <marc:subfield code="c">Randall Wright, editor ; Charles F. Manski and Whitney Newey, special guest editors.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Malden, MA :</marc:subfield>
-		<marc:subfield code="b">Blackwell Pub.,</marc:subfield>
-		<marc:subfield code="c">c2007.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">Malden, MA :</marc:subfield>
+    <marc:subfield code="b">Blackwell Pub.,</marc:subfield>
+    <marc:subfield code="c">c2007.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">1091-1496 p. :</marc:subfield>
-		<marc:subfield code="b">ill. ;</marc:subfield>
-		<marc:subfield code="c">27 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">1091-1496 p. :</marc:subfield>
+    <marc:subfield code="b">ill. ;</marc:subfield>
+    <marc:subfield code="c">27 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">International economic review (Print ISSN 0020-6598, Online ISSN 1468-2354), vol. 48, no.4, Nov. 2007.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">International economic review (Print ISSN 0020-6598, Online ISSN 1468-2354), vol. 48, no.4, Nov. 2007.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="504" ind1=" " ind2=" ">
-		<marc:subfield code="a">Includes bibliographical references.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="504" ind1=" " ind2=" ">
+    <marc:subfield code="a">Includes bibliographical references.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Econometrics.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Econometrics.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Economics.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Economics.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="600" ind1="1" ind2="0">
-		<marc:subfield code="a">McFadden, Daniel.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="600" ind1="1" ind2="0">
+    <marc:subfield code="a">McFadden, Daniel.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">McFadden, Daniel.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="700" ind1="1" ind2=" ">
+    <marc:subfield code="a">McFadden, Daniel.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Wright, Randall,</marc:subfield>
-		<marc:subfield code="d">1956-</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="700" ind1="1" ind2=" ">
+    <marc:subfield code="a">Wright, Randall,</marc:subfield>
+    <marc:subfield code="d">1956-</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Manski, Charles F.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="700" ind1="1" ind2=" ">
+    <marc:subfield code="a">Manski, Charles F.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Newey, Whitney K.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="700" ind1="1" ind2=" ">
+    <marc:subfield code="a">Newey, Whitney K.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="730" ind1="0" ind2=" ">
-		<marc:subfield code="a">International economic review (Philadelphia)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="730" ind1="0" ind2=" ">
+    <marc:subfield code="a">International economic review (Philadelphia)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="2">
-		<marc:subfield code="3">Publisher description</marc:subfield>
-		<marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-d.html</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="2">
+    <marc:subfield code="3">Publisher description</marc:subfield>
+    <marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-d.html</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="1">
-		<marc:subfield code="3">Table of contents only</marc:subfield>
-		<marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-t.html</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="1">
+    <marc:subfield code="3">Table of contents only</marc:subfield>
+    <marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-t.html</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="2">
-		<marc:subfield code="3">Contributor biographical information</marc:subfield>
-		<marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-b.html</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="2">
+    <marc:subfield code="3">Contributor biographical information</marc:subfield>
+    <marc:subfield code="u">http://www.loc.gov/catdir/enhancements/fy0806/2007050332-b.html</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="938" ind1=" " ind2=" ">
-		<marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
-		<marc:subfield code="b">BKTY</marc:subfield>
-		<marc:subfield code="c">79.95</marc:subfield>
-		<marc:subfield code="d">79.95</marc:subfield>
-		<marc:subfield code="i">1405180331</marc:subfield>
-		<marc:subfield code="n">0007538300</marc:subfield>
-		<marc:subfield code="s">active</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="938" ind1=" " ind2=" ">
+    <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+    <marc:subfield code="b">BKTY</marc:subfield>
+    <marc:subfield code="c">79.95</marc:subfield>
+    <marc:subfield code="d">79.95</marc:subfield>
+    <marc:subfield code="i">1405180331</marc:subfield>
+    <marc:subfield code="n">0007538300</marc:subfield>
+    <marc:subfield code="s">active</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="938" ind1=" " ind2=" ">
-		<marc:subfield code="a">Baker and Taylor</marc:subfield>
-		<marc:subfield code="b">BTCP</marc:subfield>
-		<marc:subfield code="n">BK0007538300</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="938" ind1=" " ind2=" ">
+    <marc:subfield code="a">Baker and Taylor</marc:subfield>
+    <marc:subfield code="b">BTCP</marc:subfield>
+    <marc:subfield code="n">BK0007538300</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="938" ind1=" " ind2=" ">
-		<marc:subfield code="a">YBP Library Services</marc:subfield>
-		<marc:subfield code="b">YANK</marc:subfield>
-		<marc:subfield code="n">2801248</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="938" ind1=" " ind2=" ">
+    <marc:subfield code="a">YBP Library Services</marc:subfield>
+    <marc:subfield code="b">YANK</marc:subfield>
+    <marc:subfield code="n">2801248</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="938" ind1=" " ind2=" ">
-		<marc:subfield code="a">Blackwell Book Service</marc:subfield>
-		<marc:subfield code="b">BBUS</marc:subfield>
-		<marc:subfield code="n">R1707007</marc:subfield>
-		<marc:subfield code="c">$79.95</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="938" ind1=" " ind2=" ">
+    <marc:subfield code="a">Blackwell Book Service</marc:subfield>
+    <marc:subfield code="b">BBUS</marc:subfield>
+    <marc:subfield code="n">R1707007</marc:subfield>
+    <marc:subfield code="c">$79.95</marc:subfield>
+  </marc:datafield>
 
-	
 
-	<marc:datafield tag="949" ind1=" " ind2=" ">
-		<marc:subfield code="b">39087029437144</marc:subfield>
-	</marc:datafield>
 
-	<marc:datafield tag="980" ind1=" " ind2=" ">
-		<marc:subfield code="a">2008-10-08</marc:subfield>
-		<marc:subfield code="b">79.95</marc:subfield>
-		<marc:subfield code="e">67.16</marc:subfield>
-		<marc:subfield code="f">526603</marc:subfield>
-		<marc:subfield code="g">1</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="949" ind1=" " ind2=" ">
+    <marc:subfield code="b">39087029437144</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">92</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="980" ind1=" " ind2=" ">
+    <marc:subfield code="a">2008-10-08</marc:subfield>
+    <marc:subfield code="b">79.95</marc:subfield>
+    <marc:subfield code="e">67.16</marc:subfield>
+    <marc:subfield code="f">526603</marc:subfield>
+    <marc:subfield code="g">1</marc:subfield>
+  </marc:datafield>
+
+  <marc:datafield tag="994" ind1=" " ind2=" ">
+    <marc:subfield code="a">92</marc:subfield>
+    <marc:subfield code="b">RRR</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Language material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Monograph/Item</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)3949333</marc:subfield>
+  <marc:subfield code="a">(NRU)3949333</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Non-Fiction</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">English</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="947" ind1=" " ind2=" ">
-	<marc:subfield code="a">9781405180337</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">9781405180337</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="947" ind1=" " ind2=" ">
-	<marc:subfield code="a">1405180331</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">1405180331</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="130" ind1="0" ind2=" ">
-	<marc:subfield code="a">Economics to econometrics :</marc:subfield>
+  <marc:subfield code="a">Economics to econometrics :</marc:subfield>
 </marc:datafield>
 
 </marc:record>

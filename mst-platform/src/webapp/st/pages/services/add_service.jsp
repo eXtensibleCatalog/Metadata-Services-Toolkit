@@ -1,9 +1,9 @@
 <%--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -83,7 +83,7 @@
                 <table style="margin-left:10px">
                     <br>
                     <tr>
-                       <td colspan="2" >                           
+                       <td colspan="2" >
                           Step 1: To add a service, see <a style="text-decoration:underline;color:blue;"href="page-resources/docs/MST User Manual.doc">user manual</a> for configuration file information. <BR><BR>
                        </td>
                     </tr>
@@ -109,15 +109,15 @@
                         </td>
                     </tr>
 
-                    
+
                 </table>
                 <form name="addService" method="post">
                     <input type="hidden" name="selectedLocation" id="selectedLocation">
                 </form>
             </div>
                         <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>
         </div>
-        
+
  </body>
 </html>

@@ -120,27 +120,27 @@ a {
    background:	#FAF7E4;
    text-transform: uppercase;
 }
-		
-a:link {	
+
+a:link {
    color:	#0000aa;
-}			
-					
-a:visited {	
+}
+
+a:visited {
    color:	#0000ff;
-}			
-								
+}
+
 a:active {
    color:	#4444ff;
-}			
+}
 
 a:hover {
    color:	#0000ff;
    background:	#ccccff;
-}			
+}
 
-a:offsite {	
+a:offsite {
    color:	#0000aa;
-}		 
+}
 
 table.analysis th, table.analysis td {
 border-right:1px solid black;

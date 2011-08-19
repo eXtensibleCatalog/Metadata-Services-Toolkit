@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10072">
-		<xc:recordID type="LCCN">77696744 /MAPS</xc:recordID>
-		<xc:recordID type="OCoLC">5496724</xc:recordID>
-		<xc:recordID type="NRU">1225858</xc:recordID>
-		<rdvocab:statementOfResponsibilityRelatingToTitle>Compiled by L.C. Trotta and R.D. Cotter, 1973. [Prepared by] Cartographic Laboratory, University of Wisconsin--Madison.</rdvocab:statementOfResponsibilityRelatingToTitle>
-		<dcterms:title>Depth to bedrock in Wisconsin.</dcterms:title>
-		<rdvocab:placeOfProduction>[Madison]</rdvocab:placeOfProduction>
-		<dcterms:publisher>University of Wisconsin--Extension, Geological and Natural History Survey in cooperation with the U.S. Geological Survey</dcterms:publisher>
-		<dcterms:issued>[1973]</dcterms:issued>
-		<dcterms:extent>col. map.</dcterms:extent>
-		<rdvocab:dimensions>56 x 54 cm. folded to 16 x 30 cm.</rdvocab:dimensions>
-		<dcterms:description>Alternate title: Wisconsin.</dcterms:description>
-		<dcterms:description>Relief shown by spot heights.</dcterms:description>
-		<dcterms:description>Depths of bedrock shown by gradient tints.</dcterms:description>
-		<dcterms:description>"Compiled from: Published and unpublished reports of the Wisconsin Geological and Natural History Survey and the U.S. Geological Survey."</dcterms:description>
-		<dcterms:description>"Base from U.S. Geological Survey, 1:1,000,000; edition of 1968."</dcterms:description>
-		<dcterms:description>Library's copy in protective enclosure.</dcterms:description>
-		<xc:typeLeader06>Cartographic material</xc:typeLeader06>
-		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10071</xc:expressionManifested></xc:entity>
+  <xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10072">
+    <xc:recordID type="LCCN">77696744 /MAPS</xc:recordID>
+    <xc:recordID type="OCoLC">5496724</xc:recordID>
+    <xc:recordID type="NRU">1225858</xc:recordID>
+    <rdvocab:statementOfResponsibilityRelatingToTitle>Compiled by L.C. Trotta and R.D. Cotter, 1973. [Prepared by] Cartographic Laboratory, University of Wisconsin--Madison.</rdvocab:statementOfResponsibilityRelatingToTitle>
+    <dcterms:title>Depth to bedrock in Wisconsin.</dcterms:title>
+    <rdvocab:placeOfProduction>[Madison]</rdvocab:placeOfProduction>
+    <dcterms:publisher>University of Wisconsin--Extension, Geological and Natural History Survey in cooperation with the U.S. Geological Survey</dcterms:publisher>
+    <dcterms:issued>[1973]</dcterms:issued>
+    <dcterms:extent>col. map.</dcterms:extent>
+    <rdvocab:dimensions>56 x 54 cm. folded to 16 x 30 cm.</rdvocab:dimensions>
+    <dcterms:description>Alternate title: Wisconsin.</dcterms:description>
+    <dcterms:description>Relief shown by spot heights.</dcterms:description>
+    <dcterms:description>Depths of bedrock shown by gradient tints.</dcterms:description>
+    <dcterms:description>"Compiled from: Published and unpublished reports of the Wisconsin Geological and Natural History Survey and the U.S. Geological Survey."</dcterms:description>
+    <dcterms:description>"Base from U.S. Geological Survey, 1:1,000,000; edition of 1968."</dcterms:description>
+    <dcterms:description>Library's copy in protective enclosure.</dcterms:description>
+    <xc:typeLeader06>Cartographic material</xc:typeLeader06>
+    <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+    <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10071</xc:expressionManifested></xc:entity>
 </xc:frbr>

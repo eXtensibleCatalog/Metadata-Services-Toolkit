@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10069">
-		<xc:recordID type="LCCN">93127790</xc:recordID>
-		<xc:recordID type="OCoLC">27853547</xc:recordID>
-		<xc:recordID type="NRU">1222801</xc:recordID>
-		<rdvocab:statementOfResponsibilityRelatingToTitle>Cataract Management Guideline Panel.</rdvocab:statementOfResponsibilityRelatingToTitle>
-		<dcterms:title>Cataract in adults : management of functional impairment /</dcterms:title>
-		<rdvocab:placeOfProduction>Rockville, Md. :</rdvocab:placeOfProduction>
-		<dcterms:publisher>U.S. Dept. of Health and Human Services, Public Health Service, Agency for Health Care Policy and Research,</dcterms:publisher>
-		<dcterms:issued>[1993]</dcterms:issued>
-		<dcterms:extent>xv, 226 p. ;</dcterms:extent>
-		<rdvocab:dimensions>23 cm.</rdvocab:dimensions>
-		<dcterms:description>"February 1993."</dcterms:description>
-		<dcterms:description>Includes bibliographical references (p. 135-160) and index.</dcterms:description>
-		<dcterms:description>Miner copy is shelved with the series Clinical practice guideline in the serial stacks.</dcterms:description>
-		<dcterms:isPartOf>AHCPR (Series) ; 93-0542.</dcterms:isPartOf>
-		<dcterms:isPartOf>Clinical practice guideline ; no. 4</dcterms:isPartOf>
-		<xc:typeLeader06>Language material</xc:typeLeader06>
-		<xc:type007>Text</xc:type007>
-		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10068</xc:expressionManifested></xc:entity>
+  <xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10069">
+    <xc:recordID type="LCCN">93127790</xc:recordID>
+    <xc:recordID type="OCoLC">27853547</xc:recordID>
+    <xc:recordID type="NRU">1222801</xc:recordID>
+    <rdvocab:statementOfResponsibilityRelatingToTitle>Cataract Management Guideline Panel.</rdvocab:statementOfResponsibilityRelatingToTitle>
+    <dcterms:title>Cataract in adults : management of functional impairment /</dcterms:title>
+    <rdvocab:placeOfProduction>Rockville, Md. :</rdvocab:placeOfProduction>
+    <dcterms:publisher>U.S. Dept. of Health and Human Services, Public Health Service, Agency for Health Care Policy and Research,</dcterms:publisher>
+    <dcterms:issued>[1993]</dcterms:issued>
+    <dcterms:extent>xv, 226 p. ;</dcterms:extent>
+    <rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+    <dcterms:description>"February 1993."</dcterms:description>
+    <dcterms:description>Includes bibliographical references (p. 135-160) and index.</dcterms:description>
+    <dcterms:description>Miner copy is shelved with the series Clinical practice guideline in the serial stacks.</dcterms:description>
+    <dcterms:isPartOf>AHCPR (Series) ; 93-0542.</dcterms:isPartOf>
+    <dcterms:isPartOf>Clinical practice guideline ; no. 4</dcterms:isPartOf>
+    <xc:typeLeader06>Language material</xc:typeLeader06>
+    <xc:type007>Text</xc:type007>
+    <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+    <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10068</xc:expressionManifested></xc:entity>
 </xc:frbr>

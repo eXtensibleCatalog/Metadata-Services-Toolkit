@@ -1,241 +1,241 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>02055cas a2200397 a 4500</marc:leader>
-	<marc:controlfield tag="001">1707227</marc:controlfield>
-	<marc:controlfield tag="005">20071221140426.0</marc:controlfield>
-	<marc:controlfield tag="008">990510d19931997nyuar         1    0eng d</marc:controlfield>
+  <marc:leader>02055cas a2200397 a 4500</marc:leader>
+  <marc:controlfield tag="001">1707227</marc:controlfield>
+  <marc:controlfield tag="005">20071221140426.0</marc:controlfield>
+  <marc:controlfield tag="008">990510d19931997nyuar         1    0eng d</marc:controlfield>
 
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   00238118 </marc:subfield>
-		<marc:subfield code="z">   95126894 </marc:subfield>
-		<marc:subfield code="z">   96208307 </marc:subfield>
-		<marc:subfield code="z">   97116436 </marc:subfield>
-		<marc:subfield code="z">   97125305 </marc:subfield>
-		<marc:subfield code="z">   97125431 </marc:subfield>
-		<marc:subfield code="z">   00501288 </marc:subfield>
-		<marc:subfield code="z">   00689022 </marc:subfield>
-		<marc:subfield code="z">   00710757 </marc:subfield>
-		<marc:subfield code="z">   00711782 </marc:subfield>
-		<marc:subfield code="z">  2001267319</marc:subfield>
-		<marc:subfield code="z">  2001277897</marc:subfield>
-		<marc:subfield code="z">  2004300064</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="010" ind1=" " ind2=" ">
+    <marc:subfield code="a">   00238118 </marc:subfield>
+    <marc:subfield code="z">   95126894 </marc:subfield>
+    <marc:subfield code="z">   96208307 </marc:subfield>
+    <marc:subfield code="z">   97116436 </marc:subfield>
+    <marc:subfield code="z">   97125305 </marc:subfield>
+    <marc:subfield code="z">   97125431 </marc:subfield>
+    <marc:subfield code="z">   00501288 </marc:subfield>
+    <marc:subfield code="z">   00689022 </marc:subfield>
+    <marc:subfield code="z">   00710757 </marc:subfield>
+    <marc:subfield code="z">   00711782 </marc:subfield>
+    <marc:subfield code="z">  2001267319</marc:subfield>
+    <marc:subfield code="z">  2001277897</marc:subfield>
+    <marc:subfield code="z">  2004300064</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)38095179</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)38095179</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DXU</marc:subfield>
-		<marc:subfield code="c">DXU</marc:subfield>
-		<marc:subfield code="d">UIU</marc:subfield>
-		<marc:subfield code="d">IUL</marc:subfield>
-		<marc:subfield code="d">DLC</marc:subfield>
-		<marc:subfield code="d">INU</marc:subfield>
-		<marc:subfield code="d">RRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">DXU</marc:subfield>
+    <marc:subfield code="c">DXU</marc:subfield>
+    <marc:subfield code="d">UIU</marc:subfield>
+    <marc:subfield code="d">IUL</marc:subfield>
+    <marc:subfield code="d">DLC</marc:subfield>
+    <marc:subfield code="d">INU</marc:subfield>
+    <marc:subfield code="d">RRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="019" ind1=" " ind2=" ">
-		<marc:subfield code="a">40828458</marc:subfield>
-		<marc:subfield code="a">48758783</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="019" ind1=" " ind2=" ">
+    <marc:subfield code="a">40828458</marc:subfield>
+    <marc:subfield code="a">48758783</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="029" ind1="1" ind2=" ">
-		<marc:subfield code="a">NZ1</marc:subfield>
-		<marc:subfield code="b">5524699</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="029" ind1="1" ind2=" ">
+    <marc:subfield code="a">NZ1</marc:subfield>
+    <marc:subfield code="b">5524699</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="029" ind1="1" ind2=" ">
-		<marc:subfield code="a">NZ1</marc:subfield>
-		<marc:subfield code="b">5524700</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="029" ind1="1" ind2=" ">
+    <marc:subfield code="a">NZ1</marc:subfield>
+    <marc:subfield code="b">5524700</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)38095179</marc:subfield>
-		<marc:subfield code="z">(OCoLC)40828458</marc:subfield>
-		<marc:subfield code="z">(OCoLC)48758783</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)38095179</marc:subfield>
+    <marc:subfield code="z">(OCoLC)40828458</marc:subfield>
+    <marc:subfield code="z">(OCoLC)48758783</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="042" ind1=" " ind2=" ">
-		<marc:subfield code="a">lc</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="042" ind1=" " ind2=" ">
+    <marc:subfield code="a">lc</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="050" ind1="0" ind2="0">
-		<marc:subfield code="a">QA76.9.D3</marc:subfield>
-		<marc:subfield code="b">I5586a</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="050" ind1="0" ind2="0">
+    <marc:subfield code="a">QA76.9.D3</marc:subfield>
+    <marc:subfield code="b">I5586a</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="092" ind1="0" ind2=" ">
-		<marc:subfield code="a">005.74</marc:subfield>
-		<marc:subfield code="b">In83c</marc:subfield>
-		<marc:subfield code="2">21</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="092" ind1="0" ind2=" ">
+    <marc:subfield code="a">005.74</marc:subfield>
+    <marc:subfield code="b">In83c</marc:subfield>
+    <marc:subfield code="2">21</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="049" ind1=" " ind2=" ">
+    <marc:subfield code="a">RRRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="111" ind1="2" ind2=" ">
-		<marc:subfield code="a">International Conference on Information and Knowledge Management.</marc:subfield>
-		<marc:subfield code="4">aut</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="111" ind1="2" ind2=" ">
+    <marc:subfield code="a">International Conference on Information and Knowledge Management.</marc:subfield>
+    <marc:subfield code="4">aut</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="a">Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="1" ind2="0">
+    <marc:subfield code="a">Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">New York, N.Y. :</marc:subfield>
-		<marc:subfield code="b">ACM Press</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">New York, N.Y. :</marc:subfield>
+    <marc:subfield code="b">ACM Press</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">v. :</marc:subfield>
-		<marc:subfield code="b">ill., maps ;</marc:subfield>
-		<marc:subfield code="c">28 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">v. :</marc:subfield>
+    <marc:subfield code="b">ill., maps ;</marc:subfield>
+    <marc:subfield code="c">28 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="310" ind1=" " ind2=" ">
-		<marc:subfield code="a">Annual</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="310" ind1=" " ind2=" ">
+    <marc:subfield code="a">Annual</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="362" ind1="1" ind2=" ">
-		<marc:subfield code="a">Began with 2nd (1993).</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="362" ind1="1" ind2=" ">
+    <marc:subfield code="a">Began with 2nd (1993).</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="362" ind1="0" ind2=" ">
-		<marc:subfield code="a">- 7th (1998).</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="362" ind1="0" ind2=" ">
+    <marc:subfield code="a">- 7th (1998).</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="550" ind1=" " ind2=" ">
-		<marc:subfield code="a">Vols. for &lt;-1998&gt; sponsored by the Association for Computing Machinery's Special Interest Group on Information Retrieval (SIGIR) and Special Interest Group on Management Information Systems (SIGMIS).</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="550" ind1=" " ind2=" ">
+    <marc:subfield code="a">Vols. for &lt;-1998&gt; sponsored by the Association for Computing Machinery's Special Interest Group on Information Retrieval (SIGIR) and Special Interest Group on Management Information Systems (SIGMIS).</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Database management</marc:subfield>
-		<marc:subfield code="v">Congresses.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Database management</marc:subfield>
+    <marc:subfield code="v">Congresses.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Knowledge representation (Information theory)</marc:subfield>
-		<marc:subfield code="v">Congresses.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Knowledge representation (Information theory)</marc:subfield>
+    <marc:subfield code="v">Congresses.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Information storage and retrieval systems</marc:subfield>
-		<marc:subfield code="v">Congresses.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Information storage and retrieval systems</marc:subfield>
+    <marc:subfield code="v">Congresses.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
-		<marc:subfield code="b">Special Interest Group on Information Retrieval.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="710" ind1="2" ind2=" ">
+    <marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
+    <marc:subfield code="b">Special Interest Group on Information Retrieval.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
-		<marc:subfield code="b">Special Interest Group on Management Information Systems.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="710" ind1="2" ind2=" ">
+    <marc:subfield code="a">Association for Computing Machinery.</marc:subfield>
+    <marc:subfield code="b">Special Interest Group on Management Information Systems.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="780" ind1="0" ind2="0">
-		<marc:subfield code="a">International Conference on Information and Knowledge Management.</marc:subfield>
-		<marc:subfield code="t">Information and knowledge management</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="780" ind1="0" ind2="0">
+    <marc:subfield code="a">International Conference on Information and Knowledge Management.</marc:subfield>
+    <marc:subfield code="t">Information and knowledge management</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="785" ind1="0" ind2="0">
-		<marc:subfield code="a">ACM International Conference on Information and Knowledge Management.</marc:subfield>
-		<marc:subfield code="t">Proceedings of the ... ACM International Conference on Information &amp; Knowledge Management</marc:subfield>
-		<marc:subfield code="w">(DLC)  2005211245</marc:subfield>
-		<marc:subfield code="w">(OCoLC)60684599</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="785" ind1="0" ind2="0">
+    <marc:subfield code="a">ACM International Conference on Information and Knowledge Management.</marc:subfield>
+    <marc:subfield code="t">Proceedings of the ... ACM International Conference on Information &amp; Knowledge Management</marc:subfield>
+    <marc:subfield code="w">(DLC)  2005211245</marc:subfield>
+    <marc:subfield code="w">(OCoLC)60684599</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="850" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="850" ind1=" " ind2=" ">
+    <marc:subfield code="a">DLC</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">C0</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="994" ind1=" " ind2=" ">
+    <marc:subfield code="a">C0</marc:subfield>
+    <marc:subfield code="b">RRR</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Language material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Serial</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Serial</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Non-Fiction</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="939" ind1=" " ind2=" ">
-	<marc:subfield code="a">1993-1997</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">1993-1997</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">English</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:controlfield tag="003">NRU</marc:controlfield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)1707227</marc:subfield>
+  <marc:subfield code="a">(NRU)1707227</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</marc:subfield>
+  <marc:subfield code="a">Proceedings of the ... ACM CIKM International Conference on Information and Knowledge Management.</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Database management</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Database management</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Knowledge representation (Information theory)</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Knowledge representation (Information theory)</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Information storage and retrieval systems</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Information storage and retrieval systems</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Congresses.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="v">Congresses.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Congresses.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="v">Congresses.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Congresses.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="v">Congresses.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 </marc:record>

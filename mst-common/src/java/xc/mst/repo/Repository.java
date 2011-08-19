@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.repo;
 
@@ -24,88 +24,109 @@ import xc.mst.bo.service.Service;
 
 public interface Repository {
 
-	public String getName();
-	public void setName(String name);
+    public String getName();
 
-	public int getSize();
+    public void setName(String name);
 
-	public Date getLastModified();
+    public int getSize();
 
-	public int getNumRecords();
+    public Date getLastModified();
 
-	public String getRecordStatsByType();
+    public int getNumRecords();
 
-	public void installOrUpdateIfNecessary(String previousVersion, String currentVersion);
+    public String getRecordStatsByType();
 
-	public void addRecord(Record record);
-	public void addRecords(List<Record> records);
+    public void installOrUpdateIfNecessary(String previousVersion, String currentVersion);
 
-	public boolean commitIfNecessary(boolean force, long processedRecordsCount,
-			RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts);
+    public void addRecord(Record record);
 
-	public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
+    public void addRecords(List<Record> records);
 
-	/**
-	 * Get number of records that satisfy the given criteria
-	 *
-	 * @param from From date to harvest the records
-	 * @param until Until date to harvest records
-	 * @param startingId starting record id to query from
-	 * @param inputFormat format of the record
-	 * @param inputSet Set of record
-	 * @return
-	 */
-	public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet);
+    public boolean commitIfNecessary(boolean force, long processedRecordsCount,
+            RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts);
 
-	/**
-	 * Get record header information
-	 *
-	 * @param from From date to harvest the records
-	 * @param until Until date to harvest records
-	 * @param startingId starting record id to query from
-	 * @param inputFormat format of the record
-	 * @param inputSet Set of record
-	 * @return
-	 */
-	public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
+    public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 
-	public Record getRecord(String oaiId);
+    /**
+     * Get number of records that satisfy the given criteria
+     * 
+     * @param from
+     *            From date to harvest the records
+     * @param until
+     *            Until date to harvest records
+     * @param startingId
+     *            starting record id to query from
+     * @param inputFormat
+     *            format of the record
+     * @param inputSet
+     *            Set of record
+     * @return
+     */
+    public long getRecordCount(Date from, Date until, Format inputFormat, Set inputSet);
 
-	public Record getRecord(long id);
+    /**
+     * Get record header information
+     * 
+     * @param from
+     *            From date to harvest the records
+     * @param until
+     *            Until date to harvest records
+     * @param startingId
+     *            starting record id to query from
+     * @param inputFormat
+     *            format of the record
+     * @param inputSet
+     *            Set of record
+     * @return
+     */
+    public List<Record> getRecordHeader(Date from, Date until, Long startingId, Format inputFormat, Set inputSet);
 
-	public List<Long> getPredecessorIds(Record r);
+    public Record getRecord(String oaiId);
 
-	public void injectSuccessors(Record r);
-	public void injectSuccessorIds(Record r);
+    public Record getRecord(long id);
 
-	public Provider getProvider();
-	public Service getService();
-	public void setProvider(Provider p);
-	public void setService(Service s);
+    public List<Long> getPredecessorIds(Record r);
 
-	public void populatePredecessors(TLongHashSet predecessors);
+    public void injectSuccessors(Record r);
 
-	public void addLink(long fromRecordId, long toRecordId);
+    public void injectSuccessorIds(Record r);
 
-	public void activateRecord(String type, long recordId);
+    public Provider getProvider();
 
-	public List<Long> getLinkedRecordIds(Long toRecordId);
+    public Service getService();
 
-	public void processComplete();
+    public void setProvider(Provider p);
 
-	public boolean ready4harvest();
+    public void setService(Service s);
 
-	public int getPersistentPropertyAsInt(String key, int def);
-	public long getPersistentPropertyAsLong(String key, long def);
-	public String getPersistentProperty(String key);
+    public void populatePredecessors(TLongHashSet predecessors);
 
-	public void setPersistentProperty(String key, int value);
-	public void setPersistentProperty(String key, long value);
-	public void setPersistentProperty(String key, String value);
+    public void addLink(long fromRecordId, long toRecordId);
 
-	public void injectHarvestInfo(Record r);
+    public void activateRecord(String type, long recordId);
 
-	public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service);
-	public void persistPreviousStatuses(TLongByteHashMap previousStatuses);
+    public List<Long> getLinkedRecordIds(Long toRecordId);
+
+    public void processComplete();
+
+    public boolean ready4harvest();
+
+    public int getPersistentPropertyAsInt(String key, int def);
+
+    public long getPersistentPropertyAsLong(String key, long def);
+
+    public String getPersistentProperty(String key);
+
+    public void setPersistentProperty(String key, int value);
+
+    public void setPersistentProperty(String key, long value);
+
+    public void setPersistentProperty(String key, String value);
+
+    public void injectHarvestInfo(Record r);
+
+    public void populatePreviousStatuses(TLongByteHashMap previousStatuses, boolean service);
+
+    public void persistPreviousStatuses(TLongByteHashMap previousStatuses);
 
 }

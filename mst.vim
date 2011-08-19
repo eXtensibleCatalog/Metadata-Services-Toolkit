@@ -861,7 +861,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 135 + 134) / 268)
 exe 'vert 2resize ' . ((&columns * 132 + 134) / 268)
-tabedit 0.3.x\mst-common\build.xml
+tabedit mst-common\build.xml
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit

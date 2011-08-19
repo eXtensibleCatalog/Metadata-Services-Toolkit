@@ -8,7 +8,7 @@
   -->
 
 
-<div class="footer"/> 
+<div class="footer"/>
 <div align="right">
-		MetadataServicesToolkit v @VERSION_INFO@
+    MetadataServicesToolkit v @VERSION_INFO@
 </div>

@@ -78,11 +78,11 @@
       <!-- OG: TODO: add suspended/native conditionals -->
       <tr>
         <td style="margin-left: 1em; font-weight: bold;">
-          '<xsl:value-of select="name"/>' 
-          Id=<xsl:value-of select="id"/>, 
-          <xsl:value-of select="state"/> 
-          on lock=<xsl:value-of select="lock"/>, 
-          total cpu time=<xsl:value-of select="cpuTime"/> 
+          '<xsl:value-of select="name"/>'
+          Id=<xsl:value-of select="id"/>,
+          <xsl:value-of select="state"/>
+          on lock=<xsl:value-of select="lock"/>,
+          total cpu time=<xsl:value-of select="cpuTime"/>
           user time=<xsl:value-of select="userTime"/>
         </td>
       </tr>

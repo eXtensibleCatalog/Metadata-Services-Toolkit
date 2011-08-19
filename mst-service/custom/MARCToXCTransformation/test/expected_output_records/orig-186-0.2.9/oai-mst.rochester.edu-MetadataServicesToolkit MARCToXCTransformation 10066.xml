@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10066">
-		<rdvocab:publisherNumber>3222d</rdvocab:publisherNumber>
-		<rdvocab:plateNumber>9235d</rdvocab:plateNumber>
-		<xc:recordID type="OCoLC">27838423</xc:recordID>
-		<xc:recordID type="NRU">1191513</xc:recordID>
-		<rdvocab:statementOfResponsibilityRelatingToTitle>Englische Übersetzung von John Bernhoff. Übersetzung aus dem Norwegischen ins Deutsche von Hans Schmidt].</rdvocab:statementOfResponsibilityRelatingToTitle>
-		<dcterms:title>Seufzer (Sighs). [Nachgelassenes Werk.</dcterms:title>
-		<rdvocab:placeOfProduction>Leipzig,</rdvocab:placeOfProduction>
-		<dcterms:publisher>Peters</dcterms:publisher>
-		<dcterms:issued>[1908]</dcterms:issued>
-		<dcterms:extent>5 p.</dcterms:extent>
-		<rdvocab:dimensions>34 cm.</rdvocab:dimensions>
-		<dcterms:description>Publisher's no.: Edition Peters No. 3222d.</dcterms:description>
-		<dcterms:description>Cover title.</dcterms:description>
-		<dcterms:description>From Sechs Lieder für eine Singstimme und Klavier.</dcterms:description>
-		<dcterms:description>Sibley Music Library copy bound with his Tränen (c1908).</dcterms:description>
-		<dcterms:alternative>Sighs.</dcterms:alternative>
-		<dcterms:alternative>Suk.</dcterms:alternative>
-		<xc:typeLeader06>Notated music</xc:typeLeader06>
-		<xc:type007>Notated music</xc:type007>
-		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10065</xc:expressionManifested></xc:entity>
+  <xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10066">
+    <rdvocab:publisherNumber>3222d</rdvocab:publisherNumber>
+    <rdvocab:plateNumber>9235d</rdvocab:plateNumber>
+    <xc:recordID type="OCoLC">27838423</xc:recordID>
+    <xc:recordID type="NRU">1191513</xc:recordID>
+    <rdvocab:statementOfResponsibilityRelatingToTitle>Englische Übersetzung von John Bernhoff. Übersetzung aus dem Norwegischen ins Deutsche von Hans Schmidt].</rdvocab:statementOfResponsibilityRelatingToTitle>
+    <dcterms:title>Seufzer (Sighs). [Nachgelassenes Werk.</dcterms:title>
+    <rdvocab:placeOfProduction>Leipzig,</rdvocab:placeOfProduction>
+    <dcterms:publisher>Peters</dcterms:publisher>
+    <dcterms:issued>[1908]</dcterms:issued>
+    <dcterms:extent>5 p.</dcterms:extent>
+    <rdvocab:dimensions>34 cm.</rdvocab:dimensions>
+    <dcterms:description>Publisher's no.: Edition Peters No. 3222d.</dcterms:description>
+    <dcterms:description>Cover title.</dcterms:description>
+    <dcterms:description>From Sechs Lieder für eine Singstimme und Klavier.</dcterms:description>
+    <dcterms:description>Sibley Music Library copy bound with his Tränen (c1908).</dcterms:description>
+    <dcterms:alternative>Sighs.</dcterms:alternative>
+    <dcterms:alternative>Suk.</dcterms:alternative>
+    <xc:typeLeader06>Notated music</xc:typeLeader06>
+    <xc:type007>Notated music</xc:type007>
+    <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+    <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10065</xc:expressionManifested></xc:entity>
 </xc:frbr>

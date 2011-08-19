@@ -4,13 +4,13 @@
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
   <xs:element name="oai-identifier">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="scheme" type="xs:string"/>
-				<xs:element name="repositoryIdentifier" type="xs:string"/>
-				<xs:element name="delimiter" type="xs:string"/>
-				<xs:element name="sampleIdentifier" type="xs:string"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="scheme" type="xs:string"/>
+        <xs:element name="repositoryIdentifier" type="xs:string"/>
+        <xs:element name="delimiter" type="xs:string"/>
+        <xs:element name="sampleIdentifier" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

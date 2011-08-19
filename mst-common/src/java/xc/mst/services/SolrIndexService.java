@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services;
 
 import java.util.List;
@@ -28,7 +28,7 @@ import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
-public class SolrIndexService extends GenericMetadataService  {
+public class SolrIndexService extends GenericMetadataService {
 
     private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
     protected int loops = 1;

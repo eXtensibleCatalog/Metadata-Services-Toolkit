@@ -113,6 +113,6 @@
         <foo xmlns="foo:bar" exception="true">exception</foo>
       </metadata>
     </record>
-	<resumptionToken>it doesn't matter</resumptionToken>
+  <resumptionToken>it doesn't matter</resumptionToken>
   </ListRecords>
 </OAI-PMH>

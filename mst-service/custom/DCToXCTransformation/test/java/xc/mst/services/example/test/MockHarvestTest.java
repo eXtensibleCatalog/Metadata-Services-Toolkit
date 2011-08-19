@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services.example.test;
 
 import org.apache.log4j.Logger;
@@ -14,23 +14,23 @@ import xc.mst.bo.provider.Format;
 
 public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
-	private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
+    private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
 
-	@Override
-	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getFooBarFormat()};
-	}
+    @Override
+    public Format[] getIncomingFormats() throws Exception {
+        return new Format[] { getFooBarFormat() };
+    }
 
-	public Format getHarvestOutFormat() throws Exception {
-		return getFooBarFormat();
-	}
+    public Format getHarvestOutFormat() throws Exception {
+        return getFooBarFormat();
+    }
 
-	@Override
-	public void finalTest() throws Exception {
-	}
-	
-	@Override
-	public void testHarvestOut() {
-	}
+    @Override
+    public void finalTest() throws Exception {
+    }
+
+    @Override
+    public void testHarvestOut() {
+    }
 
 }

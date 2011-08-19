@@ -109,7 +109,7 @@
 <xsl:template match="solr/analysis/results/indexAnalyzer/factory/args">
   <div style="margin-left: 2em; font-weight: bold;">{
   <xsl:for-each select="arg">
-    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>, 
+    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>,
   </xsl:for-each>
   }</div>
 </xsl:template>
@@ -148,7 +148,7 @@
 <xsl:template match="solr/analysis/results/queryAnalyzer/factory/args">
   <div style="margin-left: 2em; font-weight: bold;">{
   <xsl:for-each select="arg">
-    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>, 
+    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>,
   </xsl:for-each>
   }</div>
 </xsl:template>

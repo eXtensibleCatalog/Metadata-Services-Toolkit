@@ -19,24 +19,24 @@
 <%-- $Id: index.jsp 608150 2008-01-02 17:15:30Z ryan $ --%>
 <%-- $Source: /cvs/main/searching/SolrServer/resources/admin/index.jsp,v $ --%>
 <%-- $Name:  $ --%>
-  
+
 <script src="jquery-1.2.3.min.js"></script>
 <script>
 
 (function($, libName) {
   var solr = {
-    
+
     //The default location of the luke handler relative to this page
     // Can be overridden in the init(url) method
-    pathToLukeHandler: 'luke',  
-    
+    pathToLukeHandler: 'luke',
+
     // Base properties to hold schema information
     schemaInfo: {},
     schemaFields: {},
     schemaDynamicFields: {},
     schemaTypes: {},
     schemaFlags: {},
-    
+
     //The basic function to call to make the initail JSON calls
     // takes one option parameter, the path to the luke handler
     // if undefined, it will use the default, 'luke', which means
@@ -53,17 +53,17 @@
       });
 
     },
-    
+
     //load the Schema from the LukeRequestHandler
     // this loads every field, and in each field the copy source/dests and flags
     // we also load the list of field types, and the list of flags
     loadSchema: function(func) {
-			$.getJSON(solr.pathToLukeHandler +'?show=schema&wt=json', function(data) {
+      $.getJSON(solr.pathToLukeHandler +'?show=schema&wt=json', function(data) {
         //populate all non field/type/flag data in the info block
         $.each(data.index, function(i, item) {
           solr.schemaInfo[i] = item;
         });
-        
+
         //LukeRequestHandler places these two attributes outside of the "index" node, but
         // we want it here so we can more easily display it in the "HOME" block
         solr.schemaInfo['uniqueKeyField'] = data.schema.uniqueKeyField;
@@ -71,13 +71,13 @@
         //a one-off hack, because the directory string is so long and unbroken
         // that it can break CSS layouts
         solr.schemaInfo['directory'] = solr.schemaInfo['directory'].substring(0, solr.schemaInfo['directory'].indexOf('@')+1) + ' ' +  solr.schemaInfo['directory'].substring(solr.schemaInfo['directory'].indexOf('@') +1);
-        
+
         // populate the list of fields
-				$.each(data.schema.fields, function(i,item){
-					solr.schemaFields[i]=item;
-     		});
+        $.each(data.schema.fields, function(i,item){
+          solr.schemaFields[i]=item;
+         });
         // populate the list of field types
-	      $.each(data.schema.types, function(type, ft) {
+        $.each(data.schema.types, function(type, ft) {
           solr.schemaTypes[type] = ft;
         });
         //populate the list of dynamic fields
@@ -85,10 +85,10 @@
           solr.schemaDynamicFields[i] = dynField;
         });
         //populate the list of flags, so we can convert flags to text in display
-      	$.each(data.info.key, function(i, flag) {
-      		solr.schemaFlags[i] = flag;
- 	    	});
-        
+        $.each(data.info.key, function(i, flag) {
+          solr.schemaFlags[i] = flag;
+         });
+
         //LukeRequestHandler returns copyFields src/dest as the entire toString of the field
         // we only need the field name, so here we loop through the fields, and replace the full
         // field definitions with the name in the copySources/copyDests properties
@@ -100,7 +100,7 @@
             });
             field[copyProp] = newFields;
           });
-        
+
         });
         //An additional optional callback
         // used in init to trigger the 2nd call to LukeRequestHandler only
@@ -117,7 +117,7 @@
       $.getJSON(solr.pathToLukeHandler+'?wt=json', function(data) {
         $.each(data.fields, function(i, item) {
           var field = solr.schemaFields[i];
-          
+
           //If undefined, then we have a dynamicField which does not show up
           // in the LukeRequestHandler show=schema variant
           if (field == undefined) {
@@ -129,12 +129,12 @@
             //Some fields in a multicore setting have no dynamic base, either
             // the name of the core is a field that has no type or flags
             if (dynField != undefined) {
-            	var synFields = dynField['fields'];
-	            if (synFields== undefined) {
-    	          synFields= new Array();
-        	    }
-            	synFields.push(i);
-            	dynField['fields'] = synFields;
+              var synFields = dynField['fields'];
+              if (synFields== undefined) {
+                synFields= new Array();
+              }
+              synFields.push(i);
+              dynField['fields'] = synFields;
             }
             solr.schemaFields[i] = item;
           }
@@ -161,42 +161,42 @@
     // output: {'foo':'bar', 'bat':baz'}
     lukeArrayToHash: function(termsArr) {
         var hash = new Object();
-				var temp;
+        var temp;
         //topTerms comes in as an array, with odd indexes the field name
         // and even indexes the number
-				$.each(termsArr, function(i, item) {
-					if (i%2 ==0) {
-						temp = item;
-					} else {
-						hash[temp] = item;
-					} 
-				});
-				return hash;
+        $.each(termsArr, function(i, item) {
+          if (i%2 ==0) {
+            temp = item;
+          } else {
+            hash[temp] = item;
+          }
+        });
+        return hash;
     },
-    
+
     //gets the top Terms via an Ajax call the LukeRequestHandler for that field
     // The callback is used here to redraw the table after the ajax call returns
-		getTopTerms: function(fieldName, numTerms, func) {
+    getTopTerms: function(fieldName, numTerms, func) {
       if (numTerms == undefined) {
         var numTerms = 10;
       }
       if (isNaN(numTerms) || numTerms <=0 || numTerms.indexOf('.') != -1) {
         return;
       }
-			$.getJSON(solr.pathToLukeHandler+'?fl='+fieldName+'&wt=json&numTerms='+numTerms, function(data) {                  
-				solr.schemaFields[fieldName]['topTerms'] = solr.lukeArrayToHash(data.fields[fieldName].topTerms);
+      $.getJSON(solr.pathToLukeHandler+'?fl='+fieldName+'&wt=json&numTerms='+numTerms, function(data) {
+        solr.schemaFields[fieldName]['topTerms'] = solr.lukeArrayToHash(data.fields[fieldName].topTerms);
         if ($.isFunction(func)) {
           func(solr.schemaFields[fieldName]['topTerms'], fieldName);
         }
-			});
-		},
-    
+      });
+    },
+
     // Displays the SchemaInfo in the main content panel
     // dispayed on data load, and also when 'Home' is clicked
     displaySchemaInfo: function() {
       $('#mainInfo').html('');
       $('#topTerms').html('');
-      $('#histogram').html('');      
+      $('#histogram').html('');
       $('#mainInfo').append(solr.createSimpleText('Schema Information'));
       //Make sure the uniqueKeyField and defaultSearchFields come first
       $.each({'Unique Key':'uniqueKeyField', 'Default Search Field':'defaultSearchField'}, function(text, prop) {
@@ -205,7 +205,7 @@
               p.appendChild(solr.createLink(solr.schemaInfo[prop], solr.schemaInfo[prop]));
               return p;
             }));
-          } 
+          }
       });
       $.each(solr.schemaInfo, function(i, item) {
         if (i == 'uniqueKeyField' || i == 'defaultSearchField') {
@@ -217,7 +217,7 @@
       //Close all menus when we display schema home
       solr.toggleMenus(undefined, ['fields', 'types', 'dynFields']);
     },
-    
+
     // display a dynamic field in the main content panel
     displayDynamicField: function(dynamicPattern) {
       var df = solr.schemaDynamicFields[dynamicPattern];
@@ -248,14 +248,14 @@
 
       solr.toggleMenus('dynFields', ['fields', 'types'], dynamicPattern);
     },
-    
+
     // display a field type in the main area
     displayFieldType: function(typeName) {
       var ft = solr.schemaTypes[typeName];
       $('#mainInfo').html('');
       $('#topTerms').html('');
       $('#histogram').html('');
-			$('#mainInfo').append(solr.createSimpleText('Field Type: ' + typeName));
+      $('#mainInfo').append(solr.createSimpleText('Field Type: ' + typeName));
         $('#mainInfo').append(solr.createNameValueText('Fields', function(p) {
           if (ft.fields != undefined) {
             $.each(ft.fields, function(i, item) {
@@ -278,7 +278,7 @@
       solr.displayAnalyzer(ft.queryAnalyzer, 'Query Analyzer');
       solr.toggleMenus('types', ['fields', 'dynFields'], typeName);
     },
-    
+
     //Displays information about an Analyzer in the main content area
     displayAnalyzer: function(analyzer, type, shouldCollapse) {
       var tid = type.replace(' ', '');
@@ -321,19 +321,19 @@
       }
       $('#mainInfo').append(adiv);
     },
-    
+
     // display information about a Field in the main content area
     // and its TopTerms and Histogram in related divs
-		displayField: function(fieldName) {
+    displayField: function(fieldName) {
       var field = solr.schemaFields[fieldName];
       var isDynamic = field.dynamicBase != undefined ? true : false;
       var ft;
       var ftName;
-      $('#mainInfo').html('');  
+      $('#mainInfo').html('');
       $('#topTerms').html('');
       $('#histogram').html('');
       $('#mainInfo').append(solr.createSimpleText('Field: ' + fieldName));
-      
+
       //For regular fields, we take their properties; for dynamicFields,
       // we take them from their dynamicField definitions
       if (isDynamic) {
@@ -344,19 +344,19 @@
         }));
       } else {
         ftName = field.type;
-      }			
+      }
       ft = solr.schemaTypes[field.type];
       $('#mainInfo').append(solr.createNameValueText('Field Type', function(p) {
         p.appendChild(solr.createLink(ftName, ftName, solr.displayFieldType));
         return p;
       }));
-			if (solr.schemaFlags != '') {
+      if (solr.schemaFlags != '') {
         $.each({'flags':'Properties', 'schema':'Schema', 'index':'Index'}, function(prop, text) {
           if (field[prop] != undefined) {
             $('#mainInfo').append(solr.createNameValueText(text, solr.createTextFromFlags(field[prop], ft)));
           }
         });
-      }    
+      }
       $.each({'copySources':'Copied From', 'copyDests':'Copied Into'}, function(prop, text) {
         if (field[prop] != undefined && field[prop] != '') {
           $('#mainInfo').append(solr.createNameValueText(text, function(p) {
@@ -388,14 +388,14 @@
         solr.drawHistogram(field.histogram);
       }
       solr.toggleMenus('fields', ['types', 'dynFields'], fieldName);
-		},	
+    },
 
     //utility method to create a single sentence list of properties from a flag set
     // or pass it on, if the flags are (unstored field)
-		createTextFromFlags: function(fieldFlags, fieldType) {
-			var value;
+    createTextFromFlags: function(fieldFlags, fieldType) {
+      var value;
       if (fieldFlags != '(unstored field)') {
-        var value = '';      
+        var value = '';
         for (var i=0;i<fieldFlags.length;i++) {
           if (fieldFlags.charAt(i) != '-') {
             value += solr.schemaFlags[fieldFlags.charAt(i)];
@@ -403,18 +403,18 @@
           }
         }
         value = value.substring(0, value.length-2);
-			} else {
+      } else {
       value = fieldFlags;
       }
-			return value;
-		},
+      return value;
+    },
 
     //Store the currently highlighted menu item, as otherwise we
     // must traverse all li menu items, which is very slow on schemas with
     // large number of fields
     // for example $('#menu ul li').siblings().removeClass('selected');
     currentlyHighlightedMenuId: undefined,
-    
+
     //add a highlight to the currently selected menu item, and remove
     // the highlights from all other menu items
     highlightMenuItem: function(idToSelect) {
@@ -424,7 +424,7 @@
       $('#'+idToSelect).addClass('selected');
       solr.currentlyHighlightedMenuId = idToSelect;
     },
-    
+
     //Opens one menu group, close the others, and optionally highlight one
     // item, which should be in the opened menu
     toggleMenus: function(idToShow, idsToHide, idToSelect) {
@@ -436,7 +436,7 @@
         $('#'+idToHide).hide("slow");
       });
     },
-    
+
     //A utility method to create a paragraph, which takes two arguments;
     // an opening text, and either text or a callback function to follow
     // any callback function must return the node passed into it
@@ -448,7 +448,7 @@
 
     //utility method to create an HTML text element node
     // with the literal text to place, and an optional function to apply
-    // any callback function must return the node passed into it 
+    // any callback function must return the node passed into it
     createSimpleText: function(text, n, func) {
       if (n == undefined) {
         n = 'h2';
@@ -457,7 +457,7 @@
       no.appendChild(document.createTextNode(text));
       return solr.applyFuncToNode(no, func);
     },
-    
+
     //Utility method that applies a function or a string to append
     // an additional child to a node
     applyFuncToNode: function(no, func) {
@@ -471,7 +471,7 @@
       }
       return no;
     },
-        
+
     //show a table of top terms for a given field
     displayTopTerms: function(topTerms, fieldName) {
         $('#topTerms').html('');
@@ -487,7 +487,7 @@
         thead.appendChild(headerRow);
         tbl.appendChild(thead);
         var tbody = document.createElement('tbody');
-        
+
         var numTerms = 0;
         $.each(topTerms, function(term, count) {
           var c1 = $('<td>').text(term);
@@ -497,7 +497,7 @@
           numTerms++;
         });
         tbl.appendChild(tbody);
-        
+
         //create a header along with an input widget so the user
         // can request a different number of Top Terms
         var h2 = document.createElement('h2');
@@ -506,25 +506,25 @@
         termsGetter.type='text';
         termsGetter.size=5;
         termsGetter.value=numTerms;
-        
+
         termsGetter.onchange=function() {
             solr.getTopTerms(fieldName, this.value, solr.displayTopTerms);
         }
         h2.appendChild(termsGetter);
         h2.appendChild(document.createTextNode(' Terms'));
         $('#topTerms').append(h2);
-        
+
         document.getElementById('topTerms').appendChild(tbl);
         $('#topTerms').append(tbl);
     },
-    
+
     //draws a histogram, taking a map of values and an optional total height and width for the table
     drawHistogram: function(histogram, totalHeightArg, totalWidthArg) {
       $('#histogram').html('');
       $('#histogram').append(solr.createSimpleText('Histogram'));
       var max = 0;
       var bars =0;
-      //find the # of columns and max value in the histogram 
+      //find the # of columns and max value in the histogram
       // so we can create an appropriately scaled chart
       $.each(histogram, function(i, item) {
         if (item > max) max = item;
@@ -555,7 +555,7 @@
         $('#histogram').append(tbl);
       }
     },
-    
+
     //dynamically creates a link to be appended
     createLink: function(idToDisplay, linkText, linkFunction) {
       var link = document.createElement('a');
@@ -570,7 +570,7 @@
       link.innerHTML=linkText;
       return link;
     },
-    
+
     //Creates a menu header that can expand or collapse its children
     createMenuHeader: function(text, idToShow, idsToHide) {
       var head = document.createElement('h3');
@@ -584,7 +584,7 @@
       head.appendChild(a);
       return head;
     },
-    
+
     //Creates an element in a menu (e.g. each field in a list of fields)
     createMenuItem: function(tagName, text, link, type, func) {
         var fieldEle = document.createElement('li');
@@ -593,7 +593,7 @@
         fieldEle.appendChild(solr.createLink(text, link, funct));
         return fieldEle;
     },
-    
+
     //populates the menu div
     createMenu: function(menuId) {
       var m = $('#'+menuId);
@@ -626,13 +626,13 @@
       m.append(types);
     }
    };
-   
-	window[libName] = solr;
+
+  window[libName] = solr;
 })(jQuery, 'solr');
 $(document).ready(function() {
   solr.init();
 });
-    
+
 $(window).unload( function() {
   solr = null;
   $('#mainInfo').html('');
@@ -640,7 +640,7 @@ $(window).unload( function() {
   $('#topTerms').html('');
   $('#histogram').html('');
 });
-  
+
 </script>
 <%-- do a verbatim include so we can use the local vars --%>
 <%@include file="header.jsp" %>

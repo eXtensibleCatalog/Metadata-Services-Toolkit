@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>00991cam a2200277Ia 4500</marc:leader>
-	<marc:controlfield tag="001">3722562</marc:controlfield>
-	<marc:controlfield tag="005">20080225110035.0</marc:controlfield>
-	<marc:controlfield tag="008">071020s2007    ru            000 1 rusod</marc:controlfield>
+  <marc:leader>00991cam a2200277Ia 4500</marc:leader>
+  <marc:controlfield tag="001">3722562</marc:controlfield>
+  <marc:controlfield tag="005">20080225110035.0</marc:controlfield>
+  <marc:controlfield tag="008">071020s2007    ru            000 1 rusod</marc:controlfield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)175286707</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)175286707</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">MLN</marc:subfield>
-		<marc:subfield code="c">MLN</marc:subfield>
-		<marc:subfield code="d">PAU</marc:subfield>
-		<marc:subfield code="d">LNQ</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">MLN</marc:subfield>
+    <marc:subfield code="c">MLN</marc:subfield>
+    <marc:subfield code="d">PAU</marc:subfield>
+    <marc:subfield code="d">LNQ</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">9785969704084</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="020" ind1=" " ind2=" ">
+    <marc:subfield code="a">9785969704084</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="020" ind1=" " ind2=" ">
-		<marc:subfield code="a">5969704083</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="020" ind1=" " ind2=" ">
+    <marc:subfield code="a">5969704083</marc:subfield>
+  </marc:datafield>
 
-	
 
-	<marc:datafield tag="050" ind1="1" ind2="4">
-		<marc:subfield code="a">PG3485.8.D77</marc:subfield>
-		<marc:subfield code="b">I37 2007</marc:subfield>
-	</marc:datafield>
 
-	<marc:datafield tag="082" ind1="0" ind2="4">
-		<marc:subfield code="a">891.7/3/5</marc:subfield>
-		<marc:subfield code="2">22</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="050" ind1="1" ind2="4">
+    <marc:subfield code="a">PG3485.8.D77</marc:subfield>
+    <marc:subfield code="b">I37 2007</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="082" ind1="0" ind2="4">
+    <marc:subfield code="a">891.7/3/5</marc:subfield>
+    <marc:subfield code="2">22</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="6">880-01</marc:subfield>
-		<marc:subfield code="a">Sadur, Nina,</marc:subfield>
-		<marc:subfield code="d">1950-</marc:subfield>
-		<marc:subfield code="4">aut</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="049" ind1=" " ind2=" ">
+    <marc:subfield code="a">RRRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="1" ind2="0">
-		<marc:subfield code="6">880-02</marc:subfield>
-		<marc:subfield code="a">Igolka li︠u︡bvi :</marc:subfield>
-		<marc:subfield code="b">proza /</marc:subfield>
-		<marc:subfield code="c">N. Sadur.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="100" ind1="1" ind2=" ">
+    <marc:subfield code="6">880-01</marc:subfield>
+    <marc:subfield code="a">Sadur, Nina,</marc:subfield>
+    <marc:subfield code="d">1950-</marc:subfield>
+    <marc:subfield code="4">aut</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="6">880-03</marc:subfield>
-		<marc:subfield code="a">Moskva :</marc:subfield>
-		<marc:subfield code="b">Vagrius,</marc:subfield>
-		<marc:subfield code="c">2007.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="1" ind2="0">
+    <marc:subfield code="6">880-02</marc:subfield>
+    <marc:subfield code="a">Igolka li︠u︡bvi :</marc:subfield>
+    <marc:subfield code="b">proza /</marc:subfield>
+    <marc:subfield code="c">N. Sadur.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">287 p. ;</marc:subfield>
-		<marc:subfield code="c">21 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="6">880-03</marc:subfield>
+    <marc:subfield code="a">Moskva :</marc:subfield>
+    <marc:subfield code="b">Vagrius,</marc:subfield>
+    <marc:subfield code="c">2007.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="505" ind1="0" ind2="0">
-		<marc:subfield code="6">880-04</marc:subfield>
-		<marc:subfield code="t">Detki v kletke --</marc:subfield>
-		<marc:subfield code="t">I︠U︡g --</marc:subfield>
-		<marc:subfield code="t">Nemet︠s︡ --</marc:subfield>
-		<marc:subfield code="t">Igolka l︠u︡bvi.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">287 p. ;</marc:subfield>
+    <marc:subfield code="c">21 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="880" ind1="1" ind2=" ">
-		<marc:subfield code="6">100-01</marc:subfield>
-		<marc:subfield code="a">Садур, Нина,</marc:subfield>
-		<marc:subfield code="d">1950-</marc:subfield>
-		<marc:subfield code="4">aut</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="505" ind1="0" ind2="0">
+    <marc:subfield code="6">880-04</marc:subfield>
+    <marc:subfield code="t">Detki v kletke --</marc:subfield>
+    <marc:subfield code="t">I︠U︡g --</marc:subfield>
+    <marc:subfield code="t">Nemet︠s︡ --</marc:subfield>
+    <marc:subfield code="t">Igolka l︠u︡bvi.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="880" ind1="1" ind2="0">
-		<marc:subfield code="6">245-02</marc:subfield>
-		<marc:subfield code="a">Иголка любви :</marc:subfield>
-		<marc:subfield code="b">проза /</marc:subfield>
-		<marc:subfield code="c">Н. Садур.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="880" ind1="1" ind2=" ">
+    <marc:subfield code="6">100-01</marc:subfield>
+    <marc:subfield code="a">Садур, Нина,</marc:subfield>
+    <marc:subfield code="d">1950-</marc:subfield>
+    <marc:subfield code="4">aut</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="880" ind1=" " ind2=" ">
-		<marc:subfield code="6">260-03</marc:subfield>
-		<marc:subfield code="a">Москва :</marc:subfield>
-		<marc:subfield code="b">Вагриус,</marc:subfield>
-		<marc:subfield code="c">2007.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="880" ind1="1" ind2="0">
+    <marc:subfield code="6">245-02</marc:subfield>
+    <marc:subfield code="a">Иголка любви :</marc:subfield>
+    <marc:subfield code="b">проза /</marc:subfield>
+    <marc:subfield code="c">Н. Садур.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="880" ind1="0" ind2="0">
-		<marc:subfield code="6">505-04</marc:subfield>
-		<marc:subfield code="t">Детки в клетке --</marc:subfield>
-		<marc:subfield code="t">Юг --</marc:subfield>
-		<marc:subfield code="t">Немец --</marc:subfield>
-		<marc:subfield code="t">Иголка любви.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="880" ind1=" " ind2=" ">
+    <marc:subfield code="6">260-03</marc:subfield>
+    <marc:subfield code="a">Москва :</marc:subfield>
+    <marc:subfield code="b">Вагриус,</marc:subfield>
+    <marc:subfield code="c">2007.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="994" ind1=" " ind2=" ">
-		<marc:subfield code="a">C0</marc:subfield>
-		<marc:subfield code="b">RRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="880" ind1="0" ind2="0">
+    <marc:subfield code="6">505-04</marc:subfield>
+    <marc:subfield code="t">Детки в клетке --</marc:subfield>
+    <marc:subfield code="t">Юг --</marc:subfield>
+    <marc:subfield code="t">Немец --</marc:subfield>
+    <marc:subfield code="t">Иголка любви.</marc:subfield>
+  </marc:datafield>
+
+  <marc:datafield tag="994" ind1=" " ind2=" ">
+    <marc:subfield code="a">C0</marc:subfield>
+    <marc:subfield code="b">RRR</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Language material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Monograph/Item</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Fiction</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">rus</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">rus</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">Russian</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Russian</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="947" ind1=" " ind2=" ">
-	<marc:subfield code="a">9785969704084</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">9785969704084</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="947" ind1=" " ind2=" ">
-	<marc:subfield code="a">5969704083</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">5969704083</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:controlfield tag="003">NRU</marc:controlfield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)3722562</marc:subfield>
+  <marc:subfield code="a">(NRU)3722562</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Igolka li︠u︡bvi :</marc:subfield>
+  <marc:subfield code="a">Igolka li︠u︡bvi :</marc:subfield>
 </marc:datafield>
 
 </marc:record>

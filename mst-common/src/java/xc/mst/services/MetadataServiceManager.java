@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2010 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2010 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 package xc.mst.services;
 
 import java.util.List;
@@ -17,130 +17,130 @@ import xc.mst.repo.Repository;
 import xc.mst.scheduling.WorkerThread;
 
 public class MetadataServiceManager extends WorkerThread {
-	
-	protected MetadataService metadataService = null;
-	protected Repository incomingRepository = null;
-	protected List<Format> triggeringFormats = null;
-	protected List<Set> triggeringSets = null;
-	protected Set outputSet = null;
 
-	public Set getOutputSet() {
-		return outputSet;
-	}
+    protected MetadataService metadataService = null;
+    protected Repository incomingRepository = null;
+    protected List<Format> triggeringFormats = null;
+    protected List<Set> triggeringSets = null;
+    protected Set outputSet = null;
 
-	public void setOutputSet(Set outputSet) {
-		this.outputSet = outputSet;
-	}
+    public Set getOutputSet() {
+        return outputSet;
+    }
 
-	public MetadataService getMetadataService() {
-		return metadataService;
-	}
+    public void setOutputSet(Set outputSet) {
+        this.outputSet = outputSet;
+    }
 
-	public void setMetadataService(MetadataService metadataService) {
-		this.metadataService = metadataService;
-	}
-	
-	public Repository getIncomingRepository() {
-		return incomingRepository;
-	}
+    public MetadataService getMetadataService() {
+        return metadataService;
+    }
 
-	public void setIncomingRepository(Repository incomingRepository) {
-		this.incomingRepository = incomingRepository;
-	}
+    public void setMetadataService(MetadataService metadataService) {
+        this.metadataService = metadataService;
+    }
 
-	public void cancelInner() {
-		metadataService.cancel();
-		super.cancelInner();
-	}
-	
-	public List<Format> getTriggeringFormats() {
-		return triggeringFormats;
-	}
+    public Repository getIncomingRepository() {
+        return incomingRepository;
+    }
 
-	public void setTriggeringFormats(List<Format> triggeringFormats) {
-		this.triggeringFormats = triggeringFormats;
-	}
-	
-	public List<Set> getTriggeringSets() {
-		return triggeringSets;
-	}
+    public void setIncomingRepository(Repository incomingRepository) {
+        this.incomingRepository = incomingRepository;
+    }
 
-	public void setTriggeringSets(List<Set> sets) {
-		this.triggeringSets = sets;
-	}
+    public void cancelInner() {
+        metadataService.cancel();
+        super.cancelInner();
+    }
 
-	public boolean doSomeWork() {
-		if (incomingRepository.ready4harvest()) {
-			if (triggeringFormats != null) {
-				for (Format f : triggeringFormats) {
-					if (triggeringSets != null && triggeringSets.size() > 0) {
-						for (Set s : triggeringSets) {
-							metadataService.process(incomingRepository, f, s, outputSet);
-						}
-					} else {
-						metadataService.process(incomingRepository, f, null, outputSet);
-					}
-				}
-			} else if (triggeringSets != null && triggeringSets.size() > 0) {
-				for (Set s : triggeringSets) {
-					metadataService.process(incomingRepository, null, s, outputSet);
-				}
-			} else {
-				metadataService.process(incomingRepository, null, null, outputSet);
-			}
-		}
-		return false;
-	}
+    public List<Format> getTriggeringFormats() {
+        return triggeringFormats;
+    }
 
-	public void setup() {
-		metadataService.setMetadataServiceManager(this);
-		metadataService.setup();
-	}
-	
-	// only call after setup has run
-	public boolean isSetupHappy() {
-		if (metadataService == null) {
-			return true;
-		}
-		if (metadataService.getServiceStatus().equals(Status.ERROR)) {
-			return false;
-		}
-		return true;
-	}
-	
-	public void finishInner(boolean success) {
-		metadataService.finish();
-		super.finishInner(success);
-	}
+    public void setTriggeringFormats(List<Format> triggeringFormats) {
+        this.triggeringFormats = triggeringFormats;
+    }
 
-	public String getDetailedStatus() {
-		return null;
-	}
+    public List<Set> getTriggeringSets() {
+        return triggeringSets;
+    }
 
-	public String getName() {
-		if (metadataService != null && metadataService.getService() != null) {
-			return metadataService.getService().getName();
-		} else {
-			return "service starting up";
-		}
-	}
+    public void setTriggeringSets(List<Set> sets) {
+        this.triggeringSets = sets;
+    }
 
-	public void pauseInner() {
-		metadataService.pause();
-		super.pauseInner();
-	}
+    public boolean doSomeWork() {
+        if (incomingRepository.ready4harvest()) {
+            if (triggeringFormats != null) {
+                for (Format f : triggeringFormats) {
+                    if (triggeringSets != null && triggeringSets.size() > 0) {
+                        for (Set s : triggeringSets) {
+                            metadataService.process(incomingRepository, f, s, outputSet);
+                        }
+                    } else {
+                        metadataService.process(incomingRepository, f, null, outputSet);
+                    }
+                }
+            } else if (triggeringSets != null && triggeringSets.size() > 0) {
+                for (Set s : triggeringSets) {
+                    metadataService.process(incomingRepository, null, s, outputSet);
+                }
+            } else {
+                metadataService.process(incomingRepository, null, null, outputSet);
+            }
+        }
+        return false;
+    }
 
-	public void proceedInner() {
-		metadataService.resume();
-		super.proceedInner();
-	}
+    public void setup() {
+        metadataService.setMetadataServiceManager(this);
+        metadataService.setup();
+    }
 
-	public long getRecords2ProcessThisRun() {
-		return metadataService.getTotalRecordCount();
-	}
+    // only call after setup has run
+    public boolean isSetupHappy() {
+        if (metadataService == null) {
+            return true;
+        }
+        if (metadataService.getServiceStatus().equals(Status.ERROR)) {
+            return false;
+        }
+        return true;
+    }
 
-	public long getRecordsProcessedThisRun() {
-		return metadataService.getProcessedRecordCount();
-	}
+    public void finishInner(boolean success) {
+        metadataService.finish();
+        super.finishInner(success);
+    }
+
+    public String getDetailedStatus() {
+        return null;
+    }
+
+    public String getName() {
+        if (metadataService != null && metadataService.getService() != null) {
+            return metadataService.getService().getName();
+        } else {
+            return "service starting up";
+        }
+    }
+
+    public void pauseInner() {
+        metadataService.pause();
+        super.pauseInner();
+    }
+
+    public void proceedInner() {
+        metadataService.resume();
+        super.proceedInner();
+    }
+
+    public long getRecords2ProcessThisRun() {
+        return metadataService.getTotalRecordCount();
+    }
+
+    public long getRecordsProcessedThisRun() {
+        return metadataService.getProcessedRecordCount();
+    }
 
 }

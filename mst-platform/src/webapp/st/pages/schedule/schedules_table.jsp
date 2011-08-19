@@ -1,9 +1,9 @@
 <%--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -24,11 +24,11 @@
          </div>
      </c:when>
      <c:otherwise>
-	    <div class="viewTable">
-			<table width="100%">
-                
+      <div class="viewTable">
+      <table width="100%">
+
                     <thead>
-					<tr>
+          <tr>
 
                         <td width="125">
                             <div>
@@ -61,7 +61,7 @@
 
                             </div>
                         </td>
-						<td width="170">
+            <td width="170">
                                 <div>
                                         <c:if test="${columnSorted!='RepositoryName'}">
                                             <c:url var="scheduleSortUrl" value="allSchedules.action">
@@ -155,14 +155,14 @@
                         <td>
                             Message
                         </td>
-						<td>Delete Schedule</td>
-					</tr>
-				  </thead>
-              
-				
-				<tbody>
-                    
-                  
+            <td>Delete Schedule</td>
+          </tr>
+          </thead>
+
+
+        <tbody>
+
+
                                  <c:forEach var="schedule" items="${schedules}">
                                         <tr>
                                                 <c:set var="classColumn" value="plainColumn"/>
@@ -187,7 +187,7 @@
                                                     ${schedule.recurrence} ${schedule.minute} minutes past the hour
                                                 </c:if>
                                                 <c:if test="${schedule.recurrence == 'Weekly'}">
-                                                    ${schedule.recurrence} on 
+                                                    ${schedule.recurrence} on
                                                     <c:if test="${schedule.dayOfWeek == 1}">
                                                         Sunday
                                                     </c:if>
@@ -214,10 +214,10 @@
                                                 </c:if>
                                             </td>
                                             <c:set var="classColumn" value="plainColumn"/>
-					    					<c:if test="${columnSorted=='Status'}">
-													<c:set var="classColumn" value="sortColumn"/>
+                        <c:if test="${columnSorted=='Status'}">
+                          <c:set var="classColumn" value="sortColumn"/>
                                             </c:if>
-					   						<td width="80" class="${classColumn}">
+                         <td width="80" class="${classColumn}">
                                                 <c:set var="schedule_status" value ="${schedule.status}"/>
                                                 <c:choose>
                                                     <c:when test="${schedule_status=='NOT_RUNNING'}">
@@ -237,21 +237,21 @@
                                                     </c:when>
                                                     <c:when test="${schedule_status=='ERROR'}">
                                                           Error
-                                                    </c:when>                                                    
+                                                    </c:when>
                                                 </c:choose>
-                                               
+
 
                                             </td>
                                             <td>
                                                 <c:set var="lastRun" value="${mst:lastHarvest(schedule)}"/>
 
-												<c:choose>
-						                            <c:when test="${schedule_status=='NOT_RUNNING'}">
-														<c:if test="${fn:startsWith(lastRun, 'last')}">
-														    ${mst:lastHarvest(schedule)} ${timeZone}
-														</c:if>
+                        <c:choose>
+                                        <c:when test="${schedule_status=='NOT_RUNNING'}">
+                            <c:if test="${fn:startsWith(lastRun, 'last')}">
+                                ${mst:lastHarvest(schedule)} ${timeZone}
+                            </c:if>
                                                     </c:when>
-                                                    
+
                                                     <c:when test="${schedule_status=='CANCELED'}">
                                                           Last scheduled harvest was aborted.
                                                     </c:when>
@@ -262,9 +262,9 @@
                                             <td> <button class="xc_button" id="showDeleteSchedule" type="button" name="delete" onClick="javascript:YAHOO.xc.mst.schedule.view.deleteSchedule(${schedule.id}, '${schedule.scheduleName}');">Delete</button></td>
                                         </tr>
                                     </c:forEach>
-                       
-				</tbody>
-			</table>
-	  </div>
+
+        </tbody>
+      </table>
+    </div>
   </c:otherwise>
 </c:choose>

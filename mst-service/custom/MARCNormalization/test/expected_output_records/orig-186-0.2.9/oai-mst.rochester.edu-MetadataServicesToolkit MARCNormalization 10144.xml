@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>00319cy  a22001093  4500</marc:leader>
-	<marc:controlfield tag="001">4714</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="004">2888</marc:controlfield>
-	<marc:controlfield tag="005">20080423130713.0</marc:controlfield>
-	<marc:controlfield tag="008">9612095u    8   0001uueng0000000</marc:controlfield>
+  <marc:leader>00319cy  a22001093  4500</marc:leader>
+  <marc:controlfield tag="001">4714</marc:controlfield>
+  <marc:controlfield tag="003">NRU</marc:controlfield>
+  <marc:controlfield tag="004">2888</marc:controlfield>
+  <marc:controlfield tag="005">20080423130713.0</marc:controlfield>
+  <marc:controlfield tag="008">9612095u    8   0001uueng0000000</marc:controlfield>
 
-	<marc:datafield tag="852" ind1="0" ind2=" ">
-		<marc:subfield code="b">Offsite1</marc:subfield>
-		<marc:subfield code="h">QL801</marc:subfield>
-		<marc:subfield code="i">.J865</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="852" ind1="0" ind2=" ">
+    <marc:subfield code="b">Offsite1</marc:subfield>
+    <marc:subfield code="h">QL801</marc:subfield>
+    <marc:subfield code="i">.J865</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="866" ind1="3" ind2="0">
-		<marc:subfield code="a">v.52 (1931)-v.54 (1932/1933),v.56 (1934),v.58 (1935)-v.59 (1936),v.61 (1937)-v.62 (1938),v.73 (1943)-v.210 (1991)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="866" ind1="3" ind2="0">
+    <marc:subfield code="a">v.52 (1931)-v.54 (1932/1933),v.56 (1934),v.58 (1935)-v.59 (1936),v.61 (1937)-v.62 (1938),v.73 (1943)-v.210 (1991)</marc:subfield>
+  </marc:datafield>
 
 </marc:record>
