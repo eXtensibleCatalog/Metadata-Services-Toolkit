@@ -30,7 +30,7 @@ import xc.mst.utils.MSTConfiguration;
 public class AddService extends BaseActionSupport
 {
     /** Serial Id */
-	private static final long serialVersionUID = -6656889195768543265L;
+    private static final long serialVersionUID = -6656889195768543265L;
 
     /** Denotes the type of error */
     private String errorType;
@@ -82,17 +82,17 @@ public class AddService extends BaseActionSupport
     @Override
     public String execute()
     {
-    	try {
-    		serviceFiles.addAll(getServicesService().getServicesAvailableForInstall());
-    	} catch (Throwable t) {
-    		errorType = "error";
-    		log.error("Problem with service configuration. Check the path of service folder.");
-    		this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
-    		return SUCCESS;
-    	}
-    	return SUCCESS;
+        try {
+            serviceFiles.addAll(getServicesService().getServicesAvailableForInstall());
+        } catch (Throwable t) {
+            errorType = "error";
+            log.error("Problem with service configuration. Check the path of service folder.");
+            this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+            return SUCCESS;
+        }
+        return SUCCESS;
     }
-    
+
     /**
      * The method that actually adds the service to the MST
      *
@@ -115,7 +115,7 @@ public class AddService extends BaseActionSupport
         }
         catch(IOException ie)
         {
-            log.error(ie.getMessage(),ie);           
+            log.error(ie.getMessage(),ie);
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
@@ -123,7 +123,7 @@ public class AddService extends BaseActionSupport
         }
         catch(ConfigFileException cfe)
         {
-            log.error(cfe.getMessage(),cfe);           
+            log.error(cfe.getMessage(),cfe);
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
@@ -137,17 +137,17 @@ public class AddService extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
 }

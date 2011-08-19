@@ -19,34 +19,34 @@ import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 
 public class ServiceTest extends BaseTest {
-	
-	private static final Logger LOG = Logger.getLogger(ServiceTest.class);
-	
-	protected String serviceName = "r1";
 
-	@BeforeClass
-	public void setup() {
-	}
-	
-	@Test
-	public void testAll() {
-		process();
-	}
-	
-	public void process() {
-		try {
-			Service s = getServicesService().getServiceByName("MARCToXCTransformation");
-			MetadataService ms = s.getMetadataService();
-			LOG.debug("ms: "+ms);
-			Repository srepo = ms.getRepository();
-			//getRepositoryDAO().dropTables(srepo.getName());
-			srepo.installOrUpdateIfNecessary(null, s.getVersion());
-			
-			Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
-			repo.setName("r1");
-			ms.process(repo, null, null, null);
-		} catch (Throwable t) {
-			LOG.error("", t);
-		}
-	}
+    private static final Logger LOG = Logger.getLogger(ServiceTest.class);
+
+    protected String serviceName = "r1";
+
+    @BeforeClass
+    public void setup() {
+    }
+
+    @Test
+    public void testAll() {
+        process();
+    }
+
+    public void process() {
+        try {
+            Service s = getServicesService().getServiceByName("MARCToXCTransformation");
+            MetadataService ms = s.getMetadataService();
+            LOG.debug("ms: "+ms);
+            Repository srepo = ms.getRepository();
+            //getRepositoryDAO().dropTables(srepo.getName());
+            srepo.installOrUpdateIfNecessary(null, s.getVersion());
+
+            Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+            repo.setName("r1");
+            ms.process(repo, null, null, null);
+        } catch (Throwable t) {
+            LOG.error("", t);
+        }
+    }
 }

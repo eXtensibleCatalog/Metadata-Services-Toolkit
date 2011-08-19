@@ -32,7 +32,7 @@ import xc.mst.dao.DatabaseConfigException;
 public class ServiceReset extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -2829550192988572522L;
+    private static final long serialVersionUID = -2829550192988572522L;
 
     /**The name of the log file which needs to be reset **/
     private String serviceLogFileName;
@@ -42,9 +42,9 @@ public class ServiceReset extends BaseActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to reset the 'Service Logs' for a service.
@@ -56,7 +56,7 @@ public class ServiceReset extends BaseActionSupport
     {
         try
         {
-            
+
             Service tempService = getServicesService().getServiceById(serviceId);
             if(tempService==null)
             {
@@ -154,18 +154,18 @@ public class ServiceReset extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the Service ID of the Service whose Service Logs need to be reset

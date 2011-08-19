@@ -30,16 +30,16 @@ import xc.mst.dao.service.ServiceDAO;
 
 public class ListServices extends BaseActionSupport implements ServletRequestAware
 {
-       
-    /** Serial id */
-	private static final long serialVersionUID = 5867719363631588555L;
 
-	/** Determines whether the rows are to be sorted in ascending or descending order*/
+    /** Serial id */
+    private static final long serialVersionUID = 5867719363631588555L;
+
+    /** Determines whether the rows are to be sorted in ascending or descending order*/
     private boolean isAscendingOrder = true;
 
     /** The coumn on which the rows are sorted*/
     private String columnSorted = "ServiceName";
-    
+
     /** The list of services that are part of the MST */
     private List<Service> ServicesList;
 
@@ -51,7 +51,7 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
+
     /** Http servlet request */
     private HttpServletRequest servletRequest;
 
@@ -78,7 +78,7 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
             return SUCCESS;
-                      
+
         }
         catch(DatabaseConfigException dce)
         {
@@ -87,7 +87,7 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
             this.addFieldError("listServicesError", "Unable to connect to the database. Database configuration may be incorrect");
             return INPUT;
         }
-        
+
     }
 
     /**
@@ -142,7 +142,7 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
 
     /**
      * Returns the name of the column on which sorting should be performed
-     * 
+     *
      * @return column name
      */
     public String getColumnSorted()
@@ -175,21 +175,21 @@ public class ListServices extends BaseActionSupport implements ServletRequestAwa
       *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
-	public void setServletRequest(HttpServletRequest servletRequest) {
-		this.servletRequest = servletRequest;
-	}
-    
+    public void setServletRequest(HttpServletRequest servletRequest) {
+        this.servletRequest = servletRequest;
+    }
+
 }

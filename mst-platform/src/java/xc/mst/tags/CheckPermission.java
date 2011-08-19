@@ -26,8 +26,8 @@ import xc.mst.bo.user.User;
  */
 public class CheckPermission extends SimpleTagSupport {
 
-	/** Permission to check on the user */
-	private String permission;
+    /** Permission to check on the user */
+    private String permission;
 
     @Override
     public void doTag() throws JspException
@@ -41,42 +41,42 @@ public class CheckPermission extends SimpleTagSupport {
 
         for(Group group:groups)
         {
-        	for (Permission p: group.getPermissions()) {
-        		if (p.getTabName().equalsIgnoreCase(permission)) {
-        			permissionGranted = true;
-        			break;
-        		}
-        	}
+            for (Permission p: group.getPermissions()) {
+                if (p.getTabName().equalsIgnoreCase(permission)) {
+                    permissionGranted = true;
+                    break;
+                }
+            }
 
-        	if (permissionGranted) {
-        		break;
-        	}
+            if (permissionGranted) {
+                break;
+            }
         }
 
         // If permission exist then execute the JSP
         if (permissionGranted) {
-    	    try
-    		{
-    	    	if( getJspBody() != null )
-    	    	{
-    		        getJspBody().invoke(null);
-    	    	}
-    		}
-    		catch(Exception e)
-    		{
-    			throw new JspException("could not invoke body",e);
-    		}
+            try
+            {
+                if( getJspBody() != null )
+                {
+                    getJspBody().invoke(null);
+                }
+            }
+            catch(Exception e)
+            {
+                throw new JspException("could not invoke body",e);
+            }
         }
 
 
     }
 
-	public String getPermission() {
-		return permission;
-	}
+    public String getPermission() {
+        return permission;
+    }
 
-	public void setPermission(String permission) {
-		this.permission = permission;
-	}
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 
 }

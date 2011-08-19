@@ -29,7 +29,7 @@ import xc.mst.dao.DatabaseConfigException;
 public class EditLocalUser extends BaseActionSupport
 {
      /** Serial  id */
-	private static final long serialVersionUID = -7257803486933942854L;
+    private static final long serialVersionUID = -7257803486933942854L;
 
     /**The ID of the user whose details are to be edited */
     private int userId;
@@ -59,9 +59,9 @@ public class EditLocalUser extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
     /**
      * Overrides default implementation to view the edit local user page.
      *
@@ -95,7 +95,7 @@ public class EditLocalUser extends BaseActionSupport
     {
         try
         {
-           
+
             setGroupList(getGroupService().getAllGroups());
             User user = getUserService().getUserById(userId);
             user.setServer(getServerService().getServerByName("Local"));
@@ -105,13 +105,13 @@ public class EditLocalUser extends BaseActionSupport
             user.setLastName(lastName);
 
             if (password != null && password.length() > 0) {
-            	user.setPassword(getUserService().encryptPassword(password));
+                user.setPassword(getUserService().encryptPassword(password));
             }
 
             // Check if user has permissions
             boolean hasPermission = false;
             if (user.getGroups() != null && user.getGroups().size() > 0) {
-            	hasPermission = true;
+                hasPermission = true;
             }
 
             user.removeAllGroups();
@@ -137,15 +137,15 @@ public class EditLocalUser extends BaseActionSupport
                     }
                 }
             }
-            
+
             getUserService().updateUser(user);
-            
+
             // Email user that permissions has been added.
             if (!hasPermission) {
-            	getUserService().sendEmailToUserWithPermissions(user);
+                getUserService().sendEmailToUserWithPermissions(user);
             }
 
-           
+
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -165,59 +165,59 @@ public class EditLocalUser extends BaseActionSupport
         }
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the first name of the user
      *
      * @return first name
      */
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
     /**
      * Sets the first name of the user
      *
      * @param firstName first name
      */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName.trim();
+    }
 
     /**
      * Returns the last name of the user
      *
      * @return last name
      */
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
     /**
      * Sets the last name of the user
-     * 
+     *
      * @param lastName last name
      */
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName.trim();
+    }
 
     /**
      * Sets the email ID of the user

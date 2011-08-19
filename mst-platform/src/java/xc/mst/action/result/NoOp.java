@@ -22,12 +22,12 @@ import com.opensymphony.xwork2.ActionInvocation;
 public class NoOp extends StrutsResultSupport {
 
     /**
-	 * Eclipse generated id.
-	 */
-	private static final long serialVersionUID = 5057577751602240162L;
+     * Eclipse generated id.
+     */
+    private static final long serialVersionUID = 5057577751602240162L;
 
 
-	public NoOp() {
+    public NoOp() {
         super();
     }
 

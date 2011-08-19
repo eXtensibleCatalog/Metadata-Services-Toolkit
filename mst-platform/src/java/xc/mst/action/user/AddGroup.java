@@ -30,9 +30,9 @@ import xc.mst.dao.DatabaseConfigException;
 public class AddGroup extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -1479234838280649053L;
+    private static final long serialVersionUID = -1479234838280649053L;
 
-	/** The name of the group */
+    /** The name of the group */
     private String groupName;
 
     /** A Description of the group */
@@ -53,8 +53,8 @@ public class AddGroup extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType;
+    /** Error type */
+    private String errorType;
 
      /**
      * Overrides default implementation to view the add group page.
@@ -62,7 +62,7 @@ public class AddGroup extends BaseActionSupport
      * @return {@link #SUCCESS}
      */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public String execute()
     {
         try
@@ -85,35 +85,35 @@ public class AddGroup extends BaseActionSupport
      * @return {@link #SUCCESS}
      */
     @SuppressWarnings("unchecked")
-	public String addGroup()
+    public String addGroup()
     {
         try
         {
-            
+
             Group group = new Group();
             group.setName(groupName);
             group.setDescription(groupDescription);
-            
+
             Group tempGroup = getGroupService().getGroupByName(groupName);
             if(tempGroup!=null)
             {
-                
+
                 setTemporaryGroup(group);
                 setTabNames(getPermissionService().getAllPermissions());
                 this.addFieldError("addGroupError", "A group with the same name already exists");
                 errorType = "error";
                 return INPUT;
-                
+
             }
-            
+
 
             for(int i=0;i<permissionsSelected.length;i++)
             {
-                
+
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
-                
+
                 Permission tempPermission = getPermissionService().getPermissionById(permissionId);
-                
+
                 group.addPermission(tempPermission);
             }
 
@@ -138,23 +138,23 @@ public class AddGroup extends BaseActionSupport
 
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
        /**
      * Sets the group name to the specified value.

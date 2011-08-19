@@ -33,7 +33,7 @@ import xc.mst.utils.MSTConfiguration;
 public class EditService extends BaseActionSupport
 {
     /** serial id */
-	private static final long serialVersionUID = -6594114196228418111L;
+    private static final long serialVersionUID = -6594114196228418111L;
 
     /** Denotes the type of error */
     private String errorType;
@@ -49,12 +49,12 @@ public class EditService extends BaseActionSupport
 
     /** The temporary service object which is used to populate data in the JSP page*/
     private Service temporaryService;
-    
+
       /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Indicates whether to reprocess the records or not */ 
-	private boolean reprocessRecords;
+
+    /** Indicates whether to reprocess the records or not */
+    private boolean reprocessRecords;
 
      /**
      * Overrides default implementation to view the edit service page.
@@ -66,8 +66,8 @@ public class EditService extends BaseActionSupport
     {
         try
         {
-        	reprocessRecords = true;
-        	
+            reprocessRecords = true;
+
             temporaryService = getServicesService().getServiceById(serviceId);
             if(temporaryService==null)
             {
@@ -77,38 +77,38 @@ public class EditService extends BaseActionSupport
             setTemporaryService(temporaryService);
             File dir = new File(MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "services");
             File[] fileList = dir.listFiles();
-            
-            if (fileList == null) 
+
+            if (fileList == null)
             {
-           	 	errorType = "error";
-           	 	log.error("Problem with service configuration. Check the path of service folder.");
-           	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+                    errorType = "error";
+                    log.error("Problem with service configuration. Check the path of service folder.");
+                    this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
                 return SUCCESS;
             }
             for(File file : fileList)
             {
-            	if (file.isDirectory()) {
-            		serviceFiles.add(file.getName());
-            	}
-            	
-            	/*
-            	File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
-                
-                if (xccfgFolderList == null) 
+                if (file.isDirectory()) {
+                    serviceFiles.add(file.getName());
+                }
+
+                /*
+                File[] xccfgFolderList = xccfgFolder.listFiles(fileFilter);
+
+                if (xccfgFolderList == null)
                 {
-               	 	errorType = "error";
-               	 	log.error("Problem with service configuration. Check the path of service folder.");
-               	 	this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
+                        errorType = "error";
+                        log.error("Problem with service configuration. Check the path of service folder.");
+                        this.addFieldError("configFilesNotExistError","Problem with service configuration. Check the path of service folder and follow the instructions in installation manual.");
                     return SUCCESS;
                 }
-                
+
                 for(File xccfgFile : xccfgFolderList) {
-        			XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
-        			serviceFiles.add(configFile);
-        		}
-        		*/
+                    XccFgFile configFile = new XccFgFile(xccfgFile.getName(), xccfgFile.getPath());
+                    serviceFiles.add(configFile);
+                }
+                */
             }
-            
+
             setServiceFiles(serviceFiles);
             return SUCCESS;
         }
@@ -120,7 +120,7 @@ public class EditService extends BaseActionSupport
             return SUCCESS;
         }
     }
-    
+
     /**
      * The method that does the actual task of editing the details of a service
      *
@@ -165,7 +165,7 @@ public class EditService extends BaseActionSupport
         }
         catch(IOException ie)
         {
-            log.error(ie.getMessage(),ie);      
+            log.error(ie.getMessage(),ie);
             errorType = "error";
             this.addFieldError("addServiceError","Error occurred while adding service. An email has been sent to the administrator");
             getUserService().sendEmailErrorReport();
@@ -226,18 +226,18 @@ public class EditService extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the list of service folder names
@@ -279,12 +279,12 @@ public class EditService extends BaseActionSupport
         return this.selectedLocation;
     }
 
-	public boolean isReprocessRecords() {
-		return reprocessRecords;
-	}
+    public boolean isReprocessRecords() {
+        return reprocessRecords;
+    }
 
-	public void setReprocessRecords(boolean reprocessRecords) {
-		this.reprocessRecords = reprocessRecords;
-	}
+    public void setReprocessRecords(boolean reprocessRecords) {
+        this.reprocessRecords = reprocessRecords;
+    }
 }
 

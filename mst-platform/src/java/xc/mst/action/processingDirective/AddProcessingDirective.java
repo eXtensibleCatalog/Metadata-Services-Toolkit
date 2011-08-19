@@ -31,10 +31,10 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public class AddProcessingDirective extends BaseActionSupport implements ServletRequestAware
 {
-	 /** Serial ID*/
-	private static final long serialVersionUID = 6410442216158839046L;
+     /** Serial ID*/
+    private static final long serialVersionUID = 6410442216158839046L;
 
-	/**This String value denotes whether the Processing Directive session variable needs to be reset */
+    /**This String value denotes whether the Processing Directive session variable needs to be reset */
     private String refreshSession;
 
     /** A reference to the logger for this class */
@@ -54,14 +54,14 @@ public class AddProcessingDirective extends BaseActionSupport implements Servlet
 
     /** Temporary processing directive object that is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
-    
-	/** Error type */
-	private String errorType;
+
+    /** Error type */
+    private String errorType;
 
     /** Request */
     private HttpServletRequest request;
 
-   
+
 
      /**
      * Overrides default implementation to view the add processing directives page.
@@ -145,13 +145,13 @@ public class AddProcessingDirective extends BaseActionSupport implements Servlet
     }
 
      /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     /**
      * Sets the temporary processing directive object
@@ -278,17 +278,17 @@ public class AddProcessingDirective extends BaseActionSupport implements Servlet
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
 }

@@ -27,9 +27,9 @@ import xc.mst.scheduling.WorkerThread;
 public class RefreshServiceBar extends BaseActionSupport implements ServletRequestAware
 {
      /** Serial id */
-	private static final long serialVersionUID = -3395960723337222914L;
+    private static final long serialVersionUID = -3395960723337222914L;
 
-	/** A reference to the logger for this class */
+    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** Servlet request object */
@@ -40,7 +40,7 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 
     /** Determines how the HTML should be displayed in the view page for this action */
     private String displayType;
-    
+
     protected static int consecutiveSolrIndexes = 0;
 
     /**
@@ -53,74 +53,74 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
     {
             try
             {
-            	boolean solrIndexRunning = false;
-            	LOG.debug("getScheduler().getRunningJob(): "+getScheduler().getRunningJob());
-                if(getScheduler().getRunningJob()!=null && 
-                		getScheduler().getRunningJob().getType() != null && 
-                		getScheduler().getRunningJob().getJobStatus() != null) {
-                	LOG.debug("getScheduler().getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
-                	LOG.debug("getScheduler().getRunningJob().getType(): "+getScheduler().getRunningJob().getType());
-                	
-                	//TODO what to do in the case of THREAD_MARK_PROVIDER_DELETED?
-                	if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE) 
-                			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
-                			&& !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-	                    if(getScheduler().getRunningJob().getJobStatus().equals(Status.CANCELED))
-	                    {
-	                    	if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                        	currentProcess = "Aborting harvest of provider " + getScheduler().getRunningJob().getJobName();
-	                        } else {
-	                        	currentProcess = "Aborting process " + getScheduler().getRunningJob().getJobName();
-	                        }
-	                    }
-	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.PAUSED) || 
-	                    		getScheduler().getRunningJob().getJobStatus().equals(Status.IDLE))
-	                    {
-	                        if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                        	currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
-	                        } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
-	                        	if (getScheduler().wasPausedManually()) {
-	                        		currentProcess = "Paused "+getScheduler().getRunningJob().getJobName();
-	                        	} else {
-	                        		currentProcess = null;
-	                        	}
-	                        } else {
-	                        	currentProcess = "Paused processing through " + getScheduler().getRunningJob().getJobName();
-	                        }
-	                    }  
-	                    else if (getScheduler().getRunningJob().getJobStatus().equals(Status.NOT_RUNNING))
-	                    {
-	                        	currentProcess = null;
-	                    } else {
-	                    	 if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-	                    		 if (getScheduler().getRunningJob().getRecordsProcessedThisRun() > 0 && 
-	                    				 getScheduler().getRunningJob().getRecords2ProcessThisRun() > 0) {
-	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
-	                    			 " records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
-	                    			 " from repository " + getScheduler().getRunningJob().getJobName();
-	                    		 } else {
-	                    			 currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
-	                    			 " records from repository " + getScheduler().getRunningJob().getJobName();
-	                    		 }
-	                    	 } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
-	                    		 solrIndexRunning = true;
-	                    		 if (consecutiveSolrIndexes > 2) {
-		                        	 LOG.debug("getScheduler().getRunningJob().getRecordsProcessed(): "+
-		                        			 getScheduler().getRunningJob().getRecordsProcessedThisRun());
-		                        	 LOG.debug("getScheduler().getRunningJob().getTotalRecords(): "+
-		                        			 getScheduler().getRunningJob().getRecords2ProcessThisRun());
-		                        	 LOG.debug("getScheduler().getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
-	                    			 currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
-	 	                         		" records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
-	 	                         		" through " + getScheduler().getRunningJob().getJobName();
-	                    		 }
-	                         } else {
-	                         	currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() + 
-	                         	" records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() + 
-	                         	" through " + getScheduler().getRunningJob().getJobName();
-	                         }
-	                    }
-                	}
+                boolean solrIndexRunning = false;
+                LOG.debug("getScheduler().getRunningJob(): "+getScheduler().getRunningJob());
+                if(getScheduler().getRunningJob()!=null &&
+                        getScheduler().getRunningJob().getType() != null &&
+                        getScheduler().getRunningJob().getJobStatus() != null) {
+                    LOG.debug("getScheduler().getRunningJob().getJobStatus(): "+getScheduler().getRunningJob().getJobStatus());
+                    LOG.debug("getScheduler().getRunningJob().getType(): "+getScheduler().getRunningJob().getType());
+
+                    //TODO what to do in the case of THREAD_MARK_PROVIDER_DELETED?
+                    if(!getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)
+                            && !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)
+                            && !getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+                        if(getScheduler().getRunningJob().getJobStatus().equals(Status.CANCELED))
+                        {
+                            if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                                currentProcess = "Aborting harvest of provider " + getScheduler().getRunningJob().getJobName();
+                            } else {
+                                currentProcess = "Aborting process " + getScheduler().getRunningJob().getJobName();
+                            }
+                        }
+                        else if (getScheduler().getRunningJob().getJobStatus().equals(Status.PAUSED) ||
+                                getScheduler().getRunningJob().getJobStatus().equals(Status.IDLE))
+                        {
+                            if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                                currentProcess = "Paused harvesting from provider " + getScheduler().getRunningJob().getJobName();
+                            } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
+                                if (getScheduler().wasPausedManually()) {
+                                    currentProcess = "Paused "+getScheduler().getRunningJob().getJobName();
+                                } else {
+                                    currentProcess = null;
+                                }
+                            } else {
+                                currentProcess = "Paused processing through " + getScheduler().getRunningJob().getJobName();
+                            }
+                        }
+                        else if (getScheduler().getRunningJob().getJobStatus().equals(Status.NOT_RUNNING))
+                        {
+                                currentProcess = null;
+                        } else {
+                             if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                                 if (getScheduler().getRunningJob().getRecordsProcessedThisRun() > 0 &&
+                                         getScheduler().getRunningJob().getRecords2ProcessThisRun() > 0) {
+                                     currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() +
+                                     " records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() +
+                                     " from repository " + getScheduler().getRunningJob().getJobName();
+                                 } else {
+                                     currentProcess = "Harvested " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() +
+                                     " records from repository " + getScheduler().getRunningJob().getJobName();
+                                 }
+                             } else if (getScheduler().getRunningJob().getType().equalsIgnoreCase(Constants.SOLR_INDEXER)) {
+                                 solrIndexRunning = true;
+                                 if (consecutiveSolrIndexes > 2) {
+                                     LOG.debug("getScheduler().getRunningJob().getRecordsProcessed(): "+
+                                             getScheduler().getRunningJob().getRecordsProcessedThisRun());
+                                     LOG.debug("getScheduler().getRunningJob().getTotalRecords(): "+
+                                             getScheduler().getRunningJob().getRecords2ProcessThisRun());
+                                     LOG.debug("getScheduler().getRunningJob().getJobName(): "+getScheduler().getRunningJob().getJobName());
+                                     currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() +
+                                          " records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() +
+                                          " through " + getScheduler().getRunningJob().getJobName();
+                                 }
+                             } else {
+                                 currentProcess = "Processed " +  getScheduler().getRunningJob().getRecordsProcessedThisRun() +
+                                 " records out of " + getScheduler().getRunningJob().getRecords2ProcessThisRun() +
+                                 " through " + getScheduler().getRunningJob().getJobName();
+                             }
+                        }
+                    }
                 }
                 else
                 {
@@ -131,31 +131,31 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
                 LOG.debug("solrIndexRunning: "+solrIndexRunning);
                 LOG.debug("consecutiveSolrIndexes: "+consecutiveSolrIndexes);
                 if (solrIndexRunning) {
-                	consecutiveSolrIndexes++;
+                    consecutiveSolrIndexes++;
                 } else {
-                	consecutiveSolrIndexes=0;
+                    consecutiveSolrIndexes=0;
                 }
                 return SUCCESS;
             }
             catch(Throwable e)
             {
-            	LOG.error("", e);
+                LOG.error("", e);
                 log.error("The status of the services running in the MST , could not be displayed correctly",e);
                 this.addFieldError("refreshServiceBar", "The status of the services running in the MST , could not be displayed correctly");
                 return INPUT;
             }
-        
+
 
     }
 
     /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     /**
      * Sets the name of the surrent process being executed
@@ -199,4 +199,3 @@ public class RefreshServiceBar extends BaseActionSupport implements ServletReque
 }
 
 
-   

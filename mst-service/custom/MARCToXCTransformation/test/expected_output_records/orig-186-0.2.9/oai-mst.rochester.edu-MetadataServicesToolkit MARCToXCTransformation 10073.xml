@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10073">
-		<dcterms:subject xsi:type="dcterms:LCC">G3721.C5</dcterms:subject>
-		<xc:creator>Bennison, A. P.</xc:creator>
-		<rdvocab:titleOfWork>Geological highway map of the Northeastern region:</rdvocab:titleOfWork>
-		<xc:subject xsi:type="dcterms:LCSH">Geology-Northeastern States-Maps.</xc:subject>
-		<xc:spatial xsi:type="dcterms:LCSH">Northeastern States-Maps.</xc:spatial>
-		<xc:subject xsi:type="dcterms:LCSH">Geology</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Maps.</xc:subject>
-		<xc:spacial xsi:type="dcterms:LCSH">Northeastern States</xc:spacial></xc:entity>
+  <xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10073">
+    <dcterms:subject xsi:type="dcterms:LCC">G3721.C5</dcterms:subject>
+    <xc:creator>Bennison, A. P.</xc:creator>
+    <rdvocab:titleOfWork>Geological highway map of the Northeastern region:</rdvocab:titleOfWork>
+    <xc:subject xsi:type="dcterms:LCSH">Geology-Northeastern States-Maps.</xc:subject>
+    <xc:spatial xsi:type="dcterms:LCSH">Northeastern States-Maps.</xc:spatial>
+    <xc:subject xsi:type="dcterms:LCSH">Geology</xc:subject>
+    <xc:subject xsi:type="dcterms:LCSH">Maps.</xc:subject>
+    <xc:spacial xsi:type="dcterms:LCSH">Northeastern States</xc:spacial></xc:entity>
 </xc:frbr>

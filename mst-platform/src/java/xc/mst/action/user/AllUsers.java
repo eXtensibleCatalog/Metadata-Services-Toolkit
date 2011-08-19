@@ -37,7 +37,7 @@ public class AllUsers extends BaseActionSupport
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
+
     /**
      * Overrides default implementation to list all the users in the system.
      *
@@ -66,7 +66,7 @@ public class AllUsers extends BaseActionSupport
                 {
                     setUserList(getUserService().getAllUsersSorted(isAscendingOrder,UserDAO.COL_LAST_NAME));
                 }
-               
+
             }
             else
             {
@@ -74,7 +74,7 @@ public class AllUsers extends BaseActionSupport
             }
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
-            
+
         }
         catch(DatabaseConfigException dce)
         {
@@ -86,26 +86,26 @@ public class AllUsers extends BaseActionSupport
 
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /** Error type */
-	private String errorType;
+    private String errorType;
 
     /**
      * Returns the list of users

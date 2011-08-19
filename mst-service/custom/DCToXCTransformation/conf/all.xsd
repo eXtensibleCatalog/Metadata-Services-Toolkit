@@ -6,19 +6,19 @@
     version="1.0"
     elementFormDefault  ="qualified"
     attributeFormDefault="unqualified">
-		<!--
+    <!--
     xmlns:oai="http://www.openarchives.org/OAI/2.0/"
     xmlns:mst="http://www.extensiblecatalog.org/xsd/mst/1.0"
-		-->
-   
-		<xs:import namespace="http://www.openarchives.org/OAI/2.0/" 
-			schemaLocation="http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" />
+    -->
 
-		<xs:import namespace="http://www.extensiblecatalog.org/xsd/mst/1.0" 
-			schemaLocation="http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd" />
+    <xs:import namespace="http://www.openarchives.org/OAI/2.0/"
+      schemaLocation="http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" />
 
-		<xs:import namespace="http://www.loc.gov/MARC21/slim" 
-			schemaLocation="http://www.extensiblecatalog.org/doc/MST/xsd/MARC21slim_custom.xsd" />
+    <xs:import namespace="http://www.extensiblecatalog.org/xsd/mst/1.0"
+      schemaLocation="http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd" />
 
-</xs:schema> 
+    <xs:import namespace="http://www.loc.gov/MARC21/slim"
+      schemaLocation="http://www.extensiblecatalog.org/doc/MST/xsd/MARC21slim_custom.xsd" />
+
+</xs:schema>
 

@@ -29,9 +29,9 @@ import xc.mst.constants.Constants;
 public class DownloadLogFiles extends BaseActionSupport implements ServletResponseAware
 {
     /** Serial id*/
-	private static final long serialVersionUID = -2716024718026119266L;
+    private static final long serialVersionUID = -2716024718026119266L;
 
-	/** Indicates the type of log file being downloaded */
+    /** Indicates the type of log file being downloaded */
     private String logType;
 
     /** The ID of the log */
@@ -41,19 +41,19 @@ public class DownloadLogFiles extends BaseActionSupport implements ServletRespon
     private HttpServletResponse response;
 
     /** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     public String execute()
     {
         try
         {
-        	
+
             String filename = "";
             String fullpath = "";
 
             if(logType.equalsIgnoreCase("Service"))
             {
-                
+
                 Service service = getServicesService().getServiceById(id);
                 fullpath = service.getServicesLogFileName(true);
                 filename = service.getName()+"ServiceLog";

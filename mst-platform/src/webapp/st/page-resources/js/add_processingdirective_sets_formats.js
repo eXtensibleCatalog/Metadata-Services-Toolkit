@@ -1,9 +1,9 @@
  /*
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   */
 
@@ -16,7 +16,7 @@ cancel : function()
      try
      {
         document.addProcessingDirectiveSetsFormats.action= 'addProcessingDirectiveCancel.action';
-		document.addProcessingDirectiveSetsFormats.submit();
+    document.addProcessingDirectiveSetsFormats.submit();
      }
      catch(err)
      {
@@ -37,10 +37,10 @@ goBack : function()
          var choice = true;
          if(document.getElementById("formatsSelected")==null)
              {
-                    
+
                    createErrorDiv('error','Formats empty. Processing Rule cannot be created without specifying a format.');
                    choice = false;
-                                       
+
              }
          else
              {
@@ -57,8 +57,8 @@ goBack : function()
                   document.addProcessingDirectiveSetsFormats.submit();
              }
 
-            
-       
+
+
      }
      catch(err)
      {
@@ -68,24 +68,24 @@ goBack : function()
 
  selectAll : function(field, currentField)
  {
-    
-   
+
+
     if (currentField.checked) {
 
-   	 for (i=0;i<field.length;i++) 
+      for (i=0;i<field.length;i++)
         {
             field[i].checked=true;
         }
     } else {
-    	 for (i=0;i<field.length;i++) 
+       for (i=0;i<field.length;i++)
         {
             field[i].checked=false;
         }
     }
-    
+
 
  }
- 
+
 }
 
 

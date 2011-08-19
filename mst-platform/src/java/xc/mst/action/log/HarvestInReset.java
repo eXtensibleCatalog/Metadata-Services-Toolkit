@@ -40,9 +40,9 @@ public class HarvestInReset extends BaseActionSupport {
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to reset the 'Harvest-In Logs' for a service.
@@ -99,7 +99,7 @@ public class HarvestInReset extends BaseActionSupport {
         }
     }
 
-   
+
 
     /**
      * Resets all the logs that are related to the providers
@@ -157,18 +157,18 @@ public class HarvestInReset extends BaseActionSupport {
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the Provider ID of the provider whose logs are to be reset

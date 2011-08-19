@@ -26,16 +26,16 @@ import xc.mst.dao.DatabaseConfigException;
 public class ListProcessingDirectives extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = 8908002900698813282L;
+    private static final long serialVersionUID = 8908002900698813282L;
 
     /** The list of processing directives that have been set up by the user */
     private List<ProcessingDirective> processingDirectives;
 
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to list all directives
@@ -47,7 +47,7 @@ public class ListProcessingDirectives extends BaseActionSupport
     {
         try
         {
-                     
+
            processingDirectives = getProcessingDirectiveService().getAllProcessingDirectives();
            setProcessingDirectives(processingDirectives);
 
@@ -82,21 +82,21 @@ public class ListProcessingDirectives extends BaseActionSupport
         return processingDirectives;
     }
 
-	 /**
+     /**
      * Returns error type
       *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

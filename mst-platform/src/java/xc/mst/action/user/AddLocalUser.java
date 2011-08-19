@@ -31,8 +31,8 @@ import xc.mst.dao.DatabaseConfigException;
 public class AddLocalUser extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = 8341069230872861667L;
-	
+    private static final long serialVersionUID = 8341069230872861667L;
+
     /**The email ID of the user */
     private String email;
 
@@ -44,7 +44,7 @@ public class AddLocalUser extends BaseActionSupport
 
     /**The first Name of the user */
     private String firstName;
-    
+
     /**The Last Name of the user */
     private String lastName;
 
@@ -63,9 +63,9 @@ public class AddLocalUser extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
      /**
      * Overrides default implementation to view the add local user page.
       *
@@ -96,7 +96,7 @@ public class AddLocalUser extends BaseActionSupport
     public String addLocalUser()
     {
         try
-        {           
+        {
             User user = new User();
             user.setEmail(email);
             user.setFirstName(firstName);
@@ -134,7 +134,7 @@ public class AddLocalUser extends BaseActionSupport
                     return INPUT;
                 }
             }
-          
+
 
             for(int i=0;i<groupsSelected.length;i++)
             {
@@ -162,59 +162,59 @@ public class AddLocalUser extends BaseActionSupport
 
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the first name of the user
      *
      * @return first name
      */
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
     /**
      * Sets the first name of the user
      *
      * @param firstName first name
      */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName.trim();
+    }
 
     /**
      * Returns the last name of the user
      *
      * @return last name
      */
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
     /**
      * Sets the last name of the user
      *
      * @param lastName last name
      */
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName.trim();
+    }
 
      /**
      * Sets temporary user object

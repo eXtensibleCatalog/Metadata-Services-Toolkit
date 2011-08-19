@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-	<responseDate>2011-03-30T15:12:42Z</responseDate>
-	<request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2011-03-30T15:12:42Z</responseDate>
+  <request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
 
 <ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2011-03-30T14:44:50Z</datestamp><setSpec>bib</setSpec></header><metadata>
 
@@ -46,7 +46,7 @@
   <marc:datafield ind1="0" ind2="0" tag="245">
     <marc:subfield code="a">Analyse structurale des amplitudes de collision =</marc:subfield>
     <marc:subfield code="b">Structural analysis of collision amplitudes : Les Houches, June Institute, 2-27 June 1975 /</marc:subfield>
-    <marc:subfield code="c">edite´ par Roger Balian et Daniel Iagolnitzer.</marc:subfield>
+    <marc:subfield code="c">editeï¿½ par Roger Balian et Daniel Iagolnitzer.</marc:subfield>
   </marc:datafield>
   <marc:datafield ind1=" " ind2=" " tag="260">
     <marc:subfield code="a">Amsterdam :</marc:subfield>
@@ -61,7 +61,7 @@
     <marc:subfield code="c">23 cm.</marc:subfield>
   </marc:datafield>
   <marc:datafield ind1=" " ind2=" " tag="500">
-    <marc:subfield code="a">Lectures delivered at Les Houches, E´cole d'e´te´ de physique the´orique.</marc:subfield>
+    <marc:subfield code="a">Lectures delivered at Les Houches, Eï¿½cole d'eï¿½teï¿½ de physique theï¿½orique.</marc:subfield>
   </marc:datafield>
   <marc:datafield ind1=" " ind2=" " tag="504">
     <marc:subfield code="a">Includes bibliographies and index.</marc:subfield>
@@ -85,8 +85,8 @@
     <marc:subfield code="a">Iagolnitzer, Daniel.</marc:subfield>
   </marc:datafield>
   <marc:datafield ind1="2" ind2=" " tag="710">
-    <marc:subfield code="a">Universite´ de Grenoble.</marc:subfield>
-    <marc:subfield code="b">E´cole d'e´te´ de physique the´orique,Les Houches.</marc:subfield>
+    <marc:subfield code="a">Universiteï¿½ de Grenoble.</marc:subfield>
+    <marc:subfield code="b">Eï¿½cole d'eï¿½teï¿½ de physique theï¿½orique,Les Houches.</marc:subfield>
   </marc:datafield>
   <marc:datafield ind1="0" ind2=" " tag="740">
     <marc:subfield code="a">Structural analysis of collision amplitudes.</marc:subfield>

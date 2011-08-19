@@ -43,9 +43,9 @@ public class GeneralLog extends BaseActionSupport
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
 
     /**
      * Overrides default implementation to view the General Logs Page.
@@ -77,7 +77,7 @@ public class GeneralLog extends BaseActionSupport
                 {
                     fullList = getLogService().getSorted(isAscendingOrder, LogDAO.COL_LAST_LOG_RESET);
                 }
-               
+
             }
             else
             {
@@ -87,7 +87,7 @@ public class GeneralLog extends BaseActionSupport
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
             return SUCCESS;
-           
+
         }
         catch(DatabaseConfigException dce)
         {
@@ -103,18 +103,18 @@ public class GeneralLog extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
-    
+    public String getErrorType() {
+        return errorType;
+    }
+
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Sets the boolean value which determines if the rows are to be sorted in ascending order
@@ -139,7 +139,7 @@ public class GeneralLog extends BaseActionSupport
      /**
      * Sets the name of the column on which the sorting should be performed
       *
-     * @param columnSorted 
+     * @param columnSorted
      */
     public void setColumnSorted(String columnSorted)
     {
@@ -148,14 +148,14 @@ public class GeneralLog extends BaseActionSupport
 
     /**
      * Returns the name of the column on which sorting should be performed
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getColumnSorted()
     {
         return this.columnSorted;
     }
-    
+
     /**
      * Sets the list of log files
      *

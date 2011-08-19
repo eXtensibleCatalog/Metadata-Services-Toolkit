@@ -28,12 +28,12 @@ import xc.mst.dao.DatabaseConfigException;
 public class AddLDAP extends BaseActionSupport
 {
     /**
-	 * Eclipse generated id
-	 */
-	private static final long serialVersionUID = 531062895841167505L;
+     * Eclipse generated id
+     */
+    private static final long serialVersionUID = 531062895841167505L;
 
     /** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**The display name used for the LDAP server **/
     private String displayName;
@@ -55,16 +55,16 @@ public class AddLDAP extends BaseActionSupport
 
     /**Provides the status of the add Operation in the JSP page */
     private String message;
-    
-	/** Error type */
-	private String errorType; 
-	
-	/** Indicates whether to show forgot password URL */
-	private String showForgotPasswordLink;
-	
-	/** URL to forward the user to get forgot password */
-	private String forgotPasswordUrl;
-   
+
+    /** Error type */
+    private String errorType;
+
+    /** Indicates whether to show forgot password URL */
+    private String showForgotPasswordLink;
+
+    /** URL to forward the user to get forgot password */
+    private String forgotPasswordUrl;
+
 
      /**
      * Overrides default implementation to add an LDAP server.
@@ -110,7 +110,7 @@ public class AddLDAP extends BaseActionSupport
         try
         {
             boolean serverExists = false;
-         
+
             List<Server> serverList = getServerService().getAll();
             Iterator<Server> iter = serverList.iterator();
 
@@ -133,12 +133,12 @@ public class AddLDAP extends BaseActionSupport
                 server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                
+
                 if (showForgotPasswordLink.equalsIgnoreCase("yes")) {
-                	server.setForgotPasswordUrl(forgotPasswordUrl);
+                    server.setForgotPasswordUrl(forgotPasswordUrl);
                     server.setShowForgotPasswordLink(true);
                 } else {
-                	server.setForgotPasswordUrl(null);
+                    server.setForgotPasswordUrl(null);
                     server.setShowForgotPasswordLink(false);
                 }
                 if(displayName.equalsIgnoreCase("local"))
@@ -151,7 +151,7 @@ public class AddLDAP extends BaseActionSupport
                 {
                     getServerService().insertServer(server);
                 }
-               
+
             }
             else
             {
@@ -161,14 +161,14 @@ public class AddLDAP extends BaseActionSupport
                 server.setType(Server.ServerType.LDAP);
                 server.setStartLocation(getStartLocation());
                 server.setUserNameAttribute(getUserNameAttribute());
-                
+
                 if (showForgotPasswordLink.equalsIgnoreCase("yes")) {
-                	server.setForgotPasswordUrl(forgotPasswordUrl);
+                    server.setForgotPasswordUrl(forgotPasswordUrl);
                     server.setShowForgotPasswordLink(true);
-	            } else {
-	            	server.setForgotPasswordUrl(null);
+                } else {
+                    server.setForgotPasswordUrl(null);
                     server.setShowForgotPasswordLink(false);
-	            }
+                }
                 if(displayName.equalsIgnoreCase("local"))
                 {
                     this.addFieldError("addLDAPError", "Cannot update a server with name 'Local'. Please choose a different name");
@@ -306,68 +306,68 @@ public class AddLDAP extends BaseActionSupport
      *
      * @return information message
      */
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
     /**
      * Sets the status of the add operation
      *
      * @param message information message
      */
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     /**
      * Returns the temporary server object that is used to display details on the JSP
      *
      * @return server object
      */
-	public Server getServer() {
-		return server;
-	}
+    public Server getServer() {
+        return server;
+    }
 
     /**
      * Sets the temporary server object which is used to display details on the JSP
      *
      * @param server object
      */
-	public void setServer(Server server) {
-		this.server = server;
-	}
+    public void setServer(Server server) {
+        this.server = server;
+    }
 
     /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
-	public String isShowForgotPasswordLink() {
-		return showForgotPasswordLink;
-	}
+    public String isShowForgotPasswordLink() {
+        return showForgotPasswordLink;
+    }
 
-	public void setShowForgotPasswordLink(String showForgotPasswordLink) {
-		this.showForgotPasswordLink = showForgotPasswordLink;
-	}
+    public void setShowForgotPasswordLink(String showForgotPasswordLink) {
+        this.showForgotPasswordLink = showForgotPasswordLink;
+    }
 
-	public String getForgotPasswordUrl() {
-		return forgotPasswordUrl;
-	}
+    public String getForgotPasswordUrl() {
+        return forgotPasswordUrl;
+    }
 
-	public void setForgotPasswordUrl(String forgotPasswordUrl) {
-		this.forgotPasswordUrl = forgotPasswordUrl;
-	}
+    public void setForgotPasswordUrl(String forgotPasswordUrl) {
+        this.forgotPasswordUrl = forgotPasswordUrl;
+    }
 }

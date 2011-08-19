@@ -23,9 +23,9 @@ import xc.mst.constants.Constants;
 public class DisplayOAIRequest extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = 3209874357092858611L;
+    private static final long serialVersionUID = 3209874357092858611L;
 
-	/** The ID of the provider whose related OAI request is being displayed */
+    /** The ID of the provider whose related OAI request is being displayed */
     private int providerId;
 
     /** A reference to the logger for this class */
@@ -36,7 +36,7 @@ public class DisplayOAIRequest extends BaseActionSupport
 
     /**Boolean value which determines whether a harvest has been set up for the provider in question */
     private boolean noHarvestString;
-   
+
 
     /**
      * Overrides default implementation to return the OAI PMH request information pertaining to a repository.
@@ -69,7 +69,7 @@ public class DisplayOAIRequest extends BaseActionSupport
      /**
      * Sets the oai request to be displayed in the JSP
      *
-     * @param oaiRequest oai request 
+     * @param oaiRequest oai request
      */
     public void setOaiRequest(String oaiRequest)
     {

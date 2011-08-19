@@ -16,13 +16,13 @@ YAHOO.xc.mst.services.listServices = {
                 window.location = "pages/logs/downloadLogFile.action?logType="+type+"&id="+id;
             },
 
-	/** 
-	 * initialize the page 
-	 */ 
-	init : function() 
-	{
-	    //YAHOO.xc.mst.services.listServices.createDeleteServiceDialog();
-	}
+  /**
+   * initialize the page
+   */
+  init : function()
+  {
+      //YAHOO.xc.mst.services.listServices.createDeleteServiceDialog();
+  }
 
 }
 

@@ -1,9 +1,9 @@
 <%--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
@@ -14,15 +14,15 @@
 <c:set var="varResume" value="resume"/>
 <c:set var="varAbort" value="abort"/>
 
-<li style="float:left;margin-top:8px;">    
+<li style="float:left;margin-top:8px;">
 <c:if test="${currentProcess!=null}">
-	<c:choose>
+  <c:choose>
             <c:when test="${displayType!=null}">
                     <c:if test="${displayType eq varPause}">
                         <img src="page-resources/img/loading_graphic.gif">
                     </c:if>
                     <c:if test="${displayType eq varResume}">
-                          
+
                     </c:if>
                     <c:if test="${displayType eq varAbort}">
                           <img src="page-resources/img/loading_graphic.gif">
@@ -53,5 +53,5 @@
     <xxx id="currentProcess">No process running</xxx>
 </c:if>
 </li>
- 
+
  </li>

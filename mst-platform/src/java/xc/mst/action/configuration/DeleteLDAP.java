@@ -30,11 +30,11 @@ import xc.mst.dao.DatabaseConfigException;
 public class DeleteLDAP extends BaseActionSupport
 {
     /** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
     /**
      * Returns a temporary server object which is used to display details in the JSP
      *
@@ -69,7 +69,7 @@ public class DeleteLDAP extends BaseActionSupport
         {
             List<Server> serverlist = getServerService().getAll();
             Iterator<Server> serverIter = serverlist.iterator();
-            
+
             if(getUserService().getLDAPUserCount()==0)
             {
                 while(serverIter.hasNext())
@@ -112,17 +112,17 @@ public class DeleteLDAP extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
 }

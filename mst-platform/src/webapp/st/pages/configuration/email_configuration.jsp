@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -27,9 +27,9 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-        
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -46,7 +46,7 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
+    <!-- page header - this uses the yahoo page styling -->
             <div id="hd">
 
                 <!--  this is the header of the page -->
@@ -64,7 +64,7 @@
 
             <!-- body -->
             <div id="bd">
-               
+
 
                 <!-- Display of error message -->
                 <c:if test="${errorType != null}">
@@ -72,19 +72,19 @@
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <c:if test="${errorType == 'error'}">
-                        	<span class="errorText">
+                          <span class="errorText">
                                 <mst:fielderror error="${fieldErrors}">
                                 </mst:fielderror>
                             </span>
-                       	</c:if>
+                         </c:if>
                         <c:if test="${errorType == 'info'}">
-                        	<div class="jsErrorMessage"> ${message}</div>
-                        </c:if>            
+                          <div class="jsErrorMessage"> ${message}</div>
+                        </c:if>
                      </div>
                      </div>
                  </c:if>
                  <div id="error_div"></div>
-                 
+
                 <form action="changeEmailConfig.action" method="post" name="emailConfig">
 
 
@@ -111,27 +111,27 @@
                        </tr>
 
                        <tr>
-                           <td> <B>Encrypted Connection </B>&nbsp;&nbsp; 
-                           
+                           <td> <B>Encrypted Connection </B>&nbsp;&nbsp;
+
                                <br>
                                <SELECT style="width:290px; height:20px;" ID="encryptedConnection" name="encryptedConnection" >
                                   <OPTION  value="none">None</OPTION>
 
-                                  <OPTION value="ssl" 
+                                  <OPTION value="ssl"
                                   <c:if test="${emailConfig.encryptedConnection == 'ssl'}">
-                                  	SELECTED
+                                    SELECTED
                                   </c:if>
                                   >SSL</OPTION>
 
-                                  <OPTION value="tls" 
+                                  <OPTION value="tls"
                                   <c:if test="${emailConfig.encryptedConnection == 'tls'}">
-                                  	selected
+                                    selected
                                   </c:if>
                                   >TLS</OPTION>
 
-                                  <OPTION value="auto" 
+                                  <OPTION value="auto"
                                   <c:if test="${emailConfig.encryptedConnection == 'auto'}">
-                                  	selected
+                                    selected
                                   </c:if>
                                   >AUTO</OPTION>
                                 </SELECT>
@@ -144,10 +144,10 @@
                             <input type="text" id="timeout" name ="timeout" class="textfield" value="${emailConfig.timeout}" maxlength="11" size="45"><br><br></td>
                         </tr>
 
-                       
+
 
                     <br><br><br>
-		<tr><td>
+    <tr><td>
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
                         <button style="width:200px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.email.changeEmailConfig();" name="changeEmailConfig">Update Email Configuration</button>
@@ -158,7 +158,7 @@
                 </form>
             </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>              
+            <c:import url="/st/inc/footer.jsp"/>
         </div>
 
 </body>

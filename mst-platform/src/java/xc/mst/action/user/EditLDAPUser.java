@@ -32,7 +32,7 @@ import xc.mst.dao.DatabaseConfigException;
 public class EditLDAPUser extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -4469959520693478750L;
+    private static final long serialVersionUID = -4469959520693478750L;
 
     /**ID of the LDAP User to be edited */
     private int userId;
@@ -61,9 +61,9 @@ public class EditLDAPUser extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
      /**
      * Overrides default implementation to view the 'add NCIP user' page.
       *
@@ -76,7 +76,7 @@ public class EditLDAPUser extends BaseActionSupport
         {
             User user = getUserService().getUserById(userId);
             setTemporaryUser(user);
-            setGroupList(getGroupService().getAllGroups());            
+            setGroupList(getGroupService().getAllGroups());
             return SUCCESS;
         }
          catch(DatabaseConfigException dce)
@@ -96,7 +96,7 @@ public class EditLDAPUser extends BaseActionSupport
     public String editLDAPUser()
     {
         try
-        {            
+        {
             User user = getUserService().getUserById(userId);
             if(user==null)
             {
@@ -138,9 +138,9 @@ public class EditLDAPUser extends BaseActionSupport
             // Check if user has permissions
             boolean hasPermission = false;
             if (user.getGroups() != null && user.getGroups().size() > 0) {
-            	hasPermission = true;
+                hasPermission = true;
             }
-            
+
             user.removeAllGroups();
             for(int i=0;i<groupsSelected.length;i++)
             {
@@ -165,10 +165,10 @@ public class EditLDAPUser extends BaseActionSupport
                 }
             }
             getUserService().updateUser(user);
-            
+
             // Email user that permissions has been added.
             if (!hasPermission) {
-            	getUserService().sendEmailToUserWithPermissions(user);
+                getUserService().sendEmailToUserWithPermissions(user);
             }
 
 
@@ -191,59 +191,59 @@ public class EditLDAPUser extends BaseActionSupport
         }
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the first name of the user
      *
      * @return first name
      */
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
     /**
      * Sets the first name of the user
      *
      * @param firstName first name
      */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName.trim();
+    }
 
     /**
      * Returns the last name of the user
      *
      * @return last name
      */
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
     /**
      * Sets the last name of the user
-     * 
+     *
      * @param lastName last name
      */
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName.trim();
+    }
 
      /**
      * Assigns the list of groups that a user can belong to

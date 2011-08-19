@@ -23,31 +23,31 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class Logout extends ActionSupport implements ServletRequestAware {
 
-	/** Generated id  */
-	private static final long serialVersionUID = 8874524856047656439L;
+    /** Generated id  */
+    private static final long serialVersionUID = 8874524856047656439L;
 
     /** Request */
     private HttpServletRequest request;
 
-	/**
+    /**
      * Overriding default implementation to logout the user.
      *
      * @return {@link #SUCCESS}
      */
-	public String execute() throws Exception {
+    public String execute() throws Exception {
 
-		request.getSession().setAttribute("user", null);
+        request.getSession().setAttribute("user", null);
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+    /**
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
 }

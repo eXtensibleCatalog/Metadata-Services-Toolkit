@@ -28,11 +28,11 @@ import xc.mst.dao.service.ServiceDAO;
 public class ServiceLog extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -5518728481476078414L;
+    private static final long serialVersionUID = -5518728481476078414L;
 
-	/** The coulmn on which the rows are to be sorted */
+    /** The coulmn on which the rows are to be sorted */
     private String columnSorted="ServiceName";
-    
+
     /** Boolena parameter determines if the rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder=true;
 
@@ -41,9 +41,9 @@ public class ServiceLog extends BaseActionSupport
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
      /**
      * Overrides default implementation to view the Service Logs Page.
@@ -55,7 +55,7 @@ public class ServiceLog extends BaseActionSupport
     {
         try
         {
-            
+
             if(columnSorted.equalsIgnoreCase("ServiceName")||(columnSorted.equalsIgnoreCase("InputRecords"))||(columnSorted.equalsIgnoreCase("OutputRecords"))||(columnSorted.equalsIgnoreCase("Warnings"))||(columnSorted.equalsIgnoreCase("Errors"))||(columnSorted.equalsIgnoreCase("LastLogReset")))
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
@@ -91,7 +91,7 @@ public class ServiceLog extends BaseActionSupport
                 this.addFieldError("generalLogError", "The specified column does not exist");
                 return INPUT;
             }
-                       
+
             return SUCCESS;
 
         }
@@ -109,18 +109,18 @@ public class ServiceLog extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the list of all services

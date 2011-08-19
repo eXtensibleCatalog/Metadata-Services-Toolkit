@@ -22,21 +22,21 @@ import xc.mst.utils.MSTConfiguration;
  * @author Sharmila Ranganathan
  */
 public class HarvestUtil {
-		
-		/**
-		 * Returns the latest harvest end time for the given harvest schedule 
-		 * 
-		 * @param harvestSchedule - Harvest schedule to get the latest harvest end time
-		 * @return Returns the latest harvest end time 
-		 */
-		public static String latestHarvest(HarvestSchedule harvestSchedule) throws Exception
-		{
-			ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
-			
-			Timestamp latestRun = null;
-			
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		
+
+        /**
+         * Returns the latest harvest end time for the given harvest schedule
+         *
+         * @param harvestSchedule - Harvest schedule to get the latest harvest end time
+         * @return Returns the latest harvest end time
+         */
+        public static String latestHarvest(HarvestSchedule harvestSchedule) throws Exception
+        {
+            ScheduleService scheduleService = (ScheduleService)MSTConfiguration.getInstance().getBean("ScheduleService");
+
+            Timestamp latestRun = null;
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
             latestRun = scheduleService.getLatestHarvestEndTime(harvestSchedule);
             format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             String output = "Not yet harvested";
@@ -45,7 +45,7 @@ public class HarvestUtil {
             }
 
             return output;
-		
+
         }
 
         public static String simpleDateFormat(Timestamp timeStamp)

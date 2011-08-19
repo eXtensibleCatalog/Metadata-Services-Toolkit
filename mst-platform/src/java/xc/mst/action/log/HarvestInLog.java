@@ -39,9 +39,9 @@ public class HarvestInLog extends BaseActionSupport
 
     /** List of all providers **/
     private List<Provider> providerList;
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to view the 'Harvest-In Logs' Page.
@@ -75,7 +75,7 @@ public class HarvestInLog extends BaseActionSupport
                 {
                     setProviderList(getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_LOG_RESET));
                 }
-               
+
             }
             else
             {
@@ -100,18 +100,18 @@ public class HarvestInLog extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the list of Providers

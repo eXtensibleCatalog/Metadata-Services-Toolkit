@@ -27,8 +27,8 @@ commands
 
     note: also make sure you've issued the zip command on dependent services.
           eg - before you execute start2finishtest for marctoxctransformation, make
-                 sure you've issued zip on marcnormalization.       
-    
+                 sure you've issued zip on marcnormalization.
+
     test
       runs all tests.  To limit the tests run, add the test param.
         The 2 main tests (besides the above mentioned start2finishtest) are:
@@ -59,7 +59,7 @@ commands
   </target>
   -->
 
-  <target name="echo.normalized.service.name"> 
+  <target name="echo.normalized.service.name">
     <echo>normalized.service.name: ${normalized.service.name}</echo>
   </target>
 
@@ -74,7 +74,7 @@ commands
     <mkdir dir="${ivy.dir}" />
   </target>
   <target name="dev.properties.uptodate">
-    <uptodate property="dev.properties.uptodate" 
+    <uptodate property="dev.properties.uptodate"
       targetfile="dev.properties" srcfile="dev.properties.example" />
     <echo>${dev.properties.uptodate}</echo>
     <antcall target="fail.dev.properties.uptodate" />
@@ -84,11 +84,11 @@ commands
 
 ${service.name}
 ERROR:  The file dev.properties does not exist.  If this is your first time,
-  you must manually copy dev.properties.example (making the necessary 
-  customizations) to dev.properties.  If you've already done that, the 
-  purpose of this failure is to alert you that dev.properties.example 
-  has been updated.  Check the file and manually sync it with your 
-  dev.properties.  Saving dev.properties (updating the timestamp) will 
+  you must manually copy dev.properties.example (making the necessary
+  customizations) to dev.properties.  If you've already done that, the
+  purpose of this failure is to alert you that dev.properties.example
+  has been updated.  Check the file and manually sync it with your
+  dev.properties.  Saving dev.properties (updating the timestamp) will
   resolve this error.
     </fail>
   </target>
@@ -117,7 +117,7 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
 
   <!--  =================================
       target: install-ivy
-     
+
       this target is not necessary if you put ivy.jar in your ant lib directory
       if you already have ivy in your ant lib, you can simply remove this
       target and the dependency the 'go' target has on it
@@ -142,7 +142,7 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
          <tag name="todo" scope="all" description="To do:"/>
          <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
         </javadoc>
-    
+
   </target>
 
   <!-- clean the ivy cache -->
@@ -251,7 +251,7 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
       </fileset>
     </copy>
     <copy todir="${build.classes.services}" file="custom.properties" />
-    <copy tofile="${build.mst-instance.dir}/install.properties" 
+    <copy tofile="${build.mst-instance.dir}/install.properties"
       file="dev.properties" overwrite="true"/>
   </target>
 
@@ -337,7 +337,7 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
   </target>
 
   <target name="mst-sql">
-    <exec executable="${mysql.home}/bin/mysql" 
+    <exec executable="${mysql.home}/bin/mysql"
         input="${build.mst-instance.dir}/sql/create_database_script.sql">
       <arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
     </exec>
@@ -360,9 +360,9 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
 
   <target name="test" depends="install-mst, compile.test, test.nodep" />
   <target name="test.nodep" depends="init.test, init.skip.mst.install, unzip-base-tests, compile.test.nodep">
-    <java classpathref="classpath.test.run" 
+    <java classpathref="classpath.test.run"
         classname="xc.mst.services.test.MetadataServiceSpecificTest"
-        fork="true" 
+        fork="true"
         dir="${build.dir}" >
       <env key="service.name" value="${normalized.service.name}"/>
       <env key="service.test" value="${test}"/>

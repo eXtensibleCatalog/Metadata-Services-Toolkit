@@ -44,7 +44,7 @@ public class ShowGroupMembers extends BaseActionSupport
 
      /**
      * Overrides default implementation to view the page which displays all the members of a group.
-      * 
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -69,7 +69,7 @@ public class ShowGroupMembers extends BaseActionSupport
                     {
                          membershipList = getUserService().getUsersForGroupSorted(tempGroup.getId(),isAscendingOrder,UserDAO.COL_LAST_NAME);
                     }
-                   
+
                     setMembershipList(membershipList);
                     setGroupId(this.groupId);
                     return SUCCESS;
@@ -82,7 +82,7 @@ public class ShowGroupMembers extends BaseActionSupport
             }
             else
             {
-                
+
                 this.addFieldError("showGroupsMembersError", "There is no group with the group ID specified");
                 return INPUT;
             }

@@ -25,52 +25,52 @@ import org.apache.log4j.Logger;
  */
 public class PreviousPageTag extends SimpleTagSupport {
 
-	/** Logger */
-	private static final Logger log = Logger.getLogger(PreviousPageTag.class);
+    /** Logger */
+    private static final Logger log = Logger.getLogger(PreviousPageTag.class);
 
-	public void doTag() throws JspException {
-		log.debug("do tag called");
-		PagerTag pagerTag =
-			 (PagerTag)findAncestorWithClass(this,
-					 PagerTag.class);
+    public void doTag() throws JspException {
+        log.debug("do tag called");
+        PagerTag pagerTag =
+             (PagerTag)findAncestorWithClass(this,
+                     PagerTag.class);
 
-	    if(pagerTag == null)
-	    {
-	    	throw new JspTagException("the <ur:previousPage> tag must"
-	    			+ " be nested within a <ur:pager> tag");
-	    }
+        if(pagerTag == null)
+        {
+            throw new JspTagException("the <ur:previousPage> tag must"
+                    + " be nested within a <ur:pager> tag");
+        }
 
 
-		JspFragment body = getJspBody();
-		PageContext pageContext = (PageContext) getJspContext();
+        JspFragment body = getJspBody();
+        PageContext pageContext = (PageContext) getJspContext();
 
-		try {
-			if (pagerTag.getCurrentPageNumber() != 1 && pagerTag.getTotalPageNumber() > 1) {
+        try {
+            if (pagerTag.getCurrentPageNumber() != 1 && pagerTag.getTotalPageNumber() > 1) {
 
-				if( body != null )
-				{
-					int rowStart = ((pagerTag.getCurrentPageNumber() - 1) * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
-					pageContext.setAttribute("rowStart", rowStart);
+                if( body != null )
+                {
+                    int rowStart = ((pagerTag.getCurrentPageNumber() - 1) * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
+                    pageContext.setAttribute("rowStart", rowStart);
 
-					int startPageNumber = 1;
-					if( pagerTag.getCurrentPageNumber()  == pagerTag.getStartPageNumber() )
-					{
-						startPageNumber = pagerTag.getStartPageNumber() - pagerTag.getNumberOfPagesToShow();
-					}
-					else
-					{
-						startPageNumber = pagerTag.getStartPageNumber();
-					}
+                    int startPageNumber = 1;
+                    if( pagerTag.getCurrentPageNumber()  == pagerTag.getStartPageNumber() )
+                    {
+                        startPageNumber = pagerTag.getStartPageNumber() - pagerTag.getNumberOfPagesToShow();
+                    }
+                    else
+                    {
+                        startPageNumber = pagerTag.getStartPageNumber();
+                    }
 
-					pageContext.setAttribute("prevousPageStartPageNumber", startPageNumber);
-				    body.invoke(null);
-				}
+                    pageContext.setAttribute("prevousPageStartPageNumber", startPageNumber);
+                    body.invoke(null);
+                }
 
-			}
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
+            }
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
 
-	}
+    }
 
 }

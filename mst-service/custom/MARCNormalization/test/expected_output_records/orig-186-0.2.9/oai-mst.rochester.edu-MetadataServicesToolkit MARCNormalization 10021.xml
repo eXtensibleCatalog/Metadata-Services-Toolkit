@@ -1,176 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>01583nem a2200361   45 A</marc:leader>
-	<marc:controlfield tag="001">1225858</marc:controlfield>
-	<marc:controlfield tag="008">771101s1973    wiugc     a     0   eng  </marc:controlfield>
+  <marc:leader>01583nem a2200361   45 A</marc:leader>
+  <marc:controlfield tag="001">1225858</marc:controlfield>
+  <marc:controlfield tag="008">771101s1973    wiugc     a     0   eng  </marc:controlfield>
 
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   77696744 /MAPS</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="010" ind1=" " ind2=" ">
+    <marc:subfield code="a">   77696744 /MAPS</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		
-		<marc:subfield code="a">(OCoLC)5496724</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">01176219</marc:subfield>
-	</marc:datafield>
+    <marc:subfield code="a">(OCoLC)5496724</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">DLC</marc:subfield>
-		<marc:subfield code="d">m/c</marc:subfield>
-		<marc:subfield code="d">RRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="9">01176219</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RRRR</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">DLC</marc:subfield>
+    <marc:subfield code="c">DLC</marc:subfield>
+    <marc:subfield code="d">m/c</marc:subfield>
+    <marc:subfield code="d">RRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="050" ind1="0" ind2=" ">
-		<marc:subfield code="a">G4121.C5 1973</marc:subfield>
-		<marc:subfield code="b">.T7</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="049" ind1=" " ind2=" ">
+    <marc:subfield code="a">RRRR</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="052" ind1=" " ind2=" ">
-		<marc:subfield code="a">4121</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="050" ind1="0" ind2=" ">
+    <marc:subfield code="a">G4121.C5 1973</marc:subfield>
+    <marc:subfield code="b">.T7</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">G4121.C5 1973 .T7</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="052" ind1=" " ind2=" ">
+    <marc:subfield code="a">4121</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Trotta, L. C.</marc:subfield>
-		<marc:subfield code="q">(Lee C.)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="099" ind1=" " ind2=" ">
+    <marc:subfield code="a">G4121.C5 1973 .T7</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Depth to bedrock in Wisconsin.</marc:subfield>
-		<marc:subfield code="c">Compiled by L.C. Trotta and R.D. Cotter, 1973. [Prepared by] Cartographic Laboratory, University of Wisconsin--Madison.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="100" ind1="1" ind2=" ">
+    <marc:subfield code="a">Trotta, L. C.</marc:subfield>
+    <marc:subfield code="q">(Lee C.)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">[Madison]</marc:subfield>
-		<marc:subfield code="b">University of Wisconsin--Extension, Geological and Natural History Survey in cooperation with the U.S. Geological Survey</marc:subfield>
-		<marc:subfield code="c">[1973]</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="0" ind2="0">
+    <marc:subfield code="a">Depth to bedrock in Wisconsin.</marc:subfield>
+    <marc:subfield code="c">Compiled by L.C. Trotta and R.D. Cotter, 1973. [Prepared by] Cartographic Laboratory, University of Wisconsin--Madison.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">col. map.</marc:subfield>
-		<marc:subfield code="c">56 x 54 cm. folded to 16 x 30 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">[Madison]</marc:subfield>
+    <marc:subfield code="b">University of Wisconsin--Extension, Geological and Natural History Survey in cooperation with the U.S. Geological Survey</marc:subfield>
+    <marc:subfield code="c">[1973]</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Alternate title: Wisconsin.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">col. map.</marc:subfield>
+    <marc:subfield code="c">56 x 54 cm. folded to 16 x 30 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Relief shown by spot heights.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Alternate title: Wisconsin.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Depths of bedrock shown by gradient tints.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Relief shown by spot heights.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"Compiled from: Published and unpublished reports of the Wisconsin Geological and Natural History Survey and the U.S. Geological Survey."</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Depths of bedrock shown by gradient tints.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"Base from U.S. Geological Survey, 1:1,000,000; edition of 1968."</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">"Compiled from: Published and unpublished reports of the Wisconsin Geological and Natural History Survey and the U.S. Geological Survey."</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="507" ind1=" " ind2=" ">
-		<marc:subfield code="a">Scale 1:1,000,000;</marc:subfield>
-		<marc:subfield code="b">1 in. equals approx. 16 miles.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">"Base from U.S. Geological Survey, 1:1,000,000; edition of 1968."</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="590" ind1=" " ind2=" ">
-		<marc:subfield code="a">Library's copy in protective enclosure.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="507" ind1=" " ind2=" ">
+    <marc:subfield code="a">Scale 1:1,000,000;</marc:subfield>
+    <marc:subfield code="b">1 in. equals approx. 16 miles.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Geology</marc:subfield>
-		<marc:subfield code="z">Wisconsin</marc:subfield>
-		<marc:subfield code="x">Maps.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="590" ind1=" " ind2=" ">
+    <marc:subfield code="a">Library's copy in protective enclosure.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="700" ind1="1" ind2=" ">
-		<marc:subfield code="a">Cotter, R. D.</marc:subfield>
-		<marc:subfield code="q">(Ralph D.),</marc:subfield>
-		<marc:subfield code="d">1929-</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Geology</marc:subfield>
+    <marc:subfield code="z">Wisconsin</marc:subfield>
+    <marc:subfield code="x">Maps.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">University of Wisconsin--Madison.</marc:subfield>
-		<marc:subfield code="b">Cartographic Laboratory.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="700" ind1="1" ind2=" ">
+    <marc:subfield code="a">Cotter, R. D.</marc:subfield>
+    <marc:subfield code="q">(Ralph D.),</marc:subfield>
+    <marc:subfield code="d">1929-</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="710" ind1="2" ind2=" ">
-		<marc:subfield code="a">Geological Survey (U.S.)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="710" ind1="2" ind2=" ">
+    <marc:subfield code="a">University of Wisconsin--Madison.</marc:subfield>
+    <marc:subfield code="b">Cartographic Laboratory.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">950805</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="710" ind1="2" ind2=" ">
+    <marc:subfield code="a">Geological Survey (U.S.)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">u</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="910" ind1=" " ind2=" ">
+    <marc:subfield code="a">950805</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">Cstack</marc:subfield>
-		<marc:subfield code="m">SCIMON</marc:subfield>
-		<marc:subfield code="s">G4121.C5 1973 .T7</marc:subfield>
-		<marc:subfield code="b">39087011114677</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="911" ind1=" " ind2=" ">
+    <marc:subfield code="a">u</marc:subfield>
+  </marc:datafield>
+
+  <marc:datafield tag="966" ind1=" " ind2=" ">
+    <marc:subfield code="l">Cstack</marc:subfield>
+    <marc:subfield code="m">SCIMON</marc:subfield>
+    <marc:subfield code="s">G4121.C5 1973 .T7</marc:subfield>
+    <marc:subfield code="b">39087011114677</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Cartographic material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Cartographic material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Monograph/Item</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">English</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:controlfield tag="003">NRU</marc:controlfield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)1225858</marc:subfield>
+  <marc:subfield code="a">(NRU)1225858</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Depth to bedrock in Wisconsin.</marc:subfield>
+  <marc:subfield code="a">Depth to bedrock in Wisconsin.</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Geology</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Geology</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Maps.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="x">Maps.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="z">Wisconsin</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="z">Wisconsin</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 </marc:record>

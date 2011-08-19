@@ -29,9 +29,9 @@ import xc.mst.dao.service.ServiceDAO;
 public class HarvestOutLog extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -3510624101788171450L;
+    private static final long serialVersionUID = -3510624101788171450L;
 
-	/**The column on which the rows are to be sorted */
+    /**The column on which the rows are to be sorted */
     private String columnSorted="ServiceName";
 
     /** boolean parameter determines if the rows are to sorted in ascending or descending order */
@@ -42,9 +42,9 @@ public class HarvestOutLog extends BaseActionSupport
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
      /**
      * Overrides default implementation to view the Service Logs Page.
@@ -60,27 +60,27 @@ public class HarvestOutLog extends BaseActionSupport
             {
                 if(columnSorted.equalsIgnoreCase("ServiceName"))
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_SERVICE_NAME);
                 }
                 else if(columnSorted.equalsIgnoreCase("Warnings"))
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_WARNINGS);
                 }
                 else if(columnSorted.equalsIgnoreCase("Errors"))
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_ERRORS);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsAvailable"))
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_AVAILABLE);
                 }
                 else if(columnSorted.equalsIgnoreCase("RecordsHarvested"))
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_RECORDS_HARVESTED);
                 }
                 else
                 {
-                	services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
+                    services = getServicesService().getAllServicesSorted(isAscendingOrder,ServiceDAO.COL_HARVEST_OUT_LAST_LOG_RESET);
                 }
 
             }
@@ -91,7 +91,7 @@ public class HarvestOutLog extends BaseActionSupport
              setIsAscendingOrder(isAscendingOrder);
              setColumnSorted(columnSorted);
              return SUCCESS;
-            
+
         }
         catch(DatabaseConfigException dce)
         {
@@ -107,18 +107,18 @@ public class HarvestOutLog extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the list of all services

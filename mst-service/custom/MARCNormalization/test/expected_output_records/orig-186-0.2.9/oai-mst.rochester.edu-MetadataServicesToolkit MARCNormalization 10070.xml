@@ -1,218 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>01893cas a2200409 a 4500</marc:leader>
-	<marc:controlfield tag="001">2257790</marc:controlfield>
-	<marc:controlfield tag="005">20030427075436.0</marc:controlfield>
-	<marc:controlfield tag="007">cr un-</marc:controlfield>
-	<marc:controlfield tag="008">810629c19649999dcuar    s   f0    0eng d</marc:controlfield>
+  <marc:leader>01893cas a2200409 a 4500</marc:leader>
+  <marc:controlfield tag="001">2257790</marc:controlfield>
+  <marc:controlfield tag="005">20030427075436.0</marc:controlfield>
+  <marc:controlfield tag="007">cr un-</marc:controlfield>
+  <marc:controlfield tag="008">810629c19649999dcuar    s   f0    0eng d</marc:controlfield>
 
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">sn 87042357 </marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="010" ind1=" " ind2=" ">
+    <marc:subfield code="a">sn 87042357 </marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)7537123</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)7537123</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">2257790</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">2257790</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="037" ind1=" " ind2=" ">
-		<marc:subfield code="b">Supt. of Docs., U.S. Govt. Print. Off., Washington, D.C. 20402</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="037" ind1=" " ind2=" ">
+    <marc:subfield code="b">Supt. of Docs., U.S. Govt. Print. Off., Washington, D.C. 20402</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">GPO</marc:subfield>
-		<marc:subfield code="c">GPO</marc:subfield>
-		<marc:subfield code="d">GPO</marc:subfield>
-		<marc:subfield code="d">IUL</marc:subfield>
-		<marc:subfield code="d">GPO</marc:subfield>
-		<marc:subfield code="d">IUL</marc:subfield>
-		<marc:subfield code="d">CUS</marc:subfield>
-		<marc:subfield code="d">GPO</marc:subfield>
-		<marc:subfield code="d">DLC</marc:subfield>
-		<marc:subfield code="d">MvI</marc:subfield>
-		<marc:subfield code="d">MvI</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">GPO</marc:subfield>
+    <marc:subfield code="c">GPO</marc:subfield>
+    <marc:subfield code="d">GPO</marc:subfield>
+    <marc:subfield code="d">IUL</marc:subfield>
+    <marc:subfield code="d">GPO</marc:subfield>
+    <marc:subfield code="d">IUL</marc:subfield>
+    <marc:subfield code="d">CUS</marc:subfield>
+    <marc:subfield code="d">GPO</marc:subfield>
+    <marc:subfield code="d">DLC</marc:subfield>
+    <marc:subfield code="d">MvI</marc:subfield>
+    <marc:subfield code="d">MvI</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="042" ind1=" " ind2=" ">
-		<marc:subfield code="a">lcd</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="042" ind1=" " ind2=" ">
+    <marc:subfield code="a">lcd</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="043" ind1=" " ind2=" ">
-		<marc:subfield code="a">n-us-ga</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="043" ind1=" " ind2=" ">
+    <marc:subfield code="a">n-us-ga</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="074" ind1=" " ind2=" ">
-		<marc:subfield code="a">0133-A-10</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="074" ind1=" " ind2=" ">
+    <marc:subfield code="a">0133-A-10</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="074" ind1=" " ind2=" ">
-		<marc:subfield code="a">0133-A-10 (online)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="074" ind1=" " ind2=" ">
+    <marc:subfield code="a">0133-A-10 (online)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="086" ind1="0" ind2=" ">
-		<marc:subfield code="a">C 3.204:</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="086" ind1="0" ind2=" ">
+    <marc:subfield code="a">C 3.204:</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="086" ind1="0" ind2=" ">
-		<marc:subfield code="a">C 3.204/3-12:</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="086" ind1="0" ind2=" ">
+    <marc:subfield code="a">C 3.204/3-12:</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">County business patterns, Georgia.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="0" ind2="0">
+    <marc:subfield code="a">County business patterns, Georgia.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">Washington, D.C. :</marc:subfield>
-		<marc:subfield code="b">U.S. Dept. of Commerce, Bureau of the Census :</marc:subfield>
-		<marc:subfield code="b">For sale by the Supt. of Docs., U.S. G.P.O.,</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">Washington, D.C. :</marc:subfield>
+    <marc:subfield code="b">U.S. Dept. of Commerce, Bureau of the Census :</marc:subfield>
+    <marc:subfield code="b">For sale by the Supt. of Docs., U.S. G.P.O.,</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">v. :</marc:subfield>
-		<marc:subfield code="b">ill. ;</marc:subfield>
-		<marc:subfield code="c">28 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">v. :</marc:subfield>
+    <marc:subfield code="b">ill. ;</marc:subfield>
+    <marc:subfield code="c">28 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="310" ind1=" " ind2=" ">
-		<marc:subfield code="a">Annual</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="310" ind1=" " ind2=" ">
+    <marc:subfield code="a">Annual</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="362" ind1="1" ind2=" ">
-		<marc:subfield code="a">Began with 1964.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="362" ind1="1" ind2=" ">
+    <marc:subfield code="a">Began with 1964.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Description based on: 1979.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Description based on: 1979.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="530" ind1=" " ind2=" ">
-		<marc:subfield code="a">Some issues also available via Internet from the Census Bureau web site. Address as of 08/04/00: http://www.census.gov/prod/www/abs/cbptotal.html; current access available via PURL.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="530" ind1=" " ind2=" ">
+    <marc:subfield code="a">Some issues also available via Internet from the Census Bureau web site. Address as of 08/04/00: http://www.census.gov/prod/www/abs/cbptotal.html; current access available via PURL.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="580" ind1=" " ind2=" ">
-		<marc:subfield code="a">Data also included in CD-ROM publication: County business patterns.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="580" ind1=" " ind2=" ">
+    <marc:subfield code="a">Data also included in CD-ROM publication: County business patterns.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Industrial statistics</marc:subfield>
-		<marc:subfield code="z">Georgia</marc:subfield>
-		<marc:subfield code="v">Periodicals.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Industrial statistics</marc:subfield>
+    <marc:subfield code="z">Georgia</marc:subfield>
+    <marc:subfield code="v">Periodicals.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="780" ind1="0" ind2="1">
-		<marc:subfield code="t">County business patterns. Pt. 6B, South Atlantic states, Florida, Georgia, North Carolina, South Carolina</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="780" ind1="0" ind2="1">
+    <marc:subfield code="t">County business patterns. Pt. 6B, South Atlantic states, Florida, Georgia, North Carolina, South Carolina</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="787" ind1="1" ind2=" ">
-		<marc:subfield code="t">County business patterns</marc:subfield>
-		<marc:subfield code="w">(DLC)   92644462</marc:subfield>
-		<marc:subfield code="w">(OCoLC)23018656</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="787" ind1="1" ind2=" ">
+    <marc:subfield code="t">County business patterns</marc:subfield>
+    <marc:subfield code="w">(DLC)   92644462</marc:subfield>
+    <marc:subfield code="w">(OCoLC)23018656</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="710" ind1="1" ind2=" ">
-		<marc:subfield code="a">United States.</marc:subfield>
-		<marc:subfield code="b">Bureau of the Census.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="710" ind1="1" ind2=" ">
+    <marc:subfield code="a">United States.</marc:subfield>
+    <marc:subfield code="b">Bureau of the Census.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="850" ind1=" " ind2=" ">
-		<marc:subfield code="a">InU</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="850" ind1=" " ind2=" ">
+    <marc:subfield code="a">InU</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="1">
-		<marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS547</marc:subfield>
-		<marc:subfield code="z">Scroll down to "Georgia" and click on desired issue (requires Adobe Acrobat software, which is available for download)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="1">
+    <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS547</marc:subfield>
+    <marc:subfield code="z">Scroll down to "Georgia" and click on desired issue (requires Adobe Acrobat software, which is available for download)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="949" ind1=" " ind2=" ">
-		<marc:subfield code="l">DocSuDoc</marc:subfield>
-		<marc:subfield code="m">Gov Doc</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="949" ind1=" " ind2=" ">
+    <marc:subfield code="l">DocSuDoc</marc:subfield>
+    <marc:subfield code="m">Gov Doc</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="949" ind1=" " ind2=" ">
-		<marc:subfield code="l">Internet</marc:subfield>
-		<marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS547</marc:subfield>
-		<marc:subfield code="z">Scroll down to "Georgia" and click on desired issue (requires Adobe Acrobat software, which is available for download)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="949" ind1=" " ind2=" ">
+    <marc:subfield code="l">Internet</marc:subfield>
+    <marc:subfield code="u">http://purl.access.gpo.gov/GPO/LPS547</marc:subfield>
+    <marc:subfield code="z">Scroll down to "Georgia" and click on desired issue (requires Adobe Acrobat software, which is available for download)</marc:subfield>
+  </marc:datafield>
 
-	
+
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Language material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Serial</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Serial</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Electronic resource</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Electronic resource</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="934" ind1=" " ind2=" ">
-	<marc:subfield code="a">Remote</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Remote</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Non-Fiction</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="939" ind1=" " ind2=" ">
-	<marc:subfield code="a">1964-    </marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">1964-    </marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">English</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:controlfield tag="003">NRU</marc:controlfield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)2257790</marc:subfield>
+  <marc:subfield code="a">(NRU)2257790</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="130" ind1="0" ind2=" ">
-	<marc:subfield code="a">County business patterns, Georgia.</marc:subfield>
+  <marc:subfield code="a">County business patterns, Georgia.</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Industrial statistics</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Industrial statistics</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="z">Georgia</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="z">Georgia</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="969" ind1=" " ind2="0">
-	<marc:subfield code="v">Periodicals.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="v">Periodicals.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 </marc:record>

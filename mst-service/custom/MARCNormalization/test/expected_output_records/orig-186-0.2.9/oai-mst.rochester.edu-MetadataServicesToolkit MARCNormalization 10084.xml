@@ -1,185 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>02008cam a2200361 i 4500</marc:leader>
-	<marc:controlfield tag="001">2604581</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="005">20071005134016.0</marc:controlfield>
-	<marc:controlfield tag="007">cr bn ---||||a</marc:controlfield>
-	<marc:controlfield tag="008">040322s2000    dcu      l   f000 0 eng d</marc:controlfield>
+  <marc:leader>02008cam a2200361 i 4500</marc:leader>
+  <marc:controlfield tag="001">2604581</marc:controlfield>
+  <marc:controlfield tag="003">NRU</marc:controlfield>
+  <marc:controlfield tag="005">20071005134016.0</marc:controlfield>
+  <marc:controlfield tag="007">cr bn ---||||a</marc:controlfield>
+  <marc:controlfield tag="008">040322s2000    dcu      l   f000 0 eng d</marc:controlfield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">(OCoLC)48653159</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">(OCoLC)48653159</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="a">2604581</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="a">2604581</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="043" ind1=" " ind2=" ">
-		<marc:subfield code="a">n-us---</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="043" ind1=" " ind2=" ">
+    <marc:subfield code="a">n-us---</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="074" ind1=" " ind2=" ">
-		<marc:subfield code="a">0575</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="074" ind1=" " ind2=" ">
+    <marc:subfield code="a">0575</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="074" ind1=" " ind2=" ">
-		<marc:subfield code="a">0575 (online)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="074" ind1=" " ind2=" ">
+    <marc:subfield code="a">0575 (online)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="086" ind1="0" ind2=" ">
-		<marc:subfield code="a">AE 2.110:106-221</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="086" ind1="0" ind2=" ">
+    <marc:subfield code="a">AE 2.110:106-221</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="088" ind1=" " ind2=" ">
-		<marc:subfield code="a">Public Law 106-221</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="088" ind1=" " ind2=" ">
+    <marc:subfield code="a">Public Law 106-221</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="110" ind1="1" ind2=" ">
-		<marc:subfield code="a">United States.</marc:subfield>
-		<marc:subfield code="4">aut</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="110" ind1="1" ind2=" ">
+    <marc:subfield code="a">United States.</marc:subfield>
+    <marc:subfield code="4">aut</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="1" ind2="3">
-		<marc:subfield code="a">An act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="1" ind2="3">
+    <marc:subfield code="a">An act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="246" ind1="3" ind2=" ">
-		<marc:subfield code="a">Wellton-Mohawk Transfer Act</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="246" ind1="3" ind2=" ">
+    <marc:subfield code="a">Wellton-Mohawk Transfer Act</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">[Washington, D.C. :</marc:subfield>
-		<marc:subfield code="b">U.S. G.P.O. :</marc:subfield>
-		<marc:subfield code="b">Supt. of Docs., U.S. G.P.O., distributor,</marc:subfield>
-		<marc:subfield code="c">2000]</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">[Washington, D.C. :</marc:subfield>
+    <marc:subfield code="b">U.S. G.P.O. :</marc:subfield>
+    <marc:subfield code="b">Supt. of Docs., U.S. G.P.O., distributor,</marc:subfield>
+    <marc:subfield code="c">2000]</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">[2] p. ;</marc:subfield>
-		<marc:subfield code="c">24 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">[2] p. ;</marc:subfield>
+    <marc:subfield code="c">24 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"114 Stat. 351."</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">"114 Stat. 351."</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"June 20, 2000, (S. 356)."</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">"June 20, 2000, (S. 356)."</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">"Public Law 106-221."</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">"Public Law 106-221."</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Caption title.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Caption title.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="530" ind1=" " ind2=" ">
-		<marc:subfield code="a">Also available via Internet from the GPO Access web site. Addresses as of 3/22/04: http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.106&amp;directory=/disk3/wais/data/106_cong_public_laws (text file), http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.pdf&amp;directory=/disk3/wais/data/106_cong_public_laws (PDF file).</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="530" ind1=" " ind2=" ">
+    <marc:subfield code="a">Also available via Internet from the GPO Access web site. Addresses as of 3/22/04: http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.106&amp;directory=/disk3/wais/data/106_cong_public_laws (text file), http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.pdf&amp;directory=/disk3/wais/data/106_cong_public_laws (PDF file).</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="610" ind1="2" ind2="0">
-		<marc:subfield code="a">Gila Project (U.S.)</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="610" ind1="2" ind2="0">
+    <marc:subfield code="a">Gila Project (U.S.)</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="610" ind1="2" ind2="0">
-		<marc:subfield code="a">Wellton-Mohawk Irrigation and Drainage District.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="610" ind1="2" ind2="0">
+    <marc:subfield code="a">Wellton-Mohawk Irrigation and Drainage District.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Land titles</marc:subfield>
-		<marc:subfield code="x">Registration and transfer</marc:subfield>
-		<marc:subfield code="z">Arizona.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Land titles</marc:subfield>
+    <marc:subfield code="x">Registration and transfer</marc:subfield>
+    <marc:subfield code="z">Arizona.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="1">
-		<marc:subfield code="3">PDF version:</marc:subfield>
-		<marc:subfield code="u">http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.pdf&amp;directory=/disk3/wais/data/106_cong_public_laws</marc:subfield>
-		<marc:subfield code="z">Adobe Acrobat Reader required</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="1">
+    <marc:subfield code="3">PDF version:</marc:subfield>
+    <marc:subfield code="u">http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.pdf&amp;directory=/disk3/wais/data/106_cong_public_laws</marc:subfield>
+    <marc:subfield code="z">Adobe Acrobat Reader required</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="856" ind1="4" ind2="1">
-		<marc:subfield code="3">Text version:</marc:subfield>
-		<marc:subfield code="u">http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.106&amp;directory=/disk3/wais/data/106_cong_public_laws</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="856" ind1="4" ind2="1">
+    <marc:subfield code="3">Text version:</marc:subfield>
+    <marc:subfield code="u">http://frwebgate.access.gpo.gov/cgi-bin/useftp.cgi?IPaddress=162.140.64.88&amp;filename=publ221.106&amp;directory=/disk3/wais/data/106_cong_public_laws</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="999" ind1=" " ind2=" ">
-		<marc:subfield code="a">Text data RCL Internet GovDocs</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="999" ind1=" " ind2=" ">
+    <marc:subfield code="a">Text data RCL Internet GovDocs</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Language material</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Language material</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Text</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Text</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Monograph/Item</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)2604581</marc:subfield>
+  <marc:subfield code="a">(NRU)2604581</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Electronic resource</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Electronic resource</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="934" ind1=" " ind2=" ">
-	<marc:subfield code="a">Remote</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Remote</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="937" ind1=" " ind2=" ">
-	<marc:subfield code="a">Non-Fiction</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Non-Fiction</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="941" ind1=" " ind2=" ">
-	<marc:subfield code="a">eng</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="943" ind1=" " ind2=" ">
-	<marc:subfield code="a">English</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">English</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="240" ind1="0" ind2="0">
-	<marc:subfield code="a">Act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
+  <marc:subfield code="a">Act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Land titles</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Land titles</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Registration and transfer</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="x">Registration and transfer</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="967" ind1=" " ind2="0">
-	<marc:subfield code="z">Arizona.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="z">Arizona.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="246" ind1="3" ind2="0">
-	<marc:subfield code="a">Act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
+  <marc:subfield code="a">Act to authorize the Secretary of the Interior to convey certain works, facilities, and titles of the Gila Project, and designated lands within or adjacent to the Gila Project, to the Wellton-Mohawk Irrigation and Drainage District, and for other purposes.</marc:subfield>
 </marc:datafield>
 
 </marc:record>

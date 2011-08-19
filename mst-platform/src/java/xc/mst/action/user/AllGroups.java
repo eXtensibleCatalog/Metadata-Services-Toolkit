@@ -30,9 +30,9 @@ import xc.mst.dao.user.GroupDAO;
 public class AllGroups extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = -6634790751181787459L;
+    private static final long serialVersionUID = -6634790751181787459L;
 
-	/** determines whether the columns are to be sorted in ascending or descending order  */
+    /** determines whether the columns are to be sorted in ascending or descending order  */
     private boolean isAscendingOrder = true;
 
     /** determines the column on which the rows are to be sorted */
@@ -44,9 +44,9 @@ public class AllGroups extends BaseActionSupport
     /** The list of groups that a user can belong to */
     private List<Group> groupList;
 
-	/** Error type */
-	private String errorType; 
-	
+    /** Error type */
+    private String errorType;
+
      /**
      * Overrides default implementation to view the all groups page.
       *
@@ -69,7 +69,7 @@ public class AllGroups extends BaseActionSupport
                 {
                      tempList = getGroupService().getAllGroupsSorted(isAscendingOrder, GroupDAO.COL_DESCRIPTION);
                 }
-               
+
                 List<Group> finalList = new ArrayList<Group>();
 
                 Iterator<Group> iter = tempList.iterator();
@@ -101,23 +101,23 @@ public class AllGroups extends BaseActionSupport
 
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Assigns the list of groups that a user can belong to
@@ -178,6 +178,6 @@ public class AllGroups extends BaseActionSupport
     {
         return this.columnSorted;
     }
-    
-     
+
+
 }

@@ -18,29 +18,29 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
 public class QuickTest extends BaseMetadataServiceTest {
-	
-	protected String getServiceName() {
-		return "MARCNormalization";
-	}
-	
-	protected String getRepoName() {
-		return "test_repo";
-	}
-	
-	@Test
-	public void quickTest() {
-		Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
+
+    protected String getServiceName() {
+        return "MARCNormalization";
+    }
+
+    protected String getRepoName() {
+        return "test_repo";
+    }
+
+    @Test
+    public void quickTest() {
+        Repository repo = (Repository)MSTConfiguration.getInstance().getBean("Repository");
         repo.setName(getRepoName());
-		TLongHashSet predecessors = new TLongHashSet();
-		repo.populatePredecessors(predecessors);
-		LOG.debug(getRepoName()+".predecessors: "+predecessors);
-		LOG.debug(new Util().getString(predecessors));
-		
+        TLongHashSet predecessors = new TLongHashSet();
+        repo.populatePredecessors(predecessors);
+        LOG.debug(getRepoName()+".predecessors: "+predecessors);
+        LOG.debug(new Util().getString(predecessors));
+
         repo.setName(getServiceName());
         predecessors.clear();
-		repo.populatePredecessors(predecessors);
-		LOG.debug(getServiceName()+".predecessors: "+predecessors);
-		LOG.debug(new Util().getString(predecessors));
-	}
+        repo.populatePredecessors(predecessors);
+        LOG.debug(getServiceName()+".predecessors: "+predecessors);
+        LOG.debug(new Util().getString(predecessors));
+    }
 
 }

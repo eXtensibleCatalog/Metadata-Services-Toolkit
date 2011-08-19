@@ -42,8 +42,8 @@ public class HarvestOutReset extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to reset the 'Harvest-Out Logs' for a service.
@@ -75,14 +75,14 @@ public class HarvestOutReset extends BaseActionSupport
         }
         catch(DatabaseConfigException dce)
         {
-            log.error(dce.getMessage(),dce);            
+            log.error(dce.getMessage(),dce);
             this.addFieldError("HarvestOutLogReset", "Unable to connect to the database. Database Configuration may be incorrect");
             errorType = "error";
             return SUCCESS;
         }
         catch(DataException de)
         {
-            log.error(de.getMessage(),de);            
+            log.error(de.getMessage(),de);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -90,7 +90,7 @@ public class HarvestOutReset extends BaseActionSupport
         }
         catch(FileNotFoundException fe)
         {
-            log.error(fe.getMessage(),fe);           
+            log.error(fe.getMessage(),fe);
             this.addFieldError("HarvestOutLogReset", "Error Occurred while resetting harvest-out log. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -111,7 +111,7 @@ public class HarvestOutReset extends BaseActionSupport
             Iterator<Service> harvIter = serviceList.iterator();
             while(harvIter.hasNext())
             {
-                
+
                 Service tempService = (Service)harvIter.next();
                 tempService.setHarvestOutLastLogReset(new Date());
                 tempService.setHarvestOutWarnings(0);
@@ -122,7 +122,7 @@ public class HarvestOutReset extends BaseActionSupport
                 PrintWriter printWriter = new PrintWriter(filename);
                 printWriter.close();
             }
-           
+
             return SUCCESS;
         }
         catch(DatabaseConfigException dce)
@@ -195,16 +195,16 @@ public class HarvestOutReset extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

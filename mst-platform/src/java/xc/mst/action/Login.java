@@ -37,18 +37,18 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class Login extends BaseActionSupport implements ServletRequestAware {
 
-	/**
-	 * Generated id
-	 */
-	private static final long serialVersionUID = -6850951668228864727L;
+    /**
+     * Generated id
+     */
+    private static final long serialVersionUID = -6850951668228864727L;
 
-	/** User name for the user */
-	private String userName;
+    /** User name for the user */
+    private String userName;
 
-	/** Password for the user */
-	private String password;
+    /** Password for the user */
+    private String password;
 
-	/** User logged in */
+    /** User logged in */
     private User user;
 
     /** Request */
@@ -63,17 +63,17 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
     /** Server selected */
     private String serverName;
 
-	/** A reference to the logger for this class */
-	private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    private static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType;
-	
-	/**  Object used to read properties from the default configuration file */
-	protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
-	
-	/**  Indicates if error in configuration */
-	public boolean configurationError = false;
+    /** Error type */
+    private String errorType;
+
+    /**  Object used to read properties from the default configuration file */
+    protected static final Configuration defaultConfiguration = ConfigurationManager.getConfiguration();
+
+    /**  Indicates if error in configuration */
+    public boolean configurationError = false;
 
 
     /**
@@ -82,99 +82,99 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
      * @return {@link #SUCCESS}
      */
     @Override
-	public String execute() throws DataException {
-    	try {
-    		servers = getServerService().getAll();
-    	}  catch (DatabaseConfigException dce) {
-    		if (!MSTConfiguration.mstInstanceFolderExist) {
-    			addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
-    			log.error(defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
-    		} else if (!MSTConfiguration.currentInstanceFolderExist) {
-    			int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
-    			String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
-    			addFieldError("currentInstancesFolderError", instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
-    			log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
-    		} else {
-	    		log.error(dce.getMessage(), dce);
-	    		addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
-    		}
-    		configurationError = true;
-    		errorType = "error";
-			return INPUT;
-    	}
+    public String execute() throws DataException {
+        try {
+            servers = getServerService().getAll();
+        }  catch (DatabaseConfigException dce) {
+            if (!MSTConfiguration.mstInstanceFolderExist) {
+                addFieldError("instancesFolderError", defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+                log.error(defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + " folder is missing under tomcat working directory. Please refer to MST installation manual for configuring correctly.");
+            } else if (!MSTConfiguration.currentInstanceFolderExist) {
+                int beginIndex = MSTConfiguration.getUrlPath().indexOf(MSTConfiguration.FILE_SEPARATOR);
+                String instanceFolderName = MSTConfiguration.getUrlPath().substring(beginIndex + 1);
+                addFieldError("currentInstancesFolderError", instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/" + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+                log.error(instanceFolderName + " folder is missing under &lt;tomcat-working-directory&gt;/"  + defaultConfiguration.getProperty(Constants.INSTANCES_FOLDER_NAME) + ". Please refer to MST installation manual for configuring correctly.");
+            } else {
+                log.error(dce.getMessage(), dce);
+                addFieldError("dbConfigError", "Unable to access the database to get Server type information. There may be problem with database configuration.");
+            }
+            configurationError = true;
+            errorType = "error";
+            return INPUT;
+        }
 
-    	// Get the user object in session
-		User sessionUser = (User) request.getSession().getAttribute("user");
+        // Get the user object in session
+        User sessionUser = (User) request.getSession().getAttribute("user");
 
-		if (log.isDebugEnabled()) {
-			log.debug("User in session: " + sessionUser);
-		}
+        if (log.isDebugEnabled()) {
+            log.debug("User in session: " + sessionUser);
+        }
 
-		// If user exist in session then forward to page for which user has permission
-		if (sessionUser != null) {
+        // If user exist in session then forward to page for which user has permission
+        if (sessionUser != null) {
 
             List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(sessionUser);
 
             if (permissions != null) {
-            	if (permissions.size() == 0) {
-            		return "no-permission";
-            	} else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
-	            	setForwardLink("allRepository.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
-	            	setForwardLink("allSchedules.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
-	            	setForwardLink("listServices.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
-	            	setForwardLink("listProcessingDirectives.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
-	            	setForwardLink("viewBrowseRecords.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
-	            	setForwardLink("generalLog.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
-	            	setForwardLink("allUsers.action");
-	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
-	            	setForwardLink("viewEmailConfig.action");
-	            } else {
-	            	return "no-permission";
-	            }
+                if (permissions.size() == 0) {
+                    return "no-permission";
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
+                    setForwardLink("allRepository.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
+                    setForwardLink("allSchedules.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
+                    setForwardLink("listServices.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
+                    setForwardLink("listProcessingDirectives.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
+                    setForwardLink("viewBrowseRecords.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
+                    setForwardLink("generalLog.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
+                    setForwardLink("allUsers.action");
+                } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
+                    setForwardLink("viewEmailConfig.action");
+                } else {
+                    return "no-permission";
+                }
             }
             if (log.isDebugEnabled()) {
-            	log.debug("User exist in session. User forwarded to : " + forwardLink);
+                log.debug("User exist in session. User forwarded to : " + forwardLink);
             }
 
             return "user-initial-page";
-		}
+        }
 
-    	return SUCCESS;
+        return SUCCESS;
     }
 
-	/**
+    /**
      * Logs the user in to the system
      */
-	public String login() throws Exception {
+    public String login() throws Exception {
 
-		if (log.isDebugEnabled()) {
-			log.debug("Trying to login username :" + userName);
-		}
-		Server server = getServerService().getServerByName(serverName);
+        if (log.isDebugEnabled()) {
+            log.debug("Trying to login username :" + userName);
+        }
+        Server server = getServerService().getServerByName(serverName);
         user = getUserService().getUserByUserName(userName, server);
 
-		boolean result = false;
-		String resultName = INPUT;
+        boolean result = false;
+        String resultName = INPUT;
 
-		if (user != null) {
-			if (server.getName().equalsIgnoreCase("local")) {
-				result = getUserService().authenticateUser(user, password);
-			} else {
-				result = getUserService().authenticateLDAPUser(user, password, server);
-			}
+        if (user != null) {
+            if (server.getName().equalsIgnoreCase("local")) {
+                result = getUserService().authenticateUser(user, password);
+            } else {
+                result = getUserService().authenticateLDAPUser(user, password, server);
+            }
 
-			User completeUserData = getUserService().getUserById(user.getId());
-			if (result) {
-				// Place the user object in session
-				request.getSession().setAttribute("user", completeUserData);
-				user.setLastLogin(new Date());
-				getUserService().updateUser(user);
+            User completeUserData = getUserService().getUserById(user.getId());
+            if (result) {
+                // Place the user object in session
+                request.getSession().setAttribute("user", completeUserData);
+                user.setLastLogin(new Date());
+                getUserService().updateUser(user);
 
                 //get Calendar instance
                 Calendar now = Calendar.getInstance();
@@ -183,94 +183,94 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
                 //display current TimeZone using getDisplayName() method of TimeZone class
                 request.getSession().setAttribute("timeZone",timeZone.getDisplayName());
 
-				List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(completeUserData);
+                List<Permission> permissions = getUserService().getPermissionsForUserByTabOrderAsc(completeUserData);
 
                 if (permissions != null) {
-                	if (permissions.size() == 0) {
-                		return "no-permission";
-                	} else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
-    	            	setForwardLink("allRepository.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
-    	            	setForwardLink("allSchedules.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
-    	            	setForwardLink("listServices.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
-    	            	setForwardLink("listProcessingDirectives.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
-    	            	setForwardLink("viewBrowseRecords.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
-    	            	setForwardLink("generalLog.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
-    	            	setForwardLink("allUsers.action");
-    	            } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
-    	            	setForwardLink("viewEmailConfig.action");
-    	            } else {
-    	            	return "no-permission";
-    	            }
+                    if (permissions.size() == 0) {
+                        return "no-permission";
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Repositories")) {
+                        setForwardLink("allRepository.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Harvest")) {
+                        setForwardLink("allSchedules.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Services")) {
+                        setForwardLink("listServices.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Processing Rules")) {
+                        setForwardLink("listProcessingDirectives.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Browse Records")) {
+                        setForwardLink("viewBrowseRecords.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Logs")) {
+                        setForwardLink("generalLog.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Users/Groups")) {
+                        setForwardLink("allUsers.action");
+                    } else if (permissions.get(0).getTabName().equalsIgnoreCase("Configuration")) {
+                        setForwardLink("viewEmailConfig.action");
+                    } else {
+                        return "no-permission";
+                    }
                 } else {
-                	return "no-permission";
+                    return "no-permission";
                 }
 
-				resultName = SUCCESS;
-			} else {
-				servers = getServerService().getAll();
-				addFieldError("loginError", "Invalid username / password. Please try again");
-				errorType = "error";
-				resultName = INPUT;
-			}
-		} else {
-			servers = getServerService().getAll();
-			addFieldError("loginError", "Invalid username / password. Please try again");
-			errorType = "error";
-			resultName = INPUT;
-		}
-		return resultName;
-	}
+                resultName = SUCCESS;
+            } else {
+                servers = getServerService().getAll();
+                addFieldError("loginError", "Invalid username / password. Please try again");
+                errorType = "error";
+                resultName = INPUT;
+            }
+        } else {
+            servers = getServerService().getAll();
+            addFieldError("loginError", "Invalid username / password. Please try again");
+            errorType = "error";
+            resultName = INPUT;
+        }
+        return resultName;
+    }
 
-	/**
-	 * Get user name
-	 *
-	 * @return
-	 */
-	public String getUserName() {
-		return userName;
-	}
+    /**
+     * Get user name
+     *
+     * @return
+     */
+    public String getUserName() {
+        return userName;
+    }
 
-	/**
-	 * Set User name
-	 *
-	 * @param userName User name of the user logging in
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    /**
+     * Set User name
+     *
+     * @param userName User name of the user logging in
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	/**
-	 * Get password
-	 *
-	 * @return
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * Get password
+     *
+     * @return
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * Set password
-	 *
-	 * @param password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * Set password
+     *
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+    /**
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     /**
      * sets the link that the user should be forwarded to.
@@ -290,28 +290,28 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
         return this.forwardLink;
     }
 
-	public List<Server> getServers() {
-		return servers;
-	}
+    public List<Server> getServers() {
+        return servers;
+    }
 
-	public String getServerName() {
-		return serverName;
-	}
+    public String getServerName() {
+        return serverName;
+    }
 
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
 
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
-	public boolean isConfigurationError() {
-		return configurationError;
-	}
+    public boolean isConfigurationError() {
+        return configurationError;
+    }
 
 }

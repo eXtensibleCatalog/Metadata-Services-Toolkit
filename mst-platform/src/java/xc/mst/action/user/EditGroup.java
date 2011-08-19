@@ -48,7 +48,7 @@ public class EditGroup extends BaseActionSupport
 
     /** A List that is used to store permissions that have been selected by the user*/
     @SuppressWarnings("unchecked")
-	private List selectedPermissions = new ArrayList();
+    private List selectedPermissions = new ArrayList();
 
     /** The list of all the tab names */
     private List<Permission> tabNames = new ArrayList<Permission>();
@@ -56,8 +56,8 @@ public class EditGroup extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType;
+    /** Error type */
+    private String errorType;
 
      /**
      * Overrides default implementation to view the edit group page.
@@ -65,12 +65,12 @@ public class EditGroup extends BaseActionSupport
      * @return {@link #SUCCESS}
      */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public String execute()
     {
         try
         {
-            
+
             Group group = getGroupService().getGroupById(groupId);
             if(group==null)
             {
@@ -79,7 +79,7 @@ public class EditGroup extends BaseActionSupport
                 errorType = "error";
                 return INPUT;
             }
-            
+
             setTemporaryGroup(group);
             Iterator<Permission> tempIter = group.getPermissions().iterator();
             while(tempIter.hasNext())
@@ -87,7 +87,7 @@ public class EditGroup extends BaseActionSupport
                 Permission permission = (Permission)tempIter.next();
                 selectedPermissions.add(permission.getTabId());
             }
-           
+
             setTabNames(getPermissionService().getAllPermissions());
             return SUCCESS;
         }
@@ -106,7 +106,7 @@ public class EditGroup extends BaseActionSupport
      * @return {@link #SUCCESS}
      */
     @SuppressWarnings("unchecked")
-	public String editGroup()
+    public String editGroup()
     {
         try
         {
@@ -123,14 +123,14 @@ public class EditGroup extends BaseActionSupport
 
             Group tempGroup = getGroupService().getGroupByName(groupName);
 
-           
+
             if(tempGroup.getId()!=groupId)
             {
                 if(tempGroup.getName().equalsIgnoreCase(groupName))
                 {
-                   
+
                         setTemporaryGroup(group);
-                       
+
                         setTabNames(getPermissionService().getAllPermissions());
                         for(int i=0;i<permissionsSelected.length;i++)
                         {
@@ -140,14 +140,14 @@ public class EditGroup extends BaseActionSupport
                         this.addFieldError("editGroupError", "Error : A group with the same name already exists");
                         errorType = "error";
                         return INPUT;
-                    
+
                 }
             }
 
             group.removeAllPermissions();
             for(int i=0;i<permissionsSelected.length;i++)
             {
-               
+
                 int permissionId = Integer.parseInt(permissionsSelected[i]);
                 group.addPermission(getPermissionService().getPermissionById(permissionId));
             }
@@ -171,24 +171,24 @@ public class EditGroup extends BaseActionSupport
             return INPUT;
         }
     }
-    
-	/**
+
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the group name to the specified value.
@@ -286,7 +286,7 @@ public class EditGroup extends BaseActionSupport
      * @return selected permissions List
      */
     @SuppressWarnings("unchecked")
-	public List<Permission> getSelectedPermissions()
+    public List<Permission> getSelectedPermissions()
     {
         return this.selectedPermissions;
     }

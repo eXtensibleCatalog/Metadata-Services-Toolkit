@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -45,8 +45,8 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+    <!-- page header - this uses the yahoo page styling -->
+    <div id="hd">
 
             <!--  this is the header of the page -->
             <c:import url="/st/inc/header.jsp"/>
@@ -58,11 +58,11 @@
                     <jsp:param name="bread" value="Users & Groups | All Users" />
 
             </jsp:include>
- 		</div>
-		<!--  end header -->
+     </div>
+    <!--  end header -->
 
-		<!-- body -->
-		<div id="bd">
+    <!-- body -->
+    <div id="bd">
 
               <!-- Display of error message -->
                 <c:if test="${errorType != null}">
@@ -209,7 +209,7 @@
                                     <td class="${classColumn}">${n.lastName}</td>
                                     <td>
                                         <c:if test="${n.username == 'admin'}">
-                                        	<button class="xc_button_disabled" disabled="true" type="submit" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeUser.removeMember(${n.id},${groupId});">Remove</button>
+                                          <button class="xc_button_disabled" disabled="true" type="submit" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeUser.removeMember(${n.id},${groupId});">Remove</button>
                                         </c:if>
                                         <c:if test="${n.username != 'admin'}">
                                                  <button class="xc_button" type="button" name="removeMember" onclick="javascript:YAHOO.xc.mst.user.removeUser.removeMember(${n.id},${groupId});">Remove</button>
@@ -220,14 +220,14 @@
                             </c:forEach>
                         </tbody>
                     </table>
-			</div>
+      </div>
              <form name="removeMember" method="post" action= "removeMember.action">
                 <input type="hidden" id="userId" name="userId"/>
                 <input type="hidden" id="groupId" name="groupId"/>
             </form>
         </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>          
+            <c:import url="/st/inc/footer.jsp"/>
    </div>
 </body>
 </html>

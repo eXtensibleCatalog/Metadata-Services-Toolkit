@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10263">
-		<xc:titleOfExpression>Atlas &amp; argus (Albany, N.Y. : Daily)</xc:titleOfExpression>
-		<dcterms:hasFormat>Microfilm. Cleveland, Ohio : Micro Photo, Inc. 21 microfilm reels ; 35 mm.</dcterms:hasFormat>
-		<dcterms:relation>Formed by the union of: Daily Albany argus; and, Albany evening atlas.</dcterms:relation>
-		<dcterms:relation>Continued by: Argus (Albany, N.Y. : Daily).</dcterms:relation>
-		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-		<dcterms:language>English</dcterms:language>
-		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10262</xc:workExpressed></xc:entity>
+  <xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10263">
+    <xc:titleOfExpression>Atlas &amp; argus (Albany, N.Y. : Daily)</xc:titleOfExpression>
+    <dcterms:hasFormat>Microfilm. Cleveland, Ohio : Micro Photo, Inc. 21 microfilm reels ; 35 mm.</dcterms:hasFormat>
+    <dcterms:relation>Formed by the union of: Daily Albany argus; and, Albany evening atlas.</dcterms:relation>
+    <dcterms:relation>Continued by: Argus (Albany, N.Y. : Daily).</dcterms:relation>
+    <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+    <dcterms:language>English</dcterms:language>
+    <xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10262</xc:workExpressed></xc:entity>
 </xc:frbr>

@@ -28,34 +28,34 @@ import xc.mst.utils.MSTConfiguration;
 public class ViewRepository extends BaseActionSupport implements UserAware
 {
     /** Serial id	 */
-	private static final long serialVersionUID = -6162901340410964175L;
+    private static final long serialVersionUID = -6162901340410964175L;
 
-	/** A reference to the logger for this class */
-	  static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	  /** The ID of the repository to be viewed */
-	  private int repositoryId;
-	
-	  /**The User who is logged in */
-	  private User user;
-	
-	  /**The repository to be viewed */
-	  private Provider provider;
-	
-	  /** Boolean value that denotes success or failure */
-	  private String listSets;
-	
-	  /** Boolean value that denotes success or failure */
-	  private String listFormats;
-	
-	  /** Boolean value that denotes success or failure */
-	  private String Identify;
-      
+    /** A reference to the logger for this class */
+      static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+
+      /** The ID of the repository to be viewed */
+      private int repositoryId;
+
+      /**The User who is logged in */
+      private User user;
+
+      /**The repository to be viewed */
+      private Provider provider;
+
+      /** Boolean value that denotes success or failure */
+      private String listSets;
+
+      /** Boolean value that denotes success or failure */
+      private String listFormats;
+
+      /** Boolean value that denotes success or failure */
+      private String Identify;
+
       /** Error type */
-	  private String errorType;
-	
-	  /** Error messgae */
-	  private String message;
+      private String errorType;
+
+      /** Error messgae */
+      private String message;
 
      /**
      * Overrides default implementation to view the details of a repository.
@@ -91,7 +91,7 @@ public class ViewRepository extends BaseActionSupport implements UserAware
 
       /**
        * This method validates a Repository/Provider
-       * 
+       *
        * @return returns the status of the operation and re-directs accordingly
        */
       public String validateRepository()
@@ -103,7 +103,7 @@ public class ViewRepository extends BaseActionSupport implements UserAware
                 message = "Repository revalidated!";
                 errorType = "info";
                 execute();
-                
+
           }
           catch(DatabaseConfigException dce)
           {
@@ -122,32 +122,32 @@ public class ViewRepository extends BaseActionSupport implements UserAware
           return SUCCESS;
       }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the information message which describes the status of the revalidation operation
-     * 
+     *
      * @return information message
      */
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
      /**
        * Returns the ID of the repository to be viewed
@@ -270,5 +270,5 @@ public class ViewRepository extends BaseActionSupport implements UserAware
       {
           return Identify;
       }
-     
+
 }

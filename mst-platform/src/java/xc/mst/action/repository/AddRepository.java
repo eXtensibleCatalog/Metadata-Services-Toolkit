@@ -22,13 +22,13 @@ import xc.mst.constants.Constants;
  * @author  Tejaswi Haramurali
  */
 
-public class AddRepository extends BaseActionSupport 
+public class AddRepository extends BaseActionSupport
 {
 
     /** Serial id */
-	private static final long serialVersionUID = -2353352472168477475L;
+    private static final long serialVersionUID = -2353352472168477475L;
 
-	/** A reference to the logger for this class */
+    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
 
@@ -40,12 +40,12 @@ public class AddRepository extends BaseActionSupport
 
     /**The ID of the repository to be added */
     private int repositoryId;
-    
+
     /** Number of records to harvest */
     private int numberOfRecordsToHarvest;
 
-	/** Error type */
-	private String errorType;
+    /** Error type */
+    private String errorType;
 
     /**
      * The method is used to add a repository
@@ -54,36 +54,36 @@ public class AddRepository extends BaseActionSupport
      */
     public String addRepository()
     {
-    	Provider p = new Provider();
-    	String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
-    	if (error != null) {
-    		errorType = "error";
-    		this.addFieldError("editRepository",error);
-    		return INPUT;
-    	} else {
-    		setRepositoryId(p.getId());
-    		return SUCCESS;
-    	}
+        Provider p = new Provider();
+        String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
+        if (error != null) {
+            errorType = "error";
+            this.addFieldError("editRepository",error);
+            return INPUT;
+        } else {
+            setRepositoryId(p.getId());
+            return SUCCESS;
+        }
 
     }
 
-	 /**
+     /**
      * Returns error type
       *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the ID of the repository to be added
@@ -143,24 +143,24 @@ public class AddRepository extends BaseActionSupport
     {
         return repositoryURL;
     }
-    
+
     /**
      * Gets the number of records to harvest
      *
      * @return number of records to harvest
      */
-	public int getNumberOfRecordsToHarvest() {
-		return numberOfRecordsToHarvest;
-	}
+    public int getNumberOfRecordsToHarvest() {
+        return numberOfRecordsToHarvest;
+    }
 
     /**
      * Sets the number of records to harvest
      *
      * @param numberOfRecordsToHarvest number of records to harvest
      */
-	public void setNumberOfRecordsToHarvest(int numberOfRecordsToHarvest) {
-		this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
-	}
+    public void setNumberOfRecordsToHarvest(int numberOfRecordsToHarvest) {
+        this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
+    }
 
-    
+
 }

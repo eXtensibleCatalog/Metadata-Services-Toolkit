@@ -27,15 +27,15 @@ import xc.mst.dao.provider.ProviderDAO;
  */
 public class AllRepository extends BaseActionSupport
 {
-   
+
    /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-    
+
     /**
-	 * Eclipse generated id
-	 */
-	private static final long serialVersionUID = 6270020684379187321L;
-    
+     * Eclipse generated id
+     */
+    private static final long serialVersionUID = 6270020684379187321L;
+
     /** boolean value which determines if the rows are to be sorted in ascending order*/
     private boolean isAscendingOrder = true;
 
@@ -45,14 +45,14 @@ public class AllRepository extends BaseActionSupport
     /**
      * The list of Repositories that is returned
      */
-	private List<Provider> repositories;
+    private List<Provider> repositories;
 
      /** Error type */
       private String errorType;
 
     /**
      * Overrides default implementation to view all the repositories.
-     * 
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -76,7 +76,7 @@ public class AllRepository extends BaseActionSupport
                     repositories = getProviderService().getAllProvidersSorted(isAscendingOrder,ProviderDAO.COL_LAST_HARVEST_END_TIME);
                 }
 
-               
+
             }
             else //remove this and do by repo name
             {
@@ -85,7 +85,7 @@ public class AllRepository extends BaseActionSupport
             setIsAscendingOrder(isAscendingOrder);
             setColumnSorted(columnSorted);
             return SUCCESS;
-           
+
        }
        catch(DatabaseConfigException dce)
        {
@@ -151,17 +151,17 @@ public class AllRepository extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
 }

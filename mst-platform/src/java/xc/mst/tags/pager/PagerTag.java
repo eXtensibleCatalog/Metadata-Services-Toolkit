@@ -23,129 +23,129 @@ import org.apache.log4j.Logger;
  */
 public class PagerTag extends SimpleTagSupport {
 
-	/** Logger */
-	private static final Logger log = Logger.getLogger(PagerTag.class);
+    /** Logger */
+    private static final Logger log = Logger.getLogger(PagerTag.class);
 
-	/** The page number to start the display */
-	private int startPageNumber;
+    /** The page number to start the display */
+    private int startPageNumber;
 
-	/** The page number to end the display with   */
-	private int  endPageNumber;
+    /** The page number to end the display with   */
+    private int  endPageNumber;
 
-	/** Page number that is currently displayed */
-	private int currentPageNumber;
+    /** Page number that is currently displayed */
+    private int currentPageNumber;
 
-	/** Total number of pages */
-	private int totalPageNumber;
+    /** Total number of pages */
+    private int totalPageNumber;
 
-	/** Total number of rows */
-	private int totalHits;
+    /** Total number of rows */
+    private int totalHits;
 
-	/** number of results to show per page */
-	private int numberOfResultsToShow;
+    /** number of results to show per page */
+    private int numberOfResultsToShow;
 
-	/** number of pages to show  */
-	private int numberOfPagesToShow;
+    /** number of pages to show  */
+    private int numberOfPagesToShow;
 
-	/** String to represent more pages */
-	private String morePages = "....";
+    /** String to represent more pages */
+    private String morePages = "....";
 
-	public void doTag() throws JspException {
-		log.debug("do tag called");
+    public void doTag() throws JspException {
+        log.debug("do tag called");
 
-		JspFragment body = getJspBody();
+        JspFragment body = getJspBody();
 
-		if (totalHits % numberOfResultsToShow == 0) {
-			totalPageNumber = totalHits / numberOfResultsToShow;
-		} else {
-			totalPageNumber = (totalHits / numberOfResultsToShow) + 1;
-		}
+        if (totalHits % numberOfResultsToShow == 0) {
+            totalPageNumber = totalHits / numberOfResultsToShow;
+        } else {
+            totalPageNumber = (totalHits / numberOfResultsToShow) + 1;
+        }
 
-		if ((startPageNumber + numberOfPagesToShow - 1) <= totalPageNumber) {
-			endPageNumber = startPageNumber + numberOfPagesToShow - 1;
-		} else {
-			endPageNumber =totalPageNumber;
-		}
+        if ((startPageNumber + numberOfPagesToShow - 1) <= totalPageNumber) {
+            endPageNumber = startPageNumber + numberOfPagesToShow - 1;
+        } else {
+            endPageNumber =totalPageNumber;
+        }
 
-		log.debug("total page number = " + totalPageNumber + " endPageNumber = " + endPageNumber);
+        log.debug("total page number = " + totalPageNumber + " endPageNumber = " + endPageNumber);
 
-		getJspContext().setAttribute("totalPageNumber", totalPageNumber);
-		getJspContext().setAttribute("endPageNumber", endPageNumber);
-		try {
-			if( body != null )
-			{
-			    body.invoke(null);
-			}
+        getJspContext().setAttribute("totalPageNumber", totalPageNumber);
+        getJspContext().setAttribute("endPageNumber", endPageNumber);
+        try {
+            if( body != null )
+            {
+                body.invoke(null);
+            }
 
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
 
-	}
+    }
 
-	public int getStartPageNumber() {
-		return startPageNumber;
-	}
+    public int getStartPageNumber() {
+        return startPageNumber;
+    }
 
-	public void setStartPageNumber(int startPageNumber) {
-		this.startPageNumber = startPageNumber;
-	}
+    public void setStartPageNumber(int startPageNumber) {
+        this.startPageNumber = startPageNumber;
+    }
 
-	public int getEndPageNumber() {
-		return endPageNumber;
-	}
+    public int getEndPageNumber() {
+        return endPageNumber;
+    }
 
-	public void setEndPageNumber(int endPageNumber) {
-		this.endPageNumber = endPageNumber;
-	}
+    public void setEndPageNumber(int endPageNumber) {
+        this.endPageNumber = endPageNumber;
+    }
 
-	public int getCurrentPageNumber() {
-		return currentPageNumber;
-	}
+    public int getCurrentPageNumber() {
+        return currentPageNumber;
+    }
 
-	public void setCurrentPageNumber(int currentPageNumber) {
-		this.currentPageNumber = currentPageNumber;
-	}
+    public void setCurrentPageNumber(int currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
+    }
 
-	public int getTotalPageNumber() {
-		return totalPageNumber;
-	}
+    public int getTotalPageNumber() {
+        return totalPageNumber;
+    }
 
-	public void setTotalPageNumber(int totalPageNumber) {
-		this.totalPageNumber = totalPageNumber;
-	}
+    public void setTotalPageNumber(int totalPageNumber) {
+        this.totalPageNumber = totalPageNumber;
+    }
 
-	public String getMorePages() {
-		return morePages;
-	}
+    public String getMorePages() {
+        return morePages;
+    }
 
-	public void setMorePages(String morePages) {
-		this.morePages = morePages;
-	}
+    public void setMorePages(String morePages) {
+        this.morePages = morePages;
+    }
 
-	public int getTotalHits() {
-		return totalHits;
-	}
+    public int getTotalHits() {
+        return totalHits;
+    }
 
-	public void setTotalHits(int totalHits) {
-		this.totalHits = totalHits;
-	}
+    public void setTotalHits(int totalHits) {
+        this.totalHits = totalHits;
+    }
 
-	public int getNumberOfResultsToShow() {
-		return numberOfResultsToShow;
-	}
+    public int getNumberOfResultsToShow() {
+        return numberOfResultsToShow;
+    }
 
-	public void setNumberOfResultsToShow(int numberOfResultsToShow) {
-		this.numberOfResultsToShow = numberOfResultsToShow;
-	}
+    public void setNumberOfResultsToShow(int numberOfResultsToShow) {
+        this.numberOfResultsToShow = numberOfResultsToShow;
+    }
 
-	public int getNumberOfPagesToShow() {
-		return numberOfPagesToShow;
-	}
+    public int getNumberOfPagesToShow() {
+        return numberOfPagesToShow;
+    }
 
-	public void setNumberOfPagesToShow(int numberOfPagesToShow) {
-		this.numberOfPagesToShow = numberOfPagesToShow;
-	}
+    public void setNumberOfPagesToShow(int numberOfPagesToShow) {
+        this.numberOfPagesToShow = numberOfPagesToShow;
+    }
 
 
 }

@@ -23,7 +23,7 @@ YAHOO.xc.mst.services.newService = {
                 {
                     alert(err);
                 }
-                
+
             },
 
  cancel : function()

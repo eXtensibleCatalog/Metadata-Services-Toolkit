@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10106">
-		<xc:recordID type="LCCN">77000869</xc:recordID>
-		<xc:recordID type="OCoLC">2798668</xc:recordID>
-		<xc:recordID type="NRU">147041</xc:recordID>
-		<dcterms:title>Account of the captivity of William Henry.</dcterms:title>
-		<rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
-		<dcterms:publisher>Garland Pub.,</dcterms:publisher>
-		<dcterms:issued>1977.</dcterms:issued>
-		<dcterms:extent>[2] fold. leaves ;</dcterms:extent>
-		<rdvocab:dimensions>23 cm.</rdvocab:dimensions>
-		<dcterms:description>Reprint of an article which appeared in the London chronicle, v. 23, no. 1798, June 23, 1768, and no. 1799, June 25, 1768.</dcterms:description>
-		<dcterms:isPartOf>Garland library of narratives of North American Indian captivities ; v. 10</dcterms:isPartOf>
-		<xc:typeLeader06>Language material</xc:typeLeader06>
-		<xc:type007>Text</xc:type007>
-		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-		<dcterms:identifier type="ISBN">0824016343</dcterms:identifier>
-		<xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10105</xc:expressionManifested></xc:entity>
+  <xc:entity type="manifestation" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10106">
+    <xc:recordID type="LCCN">77000869</xc:recordID>
+    <xc:recordID type="OCoLC">2798668</xc:recordID>
+    <xc:recordID type="NRU">147041</xc:recordID>
+    <dcterms:title>Account of the captivity of William Henry.</dcterms:title>
+    <rdvocab:placeOfProduction>New York :</rdvocab:placeOfProduction>
+    <dcterms:publisher>Garland Pub.,</dcterms:publisher>
+    <dcterms:issued>1977.</dcterms:issued>
+    <dcterms:extent>[2] fold. leaves ;</dcterms:extent>
+    <rdvocab:dimensions>23 cm.</rdvocab:dimensions>
+    <dcterms:description>Reprint of an article which appeared in the London chronicle, v. 23, no. 1798, June 23, 1768, and no. 1799, June 25, 1768.</dcterms:description>
+    <dcterms:isPartOf>Garland library of narratives of North American Indian captivities ; v. 10</dcterms:isPartOf>
+    <xc:typeLeader06>Language material</xc:typeLeader06>
+    <xc:type007>Text</xc:type007>
+    <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+    <dcterms:identifier type="ISBN">0824016343</dcterms:identifier>
+    <xc:expressionManifested>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10105</xc:expressionManifested></xc:entity>
 </xc:frbr>

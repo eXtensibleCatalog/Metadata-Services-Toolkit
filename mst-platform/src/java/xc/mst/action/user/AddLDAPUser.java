@@ -31,7 +31,7 @@ import xc.mst.dao.DatabaseConfigException;
 public class AddLDAPUser extends BaseActionSupport
 {
     /** Serial id  */
-	private static final long serialVersionUID = 4411174825770792605L;
+    private static final long serialVersionUID = 4411174825770792605L;
 
     /**The username of the user */
     private String userName;
@@ -41,7 +41,7 @@ public class AddLDAPUser extends BaseActionSupport
 
     /**The first Name of the user */
     private String firstName;
-    
+
     /**The Last Name of the user */
     private String lastName;
 
@@ -63,8 +63,8 @@ public class AddLDAPUser extends BaseActionSupport
      /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Error type */
-	private String errorType; 
+    /** Error type */
+    private String errorType;
 
      /**
      * Overrides default implementation to view the 'add NCIP user' page.
@@ -97,7 +97,7 @@ public class AddLDAPUser extends BaseActionSupport
     {
         try
         {
-            
+
             User user = new User();
             user.setEmail(email);
             user.setFirstName(firstName);
@@ -165,7 +165,7 @@ public class AddLDAPUser extends BaseActionSupport
             {
                 Group tempGroup = getGroupService().getGroupById(Integer.parseInt(groupsSelected[i]));
                 user.addGroup(tempGroup);
-            }            
+            }
             getUserService().insertUser(user);
 
             return SUCCESS;
@@ -187,59 +187,59 @@ public class AddLDAPUser extends BaseActionSupport
         }
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Returns the first name of the user
      *
      * @return first name
      */
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
     /**
      * Sets the first name of the user
      *
      * @param firstName first name
      */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName.trim();
+    }
 
     /**
      * Returns the last name of the user
      *
      * @return last name
      */
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
     /**
      * Sets the last name of the user
-     * 
+     *
      * @param lastName last name
      */
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName.trim();
+    }
 
      /**
      * Sets list of all servers

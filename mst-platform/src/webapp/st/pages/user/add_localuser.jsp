@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -27,9 +27,9 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-            
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
@@ -38,7 +38,7 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_localuser.js"></SCRIPT>
 
-       
+
 
     </head>
 
@@ -47,8 +47,8 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+    <!-- page header - this uses the yahoo page styling -->
+    <div id="hd">
 
             <!--  this is the header of the page -->
             <c:import url="/st/inc/header.jsp"/>
@@ -60,11 +60,11 @@
                     <jsp:param name="bread" value="Users & Groups | Add Local User" />
 
             </jsp:include>
- 		</div>
-		<!--  end header -->
+     </div>
+    <!--  end header -->
 
-		<!-- body -->
-		<div id="bd">
+    <!-- body -->
+    <div id="bd">
 
 
           <!-- Display of error message -->
@@ -82,14 +82,14 @@
                  <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-        
+
          <form method="post" name="addLocalUser" id="addLocalUser">
 
           <br>
             <table style="margin-left:10px">
 
                 <tr>
-                  <td valign="top"><b>First Name</b> <br> 
+                  <td valign="top"><b>First Name</b> <br>
                   <input type="text" id="firstName" name ="firstName" class="textfield" value="${temporaryUser.firstName}" maxlength="255" size="39"><br><br></td>
                 </tr>
 
@@ -118,10 +118,10 @@
                     <input type="text" id="email" name ="email" class="textfield" value="${temporaryUser.email}" maxlength="255" size="39"><br><br></td>
                </tr>
 
-             
+
                    <tr>
                        <td><b>Select groups for user</b>  &nbsp;&nbsp;
-                       
+
                            <br>
                            <select multiple size="8" id="groupsSelected" name ="groupsSelected" style="width:250px; height:125px;">
                              <c:forEach var="m" varStatus="b" items="${groupList}">
@@ -149,25 +149,25 @@
                             <div class="smallText">
                                 (CTRL click to select multiple groups)
                             </div>
-                          
+
                        </td>
                    </tr>
-             
 
-      
-            
-	<tr> <td>
+
+
+
+  <tr> <td>
             <div align="left" style="margin-top:10px;">
                  <button style="vertical-align:bottom;" class="xc_button_small" type="button" name="cancel" onclick="javascript:YAHOO.xc.mst.users.addLocal.addcancel();">Cancel</button> &nbsp;&nbsp;&nbsp;
                  <button style="width:130px;" class="xc_button" type="button" name="addlocaluser" onclick="javascript:YAHOO.xc.mst.users.addLocal.addValidate();">Add Local User</button>
             </div>
         </td></tr>
 
- 	</table>
+   </table>
         </form>
      </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>       
+            <c:import url="/st/inc/footer.jsp"/>
   </div>
 </body>
 </html>

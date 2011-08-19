@@ -29,15 +29,15 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container_core-min.js"></SCRIPT>
-	<SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>
-	<SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>
+  <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/container/container-min.js"></SCRIPT>
+  <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/element/element-beta-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/button/button-min.js"></script>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
@@ -93,7 +93,7 @@
                     <c:otherwise>
                         <div class="viewTable">
                             <table width="100%">
-                            
+
                                   <thead>
                                     <tr>
                                         <td class="sortcolumn" width="140">
@@ -133,10 +133,10 @@
                                         <td>View Log</td>
                                     </tr>
                                 </thead>
-                           
-                            
+
+
                             <tbody>
-                               
+
                                           <c:forEach var="service" items="${services}" varStatus="serviceCount">
                                             <tr>
                                                     <c:set var="classColumn" value="plainColumn"/>
@@ -144,10 +144,10 @@
                                                         <c:set var="classColumn" value="sortColumn"/>
                                                     </c:if>
                                                 <c:if test="${!service.deleted}">
-                                                	<td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
+                                                  <td class="${classColumn}"><a href="viewEditService.action?serviceId=${service.id}"><c:out value="${service.name}"/></a></td>
                                                 </c:if>
                                                 <c:if test="${service.deleted}">
-                                                	<td class="${classColumn}">${service.name} (Deleted)</td>
+                                                  <td class="${classColumn}">${service.name} (Deleted)</td>
                                                 </c:if>
                                                 <c:set var="baseURL" value="${baseURL}"/>
                                                 <c:set var = "url" value="${fn:replace(baseURL,'SERVICE_NAME',fn:replace(service.name, ' ', '-'))}" />
@@ -175,34 +175,34 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
-                                                
+
                                                 <c:if test="${!service.deleted}">
-	                                                <td width="175px">
-	                                                    <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
-	                                                    <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
-	                                                </td>
+                                                  <td width="175px">
+                                                      <button style="width:70px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('service','${service.id}');" class="xc_button" type="button" name="Service">Service</button> &nbsp;
+                                                      <button style="width:85px" onclick="javascript:YAHOO.xc.mst.services.listServices.downloadFile('harvestout','${service.id}');" class="xc_button" type="button" name="HarvestOut">Harvest Out</button>
+                                                  </td>
                                                 </c:if>
                                                 <c:if test="${service.deleted}">
-												<td width="175px">
-                                                    	<button style="width:70px" class="xc_button_disabled" disabled type="button" name="Service">Service</button> &nbsp;
-                                                    	<button style="width:85px" class="xc_button_disabled" disabled type="button" name="HarvestOut">Harvest Out</button>
-                                                	</td>
+                        <td width="175px">
+                                                      <button style="width:70px" class="xc_button_disabled" disabled type="button" name="Service">Service</button> &nbsp;
+                                                      <button style="width:85px" class="xc_button_disabled" disabled type="button" name="HarvestOut">Harvest Out</button>
+                                                  </td>
                                                 </c:if>
                                             </tr>
                                         </c:forEach>
-                                                                  
+
                                 </tbody>
                         </table>
- 
+
                     </div>
                 </c:otherwise>
             </c:choose>
 
             </div>
 
-	       <div class="clear">&nbsp;</div>
+         <div class="clear">&nbsp;</div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>
 
         </div>
 </body>

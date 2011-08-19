@@ -28,45 +28,45 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
  */
 public class UserInterceptor extends AbstractInterceptor implements StrutsStatics{
 
-	/**
-	 * Eclipse generated id
-	 */
-	private static final long serialVersionUID = -7386840495405549846L;
+    /**
+     * Eclipse generated id
+     */
+    private static final long serialVersionUID = -7386840495405549846L;
 
-	/** Log */
-	private static Logger log = Logger.getLogger(UserInterceptor.class);
+    /** Log */
+    private static Logger log = Logger.getLogger(UserInterceptor.class);
 
-	/**
-	 * Gets the user and sets them in the session.
-	 *
-	 * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
-	 */
-	public String intercept(ActionInvocation invocation) throws Exception {
+    /**
+     * Gets the user and sets them in the session.
+     *
+     * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
+     */
+    public String intercept(ActionInvocation invocation) throws Exception {
 
-		final Object action = invocation.getAction();
-		User user = (User) invocation.getInvocationContext().getSession().get("user");
+        final Object action = invocation.getAction();
+        User user = (User) invocation.getInvocationContext().getSession().get("user");
 
-		// If user is not in session then it means the user has not logged in. So forward the user to login page.
-		if (user == null) {
-			return "user-login";
-		}
+        // If user is not in session then it means the user has not logged in. So forward the user to login page.
+        if (user == null) {
+            return "user-login";
+        }
 
-		// Check if user has any permissions assigned. If not show error message.
-		if (user != null && (user.getGroups() == null || user.getGroups().size() == 0)) {
-			if (!(action instanceof EditMyAccount) && !(action instanceof ChangePassword)) {
-				return "no-permission";
-			}
-		}
+        // Check if user has any permissions assigned. If not show error message.
+        if (user != null && (user.getGroups() == null || user.getGroups().size() == 0)) {
+            if (!(action instanceof EditMyAccount) && !(action instanceof ChangePassword)) {
+                return "no-permission";
+            }
+        }
 
-		if (action instanceof UserAware) {
-			if( user != null )
-			{
-	            ((UserAware) action).setUser(user);
-			}
-	    }
+        if (action instanceof UserAware) {
+            if( user != null )
+            {
+                ((UserAware) action).setUser(user);
+            }
+        }
 
-		return invocation.invoke();
-	}
+        return invocation.invoke();
+    }
 
 
 }

@@ -36,15 +36,15 @@
     <html>
       <head>
         <link rel="stylesheet" type="text/css" href="solr-admin.css"></link>
-	<link rel="icon" href="favicon.ico" type="image/ico"></link>
-	<link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
+  <link rel="icon" href="favicon.ico" type="image/ico"></link>
+  <link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
         <title>SOLR Info</title>
       </head>
       <body>
         <a href=".">
-	   <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR">
-	   </img>
-	</a>
+     <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR">
+     </img>
+  </a>
         <h1>SOLR Info (<xsl:value-of select="solr/schema" />)</h1>
           <xsl:value-of select="solr/host" />
           <br clear="all" />
@@ -71,22 +71,22 @@
       </td>
     </tr>
     <tr><td></td>
-      <td>Solr Specification Version: 
+      <td>Solr Specification Version:
           <xsl:value-of select="solr-spec-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Solr Implementation Version: 
+      <td>Solr Implementation Version:
           <xsl:value-of select="solr-impl-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Lucene Specification Version: 
+      <td>Lucene Specification Version:
           <xsl:value-of select="lucene-spec-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Lucene Implementation Version: 
+      <td>Lucene Implementation Version:
           <xsl:value-of select="lucene-impl-version" />
       </td>
     </tr>

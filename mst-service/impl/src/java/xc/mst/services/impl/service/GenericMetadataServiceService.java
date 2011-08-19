@@ -13,8 +13,8 @@ import xc.mst.services.MetadataService;
 
 public class GenericMetadataServiceService extends BaseService {
 
-	public MetadataService getMetadataService() {
-		return (MetadataService)config.getBean("MetadataService");
-	}
+    public MetadataService getMetadataService() {
+        return (MetadataService)config.getBean("MetadataService");
+    }
 
 }

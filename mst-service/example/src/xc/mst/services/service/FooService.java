@@ -13,17 +13,17 @@ import xc.mst.services.impl.service.GenericMetadataServiceService;
 
 public class FooService extends GenericMetadataServiceService {
 
-	protected FooDAO fooDAO = null;
+    protected FooDAO fooDAO = null;
 
-	public FooDAO getFooDAO() {
-		return fooDAO;
-	}
+    public FooDAO getFooDAO() {
+        return fooDAO;
+    }
 
-	public void setFooDAO(FooDAO fooDAO) {
-		this.fooDAO = fooDAO;
-	}
-	
-	public void fooFound(String name) {
-		getFooDAO().insertFoo(name);
-	}
+    public void setFooDAO(FooDAO fooDAO) {
+        this.fooDAO = fooDAO;
+    }
+
+    public void fooFound(String name) {
+        getFooDAO().insertFoo(name);
+    }
 }

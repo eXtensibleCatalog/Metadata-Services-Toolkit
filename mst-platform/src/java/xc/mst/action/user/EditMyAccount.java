@@ -25,120 +25,120 @@ import xc.mst.dao.DataException;
  */
 public class EditMyAccount extends BaseActionSupport implements UserAware {
 
-	/** Generated id  */
-	private static final long serialVersionUID = 1117303971697447644L;
+    /** Generated id  */
+    private static final long serialVersionUID = 1117303971697447644L;
 
-	/** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** New user registering with the system */
-	private User user;
+    /** New user registering with the system */
+    private User user;
 
-	/** First name of user */
-	private String firstName;
+    /** First name of user */
+    private String firstName;
 
-	/** Last name of user */
-	private String lastName;
-	
-	/** Email of user */
-	private String email;
+    /** Last name of user */
+    private String lastName;
 
-	/** Error type */
-	private String errorType; 
-	
-	/** Information message to user */
-	private String message;
-	
-	/**
-	 * To view edit my account
-	 */
+    /** Email of user */
+    private String email;
+
+    /** Error type */
+    private String errorType;
+
+    /** Information message to user */
+    private String message;
+
+    /**
+     * To view edit my account
+     */
     @Override
-	public String execute() throws DataException {
-		firstName =  user.getFirstName();
-		lastName =  user.getLastName();
-		email = user.getEmail();
+    public String execute() throws DataException {
+        firstName =  user.getFirstName();
+        lastName =  user.getLastName();
+        email = user.getEmail();
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Save user account information
-	 *
-	 * @return
-	 */
-	public String saveMyAccount() {
+    /**
+     * Save user account information
+     *
+     * @return
+     */
+    public String saveMyAccount() {
 
-		log.debug(EditMyAccount.class + ":" + "saveMyAccount()" );
+        log.debug(EditMyAccount.class + ":" + "saveMyAccount()" );
 
-		try {
-				User userWithEmail = getUserService().getUserByEmail(email, user.getServer());
-				if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
-					user.setFirstName(firstName);
-					user.setLastName(lastName);
-					user.setEmail(email);
+        try {
+                User userWithEmail = getUserService().getUserByEmail(email, user.getServer());
+                if (userWithEmail == null || userWithEmail.getId() == user.getId()) {
+                    user.setFirstName(firstName);
+                    user.setLastName(lastName);
+                    user.setEmail(email);
 
-					getUserService().updateUser(user);
-					errorType = "info";
-					message = "Account information saved.";
-				} else {
-					addFieldError("emailExist", "Email already exists - " + email);
-					errorType = "error";
-					return INPUT;
-				}
-		} catch (Exception e) {
-			log.error("Exception occured while saving user account information", e);
-			addFieldError("dataError", e.getMessage());
-			errorType = "error";
-			return INPUT;
-		}
-		return SUCCESS;
-	}
+                    getUserService().updateUser(user);
+                    errorType = "info";
+                    message = "Account information saved.";
+                } else {
+                    addFieldError("emailExist", "Email already exists - " + email);
+                    errorType = "error";
+                    return INPUT;
+                }
+        } catch (Exception e) {
+            log.error("Exception occured while saving user account information", e);
+            addFieldError("dataError", e.getMessage());
+            errorType = "error";
+            return INPUT;
+        }
+        return SUCCESS;
+    }
 
 
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName.trim();
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName.trim();
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
 
 }

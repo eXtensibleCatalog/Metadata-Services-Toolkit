@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -45,8 +45,8 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+    <!-- page header - this uses the yahoo page styling -->
+    <div id="hd">
 
             <!--  this is the header of the page -->
             <c:import url="/st/inc/header.jsp"/>
@@ -58,12 +58,12 @@
                     <jsp:param name="bread" value="Users & Groups | All Users" />
 
             </jsp:include>
- 		</div>
-		<!--  end header -->
+     </div>
+    <!--  end header -->
 
-		<!-- body -->
-		<div id="bd">
-        
+    <!-- body -->
+    <div id="bd">
+
               <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div id="server_error_div">
@@ -202,7 +202,7 @@
                                 </tr>
                            </thead>
                         </c:if>
-                        
+
                         <tbody>
                              <c:choose>
                                  <c:when test="${empty userList}">
@@ -259,16 +259,16 @@
                                         </c:forEach>
                                 </c:otherwise>
                              </c:choose>
-                             
+
                         </tbody>
                     </table>
-			</div>
+      </div>
              <form name="deleteUser" method="post" action= "deleteUser.action">
                 <input type="hidden" id="userId" name="userId"/>
             </form>
         </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>          
+            <c:import url="/st/inc/footer.jsp"/>
    </div>
 </body>
 </html>

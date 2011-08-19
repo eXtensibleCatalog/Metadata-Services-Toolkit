@@ -27,39 +27,39 @@ import xc.mst.dao.harvest.HarvestScheduleDAO;
  */
 public class AllSchedules extends BaseActionSupport
 {
-    
+
     /** determines the column by which the rows are to be sorted */
     private String columnSorted = "ScheduleName";
-    
+
     /** Determines if rows are to be sorted in ascending or descending order */
     private boolean isAscendingOrder = true;
-    
+
     /** Eclipse generated id */
-	private static final long serialVersionUID = 4699309117473144076L;
+    private static final long serialVersionUID = 4699309117473144076L;
 
-	/** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** All schedules */
-	private List<HarvestSchedule> schedules;
+    /** All schedules */
+    private List<HarvestSchedule> schedules;
 
-	/** Id of schedule to be deleted. */
-	private int scheduleId;
+    /** Id of schedule to be deleted. */
+    private int scheduleId;
 
-	/** Error type */
-	private String errorType; 
+    /** Error type */
+    private String errorType;
 
 
-	/**
+    /**
      * Get all schedules.
      */
     public String getAllSchedules()
     {
         try
         {
-        	if (log.isDebugEnabled()) {
-        		log.debug("In All schedules Execute()");
-        	}
+            if (log.isDebugEnabled()) {
+                log.debug("In All schedules Execute()");
+            }
             if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence"))||(columnSorted.equalsIgnoreCase("Status")))
             {
                 if(columnSorted.equalsIgnoreCase("ScheduleName"))
@@ -91,46 +91,46 @@ public class AllSchedules extends BaseActionSupport
             return SUCCESS;
         }
     }
-    
+
     /**
      * Delete a schedule
      *
      * @return
      */
     public String deleteSchedule() {
-    	
-    	if (log.isDebugEnabled()) {
-    		log.debug("AllSchedules::deleteSchedule() scheduleId = " + scheduleId);
-    	}
-    	
-    	String returnType = SUCCESS;
-    	
-    	HarvestSchedule schedule = null;
-    	try {
-    		schedule = getScheduleService().getScheduleById(scheduleId);
-    	} catch (DatabaseConfigException dce) {
-    		log.error(dce.getMessage(), dce);
-    		addFieldError("scheduleDeleteFailed", "Problems with retrieving and deleting the schedule.");
-    		errorType = "error";
-    		returnType =  INPUT;
-    	}
 
-		if (schedule != null )
+        if (log.isDebugEnabled()) {
+            log.debug("AllSchedules::deleteSchedule() scheduleId = " + scheduleId);
+        }
+
+        String returnType = SUCCESS;
+
+        HarvestSchedule schedule = null;
+        try {
+            schedule = getScheduleService().getScheduleById(scheduleId);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
+            addFieldError("scheduleDeleteFailed", "Problems with retrieving and deleting the schedule.");
+            errorType = "error";
+            returnType =  INPUT;
+        }
+
+        if (schedule != null )
         {
-	    	try
+            try
             {
-	    		getScheduleService().deleteSchedule(schedule);
+                getScheduleService().deleteSchedule(schedule);
             } catch (DataException e)
             {
-	    		log.error("Deleting the schedule failed",  e);
-	    		addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
-	    		errorType = "error";
-	    		returnType =  INPUT;
-	    	}
+                log.error("Deleting the schedule failed",  e);
+                addFieldError("scheduleDeleteFailed", "Problems with deleting the schedule :" + schedule.getScheduleName());
+                errorType = "error";
+                returnType =  INPUT;
+            }
         }
-	    		
-		try {
-			if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
+
+        try {
+            if((columnSorted.equalsIgnoreCase("ScheduleName"))||(columnSorted.equalsIgnoreCase("Recurrence")))
                 {
                     if(columnSorted.equalsIgnoreCase("ScheduleName"))
                     {
@@ -148,15 +148,15 @@ public class AllSchedules extends BaseActionSupport
                      schedules = getScheduleService().getAllSchedulesSorted(isAscendingOrder, HarvestScheduleDAO.COL_SCHEDULE_NAME);
                 }
                 setIsAscendingOrder(isAscendingOrder);
-              
-	    } catch (DataException e) {
-	    		log.error("Deleting the schedule failed" + e);
-	    		addFieldError("scheduleDIsplayError", "Problems with displaying all the schedules.");
-	    		errorType = "error";
-	    		returnType =  INPUT;
-	    }
-		
-    	return returnType;
+
+        } catch (DataException e) {
+                log.error("Deleting the schedule failed" + e);
+                addFieldError("scheduleDIsplayError", "Problems with displaying all the schedules.");
+                errorType = "error";
+                returnType =  INPUT;
+        }
+
+        return returnType;
     }
 
     /**
@@ -164,13 +164,13 @@ public class AllSchedules extends BaseActionSupport
      *
      * @return
      */
-	public List<HarvestSchedule> getSchedules() {
-		return schedules;
-	}
+    public List<HarvestSchedule> getSchedules() {
+        return schedules;
+    }
 
-	public void setScheduleId(int scheduleId) {
-		this.scheduleId = scheduleId;
-	}
+    public void setScheduleId(int scheduleId) {
+        this.scheduleId = scheduleId;
+    }
 
     /**
      * sets the boolean value which determines if the rows are to be sorted in ascending order
@@ -210,13 +210,13 @@ public class AllSchedules extends BaseActionSupport
         return this.columnSorted;
     }
 
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
-    
+
 }

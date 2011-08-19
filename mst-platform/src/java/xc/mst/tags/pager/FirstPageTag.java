@@ -24,37 +24,37 @@ import org.apache.log4j.Logger;
  */
 public class FirstPageTag extends SimpleTagSupport {
 
-	/** Logger */
-	private static final Logger log = Logger.getLogger(FirstPageTag.class);
+    /** Logger */
+    private static final Logger log = Logger.getLogger(FirstPageTag.class);
 
-	public void doTag() throws JspException {
-		log.debug("do tag called");
-		PagerTag pagerTag =
-			 (PagerTag)findAncestorWithClass(this,
-					 PagerTag.class);
+    public void doTag() throws JspException {
+        log.debug("do tag called");
+        PagerTag pagerTag =
+             (PagerTag)findAncestorWithClass(this,
+                     PagerTag.class);
 
-	    if(pagerTag == null)
-	    {
-	    	throw new JspTagException("the <ur:firstPage> tag must"
-	    			+ " be nested within a <ur:pager> tag");
-	    }
+        if(pagerTag == null)
+        {
+            throw new JspTagException("the <ur:firstPage> tag must"
+                    + " be nested within a <ur:pager> tag");
+        }
 
 
-		JspFragment body = getJspBody();
+        JspFragment body = getJspBody();
 
-		try {
-			if (pagerTag.getCurrentPageNumber() != 1) {
+        try {
+            if (pagerTag.getCurrentPageNumber() != 1) {
 
-				if( body != null )
-				{
-				    body.invoke(null);
-				}
+                if( body != null )
+                {
+                    body.invoke(null);
+                }
 
-			}
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
+            }
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
 
-	}
+    }
 
 }

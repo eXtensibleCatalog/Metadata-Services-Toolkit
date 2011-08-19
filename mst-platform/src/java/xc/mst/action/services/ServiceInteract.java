@@ -46,7 +46,7 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
         {
             if(getScheduler().getRunningJob()!=null)
             {
-            	getScheduler().cancelRunningJob();
+                getScheduler().cancelRunningJob();
                 WorkerThread.serviceBarDisplay = "abort";
             }
             else
@@ -54,12 +54,12 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
                 setDisplayText("Already_ended");
                 WorkerThread.serviceBarDisplay = "abort";
             }
-            
+
         }
         catch(Exception e)
         {
             log.error("The process could not be aborted ",e);
-            this.addFieldError("serviceAbortError", "The process could not be aborted ");            
+            this.addFieldError("serviceAbortError", "The process could not be aborted ");
         }
         return SUCCESS;
     }
@@ -75,22 +75,22 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
         {
             if(getScheduler().getRunningJob()!=null)
             {
-            	WorkerThread.serviceBarDisplay = "pausing";
-            	getScheduler().pauseRunningJob();
-            	WorkerThread.serviceBarDisplay = "resume";
+                WorkerThread.serviceBarDisplay = "pausing";
+                getScheduler().pauseRunningJob();
+                WorkerThread.serviceBarDisplay = "resume";
             }
             else
             {
                 setDisplayText("Already_ended");
                 WorkerThread.serviceBarDisplay = "abort";
             }
-           
-            
+
+
         }
         catch(Exception e)
         {
             log.error("There was an error pausing the specified service",e);
-            this.addFieldError("servicePauseError", "There was an error pausing the specified service");            
+            this.addFieldError("servicePauseError", "There was an error pausing the specified service");
         }
         return SUCCESS;
     }
@@ -106,15 +106,15 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
         {
             if(getScheduler().getRunningJob()!=null)
             {
-            	getScheduler().resumePausedJob();
-            	WorkerThread.serviceBarDisplay = "pause";
+                getScheduler().resumePausedJob();
+                WorkerThread.serviceBarDisplay = "pause";
             }
             else
             {
                 setDisplayText("Already_ended");
                 WorkerThread.serviceBarDisplay = "abort";
             }
-           
+
         }
         catch(Exception e)
         {
@@ -125,13 +125,13 @@ public class ServiceInteract extends BaseActionSupport implements ServletRequest
     }
 
     /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
      /**
      * Sets the text to be displayed in the JSP

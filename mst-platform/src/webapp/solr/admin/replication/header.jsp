@@ -17,10 +17,10 @@
 --%>
 <!-- $Id: header.jsp 809125 2009-08-29 12:46:54Z noble $ -->
 <%@ page import="org.apache.solr.common.util.NamedList,
-				 org.apache.solr.common.util.SimpleOrderedMap,
-				 org.apache.solr.request.LocalSolrQueryRequest,
-				 org.apache.solr.request.SolrQueryResponse,
-				 org.apache.solr.request.SolrRequestHandler,
+         org.apache.solr.common.util.SimpleOrderedMap,
+         org.apache.solr.request.LocalSolrQueryRequest,
+         org.apache.solr.request.SolrQueryResponse,
+         org.apache.solr.request.SolrRequestHandler,
                                  java.util.Map"%>
 <%@ page import="org.apache.solr.handler.ReplicationHandler" %>
 <%
@@ -51,7 +51,7 @@ public NamedList executeCommand(String command, SolrCore core, SolrRequestHandle
     SolrQueryResponse rsp = new SolrQueryResponse();
     core.execute(rh, solrqreq, rsp);
     namedlist = rsp.getValues();
-	return namedlist;
+  return namedlist;
 }
 %>
 
@@ -72,7 +72,7 @@ NamedList detailsMap = (NamedList)namedlist.get("details");
 
 <body>
 <a href=".."><img border="0" align="right" height="78" width="142" src="../solr_small.png" alt="Solr"></a>
-<h1>Solr replication (<%= collectionName %>) 
+<h1>Solr replication (<%= collectionName %>)
 
 <%
 if(detailsMap != null){

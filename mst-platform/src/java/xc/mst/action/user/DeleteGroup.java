@@ -34,8 +34,8 @@ public class DeleteGroup extends BaseActionSupport
     /** ID of the group to be deleted**/
     private int groupId;
 
-	/** Error type */
-	private String errorType; 
+    /** Error type */
+    private String errorType;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -50,9 +50,9 @@ public class DeleteGroup extends BaseActionSupport
     {
         try
         {
-                        
+
             Group tempGroup = getGroupService().getGroupById(groupId);
-                    
+
             boolean flag = true;
 
             List<User> users = getUserService().getAllUsersSorted(false,"username");
@@ -116,18 +116,18 @@ public class DeleteGroup extends BaseActionSupport
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
      /**
      * Sets the group ID of the group to be deleted.
@@ -156,22 +156,22 @@ public class DeleteGroup extends BaseActionSupport
      */
     public List<Group> getGroupList()
     {
-    	List<Group> finalList = new ArrayList<Group>();
-    	try {
-	        List<Group> tempList = getGroupService().getAllGroups();
-	        
-	
-	        Iterator<Group> iter = tempList.iterator();
-	        while(iter.hasNext())
-	        {
-	            Group group = (Group)iter.next();
-	            group.setMemberCount(getUserService().getUsersForGroup(group.getId()).size());
-	            finalList.add(group);
-	        }
-    	} catch  (DataException e) {
+        List<Group> finalList = new ArrayList<Group>();
+        try {
+            List<Group> tempList = getGroupService().getAllGroups();
+
+
+            Iterator<Group> iter = tempList.iterator();
+            while(iter.hasNext())
+            {
+                Group group = (Group)iter.next();
+                group.setMemberCount(getUserService().getUsersForGroup(group.getId()).size());
+                finalList.add(group);
+            }
+        } catch  (DataException e) {
             log.error("Exception occured while geting group information", e);
         }
-	        return finalList;
+            return finalList;
     }
 
 }

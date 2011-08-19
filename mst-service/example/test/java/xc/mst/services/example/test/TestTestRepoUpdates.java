@@ -12,5 +12,5 @@ import xc.mst.service.impl.test.BaseMetadataServiceTest;
 
 public class TestTestRepoUpdates extends BaseMetadataServiceTest {
 
-	// 
+    //
 }

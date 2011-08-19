@@ -24,8 +24,8 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class MSTFieldError extends SimpleTagSupport {
 
-	/** Map that contains all the field Errors */
-	private Map error;
+    /** Map that contains all the field Errors */
+    private Map error;
 
     @Override
     public void doTag() //throws JspException,IOException
@@ -48,7 +48,7 @@ public class MSTFieldError extends SimpleTagSupport {
         }
         catch(Exception e)
         {
-            
+
         }
 
     }

@@ -37,10 +37,10 @@ public class EditRepository extends BaseActionSupport
 
     /**The URL of the repository to be edited */
     private String repositoryURL;
-    
-	/** Error type */
-	private String errorType;
-	
+
+    /** Error type */
+    private String errorType;
+
     /** Number of records to harvest */
     private long numberOfRecordsToHarvest;
 
@@ -54,11 +54,11 @@ public class EditRepository extends BaseActionSupport
     {
         try
         {
-            
+
             Provider provider = getProviderService().getProviderById(repositoryId);
-           
+
             if(provider==null)
-            {                
+            {
                 errorType = "error";
                 getUserService().sendEmailErrorReport();
                 this.addFieldError("viewRepositoryError","There was a problem displaying the edit Repository page. An email has been sent to the administrator.");
@@ -86,35 +86,35 @@ public class EditRepository extends BaseActionSupport
      */
     public String editRepository()
     {
-    	Provider p = new Provider();
-    	p.setId(repositoryId);
-    	String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
-    	if (error != null) {
-    		errorType = "error";
-    		this.addFieldError("editRepository",error);
-    		return INPUT;
-    	} else {
-    		return SUCCESS;
-    	}
+        Provider p = new Provider();
+        p.setId(repositoryId);
+        String error = getRepositoryService().save(repositoryName, repositoryURL, p, numberOfRecordsToHarvest);
+        if (error != null) {
+            errorType = "error";
+            this.addFieldError("editRepository",error);
+            return INPUT;
+        } else {
+            return SUCCESS;
+        }
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Sets the Repository Name to the specified value
@@ -181,14 +181,14 @@ public class EditRepository extends BaseActionSupport
     /**
      * Get number of records to harvest
      */
-	public long getNumberOfRecordsToHarvest() {
-		return numberOfRecordsToHarvest;
-	}
+    public long getNumberOfRecordsToHarvest() {
+        return numberOfRecordsToHarvest;
+    }
 
     /**
      * Set number of records to harvest
      */
-	public void setNumberOfRecordsToHarvest(long numberOfRecordsToHarvest) {
-		this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
-	}
+    public void setNumberOfRecordsToHarvest(long numberOfRecordsToHarvest) {
+        this.numberOfRecordsToHarvest = numberOfRecordsToHarvest;
+    }
 }

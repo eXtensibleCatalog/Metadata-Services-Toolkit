@@ -24,52 +24,52 @@ import org.apache.log4j.Logger;
  */
 public class PageIteratorTag extends SimpleTagSupport {
 
-	/** Iterator variable name */
-	private String var;
+    /** Iterator variable name */
+    private String var;
 
-	/** Logger */
-	private static final Logger log = Logger.getLogger(PageIteratorTag.class);
+    /** Logger */
+    private static final Logger log = Logger.getLogger(PageIteratorTag.class);
 
-	public void doTag() throws JspException {
-		log.debug("do tag called");
+    public void doTag() throws JspException {
+        log.debug("do tag called");
 
-		PagerTag pagerTag =
-			 (PagerTag)findAncestorWithClass(this,
-					 PagerTag.class);
+        PagerTag pagerTag =
+             (PagerTag)findAncestorWithClass(this,
+                     PagerTag.class);
 
-	    if(pagerTag == null)
-	    {
-	    	throw new JspTagException("the <ur:forEachPage> tag must"
-	    			+ " be nested within a <ur:pager> tag");
-	    }
+        if(pagerTag == null)
+        {
+            throw new JspTagException("the <ur:forEachPage> tag must"
+                    + " be nested within a <ur:pager> tag");
+        }
 
-		JspFragment body = getJspBody();
+        JspFragment body = getJspBody();
 
-		try {
-			for(int i = pagerTag.getStartPageNumber(); i <= pagerTag.getEndPageNumber(); i++) {
-				getJspContext().setAttribute(var, i);
-				if( body != null )
-				{
-					int rowStart = (i * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
-				    getJspContext().setAttribute("rowStart", rowStart);
-					body.invoke(null);
-				}
-			}
+        try {
+            for(int i = pagerTag.getStartPageNumber(); i <= pagerTag.getEndPageNumber(); i++) {
+                getJspContext().setAttribute(var, i);
+                if( body != null )
+                {
+                    int rowStart = (i * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
+                    getJspContext().setAttribute("rowStart", rowStart);
+                    body.invoke(null);
+                }
+            }
 
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
 
-	}
+    }
 
 
-	public String getVar() {
-		return var;
-	}
+    public String getVar() {
+        return var;
+    }
 
-	public void setVar(String var) {
-		this.var = var;
-	}
+    public void setVar(String var) {
+        this.var = var;
+    }
 
 
 }

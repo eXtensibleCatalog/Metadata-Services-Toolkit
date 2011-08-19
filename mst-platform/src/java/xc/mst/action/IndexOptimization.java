@@ -22,56 +22,56 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class IndexOptimization extends BaseActionSupport  {
 
-	/** Generated id  */
-	private static final long serialVersionUID = 1316812472174881465L;
+    /** Generated id  */
+    private static final long serialVersionUID = 1316812472174881465L;
 
     /** Server selected */
     private String message;
 
-	/** Error type */
-	private String errorType;
-	
-	
+    /** Error type */
+    private String errorType;
+
+
     /**
      * Overriding default implementation to login the user.
      *
      * @return {@link #SUCCESS}
      */
     @Override
-	public String execute() throws DataException {
-    	
-    	try {
-    		((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
-    	}  catch (IndexException ie) {
-        	this.addFieldError("optimizeError", "Optimization of Solr index failed due to some problem.");
+    public String execute() throws DataException {
+
+        try {
+            ((SolrIndexManager)MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
+        }  catch (IndexException ie) {
+            this.addFieldError("optimizeError", "Optimization of Solr index failed due to some problem.");
             errorType = "error";
             return SUCCESS;
-    	}
+        }
 
-    	message = "Solr index optimized successfully!";
-    	
-       	return SUCCESS;
+        message = "Solr index optimized successfully!";
+
+           return SUCCESS;
     }
 
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
 
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
 
 }

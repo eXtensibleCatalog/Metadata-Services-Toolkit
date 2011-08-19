@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-	<responseDate>2011-03-30T15:12:42Z</responseDate>
-	<request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/OAIToolkit-0.6.10/oai-request.do</request>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2011-03-30T15:12:42Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/OAIToolkit-0.6.10/oai-request.do</request>
 
 <ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2011-03-30T14:44:50Z</datestamp><setSpec>bib</setSpec></header><metadata>
   <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">

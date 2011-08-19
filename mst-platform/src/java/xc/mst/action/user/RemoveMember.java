@@ -39,7 +39,7 @@ public class RemoveMember extends BaseActionSupport
 
      /**
      * Overrides default implementation to remove a user-group association.
-      * 
+      *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -47,7 +47,7 @@ public class RemoveMember extends BaseActionSupport
     {
         try
         {
-            
+
             User user = getUserService().getUserById(userId);
             user.removeGroup(getGroupService().getGroupById(groupId));
             getUserService().updateUser(user);
@@ -116,16 +116,16 @@ public class RemoveMember extends BaseActionSupport
       *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

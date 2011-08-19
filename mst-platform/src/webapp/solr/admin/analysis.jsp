@@ -68,19 +68,19 @@
 <table>
 <tr>
   <td>
-	<strong>Field
+  <strong>Field
           <select name="nt">
-	  <option <%= nt.equals("name") ? "selected=\"selected\"" : "" %> >name</option>
-	  <option <%= nt.equals("type") ? "selected=\"selected\"" : "" %>>type</option>
+    <option <%= nt.equals("name") ? "selected=\"selected\"" : "" %> >name</option>
+    <option <%= nt.equals("type") ? "selected=\"selected\"" : "" %>>type</option>
           </select></strong>
   </td>
   <td>
-	<input class="std" name="name" type="text" value="<% XML.escapeCharData(name, out); %>">
+  <input class="std" name="name" type="text" value="<% XML.escapeCharData(name, out); %>">
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Field value (Index)</strong>
+  <strong>Field value (Index)</strong>
   <br/>
   verbose output
   <input name="verbose" type="checkbox"
@@ -91,19 +91,19 @@
      <%= highlight ? "checked=\"true\"" : "" %> >
   </td>
   <td>
-	<textarea class="std" rows="8" cols="70" name="val"><% XML.escapeCharData(val,out); %></textarea>
+  <textarea class="std" rows="8" cols="70" name="val"><% XML.escapeCharData(val,out); %></textarea>
   </td>
 </tr>
 <tr>
   <td>
-	<strong>Field value (Query)</strong>
+  <strong>Field value (Query)</strong>
   <br/>
   verbose output
   <input name="qverbose" type="checkbox"
      <%= qverbose ? "checked=\"true\"" : "" %> >
   </td>
   <td>
-	<textarea class="std" rows="1" cols="70" name="qval"><% XML.escapeCharData(qval,out); %></textarea>
+  <textarea class="std" rows="1" cols="70" name="qval"><% XML.escapeCharData(qval,out); %></textarea>
   </td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
   </td>
 
   <td>
-	<input class="stdbutton" type="submit" value="analyze">
+  <input class="stdbutton" type="submit" value="analyze">
   </td>
 
 </tr>
@@ -315,12 +315,12 @@
   }
 
   static String isPayloadString( Payload p ) {
-  	String sp = new String( p.getData() );
-	for( int i=0; i < sp.length(); i++ ) {
-	if( !Character.isDefined( sp.charAt(i) ) || Character.isISOControl( sp.charAt(i) ) )
-	  return "";
-	}
-	return "(" + sp + ")";
+    String sp = new String( p.getData() );
+  for( int i=0; i < sp.length(); i++ ) {
+  if( !Character.isDefined( sp.charAt(i) ) || Character.isISOControl( sp.charAt(i) ) )
+    return "";
+  }
+  return "(" + sp + ")";
   }
 
   static void writeHeader(JspWriter out, Class clazz, Map<String,String> args) throws IOException {
@@ -457,7 +457,7 @@
             ret += isPayloadString( p );
             return ret;
           }
-          return "";			
+          return "";
         }
       }
               ,true
@@ -465,7 +465,7 @@
               ,null
       );
     }
-    
+
     out.println("</table>");
   }
 
@@ -489,7 +489,7 @@
     out.print("<td class=\"debugdata\">");
     XML.escapeCharData(sb.toString(),out);
     out.println("</td>");
-    
+
     out.println("</tr>");
     out.println("</table>");
     return sb.toString();

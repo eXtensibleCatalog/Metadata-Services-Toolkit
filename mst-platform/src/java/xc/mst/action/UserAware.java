@@ -13,17 +13,17 @@ import xc.mst.bo.user.User;
 
 /**
  * Interface for setting the user in action
- *  
+ *
  * @author Sharmila Ranganathan
  *
  */
 public interface UserAware {
-	
-	/**
-	 * Set User
-	 * 
-	 * @param user Logged in user
-	 */
-	public void setUser(User user);
+
+    /**
+     * Set User
+     *
+     * @param user Logged in user
+     */
+    public void setUser(User user);
 
 }

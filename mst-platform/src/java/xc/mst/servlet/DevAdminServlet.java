@@ -26,40 +26,40 @@ import xc.mst.scheduling.Scheduler;
 import xc.mst.utils.MSTConfiguration;
 
 public class DevAdminServlet extends HttpServlet {
-	
-	private static final Logger LOG = Logger.getLogger(DevAdminServlet.class);
-	
-	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		PrintWriter pw = resp.getWriter();
-		
-		String op = req.getParameter("op");
-		if ("props".equals(op)) {
-			Properties props = MSTConfiguration.getInstance().getProperties();
-			pw.println("<table>");
-			for (Map.Entry me: props.entrySet()) {
-				pw.println("<tr>");
-				pw.println("<td>"+me.getKey()+"</td>");
-				pw.println("<td>"+me.getValue()+"</td>");
-				pw.println("</tr>");
-			}
-			pw.println("</table>");
-		} else if ("refreshSolr".equals(op)) {
-			((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrService")).refreshServer();
-		} else if ("setProperty".equals(op)) {
-			MSTConfiguration.getInstance().setProperty(req.getParameter("key"), req.getParameter("value"));
-		} else {
-			pw.println("add ?op=[props|refreshSolr|setProperty] to the url");
-		}
-	}
-	
-	@Override
-	public void destroy() {
-		LOG.debug("destroy()");
-		Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
-		scheduler.kill();
-		LOG.debug("scheduler.killed");
-	}
+
+    private static final Logger LOG = Logger.getLogger(DevAdminServlet.class);
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        PrintWriter pw = resp.getWriter();
+
+        String op = req.getParameter("op");
+        if ("props".equals(op)) {
+            Properties props = MSTConfiguration.getInstance().getProperties();
+            pw.println("<table>");
+            for (Map.Entry me: props.entrySet()) {
+                pw.println("<tr>");
+                pw.println("<td>"+me.getKey()+"</td>");
+                pw.println("<td>"+me.getValue()+"</td>");
+                pw.println("</tr>");
+            }
+            pw.println("</table>");
+        } else if ("refreshSolr".equals(op)) {
+            ((MSTSolrService)MSTConfiguration.getInstance().getBean("MSTSolrService")).refreshServer();
+        } else if ("setProperty".equals(op)) {
+            MSTConfiguration.getInstance().setProperty(req.getParameter("key"), req.getParameter("value"));
+        } else {
+            pw.println("add ?op=[props|refreshSolr|setProperty] to the url");
+        }
+    }
+
+    @Override
+    public void destroy() {
+        LOG.debug("destroy()");
+        Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
+        scheduler.kill();
+        LOG.debug("scheduler.killed");
+    }
 
 }

@@ -2,31 +2,31 @@
 <xsd:schema targetNamespace="http://www.loc.gov/MARC21/slim" xmlns="http://www.loc.gov/MARC21/slim" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" xml:lang="en">
   <xsd:annotation>
     <xsd:documentation>
-			MARCXML: The MARC 21 XML Schema
-			Prepared by Corey Keith
-			
-				May 21, 2002 - Version 1.0  - Initial Release
+      MARCXML: The MARC 21 XML Schema
+      Prepared by Corey Keith
+
+        May 21, 2002 - Version 1.0  - Initial Release
 
 **********************************************
 Changes.
 
-August 4, 2003 - Version 1.1 - 
-Removed import of xml namespace and the use of xml:space="preserve" attributes on the leader and controlfields. 
+August 4, 2003 - Version 1.1 -
+Removed import of xml namespace and the use of xml:space="preserve" attributes on the leader and controlfields.
                     Whitespace preservation in these subfields is accomplished by the use of xsd:whiteSpace value="preserve"
 
-May 21, 2009  - Version 1.2 - 
-in subfieldcodeDataType  the pattern 
+May 21, 2009  - Version 1.2 -
+in subfieldcodeDataType  the pattern
                           "[\da-z!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?{}_^`~\[\]\\]{1}"
-	changed to:	
+  changed to:
                          "[\dA-Za-z!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?{}_^`~\[\]\\]{1}"
     i.e "A-Z" added after "[\d" before "a-z"  to allow upper case.  This change is for consistency with the documentation.
-	
+
 ************************************************************
-			This schema supports XML markup of MARC21 records as specified in the MARC documentation (see www.loc.gov).  It allows tags with
-			alphabetics and subfield codes that are symbols, neither of which are as yet used in  the MARC 21 communications formats, but are 
-			allowed by MARC 21 for local data.  The schema accommodates all types of MARC 21 records: bibliographic, holdings, bibliographic 
-			with embedded holdings, authority, classification, and community information.
-		</xsd:documentation>
+      This schema supports XML markup of MARC21 records as specified in the MARC documentation (see www.loc.gov).  It allows tags with
+      alphabetics and subfield codes that are symbols, neither of which are as yet used in  the MARC 21 communications formats, but are
+      allowed by MARC 21 for local data.  The schema accommodates all types of MARC 21 records: bibliographic, holdings, bibliographic
+      with embedded holdings, authority, classification, and community information.
+    </xsd:documentation>
   </xsd:annotation>
   <xsd:element name="record" type="recordType" nillable="true" id="record.e">
     <xsd:annotation>
@@ -75,10 +75,10 @@ in subfieldcodeDataType  the pattern
   <xsd:simpleType name="leaderDataType" id="leader.st">
     <xsd:restriction base="xsd:string">
       <xsd:whiteSpace value="preserve"/>
-		<!--  examples:
-			00937cam  2200217Mi 45’0
-			00871cam  2200229I  45?0
-		-->
+    <!--  examples:
+      00937cam  2200217Mi 45’0
+      00871cam  2200229I  45?0
+    -->
       <xsd:pattern value="[\d ]{5}[\dA-Za-z ]{1}[\dA-Za-z]{1}[\dA-Za-z ]{3}(2| )(2| )[\d ]{5}[\dA-Za-z ]{3}(4500|    |45[\dA-Za-z’\? ]{2}|45.[A0])"/>
     </xsd:restriction>
   </xsd:simpleType>

@@ -25,63 +25,63 @@ import org.apache.log4j.Logger;
  */
 public class MorePreviousTag extends SimpleTagSupport {
 
-	/** Logger */
-	private static final Logger log = Logger.getLogger(MorePreviousTag.class);
+    /** Logger */
+    private static final Logger log = Logger.getLogger(MorePreviousTag.class);
 
-	public void doTag() throws JspException {
-		log.debug("do tag called");
+    public void doTag() throws JspException {
+        log.debug("do tag called");
 
-		PagerTag pagerTag =
-			 (PagerTag)findAncestorWithClass(this,
-					 PagerTag.class);
+        PagerTag pagerTag =
+             (PagerTag)findAncestorWithClass(this,
+                     PagerTag.class);
 
-	    if(pagerTag == null)
-	    {
-	    	throw new JspTagException("the <ur:morePrevious> tag must"
-	    			+ " be nested within a <ur:PreviousPage> tag");
-	    }
+        if(pagerTag == null)
+        {
+            throw new JspTagException("the <ur:morePrevious> tag must"
+                    + " be nested within a <ur:PreviousPage> tag");
+        }
 
-		JspFragment body = getJspBody();
-		PageContext pageContext = (PageContext) getJspContext();
+        JspFragment body = getJspBody();
+        PageContext pageContext = (PageContext) getJspContext();
 
-		try {
-			int startPageNumberForPreviousSet = 1;
+        try {
+            int startPageNumberForPreviousSet = 1;
 
-			startPageNumberForPreviousSet = getStartPageNumber(pagerTag);
+            startPageNumberForPreviousSet = getStartPageNumber(pagerTag);
 
-			pageContext.setAttribute("startPageNumberForPreviousSet", startPageNumberForPreviousSet);
+            pageContext.setAttribute("startPageNumberForPreviousSet", startPageNumberForPreviousSet);
 
-			int rowStart = (startPageNumberForPreviousSet * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
-			pageContext.setAttribute("rowStart", rowStart);
+            int rowStart = (startPageNumberForPreviousSet * pagerTag.getNumberOfResultsToShow())  - pagerTag.getNumberOfResultsToShow();
+            pageContext.setAttribute("rowStart", rowStart);
 
-			if (pagerTag.getStartPageNumber() > 1) {
-				if( body != null )
-				{
-				    body.invoke(null);
-				}
-			}
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
+            if (pagerTag.getStartPageNumber() > 1) {
+                if( body != null )
+                {
+                    body.invoke(null);
+                }
+            }
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
 
-	}
+    }
 
-	/*
-	 * Determines the starting page number for the display
-	 * when user clicks on NEXT
-	 *
-	 */
-	private int getStartPageNumber(PagerTag pagerTag) {
+    /*
+     * Determines the starting page number for the display
+     * when user clicks on NEXT
+     *
+     */
+    private int getStartPageNumber(PagerTag pagerTag) {
 
-		int startPageNumberForPreviousSet = 1;
+        int startPageNumberForPreviousSet = 1;
 
-		// Ex: ... 4 5 6
-		// Determines the page number to start with when user clicks on "...". In this case the page
-		// number should start from 1.
-		// So that "1 2 3 .. Next" will be displayed
-		startPageNumberForPreviousSet = pagerTag.getStartPageNumber() - pagerTag.getNumberOfPagesToShow();
+        // Ex: ... 4 5 6
+        // Determines the page number to start with when user clicks on "...". In this case the page
+        // number should start from 1.
+        // So that "1 2 3 .. Next" will be displayed
+        startPageNumberForPreviousSet = pagerTag.getStartPageNumber() - pagerTag.getNumberOfPagesToShow();
 
-		return startPageNumberForPreviousSet;
-	}
+        return startPageNumberForPreviousSet;
+    }
 
 }

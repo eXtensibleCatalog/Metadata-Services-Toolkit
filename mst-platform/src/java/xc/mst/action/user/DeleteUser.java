@@ -27,13 +27,13 @@ import xc.mst.dao.DatabaseConfigException;
 public class DeleteUser extends BaseActionSupport
 {
     /** Serial id */
-	private static final long serialVersionUID = 2276027380221702568L;
+    private static final long serialVersionUID = 2276027380221702568L;
 
-	/**The ID of the user to be deleted */
+    /**The ID of the user to be deleted */
     private int userId;
 
-	/** Error type */
-	private String errorType;
+    /** Error type */
+    private String errorType;
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
@@ -72,23 +72,23 @@ public class DeleteUser extends BaseActionSupport
         }
     }
 
-	/**
+    /**
      * Returns error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 
     /**
      * Sets the ID of the user to be deleted

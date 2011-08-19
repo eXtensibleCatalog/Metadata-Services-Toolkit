@@ -34,7 +34,7 @@ import xc.mst.dao.DatabaseConfigException;
 public class AddProcessingDirectiveSetsFormats extends BaseActionSupport implements ServletRequestAware
 {
     /** Serial ID*/
-	private static final long serialVersionUID = 8688364366954617970L;
+    private static final long serialVersionUID = 8688364366954617970L;
 
     /** The full list of all sets in the system */
     private List<Set> setList;
@@ -65,9 +65,9 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(AddProcessingDirectiveSetsFormats.class);
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Overrides default implementation to view the add processing directives (step 2) page.
@@ -77,7 +77,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
     @Override
     public String execute()
     {
-       
+
             ProcessingDirective tempProcDir = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             String sourceType = (String)request.getSession().getAttribute("sourceType");
             if((tempProcDir==null)||(sourceType==null))
@@ -91,32 +91,32 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
             List<Set> tempSetList = null;
             if(sourceType.equalsIgnoreCase("provider"))
             {
-            	// Loop over the formats the source provider can produce
-            	// If the service can accept it as input, add it to the list
-            	// of Formats the user can select
-            	for(Format tempFormat : tempProcDir.getSourceProvider().getFormats()) {
-            		if(tempProcDir.getService().getInputFormats().contains(tempFormat)) {
+                // Loop over the formats the source provider can produce
+                // If the service can accept it as input, add it to the list
+                // of Formats the user can select
+                for(Format tempFormat : tempProcDir.getSourceProvider().getFormats()) {
+                    if(tempProcDir.getService().getInputFormats().contains(tempFormat)) {
                         tempFormatList.add(tempFormat);
-            		}
-            	}
-            	
-                tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
-                
-                if (tempProcDir.getSourceProvider().getSets() != null &&
-                		tempProcDir.getSourceProvider().getSets().size() > 0) {
-                	tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
+                    }
                 }
-                
+
+                tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
+
+                if (tempProcDir.getSourceProvider().getSets() != null &&
+                        tempProcDir.getSourceProvider().getSets().size() > 0) {
+                    tempSetList.addAll(tempProcDir.getSourceProvider().getSets());
+                }
+
             }
             else
             {
-            	// Loop over the formats the source service can produce
-            	// If the service can accept it as input, add it to the list
-            	// of Formats the user can select
-            	for(Format tempFormat : tempProcDir.getSourceService().getOutputFormats())
-            		if(tempProcDir.getService().getInputFormats().contains(tempFormat))
+                // Loop over the formats the source service can produce
+                // If the service can accept it as input, add it to the list
+                // of Formats the user can select
+                for(Format tempFormat : tempProcDir.getSourceService().getOutputFormats())
+                    if(tempProcDir.getService().getInputFormats().contains(tempFormat))
                         tempFormatList.add(tempFormat);
-            	
+
                 tempSetList = tempProcDir.getSourceService().getOutputSets();
             }
             setFormatList(tempFormatList);
@@ -125,7 +125,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
             setTemporaryProcessingDirective(tempProcDir);
             return SUCCESS;
-        
+
     }
 
     /**
@@ -183,7 +183,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                     }
                     else
                     {
-                    	/*
+                        /*
                         if(sourceType.equalsIgnoreCase("provider"))
                         {
                             tempSetList = tempProcDir.getSourceProvider().getHarvestedRecordSets();
@@ -193,7 +193,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                             tempSetList = tempProcDir.getSourceService().getOutputSets();
                         }
                         */
-                    	tempSetList = null;
+                        tempSetList = null;
                         break;
                     }
                 }
@@ -206,15 +206,15 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
            Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
            if((setExists==null) && (outputSetSpec!=null) && (!outputSetSpec.equals(""))) //output set doesn't already exist
            {
-        	   Set tempSet = new Set();
-        	   tempSet.setDisplayName(outputSetName);
-        	   tempSet.setSetSpec(outputSetSpec);
-        	   getSetService().insertSet(tempSet);
-        	   tempProcDir.setOutputSet(tempSet);
+               Set tempSet = new Set();
+               tempSet.setDisplayName(outputSetName);
+               tempSet.setSetSpec(outputSetSpec);
+               getSetService().insertSet(tempSet);
+               tempProcDir.setOutputSet(tempSet);
            }
            else
-        	   tempProcDir.setOutputSet(setExists);
-           
+               tempProcDir.setOutputSet(setExists);
+
            getProcessingDirectiveService().insertProcessingDirective(tempProcDir);
 
            request.getSession().setAttribute("temporaryProcessingDirective",null);
@@ -239,7 +239,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
 
     /**
      * Returns to the previous step in the add processing directive operation
-     * 
+     *
      * @return
      */
     public String addProcessingDirectiveGoBack()
@@ -280,7 +280,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                     }
                 }
 
-                
+
                 tempProcDir.setTriggeringFormats(tempFormatList);
                 if(SetIdList!=null)
                 {
@@ -291,7 +291,7 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
                     }
                 }
 
-                
+
                 tempProcDir.setTriggeringSets(tempSetList);
 
                 Set setExists = getSetService().getSetBySetSpec(outputSetSpec);
@@ -334,20 +334,20 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
      */
     public String addProcessingDirectiveCancel()
     {
-       
+
             request.getSession().setAttribute("temporaryProcessingDirective",null);
             return SUCCESS;
-        
+
     }
 
         /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     /**
      * Sets the name of the output set
@@ -516,16 +516,16 @@ public class AddProcessingDirectiveSetsFormats extends BaseActionSupport impleme
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
      *
      * @param errorType
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

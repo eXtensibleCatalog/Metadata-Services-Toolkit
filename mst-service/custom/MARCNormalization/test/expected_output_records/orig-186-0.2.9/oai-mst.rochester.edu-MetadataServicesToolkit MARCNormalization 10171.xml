@@ -1,172 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
 
-	<marc:leader>01169ccm a22003610  45 A</marc:leader>
-	<marc:controlfield tag="001">883452</marc:controlfield>
-	<marc:controlfield tag="003">NRU</marc:controlfield>
-	<marc:controlfield tag="008">740208s1967    nyuzza         n    N/Ae </marc:controlfield>
+  <marc:leader>01169ccm a22003610  45 A</marc:leader>
+  <marc:controlfield tag="001">883452</marc:controlfield>
+  <marc:controlfield tag="003">NRU</marc:controlfield>
+  <marc:controlfield tag="008">740208s1967    nyuzza         n    N/Ae </marc:controlfield>
 
-	<marc:datafield tag="010" ind1=" " ind2=" ">
-		<marc:subfield code="a">   68038025 /M</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="010" ind1=" " ind2=" ">
+    <marc:subfield code="a">   68038025 /M</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="028" ind1="2" ind2="0">
-		<marc:subfield code="a">AMP-6734-44</marc:subfield>
-		<marc:subfield code="b">Associated Music Publishers</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="028" ind1="2" ind2="0">
+    <marc:subfield code="a">AMP-6734-44</marc:subfield>
+    <marc:subfield code="b">Associated Music Publishers</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		
-		<marc:subfield code="a">(OCoLC)794478</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
 
-	<marc:datafield tag="035" ind1=" " ind2=" ">
-		<marc:subfield code="9">00825076</marc:subfield>
-	</marc:datafield>
+    <marc:subfield code="a">(OCoLC)794478</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="040" ind1=" " ind2=" ">
-		<marc:subfield code="a">DLC</marc:subfield>
-		<marc:subfield code="c">MIA</marc:subfield>
-		<marc:subfield code="d">IUG</marc:subfield>
-		<marc:subfield code="d">RER</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="035" ind1=" " ind2=" ">
+    <marc:subfield code="9">00825076</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="045" ind1="0" ind2=" ">
-		<marc:subfield code="b">d1963</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="040" ind1=" " ind2=" ">
+    <marc:subfield code="a">DLC</marc:subfield>
+    <marc:subfield code="c">MIA</marc:subfield>
+    <marc:subfield code="d">IUG</marc:subfield>
+    <marc:subfield code="d">RER</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="048" ind1=" " ind2=" ">
-		<marc:subfield code="a">bb02</marc:subfield>
-		<marc:subfield code="a">ba01</marc:subfield>
-		<marc:subfield code="a">bd01</marc:subfield>
-		<marc:subfield code="a">be01</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="045" ind1="0" ind2=" ">
+    <marc:subfield code="b">d1963</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="049" ind1=" " ind2=" ">
-		<marc:subfield code="a">RERA</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="048" ind1=" " ind2=" ">
+    <marc:subfield code="a">bb02</marc:subfield>
+    <marc:subfield code="a">ba01</marc:subfield>
+    <marc:subfield code="a">bd01</marc:subfield>
+    <marc:subfield code="a">be01</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="050" ind1="0" ind2=" ">
-		<marc:subfield code="a">M557.E76</marc:subfield>
-		<marc:subfield code="b">B7</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="049" ind1=" " ind2=" ">
+    <marc:subfield code="a">RERA</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="090" ind1=" " ind2=" ">
-		<marc:subfield code="a">M557</marc:subfield>
-		<marc:subfield code="b">.E84q</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="050" ind1="0" ind2=" ">
+    <marc:subfield code="a">M557.E76</marc:subfield>
+    <marc:subfield code="b">B7</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="099" ind1=" " ind2=" ">
-		<marc:subfield code="a">M557 .E84q</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="090" ind1=" " ind2=" ">
+    <marc:subfield code="a">M557</marc:subfield>
+    <marc:subfield code="b">.E84q</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="100" ind1="1" ind2=" ">
-		<marc:subfield code="a">Etler, Alvin,</marc:subfield>
-		<marc:subfield code="d">1913-1973.</marc:subfield>
-		<marc:subfield code="4">cmp</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="099" ind1=" " ind2=" ">
+    <marc:subfield code="a">M557 .E84q</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="240" ind1="1" ind2="0">
-		<marc:subfield code="a">Quintets,</marc:subfield>
-		<marc:subfield code="m">trumpets, horn, trombone, tuba</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="100" ind1="1" ind2=" ">
+    <marc:subfield code="a">Etler, Alvin,</marc:subfield>
+    <marc:subfield code="d">1913-1973.</marc:subfield>
+    <marc:subfield code="4">cmp</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="245" ind1="0" ind2="0">
-		<marc:subfield code="a">Quintet, for brass instruments.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="240" ind1="1" ind2="0">
+    <marc:subfield code="a">Quintets,</marc:subfield>
+    <marc:subfield code="m">trumpets, horn, trombone, tuba</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="260" ind1=" " ind2=" ">
-		<marc:subfield code="a">New York,</marc:subfield>
-		<marc:subfield code="b">Associated Music Publishers</marc:subfield>
-		<marc:subfield code="c">[1967]</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="245" ind1="0" ind2="0">
+    <marc:subfield code="a">Quintet, for brass instruments.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="300" ind1=" " ind2=" ">
-		<marc:subfield code="a">score (46 p.) and    parts.</marc:subfield>
-		<marc:subfield code="c">30 cm.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="260" ind1=" " ind2=" ">
+    <marc:subfield code="a">New York,</marc:subfield>
+    <marc:subfield code="b">Associated Music Publishers</marc:subfield>
+    <marc:subfield code="c">[1967]</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="306" ind1=" " ind2=" ">
-		<marc:subfield code="a">001500</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="300" ind1=" " ind2=" ">
+    <marc:subfield code="a">score (46 p.) and    parts.</marc:subfield>
+    <marc:subfield code="c">30 cm.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">For 2 trumpets, horn, trombone, and tuba.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="306" ind1=" " ind2=" ">
+    <marc:subfield code="a">001500</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="500" ind1=" " ind2=" ">
-		<marc:subfield code="a">Duration: about 15 min.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">For 2 trumpets, horn, trombone, and tuba.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="650" ind1=" " ind2="0">
-		<marc:subfield code="a">Brass quintets (Horn, trombone, trumpets (2), tuba)</marc:subfield>
-		<marc:subfield code="x">Scores and parts.</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="500" ind1=" " ind2=" ">
+    <marc:subfield code="a">Duration: about 15 min.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="910" ind1=" " ind2=" ">
-		<marc:subfield code="a">  950805        </marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="650" ind1=" " ind2="0">
+    <marc:subfield code="a">Brass quintets (Horn, trombone, trumpets (2), tuba)</marc:subfield>
+    <marc:subfield code="x">Scores and parts.</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="911" ind1=" " ind2=" ">
-		<marc:subfield code="a">u</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="910" ind1=" " ind2=" ">
+    <marc:subfield code="a">  950805        </marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO </marc:subfield>
-		<marc:subfield code="s">M557 .E84q</marc:subfield>
-		<marc:subfield code="c"> 1</marc:subfield>
-		<marc:subfield code="b">39087009106156</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="911" ind1=" " ind2=" ">
+    <marc:subfield code="a">u</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO </marc:subfield>
-		<marc:subfield code="s">M557 .E84q</marc:subfield>
-		<marc:subfield code="c"> 2</marc:subfield>
-		<marc:subfield code="b">39087009106164</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="966" ind1=" " ind2=" ">
+    <marc:subfield code="l">/Stack</marc:subfield>
+    <marc:subfield code="m">SMONO </marc:subfield>
+    <marc:subfield code="s">M557 .E84q</marc:subfield>
+    <marc:subfield code="c"> 1</marc:subfield>
+    <marc:subfield code="b">39087009106156</marc:subfield>
+  </marc:datafield>
 
-	<marc:datafield tag="966" ind1=" " ind2=" ">
-		<marc:subfield code="l">/Stack</marc:subfield>
-		<marc:subfield code="m">SMONO </marc:subfield>
-		<marc:subfield code="s">M557 .E84q</marc:subfield>
-		<marc:subfield code="c"> 3</marc:subfield>
-		<marc:subfield code="b">39087009106172</marc:subfield>
-	</marc:datafield>
+  <marc:datafield tag="966" ind1=" " ind2=" ">
+    <marc:subfield code="l">/Stack</marc:subfield>
+    <marc:subfield code="m">SMONO </marc:subfield>
+    <marc:subfield code="s">M557 .E84q</marc:subfield>
+    <marc:subfield code="c"> 2</marc:subfield>
+    <marc:subfield code="b">39087009106164</marc:subfield>
+  </marc:datafield>
+
+  <marc:datafield tag="966" ind1=" " ind2=" ">
+    <marc:subfield code="l">/Stack</marc:subfield>
+    <marc:subfield code="m">SMONO </marc:subfield>
+    <marc:subfield code="s">M557 .E84q</marc:subfield>
+    <marc:subfield code="c"> 3</marc:subfield>
+    <marc:subfield code="b">39087009106172</marc:subfield>
+  </marc:datafield>
 
 <marc:datafield tag="931" ind1=" " ind2=" ">
-	<marc:subfield code="a">Image</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Image</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="932" ind1=" " ind2=" ">
-	<marc:subfield code="a">Notated music</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Notated music</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="933" ind1=" " ind2=" ">
-	<marc:subfield code="a">Notated music</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Notated music</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="935" ind1=" " ind2=" ">
-	<marc:subfield code="a">Monograph/Item</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Monograph/Item</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="035" ind1=" " ind2=" ">
-	<marc:subfield code="a">(NRU)883452</marc:subfield>
+  <marc:subfield code="a">(NRU)883452</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="a">Brass quintets (Horn, trombone, trumpets (2), tuba)</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="a">Brass quintets (Horn, trombone, trumpets (2), tuba)</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 <marc:datafield tag="965" ind1=" " ind2="0">
-	<marc:subfield code="x">Scores and parts.</marc:subfield>
-	<marc:subfield code="5">NRU</marc:subfield>
+  <marc:subfield code="x">Scores and parts.</marc:subfield>
+  <marc:subfield code="5">NRU</marc:subfield>
 </marc:datafield>
 
 </marc:record>

@@ -31,10 +31,10 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public class EditProcessingDirective extends BaseActionSupport implements ServletRequestAware
 {
-	 /** Serial ID*/
-	private static final long serialVersionUID = -4075467154916214233L;
+     /** Serial ID*/
+    private static final long serialVersionUID = -4075467154916214233L;
 
-	/** Temporary Processing Directive object which is used to display details on the JSP */
+    /** Temporary Processing Directive object which is used to display details on the JSP */
     private ProcessingDirective temporaryProcessingDirective;
 
     /**ID of the processing directive whose details are to be edited */
@@ -60,9 +60,9 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
 
     /** The service associated with the processing directive */
     private String service;
-    
-	/** Error type */
-	private String errorType; 
+
+    /** Error type */
+    private String errorType;
 
     /**
      * Sets the ID of the processing directive to be edited
@@ -207,13 +207,13 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
     }
 
     /**
-	 * Set the servlet request.
-	 *
-	 * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
-	 */
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+     * Set the servlet request.
+     *
+     * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
+     */
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     /**
      * Overrides default implementation to view the edit processing directives (step 1) page.
@@ -227,15 +227,15 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
         {
             temporaryProcessingDirective = getProcessingDirectiveService().getByProcessingDirectiveId(processingDirectiveId);
             LOG.debug("****** EditProcessingDirective:execute "+" tempProcDir="+temporaryProcessingDirective);
-     
+
             request.getSession().setAttribute("processingDirectiveId",processingDirectiveId);
-     
+
             if(temporaryProcessingDirective==null)
             {
                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             }
-            
-            // Place PD in session 
+
+            // Place PD in session
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
             if(temporaryProcessingDirective==null)
             {
@@ -284,9 +284,9 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
 
             if(temporaryProcessingDirective==null)
             {
-                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");            
+                 temporaryProcessingDirective = (ProcessingDirective)request.getSession().getAttribute("temporaryProcessingDirective");
             }
-            
+
             if(temporaryProcessingDirective==null)
             {
                 this.addFieldError("editProcessingDirectiveEror", "Error occurred while editing processing directive. An email has been sent to the administrator. ");
@@ -296,7 +296,7 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
             }
             Provider tempProvider = getProviderService().getProviderByName(source);
             Service tempService = getServicesService().getServiceByName(source);
-            
+
             if(tempProvider!=null) //source is a provider
             {
                 request.getSession().setAttribute("sourceType","provider");
@@ -306,7 +306,7 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
                 request.getSession().setAttribute("sourceType","service");
             }
             request.getSession().setAttribute("service",getService());
-            
+
             LOG.debug("****** END EditProcessingDirective:editProcessingDirectives() "+" tempProcDir="+temporaryProcessingDirective);
 
             request.getSession().setAttribute("temporaryProcessingDirective",temporaryProcessingDirective);
@@ -326,16 +326,16 @@ public class EditProcessingDirective extends BaseActionSupport implements Servle
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets error type
-     * 
+     *
      * @param errorType error type
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

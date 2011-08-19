@@ -27,10 +27,10 @@ public class EmailConfiguration extends BaseActionSupport
 {
 
     /**  Serial id */
-	private static final long serialVersionUID = 4328003705417402790L;
+    private static final long serialVersionUID = 4328003705417402790L;
 
-	/** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** The temporary emailConfig object that is used to populate JSP page fields **/
     private EmailConfig temporaryEmailConfig;
@@ -57,11 +57,11 @@ public class EmailConfiguration extends BaseActionSupport
     private String message;
 
     private EmailConfig emailConfig = new EmailConfig();
-    
-	/** Error type */
-	private String errorType; 
 
-    
+    /** Error type */
+    private String errorType;
+
+
 
      /**
      * Overrides default implementation to view the email server configuration page.
@@ -94,7 +94,7 @@ public class EmailConfiguration extends BaseActionSupport
     public String changeEmailConfig()
     {
         try
-        {            
+        {
             emailConfig.setEmailServerAddress(emailServerAddress);
             emailConfig.setEncryptedConnection(encryptedConnection);
             emailConfig.setFromAddress(fromAddress);
@@ -263,52 +263,52 @@ public class EmailConfiguration extends BaseActionSupport
      *
      * @return information message
      */
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
     /**
      * Sets the information message which describes whether the email server was added correctly or not
      *
-     * @param message 
+     * @param message
      */
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     /**
      * Returns the temporary email config object
      *
      * @return temporary email configuration object
      */
-	public EmailConfig getEmailConfig() {
-		return emailConfig;
-	}
+    public EmailConfig getEmailConfig() {
+        return emailConfig;
+    }
 
     /**
      * Sets the email config object which is used to populate JSP fields
      *
-     * @param emailConfig 
+     * @param emailConfig
      */
-	public void setEmailConfig(EmailConfig emailConfig) {
-		this.emailConfig = emailConfig;
-	}
+    public void setEmailConfig(EmailConfig emailConfig) {
+        this.emailConfig = emailConfig;
+    }
 
     /**
      * Returns the error type
      *
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
-     * 
-     * @param errorType 
+     *
+     * @param errorType
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

@@ -14,46 +14,46 @@ import org.testng.annotations.Test;
 import xc.mst.bo.provider.Format;
 
 public class StartToFinishTest extends xc.mst.service.impl.test.StartToFinishTest {
-	
-	private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
-	
-	public String getRepoName() {
-		return "test_repo";
-	}
-	
-	@Override
-	protected long getNumberOfRecordsToHarvest() {
-		//return Integer.MAX_VALUE;
-		return 1000;
-	}
 
-	/*
-	@Override
-	protected String getSetSpec() {
-		return getRepoName()+":publication:com_5Farchival";
-	}
-	*/
-	
-	public String getProviderUrl() {
-		LOG.debug("**** getProviderUrl() BASE ");
-		return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
-	}
-	
-	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getMarc21Format()};
-	}
+    private static final Logger LOG = Logger.getLogger(StartToFinishTest.class);
 
-	public Format getHarvestOutFormat() throws Exception {
-		return getMarc21Format();
-	}
-	
-	public void finalTest() {
-	}
+    public String getRepoName() {
+        return "test_repo";
+    }
 
-	/**
-	 * To test harvest out functionality
-	 */
-	public void testHarvestOut() {
-	}
+    @Override
+    protected long getNumberOfRecordsToHarvest() {
+        //return Integer.MAX_VALUE;
+        return 1000;
+    }
+
+    /*
+    @Override
+    protected String getSetSpec() {
+        return getRepoName()+":publication:com_5Farchival";
+    }
+    */
+
+    public String getProviderUrl() {
+        LOG.debug("**** getProviderUrl() BASE ");
+        return "http://128.151.244.137:8080/OAIToolkit/oai-request.do";
+    }
+
+    public Format[] getIncomingFormats() throws Exception {
+        return new Format[] {getMarc21Format()};
+    }
+
+    public Format getHarvestOutFormat() throws Exception {
+        return getMarc21Format();
+    }
+
+    public void finalTest() {
+    }
+
+    /**
+     * To test harvest out functionality
+     */
+    public void testHarvestOut() {
+    }
 
 }

@@ -1,9 +1,9 @@
 <%--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -79,30 +79,30 @@
                 <div id="error_div"></div>
 
                  <div class="clear">&nbsp;</div>
-		<form name="editService" method="post" action="editService.action">
+    <form name="editService" method="post" action="editService.action">
                 <table style="margin-left:10px" width="100%">
                 <input type="hidden" name="serviceId" id="serviceId" value=${temporaryService.id}>
                     <br>
                     <tr>
-                       <td colspan="2" >                          
-				To update a service, see the <a style="text-decoration:underline;color:blue;"href="http://code.google.com/p/xcmetadataservicestoolkit/wiki/Metadata">user manual</a> for instructions.<br>
+                       <td colspan="2" >
+        To update a service, see the <a style="text-decoration:underline;color:blue;"href="http://code.google.com/p/xcmetadataservicestoolkit/wiki/Metadata">user manual</a> for instructions.<br>
                        </td>
                     </tr>
                     <br>
-                    
-                    
+
+
                     <tr>
                         <td>
                             <button class="xc_button" onclick="javascript:YAHOO.xc.mst.services.alterService.cancel();" type="button" name="cancel">Done</button>&nbsp;&nbsp;
                         </td>
                     </tr>
-                  
+
                 </table>
               </form>
 
             </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>              
+            <c:import url="/st/inc/footer.jsp"/>
         </div>
  </body>
 </html>

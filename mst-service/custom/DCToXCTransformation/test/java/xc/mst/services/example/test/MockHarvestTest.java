@@ -14,23 +14,23 @@ import xc.mst.bo.provider.Format;
 
 public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
-	private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
+    private static final Logger LOG = Logger.getLogger(MockHarvestTest.class);
 
-	@Override
-	public Format[] getIncomingFormats() throws Exception {
-		return new Format[] {getFooBarFormat()};
-	}
+    @Override
+    public Format[] getIncomingFormats() throws Exception {
+        return new Format[] {getFooBarFormat()};
+    }
 
-	public Format getHarvestOutFormat() throws Exception {
-		return getFooBarFormat();
-	}
+    public Format getHarvestOutFormat() throws Exception {
+        return getFooBarFormat();
+    }
 
-	@Override
-	public void finalTest() throws Exception {
-	}
-	
-	@Override
-	public void testHarvestOut() {
-	}
+    @Override
+    public void finalTest() throws Exception {
+    }
+
+    @Override
+    public void testHarvestOut() {
+    }
 
 }
