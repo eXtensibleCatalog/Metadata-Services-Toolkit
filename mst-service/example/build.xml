@@ -338,7 +338,8 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
 
   <target name="mst-sql">
     <exec executable="${mysql.home}/bin/mysql"
-        input="${build.mst-instance.dir}/sql/create_database_script.sql">
+        input="${build.mst-instance.dir}/sql/create_database_script.sql"
+        failonerror="true">
       <arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
     </exec>
   </target>

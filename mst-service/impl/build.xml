@@ -170,7 +170,6 @@ commands (ms.help)
           <include name="xsl/*" />
           <include name="build.xml" />
           <include name="build.properties" />
-          <include name="dev.properties.example" />
           <include name="ivysettings.xml" />
           <include name="ivy.xml" />
         </fileset>

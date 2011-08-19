@@ -181,30 +181,35 @@ public abstract class MockHarvestTest extends StartToFinishTest {
         stringBuilder.append(facade.execute(bean));
 
         harvestOutResponse = stringBuilder.toString();
+        LOG.debug("raw response");
+
+        LOG.debug(harvestOutResponse);
         Document doc = xmlHelper.getJDomDocument(harvestOutResponse);
         harvestOutResponse = xmlHelper.getStringPretty(doc.getRootElement());
 
         Element oaipmhEl = doc.getRootElement();
-        List records = oaipmhEl.getChild("ListRecords", oaipmhEl.getNamespace()).
-                getChildren("record", oaipmhEl.getNamespace());
+        Element listRecordsEl = oaipmhEl.getChild("ListRecords", oaipmhEl.getNamespace());
+        if (listRecordsEl != null) {
+            List records = listRecordsEl.getChildren("record", oaipmhEl.getNamespace());
 
-        for (String folderStr : new String[] {
-                ACTUAL_OUTPUT_FOLDER + "/" + getFolder(),
-                ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds" }) {
-            File outFolder = new File(folderStr);
-            if (!outFolder.exists()) {
-                outFolder.mkdir();
+            for (String folderStr : new String[] {
+                    ACTUAL_OUTPUT_FOLDER + "/" + getFolder(),
+                    ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds" }) {
+                File outFolder = new File(folderStr);
+                if (!outFolder.exists()) {
+                    outFolder.mkdir();
+                }
             }
-        }
 
-        for (Object rObj : records) {
-            Element rEl = (Element) rObj;
-            String oaiId = rEl.getChild("header", oaipmhEl.getNamespace())
-                    .getChildText("identifier", oaipmhEl.getNamespace());
-            int lastIndexOf = oaiId.lastIndexOf('/');
-            oaiId = oaiId.substring(lastIndexOf + 1);
-            Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds/" +
-                    oaiId + "-" + HarvestManager.lastOaiRequest, xmlHelper.getStringPretty(rEl));
+            for (Object rObj : records) {
+                Element rEl = (Element) rObj;
+                String oaiId = rEl.getChild("header", oaipmhEl.getNamespace())
+                        .getChildText("identifier", oaipmhEl.getNamespace());
+                int lastIndexOf = oaiId.lastIndexOf('/');
+                oaiId = oaiId.substring(lastIndexOf + 1);
+                Util.getUtil().spit(ACTUAL_OUTPUT_FOLDER + "/" + getFolder() + "/byRecordIds/" +
+                        oaiId + "-" + HarvestManager.lastOaiRequest, xmlHelper.getStringPretty(rEl));
+            }
         }
 
         LOG.debug("XML response");
