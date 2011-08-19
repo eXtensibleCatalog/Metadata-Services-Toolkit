@@ -22,84 +22,84 @@ import org.apache.solr.client.solrj.response.FacetField;
  */
 public class SolrBrowseResult {
 
-	/** Total number of results */
-	private long totalNumberOfResults;
+    /** Total number of results */
+    private long totalNumberOfResults;
 
-	/** Query */
-	private String query;
+    /** Query */
+    private String query;
 
-	/** List of resords retrieved */
-	private List<Record> records;
+    /** List of resords retrieved */
+    private List<Record> records;
 
-	/** List of facets created */
-	private List<FacetField> facets;
+    /** List of facets created */
+    private List<FacetField> facets;
 
-	/** List of selected facets */
-	private List<FacetFilter> facetFilters = new ArrayList<FacetFilter>();
+    /** List of selected facets */
+    private List<FacetFilter> facetFilters = new ArrayList<FacetFilter>();
 
-	public SolrBrowseResult(List<Record> records, List<FacetField> facets) {
-		this.records = records;
-		this.facets = facets;
-	}
-	
-	public SolrBrowseResult(List<Record> records) {
-		this.records = records;
-	}
+    public SolrBrowseResult(List<Record> records, List<FacetField> facets) {
+        this.records = records;
+        this.facets = facets;
+    }
 
-	public List<Record> getRecords() {
-		return records;
-	}
+    public SolrBrowseResult(List<Record> records) {
+        this.records = records;
+    }
 
-	public void setRecords(List<Record> records) {
-		this.records = records;
-	}
+    public List<Record> getRecords() {
+        return records;
+    }
 
-	public List<FacetField> getFacets() {
-		return facets;
-	}
+    public void setRecords(List<Record> records) {
+        this.records = records;
+    }
 
-	public void setFacets(List<FacetField> facets) {
-		this.facets = facets;
-	}
+    public List<FacetField> getFacets() {
+        return facets;
+    }
 
-	public List<FacetFilter> getFacetFilters() {
-		return facetFilters;
-	}
+    public void setFacets(List<FacetField> facets) {
+        this.facets = facets;
+    }
 
-	public void setFacetFilters(List<FacetFilter> facetFilters) {
-		this.facetFilters = facetFilters;
-	}
+    public List<FacetFilter> getFacetFilters() {
+        return facetFilters;
+    }
 
-	public void addFacetFilter(FacetFilter facetFilter) {
-		facetFilters.add(facetFilter);
-	}
+    public void setFacetFilters(List<FacetFilter> facetFilters) {
+        this.facetFilters = facetFilters;
+    }
 
-	public long getTotalNumberOfResults() {
-		return totalNumberOfResults;
-	}
+    public void addFacetFilter(FacetFilter facetFilter) {
+        facetFilters.add(facetFilter);
+    }
 
-	public void setTotalNumberOfResults(long totalNumberOfResults) {
-		this.totalNumberOfResults = totalNumberOfResults;
-	}
+    public long getTotalNumberOfResults() {
+        return totalNumberOfResults;
+    }
 
-	public String getQuery() {
-		return query;
-	}
+    public void setTotalNumberOfResults(long totalNumberOfResults) {
+        this.totalNumberOfResults = totalNumberOfResults;
+    }
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
+    public String getQuery() {
+        return query;
+    }
 
-	@Override
-	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(" query= "+query);
-		buffer.append(" totalNumberOfResults= "+totalNumberOfResults);
-		//for(Record r : records) {
-		//	buffer.append(" Record id ="+r.getId());
-		//}
-		return buffer.toString();
-	}
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(" query= "+query);
+        buffer.append(" totalNumberOfResults= "+totalNumberOfResults);
+        //for(Record r : records) {
+        //	buffer.append(" Record id ="+r.getId());
+        //}
+        return buffer.toString();
+    }
 
 
 }

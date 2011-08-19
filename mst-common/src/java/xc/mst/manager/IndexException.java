@@ -11,30 +11,30 @@ package xc.mst.manager;
 /**
  * This exception is thrown when problem in accessing Solr server, or indexing
  * and searching the Solr index
- * 
+ *
  * @author Sharmila Ranganathan
  *
  */
 public class IndexException extends Exception {
 
-	/** Serial id*/
-	private static final long serialVersionUID = -6996237342238178175L;
+    /** Serial id*/
+    private static final long serialVersionUID = -6996237342238178175L;
 
-	/**
-	 * Constructs a new IndexException with null as its detail message.
-	 */
-	public IndexException()
-	{
-		super();
-	} 
+    /**
+     * Constructs a new IndexException with null as its detail message.
+     */
+    public IndexException()
+    {
+        super();
+    }
 
-	/**
-	 * Constructs a new IndexException with the specified detail message.
-	 *
-	 * @param detail A possibly null string containing details of the exception.
-	 */
-	public IndexException(String detail)
-	{
-		super(detail);
-	} 
+    /**
+     * Constructs a new IndexException with the specified detail message.
+     *
+     * @param detail A possibly null string containing details of the exception.
+     */
+    public IndexException(String detail)
+    {
+        super(detail);
+    }
 }

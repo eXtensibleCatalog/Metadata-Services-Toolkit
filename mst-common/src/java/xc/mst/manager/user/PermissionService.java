@@ -22,19 +22,19 @@ import xc.mst.dao.DatabaseConfigException;
 public interface PermissionService
 {
     /**
-	 * Gets the permissions belonging to a group.
-	 *
-	 * @param groupId The ID of the group to get permissions for
-	 * @return A list of permissions belonging to the group
-     * @throws DatabaseConfigException 
-	 */
-	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException;
+     * Gets the permissions belonging to a group.
+     *
+     * @param groupId The ID of the group to get permissions for
+     * @return A list of permissions belonging to the group
+     * @throws DatabaseConfigException
+     */
+    public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException;
 
     /**
      * returns a permission by its ID
      * @param permissionId permission ID
      * @return
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Permission getPermissionById(int permissionId) throws DatabaseConfigException;
 
@@ -42,7 +42,7 @@ public interface PermissionService
      * returns a list of all permissions
      *
      * @return list of permissions
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List getAllPermissions() throws DatabaseConfigException;
 }

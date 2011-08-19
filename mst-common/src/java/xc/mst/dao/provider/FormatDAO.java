@@ -27,146 +27,146 @@ import xc.mst.dao.MySqlConnectionManager;
  */
 public abstract class FormatDAO extends BaseDAO
 {
-	/**
-	 * A reference to the logger for this class
-	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	/**
-	 * The Object managing the database connection
-	 */
-	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+    /**
+     * A reference to the logger for this class
+     */
+    protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/**
-	 * The name of the database table we're interacting with
-	 */
-	public final static String FORMATS_TABLE_NAME = "formats";
+    /**
+     * The Object managing the database connection
+     */
+    protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
 
-	/**
-	 * The name of the format ID column
-	 */
-	public final static String COL_FORMAT_ID = "format_id";
+    /**
+     * The name of the database table we're interacting with
+     */
+    public final static String FORMATS_TABLE_NAME = "formats";
 
-	/**
-	 * The name of the name column
-	 */
-	public final static String COL_NAME = "name";
+    /**
+     * The name of the format ID column
+     */
+    public final static String COL_FORMAT_ID = "format_id";
 
-	/**
-	 * The name of the namespace column
-	 */
-	public final static String COL_NAMESPACE = "namespace";
+    /**
+     * The name of the name column
+     */
+    public final static String COL_NAME = "name";
 
-	/**
-	 * The name of the schema_location column
-	 */
-	public final static String COL_SCHEMA_LOCATION = "schema_location";
+    /**
+     * The name of the namespace column
+     */
+    public final static String COL_NAMESPACE = "namespace";
 
-	/**
-	 * Gets all formats in the database
-	 *
-	 * @return A list containing all formats in the database
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract List<Format> getAll() throws DatabaseConfigException;
+    /**
+     * The name of the schema_location column
+     */
+    public final static String COL_SCHEMA_LOCATION = "schema_location";
 
-	/**
-	 * Gets a format by it's ID
-	 *
-	 * @param formatId The ID of the format to get
-	 * @return The format with the passed ID, or null if there was no format with that ID.
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract Format getById(int formatId) throws DatabaseConfigException;
+    /**
+     * Gets all formats in the database
+     *
+     * @return A list containing all formats in the database
+     * @throws DatabaseConfigException if there was a problem connecting to the database
+     */
+    public abstract List<Format> getAll() throws DatabaseConfigException;
 
-	/**
-	 * Gets a format by it's name
-	 *
-	 * @param name The name of the format to get
-	 * @return The format with the passed name, or null if there was no format with that ID.
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract Format getByName(String name) throws DatabaseConfigException;
+    /**
+     * Gets a format by it's ID
+     *
+     * @param formatId The ID of the format to get
+     * @return The format with the passed ID, or null if there was no format with that ID.
+     * @throws DatabaseConfigException if there was a problem connecting to the database
+     */
+    public abstract Format getById(int formatId) throws DatabaseConfigException;
 
-	/**
-	 * Gets all formats in the database which the passed provider supports
-	 *
-	 * @return A list containing all formats in the database
-	 * @throws DatabaseConfigException if there was a problem connecting to the database
-	 */
-	public abstract List<Format> getFormatsForProvider(int providerId) throws DatabaseConfigException;
+    /**
+     * Gets a format by it's name
+     *
+     * @param name The name of the format to get
+     * @return The format with the passed name, or null if there was no format with that ID.
+     * @throws DatabaseConfigException if there was a problem connecting to the database
+     */
+    public abstract Format getByName(String name) throws DatabaseConfigException;
 
-	/**
-	 * Inserts a format into the database
-	 *
-	 * @param format The format to insert
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed format was not valid for inserting
-	 */
-	public abstract boolean insert(Format format) throws DataException;
+    /**
+     * Gets all formats in the database which the passed provider supports
+     *
+     * @return A list containing all formats in the database
+     * @throws DatabaseConfigException if there was a problem connecting to the database
+     */
+    public abstract List<Format> getFormatsForProvider(int providerId) throws DatabaseConfigException;
 
-	/**
-	 * Updates a format in the database
-	 *
-	 * @param format The format to update
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed format was not valid for updating
-	 */
-	public abstract boolean update(Format format) throws DataException;
+    /**
+     * Inserts a format into the database
+     *
+     * @param format The format to insert
+     * @return True on success, false on failure
+     * @throws DataException if the passed format was not valid for inserting
+     */
+    public abstract boolean insert(Format format) throws DataException;
 
-	/**
-	 * Deletes a format from the database
-	 *
-	 * @param format The format to delete
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed format was not valid for deleting
-	 */
-	public abstract boolean delete(Format format) throws DataException;
+    /**
+     * Updates a format in the database
+     *
+     * @param format The format to update
+     * @return True on success, false on failure
+     * @throws DataException if the passed format was not valid for updating
+     */
+    public abstract boolean update(Format format) throws DataException;
 
-	/**
-	 * Validates the fields on the passed Format Object
-	 *
-	 * @param format The format to validate
-	 * @param validateId true if the ID field should be validated
-	 * @param validateNonId true if the non-ID fields should be validated
-	 * @throws DataException If one or more of the fields on the passed user were invalid
-	 */
-	protected void validateFields(Format format, boolean validateId, boolean validateNonId) throws DataException
-	{
-		StringBuilder errorMessage = new StringBuilder();
+    /**
+     * Deletes a format from the database
+     *
+     * @param format The format to delete
+     * @return True on success, false on failure
+     * @throws DataException if the passed format was not valid for deleting
+     */
+    public abstract boolean delete(Format format) throws DataException;
 
-		// Check the ID field if we're supposed to
-		if(validateId)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Checking the ID");
+    /**
+     * Validates the fields on the passed Format Object
+     *
+     * @param format The format to validate
+     * @param validateId true if the ID field should be validated
+     * @param validateNonId true if the non-ID fields should be validated
+     * @throws DataException If one or more of the fields on the passed user were invalid
+     */
+    protected void validateFields(Format format, boolean validateId, boolean validateNonId) throws DataException
+    {
+        StringBuilder errorMessage = new StringBuilder();
 
-			if(format.getId() < 0)
-				errorMessage.append("The format_id is invalid. ");
-		} // end if(we should validate the ID
+        // Check the ID field if we're supposed to
+        if(validateId)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Checking the ID");
 
-		// Check the non-ID fields if we're supposed to
-		if(validateNonId)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Checking the non-ID fields");
+            if(format.getId() < 0)
+                errorMessage.append("The format_id is invalid. ");
+        } // end if(we should validate the ID
 
-			if(format.getName() == null || format.getName().length() <= 0 || format.getName().length() > 63)
-				errorMessage.append("The name is invalid. ");
+        // Check the non-ID fields if we're supposed to
+        if(validateNonId)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Checking the non-ID fields");
 
-			if(format.getNamespace() == null || format.getNamespace().length() <= 0 || format.getNamespace().length() > 255)
-				errorMessage.append("The namespace is invalid. ");
+            if(format.getName() == null || format.getName().length() <= 0 || format.getName().length() > 63)
+                errorMessage.append("The name is invalid. ");
 
-			if(format.getSchemaLocation() == null || format.getSchemaLocation().length() <= 0 || format.getSchemaLocation().length() > 255)
-				errorMessage.append("The schema_location is invalid. ");
-		} // end if(we should validate the non-ID fields)
+            if(format.getNamespace() == null || format.getNamespace().length() <= 0 || format.getNamespace().length() > 255)
+                errorMessage.append("The namespace is invalid. ");
 
-		// Log the error and throw the exception if any fields are invalid
-		if(errorMessage.length() > 0)
-		{
-			String errors = errorMessage.toString();
-			log.error("The following errors occurred: " + errors);
-			throw new DataException(errors);
-		} // end if(error found)
-	} // end method validateFields(Format, boolean, boolean)
+            if(format.getSchemaLocation() == null || format.getSchemaLocation().length() <= 0 || format.getSchemaLocation().length() > 255)
+                errorMessage.append("The schema_location is invalid. ");
+        } // end if(we should validate the non-ID fields)
+
+        // Log the error and throw the exception if any fields are invalid
+        if(errorMessage.length() > 0)
+        {
+            String errors = errorMessage.toString();
+            log.error("The following errors occurred: " + errors);
+            throw new DataException(errors);
+        } // end if(error found)
+    } // end method validateFields(Format, boolean, boolean)
 } // end class FormatDAO

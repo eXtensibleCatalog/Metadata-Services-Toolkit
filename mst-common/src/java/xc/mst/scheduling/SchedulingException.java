@@ -17,26 +17,26 @@ package xc.mst.scheduling;
  */
 public class SchedulingException extends Exception
 {
-	/**
-	 * Used for serialization
-	 */
-	private static final long serialVersionUID = 67891L;
+    /**
+     * Used for serialization
+     */
+    private static final long serialVersionUID = 67891L;
 
-	/**
-	 * Constructs a new SchedulingException with null as its detail message.
-	 */
-	public SchedulingException()
-	{
-		super();
-	} // end constructor()
+    /**
+     * Constructs a new SchedulingException with null as its detail message.
+     */
+    public SchedulingException()
+    {
+        super();
+    } // end constructor()
 
-	/**
-	 * Constructs a new SchedulingException with the specified detail message.
-	 *
-	 * @param detail A possibly null string containing details of the exception.
-	 */
-	public SchedulingException(String detail)
-	{
-		super(detail);
-	} // end constructor(String)
+    /**
+     * Constructs a new SchedulingException with the specified detail message.
+     *
+     * @param detail A possibly null string containing details of the exception.
+     */
+    public SchedulingException(String detail)
+    {
+        super(detail);
+    } // end constructor(String)
 } // end class SchedulingException

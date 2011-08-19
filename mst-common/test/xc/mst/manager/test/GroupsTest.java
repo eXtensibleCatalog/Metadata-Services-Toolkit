@@ -35,8 +35,8 @@ public class GroupsTest extends BaseTest
      */
     public void addGroup()
     {
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
+           // Initialize Solr, database, log before testing
+           TestHelper helper = TestHelper.getInstance();
         try
         {
             GroupService groupService = (GroupService)getBean("GroupService");

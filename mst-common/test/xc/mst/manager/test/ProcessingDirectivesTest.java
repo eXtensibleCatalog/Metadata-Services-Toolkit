@@ -44,10 +44,10 @@ public class ProcessingDirectivesTest
      * Method which tests all the functionality related to Processing Directives
      *
      */
-    public void addProcDir() throws Exception 
+    public void addProcDir() throws Exception
     {
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
+           // Initialize Solr, database, log before testing
+           TestHelper helper = TestHelper.getInstance();
 
          ServicesService servicesService = new DefaultServicesService();
          Service service = new Service();
@@ -82,15 +82,15 @@ public class ProcessingDirectivesTest
              }
 
              // The version of the service, which must appear in the second line of the configuration file
-     		String version = in.readLine();
-     		version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
-     		
-     		if(version == null || version.length() == 0)
-     		{
-     			throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
-     		}
+             String version = in.readLine();
+             version = (version.indexOf('#') >= 0 ? version.substring(0, version.indexOf('#')).trim() : version.trim());
 
-             
+             if(version == null || version.length() == 0)
+             {
+                 throw new ConfigFileException("The second line of the service configuration file must be the service's version.");
+             }
+
+
              // The .jar file containing the service, which must appear in the third line of the configuration file
              String jar = in.readLine();
              jar = (jar.indexOf('#') >= 0 ? jar.substring(0, jar.indexOf('#')).trim() : jar.trim());
@@ -117,12 +117,12 @@ public class ProcessingDirectivesTest
 
                  throw new ConfigFileException("The fifth line of the service configuration file must be the service's OAI repository's port.");
              }
-         
+
          service.setName(name);
          service.setClassName(className);
          service.setVersion(version);
          servicesService.insertService(service);
-         
+
          ProviderService providerService = new DefaultProviderService();
          Provider provider = new Provider();
          provider.setName("repositoryname");
@@ -135,8 +135,8 @@ public class ProcessingDirectivesTest
          provider.setLogFileName("logFileName");
          providerService.insertProvider(provider);
 
-      	 
-      	 
+
+
             ProcessingDirectiveService pdService = new DefaultProcessingDirectiveService();
             List setList = new ArrayList();
             List formatList = new ArrayList();
@@ -153,7 +153,7 @@ public class ProcessingDirectivesTest
             processingDirective.setSourceProvider(providerService.getProviderByName("repositoryname"));
             processingDirective.setTriggeringFormats(formatList);
             processingDirective.setTriggeringSets(setList);
-            
+
             pdService.insertProcessingDirective(processingDirective);
 
             ProcessingDirective anotherDirective = pdService.getByProcessingDirectiveId(processingDirective.getId());
@@ -165,7 +165,7 @@ public class ProcessingDirectivesTest
             pdService.deleteProcessingDirective(processingDirective);
             servicesService.deleteService(service);
             providerService.deleteProvider(provider);
-            
+
     }
 
 

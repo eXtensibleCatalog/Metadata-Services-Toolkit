@@ -29,8 +29,8 @@ public class GeneralLogsTest extends BaseTest {
 
     public void generalLogsTest() throws DataException
     {
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
+           // Initialize Solr, database, log before testing
+           TestHelper helper = TestHelper.getInstance();
         try
         {
             LogService logService = (LogService)getBean("LogService");

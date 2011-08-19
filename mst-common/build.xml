@@ -22,7 +22,7 @@ commands (mc.help)
   </target>
 
   <dirname property="mc.dir" file="${ant.file.mc}" />
-  
+
   <property file="${mc.dir}/build.properties" />
   <property file="${mc.src.java}/default.properties" />
 
@@ -86,7 +86,7 @@ commands (mc.help)
   <target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
 
   <target name="mc.compile.nodep" depends="mc.init">
-    <javac 
+    <javac
       includeantruntime="false"
       destdir="${mc.build.classes}"
       classpathref="mc.classpath.compile"
@@ -126,13 +126,13 @@ commands (mc.help)
   </target>
 
   <target name="mc.deploy" depends="mc.compile.test,mc.jar.nodep">
-    <copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
+    <copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib"
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${mp.build.lib}" 
+    <copy todir="${mp.build.lib}"
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${ms.build.lib}" 
+    <copy todir="${ms.build.lib}"
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${mst-service}/example/build/lib" 
+    <copy todir="${mst-service}/example/build/lib"
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
     <copy-to-custom-services subdir="build/lib">
       <macro-file-set>
@@ -191,7 +191,7 @@ commands (mc.help)
       </fileset>
     </copy>
     <echo>running sql script</echo>
-    <exec executable="${mysql.home}/bin/mysql" 
+    <exec executable="${mysql.home}/bin/mysql"
         input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
       <arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
     </exec>

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 
 public class MetadataServiceDAO extends BaseDAO {
-	
-	private static final Logger LOG = Logger.getLogger(MetadataServiceDAO.class);
-	
+
+    private static final Logger LOG = Logger.getLogger(MetadataServiceDAO.class);
+
 }

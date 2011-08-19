@@ -24,62 +24,62 @@ import xc.mst.dao.MySqlConnectionManager;
  */
 public abstract class ProcessingDirectiveInputFormatUtilDAO extends BaseDAO
 {
-	/**
-	 * A reference to the logger for this class
-	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-	
-	/**
-	 * The Object managing the database connection
-	 */
-	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
+    /**
+     * A reference to the logger for this class
+     */
+    protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/**
-	 * The name of the processing directives to input formats database table
-	 */
-	public final static String PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME = "processing_directives_to_input_formats";
+    /**
+     * The Object managing the database connection
+     */
+    protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
 
-	/**
-	 * The name of the processing directive ID column
-	 */
-	public final static String COL_PROCESSING_DIRECTIVE_ID = "processing_directive_id";
+    /**
+     * The name of the processing directives to input formats database table
+     */
+    public final static String PROCESSING_DIRECTIVES_TO_INPUT_FORMATS_TABLE_NAME = "processing_directives_to_input_formats";
 
-	/**
-	 * The name of the format ID column
-	 */
-	public final static String COL_FORMAT_ID = "format_id";
+    /**
+     * The name of the processing directive ID column
+     */
+    public final static String COL_PROCESSING_DIRECTIVE_ID = "processing_directive_id";
 
-	/**
-	 * Inserts a row in the database assigning a format as input to a processing directive.
-	 *
-	 * @param processingDirectiveId The ID of the processing directive the format is input for
-	 * @param formatId The ID of the format that is input for the processing directive
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean insert(int processingDirectiveId, int formatId);
+    /**
+     * The name of the format ID column
+     */
+    public final static String COL_FORMAT_ID = "format_id";
 
-	/**
-	 * Deletes the row in the database assigning a format as input to a processing directive
-	 *
-	 * @param processingDirectiveId The ID of the processing directive the format is no longer input for
-	 * @param formatId The ID of the format that is no longer input for the processing directive
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean delete(int processingDirectiveId, int formatId);
+    /**
+     * Inserts a row in the database assigning a format as input to a processing directive.
+     *
+     * @param processingDirectiveId The ID of the processing directive the format is input for
+     * @param formatId The ID of the format that is input for the processing directive
+     * @return True on success, false on failure
+     */
+    public abstract boolean insert(int processingDirectiveId, int formatId);
 
-	/**
-	 * Gets the IDs of all formats which are input to the processing directive
-	 *
-	 * @param processingDirectiveId The ID of the processing directive whose input format IDs should be returned
-	 * @return A list of format IDs for the formats that are input for the processing directive
-	 */
-	public abstract List<Integer> getInputFormatsForProcessingDirective(int processingDirectiveId);
+    /**
+     * Deletes the row in the database assigning a format as input to a processing directive
+     *
+     * @param processingDirectiveId The ID of the processing directive the format is no longer input for
+     * @param formatId The ID of the format that is no longer input for the processing directive
+     * @return True on success, false on failure
+     */
+    public abstract boolean delete(int processingDirectiveId, int formatId);
 
-	/**
-	 * Deletes all input formats assignments for a processing directive
-	 *
-	 * @param processingDirectiveId The ID of the processing directive whose input formats should be removed
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean deleteInputFormatsForProcessingDirective(int processingDirectiveId);
+    /**
+     * Gets the IDs of all formats which are input to the processing directive
+     *
+     * @param processingDirectiveId The ID of the processing directive whose input format IDs should be returned
+     * @return A list of format IDs for the formats that are input for the processing directive
+     */
+    public abstract List<Integer> getInputFormatsForProcessingDirective(int processingDirectiveId);
+
+    /**
+     * Deletes all input formats assignments for a processing directive
+     *
+     * @param processingDirectiveId The ID of the processing directive whose input formats should be removed
+     * @return True on success, false on failure
+     */
+    public abstract boolean deleteInputFormatsForProcessingDirective(int processingDirectiveId);
 } // end class ProcessingDirectiveInputFormatUtilDAO

@@ -36,10 +36,10 @@ import xc.mst.manager.user.UserService;
  */
 @Test(groups = { "baseTests" }, enabled = true)
 public class ScheduleServiceTest extends BaseTest {
-	
-	public void harvestTest1() {
-		getScheduleService();
-	}
+
+    public void harvestTest1() {
+        getScheduleService();
+    }
 
  /**
   * Test creating schedule
@@ -48,19 +48,19 @@ public class ScheduleServiceTest extends BaseTest {
   */
  public void addScheduleTest() throws DataException
  {
-   	 
-   	 ProviderService providerService = (ProviderService)getBean("ProviderService");
 
-   	 ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
+        ProviderService providerService = (ProviderService)getBean("ProviderService");
 
-   	 FormatService formatService = (FormatService)getBean("FormatService");
+        ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
 
-   	 SetService setService = (SetService)getBean("SetService");
+        FormatService formatService = (FormatService)getBean("FormatService");
 
-   	 UserService userService = (UserService)getBean("UserService");
+        SetService setService = (SetService)getBean("SetService");
+
+        UserService userService = (UserService)getBean("UserService");
   try
         {
-	  	    ServerService serverService = (ServerService)getBean("ServerService");
+              ServerService serverService = (ServerService)getBean("ServerService");
 
             Provider provider = new Provider();
 

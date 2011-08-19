@@ -17,26 +17,26 @@ package xc.mst.dao;
  */
 public class DatabaseConfigException extends DataException
 {
-	/**
-	 * Used for serialization
-	 */
-	private static final long serialVersionUID = 1132345L;
+    /**
+     * Used for serialization
+     */
+    private static final long serialVersionUID = 1132345L;
 
-	/**
-	 * Constructs a new DataException with null as its detail message.
-	 */
-	public DatabaseConfigException()
-	{
-		super();
-	} // end constructor()
+    /**
+     * Constructs a new DataException with null as its detail message.
+     */
+    public DatabaseConfigException()
+    {
+        super();
+    } // end constructor()
 
-	/**
-	 * Constructs a new DataException with the specified detail message.
-	 *
-	 * @param detail A possibly null string containing details of the exception.
-	 */
-	public DatabaseConfigException(String detail)
-	{
-		super(detail);
-	} // end constructor(String)
+    /**
+     * Constructs a new DataException with the specified detail message.
+     *
+     * @param detail A possibly null string containing details of the exception.
+     */
+    public DatabaseConfigException(String detail)
+    {
+        super(detail);
+    } // end constructor(String)
 } // end class DatabaseConfigException

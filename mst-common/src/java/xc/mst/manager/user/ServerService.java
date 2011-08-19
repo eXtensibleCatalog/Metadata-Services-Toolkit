@@ -27,7 +27,7 @@ public interface ServerService {
      *
      * @param serverId the Id of the server object to be returned
      * @return The server object that is returned
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Server getServerById(int serverId) throws DatabaseConfigException;
 
@@ -36,7 +36,7 @@ public interface ServerService {
      *
      * @param serverName the name of the server object to be returned
      * @return The server object that is returned
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Server getServerByName(String serverName) throws DatabaseConfigException;
 
@@ -56,7 +56,7 @@ public interface ServerService {
 
     /**
      * Updates the details of a server
-     * 
+     *
      * @param server The server whose details are to be updated.
      */
     public void updateServer(Server server) throws DataException;

@@ -20,7 +20,7 @@ import xc.mst.manager.BaseService;
  * @author Tejaswi Haramurali
  */
 public class DefaultUserGroupUtilService extends BaseService implements UserGroupUtilService{
-	
+
     /**
      * returns a list of IDs of the groups that are associated with a user
      * @param userId user ID
@@ -35,7 +35,7 @@ public class DefaultUserGroupUtilService extends BaseService implements UserGrou
      * @param userId user ID
      */
     public void deleteGroupsForUserId(int userId) {
-    	getUserGroupUtilDAO().deleteGroupsForUser(userId);
+        getUserGroupUtilDAO().deleteGroupsForUser(userId);
     }
 
     /**
@@ -44,7 +44,7 @@ public class DefaultUserGroupUtilService extends BaseService implements UserGrou
      * @param groupId group ID
      */
     public void insertUserGroup(int userId, int groupId) {
-    	getUserGroupUtilDAO().insert(userId,groupId);
+        getUserGroupUtilDAO().insert(userId,groupId);
     }
 
     /**
@@ -53,7 +53,7 @@ public class DefaultUserGroupUtilService extends BaseService implements UserGrou
      * @param groupId group ID
      */
      public void deleteUserGroup(int userId, int groupId) {
-    	 getUserGroupUtilDAO().delete(userId,groupId);
+         getUserGroupUtilDAO().delete(userId,groupId);
     }
 
 }

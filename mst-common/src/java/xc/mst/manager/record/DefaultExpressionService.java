@@ -33,95 +33,95 @@ import xc.mst.utils.index.SolrIndexManager;
  */
 public class DefaultExpressionService extends ExpressionService
 {
-	@Override
-	public Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException
-	{
-		SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
-		
-		if(log.isDebugEnabled())
-			log.debug("Getting the record with XC expression ID " + expressionId);
+    @Override
+    public Expression getByXcExpressionId(long expressionId) throws DatabaseConfigException, IndexException
+    {
+        SolrIndexManager sim = (SolrIndexManager)config.getBean("SolrIndexManager");
 
-		// Create a query to get the Documents with the requested XC expression ID
-		SolrQuery query = new SolrQuery();
-		query.setQuery(DefaultRecordService.FIELD_FRBR_LEVEL_ID + ":" + Long.toString(expressionId) + " AND "
-			+ RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
+        if(log.isDebugEnabled())
+            log.debug("Getting the record with XC expression ID " + expressionId);
 
-		// Get the result of the query
-		SolrDocumentList doc = null;
+        // Create a query to get the Documents with the requested XC expression ID
+        SolrQuery query = new SolrQuery();
+        query.setQuery(DefaultRecordService.FIELD_FRBR_LEVEL_ID + ":" + Long.toString(expressionId) + " AND "
+            + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
 
-		doc = sim.getDocumentList(query);
+        // Get the result of the query
+        SolrDocumentList doc = null;
 
-		// Return null if we couldn't find the expression with the correct XC expression ID
-		if(doc == null)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Could not find the expression with XC expression ID " + expressionId + ".");
+        doc = sim.getDocumentList(query);
 
-			return null;
-		} // end if(no result found)
+        // Return null if we couldn't find the expression with the correct XC expression ID
+        if(doc == null)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Could not find the expression with XC expression ID " + expressionId + ".");
 
-		if(log.isDebugEnabled())
-			log.debug("Parcing the exrpession with XC exrpession ID " + expressionId + " from the Lucene Document it was stored in.");
+            return null;
+        } // end if(no result found)
 
-		return getExpressionFromDocument(doc.get(0));
-	} // end method getByXcExpressionId(long)
+        if(log.isDebugEnabled())
+            log.debug("Parcing the exrpession with XC exrpession ID " + expressionId + " from the Lucene Document it was stored in.");
 
-	@Override
-	public ExpressionList getByLinkedWork(Work work) throws IndexException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all expressions linked to the work with ID " + work.getId());
+        return getExpressionFromDocument(doc.get(0));
+    } // end method getByXcExpressionId(long)
 
-		// Create a query to get the Documents with the requested requested up link
-		SolrQuery query = new SolrQuery();
-		query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(work.getId()) + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
+    @Override
+    public ExpressionList getByLinkedWork(Work work) throws IndexException
+    {
+        if(log.isDebugEnabled())
+            log.debug("Getting all expressions linked to the work with ID " + work.getId());
 
-		// Return the list of results
-		return new ExpressionList(query);
-	} // end method getByLinkedManifestation(Manifestation)
+        // Create a query to get the Documents with the requested requested up link
+        SolrQuery query = new SolrQuery();
+        query.setQuery(DefaultRecordService.FIELD_UP_LINK + ":" + Long.toString(work.getId()) + " AND " + RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
 
-	@Override
-	public ExpressionList getByProcessedFrom(Record processedFrom) throws IndexException
-	{
-		if(log.isDebugEnabled())
-			log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
+        // Return the list of results
+        return new ExpressionList(query);
+    } // end method getByLinkedManifestation(Manifestation)
 
-		// Create a query to get the Documents with the requested input for service IDs
-		SolrQuery query = new SolrQuery();
-		query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
-				    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
+    @Override
+    public ExpressionList getByProcessedFrom(Record processedFrom) throws IndexException
+    {
+        if(log.isDebugEnabled())
+            log.debug("Getting all records that were processed from the record with ID " + processedFrom.getId());
 
-		// Return the list of results
-		return new ExpressionList(query);
-	} // end method getByProcessedFrom(long)
-	
-	@Override
-	public Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
-	{
-		// Create a Expression object to store the result
-		RecordService recordService = (RecordService)config.getBean("RecordService");
-		Expression expression = Expression.buildExpressionFromRecord(recordService.getRecordFromDocument(doc));
+        // Create a query to get the Documents with the requested input for service IDs
+        SolrQuery query = new SolrQuery();
+        query.setQuery(RecordService.FIELD_PROCESSED_FROM + ":" + Long.toString(processedFrom.getId()) + " AND "
+                    +  RecordService.FIELD_INDEXED_OBJECT_TYPE + ":" + Expression.indexedObjectType);
 
-		// Return the expression we parsed from the document
-		return expression;
-	} // end method getExpressionFromDocument(Document)
+        // Return the list of results
+        return new ExpressionList(query);
+    } // end method getByProcessedFrom(long)
 
-	@Override
-	public Expression getBasicExpressionFromDocument(SolrDocument doc)
-	{
-		// Create a Expression object to store the result
-		RecordService recordService = (RecordService)config.getBean("RecordService");
-		Expression expression = Expression.buildExpressionFromRecord(recordService.getBasicRecordFromDocument(doc));
+    @Override
+    public Expression getExpressionFromDocument(SolrDocument doc) throws DatabaseConfigException, IndexException
+    {
+        // Create a Expression object to store the result
+        RecordService recordService = (RecordService)config.getBean("RecordService");
+        Expression expression = Expression.buildExpressionFromRecord(recordService.getRecordFromDocument(doc));
 
-		// Return the Expression we parsed from the document
-		return expression;
-	} // end method getBasicExpressionFromDocument(Document)
+        // Return the expression we parsed from the document
+        return expression;
+    } // end method getExpressionFromDocument(Document)
 
-	@Override
-	protected SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
-	{
-		// Set the fields on the record and return the results
-		RecordService recordService = (RecordService)config.getBean("RecordService");
-		return recordService.setFieldsOnDocument(expression, doc, generateNewId);
-	} // end method setFieldsOnDocument(Expression, Document, boolean)
+    @Override
+    public Expression getBasicExpressionFromDocument(SolrDocument doc)
+    {
+        // Create a Expression object to store the result
+        RecordService recordService = (RecordService)config.getBean("RecordService");
+        Expression expression = Expression.buildExpressionFromRecord(recordService.getBasicRecordFromDocument(doc));
+
+        // Return the Expression we parsed from the document
+        return expression;
+    } // end method getBasicExpressionFromDocument(Document)
+
+    @Override
+    protected SolrInputDocument setFieldsOnDocument(Expression expression, SolrInputDocument doc, boolean generateNewId) throws DatabaseConfigException
+    {
+        // Set the fields on the record and return the results
+        RecordService recordService = (RecordService)config.getBean("RecordService");
+        return recordService.setFieldsOnDocument(expression, doc, generateNewId);
+    } // end method setFieldsOnDocument(Expression, Document, boolean)
 } // end class DefaultExpressionService

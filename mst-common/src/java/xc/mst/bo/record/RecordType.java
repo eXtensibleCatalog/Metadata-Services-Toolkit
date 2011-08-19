@@ -10,41 +10,41 @@
 package xc.mst.bo.record;
 
 /**
- * 
+ *
  * @author vinaykumarb
  *
  */
 public class RecordType {
 
-	private int id;
-	
-	private String name;
-	
-	private int processingOrder;
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    private String name;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private int processingOrder;
 
-	public String getName() {
-		return name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getProcessingOrder() {
-		return processingOrder;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setProcessingOrder(int processingOrder) {
-		this.processingOrder = processingOrder;
-	}
-	
-	
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getProcessingOrder() {
+        return processingOrder;
+    }
+
+    public void setProcessingOrder(int processingOrder) {
+        this.processingOrder = processingOrder;
+    }
+
+
 }

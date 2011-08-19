@@ -24,26 +24,26 @@ import xc.mst.manager.BaseService;
  */
 public class DefaultSetService extends BaseService implements SetService {
 
-	/**
-	 * Get set having the specified set id
-	 *
-	 * @param setId Id of the set
-	 * @return Set if exist else null
-	 * @throws DatabaseConfigException 
-	 */
-	public Set getSetById(int setId) throws DatabaseConfigException {
-		return setDAO.getById(setId);
-	}
+    /**
+     * Get set having the specified set id
+     *
+     * @param setId Id of the set
+     * @return Set if exist else null
+     * @throws DatabaseConfigException
+     */
+    public Set getSetById(int setId) throws DatabaseConfigException {
+        return setDAO.getById(setId);
+    }
 
-	/**
-	 * Delete Set
-	 *
-	 * @param set set to be deleted
-	 * @throws DataException Thrown when problem in deleting the set
-	 */
-	public void deleteSet(Set set) throws DataException {
-		setDAO.delete(set);
-	}
+    /**
+     * Delete Set
+     *
+     * @param set set to be deleted
+     * @throws DataException Thrown when problem in deleting the set
+     */
+    public void deleteSet(Set set) throws DataException {
+        setDAO.delete(set);
+    }
 
     /**
      * Add a set
@@ -51,25 +51,25 @@ public class DefaultSetService extends BaseService implements SetService {
      * @param set set to inserted into the database
      */
     public void insertSet(Set set) throws DataException {
-    	setDAO.insert(set);
+        setDAO.insert(set);
     }
 
     /**
      * Get all sets
      *
      * @return all sets
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Set> getAllSets() throws DatabaseConfigException {
-    	return setDAO.getAll();
+        return setDAO.getAll();
     }
 
     /**
      * Returns a Set object based on a setSpec value provided
-     * 
+     *
      * @param setSpec The set specification value
      * @return Set Object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException
     {

@@ -19,139 +19,139 @@ import java.util.List;
  */
 public class Work extends Record
 {
-	/**
-	 * The type of indexed Object this is
-	 */
-	public static String indexedObjectType = "work";
+    /**
+     * The type of indexed Object this is
+     */
+    public static String indexedObjectType = "work";
 
-	/**
-	 * Flag signifying whether or not a record was built from this work
-	 */
-	private boolean processed = false;
+    /**
+     * Flag signifying whether or not a record was built from this work
+     */
+    private boolean processed = false;
 
-	/**
-	 * The trait for the identifierOfTheWork element in the XC schema
-	 */
-	public final static String TRAIT_IDENTIFIER_FOR_THE_WORK = "identifierForTheWork";
+    /**
+     * The trait for the identifierOfTheWork element in the XC schema
+     */
+    public final static String TRAIT_IDENTIFIER_FOR_THE_WORK = "identifierForTheWork";
 
-	/**
-	 * Get's the indexed object type of this class.  This is used to differentiate between
-	 * different types of objects stored in the index.
-	 *
-	 * @return The type of indexed object for this Object
-	 */
-	public String getType()
-	{
-		return Work.indexedObjectType;
-	} // end method getIndexedObjectType()
+    /**
+     * Get's the indexed object type of this class.  This is used to differentiate between
+     * different types of objects stored in the index.
+     *
+     * @return The type of indexed object for this Object
+     */
+    public String getType()
+    {
+        return Work.indexedObjectType;
+    } // end method getIndexedObjectType()
 
-	/**
-	 * Gets whether or not the work has been processed
-	 *
-	 * @return True if the work has been processed, false otherwise
-	 */
-	public boolean getProcessed()
-	{
-		return processed;
-	} // end method getProcessed()
+    /**
+     * Gets whether or not the work has been processed
+     *
+     * @return True if the work has been processed, false otherwise
+     */
+    public boolean getProcessed()
+    {
+        return processed;
+    } // end method getProcessed()
 
-	/**
-	 * Sets whether or not the work has been processed
-	 *
-	 * @param processed True if the work has been processed, false otherwise
-	 */
-	public void setProcessed(boolean processed)
-	{
-		this.processed = processed;
-	} // end method setProcessed(boolean)
+    /**
+     * Sets whether or not the work has been processed
+     *
+     * @param processed True if the work has been processed, false otherwise
+     */
+    public void setProcessed(boolean processed)
+    {
+        this.processed = processed;
+    } // end method setProcessed(boolean)
 
-	/**
-	 * Adds an identifierForTheWork trait to the work
-	 *
-	 * @param type The type attribute of the identifierForTheWork element
-	 * @param value The value of the identifierForTheWork element
-	 */
-	public void addIdentifierForTheWork(String type, String value)
-	{
-		addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
-	} // end method addIdentifierForTheWork(String, String)
+    /**
+     * Adds an identifierForTheWork trait to the work
+     *
+     * @param type The type attribute of the identifierForTheWork element
+     * @param value The value of the identifierForTheWork element
+     */
+    public void addIdentifierForTheWork(String type, String value)
+    {
+        addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
+    } // end method addIdentifierForTheWork(String, String)
 
-	/**
-	 * Adds an identifierForTheWork trait to the work
-	 *
-	 * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
-	 */
-	public void addIdentifierForTheWork(String identifierForTheWork)
-	{
-		addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
-	} // end method addIdentifierForTheWork(String)
+    /**
+     * Adds an identifierForTheWork trait to the work
+     *
+     * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
+     */
+    public void addIdentifierForTheWork(String identifierForTheWork)
+    {
+        addTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
+    } // end method addIdentifierForTheWork(String)
 
-	/**
-	 * Removes an identifierForTheWork trait from the work
-	 *
-	 * @param type The type attribute of the identifierForTheWork element
-	 * @param value The value of the identifierForTheWork element
-	 */
-	public void removeIdentifierForTheWork(String type, String value)
-	{
-		removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
-	} // end method removeIdentifierForTheWork(String, String)
+    /**
+     * Removes an identifierForTheWork trait from the work
+     *
+     * @param type The type attribute of the identifierForTheWork element
+     * @param value The value of the identifierForTheWork element
+     */
+    public void removeIdentifierForTheWork(String type, String value)
+    {
+        removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":(" + type + ")" + value);
+    } // end method removeIdentifierForTheWork(String, String)
 
-	/**
-	 * Removes an identifierForTheWork trait from the work
-	 *
-	 * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
-	 */
-	public void removeIdentifierForTheWork(String identifierForTheWork)
-	{
-		removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
-	} // end method removeIdentifierForTheWork(String)
+    /**
+     * Removes an identifierForTheWork trait from the work
+     *
+     * @param identifierForTheWork The identifierForTheWork element in the format (<type>)<value>
+     */
+    public void removeIdentifierForTheWork(String identifierForTheWork)
+    {
+        removeTrait(TRAIT_IDENTIFIER_FOR_THE_WORK + ":" + identifierForTheWork);
+    } // end method removeIdentifierForTheWork(String)
 
-	/**
-	 * Gets a list of xc:identifierForTheWork traits on the work
-	 *
-	 * @returns A list of xc:identifierForTheWork elements for this work
-	 */
-	public List<String> getIdentifierForTheWorks()
-	{
-		List<String> results = new ArrayList<String>();
+    /**
+     * Gets a list of xc:identifierForTheWork traits on the work
+     *
+     * @returns A list of xc:identifierForTheWork elements for this work
+     */
+    public List<String> getIdentifierForTheWorks()
+    {
+        List<String> results = new ArrayList<String>();
 
-		for(String trait : getTraits())
-			if(trait.startsWith(TRAIT_IDENTIFIER_FOR_THE_WORK))
-				results.add(trait.substring(trait.indexOf(':')+1));
+        for(String trait : getTraits())
+            if(trait.startsWith(TRAIT_IDENTIFIER_FOR_THE_WORK))
+                results.add(trait.substring(trait.indexOf(':')+1));
 
-		return results;
-	} // end method getIdentifierForTheWorks()
+        return results;
+    } // end method getIdentifierForTheWorks()
 
-	/**
-	 * Builds a Work with the same fields as the passed Record
-	 *
-	 * @param record The Record to copy
-	 * @return A work with the same fields as the passed Record
-	 */
-	public static Work buildWorkFromRecord(Record record)
-	{
-		Work work = new Work();
+    /**
+     * Builds a Work with the same fields as the passed Record
+     *
+     * @param record The Record to copy
+     * @return A work with the same fields as the passed Record
+     */
+    public static Work buildWorkFromRecord(Record record)
+    {
+        Work work = new Work();
 
-		work.setCreatedAt(record.getCreatedAt());
-		work.setDeleted(record.getDeleted());
-		work.setMessages(record.getMessages());
-		work.setFormat(record.getFormat());
-		work.setHarvest(record.getHarvest());
-		work.setId(record.getId());
-		work.setInputForServices(record.getInputForServices());
-		work.setOaiDatestamp(record.getOaiDatestamp());
-		work.setOaiHeader(record.getOaiHeader());
-		work.setOaiXml(record.getOaiXml());
-		work.setProcessedByServices(record.getProcessedByServices());
-		work.setProcessedFrom(record.getProcessedFrom());
-		work.setProvider(record.getProvider());
-		work.setService(record.getService());
-		work.setSets(record.getSets());
-		work.setTraits(record.getTraits());
-		work.setUpdatedAt(record.getUpdatedAt());
-		work.setUpLinks(record.getUpLinks());
+        work.setCreatedAt(record.getCreatedAt());
+        work.setDeleted(record.getDeleted());
+        work.setMessages(record.getMessages());
+        work.setFormat(record.getFormat());
+        work.setHarvest(record.getHarvest());
+        work.setId(record.getId());
+        work.setInputForServices(record.getInputForServices());
+        work.setOaiDatestamp(record.getOaiDatestamp());
+        work.setOaiHeader(record.getOaiHeader());
+        work.setOaiXml(record.getOaiXml());
+        work.setProcessedByServices(record.getProcessedByServices());
+        work.setProcessedFrom(record.getProcessedFrom());
+        work.setProvider(record.getProvider());
+        work.setService(record.getService());
+        work.setSets(record.getSets());
+        work.setTraits(record.getTraits());
+        work.setUpdatedAt(record.getUpdatedAt());
+        work.setUpLinks(record.getUpLinks());
 
-		return work;
-	} // end method buildWorkFromRecord(Record)
+        return work;
+    } // end method buildWorkFromRecord(Record)
 } // end class Work

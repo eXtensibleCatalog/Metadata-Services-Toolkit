@@ -47,39 +47,39 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class DefaultUserService extends BaseService implements UserService {
 
-	/** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/**
-	 * Get User having the specified user id
-	 * @throws DatabaseConfigException 
-	 *
-	 * @see xc.mst.manager.user.UserService#getUserById(Long)
-	 */
-	public User getUserById(int userId) throws DatabaseConfigException {
-		return userDAO.getById(userId);
-	}
+    /**
+     * Get User having the specified user id
+     * @throws DatabaseConfigException
+     *
+     * @see xc.mst.manager.user.UserService#getUserById(Long)
+     */
+    public User getUserById(int userId) throws DatabaseConfigException {
+        return userDAO.getById(userId);
+    }
 
-	/**
-	 * Get User having the specified user name in the given server id
-	 * @throws DatabaseConfigException 
-	 *
-	 * @see xc.mst.manager.user.UserService#getUser(String, int)
-	 */
-	public User getUserByUserName(String userName, Server server) throws DatabaseConfigException {
-		return userDAO.getUserByUserName(userName, server);
+    /**
+     * Get User having the specified user name in the given server id
+     * @throws DatabaseConfigException
+     *
+     * @see xc.mst.manager.user.UserService#getUser(String, int)
+     */
+    public User getUserByUserName(String userName, Server server) throws DatabaseConfigException {
+        return userDAO.getUserByUserName(userName, server);
 
-	}
+    }
 
-	/**
-	 * Delete User
-	 *
-	 * @see xc.mst.manager.user.UserService#deleteUser(User)
-	 */
-	public void deleteUser(User user) throws DataException {
-		userDAO.delete(user);
+    /**
+     * Delete User
+     *
+     * @see xc.mst.manager.user.UserService#deleteUser(User)
+     */
+    public void deleteUser(User user) throws DataException {
+        userDAO.delete(user);
 
-	}
+    }
 
     /**
      * Insert User
@@ -88,11 +88,11 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public void insertUser(User user) throws DataException {
 
-		if (!user.getServer().getName().equalsIgnoreCase("Local")) {
-			user.setPassword("");
-		} else {
-			user.setPassword(encryptPassword(user.getPassword()));
-		}
+        if (!user.getServer().getName().equalsIgnoreCase("Local")) {
+            user.setPassword("");
+        } else {
+            user.setPassword(encryptPassword(user.getPassword()));
+        }
 
         user.setAccountCreated(new Date());
 
@@ -143,7 +143,7 @@ public class DefaultUserService extends BaseService implements UserService {
       * @return
       * @throws java.lang.Exception
       */
-     public synchronized String encryptPassword(String plaintext) 
+     public synchronized String encryptPassword(String plaintext)
       {
             MessageDigest md = null;
             try
@@ -160,7 +160,7 @@ public class DefaultUserService extends BaseService implements UserService {
             }
             catch(UnsupportedEncodingException e)
             {
-            	log.error("Exception occured while encrypting the password.", e);
+                log.error("Exception occured while encrypting the password.", e);
             }
 
             byte raw[] = md.digest(); //step 4
@@ -179,17 +179,17 @@ public class DefaultUserService extends BaseService implements UserService {
      * @return True if authentication is success else false
      */
     public boolean  authenticateUser(User user, String password)  {
-    	boolean authenticationStatus = false;
-    	String encodedPassword = encryptPassword(password);
+        boolean authenticationStatus = false;
+        String encodedPassword = encryptPassword(password);
 
-    	if (user.getPassword().equals(encodedPassword)) {
-    		authenticationStatus = true;
-    	} else {
-    		authenticationStatus = false;
-    	}
+        if (user.getPassword().equals(encodedPassword)) {
+            authenticationStatus = true;
+        } else {
+            authenticationStatus = false;
+        }
 
 
-    	return authenticationStatus;
+        return authenticationStatus;
     }
 
     /**
@@ -202,10 +202,10 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean  authenticateLDAPUser(User user, String password, Server server)  {
 
-    	log.debug("authenticateLDAPUser::" + user + " " + server.getName());
+        log.debug("authenticateLDAPUser::" + user + " " + server.getName());
 
-    	   DirContext dcon = getLDAPConnection(user.getUsername(), password, server);
-    	   
+           DirContext dcon = getLDAPConnection(user.getUsername(), password, server);
+
            if(dcon==null)
            {
                return false;
@@ -229,40 +229,40 @@ public class DefaultUserService extends BaseService implements UserService {
     private static DirContext getLDAPConnection(String username, String password, Server loginserver)
     {
 
-	     Properties ldapProperties = getGenericLDAPProperties(loginserver);
-	     try
-	     {
-		      // Set up the environment for creating the initial context
+         Properties ldapProperties = getGenericLDAPProperties(loginserver);
+         try
+         {
+              // Set up the environment for creating the initial context
 
 
-		      // Get the username attribute and start location on the LDAP server from the configuration file
-		      String usernameAttribute = loginserver.getUserNameAttribute();
-		      String startLocation = loginserver.getStartLocation();
+              // Get the username attribute and start location on the LDAP server from the configuration file
+              String usernameAttribute = loginserver.getUserNameAttribute();
+              String startLocation = loginserver.getStartLocation();
 
-		      // Set up the properties to authenticate with the correct username and password
-		      // The username passed to this function will be something like "jsmith", but we
-		      // need to authenticate to the correct LDAP location using the provided parameter.
-		      // For this reason we pull the username attribute at start locations from the
-		      // configuration file.  The result will be setting the SECURITY_PRINCIPAL (LDAP username)
-		      // to something like "uid=jsmith, ou=people, dc=rochester, dc=edu"
-		      ldapProperties.setProperty(Context.SECURITY_AUTHENTICATION, "simple"); // Set this property because we will be authenticating
-		      ldapProperties.setProperty(Context.SECURITY_PRINCIPAL, usernameAttribute + "=" + username + ", " + startLocation);
-		      ldapProperties.setProperty(Context.SECURITY_CREDENTIALS, password);
+              // Set up the properties to authenticate with the correct username and password
+              // The username passed to this function will be something like "jsmith", but we
+              // need to authenticate to the correct LDAP location using the provided parameter.
+              // For this reason we pull the username attribute at start locations from the
+              // configuration file.  The result will be setting the SECURITY_PRINCIPAL (LDAP username)
+              // to something like "uid=jsmith, ou=people, dc=rochester, dc=edu"
+              ldapProperties.setProperty(Context.SECURITY_AUTHENTICATION, "simple"); // Set this property because we will be authenticating
+              ldapProperties.setProperty(Context.SECURITY_PRINCIPAL, usernameAttribute + "=" + username + ", " + startLocation);
+              ldapProperties.setProperty(Context.SECURITY_CREDENTIALS, password);
 
 
-		      // Get the environment properties (props) for creating initial
-		      // context and specifying LDAP service provider parameters.
-		      return new InitialDirContext(ldapProperties);
-	     }
+              // Get the environment properties (props) for creating initial
+              // context and specifying LDAP service provider parameters.
+              return new InitialDirContext(ldapProperties);
+         }
 //	     catch(MalformedURLException e1) {}  // not thrown in above, but I thought I saw this in the log with misconfigured ldap?
 //	     catch(AuthenticationException e2) {} // more specific then below, I think this is the one thrown if invalid password.
-	     catch(NamingException e)
-	     {
-		      // If the exception was an error code 49, the username or password was incorrect.
-		      log.error("Exception occured while authenticating user against LDAP server.If the exception was an error code 49, the username or password was incorrect", e);
-		      InitialDirContext in = null;
-		      return in;
-	     }
+         catch(NamingException e)
+         {
+              // If the exception was an error code 49, the username or password was incorrect.
+              log.error("Exception occured while authenticating user against LDAP server.If the exception was an error code 49, the username or password was incorrect", e);
+              InitialDirContext in = null;
+              return in;
+         }
     }
 
     /**
@@ -273,18 +273,18 @@ public class DefaultUserService extends BaseService implements UserService {
     private static Properties getGenericLDAPProperties(Server loginserver)
     {
 
-		 // Get important values from the configuration file for connecting to the LDAP server.
-		 String url = loginserver.getUrl();
-		 int  port = loginserver.getPort();
+         // Get important values from the configuration file for connecting to the LDAP server.
+         String url = loginserver.getUrl();
+         int  port = loginserver.getPort();
 
-		 // Set up the environment for creating the initial context
-		 Properties ldapProperties = new Properties();
-		 ldapProperties.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-		 ldapProperties.setProperty(Context.PROVIDER_URL, url + ":" + port);
+         // Set up the environment for creating the initial context
+         Properties ldapProperties = new Properties();
+         ldapProperties.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+         ldapProperties.setProperty(Context.PROVIDER_URL, url + ":" + port);
 
 
 
-		 return ldapProperties;
+         return ldapProperties;
     }
 
     /**
@@ -295,9 +295,9 @@ public class DefaultUserService extends BaseService implements UserService {
      * @return User
      */
     public User  getUserWithPermissions(int userId) throws DataException {
-    	User user = userDAO.getById(userId);
+        User user = userDAO.getById(userId);
 
-    	return user;
+        return user;
     }
 
     /**
@@ -308,11 +308,11 @@ public class DefaultUserService extends BaseService implements UserService {
      */
     public boolean sendEmailForForgotPassword(String newPassword, User user) {
 
-    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
+        Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
-    	boolean emailSent = emailer.sendEmail(user.getEmail(), "New password", "Password has been reset. \nUser name is : " + user.getUsername() + "\nNew password is : " + newPassword);
+        boolean emailSent = emailer.sendEmail(user.getEmail(), "New password", "Password has been reset. \nUser name is : " + user.getUsername() + "\nNew password is : " + newPassword);
 
-    	return emailSent;
+        return emailSent;
     }
 
     /**
@@ -321,10 +321,10 @@ public class DefaultUserService extends BaseService implements UserService {
      * @param email Email to get the user
      * @param server Login Server
      * @return User having specified email
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public User getUserByEmail(String email, Server server) throws DatabaseConfigException {
-    	return userDAO.getUserByEmail(email, server);
+        return userDAO.getUserByEmail(email, server);
     }
 
     /**
@@ -333,7 +333,7 @@ public class DefaultUserService extends BaseService implements UserService {
      * @param sort determines whether the list of users is sorted in ascending or descending order
      * @param columnSorted the column on which the rows of users are sorted
      * @return list of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<User> getAllUsersSorted(boolean sort,String columnSorted) throws DatabaseConfigException
     {
@@ -342,10 +342,10 @@ public class DefaultUserService extends BaseService implements UserService {
 
     /**
      * Returns a list of user that are associated with a group
-     * 
+     *
      * @param group group to get the users
-     * @return list of user 
-     * @throws DatabaseConfigException 
+     * @return list of user
+     * @throws DatabaseConfigException
      */
     public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException
     {
@@ -354,10 +354,10 @@ public class DefaultUserService extends BaseService implements UserService {
 
     /**
      * Returns a list of users associated with the group
-     * 
+     *
      * @param groupId group ID
      * @return list of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<User> getUsersForGroup(int groupId) throws DatabaseConfigException
     {
@@ -379,7 +379,7 @@ public class DefaultUserService extends BaseService implements UserService {
      * returns the number of LDAP users in the system
      *
      * @return number of LDAP users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public int getLDAPUserCount() throws DatabaseConfigException
     {
@@ -391,66 +391,66 @@ public class DefaultUserService extends BaseService implements UserService {
      *
      * @param userName User name of new user
      * @param comments Comments to get access to the system
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public boolean sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException {
 
-    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
+        Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
- 		// Email the admin to assign permissions for new user
-		StringBuffer adminMessageBody = new StringBuffer();
-		adminMessageBody.append("New account created in Metadata Services Toolkit with user name : " +userName);
-		adminMessageBody.append("\nComments from the user : " + comments);
-		adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
-		String adminSubject = "Assign permission to new User";
-		
-		GroupService groupService = (GroupService)config.getBean("GroupService");
-		List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
-		
-		boolean emailConfigured = emailer.isConfigured();
-		
-		if (!emailConfigured) {
+         // Email the admin to assign permissions for new user
+        StringBuffer adminMessageBody = new StringBuffer();
+        adminMessageBody.append("New account created in Metadata Services Toolkit with user name : " +userName);
+        adminMessageBody.append("\nComments from the user : " + comments);
+        adminMessageBody.append("\nPlease login into the system and assign appropriate permissions for the user.");
+        String adminSubject = "Assign permission to new User";
+
+        GroupService groupService = (GroupService)config.getBean("GroupService");
+        List<User> admins = getUsersForGroup(groupService.getGroupByName(Group.ADMINISTRATOR).getId());
+
+        boolean emailConfigured = emailer.isConfigured();
+
+        if (!emailConfigured) {
             log.debug("*** DefaultUserService: e-mail is not configured! ");
-            		
-			return false;
-		}
-		
-		for(User admin:admins) {
-			emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
-		}
- 
-		return true;
+
+            return false;
+        }
+
+        for(User admin:admins) {
+            emailer.sendEmail(admin.getEmail(), adminSubject, adminMessageBody.toString());
+        }
+
+        return true;
     }
-    
+
     /**
      * Sends email to user to inform that following permissions has been assigned.
      *
      * @param user User whose permissions has beedn changed/added/removed
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public boolean sendEmailToUserWithPermissions(User user) throws DatabaseConfigException {
 
-    	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
+        Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
- 		// Email the user to inform that following permissions has been assigned.
-		StringBuffer messageBody = new StringBuffer();
-		messageBody.append("Hello " + user.getUsername() + ",");
-		messageBody.append("\nYou have been asssigned permissions to access following tabs in Metadata Services Toolkit.");
-		for (Permission permission: getPermissionsForUserByTabOrderAsc(user)) {
-			messageBody.append("\n\t" + permission.getTabName());
-		}
+         // Email the user to inform that following permissions has been assigned.
+        StringBuffer messageBody = new StringBuffer();
+        messageBody.append("Hello " + user.getUsername() + ",");
+        messageBody.append("\nYou have been asssigned permissions to access following tabs in Metadata Services Toolkit.");
+        for (Permission permission: getPermissionsForUserByTabOrderAsc(user)) {
+            messageBody.append("\n\t" + permission.getTabName());
+        }
 
-		String subject = "Permissions assigned to access Metadata Services Toolkit";
-		
-		boolean emailConfigured = new Emailer().isConfigured();
-		
-		if (!emailConfigured) {
-			return false;
-		}
-		
-		emailer.sendEmail(user.getEmail(), subject, messageBody.toString());
- 
-		return true;
+        String subject = "Permissions assigned to access Metadata Services Toolkit";
+
+        boolean emailConfigured = new Emailer().isConfigured();
+
+        if (!emailConfigured) {
+            return false;
+        }
+
+        emailer.sendEmail(user.getEmail(), subject, messageBody.toString());
+
+        return true;
     }
 
     /**
@@ -466,7 +466,7 @@ public class DefaultUserService extends BaseService implements UserService {
         {
             String MESSAGE = "An error has occurred with the Metadata Services Toolkit.  Please submit this error here: http://code.google.com/p/xcmetadataservicestoolkit/issues/entry \n\n Please include the following information:\n Template: Defect report from user \n Summary: <error summary> \n Description: <copy paste the relevant error message from the attached log file here> \n";
 
-        	Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
+            Emailer emailer = (Emailer)MSTConfiguration.getInstance().getBean("Emailer");
 
             String adminSubject = "MST error";
 
@@ -482,12 +482,12 @@ public class DefaultUserService extends BaseService implements UserService {
             // Get the log file path
             String filename = null;
             Enumeration<Appender> root = Logger.getRootLogger().getAllAppenders();
-                       
+
             while ( root.hasMoreElements() ){
               Appender app = (Appender)root.nextElement();
-              
+
               if ( app instanceof RollingFileAppender ){
-            	  filename =  ((RollingFileAppender)app).getFile();
+                  filename =  ((RollingFileAppender)app).getFile();
               }
             }
 
@@ -498,21 +498,21 @@ public class DefaultUserService extends BaseService implements UserService {
             return true;
         }
         catch(DatabaseConfigException dce)
-        {	
+        {
             log.error("Error occured while emailing the error log file to admin.", dce);
             return false;
-        }        
-       
+        }
+
     }
 
     /**
      * Get permissions for user ordered by tab order
-     *  
+     *
      * @param user User to get permissions
      * @return user permissions
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Permission> getPermissionsForUserByTabOrderAsc(User user) throws DatabaseConfigException {
-    	return permissionDAO.getPermissionsForUserByTabOrderAsc(user.getId());
+        return permissionDAO.getPermissionsForUserByTabOrderAsc(user.getId());
     }
 }

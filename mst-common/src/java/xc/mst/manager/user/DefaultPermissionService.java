@@ -23,15 +23,15 @@ import xc.mst.manager.BaseService;
  * @author Tejaswi Haramurali
  */
 public class DefaultPermissionService extends BaseService implements PermissionService {
-    
+
     /**
-	 * Gets the permissions belonging to a group.
-	 *
-	 * @param groupId The ID of the group to get permissions for
-	 * @return A list of permissions belonging to the group
-     * @throws DatabaseConfigException 
-	 */
-	public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
+     * Gets the permissions belonging to a group.
+     *
+     * @param groupId The ID of the group to get permissions for
+     * @return A list of permissions belonging to the group
+     * @throws DatabaseConfigException
+     */
+    public List<Permission> getPermissionsForGroup(int groupId) throws DatabaseConfigException
     {
         return getPermissionDAO().getPermissionsForGroup(groupId);
     }
@@ -40,7 +40,7 @@ public class DefaultPermissionService extends BaseService implements PermissionS
      * returns a permission by its ID
      * @param permissionId permission ID
      * @return
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Permission getPermissionById(int permissionId) throws DatabaseConfigException
     {
@@ -51,7 +51,7 @@ public class DefaultPermissionService extends BaseService implements PermissionS
      * Returns a list of all permissions in the system
      *
      * @return list of permissions
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Permission> getAllPermissions() throws DatabaseConfigException
     {

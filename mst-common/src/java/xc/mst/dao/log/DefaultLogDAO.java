@@ -28,510 +28,510 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public class DefaultLogDAO extends LogDAO
 {
-	/**
-	 * A PreparedStatement to get all logs in the database
-	 */
-	private static PreparedStatement psGetAll = null;
-	
-	/**
-	 * A PreparedStatement to get a log from the database by its ID
-	 */
-	private static PreparedStatement psGetById = null;
+    /**
+     * A PreparedStatement to get all logs in the database
+     */
+    private static PreparedStatement psGetAll = null;
 
-	/**
-	 * A PreparedStatemnt to insert a log into the database
-	 */
-	private static PreparedStatement psInsert = null;
+    /**
+     * A PreparedStatement to get a log from the database by its ID
+     */
+    private static PreparedStatement psGetById = null;
 
-	/**
-	 * A PreparedStatemnt to update a log in the database
-	 */
-	private static PreparedStatement psUpdate = null;
+    /**
+     * A PreparedStatemnt to insert a log into the database
+     */
+    private static PreparedStatement psInsert = null;
 
-	/**
-	 * A PreparedStatement to delete a log from the database
-	 */
-	private static PreparedStatement psDelete = null;
+    /**
+     * A PreparedStatemnt to update a log in the database
+     */
+    private static PreparedStatement psUpdate = null;
 
-	/**
-	 * A Lock to synchronize access to the PreparedStatement to get all logs in the database
-	 */
-	private static Object psGetAllLock = new Object();
-	
-	/**
-	 * A Lock to synchronize access to the PreparedStatement to get a log from the database by its ID
-	 */
-	private static Object psGetByIdLock = new Object();
+    /**
+     * A PreparedStatement to delete a log from the database
+     */
+    private static PreparedStatement psDelete = null;
 
-	/**
-	 * A Lock to synchronize access to the PreparedStatement to insert a log into the database
-	 */
-	private static Object psInsertLock = new Object();
+    /**
+     * A Lock to synchronize access to the PreparedStatement to get all logs in the database
+     */
+    private static Object psGetAllLock = new Object();
 
-	/**
-	 * A Lock to synchronize access to the PreparedStatement to update a log in the database
-	 */
-	private static Object psUpdateLock = new Object();
+    /**
+     * A Lock to synchronize access to the PreparedStatement to get a log from the database by its ID
+     */
+    private static Object psGetByIdLock = new Object();
 
-	/**
-	 * A Lock to synchronize access to the PreparedStatement to delete a log from the database
-	 */
-	private static Object psDeleteLock = new Object();
+    /**
+     * A Lock to synchronize access to the PreparedStatement to insert a log into the database
+     */
+    private static Object psInsertLock = new Object();
 
-	@Override
-	public List<Log> getAll() throws DatabaseConfigException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		synchronized(psGetAllLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting all logs");
+    /**
+     * A Lock to synchronize access to the PreparedStatement to update a log in the database
+     */
+    private static Object psUpdateLock = new Object();
 
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+    /**
+     * A Lock to synchronize access to the PreparedStatement to delete a log from the database
+     */
+    private static Object psDeleteLock = new Object();
 
-			// The list of all Logs
-			List<Log> logs = new ArrayList<Log>();
+    @Override
+    public List<Log> getAll() throws DatabaseConfigException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-			try
-			{
-				// If the PreparedStatement to get all logs was not defined, create it
-				if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
-				{
-					// SQL to get the rows
-					String selectSql = "SELECT " + COL_LOG_ID + ", " +
-												   COL_WARNINGS + ", " +
-				                                   COL_ERRORS + ", " +
-				                                   COL_LAST_LOG_RESET + ", " +
-				                                   COL_LOG_FILE_NAME + ", " +
-				                                   COL_LOG_FILE_LOCATION + " " +
-				                       "FROM " + LOGS_TABLE_NAME;
+        synchronized(psGetAllLock)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Getting all logs");
 
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
+            // The ResultSet from the SQL query
+            ResultSet results = null;
 
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
-				} // end if(get all PreparedStatement not defined)
+            // The list of all Logs
+            List<Log> logs = new ArrayList<Log>();
 
-				// Get the result of the SELECT statement
+            try
+            {
+                // If the PreparedStatement to get all logs was not defined, create it
+                if(psGetAll == null || dbConnectionManager.isClosed(psGetAll))
+                {
+                    // SQL to get the rows
+                    String selectSql = "SELECT " + COL_LOG_ID + ", " +
+                                                   COL_WARNINGS + ", " +
+                                                   COL_ERRORS + ", " +
+                                                   COL_LAST_LOG_RESET + ", " +
+                                                   COL_LOG_FILE_NAME + ", " +
+                                                   COL_LOG_FILE_LOCATION + " " +
+                                       "FROM " + LOGS_TABLE_NAME;
 
-				// Execute the query
-				results = dbConnectionManager.executeQuery(psGetAll);
+                    if(log.isDebugEnabled())
+                        log.debug("Creating the \"get all logs\" PreparedStatement the SQL " + selectSql);
 
-				// For each result returned, add a Log object to the list with the returned data
-				while(results.next())
-				{
-					// The Object which will contain data on the log
-					Log logObj = new Log();
+                    // A prepared statement to run the select SQL
+                    // This should sanitize the SQL and prevent SQL injection
+                    psGetAll = dbConnectionManager.prepareStatement(selectSql, psGetAll);
+                } // end if(get all PreparedStatement not defined)
 
-					// Set the fields on the log
-					logObj.setId(results.getInt(1));
-					logObj.setWarnings(results.getInt(2));
-					logObj.setErrors(results.getInt(3));
-					logObj.setLastLogReset(results.getDate(4));
-					logObj.setLogFileName(results.getString(5));
-					logObj.setLogFileLocation(results.getString(6));
+                // Get the result of the SELECT statement
 
-					// Add the log to the list
-					logs.add(logObj);
-				} // end loop over results
+                // Execute the query
+                results = dbConnectionManager.executeQuery(psGetAll);
 
-				if(log.isDebugEnabled())
-					log.debug("Found " + logs.size() + " logs in the database.");
+                // For each result returned, add a Log object to the list with the returned data
+                while(results.next())
+                {
+                    // The Object which will contain data on the log
+                    Log logObj = new Log();
 
-				return logs;
-			} // end try(get results)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the logs.", e);
+                    // Set the fields on the log
+                    logObj.setId(results.getInt(1));
+                    logObj.setWarnings(results.getInt(2));
+                    logObj.setErrors(results.getInt(3));
+                    logObj.setLastLogReset(results.getDate(4));
+                    logObj.setLogFileName(results.getString(5));
+                    logObj.setLogFileLocation(results.getString(6));
 
-				return logs;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return getAll();
-			}
-			finally
-			{
-				dbConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // synchronized
-	} // end method getAll()
+                    // Add the log to the list
+                    logs.add(logObj);
+                } // end loop over results
 
-	@Override
-	public List<Log> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		if(log.isDebugEnabled())
-			log.debug("Getting all logs sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
+                if(log.isDebugEnabled())
+                    log.debug("Found " + logs.size() + " logs in the database.");
 
-		// Validate the column we're trying to sort on
-		if(!sortableColumns.contains(columnSorted))
-		{
-			log.error("An attempt was made to sort on the invalid column " + columnSorted);
-			return getAll();
-		} // end if(sort column invalid)
-		
-		// The ResultSet from the SQL query
-		ResultSet results = null;
+                return logs;
+            } // end try(get results)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while getting the logs.", e);
 
-		// The Statement for getting the rows
-		Statement getSorted = null;
-		
-		// The list of all Logs
-		List<Log> logs = new ArrayList<Log>();
+                return logs;
+            } // end catch(SQLException)
+            catch (DBConnectionResetException e){
+                log.info("Re executing the query that failed ");
+                return getAll();
+            }
+            finally
+            {
+                dbConnectionManager.closeResultSet(results);
+            } // end finally(close ResultSet)
+        } // synchronized
+    } // end method getAll()
 
-		try
-		{
-			
-			// SQL to get the rows
-			String selectSql = "SELECT " + COL_LOG_ID + ", " +
-										   COL_WARNINGS + ", " +
-		                                   COL_ERRORS + ", " +
-		                                   COL_LAST_LOG_RESET + ", " +
-		                                   COL_LOG_FILE_NAME + ", " +
-		                                   COL_LOG_FILE_LOCATION + " " +
-		                       "FROM " + LOGS_TABLE_NAME + " " +
+    @Override
+    public List<Log> getSorted(boolean asc,String columnSorted) throws DatabaseConfigException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+
+        if(log.isDebugEnabled())
+            log.debug("Getting all logs sorted in " + (asc ? "ascending" : "descending") + " order on the column " + columnSorted);
+
+        // Validate the column we're trying to sort on
+        if(!sortableColumns.contains(columnSorted))
+        {
+            log.error("An attempt was made to sort on the invalid column " + columnSorted);
+            return getAll();
+        } // end if(sort column invalid)
+
+        // The ResultSet from the SQL query
+        ResultSet results = null;
+
+        // The Statement for getting the rows
+        Statement getSorted = null;
+
+        // The list of all Logs
+        List<Log> logs = new ArrayList<Log>();
+
+        try
+        {
+
+            // SQL to get the rows
+            String selectSql = "SELECT " + COL_LOG_ID + ", " +
+                                           COL_WARNINGS + ", " +
+                                           COL_ERRORS + ", " +
+                                           COL_LAST_LOG_RESET + ", " +
+                                           COL_LOG_FILE_NAME + ", " +
+                                           COL_LOG_FILE_LOCATION + " " +
+                               "FROM " + LOGS_TABLE_NAME + " " +
                                "ORDER BY " + columnSorted + (asc ? " ASC" : " DESC");
 
-			if(log.isDebugEnabled())
-				log.debug("Creating the \"get all logs sorted\" Statement the SQL " + selectSql);
+            if(log.isDebugEnabled())
+                log.debug("Creating the \"get all logs sorted\" Statement the SQL " + selectSql);
 
-			// A statement to run the select SQL
-			getSorted = dbConnectionManager.createStatement();
-			
-			// Get the results of the SELECT statement			
-			
-			// Execute the query
-			results = getSorted.executeQuery(selectSql);
+            // A statement to run the select SQL
+            getSorted = dbConnectionManager.createStatement();
 
-			// For each result returned, add a Log object to the list with the returned data
-			while(results.next())
-			{
-				// The Object which will contain data on the log
-				Log logObj = new Log();
+            // Get the results of the SELECT statement
 
-				// Set the fields on the log
-				logObj.setId(results.getInt(1));
-				logObj.setWarnings(results.getInt(2));
-				logObj.setErrors(results.getInt(3));
-				logObj.setLastLogReset(results.getDate(4));
-				logObj.setLogFileName(results.getString(5));
-				logObj.setLogFileLocation(results.getString(6));
+            // Execute the query
+            results = getSorted.executeQuery(selectSql);
 
-				// Add the log to the list
-				logs.add(logObj);
-			} // end loop over results
+            // For each result returned, add a Log object to the list with the returned data
+            while(results.next())
+            {
+                // The Object which will contain data on the log
+                Log logObj = new Log();
 
-			if(log.isDebugEnabled())
-				log.debug("Found " + logs.size() + " logs in the database.");
+                // Set the fields on the log
+                logObj.setId(results.getInt(1));
+                logObj.setWarnings(results.getInt(2));
+                logObj.setErrors(results.getInt(3));
+                logObj.setLastLogReset(results.getDate(4));
+                logObj.setLogFileName(results.getString(5));
+                logObj.setLogFileLocation(results.getString(6));
 
-			return logs;
-		} // end try(get results)
-		catch(SQLException e)
-		{
-			log.error("A SQLException occurred while getting the logs.", e);
-            
-			return logs;
-		} // end catch(SQLException)
-		finally
-		{
-			dbConnectionManager.closeResultSet(results);
-			
-			try
-			{
-				if(getSorted != null)
-					getSorted.close();
-			} // end try(close the Statement)
-			catch(SQLException e)
-			{
-				log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
-			} // end catch(SQLException)
-		} // end finally(close ResultSet)
-	} // end method getSortedByUserName(boolean)
-	
-	@Override
-	public Log getById(int id) throws DatabaseConfigException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		synchronized(psGetByIdLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Getting the log with ID " + id);
+                // Add the log to the list
+                logs.add(logObj);
+            } // end loop over results
 
-			// The ResultSet from the SQL query
-			ResultSet results = null;
+            if(log.isDebugEnabled())
+                log.debug("Found " + logs.size() + " logs in the database.");
 
-			try
-			{
-				// If the PreparedStatement to get a log by ID was not defined, create it
-				if(psGetById == null || dbConnectionManager.isClosed(psGetById))
-				{
-					// SQL to get the row
-					String selectSql = "SELECT " + COL_LOG_ID + ", " +
-					                               COL_WARNINGS + ", " +
-					                               COL_ERRORS + ", " +
-					                               COL_LAST_LOG_RESET + ", " +
-					                               COL_LOG_FILE_NAME + ", " +
-				                                   COL_LOG_FILE_LOCATION + " " +
-	                                   "FROM " + LOGS_TABLE_NAME + " " +
-	                                   "WHERE " + COL_LOG_ID + "=?";
+            return logs;
+        } // end try(get results)
+        catch(SQLException e)
+        {
+            log.error("A SQLException occurred while getting the logs.", e);
 
-					if(log.isDebugEnabled())
-						log.debug("Creating the PreparedStatement to get a log by ID from the SQL " + selectSql);
+            return logs;
+        } // end catch(SQLException)
+        finally
+        {
+            dbConnectionManager.closeResultSet(results);
 
-					// A prepared statement to run the select SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
-				} // end if(get by ID PreparedStatement not defined)
+            try
+            {
+                if(getSorted != null)
+                    getSorted.close();
+            } // end try(close the Statement)
+            catch(SQLException e)
+            {
+                log.error("An error occurred while trying to close the \"get processing directives sorted\" Statement");
+            } // end catch(SQLException)
+        } // end finally(close ResultSet)
+    } // end method getSortedByUserName(boolean)
 
-				// Set the parameters on the update statement
-				psGetById.setInt(1, id);
+    @Override
+    public Log getById(int id) throws DatabaseConfigException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-				// Get the result of the SELECT statement
+        synchronized(psGetByIdLock)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Getting the log with ID " + id);
 
-				// Execute the query
-				results = dbConnectionManager.executeQuery(psGetById);
+            // The ResultSet from the SQL query
+            ResultSet results = null;
 
-				// If any results were returned
-				if(results.next())
-				{
-					// The Object which will contain data on the log
-					Log logObj = new Log();
+            try
+            {
+                // If the PreparedStatement to get a log by ID was not defined, create it
+                if(psGetById == null || dbConnectionManager.isClosed(psGetById))
+                {
+                    // SQL to get the row
+                    String selectSql = "SELECT " + COL_LOG_ID + ", " +
+                                                   COL_WARNINGS + ", " +
+                                                   COL_ERRORS + ", " +
+                                                   COL_LAST_LOG_RESET + ", " +
+                                                   COL_LOG_FILE_NAME + ", " +
+                                                   COL_LOG_FILE_LOCATION + " " +
+                                       "FROM " + LOGS_TABLE_NAME + " " +
+                                       "WHERE " + COL_LOG_ID + "=?";
 
-					// Set the fields on the log
-					logObj.setId(results.getInt(1));
-					logObj.setWarnings(results.getInt(2));
-					logObj.setErrors(results.getInt(3));
-					logObj.setLastLogReset(results.getDate(4));
-					logObj.setLogFileName(results.getString(5));
-					logObj.setLogFileLocation(results.getString(6));
+                    if(log.isDebugEnabled())
+                        log.debug("Creating the PreparedStatement to get a log by ID from the SQL " + selectSql);
 
-					if(log.isDebugEnabled())
-						log.debug("Found the log with ID " + id + " in the database.");
+                    // A prepared statement to run the select SQL
+                    // This should sanitize the SQL and prevent SQL injection
+                    psGetById = dbConnectionManager.prepareStatement(selectSql, psGetById);
+                } // end if(get by ID PreparedStatement not defined)
 
-					// Return the log
-					return logObj;
-				} // end if(log found)
+                // Set the parameters on the update statement
+                psGetById.setInt(1, id);
 
-				if(log.isDebugEnabled())
-					log.debug("The log with ID " + id + " was not found in the database.");
+                // Get the result of the SELECT statement
 
-				return null;
-			} // end try(get Log)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while getting the log with ID " + id, e);
+                // Execute the query
+                results = dbConnectionManager.executeQuery(psGetById);
 
-				return null;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return getById(id);
-			}
-			finally
-			{
-				dbConnectionManager.closeResultSet(results);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method getById(int)
+                // If any results were returned
+                if(results.next())
+                {
+                    // The Object which will contain data on the log
+                    Log logObj = new Log();
 
-	@Override
-	public boolean insert(Log logObj) throws DataException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		// Check that the non-ID fields on the log are valid
-		validateFields(logObj, false, true);
+                    // Set the fields on the log
+                    logObj.setId(results.getInt(1));
+                    logObj.setWarnings(results.getInt(2));
+                    logObj.setErrors(results.getInt(3));
+                    logObj.setLastLogReset(results.getDate(4));
+                    logObj.setLogFileName(results.getString(5));
+                    logObj.setLogFileLocation(results.getString(6));
 
-		synchronized(psInsertLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Inserting a new log");
+                    if(log.isDebugEnabled())
+                        log.debug("Found the log with ID " + id + " in the database.");
 
-			// The ResultSet returned by the query
-			ResultSet rs = null;
+                    // Return the log
+                    return logObj;
+                } // end if(log found)
 
-			try
-			{	
-					// Create the PreparedStatement to insert a log if it hasn't already been defined
-					if(psInsert == null || dbConnectionManager.isClosed(psInsert))
-					{
-						// SQL to insert the new row
-						String insertSql = "INSERT INTO " + LOGS_TABLE_NAME + " (" + COL_WARNINGS + ", " +
-		            	    													     COL_ERRORS + ", " +
-		            	    													     COL_LAST_LOG_RESET + ", " +
-		            	    													     COL_LOG_FILE_NAME + ", " +
-		            	    													     COL_LOG_FILE_LOCATION + ") " +
-		            				       "VALUES (?, ?, ?, ?, ?)";
+                if(log.isDebugEnabled())
+                    log.debug("The log with ID " + id + " was not found in the database.");
 
-						if(log.isDebugEnabled())
-							log.debug("Creating the \"insert log\" PreparedStatement from the SQL " + insertSql);
+                return null;
+            } // end try(get Log)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while getting the log with ID " + id, e);
 
-						// A prepared statement to run the insert SQL
-						// This should sanitize the SQL and prevent SQL injection
-						psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
-					} // end if(insert PreparedStatement not defined)
+                return null;
+            } // end catch(SQLException)
+            catch (DBConnectionResetException e){
+                log.info("Re executing the query that failed ");
+                return getById(id);
+            }
+            finally
+            {
+                dbConnectionManager.closeResultSet(results);
+            } // end finally(close ResultSet)
+        } // end synchronized
+    } // end method getById(int)
 
-					// Set the parameters on the insert statement
-					psInsert.setInt(1, logObj.getWarnings());
-					psInsert.setInt(2, logObj.getErrors());
-					psInsert.setDate(3, logObj.getLastLogReset());
-					psInsert.setString(4, logObj.getLogFileName());
-					psInsert.setString(5, logObj.getLogFileLocation());
+    @Override
+    public boolean insert(Log logObj) throws DataException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-					// Execute the insert statement and return the result
-					if(dbConnectionManager.executeUpdate(psInsert) > 0)
-					{
-						// Get the auto-generated resource identifier ID and set it correctly on this log Object
-						rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+        // Check that the non-ID fields on the log are valid
+        validateFields(logObj, false, true);
 
-					    if (rs.next())
-					        logObj.setId(rs.getInt(1));
+        synchronized(psInsertLock)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Inserting a new log");
 
-						return true;
-					} // end if(insert succeeded)
+            // The ResultSet returned by the query
+            ResultSet rs = null;
 
-					return false;
-			} // end try(insert Log)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while inserting a new log.", e);
-				
-				return false;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return insert(logObj);
-			}
-			finally
-			{
-				dbConnectionManager.closeResultSet(rs);
-			} // end finally(close ResultSet)
-		} // end synchronized
-	} // end method insert(log)
+            try
+            {
+                    // Create the PreparedStatement to insert a log if it hasn't already been defined
+                    if(psInsert == null || dbConnectionManager.isClosed(psInsert))
+                    {
+                        // SQL to insert the new row
+                        String insertSql = "INSERT INTO " + LOGS_TABLE_NAME + " (" + COL_WARNINGS + ", " +
+                                                                                     COL_ERRORS + ", " +
+                                                                                     COL_LAST_LOG_RESET + ", " +
+                                                                                     COL_LOG_FILE_NAME + ", " +
+                                                                                     COL_LOG_FILE_LOCATION + ") " +
+                                           "VALUES (?, ?, ?, ?, ?)";
 
-	@Override
-	public boolean update(Log logObj) throws DataException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		// Check that the fields on the log are valid
-		validateFields(logObj, true, true);
+                        if(log.isDebugEnabled())
+                            log.debug("Creating the \"insert log\" PreparedStatement from the SQL " + insertSql);
 
-		synchronized(psUpdateLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Updating the log with ID " + logObj.getId());
+                        // A prepared statement to run the insert SQL
+                        // This should sanitize the SQL and prevent SQL injection
+                        psInsert = dbConnectionManager.prepareStatement(insertSql, psInsert);
+                    } // end if(insert PreparedStatement not defined)
 
-			try
-			{
-				// If the PreparedStatement to update a log has not been created, create it
-				if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
-				{
-					// SQL to update new row
-					String updateSql = "UPDATE " + LOGS_TABLE_NAME + " SET " + COL_WARNINGS + "=?, " +
-				                                                               COL_ERRORS + "=?, " +
-				                                                               COL_LAST_LOG_RESET + "=?, " +
-				                                                               COL_LOG_FILE_NAME + "=?, " +
-				                                                               COL_LOG_FILE_LOCATION + "=? " +
-	                                   "WHERE " + COL_LOG_ID + "=?";
+                    // Set the parameters on the insert statement
+                    psInsert.setInt(1, logObj.getWarnings());
+                    psInsert.setInt(2, logObj.getErrors());
+                    psInsert.setDate(3, logObj.getLastLogReset());
+                    psInsert.setString(4, logObj.getLogFileName());
+                    psInsert.setString(5, logObj.getLogFileLocation());
 
-					if(log.isDebugEnabled())
-						log.debug("Creating the \"update log\" PreparedStatement from the SQL " + updateSql);
+                    // Execute the insert statement and return the result
+                    if(dbConnectionManager.executeUpdate(psInsert) > 0)
+                    {
+                        // Get the auto-generated resource identifier ID and set it correctly on this log Object
+                        rs = dbConnectionManager.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
 
-					// A prepared statement to run the update SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
-				} // end if(update PreparedStatement is not defined)
+                        if (rs.next())
+                            logObj.setId(rs.getInt(1));
 
-				// Set the parameters on the update statement
-				psUpdate.setInt(1, logObj.getWarnings());
-				psUpdate.setInt(2, logObj.getErrors());
-				psUpdate.setDate(3, logObj.getLastLogReset());
-				psUpdate.setString(4, logObj.getLogFileName());
-				psUpdate.setString(5, logObj.getLogFileLocation());
-				psUpdate.setInt(6, logObj.getId());
+                        return true;
+                    } // end if(insert succeeded)
 
-				// Execute the update statement and return the result
-				return dbConnectionManager.executeUpdate(psUpdate) > 0;
-			} // end try(update log)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while updating the log with ID " + logObj.getId(), e);
+                    return false;
+            } // end try(insert Log)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while inserting a new log.", e);
 
-				return false;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return update(logObj);
-			}
-		} // end synchronized
-	} // end method update(Log)
+                return false;
+            } // end catch(SQLException)
+            catch (DBConnectionResetException e){
+                log.info("Re executing the query that failed ");
+                return insert(logObj);
+            }
+            finally
+            {
+                dbConnectionManager.closeResultSet(rs);
+            } // end finally(close ResultSet)
+        } // end synchronized
+    } // end method insert(log)
 
-	@Override
-	public boolean delete(Log logObj) throws DataException
-	{
-		// Throw an exception if the connection is null.  This means the configuration file was bad.
-		if(dbConnectionManager.getDbConnection() == null)
-			throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
-		
-		// Check that the ID field on the log are valid
-		validateFields(logObj, true, false);
+    @Override
+    public boolean update(Log logObj) throws DataException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
 
-		synchronized(psDeleteLock)
-		{
-			if(log.isDebugEnabled())
-				log.debug("Deleting the log with ID " + logObj.getId());
+        // Check that the fields on the log are valid
+        validateFields(logObj, true, true);
 
-			try
-			{
-				// If the PreparedStatement to delete a log was not defined, create it
-				if(psDelete == null || dbConnectionManager.isClosed(psDelete))
-				{
-					// SQL to delete the row from the table
-					String deleteSql = "DELETE FROM "+ LOGS_TABLE_NAME + " " +
-		                               "WHERE " + COL_LOG_ID + " = ? ";
+        synchronized(psUpdateLock)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Updating the log with ID " + logObj.getId());
 
-					if(log.isDebugEnabled())
-						log.debug("Creating the PreparedStatement to delete a log from the SQL " + deleteSql);
+            try
+            {
+                // If the PreparedStatement to update a log has not been created, create it
+                if(psUpdate == null || dbConnectionManager.isClosed(psUpdate))
+                {
+                    // SQL to update new row
+                    String updateSql = "UPDATE " + LOGS_TABLE_NAME + " SET " + COL_WARNINGS + "=?, " +
+                                                                               COL_ERRORS + "=?, " +
+                                                                               COL_LAST_LOG_RESET + "=?, " +
+                                                                               COL_LOG_FILE_NAME + "=?, " +
+                                                                               COL_LOG_FILE_LOCATION + "=? " +
+                                       "WHERE " + COL_LOG_ID + "=?";
 
-					// A prepared statement to run the delete SQL
-					// This should sanitize the SQL and prevent SQL injection
-					psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
-				} // end if(delete PreparedStatement not defined)
+                    if(log.isDebugEnabled())
+                        log.debug("Creating the \"update log\" PreparedStatement from the SQL " + updateSql);
 
-				// Set the parameters on the delete statement
-				psDelete.setInt(1, logObj.getId());
+                    // A prepared statement to run the update SQL
+                    // This should sanitize the SQL and prevent SQL injection
+                    psUpdate = dbConnectionManager.prepareStatement(updateSql, psUpdate);
+                } // end if(update PreparedStatement is not defined)
 
-				// Execute the delete statement and return the result
-				return dbConnectionManager.execute(psDelete);
-			} // end try(delete log)
-			catch(SQLException e)
-			{
-				log.error("A SQLException occurred while deleting the log with ID " + logObj.getId(), e);
+                // Set the parameters on the update statement
+                psUpdate.setInt(1, logObj.getWarnings());
+                psUpdate.setInt(2, logObj.getErrors());
+                psUpdate.setDate(3, logObj.getLastLogReset());
+                psUpdate.setString(4, logObj.getLogFileName());
+                psUpdate.setString(5, logObj.getLogFileLocation());
+                psUpdate.setInt(6, logObj.getId());
 
-				return false;
-			} // end catch(SQLException)
-			catch (DBConnectionResetException e){
-				log.info("Re executing the query that failed ");
-				return delete(logObj);
-			}
-		} // end synchronized
-	} // end method delete(Log)
+                // Execute the update statement and return the result
+                return dbConnectionManager.executeUpdate(psUpdate) > 0;
+            } // end try(update log)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while updating the log with ID " + logObj.getId(), e);
+
+                return false;
+            } // end catch(SQLException)
+            catch (DBConnectionResetException e){
+                log.info("Re executing the query that failed ");
+                return update(logObj);
+            }
+        } // end synchronized
+    } // end method update(Log)
+
+    @Override
+    public boolean delete(Log logObj) throws DataException
+    {
+        // Throw an exception if the connection is null.  This means the configuration file was bad.
+        if(dbConnectionManager.getDbConnection() == null)
+            throw new DatabaseConfigException("Unable to connect to the database using the parameters from the configuration file.");
+
+        // Check that the ID field on the log are valid
+        validateFields(logObj, true, false);
+
+        synchronized(psDeleteLock)
+        {
+            if(log.isDebugEnabled())
+                log.debug("Deleting the log with ID " + logObj.getId());
+
+            try
+            {
+                // If the PreparedStatement to delete a log was not defined, create it
+                if(psDelete == null || dbConnectionManager.isClosed(psDelete))
+                {
+                    // SQL to delete the row from the table
+                    String deleteSql = "DELETE FROM "+ LOGS_TABLE_NAME + " " +
+                                       "WHERE " + COL_LOG_ID + " = ? ";
+
+                    if(log.isDebugEnabled())
+                        log.debug("Creating the PreparedStatement to delete a log from the SQL " + deleteSql);
+
+                    // A prepared statement to run the delete SQL
+                    // This should sanitize the SQL and prevent SQL injection
+                    psDelete = dbConnectionManager.prepareStatement(deleteSql, psDelete);
+                } // end if(delete PreparedStatement not defined)
+
+                // Set the parameters on the delete statement
+                psDelete.setInt(1, logObj.getId());
+
+                // Execute the delete statement and return the result
+                return dbConnectionManager.execute(psDelete);
+            } // end try(delete log)
+            catch(SQLException e)
+            {
+                log.error("A SQLException occurred while deleting the log with ID " + logObj.getId(), e);
+
+                return false;
+            } // end catch(SQLException)
+            catch (DBConnectionResetException e){
+                log.info("Re executing the query that failed ");
+                return delete(logObj);
+            }
+        } // end synchronized
+    } // end method delete(Log)
 } // end class DefaultLogDAO

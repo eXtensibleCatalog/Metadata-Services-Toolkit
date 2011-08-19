@@ -42,340 +42,340 @@ import xc.mst.utils.index.SolrIndexManager;
 
 public class TestTransformation extends BaseTest {
 
-	
-	/**
-	 * ID of the Transformation Service 
-	 */
-	private static int transformationServiceId = 1;
 
-	/**
-	 * Package of the input files for the transformation service
-	 */
-	private String inputDirPath = "/xc/mst/services/test/resources/transformation/input";
+    /**
+     * ID of the Transformation Service
+     */
+    private static int transformationServiceId = 1;
 
-	/**
-	 * Package of the expected output files for the transformation service
-	 */
-	private String outputDirPath = "/xc/mst/services/test/resources/transformation/output";
-	
-	/**
-	 * Record ID's of the records to be tested
-	 */
-	public ArrayList<String> recordList = new ArrayList<String>();
-	
-	
-	public Hashtable<String, Long>  inputRecordIDMap =  new Hashtable<String, Long>();
-	
-	/**
-	 * List of Input Records as XML String
-	 */
-	public HashMap<String,String> inputRecords = new HashMap<String, String>();
-	
-	/**
-	 * List of Output Records as XML String
-	 */
-	public HashMap<String,String> processedRecords = new HashMap<String, String>();
-	
-	
-	public Hashtable<String , List<Record>> transformedRecords = new Hashtable<String, List<Record>>();
-	
-	public Hashtable<String , ArrayList<Document>> baseRecords = new Hashtable<String, ArrayList<Document>>();
-	
-	
-	/**
-	 * List of Expected Output Records as XML String
-	 */
-	public HashMap<String,String> baseProcessedRecords = new HashMap<String, String>();
-	
-	/**
-	 * Record service
-	 */
-	RecordService recordService;
-	
-	/**
-	 * Executes all the preliminary steps for the test
-	 */
-	@BeforeClass
-	public void beforeClass(){
-		
-		try {
-			
-		   	 // Initialize Solr, database, log before testing
-		   	 TestHelper helper = TestHelper.getInstance(); 
+    /**
+     * Package of the input files for the transformation service
+     */
+    private String inputDirPath = "/xc/mst/services/test/resources/transformation/input";
 
-			// Initialize Record Service
-			recordService = (RecordService)getBean("RecordService");
+    /**
+     * Package of the expected output files for the transformation service
+     */
+    private String outputDirPath = "/xc/mst/services/test/resources/transformation/output";
 
-			// List of all test records
-			recordList.add("1048559");
-			recordList.add("1071900");
-			recordList.add("1299843");
-			recordList.add("1472600");
-			recordList.add("1807351");
-			recordList.add("18206");
-			recordList.add("2510091");
-			recordList.add("2944145");
-			recordList.add("3349023");
-			recordList.add("3395662");
-			recordList.add("3724338");
-			recordList.add("37294");
-			recordList.add("3768890");
-			recordList.add("3949333");
-			recordList.add("4164761");
-			recordList.add("1177208");
-			recordList.add("1586760");
-			recordList.add("1714983");
-			
-			// Read input and expected output files from package
-			readRecordsFromPackage();
-			
-			// Add the MARC Records to be processed
-			addUnprocessedRecordFromFiles();
-			
-			Thread.sleep(1000);
-			
-			// Commit the records
-			((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
-			Thread.sleep(1000);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    /**
+     * Record ID's of the records to be tested
+     */
+    public ArrayList<String> recordList = new ArrayList<String>();
 
-	}
-	
-	/**
-	 * Test to be performed on transformation service. Compares the results from the transformation service 
-	 * with the expected results stored in the package. 
-	 */
-	@Test(groups = { "baseTests" }, enabled = true)
-	public void test(){
 
-		try
-		{
+    public Hashtable<String, Long>  inputRecordIDMap =  new Hashtable<String, Long>();
 
-			// Run Transformation Service
-			MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
-			ms.runService(transformationServiceId, -1);;
-			((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
-			Thread.sleep(1000);
-			
-			// Prepare the list of transformed records
-			for (String recordNRUID : inputRecordIDMap.keySet()) {
-				
-				Long SOLRID = inputRecordIDMap.get(recordNRUID);
-				List<Record> list =  recordService.getByProcessedFrom(SOLRID.longValue());
-				transformedRecords.put(recordNRUID, list);
-				
-			}
-			
+    /**
+     * List of Input Records as XML String
+     */
+    public HashMap<String,String> inputRecords = new HashMap<String, String>();
+
+    /**
+     * List of Output Records as XML String
+     */
+    public HashMap<String,String> processedRecords = new HashMap<String, String>();
+
+
+    public Hashtable<String , List<Record>> transformedRecords = new Hashtable<String, List<Record>>();
+
+    public Hashtable<String , ArrayList<Document>> baseRecords = new Hashtable<String, ArrayList<Document>>();
+
+
+    /**
+     * List of Expected Output Records as XML String
+     */
+    public HashMap<String,String> baseProcessedRecords = new HashMap<String, String>();
+
+    /**
+     * Record service
+     */
+    RecordService recordService;
+
+    /**
+     * Executes all the preliminary steps for the test
+     */
+    @BeforeClass
+    public void beforeClass(){
+
+        try {
+
+                // Initialize Solr, database, log before testing
+                TestHelper helper = TestHelper.getInstance();
+
+            // Initialize Record Service
+            recordService = (RecordService)getBean("RecordService");
+
+            // List of all test records
+            recordList.add("1048559");
+            recordList.add("1071900");
+            recordList.add("1299843");
+            recordList.add("1472600");
+            recordList.add("1807351");
+            recordList.add("18206");
+            recordList.add("2510091");
+            recordList.add("2944145");
+            recordList.add("3349023");
+            recordList.add("3395662");
+            recordList.add("3724338");
+            recordList.add("37294");
+            recordList.add("3768890");
+            recordList.add("3949333");
+            recordList.add("4164761");
+            recordList.add("1177208");
+            recordList.add("1586760");
+            recordList.add("1714983");
+
+            // Read input and expected output files from package
+            readRecordsFromPackage();
+
+            // Add the MARC Records to be processed
+            addUnprocessedRecordFromFiles();
+
+            Thread.sleep(1000);
+
+            // Commit the records
+            ((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
+            Thread.sleep(1000);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Test to be performed on transformation service. Compares the results from the transformation service
+     * with the expected results stored in the package.
+     */
+    @Test(groups = { "baseTests" }, enabled = true)
+    public void test(){
+
+        try
+        {
+
+            // Run Transformation Service
+            MetadataService ms  = new MetadataServiceFactory().getService(transformationServiceId);
+            ms.runService(transformationServiceId, -1);;
+            ((SolrIndexManager)getBean("SolrIndexManager")).commitIndex();
+            Thread.sleep(1000);
+
+            // Prepare the list of transformed records
+            for (String recordNRUID : inputRecordIDMap.keySet()) {
+
+                Long SOLRID = inputRecordIDMap.get(recordNRUID);
+                List<Record> list =  recordService.getByProcessedFrom(SOLRID.longValue());
+                transformedRecords.put(recordNRUID, list);
+
+            }
+
 //			RecordList records = recordService.getAll();
 
-			// Prepare a list of base output records
-			for(String recordNRUID: baseRecords.keySet()){
-				
-				ArrayList<Document> baseRecordList = baseRecords.get(recordNRUID);
-				List<Record> transformedRecordList = transformedRecords.get(recordNRUID);
-				ArrayList<Document> transformedDocumentList = new ArrayList<Document>();
+            // Prepare a list of base output records
+            for(String recordNRUID: baseRecords.keySet()){
 
-				StringReader sr = null;
-				StringWriter sw = null;
-				String transformedXML = null;
-				SAXBuilder sb = new SAXBuilder();
-				XMLOutputter xOut = new XMLOutputter();
-				
-				for (Record record : transformedRecordList) {
-					sr = new StringReader(record.getOaiXml());
-					transformedDocumentList.add(sb.build(sr));
-					sr.close();
-				}
-				
-				if(baseRecordList.size() != transformedRecordList.size()){
-				
-					System.out.println("baseRecordList:"+baseRecordList.size());
-					System.out.println("transformedRecordList:"+transformedRecordList.size());
-					Assert.assertFalse(true, "Number of frbrized records generated not equal.");
-				
-				}
+                ArrayList<Document> baseRecordList = baseRecords.get(recordNRUID);
+                List<Record> transformedRecordList = transformedRecords.get(recordNRUID);
+                ArrayList<Document> transformedDocumentList = new ArrayList<Document>();
 
-				else {
-					
-					for (Document transformedRecord : transformedDocumentList) {
-						
-						boolean match = false;
-						for (Document baseRecord : baseRecordList) {	
+                StringReader sr = null;
+                StringWriter sw = null;
+                String transformedXML = null;
+                SAXBuilder sb = new SAXBuilder();
+                XMLOutputter xOut = new XMLOutputter();
 
-							/*
-							 * BDA 2010-05-05 - XCRecord currently only exists in the MARCToXCTransformation project
-							 * 
-							// Compare frbr levels
-							if( !transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("type")
-							.equals(baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("type")))
-							//if(!baseRecordFRBRLevel.equals(transformedRecordFRBRLevel))
-								continue;
-							
-							// Compare content
-							else{
-								//Remove id
-								transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeAttribute("id");
-								baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeAttribute("id");
-								
-								// Remove link elements
-								transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeChildren("link", XCRecord.XC_NAMESPACE);
-								baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeChildren("link", XCRecord.XC_NAMESPACE);
-								
-								sw = new StringWriter();
-								xOut.output(baseRecord, sw);
-								String baseXML = sw.toString();
-								sw.flush();
-								sw.close();
-								
-								sw = new StringWriter();
-								xOut.output(transformedRecord, sw);
-								transformedXML = sw.toString();
-								sw.flush();
-								sw.close();
-								
-								if(baseXML.equals(transformedXML)){
-									match = true;
-									break;
-								}
+                for (Record record : transformedRecordList) {
+                    sr = new StringReader(record.getOaiXml());
+                    transformedDocumentList.add(sb.build(sr));
+                    sr.close();
+                }
 
-							}
-							*/
-						}
-						
-						if(!match){
-							System.out.println(transformedXML);
-							Assert.assertFalse(true, "The content of the records do not match.");
-							break;
-							
-							}
-						
-					}
-					
-				}
-			}
-			
-		
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	@AfterClass
-	public void afterClass(){
-		// Delete the records added as part of test
-	
-	}
-	
-	/**
-	 * Add the input records read from the package into the index manager for processing
-	 * @throws DataException
-	 * @throws IOException
-	 * @throws IndexException 
-	 */
-	public void addUnprocessedRecordFromFiles() throws DataException, IOException, IndexException
-	{
-		ProviderDAO providerDao = (ProviderDAO)getBean("ProviderDAO");
-		FormatDAO formatDao = (FormatDAO)getBean("FormatDAO");
-		ServiceDAO serviceDao = (ServiceDAO)getBean("ServiceDAO");
-		RecordService recordService = (RecordService)getBean("RecordService");
+                if(baseRecordList.size() != transformedRecordList.size()){
 
-		for (String file : inputRecords.keySet()) {
+                    System.out.println("baseRecordList:"+baseRecordList.size());
+                    System.out.println("transformedRecordList:"+transformedRecordList.size());
+                    Assert.assertFalse(true, "Number of frbrized records generated not equal.");
 
-			Record record = new Record();
-			record.setOaiXml(inputRecords.get(file));
-			record.setFormat(formatDao.getById(1));
-			record.setProvider(providerDao.getById(1));
-			//record.setOaiIdentifier("oai:rochester");
-			record.setProvider(providerDao.getById(1));
-			record.addInputForService(serviceDao.getById(transformationServiceId));
-			// Add unprocessed records to index manager
-			recordService.insert(record);
-			
-			inputRecordIDMap.put(file, record.getId());
-		}
-	}
-	
-	/**
-	 * Reads the input and expected output records from the files in the packages into appropriate lists
-	 * @throws IOException
-	 * @throws JDOMException 
-	 */
-	private void readRecordsFromPackage() throws IOException, JDOMException {
-		StringReader sr = null;
-		SAXBuilder sb = new SAXBuilder();
+                }
+
+                else {
+
+                    for (Document transformedRecord : transformedDocumentList) {
+
+                        boolean match = false;
+                        for (Document baseRecord : baseRecordList) {
+
+                            /*
+                             * BDA 2010-05-05 - XCRecord currently only exists in the MARCToXCTransformation project
+                             *
+                            // Compare frbr levels
+                            if( !transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("type")
+                            .equals(baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).getAttributeValue("type")))
+                            //if(!baseRecordFRBRLevel.equals(transformedRecordFRBRLevel))
+                                continue;
+
+                            // Compare content
+                            else{
+                                //Remove id
+                                transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeAttribute("id");
+                                baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeAttribute("id");
+
+                                // Remove link elements
+                                transformedRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeChildren("link", XCRecord.XC_NAMESPACE);
+                                baseRecord.getRootElement().getChild("entity", XCRecord.XC_NAMESPACE).removeChildren("link", XCRecord.XC_NAMESPACE);
+
+                                sw = new StringWriter();
+                                xOut.output(baseRecord, sw);
+                                String baseXML = sw.toString();
+                                sw.flush();
+                                sw.close();
+
+                                sw = new StringWriter();
+                                xOut.output(transformedRecord, sw);
+                                transformedXML = sw.toString();
+                                sw.flush();
+                                sw.close();
+
+                                if(baseXML.equals(transformedXML)){
+                                    match = true;
+                                    break;
+                                }
+
+                            }
+                            */
+                        }
+
+                        if(!match){
+                            System.out.println(transformedXML);
+                            Assert.assertFalse(true, "The content of the records do not match.");
+                            break;
+
+                            }
+
+                    }
+
+                }
+            }
 
 
-		for (String file : recordList) {
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-			// Read the input records from package
-			
-			inputRecords.put(file, readUnicodeFile(inputDirPath+"/"+file+".xml"));	
-			
-			
-			// Read expected output records from package
-			int i=1;
-			ArrayList<Document> frbrizedBaseOutputRecords = new ArrayList<Document>();
-			while(true){
-				
-				String baseOutputRecordFile = outputDirPath+"/r"+file+"/"+i+".xml";
-				if(readUnicodeFile(baseOutputRecordFile) == null)
-					break;
-				else{
-					sr = new StringReader(readUnicodeFile(baseOutputRecordFile));
-					frbrizedBaseOutputRecords.add(sb.build(sr));
-				}
-				i++;	
-			}
-			baseRecords.put(file, frbrizedBaseOutputRecords);
-		}
-	}
-	
-	/**
-	 * 
-	 * @param file
-	 * @return
-	 */
-	private String readUnicodeFile(String file)
-	{
-	     StringBuffer buffer = null;
+    /**
+     *
+     */
+    @AfterClass
+    public void afterClass(){
+        // Delete the records added as part of test
 
-	     InputStreamReader isr = null;
-	     try {
-	       isr = new InputStreamReader(TestTransformation.class.getResourceAsStream(file), "UTF-8");
+    }
 
-	       buffer = new StringBuffer();
-	       int ch;
-	       while ((ch = isr.read()) > -1) {
-	         buffer.append((char)ch);
-	       }
-	       if (isr != null)
-	         isr.close();
-	     } catch (Exception ex) {
-	       return null;
-	     }
-	     String ret = buffer.toString();
-	    
-	     return ret;
-	   }
-		
-	/**
-	 * 
-	 * @param line
-	 * @return
-	 */
-	private String removeTrailingNewLine(String line){
-		
-		 while(line.endsWith("\n"))
-			 line = line.substring(0,line.length() - 1 );
-		 
-		 return line;
-	}
+    /**
+     * Add the input records read from the package into the index manager for processing
+     * @throws DataException
+     * @throws IOException
+     * @throws IndexException
+     */
+    public void addUnprocessedRecordFromFiles() throws DataException, IOException, IndexException
+    {
+        ProviderDAO providerDao = (ProviderDAO)getBean("ProviderDAO");
+        FormatDAO formatDao = (FormatDAO)getBean("FormatDAO");
+        ServiceDAO serviceDao = (ServiceDAO)getBean("ServiceDAO");
+        RecordService recordService = (RecordService)getBean("RecordService");
+
+        for (String file : inputRecords.keySet()) {
+
+            Record record = new Record();
+            record.setOaiXml(inputRecords.get(file));
+            record.setFormat(formatDao.getById(1));
+            record.setProvider(providerDao.getById(1));
+            //record.setOaiIdentifier("oai:rochester");
+            record.setProvider(providerDao.getById(1));
+            record.addInputForService(serviceDao.getById(transformationServiceId));
+            // Add unprocessed records to index manager
+            recordService.insert(record);
+
+            inputRecordIDMap.put(file, record.getId());
+        }
+    }
+
+    /**
+     * Reads the input and expected output records from the files in the packages into appropriate lists
+     * @throws IOException
+     * @throws JDOMException
+     */
+    private void readRecordsFromPackage() throws IOException, JDOMException {
+        StringReader sr = null;
+        SAXBuilder sb = new SAXBuilder();
+
+
+        for (String file : recordList) {
+
+            // Read the input records from package
+
+            inputRecords.put(file, readUnicodeFile(inputDirPath+"/"+file+".xml"));
+
+
+            // Read expected output records from package
+            int i=1;
+            ArrayList<Document> frbrizedBaseOutputRecords = new ArrayList<Document>();
+            while(true){
+
+                String baseOutputRecordFile = outputDirPath+"/r"+file+"/"+i+".xml";
+                if(readUnicodeFile(baseOutputRecordFile) == null)
+                    break;
+                else{
+                    sr = new StringReader(readUnicodeFile(baseOutputRecordFile));
+                    frbrizedBaseOutputRecords.add(sb.build(sr));
+                }
+                i++;
+            }
+            baseRecords.put(file, frbrizedBaseOutputRecords);
+        }
+    }
+
+    /**
+     *
+     * @param file
+     * @return
+     */
+    private String readUnicodeFile(String file)
+    {
+         StringBuffer buffer = null;
+
+         InputStreamReader isr = null;
+         try {
+           isr = new InputStreamReader(TestTransformation.class.getResourceAsStream(file), "UTF-8");
+
+           buffer = new StringBuffer();
+           int ch;
+           while ((ch = isr.read()) > -1) {
+             buffer.append((char)ch);
+           }
+           if (isr != null)
+             isr.close();
+         } catch (Exception ex) {
+           return null;
+         }
+         String ret = buffer.toString();
+
+         return ret;
+       }
+
+    /**
+     *
+     * @param line
+     * @return
+     */
+    private String removeTrailingNewLine(String line){
+
+         while(line.endsWith("\n"))
+             line = line.substring(0,line.length() - 1 );
+
+         return line;
+    }
 }

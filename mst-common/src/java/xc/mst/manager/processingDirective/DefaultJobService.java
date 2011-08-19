@@ -32,17 +32,17 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class DefaultJobService extends BaseService implements JobService {
 
-	/**
-	 * A reference to the logger for this class
-	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /**
+     * A reference to the logger for this class
+     */
+    protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
      * Returns a job with the given ID
      *
      * @param jobId job ID
      * @return job object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Job getByJobId(int jobId) throws DatabaseConfigException {
         return jobDAO.getById(jobId);
@@ -55,13 +55,13 @@ public class DefaultJobService extends BaseService implements JobService {
      */
     public void insertJob(Job job) {
 
-    	try {
-			jobDAO.insert(job);
-			// Write the current jobs in queue to a file
-			writeToFile();
-		} catch (DataException e) {
-			log.error("Data Exception occured when inserting a Job." , e);
-		}
+        try {
+            jobDAO.insert(job);
+            // Write the current jobs in queue to a file
+            writeToFile();
+        } catch (DataException e) {
+            log.error("Data Exception occured when inserting a Job." , e);
+        }
     }
 
     /**
@@ -71,13 +71,13 @@ public class DefaultJobService extends BaseService implements JobService {
      */
     public void deleteJob(Job job) {
         try {
-			jobDAO.delete(job);
-			
-			// Write the current jobs in queue to a file
-			writeToFile();
-		} catch (DataException e) {
-			log.error("Data Exception occured when deleting a Job." , e);
-		}
+            jobDAO.delete(job);
+
+            // Write the current jobs in queue to a file
+            writeToFile();
+        } catch (DataException e) {
+            log.error("Data Exception occured when deleting a Job." , e);
+        }
     }
 
     /**
@@ -87,17 +87,17 @@ public class DefaultJobService extends BaseService implements JobService {
      */
     public void updateJob(Job job) {
         try {
-			jobDAO.update(job);
-		} catch (DataException e) {
-			log.error("Data Exception occured when updating a Job." , e);
-		}
+            jobDAO.update(job);
+        } catch (DataException e) {
+            log.error("Data Exception occured when updating a Job." , e);
+        }
     }
 
     /**
      * Returns a list of all jobs
      *
      * @return list of jobs
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Job> getAllJobs() throws DatabaseConfigException
     {
@@ -109,7 +109,7 @@ public class DefaultJobService extends BaseService implements JobService {
      *
      * @param scheduleId Harvest schedule ID
      * @return list of jobs
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Job> getByHarvestScheduleId(int scheduleId) throws DatabaseConfigException
     {
@@ -121,89 +121,89 @@ public class DefaultJobService extends BaseService implements JobService {
      *
      * @param serviceId service ID
      * @return list of jobs
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Job> getByServiceId(int serviceId) throws DatabaseConfigException
     {
         return jobDAO.getByServiceId(serviceId);
     }
 
-	/**
-	 * Get the maximum order
-	 *
-	 * @return max order
-	 * @throws DatabaseConfigException 
-	 */
-	public int getMaxOrder() throws DatabaseConfigException {
-		return jobDAO.getMaxOrder();
-	}
-	
-	/**
-	 * Get next job in queue to execute
-	 *   
-	 * @return Job to execute 
-	 * @throws DatabaseConfigException
-	 */
-	public Job getNextJobToExecute() throws DatabaseConfigException
-	{
-		return jobDAO.getNextJobToExecute();
-	}
-  
-	/**
-	 * Write jobs in database queue to a file
-	 *   
-	 * @throws DatabaseConfigException
-	 */
-	public void writeToFile() throws DatabaseConfigException
-	{
-		List<Job> jobs = getAllJobs();
-		SetService setService = (SetService)config.getBean("SetService");
-		
-		try{
-		    // Create file 
-		    FileWriter fstream = new FileWriter(MSTConfiguration.getUrlPath() +  MSTConfiguration.FILE_SEPARATOR  + "JobsInQueue.txt");
-		    BufferedWriter out = new BufferedWriter(fstream);
-		    
-		    out.write("Order\t\t Job Name\t\t\n");
-		    
-		    // Write all jobs in queue to a file
-		    for (Job job: jobs) {
-		    	if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
-		    		out.write(job.getOrder() + "\t\t" + job.getService().getName());
-		    		if (job.getOutputSetId() > 0) { 
-		    			Set set = setService.getSetById(job.getOutputSetId());
-		    			out.write(", Output Set : " +  (set != null ? set.getDisplayName() : ""));
-		    		} else {
-		    			out.write(", Output Set : NONE" );
-		    		}
-		    		out.write("\n");
-		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
-		    		if (job.getProcessingDirective().getSourceProvider() != null) {
-		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceProvider().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
-		    		} else {
-		    			out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceService().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
-		    		}
-		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
-		    		out.write(job.getOrder() + "\t\t" + "Harvest repository: " + job.getHarvestSchedule().getProvider().getName() + "\n");
-		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
-		    		out.write(job.getOrder() + "\t\t" + "Reprocessing records through service: " + job.getService().getName() + "\n");
-		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
-		    		out.write(job.getOrder() + "\t\t" + "Deleting service " + job.getService().getName() + " and its records. \n");
-		    	} else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
-		    		log.debug("job: "+job);
-		    		log.debug("job.getHarvestSchedule(): "+job.getHarvestSchedule());
-		    		log.debug("job.getHarvestSchedule().getProvider(): "+job.getHarvestSchedule().getProvider());
-		    		log.debug("job.getHarvestSchedule().getProvider().getName(): "+job.getHarvestSchedule().getProvider().getName());
-		    		out.write(job.getOrder() + "\t\t" + "Marking provider records deleted " + job.getHarvestSchedule().getProvider().getName());
-		    	}
-		    }
-		    
-		    //Close the output stream
-		    out.close();
-		} catch(IOException ioe) {
-			log.error("IOException occured when writing jobs to file", ioe);
-		}
-		
-		
-	}
+    /**
+     * Get the maximum order
+     *
+     * @return max order
+     * @throws DatabaseConfigException
+     */
+    public int getMaxOrder() throws DatabaseConfigException {
+        return jobDAO.getMaxOrder();
+    }
+
+    /**
+     * Get next job in queue to execute
+     *
+     * @return Job to execute
+     * @throws DatabaseConfigException
+     */
+    public Job getNextJobToExecute() throws DatabaseConfigException
+    {
+        return jobDAO.getNextJobToExecute();
+    }
+
+    /**
+     * Write jobs in database queue to a file
+     *
+     * @throws DatabaseConfigException
+     */
+    public void writeToFile() throws DatabaseConfigException
+    {
+        List<Job> jobs = getAllJobs();
+        SetService setService = (SetService)config.getBean("SetService");
+
+        try{
+            // Create file
+            FileWriter fstream = new FileWriter(MSTConfiguration.getUrlPath() +  MSTConfiguration.FILE_SEPARATOR  + "JobsInQueue.txt");
+            BufferedWriter out = new BufferedWriter(fstream);
+
+            out.write("Order\t\t Job Name\t\t\n");
+
+            // Write all jobs in queue to a file
+            for (Job job: jobs) {
+                if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE)) {
+                    out.write(job.getOrder() + "\t\t" + job.getService().getName());
+                    if (job.getOutputSetId() > 0) {
+                        Set set = setService.getSetById(job.getOutputSetId());
+                        out.write(", Output Set : " +  (set != null ? set.getDisplayName() : ""));
+                    } else {
+                        out.write(", Output Set : NONE" );
+                    }
+                    out.write("\n");
+                } else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_PROCESSING_DIRECTIVE)) {
+                    if (job.getProcessingDirective().getSourceProvider() != null) {
+                        out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceProvider().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
+                    } else {
+                        out.write(job.getOrder() + "\t\t" + "Processing directive: [Source=" +  job.getProcessingDirective().getSourceService().getName() + ", Service=" + job.getProcessingDirective().getService().getName() + "]\n");
+                    }
+                } else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_REPOSITORY)) {
+                    out.write(job.getOrder() + "\t\t" + "Harvest repository: " + job.getHarvestSchedule().getProvider().getName() + "\n");
+                } else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_SERVICE_REPROCESS)) {
+                    out.write(job.getOrder() + "\t\t" + "Reprocessing records through service: " + job.getService().getName() + "\n");
+                } else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_DELETE_SERVICE)) {
+                    out.write(job.getOrder() + "\t\t" + "Deleting service " + job.getService().getName() + " and its records. \n");
+                } else if (job.getJobType().equalsIgnoreCase(Constants.THREAD_MARK_PROVIDER_DELETED)) {
+                    log.debug("job: "+job);
+                    log.debug("job.getHarvestSchedule(): "+job.getHarvestSchedule());
+                    log.debug("job.getHarvestSchedule().getProvider(): "+job.getHarvestSchedule().getProvider());
+                    log.debug("job.getHarvestSchedule().getProvider().getName(): "+job.getHarvestSchedule().getProvider().getName());
+                    out.write(job.getOrder() + "\t\t" + "Marking provider records deleted " + job.getHarvestSchedule().getProvider().getName());
+                }
+            }
+
+            //Close the output stream
+            out.close();
+        } catch(IOException ioe) {
+            log.error("IOException occured when writing jobs to file", ioe);
+        }
+
+
+    }
 }

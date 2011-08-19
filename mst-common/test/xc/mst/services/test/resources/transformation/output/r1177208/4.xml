@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:URMST:Transformation Service/16474">
-		
-		<xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
-		
-		<xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
-		<rdvocab:titleOfWork>I'm gettin' sentimental over you. </rdvocab:titleOfWork>
-		<xc:creator>Bassman, George, 1914-1997.</xc:creator></xc:entity>
+  <xc:entity type="work" id="oai:URMST:Transformation Service/16474">
+
+    <xc:subject xsi:type="dcterms:LCSH">Trombone music.</xc:subject>
+    <xc:subject xsi:type="dcterms:LCSH">Oratorios-Excerpts, Arranged.</xc:subject>
+
+    <xc:type xsi:type="dcterms:LCSH">Excerpts, Arranged.</xc:type>
+    <rdvocab:titleOfWork>I'm gettin' sentimental over you. </rdvocab:titleOfWork>
+    <xc:creator>Bassman, George, 1914-1997.</xc:creator></xc:entity>
 </xc:frbr>

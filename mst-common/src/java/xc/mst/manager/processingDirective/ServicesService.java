@@ -29,40 +29,40 @@ public interface ServicesService
      * Returns a list of all the services
      *
      * @return returns the list containing all the services
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Service> getAllServices() throws DatabaseConfigException;
 
     /**
      * Parses a configuration file with information on the service to add
      * and adds the new service, loading any new .jar files if necessary.
-     * 
+     *
      * @param name The name of the service
      * @throws DataException If an error occurred while interacting with the database
      * @throws IOException If an error occurred while reading the configuration file
      * @throws ConfigFileException If the configuration file was invalid
      */
     public void addNewService(String name) throws DataException, IOException, ConfigFileException;
-    
+
     /**
-	 * Parses a configuration file with information on the service to update
+     * Parses a configuration file with information on the service to update
      * and updates the service, loading any new .jar files if necessary.
-	 * 
-	 * @param name Service folder name
-	 * @param service The service to update
-	 * @throws DataException If an error occurred while interacting with the database
+     *
+     * @param name Service folder name
+     * @param service The service to update
+     * @throws DataException If an error occurred while interacting with the database
      * @throws IOException If an error occurred while reading the configuration file
      * @throws ConfigFileException If the configuration file was invalid
-	 */
-	void updateService(String name, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException;
+     */
+    void updateService(String name, Service service, boolean reprocessingRequired) throws DataException, IndexException, IOException, ConfigFileException;
 
-	/**
+    /**
      * Adds a new Service
      *
      * @param service The service to be added
      */
     public void insertService(Service service) throws DataException;
-    
+
     /**
      * Deletes a service from the MST. This method has to be used when the service has no processed records.
      *
@@ -70,14 +70,14 @@ public interface ServicesService
      * @throws xc.mst.dao.DataException
      */
     public void deleteService(Service service) throws DataException;
-    
+
     /**
      * Deletes a service and its records by scheduling a job
      *
      * @param service service to be deleted
      */
     public void deleteServiceAndRecordsByJob(Service service) throws DataException;
-    
+
     /**
      * Updates the details of a Service
      *
@@ -90,7 +90,7 @@ public interface ServicesService
      *
      * @param serviceId The Id based on which a service object is retrieved.
      * @return
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Service getServiceById(int serviceId) throws DatabaseConfigException;
 
@@ -99,30 +99,30 @@ public interface ServicesService
      *
      * @param serviceName The name of the service
      * @return
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Service getServiceByName(String serviceName) throws DatabaseConfigException;
-    
+
     public Object getBean(String serviceName, String beanName);
 
     /**
      * returns a list of soervices sorted by name
-     * 
+     *
      * @param sort boolean parameter that determines of the services are to be sorted in ascending/descending order
      * @return list of services
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Service> getAllServicesSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
-    
+
     public Collection<String> getServicesAvailableForInstall();
-    
+
     /**
      * If file time needs update, it follows that the service must reprocess.
      */
     public boolean doesServiceFileTimeNeedUpdate(Service service);
-    
+
     /**
-     * get the latest timestamp any of the services files has, persist this latest timestamp as part of the 
+     * get the latest timestamp any of the services files has, persist this latest timestamp as part of the
      * service's permanent record.
      */
     public void updateServiceLastModifiedTime(String name, Service service);

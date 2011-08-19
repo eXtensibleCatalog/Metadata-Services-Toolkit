@@ -22,15 +22,15 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class StartSchedulerThread
 {
-	/**
-	 * The main method starts the Scheduler Thread.
-	 *
-	 * @param args Not used
-	 */
-	public static void main(String[] args)
-	{
-		Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
-		Thread schedulerThread = new Thread(scheduler);
-		schedulerThread.start();
-	} // end main method
+    /**
+     * The main method starts the Scheduler Thread.
+     *
+     * @param args Not used
+     */
+    public static void main(String[] args)
+    {
+        Scheduler scheduler = (Scheduler)MSTConfiguration.getInstance().getBean("Scheduler");
+        Thread schedulerThread = new Thread(scheduler);
+        schedulerThread.start();
+    } // end main method
 } // end class StartSchedulerThread

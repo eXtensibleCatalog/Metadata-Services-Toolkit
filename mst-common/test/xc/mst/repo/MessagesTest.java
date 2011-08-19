@@ -10,31 +10,31 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.common.test.BaseTest;
 
 public class MessagesTest extends BaseTest {
-	
-	@Test
-	public void test() {
-		List<Record> records = new ArrayList<Record>();
-		for (int i=0; i<100; i++) {
-			Record r = getRepositoryDAO().getRecord("test_repo", i);
-			if (r != null) {
-				records.add(r);
-			}
-			r = getRepositoryDAO().getRecord("marcnormalization", i);
-			if (r != null) {
-				records.add(r);
-			}
-		}
-		
-		LOG.debug("records.size(): "+records.size());
-		
-		//getMessageDAO().injectMessages(records);
-		
-		for (Record r : records) {
-			for (RecordMessage rm : r.getMessages()) {
-				LOG.debug(rm.toString());
-			}
-		}
-		
-	}
+
+    @Test
+    public void test() {
+        List<Record> records = new ArrayList<Record>();
+        for (int i=0; i<100; i++) {
+            Record r = getRepositoryDAO().getRecord("test_repo", i);
+            if (r != null) {
+                records.add(r);
+            }
+            r = getRepositoryDAO().getRecord("marcnormalization", i);
+            if (r != null) {
+                records.add(r);
+            }
+        }
+
+        LOG.debug("records.size(): "+records.size());
+
+        //getMessageDAO().injectMessages(records);
+
+        for (Record r : records) {
+            for (RecordMessage rm : r.getMessages()) {
+                LOG.debug(rm.toString());
+            }
+        }
+
+    }
 
 }

@@ -23,22 +23,22 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public interface FormatService {
 
-	/**
-	 * Get format having the specified format id
-	 *
-	 * @param formatId Id of the format
-	 * @return Format if exist else null
-	 * @throws DatabaseConfigException 
-	 */
-	public Format getFormatById(int formatId) throws DatabaseConfigException;
+    /**
+     * Get format having the specified format id
+     *
+     * @param formatId Id of the format
+     * @return Format if exist else null
+     * @throws DatabaseConfigException
+     */
+    public Format getFormatById(int formatId) throws DatabaseConfigException;
 
-	/**
-	 * Delete Format
-	 *
-	 * @param format format to be deleted
-	 * @throws DataException Thrown when problem in deleting the format
-	 */
-	public void deleteFormat(Format format) throws DataException;
+    /**
+     * Delete Format
+     *
+     * @param format format to be deleted
+     * @throws DataException Thrown when problem in deleting the format
+     */
+    public void deleteFormat(Format format) throws DataException;
 
     /**
      * Add a format
@@ -51,17 +51,17 @@ public interface FormatService {
      * Get all formats
      *
      * @return all formats
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Format> getAllFormats() throws DatabaseConfigException;
-    
-	/**
-	 * Get format having the specified format name
-	 *
-	 * @param name name of the format
-	 * @return Format if exist else null
-	 * @throws DatabaseConfigException 
-	 */
-	public Format getFormatByName(String name) throws DatabaseConfigException;
+
+    /**
+     * Get format having the specified format name
+     *
+     * @param name name of the format
+     * @return Format if exist else null
+     * @throws DatabaseConfigException
+     */
+    public Format getFormatByName(String name) throws DatabaseConfigException;
 
 }

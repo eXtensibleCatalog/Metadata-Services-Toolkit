@@ -9,5 +9,5 @@
 package xc.mst.constants;
 
 public enum Status {
-	PAUSING, PAUSED, RUNNING, CANCELED, NOT_RUNNING, ERROR, IDLE;
+    PAUSING, PAUSED, RUNNING, CANCELED, NOT_RUNNING, ERROR, IDLE;
 }

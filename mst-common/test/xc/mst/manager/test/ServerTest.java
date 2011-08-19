@@ -32,9 +32,9 @@ public class ServerTest extends BaseTest
      */
     public void addServer()
     {
-    	
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
+
+           // Initialize Solr, database, log before testing
+           TestHelper helper = TestHelper.getInstance();
         try
         {
             ServerService serverService = (ServerService)getBean("ServerService");
@@ -63,7 +63,7 @@ public class ServerTest extends BaseTest
             assert(anotherServer.getType().equals(ServerType.LDAP)): "Server type should be LDAP";
             assert(anotherServer.getUrl().equalsIgnoreCase(server.getUrl())): "The URLs dont match";
             assert(anotherServer.getUserNameAttribute().equalsIgnoreCase(server.getUserNameAttribute())): "The username Attributes dont match";
-            
+
             serverService.deleteServer(server);
 
         }

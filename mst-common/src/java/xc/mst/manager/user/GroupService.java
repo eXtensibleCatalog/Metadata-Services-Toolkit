@@ -30,16 +30,16 @@ public interface GroupService {
      *
      * @param groupId Specifies the ID of the group object to be returned
      * @return Group if exists otherwise null
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Group getGroupById(int groupId) throws DatabaseConfigException;
-    
+
     /**
      * Return the group with the specided Group name
      *
      * @param groupName Specifies the name of the group object to be returned
      * @return Group if exists otherwise null
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Group getGroupByName(String groupName) throws DatabaseConfigException;
 
@@ -68,19 +68,19 @@ public interface GroupService {
      * Returns a list of all the groups the user can be a member of
      *
      * @return list of groups
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Group> getAllGroups() throws DatabaseConfigException;
 
    /**
     * Returns a sorted list of all the groups
-    * 
+    *
     * @param isAscendingOrder determines whether the list of groups is to be sorted in ascending or descending order
     * @param columnSorted The column on which the rows are sorted
     * @return list of groups
- * @throws DatabaseConfigException 
+ * @throws DatabaseConfigException
     */
     public List<Group> getAllGroupsSorted(boolean isAscendingOrder,String columnSorted) throws DatabaseConfigException;
 
-    
+
 }

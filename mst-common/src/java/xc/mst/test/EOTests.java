@@ -22,30 +22,30 @@ import xc.mst.scheduling.SchedulingException;
 
 public class EOTests
 {
-	/**
-	 * An Object used to read properties from the configuration file for the Metadata Services Toolkit
-	 */
-	protected static ApplicationContext applicationContext = null;
+    /**
+     * An Object used to read properties from the configuration file for the Metadata Services Toolkit
+     */
+    protected static ApplicationContext applicationContext = null;
 
-	/**
-	 * Used to format timestamps for the results of the tests
-	 */
-	private static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+    /**
+     * Used to format timestamps for the results of the tests
+     */
+    private static DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
-	static
-	{
-		applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
-	}
+    static
+    {
+        applicationContext = new ClassPathXmlApplicationContext(new String[] {"spring-mst.xml"});
+    }
 
-	/**
-	 * Tests the classes in the data project
-	 *
-	 * @param args Ignored
-	 */
-	public static void main(String[] args) throws DataException, SchedulingException
-	{
-		try
-		{
+    /**
+     * Tests the classes in the data project
+     *
+     * @param args Ignored
+     */
+    public static void main(String[] args) throws DataException, SchedulingException
+    {
+        try
+        {
 //			Record record = new Record();
 //			record.setCreatedAt(new Date());
 //			record.setDeleted(false);
@@ -253,20 +253,20 @@ public class EOTests
 //
 //			if(true) return;
 
-			LogDAO dao = new DefaultLogDAO();
-			Log logg = dao.getById(1);
-			logg = dao.getById(1);
-			logg = dao.getById(1);
-			logg = dao.getById(1);
-			return;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			//SolrIndexManager.getInstance().commitIndex();
-		}
-	}
+            LogDAO dao = new DefaultLogDAO();
+            Log logg = dao.getById(1);
+            logg = dao.getById(1);
+            logg = dao.getById(1);
+            logg = dao.getById(1);
+            return;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            //SolrIndexManager.getInstance().commitIndex();
+        }
+    }
 }

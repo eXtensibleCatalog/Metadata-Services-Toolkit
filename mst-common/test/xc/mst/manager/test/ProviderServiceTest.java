@@ -30,7 +30,7 @@ import xc.mst.manager.user.ServerService;
 public class ProviderServiceTest extends BaseTest
 {
 
-	
+
 
     /**
      * Method which tests all the functionality related to Providers
@@ -38,12 +38,12 @@ public class ProviderServiceTest extends BaseTest
      */
     public void addProviderTest() throws DataException
                 {
-    	
-   	 // Initialize Solr, database, log before testing
-   	 TestHelper helper = TestHelper.getInstance();
+
+        // Initialize Solr, database, log before testing
+        TestHelper helper = TestHelper.getInstance();
         try
         {
-        	ServerService serverService = (ServerService)getBean("ServerService");
+            ServerService serverService = (ServerService)getBean("ServerService");
             ProviderService providerService = (ProviderService)getBean("ProviderService");
             Provider provider = new Provider();
             provider.setName("repositoryname");

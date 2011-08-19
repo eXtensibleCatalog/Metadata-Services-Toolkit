@@ -37,183 +37,183 @@ import xc.mst.utils.MSTConfiguration;
  */
 public class MSTSolrService extends BaseService {
 
-	/**
-	 * The logger object
-	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /**
+     * The logger object
+     */
+    protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/** Solr server */
-	protected SolrServer server = null;
+    /** Solr server */
+    protected SolrServer server = null;
 
-	/**
-	 * The repository management log file name
-	 */
-	protected Log logObj = null;
+    /**
+     * The repository management log file name
+     */
+    protected Log logObj = null;
 
-	public void init()
-	{
-		try
-		{
-			logObj = getLogDAO().getById(Constants.LOG_ID_SOLR_INDEX);
-		}
-		catch (DatabaseConfigException e)
-		{
-			log.error("Cannot connect to the database with the parameters in the configuration file.", e);
-		}
-		
-		if(log.isDebugEnabled()) {
-			log.debug("Initializing the MSTSolrServer instance.");
-		}
-		server = createSolrServer();
-	}
-	
-	public void refreshServer() {
-		server = null;
-		server = createSolrServer();
-	}
-	
-	public SolrServer getServer() {
-		return server;
-	}
-	
-	public void setServer(SolrServer server) {
-		this.server = server;
-	}
+    public void init()
+    {
+        try
+        {
+            logObj = getLogDAO().getById(Constants.LOG_ID_SOLR_INDEX);
+        }
+        catch (DatabaseConfigException e)
+        {
+            log.error("Cannot connect to the database with the parameters in the configuration file.", e);
+        }
 
-	/**
-	 * Get Solr server instance
-	 *
-	 * @return
-	 */
-	private SolrServer createSolrServer() {
+        if(log.isDebugEnabled()) {
+            log.debug("Initializing the MSTSolrServer instance.");
+        }
+        server = createSolrServer();
+    }
 
-		if (server == null)
-		{
-			String solrHome = MSTConfiguration.getUrlPath();
-			solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
-			System.setProperty("solr.home", solrHome);
-			System.setProperty("solr.solr.home", solrHome);
+    public void refreshServer() {
+        server = null;
+        server = createSolrServer();
+    }
 
-			log.info("Opening Solr at 3" + solrHome);
-			
-			java.util.logging.Level logLevel = getLogLevel(config.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
-			log.info("1");
-			
-			try
-			{
-				java.util.logging.Logger logg = java.util.logging.Logger.getLogger("org.apache.solr");
-			    logg.setUseParentHandlers(false);
-			    logg.log(java.util.logging.Level.INFO, "Changing log level to " + logLevel);
-			    logg.setLevel(logLevel);
-			    log.info("2");
+    public SolrServer getServer() {
+        return server;
+    }
 
-				CoreContainer container = new CoreContainer();
-				CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
-				log.info("3");
-				SolrCore core = container.create(descriptor);
-				container.register("core1", core, false);
+    public void setServer(SolrServer server) {
+        this.server = server;
+    }
 
-				server = new EmbeddedSolrServer(container, "core1");
-				LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);
-				log.info("successfully opened solr: "+server);
-			}
-			catch (IOException ioe)
-			{
-				log.error("Failure to create server instance. Solr Server is not created.", ioe);
+    /**
+     * Get Solr server instance
+     *
+     * @return
+     */
+    private SolrServer createSolrServer() {
 
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+        if (server == null)
+        {
+            String solrHome = MSTConfiguration.getUrlPath();
+            solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
+            System.setProperty("solr.home", solrHome);
+            System.setProperty("solr.solr.home", solrHome);
 
-				logObj.setErrors(logObj.getErrors()+1);
-				try
-				{
-					getLogDAO().update(logObj);
-				}
-				catch(DataException e)
-				{
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-			}
-			catch (SAXException se)
-			{
-				log.error("Failure to create server instance. Solr Server is not created.", se);
+            log.info("Opening Solr at 3" + solrHome);
 
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+            java.util.logging.Level logLevel = getLogLevel(config.getProperty(Constants.CONFIG_SOLR_LOG_LEVEL));
+            log.info("1");
 
-				logObj.setErrors(logObj.getErrors()+1);
-				try
-				{
-					getLogDAO().update(logObj);
-				}
-				catch(DataException e)
-				{
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-			}
-			catch (ParserConfigurationException pe)
-			{
-				log.error("Failure to create server instance. Solr Server is not created.", pe);
+            try
+            {
+                java.util.logging.Logger logg = java.util.logging.Logger.getLogger("org.apache.solr");
+                logg.setUseParentHandlers(false);
+                logg.log(java.util.logging.Level.INFO, "Changing log level to " + logLevel);
+                logg.setLevel(logLevel);
+                log.info("2");
 
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                CoreContainer container = new CoreContainer();
+                CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
+                log.info("3");
+                SolrCore core = container.create(descriptor);
+                container.register("core1", core, false);
 
-				logObj.setErrors(logObj.getErrors()+1);
-				try
-				{
-					getLogDAO().update(logObj);
-				}
-				catch(DataException e)
-				{
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-			}
-			catch (Exception e)
-			{
-				log.error("Failure to create server instance. Solr Server is not created.", e);
+                server = new EmbeddedSolrServer(container, "core1");
+                LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);
+                log.info("successfully opened solr: "+server);
+            }
+            catch (IOException ioe)
+            {
+                log.error("Failure to create server instance. Solr Server is not created.", ioe);
 
-				LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
 
-				logObj.setErrors(logObj.getErrors()+1);
-				try
-				{
-					getLogDAO().update(logObj);
-				}
-				catch(DataException e1)
-				{
-					log.error("DataExcepiton while updating the log's error count.");
-				}
-			}
-		}
+                logObj.setErrors(logObj.getErrors()+1);
+                try
+                {
+                    getLogDAO().update(logObj);
+                }
+                catch(DataException e)
+                {
+                    log.error("DataExcepiton while updating the log's error count.");
+                }
+            }
+            catch (SAXException se)
+            {
+                log.error("Failure to create server instance. Solr Server is not created.", se);
 
-		return server;
-	}
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
 
-	private static java.util.logging.Level getLogLevel(String level)
-	{
-		if(level.equalsIgnoreCase("DEBUG"))
-			return java.util.logging.Level.ALL;
-		if(level.equalsIgnoreCase("INFO"))
-			return java.util.logging.Level.INFO;
-		if(level.equalsIgnoreCase("WARN"))
-			return java.util.logging.Level.WARNING;
-		if(level.equalsIgnoreCase("WARNING"))
-			return java.util.logging.Level.WARNING;
-		if(level.equalsIgnoreCase("ERROR"))
-			return java.util.logging.Level.SEVERE;
-		if(level.equalsIgnoreCase("OFF"))
-			return java.util.logging.Level.OFF;
-		if(level.equalsIgnoreCase("CONFIG"))
-			return java.util.logging.Level.CONFIG;
-		if(level.equalsIgnoreCase("ALL"))
-			return java.util.logging.Level.ALL;
-		if(level.equalsIgnoreCase("FINE"))
-			return java.util.logging.Level.FINE;
-		if(level.equalsIgnoreCase("FINER"))
-			return java.util.logging.Level.FINER;
-		if(level.equalsIgnoreCase("FINEST"))
-			return java.util.logging.Level.FINEST;
-		if(level.equalsIgnoreCase("SEVERE"))
-			return java.util.logging.Level.SEVERE;
+                logObj.setErrors(logObj.getErrors()+1);
+                try
+                {
+                    getLogDAO().update(logObj);
+                }
+                catch(DataException e)
+                {
+                    log.error("DataExcepiton while updating the log's error count.");
+                }
+            }
+            catch (ParserConfigurationException pe)
+            {
+                log.error("Failure to create server instance. Solr Server is not created.", pe);
 
-		return java.util.logging.Level.WARNING;
-	}
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+
+                logObj.setErrors(logObj.getErrors()+1);
+                try
+                {
+                    getLogDAO().update(logObj);
+                }
+                catch(DataException e)
+                {
+                    log.error("DataExcepiton while updating the log's error count.");
+                }
+            }
+            catch (Exception e)
+            {
+                log.error("Failure to create server instance. Solr Server is not created.", e);
+
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+
+                logObj.setErrors(logObj.getErrors()+1);
+                try
+                {
+                    getLogDAO().update(logObj);
+                }
+                catch(DataException e1)
+                {
+                    log.error("DataExcepiton while updating the log's error count.");
+                }
+            }
+        }
+
+        return server;
+    }
+
+    private static java.util.logging.Level getLogLevel(String level)
+    {
+        if(level.equalsIgnoreCase("DEBUG"))
+            return java.util.logging.Level.ALL;
+        if(level.equalsIgnoreCase("INFO"))
+            return java.util.logging.Level.INFO;
+        if(level.equalsIgnoreCase("WARN"))
+            return java.util.logging.Level.WARNING;
+        if(level.equalsIgnoreCase("WARNING"))
+            return java.util.logging.Level.WARNING;
+        if(level.equalsIgnoreCase("ERROR"))
+            return java.util.logging.Level.SEVERE;
+        if(level.equalsIgnoreCase("OFF"))
+            return java.util.logging.Level.OFF;
+        if(level.equalsIgnoreCase("CONFIG"))
+            return java.util.logging.Level.CONFIG;
+        if(level.equalsIgnoreCase("ALL"))
+            return java.util.logging.Level.ALL;
+        if(level.equalsIgnoreCase("FINE"))
+            return java.util.logging.Level.FINE;
+        if(level.equalsIgnoreCase("FINER"))
+            return java.util.logging.Level.FINER;
+        if(level.equalsIgnoreCase("FINEST"))
+            return java.util.logging.Level.FINEST;
+        if(level.equalsIgnoreCase("SEVERE"))
+            return java.util.logging.Level.SEVERE;
+
+        return java.util.logging.Level.WARNING;
+    }
 
 }

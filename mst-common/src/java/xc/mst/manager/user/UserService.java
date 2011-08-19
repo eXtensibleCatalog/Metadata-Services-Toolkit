@@ -27,22 +27,22 @@ import xc.mst.dao.DatabaseConfigException;
 public interface UserService {
 
 
-	/**
-	 * Get User having the specified user id
-	 *
-	 * @param userId Id of the user
-	 * @return User if exist else null
-	 * @throws DatabaseConfigException 
-	 */
-	public User getUserById(int userId) throws DatabaseConfigException;
+    /**
+     * Get User having the specified user id
+     *
+     * @param userId Id of the user
+     * @return User if exist else null
+     * @throws DatabaseConfigException
+     */
+    public User getUserById(int userId) throws DatabaseConfigException;
 
-	/**
-	 * Delete User
-	 *
-	 * @param user user to be deleted
-	 * @throws DataException Thrown when problem in deleting the user
-	 */
-	public void deleteUser(User user) throws DataException;
+    /**
+     * Delete User
+     *
+     * @param user user to be deleted
+     * @throws DataException Thrown when problem in deleting the user
+     */
+    public void deleteUser(User user) throws DataException;
 
     /**
      *
@@ -112,7 +112,7 @@ public interface UserService {
      *
      * @param email Email to get the user
      * @return User having specified email
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public User getUserByEmail(String email, Server server) throws DatabaseConfigException ;
 
@@ -122,7 +122,7 @@ public interface UserService {
      * @param sort determines whether the list of users is sorted in ascending or descending order
      * @param columnSorted the column on which the rows of users are sorted
      * @return list of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<User> getAllUsersSorted(boolean sort,String columnSorted) throws DatabaseConfigException;
 
@@ -132,7 +132,7 @@ public interface UserService {
      * @param userName user name of user
      * @param server  login server
      * @return User
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public User getUserByUserName(String userName, Server server) throws DatabaseConfigException;
 
@@ -154,7 +154,7 @@ public interface UserService {
     * @param sort determines if the rows are to be sorted in ascending or descending order
     * @param columnSorted the column on which the rows are to be sorted
     * @return sorted list of users
- * @throws DatabaseConfigException 
+ * @throws DatabaseConfigException
     */
     public List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException;
 
@@ -163,16 +163,16 @@ public interface UserService {
      *
      * @param userName User name of new user
      * @param comments Comments to get access to the system
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public boolean sendEmailForUserPermission(String userName, String comments) throws DatabaseConfigException ;
 
      /**
     * Returns the list of users associated with a group
-      * 
+      *
     * @param groupId group ID
     * @return sorted list of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
     */
     public List<User> getUsersForGroup(int groupId) throws DatabaseConfigException;
 
@@ -188,24 +188,24 @@ public interface UserService {
      * returns the number of LDAP users in the system
      *
      * @return number of LDAP users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public int getLDAPUserCount() throws DatabaseConfigException;
 
     /**
      * Get permissions for user ordered by tab order
-     *  
+     *
      * @param user User to get permissions
      * @return user permissions
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Permission> getPermissionsForUserByTabOrderAsc(User user) throws DatabaseConfigException;
-    
+
     /**
      * Sends email to user to inform that following permissions has been assigned.
      *
      * @param user User whose permissions has beedn changed/added/removed
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public boolean sendEmailToUserWithPermissions(User user) throws DatabaseConfigException ;
 }

@@ -36,8 +36,8 @@ import xc.mst.utils.MSTConfiguration;
  * @author Tejaswi Haramurali
  */
 public class DefaultProviderService extends BaseService implements ProviderService{
-	
-	private static final Logger LOG = Logger.getLogger(DefaultProviderService.class);
+
+    private static final Logger LOG = Logger.getLogger(DefaultProviderService.class);
 
     /**
      * Returns a provider by its name
@@ -79,14 +79,14 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void insertProvider(Provider provider) throws DataException{
-    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-		ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
-		
-		getProviderDAO().insert(provider);
-		validator.validate(provider.getId());
-    	
-    	Repository r = getRepositoryDAO().createRepository(provider);
-    	r.installOrUpdateIfNecessary(null, config.getProperty("version"));
+        provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+        ValidateRepository validator = (ValidateRepository)MSTConfiguration.getInstance().getBean("ValidateRepository");
+
+        getProviderDAO().insert(provider);
+        validator.validate(provider.getId());
+
+        Repository r = getRepositoryDAO().createRepository(provider);
+        r.installOrUpdateIfNecessary(null, config.getProperty("version"));
         LogWriter.addInfo(provider.getLogFileName(), "Beginning logging for " + provider.getName());
     }
 
@@ -98,45 +98,45 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      */
     public void deleteProvider(Provider provider) throws DataException, IndexException{
 
-    	//TODO pull out the two below to methods so I can use them elsewhere
-    	// Delete schedule for this repository
-    	
-    	// Check if any harvest is running 
+        //TODO pull out the two below to methods so I can use them elsewhere
+        // Delete schedule for this repository
+
+        // Check if any harvest is running
         if(getScheduler().getRunningJob()!=null)
         {
-        	// Check if this repository is being harvested 
-        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
-        		WorkerThread harvesterWorkerThread = (WorkerThread)getScheduler().getRunningJob();
-        		if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
-        			getScheduler().cancelRunningJob();
-        		}
-        	}
-        	
-        	// Check if this repository is being processed by processing directive
-        	if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_SERVICE)) {
-        		MetadataServiceManager msm = (MetadataServiceManager)getScheduler().getRunningJob();
-        		Repository incomingRepo = msm.getIncomingRepository();
-        		
-        		if (incomingRepo != null && incomingRepo.getName().equals(provider.getName())) {
-        			getScheduler().cancelRunningJob();
-        		}
-        	}
+            // Check if this repository is being harvested
+            if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_REPOSITORY)) {
+                WorkerThread harvesterWorkerThread = (WorkerThread)getScheduler().getRunningJob();
+                if (harvesterWorkerThread.getJobName().equals(provider.getName())) {
+                    getScheduler().cancelRunningJob();
+                }
+            }
+
+            // Check if this repository is being processed by processing directive
+            if (getScheduler().getRunningJob().getType().equals(Constants.THREAD_SERVICE)) {
+                MetadataServiceManager msm = (MetadataServiceManager)getScheduler().getRunningJob();
+                Repository incomingRepo = msm.getIncomingRepository();
+
+                if (incomingRepo != null && incomingRepo.getName().equals(provider.getName())) {
+                    getScheduler().cancelRunningJob();
+                }
+            }
         }
-        
-    	HarvestSchedule harvestSchedule = getScheduleService().getScheduleForProvider(provider);
-    	if (harvestSchedule != null) {
-    		getScheduleService().deleteSchedule(harvestSchedule);
-    	}
 
-    	// Delete processing directive for this repository
-    	List<ProcessingDirective> directives =  getProcessingDirectiveService().getBySourceProviderId(provider.getId());
-    	for (ProcessingDirective directive:directives) {
-    		getProcessingDirectiveService().deleteProcessingDirective(directive);
-    	}
+        HarvestSchedule harvestSchedule = getScheduleService().getScheduleForProvider(provider);
+        if (harvestSchedule != null) {
+            getScheduleService().deleteSchedule(harvestSchedule);
+        }
 
-    	// Delete provider
-    	getProviderDAO().delete(provider);
-    	getRepositoryDAO().deleteRepo(provider.getName());
+        // Delete processing directive for this repository
+        List<ProcessingDirective> directives =  getProcessingDirectiveService().getBySourceProviderId(provider.getId());
+        for (ProcessingDirective directive:directives) {
+            getProcessingDirectiveService().deleteProcessingDirective(directive);
+        }
+
+        // Delete provider
+        getProviderDAO().delete(provider);
+        getRepositoryDAO().deleteRepo(provider.getName());
     }
 
     /**
@@ -146,8 +146,8 @@ public class DefaultProviderService extends BaseService implements ProviderServi
      * @throws xc.mst.dao.DataException
      */
     public void updateProvider(Provider provider) throws DataException{
-    	provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
-    	getProviderDAO().update(provider);
+        provider.setLogFileName("logs" + MSTConfiguration.FILE_SEPARATOR + "harvestIn"+ MSTConfiguration.FILE_SEPARATOR + provider.getName()+".txt");
+        getProviderDAO().update(provider);
     }
 
     /**
@@ -175,25 +175,25 @@ public class DefaultProviderService extends BaseService implements ProviderServi
     }
 
     public void markProviderDeleted(Provider provider) {
-		
-		LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
 
-		HarvestSchedule harvestSchedule = null;
-		try {
-			harvestSchedule = getScheduleService().getScheduleForProvider(provider);
+        LOG.debug("DefaultProviderService.markProviderDeleted() begin method");
 
-			Job job = new Job(harvestSchedule, Constants.THREAD_MARK_PROVIDER_DELETED);
-			JobService jobService = getJobService();
-			job.setOrder(jobService.getMaxOrder() + 1); 
-			jobService.insertJob(job);
+        HarvestSchedule harvestSchedule = null;
+        try {
+            harvestSchedule = getScheduleService().getScheduleForProvider(provider);
 
-			LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
+            Job job = new Job(harvestSchedule, Constants.THREAD_MARK_PROVIDER_DELETED);
+            JobService jobService = getJobService();
+            job.setOrder(jobService.getMaxOrder() + 1);
+            jobService.insertJob(job);
 
-		} catch (DatabaseConfigException e1) {
-    		LOG.error("DataException while getting a harvestSchedule: ", e1);
-		}
+            LOG.debug("DefaultServicesService.markRepositoryRecordsDeleted() end of method");
 
-		LOG.debug("DefaultProviderService.markProviderDeleted() end of method");
+        } catch (DatabaseConfigException e1) {
+            LOG.error("DataException while getting a harvestSchedule: ", e1);
+        }
+
+        LOG.debug("DefaultProviderService.markProviderDeleted() end of method");
 
     }
 }

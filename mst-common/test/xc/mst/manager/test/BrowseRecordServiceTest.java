@@ -47,24 +47,24 @@ public class BrowseRecordServiceTest extends BaseTest {
   */
  public void browseRecordTest() throws Exception
  {
-   	 // Initialize Solr, database, log before testing
-   	 TestHelper helper = TestHelper.getInstance();
-	 
-	 		
-	 		 ProviderService providerService = (ProviderService)getBean("ProviderService");
+        // Initialize Solr, database, log before testing
+        TestHelper helper = TestHelper.getInstance();
 
-	 		 BrowseRecordService browseRecordService = (BrowseRecordService)getBean("BrowseRecordService");
-	 		 
-	 		 ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
 
-	 		 FormatService formatService = (FormatService)getBean("FormatService");
+              ProviderService providerService = (ProviderService)getBean("ProviderService");
 
-	 		 SetService setService = (SetService)getBean("SetService");
+              BrowseRecordService browseRecordService = (BrowseRecordService)getBean("BrowseRecordService");
 
-	 		 UserService userService = (UserService)getBean("UserService");
+              ScheduleService scheduleService = (ScheduleService)getBean("ScheduleService");
 
-	  		ServerService serverService = (ServerService)getBean("ServerService");
-	  		
+              FormatService formatService = (FormatService)getBean("FormatService");
+
+              SetService setService = (SetService)getBean("SetService");
+
+              UserService userService = (UserService)getBean("UserService");
+
+              ServerService serverService = (ServerService)getBean("ServerService");
+
             User user = userService.getUserByUserName("admin", serverService.getServerByName("Local"));
 
             Provider provider = new Provider();
@@ -74,23 +74,23 @@ public class BrowseRecordServiceTest extends BaseTest {
             provider.setOaiProviderUrl("http://www.cimec.org.ar/ojs/index.php/cimec-repo/oai");
             provider.setCreatedAt(new java.util.Date());
             providerService.insertProvider(provider);
-            
+
             ValidateRepository validateRepository = new ValidateRepository();
             validateRepository.validate(provider.getId());
-            
-            
+
+
             HarvestSchedule schedule = new HarvestSchedule();
             schedule.setScheduleName("Test Schedule Name");
             schedule.setDayOfWeek(1);
 
             for (Format format:formatService.getAllFormats()) {
-            	
-            	if (format.getName().equalsIgnoreCase("marcxml")) {
-            		schedule.addFormat(format);
-            		break;
-            	}
+
+                if (format.getName().equalsIgnoreCase("marcxml")) {
+                    schedule.addFormat(format);
+                    break;
+                }
             }
-            
+
             schedule.setHour(5);
             schedule.setId(111);
             schedule.setMinute(5);
@@ -100,16 +100,16 @@ public class BrowseRecordServiceTest extends BaseTest {
 
             scheduleService.insertSchedule(schedule);
             /* TODO: need a new test
-            HarvestRunner harvestRunner = (HarvestRunner)getBean("HarvestRunner"); 
+            HarvestRunner harvestRunner = (HarvestRunner)getBean("HarvestRunner");
             harvestRunner.setScheduleId(schedule.getId());
             harvestRunner.runHarvest();
             */
-            
+
             SolrQuery query = new SolrQuery();
             query.setQuery("*:*");
             query.addFilterQuery("provider_name:\"Test Repository Name\"");
             SolrBrowseResult result =  browseRecordService.search(query);
-            
+
             assert result.getTotalNumberOfResults() == 22 : "Total number of records should be 22. But it is " + result.getTotalNumberOfResults();
 
             providerService.deleteProvider(provider);

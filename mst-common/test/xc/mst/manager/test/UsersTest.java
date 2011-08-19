@@ -35,8 +35,8 @@ public class UsersTest extends BaseTest
      */
     public void addUser()
     {
-      	 // Initialize Solr, database, log before testing
-      	 TestHelper helper = TestHelper.getInstance();
+           // Initialize Solr, database, log before testing
+           TestHelper helper = TestHelper.getInstance();
         try
         {
             List groupList = new ArrayList();

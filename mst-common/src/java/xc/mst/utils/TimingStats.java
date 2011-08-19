@@ -273,9 +273,9 @@ public class TimingStats {
                     reset((String)omi.next());
                 }
                 /*
-				for (String key : namedTimers.keySet()) {
-					reset(key);
-				}
+                for (String key : namedTimers.keySet()) {
+                    reset(key);
+                }
                  */
                 namedTimers = new ListOrderedMap();
                 Long nullLastTime = namedLastTimes.get(DEFAULT);

@@ -25,23 +25,23 @@ import xc.mst.manager.IndexException;
  */
 public interface BrowseRecordService {
 
-	/**
-	 * Method to search the index for records
+    /**
+     * Method to search the index for records
      *
-	 * @param query Query to perform the search
-	 * @return Search results
-	 * @throws DatabaseConfigException 
-	 */
-	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException;
-	
-	/**
-	 * Get error description for this code and service
-	 * 
-	 * @param errorCode Error code
-	 * @param service Service which generated the error
-	 * @return Error if found
-	 * @throws DatabaseConfigException 
-	 */
-	public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException; 
+     * @param query Query to perform the search
+     * @return Search results
+     * @throws DatabaseConfigException
+     */
+    public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException;
+
+    /**
+     * Get error description for this code and service
+     *
+     * @param errorCode Error code
+     * @param service Service which generated the error
+     * @return Error if found
+     * @throws DatabaseConfigException
+     */
+    public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException;
 
 }

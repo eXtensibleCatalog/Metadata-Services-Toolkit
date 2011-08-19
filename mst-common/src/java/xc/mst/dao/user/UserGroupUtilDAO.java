@@ -26,91 +26,91 @@ import xc.mst.dao.MySqlConnectionManager;
  */
 public abstract class UserGroupUtilDAO extends BaseDAO
 {
-	/**
-	 * A reference to the logger for this class
-	 */
-	protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
-
-	/**
-	 * The Object managing the database connection
-	 */
-	protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
-	
-	/**
-	 * The name of the user to groups database table
-	 */
-	public final static String USERS_TO_GROUPS_TABLE_NAME = "users_to_groups";
+    /**
+     * A reference to the logger for this class
+     */
+    protected static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /**
-	 * The name of the users database table
-	 */
-	public final static String USERS_TABLE_NAME = "users";
-
-	/**
-	 * The name of the user ID column
-	 */
-	public final static String COL_USER_ID = "user_id";
-
-	/**
-	 * The name of the group ID column
-	 */
-	public final static String COL_GROUP_ID = "group_id";
+     * The Object managing the database connection
+     */
+    protected MySqlConnectionManager dbConnectionManager = MySqlConnectionManager.getInstance();
 
     /**
-	 * The name of the username column
-	 */
-	public final static String COL_USERNAME = "username";
+     * The name of the user to groups database table
+     */
+    public final static String USERS_TO_GROUPS_TABLE_NAME = "users_to_groups";
 
-	/**
-	 * The name of the first name column
-	 */
-	public final static String COL_FIRST_NAME = "first_name";
+    /**
+     * The name of the users database table
+     */
+    public final static String USERS_TABLE_NAME = "users";
 
-	/**
-	 * The name of the last name column
-	 */
-	public final static String COL_LAST_NAME = "last_name";
-	
-	/**
-	 * Inserts a row in the database assigning a user to a group.
-	 *
-	 * @param userId The user to assign to the group
-	 * @param groupId The group to assign the user to
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean insert(int userId, int groupId);
+    /**
+     * The name of the user ID column
+     */
+    public final static String COL_USER_ID = "user_id";
 
-	/**
-	 * Deletes the row in the database assigning the user to the group.
-	 *
-	 * @param userId The user to remove from the group
-	 * @param groupId The group to remove the user from
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean delete(int userId, int groupId);
+    /**
+     * The name of the group ID column
+     */
+    public final static String COL_GROUP_ID = "group_id";
 
-	/**
-	 * Gets all groups to which a user belongs
-	 *
-	 * @param userId The ID of the user whose groups should be returned
-	 * @return A list of group IDs for the groups the user belongs to
-	 */
-	public abstract List<Integer> getGroupsForUser(int userId);
+    /**
+     * The name of the username column
+     */
+    public final static String COL_USERNAME = "username";
 
-	/**
-	 * Deletes all groups assignments for a user
-	 *
-	 * @param userId The ID of the user whose groups should be removed
-	 * @return True on success, false on failure
-	 */
-	public abstract boolean deleteGroupsForUser(int userId);
+    /**
+     * The name of the first name column
+     */
+    public final static String COL_FIRST_NAME = "first_name";
+
+    /**
+     * The name of the last name column
+     */
+    public final static String COL_LAST_NAME = "last_name";
+
+    /**
+     * Inserts a row in the database assigning a user to a group.
+     *
+     * @param userId The user to assign to the group
+     * @param groupId The group to assign the user to
+     * @return True on success, false on failure
+     */
+    public abstract boolean insert(int userId, int groupId);
+
+    /**
+     * Deletes the row in the database assigning the user to the group.
+     *
+     * @param userId The user to remove from the group
+     * @param groupId The group to remove the user from
+     * @return True on success, false on failure
+     */
+    public abstract boolean delete(int userId, int groupId);
+
+    /**
+     * Gets all groups to which a user belongs
+     *
+     * @param userId The ID of the user whose groups should be returned
+     * @return A list of group IDs for the groups the user belongs to
+     */
+    public abstract List<Integer> getGroupsForUser(int userId);
+
+    /**
+     * Deletes all groups assignments for a user
+     *
+     * @param userId The ID of the user whose groups should be removed
+     * @return True on success, false on failure
+     */
+    public abstract boolean deleteGroupsForUser(int userId);
 
     /**
      * returns a list of all the users associated with a group
      *
      * @param groupId group ID
      * @return List of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public abstract List<User> getUsersForGroup(int groupId) throws DatabaseConfigException;
 
@@ -128,9 +128,9 @@ public abstract class UserGroupUtilDAO extends BaseDAO
      * @param sort determines if the rows are to be sorted in ascending or descending order
      * @param columnSorted the column on which the rows are to be sorted
      * @return list of users
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public abstract List<User> getUsersForGroupSorted(int groupId,boolean sort,String columnSorted) throws DatabaseConfigException;
-    
+
 } // end class UserGroupUtil
 

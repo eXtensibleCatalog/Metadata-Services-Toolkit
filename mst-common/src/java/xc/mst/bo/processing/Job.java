@@ -17,121 +17,121 @@ import xc.mst.bo.service.Service;
  * @author Sharmila Ranganathan
  */
 public class Job {
-	
-	/** The processing directive's id */
-	private int id = -1;
-	
-	/** Service to run */
-	public Service service;
-	
-	/** Harvest schedule to run */
-	public HarvestSchedule harvestSchedule;
-	
-	/** Output set to write the service output to */
-	public int outputSetId;
-	
-	/** Processing Directive to run */
-	public ProcessingDirective processingDirective;
-	
-	/** Order in which job has to be executed */
-	public int order;
-	
-	/** Type of job */
-	public String jobType;
-	
-	/** Default constructor */
-	public Job() {
-	}
-	
-	/** Constructor */
-	public Job(Service service, Integer outputSetId, String jobType) {
-		if (outputSetId == null) {
-			outputSetId = 0;
-		}
-		this.service = service;
-		this.outputSetId = outputSetId;
-		this.jobType = jobType;
-	}
-	
-	/** Constructor */
-	public Job(HarvestSchedule harvestSchedule, String jobType) {
-		this.harvestSchedule = harvestSchedule;
-		this.jobType = jobType;
-	}
-	
-	/** Constructor */
-	public Job(ProcessingDirective processingDirective, String jobType) {
-		this.processingDirective = processingDirective;
-		this.jobType = jobType;
-	}
 
-	public int getId() {
-		return id;
-	}
+    /** The processing directive's id */
+    private int id = -1;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    /** Service to run */
+    public Service service;
 
-	public Service getService() {
-		return service;
-	}
+    /** Harvest schedule to run */
+    public HarvestSchedule harvestSchedule;
 
-	public void setService(Service service) {
-		this.service = service;
-	}
+    /** Output set to write the service output to */
+    public int outputSetId;
 
-	public HarvestSchedule getHarvestSchedule() {
-		return harvestSchedule;
-	}
+    /** Processing Directive to run */
+    public ProcessingDirective processingDirective;
 
-	public void setHarvestSchedule(HarvestSchedule harvestSchedule) {
-		this.harvestSchedule = harvestSchedule;
-	}
+    /** Order in which job has to be executed */
+    public int order;
 
-	public int getOutputSetId() {
-		return outputSetId;
-	}
+    /** Type of job */
+    public String jobType;
 
-	public void setOutputSetId(int outputSetId) {
-		this.outputSetId = outputSetId;
-	}
+    /** Default constructor */
+    public Job() {
+    }
 
-	public int getOrder() {
-		return order;
-	}
+    /** Constructor */
+    public Job(Service service, Integer outputSetId, String jobType) {
+        if (outputSetId == null) {
+            outputSetId = 0;
+        }
+        this.service = service;
+        this.outputSetId = outputSetId;
+        this.jobType = jobType;
+    }
 
-	public void setOrder(int order) {
-		this.order = order;
-	}
+    /** Constructor */
+    public Job(HarvestSchedule harvestSchedule, String jobType) {
+        this.harvestSchedule = harvestSchedule;
+        this.jobType = jobType;
+    }
 
-	public ProcessingDirective getProcessingDirective() {
-		return processingDirective;
-	}
+    /** Constructor */
+    public Job(ProcessingDirective processingDirective, String jobType) {
+        this.processingDirective = processingDirective;
+        this.jobType = jobType;
+    }
 
-	public void setProcessingDirective(ProcessingDirective processingDirective) {
-		this.processingDirective = processingDirective;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("[ Id="+id);
-		sb.append(" Service="+service);
-		sb.append(" Processing directive="+processingDirective);
-		sb.append(" harvestSchedule="+harvestSchedule);
-		sb.append(" order="+order+"]");
-		sb.append(" jobType="+jobType+"]");
-		
-		return sb.toString();
-		
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getJobType() {
-		return jobType;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setJobType(String jobType) {
-		this.jobType = jobType;
-	}
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public HarvestSchedule getHarvestSchedule() {
+        return harvestSchedule;
+    }
+
+    public void setHarvestSchedule(HarvestSchedule harvestSchedule) {
+        this.harvestSchedule = harvestSchedule;
+    }
+
+    public int getOutputSetId() {
+        return outputSetId;
+    }
+
+    public void setOutputSetId(int outputSetId) {
+        this.outputSetId = outputSetId;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public ProcessingDirective getProcessingDirective() {
+        return processingDirective;
+    }
+
+    public void setProcessingDirective(ProcessingDirective processingDirective) {
+        this.processingDirective = processingDirective;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("[ Id="+id);
+        sb.append(" Service="+service);
+        sb.append(" Processing directive="+processingDirective);
+        sb.append(" harvestSchedule="+harvestSchedule);
+        sb.append(" order="+order+"]");
+        sb.append(" jobType="+jobType+"]");
+
+        return sb.toString();
+
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
 }

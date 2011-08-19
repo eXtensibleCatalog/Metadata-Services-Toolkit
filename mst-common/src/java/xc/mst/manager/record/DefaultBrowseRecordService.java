@@ -39,76 +39,76 @@ import xc.mst.manager.IndexException;
  */
 public class DefaultBrowseRecordService extends BaseService implements BrowseRecordService {
 
-	/**
-	 * A reference to the logger for this class
-	 */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /**
+     * A reference to the logger for this class
+     */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
-	/**
-	 * Method to search the index for records
+    /**
+     * Method to search the index for records
      *
-	 * @param query Query to perform the search
-	 * @return Search results
-	 * @throws DatabaseConfigException 
-	 */
-	public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException {
+     * @param query Query to perform the search
+     * @return Search results
+     * @throws DatabaseConfigException
+     */
+    public SolrBrowseResult search(SolrQuery query) throws IndexException, DatabaseConfigException {
 
-		SolrServer server = getMSTSolrService().getServer();
-		SolrBrowseResult result = null;
-		
-		// Discard deleted records
-		//query.addFilterQuery("deleted:false");
-		
-		if (log.isDebugEnabled()) {
-			log.debug("Querying Solr server with query:" + query);
-		}
+        SolrServer server = getMSTSolrService().getServer();
+        SolrBrowseResult result = null;
 
-		if (server == null) {
-			log.error("Solr server is null. Check the path to solr folder.");
-			throw new IndexException("Solr server is null. Check the path to solr folder.");
-		}
-		
-		QueryResponse rsp = null;
-		try {
-			rsp = server.query( query );
-		} catch (SolrServerException sse) {
-			log.error("Exception occured while executing the query. Check the path to solr folder.", sse);
-			throw new IndexException(sse.getMessage());
-		}
+        // Discard deleted records
+        //query.addFilterQuery("deleted:false");
 
-	    // Load the records in the SolrBrowseResilt object
-	    SolrDocumentList docs = rsp.getResults();
+        if (log.isDebugEnabled()) {
+            log.debug("Querying Solr server with query:" + query);
+        }
 
-	    RecordService recordService = (RecordService)config.getBean("RecordService");
-	    Iterator<SolrDocument> iteration = docs.iterator();
-	    List<Record> records = new ArrayList<Record>();
+        if (server == null) {
+            log.error("Solr server is null. Check the path to solr folder.");
+            throw new IndexException("Solr server is null. Check the path to solr folder.");
+        }
 
-	    while(iteration.hasNext()) {
-	    	records.add(recordService.getRecordFieldsForBrowseFromDocument(iteration.next()));
-	    }
+        QueryResponse rsp = null;
+        try {
+            rsp = server.query( query );
+        } catch (SolrServerException sse) {
+            log.error("Exception occured while executing the query. Check the path to solr folder.", sse);
+            throw new IndexException(sse.getMessage());
+        }
 
-	    // Load the facets in the SolrBrowseResult object
-	    List<FacetField> facets = rsp.getFacetFields();
-	    result = new SolrBrowseResult(records, facets);
-	    result.setTotalNumberOfResults(docs.getNumFound());
+        // Load the records in the SolrBrowseResilt object
+        SolrDocumentList docs = rsp.getResults();
 
-		
+        RecordService recordService = (RecordService)config.getBean("RecordService");
+        Iterator<SolrDocument> iteration = docs.iterator();
+        List<Record> records = new ArrayList<Record>();
 
-		return result;
+        while(iteration.hasNext()) {
+            records.add(recordService.getRecordFieldsForBrowseFromDocument(iteration.next()));
+        }
 
-	}
+        // Load the facets in the SolrBrowseResult object
+        List<FacetField> facets = rsp.getFacetFields();
+        result = new SolrBrowseResult(records, facets);
+        result.setTotalNumberOfResults(docs.getNumFound());
 
-	/**
-	 * Get error description for this code and service
-	 * 
-	 * @param errorCode Error code
-	 * @param service Service which generated the error
-	 * @return Error if found
-	 * @throws DatabaseConfigException 
-	 */
-	public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException {
-		
-		return errorCodeDAO.getByErrorCodeAndService(errorCode, service);
-		
-	}
+
+
+        return result;
+
+    }
+
+    /**
+     * Get error description for this code and service
+     *
+     * @param errorCode Error code
+     * @param service Service which generated the error
+     * @return Error if found
+     * @throws DatabaseConfigException
+     */
+    public ErrorCode getError(String errorCode, Service service) throws DatabaseConfigException {
+
+        return errorCodeDAO.getByErrorCodeAndService(errorCode, service);
+
+    }
 }

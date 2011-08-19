@@ -22,19 +22,19 @@ import xc.mst.dao.DatabaseConfigException;
 public interface EmailConfigService
 {
     /**
-	 * Gets the Email Configuration
-	 *
-	 * @return The email configuration, or null if there was no email configuration in the database.
-     * @throws DatabaseConfigException 
-	 */
-	public abstract EmailConfig getEmailConfiguration() throws DatabaseConfigException;
+     * Gets the Email Configuration
+     *
+     * @return The email configuration, or null if there was no email configuration in the database.
+     * @throws DatabaseConfigException
+     */
+    public abstract EmailConfig getEmailConfiguration() throws DatabaseConfigException;
 
-	/**
-	 * Updates the email configuration
-	 *
-	 * @param emailconfig The new email configuration
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed email configuration was not valid
-	 */
-	public abstract void setEmailConfiguration(EmailConfig emailconfig) throws DataException;
+    /**
+     * Updates the email configuration
+     *
+     * @param emailconfig The new email configuration
+     * @return True on success, false on failure
+     * @throws DataException if the passed email configuration was not valid
+     */
+    public abstract void setEmailConfiguration(EmailConfig emailconfig) throws DataException;
 }

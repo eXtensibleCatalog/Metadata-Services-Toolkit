@@ -25,56 +25,56 @@ import xc.mst.dao.DatabaseConfigException;
 public interface LogService
 {
     /**
-	 * Gets all logs from the database
-	 *
-	 * @return A list of Log Objects representing all logs in the database
-     * @throws DatabaseConfigException 
-	 */
-	public List<Log> getAll() throws DatabaseConfigException;
-
-	/**
-	 * Gets the log from the database with the passed log ID
-	 *
-	 * @param id The ID of the log to get
-	 * @return A the log with the log ID
-	 * @throws DatabaseConfigException 
-	 */
-	public Log getById(int id) throws DatabaseConfigException;
-
-	/**
-	 * Inserts a log into the database
-	 *
-	 * @param log The log to insert
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed log was not valid for inserting
-	 */
-	public void insert(Log log) throws DataException;
-
-	/**
-	 * Updates a log in the database
-	 *
-	 * @param log The log to update
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed log was not valid for updating
-	 */
-	public void update(Log log) throws DataException;
-
-	/**
-	 * Deletes a log from the database
-	 *
-	 * @param log The log to delete
-	 * @return True on success, false on failure
-	 * @throws DataException if the passed log was not valid for deleting
-	 */
-	public void delete(Log log) throws DataException;
+     * Gets all logs from the database
+     *
+     * @return A list of Log Objects representing all logs in the database
+     * @throws DatabaseConfigException
+     */
+    public List<Log> getAll() throws DatabaseConfigException;
 
     /**
-	 * Gets a sorted list of all general logs in the database
-	 *
-	 * @param asc True to sort in ascending order, false to sort in descending order
+     * Gets the log from the database with the passed log ID
+     *
+     * @param id The ID of the log to get
+     * @return A the log with the log ID
+     * @throws DatabaseConfigException
+     */
+    public Log getById(int id) throws DatabaseConfigException;
+
+    /**
+     * Inserts a log into the database
+     *
+     * @param log The log to insert
+     * @return True on success, false on failure
+     * @throws DataException if the passed log was not valid for inserting
+     */
+    public void insert(Log log) throws DataException;
+
+    /**
+     * Updates a log in the database
+     *
+     * @param log The log to update
+     * @return True on success, false on failure
+     * @throws DataException if the passed log was not valid for updating
+     */
+    public void update(Log log) throws DataException;
+
+    /**
+     * Deletes a log from the database
+     *
+     * @param log The log to delete
+     * @return True on success, false on failure
+     * @throws DataException if the passed log was not valid for deleting
+     */
+    public void delete(Log log) throws DataException;
+
+    /**
+     * Gets a sorted list of all general logs in the database
+     *
+     * @param asc True to sort in ascending order, false to sort in descending order
      * @param columnName determines the name of the column on which the rows should be sorted
-	 * @return A list containing all general logs in the database
-     * @throws DatabaseConfigException 
-	 */
-	public abstract List<Log> getSorted(boolean asc,String columnName) throws DatabaseConfigException;
+     * @return A list containing all general logs in the database
+     * @throws DatabaseConfigException
+     */
+    public abstract List<Log> getSorted(boolean asc,String columnName) throws DatabaseConfigException;
 }

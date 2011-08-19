@@ -23,31 +23,31 @@ import xc.mst.dao.DatabaseConfigException;
  */
 public interface SetService {
 
-	/**
-	 * Get set having the specified set id
-	 *
-	 * @param setId Id of the set
-	 * @return Set if exist else null
-	 * @throws DatabaseConfigException 
-	 */
-	public Set getSetById(int setId) throws DatabaseConfigException;
+    /**
+     * Get set having the specified set id
+     *
+     * @param setId Id of the set
+     * @return Set if exist else null
+     * @throws DatabaseConfigException
+     */
+    public Set getSetById(int setId) throws DatabaseConfigException;
 
     /**
      * Returns a Set object based on the value of the setSpec supplied.
      *
      * @param setSpec The set Specification value
      * @return Set object
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public Set getSetBySetSpec(String setSpec) throws DatabaseConfigException;
-    
-	/**
-	 * Delete Set
-	 *
-	 * @param set set to be deleted
-	 * @throws DataException Thrown when problem in deleting the set
-	 */
-	public void deleteSet(Set set) throws DataException;
+
+    /**
+     * Delete Set
+     *
+     * @param set set to be deleted
+     * @throws DataException Thrown when problem in deleting the set
+     */
+    public void deleteSet(Set set) throws DataException;
 
     /**
      * Add a set
@@ -60,7 +60,7 @@ public interface SetService {
      * Get all sets
      *
      * @return all sets
-     * @throws DatabaseConfigException 
+     * @throws DatabaseConfigException
      */
     public List<Set> getAllSets() throws DatabaseConfigException;
 
