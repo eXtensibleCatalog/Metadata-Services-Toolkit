@@ -44,17 +44,17 @@ public class SolrIndexService extends GenericMetadataService {
 
     @Override
     protected List<Record> getRecords(Repository repo, ServiceHarvest sh, Format inputFormat, Set inputSet) {
-        TimingLogger.start("getRecordsWSets");
-        List<Record> rs =
-                ((DefaultRepository) repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
-        TimingLogger.stop("getRecordsWSets");
-        /*
-        if (loops++ % 1000 == 0) {
-            loops = 1;
-            TimingLogger.reset();
-        }
-        */
-        return rs;
+            TimingLogger.start("getRecordsWSets");
+            List<Record> rs =
+                ((DefaultRepository)repo).getRecordsWSets(sh.getFrom(), sh.getUntil(), sh.getHighestId(), null);
+            TimingLogger.stop("getRecordsWSets");
+            /*
+            if (loops++ % 1000 == 0) {
+                loops = 1;
+                TimingLogger.reset();
+            }
+            */
+            return rs;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SolrIndexService extends GenericMetadataService {
                 TimingLogger.start("commitIndex");
                 getSolrIndexManager().commitIndex();
                 TimingLogger.stop("commitIndex");
-                recordsProcessedSinceCommit = 0;
+                recordsProcessedSinceCommit=0;
                 return true;
             } catch (Throwable t) {
                 getUtil().throwIt(t);
@@ -82,7 +82,7 @@ public class SolrIndexService extends GenericMetadataService {
 
     public List<OutputRecord> process(InputRecord ri) {
         recordsProcessedSinceCommit++;
-        this.name4progressBar = "indexing " + incomingRepository.getName();
+        this.name4progressBar = "indexing "+incomingRepository.getName();
         /*
         if (ri.getStatus() != Record.ACTIVE) {
             TimingLogger.start("deleteByQuery");
@@ -91,16 +91,16 @@ public class SolrIndexService extends GenericMetadataService {
         } else {
         */
         TimingLogger.add(incomingRepository.getName(), 0);
-        Record r = (Record) ri;
-        LOG.debug("indexing record.getId(): " + r.getId());
+        Record r = (Record)ri;
+        LOG.debug("indexing record.getId(): "+r.getId());
         if (r.getId() % 1000 == 0) {
-            LOG.debug("indexing record.getId(): " + r.getId());
+            LOG.debug("indexing record.getId(): "+r.getId());
         }
         SolrInputDocument doc = new SolrInputDocument();
         doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
         r.setMode(Record.STRING_MODE);
-        // doc.addField(RecordService.FIELD_OAI_XML, r.getOaiXml());
-        doc.addField(RecordService.FIELD_ALL, r.getId() + " " + r.getOaiXml());
+        //doc.addField(RecordService.FIELD_OAI_XML, r.getOaiXml());
+        doc.addField(RecordService.FIELD_ALL, r.getId()+" "+r.getOaiXml());
         if (r.getFormat() != null) {
             doc.addField(RecordService.FIELD_FORMAT_ID, r.getFormat().getId());
             doc.addField("format_name", r.getFormat().getName());
@@ -138,9 +138,9 @@ public class SolrIndexService extends GenericMetadataService {
         if (r.getMessages() != null) {
             for (RecordMessage m : r.getMessages()) {
                 try {
-                    LOG.debug("m: " + m);
+                    LOG.debug("m: "+m);
                     doc.addField(RecordService.FIELD_ERROR,
-                            m.getCode() + ":" + m.getMessage());
+                            m.getMessage());  // used to display id here prepended to msg text.
                 } catch (Throwable t) {
                     LOG.error("continuing, but logging", t);
                 }
@@ -152,14 +152,11 @@ public class SolrIndexService extends GenericMetadataService {
         } catch (IndexException ie) {
             throw new RuntimeException(ie);
         }
-        // }
         return null;
     }
 
     public void runTests() {
-        // do nothing
+        //do nothing
     }
-
-    protected void processStatusDisplay(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
-    }
+    protected void processStatusDisplay(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {}
 }

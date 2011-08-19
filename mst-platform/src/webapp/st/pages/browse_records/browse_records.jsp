@@ -153,14 +153,54 @@ text-decoration:underline;
                     </c:if>
                   </c:forEach>
 
-                  <c:if test="${facetExist == false}">
-                      <c:url var="facetFilter" value="browseRecords.action">
-                          <c:param name="query" value="${query}"/>
-                          <c:param name="searchXML" value="${searchXML}"/>
-                          <c:param name="addFacetName" value="${facet.name}"/>
-                          <c:param name="addFacetValue" value="${fcount.name}"/>
-                          <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
-                          <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+						<c:forEach var="record" items="${result.records}" varStatus="rowCounter">
+						<c:if test="${rowCounter.count % 2 != 0}">
+							<div class="record_result_odd_div">
+						</c:if>
+						<c:if test="${rowCounter.count % 2 == 0}">
+							<div class="record_result_even_div">
+						</c:if>
+							<div class="record_number">
+								${rowStart + rowCounter.count}.
+							</div>
+						
+							<div class="record_text">
+								<c:url var="viewRecord" value="viewRecord.action">
+									  <c:param name="recordId" value="${record.id}"/>
+									  <c:param name="query" value="${query}"/>
+									  <c:param name="searchXML" value="${searchXML}"/>
+									  <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
+								  	  <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+									  <c:param name="rowStart" value="${rowStart}"/>
+									  <c:param name="startPageNumber" value="${startPageNumber}"/>
+									  <c:param name="currentPageNumber" value="${currentPageNumber}"/>
+								  </c:url>
+								<a href="${viewRecord}">${record.oaiIdentifier}</a>
+								<br>
+								Schema: ${record.format.name}
+								<br>
+								<c:if test="${record.provider != null}">
+									Repository: ${record.provider.name}
+									<br>
+								</c:if>
+								<c:if test="${record.service != null}">
+									Service: ${record.service.name}
+									<br>
+								</c:if>
+								<c:if test="${record.harvestScheduleName != null}">
+									Harvest: ${record.harvestScheduleName} 
+									<br>
+								</c:if>
+								<div class="redError">
+								<c:if test="${record.messages != '[]'}">
+									Error:
+									<c:forEach var="error" items="${record.messages}" varStatus="status">
+										<c:if test="${status.count > 1}">, </c:if>
+										${error.message} <c:if test="${error.detail != null}">[${error.detail}]</c:if>
+									</c:forEach>
+									<br>
+								</c:if>
+								</div>
 
                        </c:url>
                       <div style="text-indent: -25px; padding-left: 25px;">

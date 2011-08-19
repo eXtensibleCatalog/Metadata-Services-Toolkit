@@ -1091,8 +1091,8 @@ public class NormalizationService extends GenericMetadataService {
                 addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO);
                 // addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
-                continue;
-            }
+				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
+				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
@@ -1335,35 +1335,50 @@ public class NormalizationService extends GenericMetadataService {
                 // Initialize the aSubfield if we found the $a
                 if (subfield.getAttribute("code").getValue().equals("a"))
                     aSubfield = subfield;
+            StringBuilder err_sb = new StringBuilder("");
 
-                // Initialize the bSubfield if we found the $b
-                if (subfield.getAttribute("code").getValue().equals("b")) {
-                    err_sb.append(" subfield b");
+			// Iterate over the subfields to find the $a and $b subfields
+			for(Element subfield : subfields)
+			{
+				// Initialize the aSubfield if we found the $a
+				if(subfield.getAttribute("code").getValue().equals("a"))
+					aSubfield = subfield;
+
+				// Initialize the bSubfield if we found the $b
+				if(subfield.getAttribute("code").getValue().equals("b")) {
+                    err_sb.append("subfield b");
                     bSubfield = subfield;
                     // addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
                 }
 
-                // Initialize the subfield9 if we found the $9
-                if (subfield.getAttribute("code").getValue().equals("9")) {
-                    err_sb.append(" subfield 9");
-                    subfield9 = subfield;
-                    // addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-                }
-                // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
-                addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
+				// Initialize the subfield9 if we found the $9
+				if(subfield.getAttribute("code").getValue().equals("9")) {
+				    err_sb.append("subfield 9");
+					subfield9 = subfield;
+					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
+				}
 
             } // end loop over 035 subfields
 
-            // Execute only if Fix035 step is enabled
-            if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
-                // First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
-                if (bSubfield != null) {
-                    // Check if the $b subfield was "ocm", "ocn", or "ocl"
-                    if (bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl")) {
-                        // Try to parse out the control number from the $a subfield
-                        if (aSubfield != null) {
-                            try {
-                                String controlNumber = aSubfield.getText().trim();
+			if (bSubfield != null || subfield9 != null) {
+	            // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+	            addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
+			}
+
+			// Execute only if Fix035 step is enabled
+			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+				// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
+				if(bSubfield != null)
+				{
+					// Check if the $b subfield was "ocm", "ocn", or "ocl"
+					if(bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl"))
+					{
+						// Try to parse out the control number from the $a subfield
+						if(aSubfield != null)
+						{
+							try
+							{
+								String controlNumber = aSubfield.getText().trim();
 
                                 // Set $a to (OCoLC)%CONTROL_NUMBER%
                                 aSubfield.setText("(OCoLC)" + controlNumber);
