@@ -419,7 +419,7 @@ text-decoration:underline;
 									Error:
 									<c:forEach var="error" items="${record.messages}" varStatus="status">
 										<c:if test="${status.count > 1}">, </c:if>
-										${error.message}<c:if test="${error.detail != null}">[${error.detail}]</c:if>
+										${error.message} <c:if test="${error.detail != null}">[${error.detail}]</c:if>
 									</c:forEach>
 									<br>
 								</c:if>

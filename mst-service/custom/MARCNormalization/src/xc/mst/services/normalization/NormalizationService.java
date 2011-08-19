@@ -1383,14 +1383,14 @@ public class NormalizationService extends GenericMetadataService {
 
 				// Initialize the bSubfield if we found the $b
 				if(subfield.getAttribute("code").getValue().equals("b")) {
-                    err_sb.append(" subfield b");
+                    err_sb.append("subfield b");
 					bSubfield = subfield;
 					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
 				}
 
 				// Initialize the subfield9 if we found the $9
 				if(subfield.getAttribute("code").getValue().equals("9")) {
-				    err_sb.append(" subfield 9");
+				    err_sb.append("subfield 9");
 					subfield9 = subfield;
 					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
 				}
