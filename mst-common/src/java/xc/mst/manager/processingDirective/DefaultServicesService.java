@@ -420,13 +420,6 @@ public class DefaultServicesService extends BaseService
 
             String logFileName = getLogDAO().getById(Constants.LOG_ID_SERVICE_MANAGEMENT).getLogFileLocation();
 
-            // The name of the service, which must appear in the first line of the configuration file
-            String serviceName = props.getString("service.name");
-            if (serviceName == null || serviceName.length() == 0) {
-                LogWriter.addError(logFileName, "Error adding a new service: The first line of the service configuration file must be the service's name.");
-                throw new ConfigFileException("The first line of the service configuration file must be the service's name.");
-            }
-
             // The version of the service, which must appear in the second line of the configuration file
             String version = props.getString("service.version");
             if (version == null || version.length() == 0) {
