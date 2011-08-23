@@ -12,7 +12,7 @@ package xc.mst.services.normalization;
 /**
  * This class defines several constants as public static final variables
  * which may be used throughout the NormalizationService
- * 
+ *
  * @author Eric Osisek
  */
 public class NormalizationServiceConstants {
@@ -264,6 +264,11 @@ public class NormalizationServiceConstants {
      * Parameter for looking up the whether or not the Fix035Code9 normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_FIX_035_CODE_9 = "Fix035Code9";
+
+    /**
+     * Parameter for looking up the whether or not the Add014Source normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_014_SOURCE = "Add014Source";
 
     // *******************************************************************
     // Properties file names

@@ -43,7 +43,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
  * record which is a copy of the original record after cleaning up common problems.
- * 
+ *
  * @author Eric Osisek
  */
 public class NormalizationService extends GenericMetadataService {
@@ -142,7 +142,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Gets the status of the service
-     * 
+     *
      * @return This service's status
      */
     public Status getServiceStatus() {
@@ -382,6 +382,10 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
                     normalizedXml = locationLimitName(normalizedXml);
 
+                //TODO new step here!
+                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_014_SOURCE, "0").equals("1"))
+                    normalizedXml = add014source(normalizedXml);
+
                 TimingLogger.stop("holdsteps");
             }
 
@@ -504,7 +508,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * If the 003's value is "OCoLC", remove it.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -523,7 +527,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates a DCMI Type field based on the record's Leader 06 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -579,7 +583,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates a vocabulary field based on the record's Leader 06 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -640,7 +644,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates a vocabulary field based on the record's Leader 06 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -678,7 +682,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates a mode of issuance field based upon single letter in Leader07
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -716,7 +720,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Creates a new 035 field on the record based on the existing 001 and 003 fields
      * for example, if 001 = 12345 and 003 = NRU, the new 035 will be (NRU)12345.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -776,7 +780,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates a DCMI Type field based on the record's 007 offset 00 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -814,7 +818,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates an 007 vocabulary field based on the record's 007 offset 00 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -858,7 +862,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Creates an SMD vocabulary field based on the record's 007 offset 00 and offset 01 values.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -904,7 +908,7 @@ public class NormalizationService extends GenericMetadataService {
      * Creates a field with a value of "Fiction" if the Leader 06 value is 'a'
      * and the 008 offset 33 value is '1', otherwise creates the field with a value
      * of "Non-Fiction"
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -942,7 +946,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Creates a field with the date range specified in the 008 control field
      * if 008 offset 06 is 'r'
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -981,7 +985,7 @@ public class NormalizationService extends GenericMetadataService {
      * Creates a field for each language found in the original record's 008 offset 35-38
      * and 041 $a and $d fields. Only one field is added when the original record
      * would produce duplicates of it.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1061,7 +1065,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Creates a field which contains the full name of the language based for
      * each language code from the LanguageSplit step.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1088,12 +1092,11 @@ public class NormalizationService extends GenericMetadataService {
                 if (LOG.isDebugEnabled())
                     LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
-                addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO);
-                // addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
-
 				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
 				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
+				continue;
+            }
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
 
@@ -1108,7 +1111,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If leader 06 contains certain values, create a field with the intended audience from the
      * 008 offset 22 value.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1155,7 +1158,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * If there is no 502 field, create one with the value "Thesis" if 08 offset 24, 25, 26 or 27 is 'm'.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1202,7 +1205,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Creates a field for each 020 field with the same $a value except that
      * everything after the first left parenthesis is removed.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1245,7 +1248,7 @@ public class NormalizationService extends GenericMetadataService {
      * Creates a new 035 field on the record based on the existing 001 field if
      * there is no 003 field. For example, if 001 = 12345 and the organization
      * code in the configuration file is NRU, the new 035 will be (NRU)12345.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1304,7 +1307,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Edits OCLC 035 records with common incorrect formats to take the format
      * (OCoLC)%CONTROL_NUMBER%.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1329,18 +1332,11 @@ public class NormalizationService extends GenericMetadataService {
             // Get the control fields
             List<Element> subfields = field035.getChildren("subfield", marcNamespace);
 
+            StringBuilder err_sb = new StringBuilder("");
             // Iterate over the subfields to find the $a and $b subfields
             for (Element subfield : subfields) {
-                StringBuilder err_sb = new StringBuilder("");
-                // Initialize the aSubfield if we found the $a
-                if (subfield.getAttribute("code").getValue().equals("a"))
-                    aSubfield = subfield;
-            StringBuilder err_sb = new StringBuilder("");
 
-			// Iterate over the subfields to find the $a and $b subfields
-			for(Element subfield : subfields)
-			{
-				// Initialize the aSubfield if we found the $a
+                // Initialize the aSubfield if we found the $a
 				if(subfield.getAttribute("code").getValue().equals("a"))
 					aSubfield = subfield;
 
@@ -1466,7 +1462,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Removes duplicate 035 fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1483,7 +1479,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If 100 $4, 110 $4, or 111 $4 are empty and leader 06 is 'a',
      * set the empty $4 subfields to "aut".
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1543,7 +1539,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If 100 $4, 110 $4, or 111 $4 are empty and leader 06 is 'c',
      * set the empty $4 subfields to "cmp".
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1603,7 +1599,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If 130, 240, and 243 all don't exist and 245 does exist, copy the 245 into
      * a new 243 field. Only copies subfields afknp
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1627,7 +1623,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Changes 655 $2 subfield to "NRUgenre" and deletes the 655 $5 subfield
      * for each 655 field with $2 = "local" and $5 = "NRU"
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1675,7 +1671,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Copies relevant fields from the 600, 610, 611, 630, and 650 datafields into
      * 9xx fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1711,7 +1707,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Copies relevant fields from the 648 datafield into 9xx fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1747,7 +1743,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Copies relevant fields from the 651 datafield into 9xx fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1783,7 +1779,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Copies relevant fields from the 655 datafield into 9xx fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1819,7 +1815,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Removes duplicate DCMI type fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1835,7 +1831,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Removes duplicate 007 vocab fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1849,9 +1845,23 @@ public class NormalizationService extends GenericMetadataService {
         return marcXml;
     }
 
+    //TODO
+    /**
+     * if the field 014 has a value beginning with the characters 'ocm' , add a subfield b to the 014 containing the characters 'OCoLC'
+     */
+    private MarcXmlManager add014source(MarcXmlManager marcXml) {
+
+        // both $a and $b are (NR) fields (non repeatable)
+        // , check the 014 $a value, if it has what we are looking for, populate $b, if necessary.
+        final ArrayList<String> field014subfieldA = marcXml.getField014subfieldA();
+        //TODO
+        //marcXml.getField014subfieldB()
+        return marcXml;
+    }
+
     /**
      * Replaces the location code in 852 $b with the name of the location it represents.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1887,7 +1897,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * For the location code in 852 $b, it assigns corresponding location name to new 852 $c.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1934,7 +1944,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * For the location code in 852 $b, it assigns corresponding location limit name to 852 $b.
      * In case of more than 1 limit name exist then put each limit name in separate $b within same 852
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1993,7 +2003,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Replaces the location code in 945 $l with the name of the location it represents.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -2029,7 +2039,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Removes 945 field if there is no $5 field with organization code
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -2070,7 +2080,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Copies relevant fields from the 651 datafield into 9xx fields.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -2093,7 +2103,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Create a 246 field without an initial article whenever a 245 exists with an initial article.
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -2123,7 +2133,7 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * Removes duplicate 959, 963, 965, 967, and 969 fields
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -2144,8 +2154,8 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Returns true if the passed language is valid and false otherwise. The following languages are invalid:
      * "mul", "N/A", "xxx", "und", "   ", and languages with more or less than three characters
-     * 
-     * 
+     *
+     *
      * @param language
      *            The language code we're testing
      * @return true if the passed language is valid and false otherwise.

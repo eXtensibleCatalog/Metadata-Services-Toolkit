@@ -28,7 +28,7 @@ import xc.mst.utils.TimingLogger;
  * This class is used to manage a MARC XML record. When constructed,
  * it parses out fields likely to be needed by the Normalization service,
  * and contains methods to add, remove, modify, and deduplicate a field.
- * 
+ *
  * @author Eric Osisek
  */
 public class MarcXmlManager {
@@ -52,7 +52,7 @@ public class MarcXmlManager {
      * Constructs a MarcXmlManager based on a MARC XML record.
      * This constructor will initialize all cached fields by iterating over
      * the MARC XML record's fields exactly once.
-     * 
+     *
      * @param marcXml
      *            The MARC XML record we're managing
      * @param organizationCode
@@ -115,7 +115,7 @@ public class MarcXmlManager {
 
     /**
      * Tests whether or not the MARC XML record contains the passed linking field.
-     * 
+     *
      * @param linkingField
      *            The value of the linking field we're testing for duplicates.
      * @return true iff the MARC XML record contained the passed linking field.
@@ -135,7 +135,7 @@ public class MarcXmlManager {
      * Checks whether or not a String is a value indicating a role when
      * found in a $4 subfield. If it is, the parent datafield should be
      * ignored for certain operations.
-     * 
+     *
      * @param valueToTest
      *            The value of a $4 subfield
      * @return true if valueToTest appearing in a $4 subfield means we
@@ -179,7 +179,7 @@ public class MarcXmlManager {
     /**
      * The value of the next linking field we will use. This value starts at 1 for each record we're
      * normalizing, and increments every time a linking field is used in that record.
-     * 
+     *
      * We'll initialize it to 0 since we'll increment it before using it.
      */
     private int nextLinkingField = 0;
@@ -190,7 +190,7 @@ public class MarcXmlManager {
      * on the current MARC XML record. Since most MARC XML records
      * will not use linking fields, this typically only increments
      * nextLinkingField.
-     * 
+     *
      * @return The value of the next linking field to be used with this MARC XML record.
      */
     public String getNextLinkingField() {
@@ -214,7 +214,7 @@ public class MarcXmlManager {
 
     /**
      * Gets a list of the language codes we've added using this MarcXmlManager.
-     * 
+     *
      * @return A list of the language codes we've added using this MarcXmlManager.
      */
     public ArrayList<String> getAddedLanguageCodes() {
@@ -239,7 +239,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the leader field
-     * 
+     *
      * @return the MARC XML's leader
      */
     public String getLeader() {
@@ -261,7 +261,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 001 field
-     * 
+     *
      * @return the MARC XML's 001 field
      */
     public String getField001() {
@@ -275,7 +275,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 003 field
-     * 
+     *
      * @return the MARC XML's 003 field
      */
     public String getField003() {
@@ -289,7 +289,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 006 field
-     * 
+     *
      * @return the MARC XML's 006 field
      */
     public String getField006() {
@@ -303,7 +303,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 007 field
-     * 
+     *
      * @return the MARC XML's 007 field
      */
     public String getField007() {
@@ -317,11 +317,39 @@ public class MarcXmlManager {
 
     /**
      * Gets the 008 field
-     * 
+     *
      * @return the MARC XML's 008 field
      */
     public String getField008() {
         return field008;
+    }
+
+    /**
+     * The value of the 014 $b field
+     */
+    private ArrayList<String> field014subfieldB = new ArrayList<String>();
+
+    /**
+     * Gets the 014 data field subfield b
+     *
+     * @return the MARC XML's 014 $b field
+     */
+    public ArrayList<String> getField014subfieldB() {
+        return field014subfieldB;
+    }
+
+    /**
+     * The value of the 014 $a field
+     */
+    private ArrayList<String> field014subfieldA = new ArrayList<String>();
+
+    /**
+     * Gets the 014 data field subfield a
+     *
+     * @return the MARC XML's 014 $a field
+     */
+    public ArrayList<String> getField014subfieldA() {
+        return field014subfieldA;
     }
 
     /**
@@ -331,7 +359,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 020 field
-     * 
+     *
      * @return the MARC XML's 020 field
      */
     public ArrayList<String> getField020() {
@@ -345,7 +373,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 041 $a value
-     * 
+     *
      * @return the MARC XML's 041 $a value
      */
     public ArrayList<String> getField041subfieldA() {
@@ -359,7 +387,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 041 $d value
-     * 
+     *
      * @return the MARC XML's 041 $d value
      */
     public ArrayList<String> getField041subfieldD() {
@@ -373,7 +401,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 502 field
-     * 
+     *
      * @return the MARC XML's 502 field
      */
     public ArrayList<String> getField502() {
@@ -387,7 +415,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 100 field's element
-     * 
+     *
      * @return the MARC XML's 100 field's element
      */
     public ArrayList<Element> getField100Element() {
@@ -401,7 +429,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 110 field's element
-     * 
+     *
      * @return the MARC XML's 110 field's element
      */
     public ArrayList<Element> getField110Element() {
@@ -415,7 +443,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 111 field's element
-     * 
+     *
      * @return the MARC XML's 111 field's element
      */
     public ArrayList<Element> getField111Element() {
@@ -429,7 +457,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 100 $4 value
-     * 
+     *
      * @return the MARC XML's 100 $4 value
      */
     public String getField100subfield4() {
@@ -443,7 +471,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 110 $4 value
-     * 
+     *
      * @return the MARC XML's 110 $4 value
      */
     public String getField110subfield4() {
@@ -457,7 +485,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 111 $4 value
-     * 
+     *
      * @return the MARC XML's 111 $4 value
      */
     public String getField111subfield4() {
@@ -471,7 +499,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 130 field
-     * 
+     *
      * @return the MARC XML's 130 field
      */
     public String getField130() {
@@ -485,7 +513,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 240 field's element
-     * 
+     *
      * @return the MARC XML's 240 field's element
      */
     public ArrayList<Element> getField240Element() {
@@ -499,7 +527,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 240 field
-     * 
+     *
      * @return the MARC XML's 240 field
      */
     public String getField240() {
@@ -513,7 +541,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 243 field
-     * 
+     *
      * @return the MARC XML's 243 field
      */
     public String getField243() {
@@ -527,7 +555,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 243 field's element
-     * 
+     *
      * @return the MARC XML's 243 field's element
      */
     public ArrayList<Element> getField243Element() {
@@ -541,7 +569,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 245 field
-     * 
+     *
      * @return the MARC XML's 245 field
      */
     public String getField245() {
@@ -555,7 +583,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 440 field's element
-     * 
+     *
      * @return the MARC XML's 440 field's element
      */
     public ArrayList<Element> getField440Elements() {
@@ -569,7 +597,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 600 field's element
-     * 
+     *
      * @return the MARC XML's 600 field's element
      */
     public ArrayList<Element> getField600Elements() {
@@ -583,7 +611,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 610 field's element
-     * 
+     *
      * @return the MARC XML's 610 field's element
      */
     public ArrayList<Element> getField610Elements() {
@@ -597,7 +625,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 611 field's element
-     * 
+     *
      * @return the MARC XML's 611 field's element
      */
     public ArrayList<Element> getField611Elements() {
@@ -611,7 +639,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 630 field's element
-     * 
+     *
      * @return the MARC XML's 630 field's element
      */
     public ArrayList<Element> getField630Elements() {
@@ -625,7 +653,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 650 field's element
-     * 
+     *
      * @return the MARC XML's 650 field's element
      */
     public ArrayList<Element> getField650Elements() {
@@ -639,7 +667,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 655 field's element
-     * 
+     *
      * @return the MARC XML's 655 field's element
      */
     public ArrayList<Element> getField655Elements() {
@@ -653,7 +681,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 700 field's element
-     * 
+     *
      * @return the MARC XML's 700 field's element
      */
     public ArrayList<Element> getField700Elements() {
@@ -667,7 +695,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 710 field's element
-     * 
+     *
      * @return the MARC XML's 710 field's element
      */
     public ArrayList<Element> getField710Elements() {
@@ -681,7 +709,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 711 field's element
-     * 
+     *
      * @return the MARC XML's 711 field's element
      */
     public ArrayList<Element> getField711Elements() {
@@ -695,7 +723,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 730 field's element
-     * 
+     *
      * @return the MARC XML's 730 field's element
      */
     public ArrayList<Element> getField730Elements() {
@@ -709,7 +737,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 800 field's element
-     * 
+     *
      * @return the MARC XML's 800 field's element
      */
     public ArrayList<Element> getField800Elements() {
@@ -723,7 +751,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 810 field's element
-     * 
+     *
      * @return the MARC XML's 810 field's element
      */
     public ArrayList<Element> getField810Elements() {
@@ -737,7 +765,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 811 field's element
-     * 
+     *
      * @return the MARC XML's 811 field's element
      */
     public ArrayList<Element> getField811Elements() {
@@ -751,7 +779,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 852 $b value
-     * 
+     *
      * @return the MARC XML's 852 $b value
      */
     public ArrayList<String> getField852subfieldBs() {
@@ -765,7 +793,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the 945 $l value
-     * 
+     *
      * @return the MARC XML's 945 $l value
      */
     public ArrayList<String> getField945subfieldLs() {
@@ -781,7 +809,7 @@ public class MarcXmlManager {
      * Gets a list of the original 035 fields for the MARC XML. Any changes
      * made to the elements in this list will be reflected in the corrosponding
      * 035 fields on the MARC XML records.
-     * 
+     *
      * @return A list of the original 035 fields for the MARC XML
      */
     public ArrayList<Element> getOriginal035Fields() {
@@ -790,7 +818,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the MARC XML resulting from the modifications which have been made through this MarcXmlManager
-     * 
+     *
      * @return The modified MARC XML record.
      */
     public Element getModifiedMarcXml() {
@@ -799,7 +827,7 @@ public class MarcXmlManager {
 
     /**
      * Returns true if the passed tag contains the passed subfield
-     * 
+     *
      * @param tag
      *            The tag we're checking
      * @param subfield
@@ -956,6 +984,16 @@ public class MarcXmlManager {
                 // Add the 020 $a subfields
                 field020.addAll(subfields);
             } // end if (020 found)
+
+            else if (tag.equals("014")) {
+                // Get the $b subfields
+                List<String> subfields = getSubfieldValuesOfField(field, 'b');
+                field014subfieldB.addAll(subfields);
+
+                // Get the $a subfields
+                subfields = getSubfieldValuesOfField(field, 'a');
+                field014subfieldA.addAll(subfields);
+            }
 
             // If the current field is 035, get its subfields
             else if (tag.equals("035"))
@@ -1138,7 +1176,7 @@ public class MarcXmlManager {
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicaters empty and the $a subfield will be set to the specified value.
-     * 
+     *
      * @param tag
      *            The tag we're adding (i.e. 931)
      * @param subfieldAValue
@@ -1151,7 +1189,7 @@ public class MarcXmlManager {
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicaters empty and the $a subfield will be set to the specified value.
-     * 
+     *
      * @param tag
      *            The tag we're adding (i.e. 931)
      * @param subfieldAValue
@@ -1224,7 +1262,7 @@ public class MarcXmlManager {
 
     /**
      * Adds a new controlfield to the MARC XML record and returns the result.
-     * 
+     *
      * @param tag
      *            The tag we're adding (i.e. 931)
      * @param value
@@ -1248,7 +1286,7 @@ public class MarcXmlManager {
 
     /**
      * Copies one marcXml tag into another marcXml tag
-     * 
+     *
      * @param copyFromTag
      *            The tag we're copying from
      * @param copyToTag
@@ -1336,7 +1374,7 @@ public class MarcXmlManager {
      * subfields in that datafield are copied into the copy into field until the
      * first occurrence of a required field. In addition, the $2 is copied into the
      * resulting field, even if it occurred after a stop field
-     * 
+     *
      * @param targetFields
      *            The fields which are to be split
      * @param copyIntoField
@@ -1437,7 +1475,7 @@ public class MarcXmlManager {
      * Used to split the 4 categories of information contained in 6XX tags.
      * Copies only the specified subfield into the copy into field, each into
      * its own field. In addition, the $2 is copied into the resulting fields
-     * 
+     *
      * @param targetFields
      *            The fields which are to be split
      * @param copyIntoField
@@ -1528,7 +1566,7 @@ public class MarcXmlManager {
      * a target datafield, all subfields in that datafield are copied into the copy
      * into field until the first occurrence of a $t field. In addition, the $4
      * is copied into the resulting field, even if it occurred after a $t
-     * 
+     *
      * @param targetFields
      *            The fields which are to be split
      * @param copyIntoField
@@ -1645,7 +1683,7 @@ public class MarcXmlManager {
      * Two fields are considered duplicates if they have the same subfields
      * in the same order with the same values. If one or more duplicate
      * fields are found with the specified tag, all but one of them are removed.
-     * 
+     *
      * @param tag
      *            The tag whose fields should be deduplicated.
      */
@@ -1710,7 +1748,7 @@ public class MarcXmlManager {
      * Two fields are considered duplicates if they have the same subfields
      * in the same order with the same values. If one or more duplicate
      * fields are found with the specified tag, all but one of them are removed.
-     * 
+     *
      * 959 fields have a seperate dedup method since they have to handle linking fields
      */
     @SuppressWarnings("unchecked")
@@ -1788,7 +1826,7 @@ public class MarcXmlManager {
      * Sets the value for a specified subfield of a specified field. If the requested
      * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the first one only.
-     * 
+     *
      * @param targetField
      *            The tag of the field to set the subfield for.
      * @param targetSubfield
@@ -1804,7 +1842,7 @@ public class MarcXmlManager {
      * Sets the value for a specified subfield of a specified field. If the requested
      * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the first one only.
-     * 
+     *
      * @param targetField
      *            The tag of the field to set the subfield for.
      * @param targetSubfield
@@ -1878,7 +1916,7 @@ public class MarcXmlManager {
      * Sets the value for a specified subfield of a specified field. If the requested
      * field does not exist this method will do nothing. If there are more than one
      * entry for the requested field, the subfield is set on the nth one only.
-     * 
+     *
      * @param targetField
      *            The tag of the field to set the subfield for.
      * @param targetSubfield
@@ -1938,7 +1976,7 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     * 
+     *
      * @param datafield
      *            The Element we're getting the subfield of
      * @param subfield
@@ -1984,7 +2022,7 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     * 
+     *
      * @param datafield
      *            The Element we're getting the subfield of
      * @param subfield
@@ -2057,7 +2095,7 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified indicator of that Element
-     * 
+     *
      * @param datafield
      *            The Element we're getting the indicator of
      * @param indicator
@@ -2117,7 +2155,7 @@ public class MarcXmlManager {
 
     /**
      * Gets all MARC XML data fields with a given tag
-     * 
+     *
      * @param targetField
      *            The tag of the data fields to retrieve (for example, "035")
      * @return A list of all data fields with the requested tag
@@ -2184,7 +2222,7 @@ public class MarcXmlManager {
 
     /**
      * Given an Element containing a MARC XML datafield, return the value of the specified subfield of that Element
-     * 
+     *
      * @param datafield
      *            The Element we're getting the subfield of
      * @param subfield
@@ -2255,7 +2293,7 @@ public class MarcXmlManager {
 
     /**
      * Gets all MARC XML datafields containing linking fields ($8 subfields for any tag)
-     * 
+     *
      * @return A list of all datafields containing linking fields in the MARCXML document
      */
     @SuppressWarnings("unchecked")
@@ -2305,7 +2343,7 @@ public class MarcXmlManager {
 
     /**
      * Gets the value of a MARC XML control field
-     * 
+     *
      * @param targetField
      *            The control field to retrieve (for example, "008")
      */
@@ -2368,7 +2406,7 @@ public class MarcXmlManager {
     /**
      * Gets data field 945. Separate method is used for 945 because it needs to return
      * field 945 irrespective of $5 subfield value being organization code.
-     * 
+     *
      * @return A list of all data fields with the requested tag
      */
     @SuppressWarnings("unchecked")
