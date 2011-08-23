@@ -244,7 +244,7 @@ note: help on the ant commands within particular service subprojects can be foun
   </target>
 
   <target name="touch">
-    <touch file="${mst-service}/example/dev.properties" />
+    <ant dir="${mst-service}/example" target="touch" inheritAll="false" />
     <target-custom-services target="touch" />
   </target>
 

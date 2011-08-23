@@ -1092,10 +1092,10 @@ public class NormalizationService extends GenericMetadataService {
                 if (LOG.isDebugEnabled())
                     LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
-				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
-				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
+                addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
+                //addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
-				continue;
+                continue;
             }
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
