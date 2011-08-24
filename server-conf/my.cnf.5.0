@@ -40,6 +40,8 @@ myisam_sort_buffer_size = 64M
 #myisam_max_extra_sort_file_size = 10G
 #transaction_isolation = READ-COMMITTED
 #init_connect = 'SET AUTOCOMMIT=0'
+#log=/export/home/benjamina/var/mysql-query.log
+log-error=/export/home/benjamina/var/mysql-error.log
 
 # added by BDA on 2010-10-07
 # join_buffer_size = 256M
@@ -66,7 +68,7 @@ skip-federated
 
 # Replication Master Server (default)
 # binary logging is required for replication
-log-bin=mysql-bin
+# log-bin=mysql-bin
 
 # required unique id between 1 and 2^32 - 1
 # defaults to 1 if master-host is not set
@@ -130,6 +132,7 @@ server-id	= 1
 
 # Point the following paths to different dedicated disks
 #tmpdir		= /tmp/		
+tmpdir=/xc/mysql/tmp
 #log-update 	= /path-to-dedicated-directory/hostname
 
 # Uncomment the following if you are using BDB tables
@@ -174,3 +177,4 @@ write_buffer = 2M
 
 [mysqlhotcopy]
 interactive-timeout
+
