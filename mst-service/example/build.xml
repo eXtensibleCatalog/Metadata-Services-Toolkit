@@ -37,7 +37,16 @@ commands
     </echo>
   </target>
 
-  <target name="touch">
+  <target name="check-copy-dev.properties">
+    <available property="dev.properties.exists" file="dev.properties" />
+    <antcall target="copy-dev.properties" />
+  </target>
+
+  <target name="copy-dev.properties" unless="dev.properties.exists">
+    <copy file="dev.properties.example" tofile="dev.properties" />
+  </target>
+
+  <target name="touch" depends="check-copy-dev.properties">
     <touch file="dev.properties" />
   </target>
 
