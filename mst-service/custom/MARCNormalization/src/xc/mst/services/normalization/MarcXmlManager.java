@@ -339,20 +339,6 @@ public class MarcXmlManager {
     }
 
     /**
-     * The value of the 014 $a field
-     */
-    private ArrayList<String> field014subfieldA = new ArrayList<String>();
-
-    /**
-     * Gets the 014 data field subfield a
-     *
-     * @return the MARC XML's 014 $a field
-     */
-    public ArrayList<String> getField014subfieldA() {
-        return field014subfieldA;
-    }
-
-    /**
      * The value of the 020 field
      */
     private ArrayList<String> field020 = new ArrayList<String>();
@@ -989,10 +975,6 @@ public class MarcXmlManager {
                 // Get the $b subfields
                 List<String> subfields = getSubfieldValuesOfField(field, 'b');
                 field014subfieldB.addAll(subfields);
-
-                // Get the $a subfields
-                subfields = getSubfieldValuesOfField(field, 'a');
-                field014subfieldA.addAll(subfields);
             }
 
             // If the current field is 035, get its subfields

@@ -10,12 +10,15 @@
 package xc.mst.services.normalization;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
@@ -127,6 +130,8 @@ public class NormalizationService extends GenericMetadataService {
 
     protected XmlHelper xmlHelper = new XmlHelper();
 
+    private HashMap<String, String> m_map_014keyValuePairs;
+
     /**
      * Construct a NormalizationService Object
      */
@@ -135,8 +140,18 @@ public class NormalizationService extends GenericMetadataService {
         try {
             marc21 = getFormatService().getFormatByName("marc21");
             loadConfiguration(getUtil().slurp("service.xccfg", getClass().getClassLoader()));
+            m_map_014keyValuePairs = get014keyValuePairs();
+            for (String key: m_map_014keyValuePairs.keySet()) {
+                LOG.debug("*** m_map_014keyValuePairs, key = "+key);
+            }
+            if (m_map_014keyValuePairs.size() < 1) {
+                LOG.error("*** m_map_014keyValuePairs empty!");
+            }
+
         } catch (DatabaseConfigException e) {
             LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+        } catch (Exception e2) {
+            LOG.error("Problem with init.", e2);
         }
     }
 
@@ -382,9 +397,9 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
                     normalizedXml = locationLimitName(normalizedXml);
 
-                //TODO new step here!
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_014_SOURCE, "0").equals("1"))
+                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_014_SOURCE, "0").equals("1")) {
                     normalizedXml = add014source(normalizedXml);
+                }
 
                 TimingLogger.stop("holdsteps");
             }
@@ -1092,10 +1107,10 @@ public class NormalizationService extends GenericMetadataService {
                 if (LOG.isDebugEnabled())
                     LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
-                addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
-                //addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
+				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
+				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
-                continue;
+				continue;
             }
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
@@ -1845,17 +1860,109 @@ public class NormalizationService extends GenericMetadataService {
         return marcXml;
     }
 
-    //TODO
+    //http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+        List<T> r = new ArrayList<T>(c.size());
+        for(Object o: c)
+          r.add(clazz.cast(o));
+        return r;
+    }
+
+    private HashMap<String,String> get014keyValuePairs() {
+        try {
+            //there is probably a more righteous way to grab the service name.
+            final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCNormalization") +
+                    "/META-INF/classes/xc/mst/services/custom.properties");
+
+            // substitutions.014.key=ocm, pitt, roc
+            // substitutions.014.value=OCoLC, steel, flour
+
+            final List<String> keys = castList(String.class, props.getList("substitutions.014.key"));
+            final List<String> values = castList(String.class, props.getList("substitutions.014.value"));
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            for (int i=0; i<keys.size(); i++) {   //want a guaranteed order
+                if (values.get(i) != null) {
+                    map.put(keys.get(i), values.get(i));
+                }
+                else {
+                    LOG.error("Error less values in substitutions.014.value than keys in substitutions.014.key");
+                }
+            }
+            return map;
+        } catch (Exception e) {
+            LOG.error("Error loading custom.properties for service: "+this.getServiceName(), e);
+            return null;
+        }
+    }
+
     /**
      * if the field 014 has a value beginning with the characters 'ocm' , add a subfield b to the 014 containing the characters 'OCoLC'
      */
     private MarcXmlManager add014source(MarcXmlManager marcXml) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Entering add014source normalization step.");
+        }
 
-        // both $a and $b are (NR) fields (non repeatable)
-        // , check the 014 $a value, if it has what we are looking for, populate $b, if necessary.
-        final ArrayList<String> field014subfieldA = marcXml.getField014subfieldA();
-        //TODO
-        //marcXml.getField014subfieldB()
+        if (m_map_014keyValuePairs == null) {
+            LOG.error("Can not check for 014 datafields - nothing in configuration for 014 data checking.");
+            return marcXml;
+        }
+
+        // Get dataFiled with tag=014
+        List<Element> dataFields = marcXml.getDataFields("014");
+        // Loop through the 014 - note, there will only be 1, max!
+        for (Element dataField : dataFields) {
+
+            // Get all $a for that field (there will only be 1 max)
+            final List<Element> field014subfieldA = marcXml.getSubfieldsOfField(dataField, 'a');
+            // both $a and $b are (NR) fields (non repeatable)
+            // , check the 014 $a value, if it has what we are looking for, populate $b, if necessary.
+            Element _field014subfieldA;
+            if (field014subfieldA != null) {
+                if (field014subfieldA.size() > 0) {
+                    _field014subfieldA = field014subfieldA.get(0);
+                    for (String key: m_map_014keyValuePairs.keySet()) {
+                        if (_field014subfieldA.getText().startsWith(key)) {
+                            LOG.debug("*** Found match "+_field014subfieldA.getText()+" for key:"+key);
+
+                            // not really expecting to find subfield b but need to check.
+                            final ArrayList<String>  field014subfieldB = marcXml.getField014subfieldB();
+                            if (field014subfieldB != null) {
+                                if (field014subfieldB.size() > 0) {
+                                    //problem
+                                    LOG.error("** SUBFIELD B ALREADY EXISTS! "+field014subfieldB.get(0));
+                                }
+                                else {
+                                    // Add the $b subfield to the MARC XML field 014
+                                    Element newSubfieldB = new Element("subfield", marcNamespace);
+                                    newSubfieldB.setAttribute("code", "b");
+                                    newSubfieldB.setText(m_map_014keyValuePairs.get(key));
+
+                                    // Add the $b subfield to the new dataField
+                                    dataField.addContent("\n\t").addContent(newSubfieldB).addContent("\n");
+                                }
+                            }
+                            else {
+
+                                // Add the $b subfield to the MARC XML field 014
+                                Element newSubfieldB = new Element("subfield", marcNamespace);
+                                newSubfieldB.setAttribute("code", "b");
+                                newSubfieldB.setText(m_map_014keyValuePairs.get(key));
+
+                                // Add the $b subfield to the new datafield
+                                dataField.addContent("\n\t").addContent(newSubfieldB).addContent("\n");
+
+                            }
+                            break;
+                        }
+                        else {
+                            LOG.debug("*** No match yet for "+_field014subfieldA.getText()+ " tried key: "+key);
+                        }
+                    }
+                }
+            }
+        }
         return marcXml;
     }
 
@@ -1937,7 +2044,6 @@ public class NormalizationService extends GenericMetadataService {
                 dataField.addContent("\n\t").addContent(index + 1, newSubfieldC).addContent("\n");
             }
         }
-
         return marcXml;
     }
 
