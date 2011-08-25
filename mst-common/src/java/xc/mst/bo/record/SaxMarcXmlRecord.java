@@ -300,18 +300,48 @@ public class SaxMarcXmlRecord implements ContentHandler {
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> get014s(char ind, char code) {
+    public List<String> get014s(char ind, char code, char codeToCheck, String field003) {
+        // for now do an unsolicited check for subfield $b, rather than having the method pass that in.
+
         List<String> the014s = new ArrayList<String>();
+        //blacklist (ignore) if 014 codeToCheck (i.e. subfield $b) does not match field003 or field003 is null
 
         if (marcRecord.getDataFields() != null) {
             List<Field> fields = (List<Field>) marcRecord.getDataFields().get(14);
             if (fields != null) {
+                // note, 014 is an (R) field (repeatable); subfield $a, $b with 014 are not (NR)
                 for (Field f : fields) {
                     if (f.getInd1() == ind) {
                         if (f.getSubfields() != null) {
+                            //1st loop through and check for codeToCheck,
+                            //  if pass that test, loop again and add sf code contents if found
+                            //    seems as though I have to do this because it is a repeatable field.
+                            boolean okay = true;
                             for (Subfield sf : f.getSubfields()) {
-                                if (code == sf.getCode()) {
-                                    the014s.add(sf.getContents());
+                                if (codeToCheck == sf.getCode()) {
+                                    if (field003 != null) {
+                                        if (!field003.equals(sf.getContents())) {
+                                            LOG.debug("** BLACKLIST because field003="+field003+" != compareTo "+sf.getContents());
+                                            okay = false;  // instead of this flag, could break or continue to a label
+                                        }
+                                        else {
+                                            LOG.debug("** PASS because field003="+field003+" same as "+sf.getContents());
+                                        }
+                                    }
+                                    else {
+                                        LOG.debug("** BLACKLIST because field003="+field003+" != compareTo "+sf.getContents());
+                                        okay = false;  // instead of this flag, could break or continue to a label
+                                    }
+                                }
+                                else {
+                                    LOG.debug("** PASS because no subfield to check," +" sf= "+codeToCheck);
+                                }
+                            }
+                            if (okay) {
+                                for (Subfield sf : f.getSubfields()) {
+                                    if (code == sf.getCode()) {
+                                        the014s.add(sf.getContents());
+                                    }
                                 }
                             }
                         }
