@@ -227,6 +227,7 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             if (results.size() != 1) {
+                //TODO incr records counts no output
                 addMessage(recordIn, 108, RecordMessage.ERROR);
             }
             return results;
@@ -1107,8 +1108,9 @@ public class NormalizationService extends GenericMetadataService {
                 if (LOG.isDebugEnabled())
                     LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
+                //The service should ignore any 008 with lang value ‘mul’.  As long as 'mul' does not appear in the .xccfg file, this will
+                // happen and you will see the 'mul' as the language code not found in the message seen in browse records.
 				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
-				//addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, "Unrecognized language code: " + languageCode);
 
 				continue;
             }
@@ -1373,6 +1375,7 @@ public class NormalizationService extends GenericMetadataService {
 
 			if (bSubfield != null || subfield9 != null) {
 	            // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+
 	            addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
 			}
 
