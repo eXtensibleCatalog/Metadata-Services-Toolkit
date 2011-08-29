@@ -32,9 +32,9 @@ import xc.mst.services.impl.service.GenericMetadataServiceService;
 import xc.mst.utils.XmlHelper;
 
 /**
- * 
+ *
  * @author Benjamin D. Anderson
- * 
+ *
  */
 public class XCRecordService extends GenericMetadataServiceService {
 
@@ -57,7 +57,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
     /**
      * Gets a Document Object containing the XC record
-     * 
+     *
      * @return A Document Object containing the XC record
      */
     public Document getXcRecordXml(AggregateXCRecord ar) {
@@ -238,7 +238,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
     /**
      * Adds an element to the XC record at the specified FRBR level
-     * 
+     *
      * @param elementName
      *            The name of the element to add
      * @param elementValue
@@ -294,7 +294,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
     /**
      * Adds a holdings element to the XC record
-     * 
+     *
      * @param holdingsElementContent
      *            The element to add
      */
@@ -313,7 +313,7 @@ public class XCRecordService extends GenericMetadataServiceService {
     /**
      * Adds an title to be added as a titleOfExpression to new expression
      * element in the XC record
-     * 
+     *
      * @param titleOfExpression
      *            The title to add
      */
@@ -328,7 +328,7 @@ public class XCRecordService extends GenericMetadataServiceService {
     /**
      * Adds an element to the XC record to a non-default work level element
      * based on a specific linking field
-     * 
+     *
      * @param elementName
      *            The name of the element to add
      * @param elementValue
@@ -383,7 +383,7 @@ public class XCRecordService extends GenericMetadataServiceService {
      * been checked before. If the same input is passed to this function
      * multiple times, it will return true the first time and false every other
      * time.
-     * 
+     *
      * @param elementName
      *            The name of the element to add
      * @param elementValue
@@ -421,7 +421,7 @@ public class XCRecordService extends GenericMetadataServiceService {
      * been checked before. If the same input is passed to this function
      * multiple times, it will return true the first time and false every other
      * time.
-     * 
+     *
      * @param elementName
      *            The name of the element to add
      * @param elementValue
@@ -457,7 +457,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
     /**
      * Version of getSplitXCRecordXML which uses supplied work and expression ids
-     * 
+     *
      * @param transformationService
      * @return
      */
@@ -478,7 +478,7 @@ public class XCRecordService extends GenericMetadataServiceService {
      * service. Each document in the list represents a FRBR level with its own
      * OAI id.
      * (this one does not appear to be used anywhere!)
-     * 
+     *
      * @param transformationService
      * @return
      */
@@ -779,7 +779,7 @@ public class XCRecordService extends GenericMetadataServiceService {
      * Gets a list of documents that represent the output of transformation
      * service. Each document in the list represents a FRBR level with its own
      * OAI id.
-     * 
+     *
      * @param transformationService
      * @return
      */
@@ -828,7 +828,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
             ar.xcRootElement.addContent(holdingsElement);
             Record r = createRecord(ar, holdingId,
-                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds);
+                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds);  // <-the uplinks
             records.add(r);
             ar.xcRootElement.removeContent();
         }

@@ -116,7 +116,7 @@
       <c:if test="${record.messages != '[]'}">
         messages:
         <c:forEach var="m" items="${record.messages}" varStatus="status">
-          <div class="redError">${m.code}: ${m.message}
+          <div class="redError">${m.message}
           <c:if test="${m.detail != null}">
             ${m.detail}
           </c:if>

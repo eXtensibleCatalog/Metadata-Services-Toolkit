@@ -322,6 +322,8 @@ public class HarvestManager extends WorkerThread {
                             }
                         }
 
+                        //TODO note during unit test, file_harvest, sometimes does not find file to harvest/hangs if a *~ file exists, why?
+                        // maybe if running test 2x?
                         File[] files = folder.listFiles();
                         files = sortFiles(files);
                         for (File file : files) {
@@ -673,7 +675,7 @@ public class HarvestManager extends WorkerThread {
 
     /**
      * Builds and sends an email report about the harvest to the schedule's notify email address.
-     * 
+     *
      * @param problem
      *            The problem which prevented the harvest from finishing, or null if the harvest was successful
      */
