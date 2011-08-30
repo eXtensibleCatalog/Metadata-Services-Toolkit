@@ -38,9 +38,9 @@ import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
- * 
+ *
  * @author Benjamin D. Anderson
- * 
+ *
  */
 public class TransformationDAO extends GenericMetadataServiceDAO {
 
@@ -130,11 +130,17 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                                 } else {
                                     j.increment();
                                 }
-                                os.write(orgCodeBytes);
-                                os.write(tabBytes);
-                                os.write(me.getKey().getBytes());
-                                os.write(tabBytes);
-                                os.write(String.valueOf(me.getValue()).getBytes());
+                                try {   // till we fix up our code me data can be null
+                                    os.write(orgCodeBytes);
+                                    os.write(tabBytes);
+                                    os.write(me.getKey().getBytes());
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(me.getValue()).getBytes());
+                                } catch (Exception e) {
+                                    // TODO test whether catching this too early or whether we need to NOT REPLACE into table if
+                                    //       we get the exception here.
+                                    LOG.error("problem with data - ",e);
+                                }
                             }
                         }
                     }
