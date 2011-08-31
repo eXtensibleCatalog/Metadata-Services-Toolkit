@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
   <responseDate>2011-08-24T12:53:15Z</responseDate>
   <request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
