@@ -174,8 +174,18 @@ HoldingsLocationName = 0
 # location limit name. By default 0
 LocationLimitName = 0
 
-# 1 to add a subfield b to the 014 containing the characters 'OCoLC' 
-# if the field 014 has a value beginning with the chars "OCoLC"
+# 1 to add a subfield b to the 014 containing the characters found in 
+# MARCNormalization custom.properties file substitutions.014.value
+# ,if the field 014 has a value beginning with the chars found in the 
+# MARCNormalization custom.properties file substitutions.014.key
+#
+# For example by default the file contains:
+# substitutions.014.key=ocm
+# substitutions.014.value=OCoLC
+# so in this case if 014 starts with ocm then add a subfield b containing 
+# the characters 'OCoLC'
+#
+# see custom.properties for more information.
 Add014Source = 0
 
 #-----------------------------------------

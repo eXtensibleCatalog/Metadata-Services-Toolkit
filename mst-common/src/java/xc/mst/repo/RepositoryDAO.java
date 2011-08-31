@@ -981,7 +981,7 @@ public class RepositoryDAO extends BaseDAO {
 
     /**
      * check if row returned, if so have records with given status
-     * 
+     *
      * @param name
      *            repo_name
      * @param format_id
@@ -2119,6 +2119,24 @@ public class RepositoryDAO extends BaseDAO {
                                 getTableName(name, RECORDS_TABLE) + " group by status order by status");
         List<Map<String, Object>> rowsByType = null;
 
+        // the below returns something like:
+        //+------+--------+---------+
+        //| type | status | c       |
+        //+------+--------+---------+
+        //| e    | A      | 2808321 |
+        //| h    | A      | 2791443 |
+        //| h    | H      |   10931 |
+        //| m    | A      | 2630614 |
+        //| w    | A      | 2808321 |
+        //+------+--------+---------+
+        //
+        // those results will be used in the record counts summary displayed in a service's log file:
+        //     e-active:   2,808,321                      h-active:   2,791,443                        h-held:      10,931
+        //     m-active:   2,630,614                      w-active:   2,808,321
+        // total-active:  11,038,699                    total-held:      10,931
+        //
+        // (as contrasted with grabbing the data from the outgoing_record_counts table)
+        //
         if (isServiceRepo(name)) {
             rowsByType = this.jdbcTemplate.queryForList(
                     "select type, status, count(*) c from " +

@@ -94,7 +94,10 @@ public class DefaultRepository extends BaseService implements Repository {
                     LOG.debug("config.getProperty(\"version\"): " + config.getProperty("version"));
                     if (previousVersion == null &&
                             currentVersion != null &&
-                            currentVersion.startsWith("0.3.")) {
+                            (currentVersion.startsWith("0.3.") ||
+                             currentVersion.startsWith("1.")
+                             )
+                        ) {
                         getRepositoryDAO().createTables(thisthis);
                     }
                 } catch (Throwable t) {
