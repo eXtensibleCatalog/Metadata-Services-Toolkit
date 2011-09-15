@@ -141,8 +141,8 @@ public class NormalizationService extends GenericMetadataService {
             marc21 = getFormatService().getFormatByName("marc21");
             loadConfiguration(getUtil().slurp("service.xccfg", getClass().getClassLoader()));
             m_map_014keyValuePairs = get014keyValuePairs();
-            for (String key: m_map_014keyValuePairs.keySet()) {
-                LOG.debug("*** m_map_014keyValuePairs, key = "+key);
+            for (String key : m_map_014keyValuePairs.keySet()) {
+                LOG.debug("*** m_map_014keyValuePairs, key = " + key);
             }
             if (m_map_014keyValuePairs.size() < 1) {
                 LOG.error("*** m_map_014keyValuePairs empty!");
@@ -227,7 +227,7 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             if (results.size() != 1) {
-                //TODO incr records counts no output
+                // TODO incr records counts no output
                 addMessage(recordIn, 108, RecordMessage.ERROR);
             }
             return results;
@@ -1108,11 +1108,11 @@ public class NormalizationService extends GenericMetadataService {
                 if (LOG.isDebugEnabled())
                     LOG.debug("Cannot find a language term mapping for the language code " + languageCode + ".");
 
-                //The service should ignore any 008 with lang value ‘mul’.  As long as 'mul' does not appear in the .xccfg file, this will
+                // The service should ignore any 008 with lang value 'mul'. As long as 'mul' does not appear in the .xccfg file, this will
                 // happen and you will see the 'mul' as the language code not found in the message seen in browse records.
-				addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
+                addMessage(marcXml.getInputRecord(), 106, RecordMessage.INFO, languageCode);
 
-				continue;
+                continue;
             }
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the language term " + languageTerm + " for the language code " + languageCode + ".");
@@ -1354,45 +1354,41 @@ public class NormalizationService extends GenericMetadataService {
             for (Element subfield : subfields) {
 
                 // Initialize the aSubfield if we found the $a
-				if(subfield.getAttribute("code").getValue().equals("a"))
-					aSubfield = subfield;
+                if (subfield.getAttribute("code").getValue().equals("a"))
+                    aSubfield = subfield;
 
-				// Initialize the bSubfield if we found the $b
-				if(subfield.getAttribute("code").getValue().equals("b")) {
+                // Initialize the bSubfield if we found the $b
+                if (subfield.getAttribute("code").getValue().equals("b")) {
                     err_sb.append("subfield b");
                     bSubfield = subfield;
                     // addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
                 }
 
-				// Initialize the subfield9 if we found the $9
-				if(subfield.getAttribute("code").getValue().equals("9")) {
-				    err_sb.append("subfield 9");
-					subfield9 = subfield;
-					//addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
-				}
+                // Initialize the subfield9 if we found the $9
+                if (subfield.getAttribute("code").getValue().equals("9")) {
+                    err_sb.append("subfield 9");
+                    subfield9 = subfield;
+                    // addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
+                }
 
             } // end loop over 035 subfields
 
-			if (bSubfield != null || subfield9 != null) {
-	            // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+            if (bSubfield != null || subfield9 != null) {
+                // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
 
-	            addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
-			}
+                addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
+            }
 
-			// Execute only if Fix035 step is enabled
-			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
-				// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
-				if(bSubfield != null)
-				{
-					// Check if the $b subfield was "ocm", "ocn", or "ocl"
-					if(bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl"))
-					{
-						// Try to parse out the control number from the $a subfield
-						if(aSubfield != null)
-						{
-							try
-							{
-								String controlNumber = aSubfield.getText().trim();
+            // Execute only if Fix035 step is enabled
+            if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+                // First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
+                if (bSubfield != null) {
+                    // Check if the $b subfield was "ocm", "ocn", or "ocl"
+                    if (bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl")) {
+                        // Try to parse out the control number from the $a subfield
+                        if (aSubfield != null) {
+                            try {
+                                String controlNumber = aSubfield.getText().trim();
 
                                 // Set $a to (OCoLC)%CONTROL_NUMBER%
                                 aSubfield.setText("(OCoLC)" + controlNumber);
@@ -1863,17 +1859,17 @@ public class NormalizationService extends GenericMetadataService {
         return marcXml;
     }
 
-    //http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+    // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
     public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
         List<T> r = new ArrayList<T>(c.size());
-        for(Object o: c)
-          r.add(clazz.cast(o));
+        for (Object o : c)
+            r.add(clazz.cast(o));
         return r;
     }
 
-    private HashMap<String,String> get014keyValuePairs() {
+    private HashMap<String, String> get014keyValuePairs() {
         try {
-            //there is probably a more righteous way to grab the service name.
+            // there is probably a more righteous way to grab the service name.
             final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCNormalization") +
                     "/META-INF/classes/xc/mst/services/custom.properties");
 
@@ -1884,17 +1880,16 @@ public class NormalizationService extends GenericMetadataService {
             final List<String> values = castList(String.class, props.getList("substitutions.014.value"));
 
             HashMap<String, String> map = new HashMap<String, String>();
-            for (int i=0; i<keys.size(); i++) {   //want a guaranteed order
+            for (int i = 0; i < keys.size(); i++) { // want a guaranteed order
                 if (values.get(i) != null) {
                     map.put(keys.get(i), values.get(i));
-                }
-                else {
+                } else {
                     LOG.error("Error less values in substitutions.014.value than keys in substitutions.014.key");
                 }
             }
             return map;
         } catch (Exception e) {
-            LOG.error("Error loading custom.properties for service: "+this.getServiceName(), e);
+            LOG.error("Error loading custom.properties for service: " + this.getServiceName(), e);
             return null;
         }
     }
@@ -1925,18 +1920,17 @@ public class NormalizationService extends GenericMetadataService {
             if (field014subfieldA != null) {
                 if (field014subfieldA.size() > 0) {
                     _field014subfieldA = field014subfieldA.get(0);
-                    for (String key: m_map_014keyValuePairs.keySet()) {
+                    for (String key : m_map_014keyValuePairs.keySet()) {
                         if (_field014subfieldA.getText().startsWith(key)) {
-                            LOG.debug("*** Found match "+_field014subfieldA.getText()+" for key:"+key);
+                            LOG.debug("*** Found match " + _field014subfieldA.getText() + " for key:" + key);
 
                             // not really expecting to find subfield b but need to check.
-                            final ArrayList<String>  field014subfieldB = marcXml.getField014subfieldB();
+                            final ArrayList<String> field014subfieldB = marcXml.getField014subfieldB();
                             if (field014subfieldB != null) {
                                 if (field014subfieldB.size() > 0) {
-                                    //problem
-                                    LOG.error("** SUBFIELD B ALREADY EXISTS! "+field014subfieldB.get(0));
-                                }
-                                else {
+                                    // problem
+                                    LOG.error("** SUBFIELD B ALREADY EXISTS! " + field014subfieldB.get(0));
+                                } else {
                                     // Add the $b subfield to the MARC XML field 014
                                     Element newSubfieldB = new Element("subfield", marcNamespace);
                                     newSubfieldB.setAttribute("code", "b");
@@ -1945,8 +1939,7 @@ public class NormalizationService extends GenericMetadataService {
                                     // Add the $b subfield to the new dataField
                                     dataField.addContent("\n\t").addContent(newSubfieldB).addContent("\n");
                                 }
-                            }
-                            else {
+                            } else {
 
                                 // Add the $b subfield to the MARC XML field 014
                                 Element newSubfieldB = new Element("subfield", marcNamespace);
@@ -1958,9 +1951,8 @@ public class NormalizationService extends GenericMetadataService {
 
                             }
                             break;
-                        }
-                        else {
-                            LOG.debug("*** No match yet for "+_field014subfieldA.getText()+ " tried key: "+key);
+                        } else {
+                            LOG.debug("*** No match yet for " + _field014subfieldA.getText() + " tried key: " + key);
                         }
                     }
                 }
