@@ -341,16 +341,19 @@ text-decoration:underline;
             <!-- Display of filters In case of successor - end -->
           </div>
 
-          <!-- Display of Search text box - begin -->
+          <!-- Display of Search text box - begin TODO this is going to get changed to include identifiers...-->
           <div class="search_box_div">
             <form name="browseRecordsForm" method="post" action="browseRecords.action">
 
               <input type="text" id="search_text" name="query" value="<c:out escapeXml="true" value="${query}" />" size="40"/>&nbsp;&nbsp;&nbsp;
               <button class="xc_button" type="submit" name="save" >Search</button>
-              <br><input type="checkbox" id="search_xml" name="searchXML" value="true"
-              <c:if test="${searchXML}">
-                checked
-              </c:if>/> Search Full XML content
+	      <br>
+
+	      <s:combobox label="Identifier?" 
+		headerKey="-1" headerValue="--- Select ---"
+		list="identifiers" 
+		name="identifier" />
+  
             </form>
           </div>
           <!-- Display of Search text box - end -->

@@ -42,8 +42,9 @@ public class MSTServletFilter implements Filter {
         SessionFactory sessionFactory = (SessionFactory)MSTConfiguration.getInstance().getBean("SessionFactory");
         sessionFactory.openSession();
         */
+        HttpServletRequest hsr=null;
         try {
-            HttpServletRequest hsr = (HttpServletRequest) req;
+            hsr = (HttpServletRequest) req;
             LOG.debug("hsr.getRequestURI(): " + hsr.getRequestURI());
             if (hsr.getRequestURI().contains("/solr/") || hsr.getRequestURI().contains("/devAdmin")) {
                 if (hsr.getSession().getAttribute("user") == null) {
@@ -71,7 +72,7 @@ public class MSTServletFilter implements Filter {
             req.setCharacterEncoding("UTF-8");
             chain.doFilter(req, resp);
         } catch (Throwable t) {
-            LOG.error("", t);
+            LOG.error("Exception, initial URI:  hsr.getRequestURI(): " + hsr.getRequestURI(), t);
         } finally {
             // sessionFactory.close();
         }

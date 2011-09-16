@@ -26,7 +26,7 @@
     method="html"
     indent="yes"
     encoding="utf-8"
-    media-type="text/html; charset=UTF-8"
+    media-type="text/html"
     doctype-public="-//W3C//DTD HTML 4.01//EN"
     doctype-system="http://www.w3.org/TR/html4/strict.dtd" />
 
@@ -36,11 +36,11 @@
         <link rel="stylesheet" type="text/css" href="solr-admin.css"></link>
         <link rel="icon" href="favicon.ico" type="image/ico"></link>
         <link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
-        <title>SOLR Info</title>
+        <title>Solr Info</title>
       </head>
       <body>
         <a href=".">
-          <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR"/>
+          <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="Apache Solr"/>
         </a>
         <h1>Solr Admin (<xsl:value-of select="solr/meta/collection" />)</h1>
         <h2>Thread Dump</h2>
@@ -78,11 +78,11 @@
       <!-- OG: TODO: add suspended/native conditionals -->
       <tr>
         <td style="margin-left: 1em; font-weight: bold;">
-          '<xsl:value-of select="name"/>'
-          Id=<xsl:value-of select="id"/>,
-          <xsl:value-of select="state"/>
-          on lock=<xsl:value-of select="lock"/>,
-          total cpu time=<xsl:value-of select="cpuTime"/>
+          '<xsl:value-of select="name"/>' 
+          Id=<xsl:value-of select="id"/>, 
+          <xsl:value-of select="state"/> 
+          on lock=<xsl:value-of select="lock"/>, 
+          total cpu time=<xsl:value-of select="cpuTime"/> 
           user time=<xsl:value-of select="userTime"/>
         </td>
       </tr>

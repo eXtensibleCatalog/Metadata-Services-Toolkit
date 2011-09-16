@@ -92,7 +92,7 @@
             <artifact name="commons-beanutils" type="jar"/>
         </dependency>
 
-         <dependency org="commons-collections" name="commons-collections" rev="3.2" transitive="false">
+         <dependency org="commons-collections" name="commons-collections" rev="3.2"  transitive="false">
             <artifact name="commons-collections" type="jar"/>
         </dependency>
 
@@ -108,16 +108,17 @@
             <artifact name="jconfig" type="jar"/>
         </dependency>
 
-        <dependency org="org.apache.lucene" name="lucene-core" rev="2.9.1" transitive="false">
+        <dependency org="org.apache.lucene" name="lucene-core" rev="3.4.0" transitive="false">
             <artifact name="lucene-core" type="jar"/>
         </dependency>
 
-        <dependency org="org.apache.solr" name="solr-solrj" rev="1.4.0" transitive="true">
+            <!--artifact name="jaxp-api" type="jar" url="http://repo1.maven.org/maven2/javax/xml/jaxp-api/1.4.2/jaxp-api-1.4.2.jar"/-->
+        <dependency org="org.apache.solr" name="solr-solrj" rev="3.4.0" transitive="true">
             <artifact name="solr-solrj" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
         </dependency>
 
-        <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="1.4.0" transitive="true">
+        <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="3.4.0" transitive="true">
             <artifact name="solr-dataimporthandler" type="jar"/>
         </dependency>
 
@@ -130,19 +131,40 @@
         </dependency>
     -->
 
-        <dependency org="org.apache.solr" name="solr-core" rev="1.4.0" transitive="true">
+        <dependency org="org.apache.solr" name="solr-core" rev="3.4.0" transitive="true">
             <artifact name="solr-core" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
         </dependency>
 
-        <dependency org="org.apache.lucene" name="lucene-highlighter" rev="2.9.1" transitive="false">
+        <dependency org="org.apache.solr" name="solr-commons-csv" rev="3.4.0" transitive="true">
+            <artifact name="solr-commons-csv" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+        </dependency>
+
+        <dependency org="org.apache.lucene" name="lucene-highlighter" rev="3.4.0" transitive="false">
             <artifact name="lucene-highlighter" type="jar"/>
         </dependency>
+	<!--cannot find a snowball in latest lucene-->
+	<!--
         <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.9.1" transitive="false">
             <artifact name="lucene-snowball" type="jar"/>
-        </dependency>
-        <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="2.9.1" transitive="false">
+	</dependency> 
+	-->
+        <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="3.4.0" transitive="false">
             <artifact name="lucene-spellchecker" type="jar"/>
+        </dependency>
+	<!--add-->
+        <dependency org="org.apache.lucene" name="lucene-analyzers" rev="3.4.0" transitive="false">
+            <artifact name="lucene-analyzers" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-memory" rev="3.4.0" transitive="false">
+            <artifact name="lucene-memory" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-misc" rev="3.4.0" transitive="false">
+            <artifact name="lucene-misc" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-queries" rev="3.4.0" transitive="false">
+            <artifact name="lucene-queries" type="jar"/>
         </dependency>
         <dependency org="stax-utils" name="stax-utils" rev="snapshot-20040917" transitive="false">
             <artifact name="stax-utils" type="jar"/>
@@ -152,7 +174,7 @@
             <artifact name="mysql-connector-java" type="jar"/>
         </dependency>
 
-        <dependency org="log4j" name="log4j" rev="1.2.14">
+        <dependency org="log4j" name="log4j" rev="1.2.14" conf="default->master,javadoc">
             <artifact name="log4j" type="jar"/>
         </dependency>
 

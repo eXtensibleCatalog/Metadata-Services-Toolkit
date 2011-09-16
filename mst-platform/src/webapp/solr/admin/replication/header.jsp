@@ -15,12 +15,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 --%>
-<!-- $Id: header.jsp 809125 2009-08-29 12:46:54Z noble $ -->
+<!-- $Id: header.jsp 1151947 2011-07-28 18:07:54Z hossman $ -->
 <%@ page import="org.apache.solr.common.util.NamedList,
-         org.apache.solr.common.util.SimpleOrderedMap,
-         org.apache.solr.request.LocalSolrQueryRequest,
-         org.apache.solr.request.SolrQueryResponse,
-         org.apache.solr.request.SolrRequestHandler,
+				 org.apache.solr.common.util.SimpleOrderedMap,
+				 org.apache.solr.request.LocalSolrQueryRequest,
+				 org.apache.solr.response.SolrQueryResponse,
+				 org.apache.solr.request.SolrRequestHandler,
                                  java.util.Map"%>
 <%@ page import="org.apache.solr.handler.ReplicationHandler" %>
 <%
@@ -41,7 +41,7 @@ var host_name="<%= hostname %>"
 <link rel="icon" href="../favicon.ico" type="image/ico" />
 <link rel="shortcut icon" href="../favicon.ico" type="image/ico" />
 <title>Solr replication admin page</title>
-<script type="text/javascript" src="../jquery-1.2.3.min.js"></script>
+<script type="text/javascript" src="../jquery-1.4.3.min.js"></script>
 
 <%!
 public NamedList executeCommand(String command, SolrCore core, SolrRequestHandler rh){
@@ -51,7 +51,7 @@ public NamedList executeCommand(String command, SolrCore core, SolrRequestHandle
     SolrQueryResponse rsp = new SolrQueryResponse();
     core.execute(rh, solrqreq, rsp);
     namedlist = rsp.getValues();
-  return namedlist;
+	return namedlist;
 }
 %>
 
@@ -72,7 +72,7 @@ NamedList detailsMap = (NamedList)namedlist.get("details");
 
 <body>
 <a href=".."><img border="0" align="right" height="78" width="142" src="../solr_small.png" alt="Solr"></a>
-<h1>Solr replication (<%= collectionName %>)
+<h1>Solr replication (<%= collectionName %>) 
 
 <%
 if(detailsMap != null){

@@ -26,7 +26,7 @@
     method="html"
     indent="yes"
     encoding="utf-8"
-    media-type="text/html; charset=UTF-8"
+    media-type="text/html"
     doctype-public="-//W3C//DTD HTML 4.01//EN"
     doctype-system="http://www.w3.org/TR/html4/strict.dtd" />
 
@@ -36,11 +36,11 @@
         <link rel="stylesheet" type="text/css" href="solr-admin.css"></link>
         <link rel="icon" href="favicon.ico" type="image/ico"></link>
         <link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
-        <title>SOLR Info</title>
+        <title>Solr Info</title>
       </head>
       <body>
         <a href="">
-          <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR"/>
+          <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="Apache Solr"/>
   </a>
         <h1>Solr Admin (<xsl:value-of select="solr/meta/collection" />)</h1>
         <div style="margin-top: 1em;">
@@ -109,7 +109,7 @@
 <xsl:template match="solr/analysis/results/indexAnalyzer/factory/args">
   <div style="margin-left: 2em; font-weight: bold;">{
   <xsl:for-each select="arg">
-    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>,
+    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>, 
   </xsl:for-each>
   }</div>
 </xsl:template>
@@ -148,7 +148,7 @@
 <xsl:template match="solr/analysis/results/queryAnalyzer/factory/args">
   <div style="margin-left: 2em; font-weight: bold;">{
   <xsl:for-each select="arg">
-    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>,
+    <xsl:apply-templates select="@name"/>=<xsl:value-of select="."/>, 
   </xsl:for-each>
   }</div>
 </xsl:template>
