@@ -117,11 +117,13 @@
         <dependency org="org.apache.solr" name="solr-solrj" rev="3.4.0" transitive="true">
             <artifact name="solr-solrj" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
         </dependency>
 
         <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="3.4.0" transitive="true">
             <artifact name="solr-dataimporthandler" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
         </dependency>
 
     <!--
@@ -136,11 +138,13 @@
         <dependency org="org.apache.solr" name="solr-core" rev="3.4.0" transitive="true">
             <artifact name="solr-core" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
         </dependency>
 
         <dependency org="org.apache.solr" name="solr-commons-csv" rev="3.4.0" transitive="true">
             <artifact name="solr-commons-csv" type="jar"/>
       <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
         </dependency>
 
         <dependency org="org.apache.lucene" name="lucene-highlighter" rev="3.4.0" transitive="false">
