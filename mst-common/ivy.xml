@@ -121,6 +121,7 @@
 
         <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="3.4.0" transitive="true">
             <artifact name="solr-dataimporthandler" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
         </dependency>
 
     <!--

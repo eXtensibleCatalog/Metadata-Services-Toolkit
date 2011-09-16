@@ -22,7 +22,7 @@
 	<classpathentry kind="lib" path="build/lib/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-io-1.4.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-lang-2.5.jar"/>
-	<classpathentry kind="lib" path="build/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="build/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-pool-1.3.jar"/>
 	<classpathentry kind="lib" path="build/lib/cpptasks-1.0b3.jar"/>
 	<classpathentry kind="lib" path="build/lib/dom4j-1.6.1.jar"/>
@@ -50,7 +50,7 @@
 	<classpathentry kind="lib" path="build/lib/mysql-connector-java-5.0.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/servlet-api-6.0.18.jar"/>
-	<classpathentry kind="lib" path="build/lib/slf4j-api-1.6.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/solr-commons-csv-3.4.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/solr-core-3.4.0.jar"/>
