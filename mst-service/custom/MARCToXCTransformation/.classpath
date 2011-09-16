@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test/java"/>
 	<classpathentry kind="lib" path="build/lib/activation-1.1.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
+	<classpathentry kind="lib" path="build/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="build/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="build/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/asm-tree-3.1.jar"/>
@@ -38,7 +38,7 @@
 	<classpathentry kind="lib" path="build/lib/jsp-api-6.0.18.jar"/>
 	<classpathentry kind="lib" path="build/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="build/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-analyzers-3.4.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-core-3.4.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-highlighter-3.4.0.jar"/>
