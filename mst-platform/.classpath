@@ -39,23 +39,23 @@
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-analyzers-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-core-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-highlighter-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-memory-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-misc-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-queries-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-spellchecker-3.4.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-analyzers-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-highlighter-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-memory-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-misc-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-queries-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/lucene-spellchecker-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/mail-1.4.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/mysql-connector-java-5.0.8.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/servlet-api-6.0.18.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/slf4j-log4j12-1.6.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-commons-csv-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-core-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-dataimporthandler-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-solrj-3.4.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-commons-csv-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-dataimporthandler-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-solrj-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/spring-aop-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/spring-asm-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/spring-beans-3.0.2.RELEASE.jar"/>

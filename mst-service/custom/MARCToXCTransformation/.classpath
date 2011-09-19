@@ -39,13 +39,13 @@
 	<classpathentry kind="lib" path="build/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-analyzers-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-core-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-highlighter-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-memory-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-misc-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-queries-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-spellchecker-3.4.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-analyzers-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-highlighter-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-memory-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-misc-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-queries-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-spellchecker-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/mail-1.4.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/mysql-connector-java-5.0.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/ognl-3.0.jar"/>
@@ -53,11 +53,11 @@
 	<classpathentry kind="lib" path="build/lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/servlet-api-6.0.18.jar"/>
 	<classpathentry kind="lib" path="build/lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/solr-commons-csv-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/solr-core-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/solr-dataimporthandler-3.4.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/solr-solrj-3.4.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/solr-commons-csv-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/solr-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/solr-dataimporthandler-3.3.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/solr-solrj-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/spring-aop-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="build/lib/spring-asm-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="build/lib/spring-beans-3.0.2.RELEASE.jar"/>
