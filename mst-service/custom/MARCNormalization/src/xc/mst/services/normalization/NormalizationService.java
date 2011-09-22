@@ -9,6 +9,8 @@
 
 package xc.mst.services.normalization;
 
+import static xc.mst.services.normalization.NormalizationServiceConstants.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -131,9 +133,11 @@ public class NormalizationService extends GenericMetadataService {
     protected XmlHelper xmlHelper = new XmlHelper();
 
     private HashMap<String, String> m_map_014keyValuePairs;
+    //private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
 
     /**
      * Construct a NormalizationService Object
+     * - note this is called by spring
      */
     public void init() {
         // Initialize the XC format
@@ -190,6 +194,7 @@ public class NormalizationService extends GenericMetadataService {
 
     @Override
     public List<OutputRecord> process(InputRecord recordIn) {
+
         TimingLogger.add("xpath", 0);
         LOG.debug("recordIn.getId(): " + recordIn.getId());
         TimingLogger.start("processRecord");
@@ -238,8 +243,9 @@ public class NormalizationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> convertRecord(InputRecord record) {
+
         // Empty the lists of errors because we're beginning to process a new record
-        errors = new ArrayList<RecordMessage>();
+        errors = new ArrayList<RecordMessage>();  // are these largely or entirely unused?
         outputRecordErrors = new ArrayList<RecordMessage>();
 
         // The list of records resulting from processing the incoming record
@@ -275,112 +281,112 @@ public class NormalizationService extends GenericMetadataService {
 
                 type = "b";
                 ((Record) record).setType(type);
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
                     normalizedXml = removeOcolc003(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DCMI_TYPE_06, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DCMI_TYPE_06, "0").equals("1"))
                     normalizedXml = dcmiType06(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LEADER_06_VOCAB, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_LEADER_06_VOCAB, "0").equals("1"))
                     normalizedXml = leader06MarcVocab(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_007_VOCAB_06, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_007_VOCAB_06, "0").equals("1"))
                     normalizedXml = vocab06(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_MODE_OF_ISSUANCE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_MODE_OF_ISSUANCE, "0").equals("1"))
                     normalizedXml = modeOfIssuance(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_MOVE_MARC_ORG_CODE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_MOVE_MARC_ORG_CODE, "0").equals("1"))
                     normalizedXml = moveMarcOrgCode(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DCMI_TYPE_00_07, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DCMI_TYPE_00_07, "0").equals("1"))
                     normalizedXml = dcmiType0007(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_007_VOCAB, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_007_VOCAB, "0").equals("1"))
                     normalizedXml = vocab007(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_007_SMD_TYPE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_007_SMD_TYPE, "0").equals("1"))
                     normalizedXml = smdType007(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FICTION_OR_NONFICTION, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_FICTION_OR_NONFICTION, "0").equals("1"))
                     normalizedXml = fictionOrNonfiction(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_008_DATE_RANGE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_008_DATE_RANGE, "0").equals("1"))
                     normalizedXml = dateRange(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LANGUAGE_SPLIT, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_LANGUAGE_SPLIT, "0").equals("1"))
                     normalizedXml = languageSplit(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LANGUAGE_TERM, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_LANGUAGE_TERM, "0").equals("1"))
                     normalizedXml = languageTerm(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_008_AUDIENCE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_008_AUDIENCE, "0").equals("1"))
                     normalizedXml = audienceFrom008(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_008_THESIS, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_008_THESIS, "0").equals("1"))
                     normalizedXml = thesisFrom008(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_ISBN_CLEANUP, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_ISBN_CLEANUP, "0").equals("1"))
                     normalizedXml = isbnCleanup(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
                     normalizedXml = supplyMARCOrgCode(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")
-                        || enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
-                        || enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
+                if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")
+                        || enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
+                        || enabledSteps.getProperty(CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
                     normalizedXml = fix035(normalizedXml);
                 }
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_035, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_035, "0").equals("1"))
                     normalizedXml = dedup035(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_ROLE_AUTHOR, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_ROLE_AUTHOR, "0").equals("1"))
                     normalizedXml = roleAuthor(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_ROLE_COMPOSER, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_ROLE_COMPOSER, "0").equals("1"))
                     normalizedXml = roleComposer(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_UNIFORM_TITLE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_UNIFORM_TITLE, "0").equals("1"))
                     normalizedXml = uniformTitle(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_NRU_GENRE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_NRU_GENRE, "0").equals("1"))
                     normalizedXml = nruGenre(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TOPIC_SPLIT, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_TOPIC_SPLIT, "0").equals("1"))
                     normalizedXml = topicSplit(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_CHRON_SPLIT, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_CHRON_SPLIT, "0").equals("1"))
                     normalizedXml = chronSplit(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_GEOG_SPLIT, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_GEOG_SPLIT, "0").equals("1"))
                     normalizedXml = geogSplit(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_GENRE_SPLIT, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_GENRE_SPLIT, "0").equals("1"))
                     normalizedXml = genreSplit(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_DCMI_TYPE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_DCMI_TYPE, "0").equals("1"))
                     normalizedXml = dedupDcmiType(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_007_VOCAB, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_007_VOCAB, "0").equals("1"))
                     normalizedXml = dedup007Vocab(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_SEPERATE_NAME, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_SEPERATE_NAME, "0").equals("1"))
                     normalizedXml = seperateName(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_DEDUP_9XX, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_9XX, "0").equals("1"))
                     normalizedXml = dedup9XX(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_TITLE_ARTICLE, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_TITLE_ARTICLE, "0").equals("1"))
                     normalizedXml = titleArticle(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_BIB_LOCATION_NAME, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_BIB_LOCATION_NAME, "0").equals("1"))
                     normalizedXml = bibLocationName(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_III_LOCATION_NAME, "0").equals("1"))
                     normalizedXml = IIILocationName(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_REMOVE_945_FIELD, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_REMOVE_945_FIELD, "0").equals("1"))
                     normalizedXml = remove945Field(normalizedXml);
 
                 TimingLogger.stop("bibsteps");
@@ -392,13 +398,13 @@ public class NormalizationService extends GenericMetadataService {
 
                 type = "h";
                 ((Record) record).setType(type);
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
                     normalizedXml = holdingsLocationName(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
+                if (enabledSteps.getProperty(CONFIG_ENABLED_LOCATION_LIMIT_NAME, "0").equals("1"))
                     normalizedXml = locationLimitName(normalizedXml);
 
-                if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_014_SOURCE, "0").equals("1")) {
+                if (enabledSteps.getProperty(CONFIG_ENABLED_014_SOURCE, "0").equals("1")) {
                     normalizedXml = add014source(normalizedXml);
                 }
 
@@ -408,6 +414,7 @@ public class NormalizationService extends GenericMetadataService {
             if (LOG.isDebugEnabled())
                 LOG.debug("Adding errors to the record.");
 
+            //TODO who / where does errors get added to?
             record.setMessages(errors);
 
             if (LOG.isDebugEnabled())
@@ -567,7 +574,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Found the DCMI Type " + dcmiType + " for the leader 06 value of " + leader06 + ".");
 
             // Add a MARCXML field to store the DCMI Type
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType);
+            marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType);
         }
 
         String field006 = marcXml.getField006();
@@ -589,7 +596,7 @@ public class NormalizationService extends GenericMetadataService {
                     LOG.debug("Found the DCMI Type " + dcmiType006_0 + " for the 006 offset 0 value of " + field006_0 + ".");
 
                 // Add a MARCXML field to store the DCMI Type
-                marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType006_0);
+                marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType006_0);
             }
         }
 
@@ -628,7 +635,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Found the MARC vocabulary " + marcVocab + " for the leader 06 value of " + leader06 + ".");
 
             // Add a MARCXML field to store the SMD Vocab
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_MARC_VOCAB, marcVocab);
+            marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab);
         }
 
         String field006 = marcXml.getField006();
@@ -650,7 +657,7 @@ public class NormalizationService extends GenericMetadataService {
                     LOG.debug("Found the MARC vocabulary " + marcVocab006_0 + " for the 006 offset 0 value of " + marcVocab006_0 + ".");
 
                 // Add a MARCXML field to store the SMD Vocab
-                marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
+                marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
             }
         }
 
@@ -690,7 +697,7 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("Found the vocab " + marcVocab + " for the leader 06 value of " + leader06 + ".");
 
         // Add a MARCXML field to store the SMD Vocab
-        marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, marcVocab);
+        marcXml.addMarcXmlField(FIELD_9XX_007_VOCAB, marcVocab);
 
         // Return the modified MARCXML record
         return marcXml;
@@ -728,7 +735,7 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("Found the mode of issuance " + modeOfIssuance + " for the leader 07 value of " + leader07 + ".");
 
         // Add a MARCXML field to store the mode of issuance
-        marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_MODE_OF_ISSUANCE, modeOfIssuance);
+        marcXml.addMarcXmlField(FIELD_9XX_MODE_OF_ISSUANCE, modeOfIssuance);
 
         return marcXml;
     }
@@ -762,7 +769,7 @@ public class NormalizationService extends GenericMetadataService {
             return marcXml;
         }
 
-        boolean moveAllOrgCodes = enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_MOVE_ALL_MARC_ORG_CODES, "0").equals("1");
+        boolean moveAllOrgCodes = enabledSteps.getProperty(CONFIG_MOVE_ALL_MARC_ORG_CODES, "0").equals("1");
 
         // Create the new 035 field
         if (moveAllOrgCodes || control003.equalsIgnoreCase(getOrganizationCode())) {
@@ -826,7 +833,7 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("Found the DCMI Type " + dcmiType + " for the 007 offset 00 value of " + field007offset00 + ".");
 
         // Add a MARCXML field to store the DCMI Type
-        marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE, dcmiType);
+        marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType);
 
         // Return the modified MARCXML record
         return marcXml;
@@ -869,7 +876,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Found the 007 Vocab " + smdVocab + " for the 007 offset 00 value of " + field007offset00 + ".");
 
             // Add a MARCXML field to store the SMD Vocab
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB, smdVocab);
+            marcXml.addMarcXmlField(FIELD_9XX_007_VOCAB, smdVocab);
         }
 
         // Return the modified MARCXML record
@@ -912,7 +919,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Found the SMD type " + smdVocab + " for the 007 offset 00 and 01 values of " + field007offset00and01 + ".");
 
             // Add a MARCXML field to store the SMD Vocab
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_SMD_VOCAB, smdVocab);
+            marcXml.addMarcXmlField(FIELD_9XX_SMD_VOCAB, smdVocab);
 
         }
 
@@ -951,9 +958,9 @@ public class NormalizationService extends GenericMetadataService {
 
         // Add the fiction or nonfiction field
         if (field008offset33 == '1' || field008offset33 == 'd' || field008offset33 == 'j' || field008offset33 == 'f' || field008offset33 == 'p')
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
+            marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
         else
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");
+            marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");
 
         // Return the modified MARCXML record
         return marcXml;
@@ -992,7 +999,7 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("008 offset 6 was 'c', 'd' or 'k' so we will add a field with the date range " + dateRange + ".");
 
         // Add the date range field
-        marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DATE_RANGE, dateRange);
+        marcXml.addMarcXmlField(FIELD_9XX_DATE_RANGE, dateRange);
 
         return marcXml;
     }
@@ -1072,7 +1079,7 @@ public class NormalizationService extends GenericMetadataService {
         // Add each language to the MARCXML in a new field
         for (String language : languages)
             if (!language.equals("   ")) {
-                marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT, language);
+                marcXml.addMarcXmlField(FIELD_9XX_LANGUAGE_SPLIT, language);
             }
 
         return marcXml;
@@ -1119,7 +1126,7 @@ public class NormalizationService extends GenericMetadataService {
 
             // Add a MARCXML field to store the SMD Vocab
 
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_TERM, languageTerm);
+            marcXml.addMarcXmlField(FIELD_9XX_LANGUAGE_TERM, languageTerm);
         }
 
         return marcXml;
@@ -1167,7 +1174,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
 
             // Add a MARCXML field to store the audience
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_AUDIENCE, audience);
+            marcXml.addMarcXmlField(FIELD_9XX_AUDIENCE, audience);
         }
 
         return marcXml;
@@ -1255,7 +1262,7 @@ public class NormalizationService extends GenericMetadataService {
                 LOG.debug("Adding the cleaned up ISBN number " + cleanIsbn + " to the normalized record.");
 
             // Add the cleaned up ISBN to the MARCXML in a new field
-            marcXml.addMarcXmlField(NormalizationServiceConstants.FIELD_9XX_CLEAN_ISBN, cleanIsbn);
+            marcXml.addMarcXmlField(FIELD_9XX_CLEAN_ISBN, cleanIsbn);
         }
 
         return marcXml;
@@ -1276,6 +1283,7 @@ public class NormalizationService extends GenericMetadataService {
 
         // Get the 001 and 003 control fields
         String control001 = marcXml.getField001();
+
         String control003 = marcXml.getField003();
 
         // If either control field didn't exist, we don't have to do anything
@@ -1299,7 +1307,7 @@ public class NormalizationService extends GenericMetadataService {
 
             control001 = control001.substring(new003.length());
         } else {
-            // Add an 003 to thee header
+            // Add an 003 to the header
             new003 = getOrganizationCode();
         }
 
@@ -1380,7 +1388,7 @@ public class NormalizationService extends GenericMetadataService {
 			}
 
 			// Execute only if Fix035 step is enabled
-			if(enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+			if(enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
 				// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
 				if(bSubfield != null)
 				{
@@ -1415,7 +1423,7 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             // Execute only if Fix035Code9 step is enabled
-            if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
+            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
                 // Forth case: $9 = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
                 if (subfield9 != null && (subfield9.getText().startsWith("ocm") || subfield9.getText().startsWith("ocn") || subfield9.getText().startsWith("ocl"))) {
                     // Add an $a subfield if there wasn't one
@@ -1431,7 +1439,7 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             // Execute only if Fix035 step is enabled
-            if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
                 // If the $a has more than one prefix, only use the first one
                 if (aSubfield != null) {
                     String aSubfieldText = aSubfield.getText();
@@ -1441,7 +1449,7 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             // Execute only if 035LeadingZero step is enabled. Removes leading zeros in 035 $a records. Changes (OCoLC)00021452 to (OCoLC)21452
-            if (enabledSteps.getProperty(NormalizationServiceConstants.CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")) {
+            if (enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")) {
 
                 if (aSubfield != null) {
                     // Get value of $a
@@ -1707,7 +1715,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("650");
 
         // Copy the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_TOPIC_SPLIT, "vxyz");
+        marcXml.splitField(tagsToCopy, FIELD_9XX_TOPIC_SPLIT, "vxyz");
 
         // Add the fields which we want to copy just the $x subfield from
         tagsToCopy.add("648");
@@ -1718,7 +1726,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("655");
 
         // Copy just the $x subfields of the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_TOPIC_SPLIT, 'x');
+        marcXml.splitField(tagsToCopy, FIELD_9XX_TOPIC_SPLIT, 'x');
 
         return marcXml;
     }
@@ -1739,7 +1747,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("648");
 
         // Copy the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_CHRON_SPLIT, "vxyz");
+        marcXml.splitField(tagsToCopy, FIELD_9XX_CHRON_SPLIT, "vxyz");
 
         // Add the fields which we want to copy just the $y subfield from
         tagsToCopy.add("600");
@@ -1754,7 +1762,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("655");
 
         // Copy just the $y subfields of the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_CHRON_SPLIT, 'y');
+        marcXml.splitField(tagsToCopy, FIELD_9XX_CHRON_SPLIT, 'y');
 
         return marcXml;
     }
@@ -1775,7 +1783,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("651");
 
         // Copy the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_GEOG_SPLIT, "vxyz");
+        marcXml.splitField(tagsToCopy, FIELD_9XX_GEOG_SPLIT, "vxyz");
 
         // Add the fields which we want to copy just the $z subfield from
         tagsToCopy.add("600");
@@ -1790,7 +1798,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("655");
 
         // Copy just the $z subfields of the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_GEOG_SPLIT, 'z');
+        marcXml.splitField(tagsToCopy, FIELD_9XX_GEOG_SPLIT, 'z');
 
         return marcXml;
     }
@@ -1811,7 +1819,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("655");
 
         // Copy the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_GENRE_SPLIT, "vxyz");
+        marcXml.splitField(tagsToCopy, FIELD_9XX_GENRE_SPLIT, "vxyz");
 
         // Reset tags to copy to contain only those fields which we want to copy just the $v subfield from
         tagsToCopy.add("600");
@@ -1826,7 +1834,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("651");
 
         // Copy just the $v subfields of the fields
-        marcXml.splitField(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_GENRE_SPLIT, 'v');
+        marcXml.splitField(tagsToCopy, FIELD_9XX_GENRE_SPLIT, 'v');
 
         return marcXml;
     }
@@ -1842,7 +1850,7 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering DedupDCMIType normalization step.");
 
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_DCMI_TYPE);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_DCMI_TYPE);
 
         return marcXml;
     }
@@ -1858,7 +1866,7 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering Dedup007Vocab normalization step.");
 
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_007_VOCAB);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_007_VOCAB);
 
         return marcXml;
     }
@@ -2016,10 +2024,10 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering holdingsLocationName normalization step.");
 
-        // Get dataFiled with tag=852
+        // Get dataField with tag=852
         List<Element> dataFields = marcXml.getDataFields("852");
 
-        // Lopp through the 852
+        // Loop through the 852
         for (Element dataField : dataFields) {
 
             // Get all $b for that field
@@ -2062,10 +2070,10 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering locationLimitName normalization step.");
 
-        // Get dataFiled with tag=852
+        // Get dataField with tag=852
         List<Element> dataFields = marcXml.getDataFields("852");
 
-        // Lopp through the 852
+        // Loop through the 852
         for (Element dataField : dataFields) {
 
             // Get all $b for that field
@@ -2205,7 +2213,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("711");
 
         // Copy the fields, but only if they contain a $t subfield
-        marcXml.seperateNames(tagsToCopy, NormalizationServiceConstants.FIELD_9XX_SEPERATE_NAME);
+        marcXml.seperateNames(tagsToCopy, FIELD_9XX_SEPERATE_NAME);
 
         return marcXml;
     }
@@ -2251,10 +2259,10 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering Dedup9XX normalization step.");
 
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_CHRON_SPLIT);
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_TOPIC_SPLIT);
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_GEOG_SPLIT);
-        marcXml.deduplicateMarcXmlField(NormalizationServiceConstants.FIELD_9XX_GENRE_SPLIT);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_CHRON_SPLIT);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_TOPIC_SPLIT);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_GEOG_SPLIT);
+        marcXml.deduplicateMarcXmlField(FIELD_9XX_GENRE_SPLIT);
         marcXml.deduplicateMarcXml959Field();
 
         return marcXml;
@@ -2387,6 +2395,42 @@ public class NormalizationService extends GenericMetadataService {
     protected String getOrganizationCode() {
         return enabledSteps.getProperty("OrganizationCode");
     }
+
+    /*
+    //for solr indexer
+    public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
+        //implement here is decide to go back to way where individual service provides identifiers.
+        // Get the 001 and 003 control fields
+
+        // The XML after normalizing the record
+        Element marcXml = null;
+
+        //TimingLogger.start("create dom");
+        ri.setMode(Record.JDOM_MODE);
+        marcXml = ri.getOaiXmlEl();
+        //TimingLogger.stop("create dom");
+
+        // Create a MarcXmlManagerForNormalizationService for the record
+        MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
+        normalizedXml.setInputRecord(ri);
+
+        ArrayList<RegisteredData> identifiers = new ArrayList<RegisteredData> ();
+        String control001 = normalizedXml.getField001();
+        String control245 = normalizedXml.getField245();
+
+        if (control001 != null) {
+            identifiers.add(new RegisteredData("id_001_key", control001, "001"));
+        }
+        // call it 'title?'
+        if (control245 != null) {
+            identifiers.add(new RegisteredData("id_title_key", control245, "title"));
+        }
+        if (identifiers.size() <1) {
+            LOG.error("*** NO NORM. IDENTIFIERS FOUND! for"+ri.getId());
+        }
+        return identifiers;
+    }
+    */
 
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
         /*
