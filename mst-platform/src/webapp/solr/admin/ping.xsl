@@ -26,7 +26,7 @@
     method="html"
     indent="yes"
     encoding="utf-8"
-    media-type="text/html; charset=UTF-8"
+    media-type="text/html"
     doctype-public="-//W3C//DTD HTML 4.01//EN"
     doctype-system="http://www.w3.org/TR/html4/strict.dtd" />
 
@@ -34,15 +34,15 @@
     <html>
       <head>
         <link rel="stylesheet" type="text/css" href="solr-admin.css"></link>
-  <link rel="icon" href="favicon.ico" type="image/ico"></link>
-  <link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
+	<link rel="icon" href="favicon.ico" type="image/ico"></link>
+	<link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
         <title>Solr Admin: Ping</title>
       </head>
       <body>
         <a href=".">
-     <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR">
-     </img>
-  </a>
+	   <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="Apache Solr">
+	   </img>
+	</a>
         <h1>Solr Admin (<xsl:value-of select="solr/meta/collection" />)</h1>
         <div style="margin-top: 1em;">
           <xsl:apply-templates/>

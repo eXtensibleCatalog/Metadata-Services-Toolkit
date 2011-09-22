@@ -62,6 +62,7 @@ import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
+import xc.mst.services.SolrIndexService;
 import xc.mst.utils.MSTConfiguration;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -91,6 +92,10 @@ public class BaseActionSupport extends ActionSupport {
 
     public ServicesService getServicesService() {
         return (ServicesService) MSTConfiguration.getInstance().getBean("ServicesService");
+    }
+
+    public SolrIndexService getSolrIndexService() {
+        return (SolrIndexService) MSTConfiguration.getInstance().getBean("SolrIndexService");
     }
 
     public BrowseRecordService getBrowseRecordService() {

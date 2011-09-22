@@ -35,6 +35,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.bo.record.RegisteredData;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -54,7 +55,7 @@ import xc.mst.utils.TimingLogger;
  * may be used, each one of which extends the MetadataService class. The
  * MetadataService class provides a common interface through which the MST can
  * invoke functionality on a Metadata Service.
- * 
+ *
  * @author Benjamin D. Anderson
  */
 
@@ -96,6 +97,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected long timeDiff = 0;
 
     protected Repository repository = null;
+
+    /**
+     * A list of identifiers to add to the record currently being processed
+     */
+    protected HashMap<String, String> m_identifiers = new HashMap<String, String>();
 
     static {
         LOG.debug("GenericMetadataService class loaded!!!");
@@ -357,8 +363,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param r
      *            <b>note: modifying input objects has no effect on the
      *            system</b>
@@ -415,7 +421,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
      *         </ul>
      *         </li>
      *         </ul>
-     * 
+     *
      * @see xc.mst.bo.record.RecordIfc
      * @see xc.mst.bo.record.InputRecord
      * @see xc.mst.bo.record.OutputRecord
@@ -900,6 +906,20 @@ public abstract class GenericMetadataService extends SolrMetadataService
             return config.getPropertyAsBoolean("error." + code + "enabled", true);
         }
         return config.getPropertyAsBoolean("error." + code + "enabled", false);
+    }
+
+    // stuff you want to end up displaying in browse records, to make searching for known interesting data easier.
+    // fogbugz 828
+    public void registerId(String readable, String identifier) {
+        m_identifiers.put(readable, identifier);
+    }
+    public Map<String, String> getIdentifiers() {
+        return m_identifiers;
+    }
+    // For now, SolrIndexService overrides this only.  But leave at this level to give option later for services to provide this
+    // information directly.
+    public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
+        return new ArrayList<RegisteredData> ();
     }
 
 }

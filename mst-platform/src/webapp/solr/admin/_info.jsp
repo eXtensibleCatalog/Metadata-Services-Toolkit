@@ -27,7 +27,7 @@
 <%@ page import="java.net.UnknownHostException" %>
 
 <%!
-  // only try to figure out the hostname once in a static block so
+  // only try to figure out the hostname once in a static block so 
   // we don't have a potentially slow DNS lookup on every admin request
   static InetAddress addr = null;
   static String hostname = "unknown";
@@ -42,13 +42,13 @@
 %>
 
 <%
-  //
+  // 
   SolrCore  core = (SolrCore) request.getAttribute("org.apache.solr.SolrCore");
   if (core == null) {
     response.sendError( 404, "missing core name in path" );
     return;
   }
-
+    
   SolrConfig solrConfig = core.getSolrConfig();
   int port = request.getServerPort();
   IndexSchema schema = core.getSchema();
@@ -66,7 +66,7 @@
   String collectionName = schema!=null ? schema.getName():"unknown";
 
   String defaultSearch = "";
-  {
+  { 
     StringWriter tmp = new StringWriter();
     XML.escapeCharData
       (solrConfig.get("admin/defaultQuery/text()", ""), tmp);
@@ -78,7 +78,7 @@
   String luceneImplVersion = "";
   String luceneSpecVersion = "";
 
-  {
+  { 
     Package p;
     StringWriter tmp;
 
@@ -96,7 +96,7 @@
       XML.escapeCharData(solrSpecVersion, tmp);
       solrSpecVersion = tmp.toString();
     }
-
+  
     p = LucenePackage.class.getPackage();
 
     tmp = new StringWriter();
@@ -112,7 +112,9 @@
       luceneSpecVersion = tmp.toString();
     }
   }
-
+  
   String cwd=System.getProperty("user.dir");
   String solrHome= solrConfig.getInstanceDir();
+  
+  boolean cachingEnabled = !solrConfig.getHttpCachingConfig().isNever304(); 
 %>

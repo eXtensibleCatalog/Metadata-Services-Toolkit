@@ -7,7 +7,7 @@
  (the "License"); you may not use this file except in compliance with
  the License.  You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+     http://www.apache.org/licenses/LICENSE-2.0 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,16 +46,16 @@ if (detailsMap != null)
     <%
     NamedList nl = (NamedList) slave.get("masterDetails");
     if(nl == null)
-      out.print(" - <b>Unreachable</b>");
+    	out.print(" - <b>Unreachable</b>");
     %>
   </td>
 </tr>
 <%
-    if (nl != null) {
+    if (nl != null) {         
       nl = (NamedList) nl.get("master");
-      if(nl != null){
+      if(nl != null){      
   %>
-<tr>
+<tr>  
   <td>
   </td>
   <td>Latest Index Version:<%=nl.get("indexVersion")%>, Generation: <%=nl.get("generation")%>
@@ -113,7 +113,7 @@ if (detailsMap != null)
 
 <%
   if (detailsMap != null)
-    if ("true".equals(detailsMap.get("isMaster")))
+    if ("true".equals(detailsMap.get("isMaster"))) 
        if(detailsMap.get("master") != null){
            master = (NamedList) detailsMap.get("master");
 %>
@@ -199,9 +199,9 @@ if (detailsMap != null)
         else {
           NamedList nl1 = (NamedList) slave.get("masterDetails");
           if(nl1 != null){
-            NamedList nl2 = (NamedList) nl1.get("master");
-            if(nl2 != null)
-              out.println("Next Replication Cycle At: After " + nl2.get("replicateAfter") + " on master.");
+          	NamedList nl2 = (NamedList) nl1.get("master");
+          	if(nl2 != null)
+          		out.println("Next Replication Cycle At: After " + nl2.get("replicateAfter") + " on master.");
           }
         }
     %>
@@ -263,7 +263,7 @@ if (detailsMap != null)
       else if (pollVal.equals("enable"))
         executeCommand("enablepoll", core, rh);
     if(slave != null)
-      if ("false".equals(slave.get("isPollingDisabled"))) {
+    	if ("false".equals(slave.get("isPollingDisabled"))) {
   %>
 
     <form name=polling method="POST" action="./index.jsp" accept-charset="UTF-8">
@@ -274,7 +274,7 @@ if (detailsMap != null)
     <%}%>
     <%
       if(slave != null)
-        if ("true".equals(slave.get("isPollingDisabled"))) {
+      	if ("true".equals(slave.get("isPollingDisabled"))) {
     %>
 
     <form name=polling method="POST" action="./index.jsp" accept-charset="UTF-8">
@@ -297,7 +297,7 @@ if (detailsMap != null)
     </form>
     <%
       if(slave != null)
-        if ("true".equals(slave.get("isReplicating"))) {
+      	if ("true".equals(slave.get("isReplicating"))) {
     %>
     <script type="text/javascript">
       document["replicate"].replicateButton.disabled = true;

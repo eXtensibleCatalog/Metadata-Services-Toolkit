@@ -15,8 +15,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<!-- $Id: registry.xsl 815587 2009-09-16 01:57:15Z gsingers $ -->
-<!-- $URL: https://svn.apache.org/repos/asf/lucene/solr/branches/branch-1.4/src/webapp/web/admin/registry.xsl $ -->
+<!-- $Id: registry.xsl 1075192 2011-02-28 00:50:09Z uschindler $ -->
+<!-- $URL: https://svn.apache.org/repos/asf/lucene/dev/branches/lucene_solr_3_4/solr/webapp/web/admin/registry.xsl $ -->
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,7 +26,7 @@
   <xsl:output
     method="html"
     encoding="utf-8"
-    media-type="text/html; charset=UTF-8"
+    media-type="text/html"
     indent="yes"
     doctype-public="-//W3C//DTD HTML 4.01//EN"
     doctype-system="http://www.w3.org/TR/html4/strict.dtd" />
@@ -36,21 +36,21 @@
     <html>
       <head>
         <link rel="stylesheet" type="text/css" href="solr-admin.css"></link>
-  <link rel="icon" href="favicon.ico" type="image/ico"></link>
-  <link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
-        <title>SOLR Info</title>
+	<link rel="icon" href="favicon.ico" type="image/ico"></link>
+	<link rel="shortcut icon" href="favicon.ico" type="image/ico"></link>
+        <title>Solr Info</title>
       </head>
       <body>
         <a href=".">
-     <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="SOLR">
-     </img>
-  </a>
-        <h1>SOLR Info (<xsl:value-of select="solr/schema" />)</h1>
+	   <img border="0" align="right" height="78" width="142" src="solr_small.png" alt="Apache Solr">
+	   </img>
+	</a>
+        <h1>Solr Info (<xsl:value-of select="solr/schema" />)</h1>
           <xsl:value-of select="solr/host" />
           <br clear="all" />
         <xsl:apply-templates/>
         <br /><br />
-        <a href="">Return to Admin Page</a>
+        <a href=".">Return to Admin Page</a>
       </body>
     </html>
   </xsl:template>
@@ -71,22 +71,22 @@
       </td>
     </tr>
     <tr><td></td>
-      <td>Solr Specification Version:
+      <td>Solr Specification Version: 
           <xsl:value-of select="solr-spec-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Solr Implementation Version:
+      <td>Solr Implementation Version: 
           <xsl:value-of select="solr-impl-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Lucene Specification Version:
+      <td>Lucene Specification Version: 
           <xsl:value-of select="lucene-spec-version" />
       </td>
     </tr>
     <tr><td></td>
-      <td>Lucene Implementation Version:
+      <td>Lucene Implementation Version: 
           <xsl:value-of select="lucene-impl-version" />
       </td>
     </tr>
