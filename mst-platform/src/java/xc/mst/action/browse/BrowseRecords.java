@@ -198,6 +198,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             } else {
                 if (!StringUtils.isEmpty(identifier)) {
                     String qFld = getIdentifiers().get(identifier);
+                    if (query.indexOf(" ") != -1) {
+                        query = "(" + query + ")";
+                    }
                     if (qFld != null) {
                         String q = new String(qFld+":"+query);
                         solrQuery.setQuery(q);
