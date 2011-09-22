@@ -38,7 +38,7 @@ import xc.mst.utils.index.SolrIndexManager;
 
 /**
  * Service class to query, add, update and delete records from an index.
- * 
+ *
  * @author Eric Osisek
  */
 public abstract class RecordService extends BaseService {
@@ -210,14 +210,14 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index
-     * 
+     *
      * @return A list of all records in the index
      */
     public abstract List<Record> getAll() throws IndexException;
 
     /**
      * Gets the record from the index with the passed record ID
-     * 
+     *
      * @param id
      *            The record's ID
      * @return The record with the passed record ID
@@ -227,7 +227,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets the basic information for a a record from the index with the passed record ID
-     * 
+     *
      * @param id
      *            The record's ID
      * @return The basic information for a record with the passed record ID
@@ -237,7 +237,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed provider ID
-     * 
+     *
      * @param providerId
      *            The provider ID of the records to retrieve
      * @return A list of all records in the index with the passed provider ID
@@ -246,7 +246,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets number of records from the index with the passed provider ID
-     * 
+     *
      * @param providerId
      *            The provider ID of the records to retrieve
      * @return Number of records in the index with the passed provider ID
@@ -255,7 +255,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed service ID
-     * 
+     *
      * @param serviceId
      *            The service ID of the records to retrieve
      * @return A list of all records in the index with the passed provider ID
@@ -264,7 +264,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets number of records from the index with the passed service ID
-     * 
+     *
      * @param serviceId
      *            The service ID of the records to retrieve
      * @return Number of records in the index with the passed provider ID
@@ -273,7 +273,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed processing service ID
-     * 
+     *
      * @param serviceId
      *            The service ID of the service that processed records to retrieve
      * @return A list of all records in the index with the passed processing service ID
@@ -282,7 +282,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed harvest ID
-     * 
+     *
      * @param harvestId
      *            The harvest ID of the records to retrieve
      * @return A list of all records in the index with the passed harvest ID
@@ -291,7 +291,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed format ID and service ID
-     * 
+     *
      * @param formatId
      *            The format ID of the records to retrieve
      * @param serviceId
@@ -302,7 +302,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index contained in the set with the passed name
-     * 
+     *
      * @param setName
      *            the name of the set whose records should be returned
      * @return A list all records in the index contained in the set with the passed name
@@ -311,7 +311,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Get successors of given records id created by specified service id
-     * 
+     *
      * @param recordId
      *            Id of record
      * @param serviceId
@@ -323,7 +323,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index contained in the set with the passed setSpec
-     * 
+     *
      * @param setSpec
      *            the setSpec of the set whose records should be returned
      * @return A list all records in the index contained in the set with the passed setSpec
@@ -332,7 +332,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index harvested from the provider with the passed name
-     * 
+     *
      * @param providerName
      *            the name of the provider whose records should be returned
      * @return A list all records in the index harvested from the provider with the passed name
@@ -341,7 +341,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index harvested from the provider with the passed URL
-     * 
+     *
      * @param providerUrl
      *            the URL of the provider whose records should be returned
      * @return A list all records in the index harvested from the provider with the passed URL
@@ -350,7 +350,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the format with the passed name
-     * 
+     *
      * @param formatName
      *            the name of the format whose records should be returned
      * @return A list all records in the index with the format with the passed name
@@ -359,21 +359,21 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all record inputs that were not processed for a given service
-     * 
+     *
      * @return A list of all records that need to be processed for a given service
      */
     public abstract List<Record> getInputForServiceToProcess(int serviceId) throws IndexException;
 
     /**
      * Gets all record inputs that were not processed for a given Service and Record Type
-     * 
+     *
      * @return A list of all records that need to be processed for a given service
      */
     public abstract Records getByInputToServiceAndRecordType(int serviceId, String recordType) throws IndexException;
 
     /**
      * Gets all record inputs that were not processed for a given service
-     * 
+     *
      * @return A list of all records that need to be processed for a given service
      */
     public abstract List<Record> getInputForService(int serviceId) throws IndexException;
@@ -390,14 +390,14 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets count of record inputs that were not processed for a given service
-     * 
+     *
      * @return count of record inputs that were not processed for a given service
      */
     public abstract int getCountOfRecordsToBeProcessedVyService(int serviceId) throws IndexException;
 
     /**
      * Gets the record from the index with the passed OAI Identifier
-     * 
+     *
      * @param identifier
      *            The record's OAI Identifer
      * @return A Record Object representing the record with the passed OAI Identifier
@@ -407,7 +407,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all matching record from the index with the passed OAI Identifier
-     * 
+     *
      * @param identifier
      *            List of record's OAI Identifer
      * @return A List of Record Object representing the record with the passed OAI Identifier
@@ -417,7 +417,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets the record from the index with the passed OAI Identifier
-     * 
+     *
      * @param identifier
      *            The record's OAI Identifer
      * @param providerId
@@ -429,7 +429,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets the record from the index with the passed OAI Identifier
-     * 
+     *
      * @param identifier
      *            The record's OAI Identifer
      * @param serviceId
@@ -441,7 +441,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets the record from the index with the passed OAI Identifier
-     * 
+     *
      * @param identifier
      *            The record's OAI Identifer
      * @param serviceId
@@ -453,7 +453,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index which have been processed from the specified record
-     * 
+     *
      * @param processedFromId
      *            The ID of the original record whose processed Records we're getting
      * @return A list of all records in the index which have been processed from the specified record
@@ -462,7 +462,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records including deleted , from the index which have been processed from the specified record
-     * 
+     *
      * @param processedFromId
      *            The ID of the original record whose processed Records we're getting
      * @return A list of all records in the index which have been processed from the specified record
@@ -471,7 +471,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets all records from the index with the passed trait
-     * 
+     *
      * @param trait
      *            The trait of the records to retrieve
      * @return A list of all records in the index with the passed trait
@@ -480,7 +480,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Gets the record from the index with the earliest datestamp processed by a given service
-     * 
+     *
      * @param serviceId
      *            The ID of the service whose earliest processed record we're looking for
      * @return The record with earliest datestamp that was processed by the target service
@@ -489,7 +489,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Returns the number of processed records between the specified dates contained in the specified set
-     * 
+     *
      * @param fromDate
      *            The lower bound for the date for the records to count
      * @param untilDate
@@ -508,7 +508,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Returns the records between the specified dates within the specified set
-     * 
+     *
      * @param fromDate
      *            The lower bound for the date for the records to return
      * @param untilDate
@@ -530,12 +530,14 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Inserts a record into the index
-     * 
+     *
      * @param record
      *            The record to insert
      * @return true on success, false on failure
      */
     public boolean insert(Record record) throws DataException, IndexException {
+        //TODO This is dead code.  The method may get overridden at best.
+
         // Check that the non-ID fields on the record are valid
         validateFields(record, false, true);
 
@@ -566,12 +568,13 @@ public abstract class RecordService extends BaseService {
 
         SolrIndexManager sim = (SolrIndexManager) config.getBean("SolrIndexManager");
         boolean retVal = sim.addDoc(doc);
+
         return retVal;
     } // end method insert(Record)
 
     /**
      * Updates a record in the index
-     * 
+     *
      * @param record
      *            The record to update
      * @return true on success, false on failure
@@ -598,7 +601,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Deletes a record from the index
-     * 
+     *
      * @param record
      *            The record to delete
      * @return true on success, false on failure
@@ -627,7 +630,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Parses a Record from the fields in a Document from the index.
-     * 
+     *
      * @param doc
      *            The document containing information on the Record.
      * @return The record which was contained in the passed Document.
@@ -637,7 +640,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Parses a Record from the fields in a Document from the index.
-     * 
+     *
      * @param doc
      *            The document containing information on the Record.
      * @return The record which was contained in the passed Document.
@@ -647,7 +650,7 @@ public abstract class RecordService extends BaseService {
     /**
      * Sets the fields on the document which need to be stored in the
      * index.
-     * 
+     *
      * @param record
      *            The record to use to set the fields on the document
      * @param doc
@@ -661,7 +664,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Escapes characters that aren't allowed in queries run on the index
-     * 
+     *
      * @param str
      *            The String to be escaped
      * @return The escaped String
@@ -670,7 +673,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Get the last created record in given service
-     * 
+     *
      * @param serviceId
      *            Service id in which to get last created record
      * @return Last created record
@@ -680,7 +683,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Load Record only with OAI header and OAI XML
-     * 
+     *
      * @param doc
      *            Solr document
      * @return Record
@@ -690,7 +693,7 @@ public abstract class RecordService extends BaseService {
     /**
      * Parses a Record from the fields in a Document from the index.
      * Loads only fields required to be displayed on Browse records results page
-     * 
+     *
      * @param doc
      *            The document containing information on the Record.
      * @return The record which was contained in the passed Document.
@@ -714,7 +717,7 @@ public abstract class RecordService extends BaseService {
 
     /**
      * Validates the fields on the passed Record Object
-     * 
+     *
      * @param record
      *            The record to validate
      * @param validateId

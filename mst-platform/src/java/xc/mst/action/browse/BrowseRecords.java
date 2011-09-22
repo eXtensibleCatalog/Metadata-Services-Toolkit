@@ -16,12 +16,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -39,14 +42,15 @@ import xc.mst.manager.processingDirective.ServicesService;
 import xc.mst.manager.record.BrowseRecordService;
 import xc.mst.manager.record.RecordService;
 import xc.mst.repo.RepositoryService;
+import xc.mst.services.SolrIndexService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XmlHelper;
 
 /**
  * Browse records
- * 
+ *
  * @author Sharmila Ranganathan
- * 
+ *
  */
 public class BrowseRecords extends Pager implements ServletResponseAware {
 
@@ -55,6 +59,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
     /** A reference to the logger for this class */
     static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    static Logger LOG = Logger.getLogger(BrowseRecords.class);
 
     /** Browse result */
     private SolrBrowseResult result;
@@ -116,12 +121,26 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     /** Error type */
     private String errorType;
 
+    private HashMap<String,String> identifiers;
+    private ArrayList<String> idKeys;
+
+    /** for individual query can pick one from identifiers list **/
+    private String identifier;
+
     /**
      * Execute method to load initial screen with just the facets
      */
     public String execute() {
         searchXML = true;
         isInitialLoad = true;
+        try {
+            initializeIdentifiers();
+        } catch (DatabaseConfigException e) {
+            log.error("Search failed. Problem with connecting to database using the parameters in configuration file.", e);
+            errorType = "error";
+            addFieldError("dbError", "Search failed.Problem with connecting to database using the parameters in configuration file.");
+            return INPUT;
+        }
         browse();
         return SUCCESS;
     }
@@ -177,10 +196,26 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             if ((query == null) || (query.equals(""))) {
                 solrQuery.setQuery("*:*");
             } else {
-                if (searchXML) {
-                    solrQuery.setQuery(query.replaceAll(":", "\\\\:") + " OR " + RecordService.FIELD_ALL + ":" + query.replaceAll(":", "\\\\:"));
+                if (!StringUtils.isEmpty(identifier)) {
+                    String qFld = getIdentifiers().get(identifier);
+                    if (qFld != null) {
+                        String q = new String(qFld+":"+query);
+                        solrQuery.setQuery(q);
+                        if (log.isDebugEnabled()) {
+                            LOG.debug("*** browse() ident="+qFld+" query="+q);
+                        }
+                    }
+                    else {
+                        if (log.isDebugEnabled()) {
+                            LOG.debug("*** NO field associated with IDENTIFIER! "+" query="+query+" identifier="+identifier);
+                        }
+                        solrQuery.setQuery("*:*");
+                    }
                 } else {
-                    solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
+                    if (log.isDebugEnabled()) {
+                        LOG.debug("*** NO IDENTIFIER FOUND! "+" query="+query);
+                    }
+                    solrQuery.setQuery("*:*");
                 }
             }
 
@@ -252,26 +287,34 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 log.debug("After removing facet values(final):" + selectedFacetValues);
             }
 
-            // Query formation
-            solrQuery.setFacet(true)
-                     .setFacetMinCount(1);
-            solrQuery.addFacetField("status");
-            solrQuery.addFacetField("provider_name");
-            solrQuery.addFacetField("service_name");
-            solrQuery.addFacetField("format_name");
-            solrQuery.addFacetField("set_name");
-            solrQuery.addFacetField("error");
+            if (isInitialLoad) {
+                // TBD do we want this if not initial load (used to have it in, but now,
+                // query specific ident only, so would only come into play, if no ident
+                // given then defaults to *:*
+                //
+                // Query formation
+                solrQuery.setFacet(true)
+                         .setFacetMinCount(1);
+                solrQuery.addFacetField("status");
+                solrQuery.addFacetField("provider_name");
+                solrQuery.addFacetField("service_name");
+                solrQuery.addFacetField("format_name");
+                solrQuery.addFacetField("set_name");
+                solrQuery.addFacetField("error");
 
-            // Fields to load
-            solrQuery.addField(RecordService.FIELD_RECORD_ID);
-            solrQuery.addField(RecordService.FIELD_FORMAT_ID);
-            solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
-            solrQuery.addField(RecordService.FIELD_SERVICE_ID);
-            solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
-            solrQuery.addField(RecordService.FIELD_ERROR);
-            solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
-            solrQuery.addField(RecordService.FIELD_SUCCESSOR);
-            solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
+                // Fields to load
+                solrQuery.addField(RecordService.FIELD_RECORD_ID);
+                solrQuery.addField(RecordService.FIELD_FORMAT_ID);
+                solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
+                solrQuery.addField(RecordService.FIELD_SERVICE_ID);
+                solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
+                solrQuery.addField(RecordService.FIELD_ERROR);
+                solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
+                solrQuery.addField(RecordService.FIELD_SUCCESSOR);
+                solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
+
+                getIdentifiers();
+            }
 
             rowEnd = rowStart + numberOfResultsToShow;
 
@@ -526,7 +569,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
     /**
      * Returns the total number of hits
-     * 
+     *
      * @see xc.mst.action.browse.Pager#getTotalHits()
      */
     public long getTotalHits() {
@@ -583,5 +626,57 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
     public void setErrorType(String errorType) {
         this.errorType = errorType;
+    }
+    public HashMap<String, String> getIdentifiers() {
+        if (identifiers == null || identifiers.size() < 1) {
+            try {
+                initializeIdentifiers();
+            } catch (DatabaseConfigException e) {
+                log.error("", e);
+                errorType = "error";
+                addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
+            }
+        }
+        return identifiers;
+    }
+    public void setIdentifiers(HashMap<String, String> id) {
+        this.identifiers = id;
+    }
+    public ArrayList<String> getIdKeys() {
+        if (idKeys == null || idKeys.size() < 1) {
+            try {
+                initializeIdentifiers();
+            } catch (DatabaseConfigException e) {
+                log.error("", e);
+                errorType = "error";
+                addFieldError("dbError", "Problem with connecting to database using the parameters in configuration file.");
+            }
+        }
+        return idKeys;
+    }
+    public void setIdKeys(ArrayList<String> key) {
+        this.idKeys = key;
+    }
+    public String getIdentifier() {
+        return this.identifier;
+    }
+    public void setIdentifier(String id) {
+        this.identifier = id;
+    }
+
+    public void initializeIdentifiers() throws DatabaseConfigException {
+
+        SolrIndexService solrIndexService = getSolrIndexService();
+        Map<String,String> ids = solrIndexService.getIdentifiers();
+        if (identifiers == null) {
+            identifiers = new HashMap<String, String>();
+        }
+        if (idKeys == null) {
+            idKeys = new ArrayList<String>();
+        }
+        if (ids != null && ids.size() > 0) {
+            identifiers.putAll(ids);
+            idKeys.addAll(ids.keySet());
+        }
     }
 }

@@ -10,9 +10,12 @@
 package xc.mst.services;
 
 import java.util.List;
+import java.util.Map;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.RegisteredData;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
@@ -33,7 +36,7 @@ public interface MetadataService {
     /**
      * This method not only creates new records (inserts), but it can
      * also update records and delete records.
-     * 
+     *
      * @param repo
      * @param inputFormat
      * @param inputSet
@@ -62,6 +65,20 @@ public interface MetadataService {
     public String getMessage(int code, char type, String[] args);
 
     public boolean isMessageEnabled(int code, char type);
+
+    // stuff you want to end up displaying in browse records, to make searching for known interesting data easier.
+    // will be if the format of '001', need to store the identifiers only, to be able to retrieve them later for browse records.
+    // also need to store a human readable version that gets displayed in the UI.
+    // fogbugz 828
+    public void registerId(String readable, String identifier);
+
+    // get the set of identifiers that the service has registered.  This is the actual indexed identifier + a human readable version
+    // fogbugz 828
+    public Map<String, String> getIdentifiers();
+
+    // on a record by record basis SolrIndexService will ask a service for that records registered identifiers
+    public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri);
+
 
     // leftover methods that I think can be eventually deleted
     public void runService(int serviceId, int outputSetId);
