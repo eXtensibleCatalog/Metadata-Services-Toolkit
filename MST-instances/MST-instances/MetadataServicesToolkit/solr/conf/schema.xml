@@ -209,7 +209,22 @@
    
    <field name="error" type="string" indexed="true" stored="true" multiValued="true"/>
 
-   <field name="all" type="text" indexed="true" stored="false" multiValued="true"/>
+  
+ <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
+	 will be used if the name matches any of the patterns.  
+	 -->
+<!--
+   <dynamicField name="*_key"  type="text_norm_icu"  indexed="true"  stored="true" multiValued="true"/>
+   <dynamicField name="*_t"  type="text"  indexed="true"  stored="true" multiValued="true"/>
+   <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" multiValued="true"/>
+   <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
+   <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
+   <dynamicField name="*_b"  type="boolean" indexed="true"  stored="true"/>
+   <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
+   <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
+	 -->
+   <dynamicField name="*_key"  type="text"  indexed="true"  stored="true" multiValued="true"/>
+   
    
  </fields>
 
@@ -219,7 +234,7 @@
  <uniqueKey>record_id</uniqueKey>
 
  <!-- field for the QueryParser to use when an explicit fieldname is absent -->
- <defaultSearchField>all</defaultSearchField> 
+ <defaultSearchField>record_id</defaultSearchField> 
 
  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
  <solrQueryParser defaultOperator="OR"/>
