@@ -351,7 +351,7 @@ text-decoration:underline;
 
 	      <s:combobox label="Identifier?" 
 		headerKey="-1" headerValue="--- Select ---"
-		list="identifiers" 
+		list="idKeys" 
 		name="identifier" />
   
             </form>
