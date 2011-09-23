@@ -304,16 +304,16 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             solrQuery.addFacetField("set_name");
             solrQuery.addFacetField("error");
 
-            // Fields to load
-            solrQuery.addField(RecordService.FIELD_RECORD_ID);
-            solrQuery.addField(RecordService.FIELD_FORMAT_ID);
-            solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
-            solrQuery.addField(RecordService.FIELD_SERVICE_ID);
-            solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
-            solrQuery.addField(RecordService.FIELD_ERROR);
-            solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
-            solrQuery.addField(RecordService.FIELD_SUCCESSOR);
-            solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
+                // Fields to load
+                solrQuery.addField(RecordService.FIELD_RECORD_ID);
+                solrQuery.addField(RecordService.FIELD_FORMAT_ID);
+                solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
+                solrQuery.addField(RecordService.FIELD_SERVICE_ID);
+                solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
+                solrQuery.addField(RecordService.FIELD_ERROR);
+                solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
+                solrQuery.addField(RecordService.FIELD_SUCCESSOR);
+                solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
 
             //TODO add identifier fields?
             getIdentifiers();

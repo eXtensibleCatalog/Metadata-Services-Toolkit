@@ -133,6 +133,7 @@ public class NormalizationService extends GenericMetadataService {
     protected XmlHelper xmlHelper = new XmlHelper();
 
     private HashMap<String, String> m_map_014keyValuePairs;
+    //private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
 
     // private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
 
