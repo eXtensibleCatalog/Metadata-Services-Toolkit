@@ -110,9 +110,15 @@
             <artifact name="jconfig" type="jar"/>
         </dependency>
 
-        <dependency org="org.apache.lucene" name="lucene-core" rev="3.3.0" transitive="false">
-            <artifact name="lucene-core" type="jar"/>
+        <dependency org="org.apache.solr" name="solr-analysis-extras" rev="3.3.0" transitive="true">
+		<artifact name="solr-analysis-extras" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
         </dependency>
+	
 
         <dependency org="org.apache.solr" name="solr-solrj" rev="3.3.0" transitive="true">
             <artifact name="solr-solrj" type="jar"/>
@@ -150,22 +156,23 @@
       <exclude org="org.mortbay.jetty" />
         </dependency>
 
+        <dependency org="org.apache.lucene" name="lucene-core" rev="3.3.0" transitive="false">
+            <artifact name="lucene-core" type="jar"/>
+        </dependency>
+
         <dependency org="org.apache.lucene" name="lucene-highlighter" rev="3.3.0" transitive="false">
             <artifact name="lucene-highlighter" type="jar"/>
         </dependency>
 
-	<!--cannot find a snowball in latest lucene, now the stemming is created by solr.PorterStemFilterFactory-->
-	<!--
-        <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.9.1" transitive="false">
-            <artifact name="lucene-snowball" type="jar"/>
-	</dependency> 
-	-->
         <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="3.3.0" transitive="false">
             <artifact name="lucene-spellchecker" type="jar"/>
         </dependency>
 
         <dependency org="org.apache.lucene" name="lucene-analyzers" rev="3.3.0" transitive="false">
             <artifact name="lucene-analyzers" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-icu" rev="3.3.0" transitive="false">
+            <artifact name="lucene-icu" type="jar"/>
         </dependency>
         <dependency org="org.apache.lucene" name="lucene-memory" rev="3.3.0" transitive="false">
             <artifact name="lucene-memory" type="jar"/>
