@@ -20,6 +20,7 @@ stopworda
 stopwordb
 
 #Standard english stop words taken from Lucene's StopAnalyzer
+a
 an
 and
 are
@@ -39,9 +40,7 @@ not
 of
 on
 or
-s
 such
-t
 that
 the
 their

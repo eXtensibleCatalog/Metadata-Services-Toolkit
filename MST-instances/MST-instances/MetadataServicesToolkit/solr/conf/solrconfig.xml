@@ -26,6 +26,8 @@
      -->
   <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
 
+  <luceneMatchVersion>LUCENE_33</luceneMatchVersion>
+  
   <!-- Used to specify an alternate directory to hold all index data
        other than the default ./data under the Solr home.
        If replication is in use, this should match the replication configuration. -->
@@ -126,8 +128,8 @@
 		e.g <jmx serviceurl="service:jmx:rmi:///jndi/rmi://localhost:9999/solr" />
 		
 		For more details see http://wiki.apache.org/solr/SolrJmx
-  -->
   <jmx />
+  -->
 
   <!-- the default high-performance update handler -->
   <updateHandler class="solr.DirectUpdateHandler2">

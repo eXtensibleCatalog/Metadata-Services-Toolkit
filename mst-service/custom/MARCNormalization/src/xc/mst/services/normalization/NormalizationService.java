@@ -135,6 +135,8 @@ public class NormalizationService extends GenericMetadataService {
     private HashMap<String, String> m_map_014keyValuePairs;
     //private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
 
+    // private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
+
     /**
      * Construct a NormalizationService Object
      * - note this is called by spring
@@ -245,7 +247,7 @@ public class NormalizationService extends GenericMetadataService {
     private List<OutputRecord> convertRecord(InputRecord record) {
 
         // Empty the lists of errors because we're beginning to process a new record
-        errors = new ArrayList<RecordMessage>();  // are these largely or entirely unused?
+        errors = new ArrayList<RecordMessage>(); // are these largely or entirely unused?
         outputRecordErrors = new ArrayList<RecordMessage>();
 
         // The list of records resulting from processing the incoming record
@@ -414,7 +416,7 @@ public class NormalizationService extends GenericMetadataService {
             if (LOG.isDebugEnabled())
                 LOG.debug("Adding errors to the record.");
 
-            //TODO who / where does errors get added to?
+            // TODO who / where does errors get added to?
             record.setMessages(errors);
 
             if (LOG.isDebugEnabled())
@@ -1387,20 +1389,16 @@ public class NormalizationService extends GenericMetadataService {
                 addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
             }
 
-			// Execute only if Fix035 step is enabled
-			if(enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
-				// First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
-				if(bSubfield != null)
-				{
-					// Check if the $b subfield was "ocm", "ocn", or "ocl"
-					if(bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl"))
-					{
-						// Try to parse out the control number from the $a subfield
-						if(aSubfield != null)
-						{
-							try
-							{
-								String controlNumber = aSubfield.getText().trim();
+            // Execute only if Fix035 step is enabled
+            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
+                // First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
+                if (bSubfield != null) {
+                    // Check if the $b subfield was "ocm", "ocn", or "ocl"
+                    if (bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl")) {
+                        // Try to parse out the control number from the $a subfield
+                        if (aSubfield != null) {
+                            try {
+                                String controlNumber = aSubfield.getText().trim();
 
                                 // Set $a to (OCoLC)%CONTROL_NUMBER%
                                 aSubfield.setText("(OCoLC)" + controlNumber);
@@ -2393,48 +2391,48 @@ public class NormalizationService extends GenericMetadataService {
     }
 
     /*
-    //for solr indexer
-    public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
-        //implement here is decide to go back to way where individual service provides identifiers.
-        // Get the 001 and 003 control fields
-
-        // The XML after normalizing the record
-        Element marcXml = null;
-
-        //TimingLogger.start("create dom");
-        ri.setMode(Record.JDOM_MODE);
-        marcXml = ri.getOaiXmlEl();
-        //TimingLogger.stop("create dom");
-
-        // Create a MarcXmlManagerForNormalizationService for the record
-        MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
-        normalizedXml.setInputRecord(ri);
-
-        ArrayList<RegisteredData> identifiers = new ArrayList<RegisteredData> ();
-        String control001 = normalizedXml.getField001();
-        String control245 = normalizedXml.getField245();
-
-        if (control001 != null) {
-            identifiers.add(new RegisteredData("id_001_key", control001, "001"));
-        }
-        // call it 'title?'
-        if (control245 != null) {
-            identifiers.add(new RegisteredData("id_title_key", control245, "title"));
-        }
-        if (identifiers.size() <1) {
-            LOG.error("*** NO NORM. IDENTIFIERS FOUND! for"+ri.getId());
-        }
-        return identifiers;
-    }
-    */
+     * //for solr indexer
+     * public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
+     * //implement here is decide to go back to way where individual service provides identifiers.
+     * // Get the 001 and 003 control fields
+     *
+     * // The XML after normalizing the record
+     * Element marcXml = null;
+     *
+     * //TimingLogger.start("create dom");
+     * ri.setMode(Record.JDOM_MODE);
+     * marcXml = ri.getOaiXmlEl();
+     * //TimingLogger.stop("create dom");
+     *
+     * // Create a MarcXmlManagerForNormalizationService for the record
+     * MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
+     * normalizedXml.setInputRecord(ri);
+     *
+     * ArrayList<RegisteredData> identifiers = new ArrayList<RegisteredData> ();
+     * String control001 = normalizedXml.getField001();
+     * String control245 = normalizedXml.getField245();
+     *
+     * if (control001 != null) {
+     * identifiers.add(new RegisteredData("id_001_key", control001, "001"));
+     * }
+     * // call it 'title?'
+     * if (control245 != null) {
+     * identifiers.add(new RegisteredData("id_title_key", control245, "title"));
+     * }
+     * if (identifiers.size() <1) {
+     * LOG.error("*** NO NORM. IDENTIFIERS FOUND! for"+ri.getId());
+     * }
+     * return identifiers;
+     * }
+     */
 
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
         /*
-        rule_checking_enabled=true
-        # id's of providers and services to use in rule processing
-        ruleset1.provider.1= 1
-        ruleset1.service.1 = 1
-        ruleset1.service.2 = 2
+         * rule_checking_enabled=true
+         * # id's of providers and services to use in rule processing
+         * ruleset1.provider.1= 1
+         * ruleset1.service.1 = 1
+         * ruleset1.service.2 = 2
          */
         // need to get repository record counts (incoming are all that exist) and normalization outgoing record counts, and run rules.
         if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {

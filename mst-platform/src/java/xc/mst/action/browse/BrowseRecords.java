@@ -290,20 +290,19 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 log.debug("After removing facet values(final):" + selectedFacetValues);
             }
 
-            if (isInitialLoad) {
-                // TBD do we want this if not initial load (used to have it in, but now,
-                // query specific ident only, so would only come into play, if no ident
-                // given then defaults to *:*
-                //
-                // Query formation
-                solrQuery.setFacet(true)
-                         .setFacetMinCount(1);
-                solrQuery.addFacetField("status");
-                solrQuery.addFacetField("provider_name");
-                solrQuery.addFacetField("service_name");
-                solrQuery.addFacetField("format_name");
-                solrQuery.addFacetField("set_name");
-                solrQuery.addFacetField("error");
+            // TBD do we want this if not initial load (used to have it in, but now,
+            // query specific ident only, so would only come into play, if no ident
+            // given then defaults to *:*
+            //
+            // Query formation
+            solrQuery.setFacet(true)
+                     .setFacetMinCount(1);
+            solrQuery.addFacetField("status");
+            solrQuery.addFacetField("provider_name");
+            solrQuery.addFacetField("service_name");
+            solrQuery.addFacetField("format_name");
+            solrQuery.addFacetField("set_name");
+            solrQuery.addFacetField("error");
 
                 // Fields to load
                 solrQuery.addField(RecordService.FIELD_RECORD_ID);
@@ -316,8 +315,8 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 solrQuery.addField(RecordService.FIELD_SUCCESSOR);
                 solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
 
-                getIdentifiers();
-            }
+            //TODO add identifier fields?
+            getIdentifiers();
 
             rowEnd = rowStart + numberOfResultsToShow;
 
