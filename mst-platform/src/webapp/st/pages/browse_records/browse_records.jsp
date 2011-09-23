@@ -130,7 +130,6 @@ text-decoration:underline;
                        <c:if test="${facet.name == filter.name}">
                          <c:url var="removeFacet" value="browseRecords.action">
                           <c:param name="query" value="${query}"/>
-                          <c:param name="searchXML" value="${searchXML}"/>
                           <c:param name="removeFacetName" value="${filter.name}"/>
                           <c:param name="removeFacetValue" value="${filter.value}"/>
                           <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
@@ -156,7 +155,6 @@ text-decoration:underline;
                   <c:if test="${facetExist == false}">
                       <c:url var="facetFilter" value="browseRecords.action">
                           <c:param name="query" value="${query}"/>
-                          <c:param name="searchXML" value="${searchXML}"/>
                           <c:param name="addFacetName" value="${facet.name}"/>
                           <c:param name="addFacetValue" value="${fcount.name}"/>
                           <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
@@ -170,7 +168,6 @@ text-decoration:underline;
                         <c:url var="viewError" value="viewErrorDescription.action">
                             <c:param name="error" value="${fcount.name}"/>
                             <c:param name="query" value="${query}"/>
-                            <c:param name="searchXML" value="${searchXML}"/>
                             <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
                             <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
                             <c:param name="rowStart" value="${rowStart}"/>
@@ -206,7 +203,6 @@ text-decoration:underline;
                     <c:param name="query" value=""/>
                     <c:param name="addFacetName" value="successor"/>
                     <c:param name="addFacetValue" value="${predecessorRecord.id}"/>
-                    <c:param name="searchXML" value="false"/>
                  </c:url>
 
 
@@ -277,7 +273,6 @@ text-decoration:underline;
                     <c:param name="query" value=""/>
                     <c:param name="addFacetName" value="processed_from"/>
                     <c:param name="addFacetValue" value="${successorRecord.id}"/>
-                    <c:param name="searchXML" value="false"/>
                  </c:url>
               <p class="searched_for">You Searched for : <strong>All Precedessors of:</strong><br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -394,7 +389,6 @@ text-decoration:underline;
                 <c:url var="viewRecord" value="viewRecord.action">
                     <c:param name="recordId" value="${record.id}"/>
                     <c:param name="query" value="${query}"/>
-                    <c:param name="searchXML" value="${searchXML}"/>
                     <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
                       <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
                     <c:param name="rowStart" value="${rowStart}"/>
@@ -433,13 +427,11 @@ text-decoration:underline;
                     <c:param name="query" value=""/>
                     <c:param name="addFacetName" value="successor"/>
                     <c:param name="addFacetValue" value="${record.id}"/>
-                    <c:param name="searchXML" value="false"/>
                  </c:url>
                  <c:url var="viewSuccessorRecord" value="browseRecords.action">
                     <c:param name="query" value=""/>
                     <c:param name="addFacetName" value="processed_from"/>
                     <c:param name="addFacetValue" value="${record.id}"/>
-                    <c:param name="searchXML" value="false"/>
                  </c:url>
                      <c:if test="${record.numberOfPredecessors > 0 && record.numberOfSuccessors > 0}">
                     <a href="${viewPredecessorRecord}">${record.numberOfPredecessors}
