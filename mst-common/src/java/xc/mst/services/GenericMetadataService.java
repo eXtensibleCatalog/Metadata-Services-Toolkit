@@ -13,13 +13,7 @@ import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 
 import org.apache.log4j.Logger;
@@ -101,7 +95,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     /**
      * A list of identifiers to add to the record currently being processed
      */
-    protected HashMap<String, String> m_identifiers = new HashMap<String, String>();
+    protected LinkedHashMap<String, String> m_identifiers = new LinkedHashMap<String, String>();
 
     static {
         LOG.debug("GenericMetadataService class loaded!!!");
@@ -913,7 +907,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     public void registerId(String readable, String identifier) {
         m_identifiers.put(readable, identifier);
     }
-    public Map<String, String> getIdentifiers() {
+    public LinkedHashMap<String, String> getIdentifiers() {
         return m_identifiers;
     }
     // For now, SolrIndexService overrides this only.  But leave at this level to give option later for services to provide this
