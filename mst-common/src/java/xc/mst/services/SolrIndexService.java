@@ -250,7 +250,6 @@ public class SolrIndexService extends GenericMetadataService {
             //    for (Set set : r.getSets()) {
             //    }
             //}
-
             // note this one is special, it is always added, it is not parsed out of the record's xml, so do not have it come out of
             //   the config file?
             doc.addField("id_identifier_key", r.getId());
