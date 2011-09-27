@@ -520,6 +520,9 @@
    
    <field name="error" type="string" indexed="true" stored="true" multiValued="true"/>
 
+   <!--
+   <field name="text"  type="text_norm_icu"  indexed="true"  stored="false" multiValued="true"/>
+   -->
   
  <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
          will be used if the name matches any of the patterns.  -->
@@ -558,6 +561,10 @@
    <copyField source="features" dest="text"/>
    <copyField source="includes" dest="text"/>
    <copyField source="manu" dest="manu_exact"/>
+   -->
+
+   <!--
+   <copyField source="*_key"  dest="text" />
    -->
 
    <!-- Above, multiple source fields are copied to the [text] field.

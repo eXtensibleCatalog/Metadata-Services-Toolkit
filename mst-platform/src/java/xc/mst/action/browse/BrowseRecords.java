@@ -15,12 +15,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
+import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -121,7 +116,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
     /** Error type */
     private String errorType;
 
-    private HashMap<String,String> identifiers;
+    private LinkedHashMap<String,String> identifiers;
     private ArrayList<String> idKeys;
 
     /** for individual query can pick one from identifiers list **/
@@ -212,7 +207,13 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                         if (log.isDebugEnabled()) {
                             LOG.debug("*** NO field associated with IDENTIFIER! "+" query="+query+" identifier="+identifier);
                         }
-                        solrQuery.setQuery("*:*");
+                        // solr schema: <copyField source="*_key"  dest="text" />
+                        if (query.indexOf(" ") != -1) {
+                            query = "(" + query + ")";
+                        }
+                        // TODO having trouble getting this working, leave as a TODO for now, and drop back to default search on record_id.
+                        //solrQuery.setQuery("text:"+ query);
+                        solrQuery.setQuery(query);
                     }
                 } else {
                     if (log.isDebugEnabled()) {
@@ -290,10 +291,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                 log.debug("After removing facet values(final):" + selectedFacetValues);
             }
 
-            // TBD do we want this if not initial load (used to have it in, but now,
-            // query specific ident only, so would only come into play, if no ident
-            // given then defaults to *:*
-            //
             // Query formation
             solrQuery.setFacet(true)
                      .setFacetMinCount(1);
@@ -304,18 +301,17 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             solrQuery.addFacetField("set_name");
             solrQuery.addFacetField("error");
 
-                // Fields to load
-                solrQuery.addField(RecordService.FIELD_RECORD_ID);
-                solrQuery.addField(RecordService.FIELD_FORMAT_ID);
-                solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
-                solrQuery.addField(RecordService.FIELD_SERVICE_ID);
-                solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
-                solrQuery.addField(RecordService.FIELD_ERROR);
-                solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
-                solrQuery.addField(RecordService.FIELD_SUCCESSOR);
-                solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
+            // Fields to load
+            solrQuery.addField(RecordService.FIELD_RECORD_ID);
+            solrQuery.addField(RecordService.FIELD_FORMAT_ID);
+            solrQuery.addField(RecordService.FIELD_PROVIDER_ID);
+            solrQuery.addField(RecordService.FIELD_SERVICE_ID);
+            solrQuery.addField(RecordService.FIELD_HARVEST_SCHEDULE_NAME);
+            solrQuery.addField(RecordService.FIELD_ERROR);
+            solrQuery.addField(RecordService.FIELD_PROCESSED_FROM);
+            solrQuery.addField(RecordService.FIELD_SUCCESSOR);
+            solrQuery.addField(RecordService.FIELD_OAI_IDENTIFIER);
 
-            //TODO add identifier fields?
             getIdentifiers();
 
             rowEnd = rowStart + numberOfResultsToShow;
@@ -641,7 +637,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
         }
         return identifiers;
     }
-    public void setIdentifiers(HashMap<String, String> id) {
+    public void setIdentifiers(LinkedHashMap<String, String> id) {
         this.identifiers = id;
     }
     public ArrayList<String> getIdKeys() {
@@ -671,7 +667,7 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
         SolrIndexService solrIndexService = getSolrIndexService();
         Map<String,String> ids = solrIndexService.getIdentifiers();
         if (identifiers == null) {
-            identifiers = new HashMap<String, String>();
+            identifiers = new LinkedHashMap<String, String>();
         }
         if (idKeys == null) {
             idKeys = new ArrayList<String>();

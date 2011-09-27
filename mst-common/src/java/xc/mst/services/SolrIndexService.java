@@ -9,6 +9,8 @@
 package xc.mst.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -49,13 +51,63 @@ public class SolrIndexService extends GenericMetadataService {
 
     public void init() {
         //TODO get these out of config file!
-//        registerId("marc:controlfield 001", "id_001_key");   //register your 'important' identifiers for this service
-//        registerId("marc:controlfield 004", "id_004_key");
-//        registerId("marc:datafield 014$a",  "id_014_key");
-        registerId("Title",                 "id_title_key"); //  note, for solr to recognize as dynamic field I've add _key
+        //  note, for solr to recognize as dynamic field I've add _key
+        registerId("Identifier",            "id_identifier_key");
+        registerId(" - Record_ID",          "record_id_key");
+        registerId(" - dcterms_ident_manifestation", "id_manDCTermsIdent_key");
+        registerId(" - dcterms_ident_holdings", "id_holdDCTermsIdent_key");
+        registerId(" - marc:controlfield 001", "id_001_key");
+        registerId("Title",                 "id_title_key");
+        registerId(" - rdvocab:titleOfWork", "rdvocab_titleOfWork_key");
+        registerId(" - xc:titleOfExpression", "xc_titleOfExpression_key");
+        registerId(" - dcterms:title", "dcterms_title_key");
+        registerId(" - marc:datafield 245$a", "id_245a_key");
+        registerId(" - marc:datafield 245$b", "id_245b_key");
         registerId("Call Number",           "id_callnum_key");
+        registerId(" - xc:callNumber", "xc_callnum_key");
+        registerId(" - marc:datafield 852$h", "id_852h_key");
+        registerId(" - marc:datafield 852$i", "id_852i_key");
         registerId("Creator/Contributor",   "id_author_key");
+        registerId(" - xc:contributor", "xc_contributor_key");
+        registerId(" - xc:creator",   "xc_creator_key");
+        registerId(" - dcterms:creator", "dcterms_creator_key");
+        registerId(" - rdarole:compiler", "xc_rdarole_compiler_key");
+        registerId(" - rdarole:composer", "xc_rdarole_composer_key");
+        registerId(" - rdarole:speaker", "xc_rdarole_speaker_key");
+        registerId(" - rdarole:director",   "xc_rdarole_director_key");
+        registerId(" - rdarole:producer",   "xc_rdarole_producer_key");
+        registerId(" - rdarole:editor",   "xc_rdarole_editor_key");
+        registerId(" - rdarole:illustrator",   "xc_rdarole_illustrator_key");
+        registerId(" - rdarole:performer",   "xc_rdarole_performer_key");
+        registerId(" - rdarole:translator",   "xc_rdarole_translator_key");
+        registerId(" - marc:datafield 100$a", "id_100a_key");
+        registerId(" - marc:datafield 100$b", "id_100b_key");
+        registerId(" - marc:datafield 100$c", "id_100c_key");
+        registerId(" - marc:datafield 100$d", "id_100d_key");
+        registerId(" - marc:datafield 110$a", "id_110a_key");
+        registerId(" - marc:datafield 110$b", "id_110b_key");
+        registerId(" - marc:datafield 110$c", "id_110c_key");
+        registerId(" - marc:datafield 110$d", "id_110d_key");
+        registerId(" - marc:datafield 111$a", "id_111a_key");
+        registerId(" - marc:datafield 111$c", "id_111c_key");
+        registerId(" - marc:datafield 111$d", "id_111d_key");
+        registerId(" - marc:datafield 700$a", "id_700a_key");
+        registerId(" - marc:datafield 700$b", "id_700b_key");
+        registerId(" - marc:datafield 700$c", "id_700c_key");
+        registerId(" - marc:datafield 700$d", "id_700d_key");
+        registerId(" - marc:datafield 710$a", "id_710a_key");
+        registerId(" - marc:datafield 710$b", "id_710b_key");
+        registerId(" - marc:datafield 710$c", "id_710c_key");
+        registerId(" - marc:datafield 710$d", "id_710d_key");
+        registerId(" - marc:datafield 711$a", "id_711a_key");
+        registerId(" - marc:datafield 711$c", "id_711c_key");
+        registerId(" - marc:datafield 711$d", "id_711d_key");
         registerId("Uplink",                "id_uplink_key");
+        registerId(" - xc:workExpressed", "id_xc_workExpressed_key");
+        registerId(" - xc:expressionManifested", "id_xc_expressionManifested_key");
+        registerId(" - xc:manifestationHeld", "id_xc_manifestationHeld_key");
+        registerId(" - marc:controlfield 004", "id_004_key");
+        registerId(" - marc:datafield 014$a",  "id_014_key");
     }
 
     public String getName4progressBar() {
@@ -103,6 +155,7 @@ public class SolrIndexService extends GenericMetadataService {
     public List<OutputRecord> process(InputRecord ri) {
         recordsProcessedSinceCommit++;
         this.name4progressBar = "indexing "+incomingRepository.getName();
+
         /*
         if (ri.getStatus() != Record.ACTIVE) {
             TimingLogger.start("deleteByQuery");
@@ -133,6 +186,25 @@ public class SolrIndexService extends GenericMetadataService {
                 doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
             }
         }
+
+        /*
+        if (incomingRepository != null) {
+            if (incomingRepository.getProvider() !=null) {
+                if (incomingRepository.getProvider().getName() != null ) {
+                    LOG.info("*** SolrIndexService, process(ri), repo=" +this.incomingRepository.getProvider().getName());
+                }
+                else {
+                    LOG.info("*** SolrIndexService, process(ri), provider (noname)=" +this.incomingRepository.getProvider());
+                }
+            }
+            else {
+                LOG.info("*** SolrIndexService, process(ri), repo, no provider=" +this.incomingRepository);
+            }
+        }
+        else {
+            LOG.info("*** SolrIndexService, process(ri), incomingRepo=null");
+        }
+        */
 
         if (this.incomingRepository.getProvider() != null) {
             doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
@@ -168,6 +240,7 @@ public class SolrIndexService extends GenericMetadataService {
         try {
             final Format marc21 = getFormatService().getFormatByName("marc21");
             final Format xc = getFormatService().getFormatByName("xc");
+            //final Format dc = getFormatService().getFormatByName("dc");
             final Format format = r.getFormat();
             final String type = r.getType();
 
@@ -177,124 +250,301 @@ public class SolrIndexService extends GenericMetadataService {
             //    for (Set set : r.getSets()) {
             //    }
             //}
+            // note this one is special, it is always added, it is not parsed out of the record's xml, so do not have it come out of
+            //   the config file?
+            doc.addField("id_identifier_key", r.getId());
+            doc.addField("record_id_key", r.getId());
+
             if (format.equals(xc)) {
                 if (type != null) {
                     if (type.equals("w")) {
-                        addFieldToIndex(ri, doc, "//rdvocab:titleOfWork", "id_title_key", false);
-                        addFieldToIndex(ri, doc, "//xc:creator", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:compiler", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:composer", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:speaker", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//dcterms:creator", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:director", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:producer", "id_author_key", true);
+                        addFieldToIndex(ri, doc, "//rdvocab:titleOfWork",
+                                Collections.unmodifiableList(Arrays.asList("id_title_key", "rdvocab_titleOfWork_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//xc:creator",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_creator_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:compiler",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_compiler_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:composer",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_composer_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:speaker",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_speaker_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//dcterms:creator",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "dcterms_creator_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:director",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_director_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:producer",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key","xc_rdarole_producer_key")),
+                                true);
                     }
                     if (type.equals("e")) {
-                        addFieldToIndex(ri, doc, "//xc:workExpressed", "id_uplink_key", true);
+                        addFieldToIndex(ri, doc, "//xc:workExpressed",
+                                Collections.unmodifiableList(Arrays.asList("id_uplink_key", "id_xc_workExpressed_key")),
+                                true);
                         //TODO either add to stopwords or strip extraneous junk out of uplink,
                         // TODO i.e. oai:msg.rochester.edu:MetadataServicesToolkit/marctoxctransformation/
                         // TODO is all unneeded.
-                        addFieldToIndex(ri, doc, "//xc:titleOfExpression", "id_title_key", false);
-                        addFieldToIndex(ri, doc, "//xc:contributor", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:director", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:editor", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:illustrator", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:performer", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:producer", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//rdarole:translator", "id_author_key", true);
+                        addFieldToIndex(ri, doc, "//xc:titleOfExpression",
+                                Collections.unmodifiableList(Arrays.asList("id_title_key", "xc_titleOfExpression_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//xc:contributor",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_contributor_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:director",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_director_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:editor",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_editor_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:illustrator",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_illustrator_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:performer",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_performer_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:producer",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_producer_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:translator",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "xc_rdarole_translator_key")),
+                                true);
                     }
                     if (type.equals("m")) {
-                        addFieldToIndex(ri, doc, "//xc:expressionManifested", "id_uplink_key", true);
+                        addFieldToIndex(ri, doc, "//xc:expressionManifested",
+                                Collections.unmodifiableList(Arrays.asList("id_uplink_key", "id_xc_expressionManifested_key")),
+                                true);
                         //TODO either add to stopwords or strip extraneous junk out of uplink,
                         // TODO i.e. oai:msg.rochester.edu:MetadataServicesToolkit/marctoxctransformation/
                         // TODO is all unneeded.
-                        addFieldToIndex(ri, doc, "//dcterms:title", "id_title_key", false);
+                        addFieldToIndex(ri, doc, "//dcterms:title",
+                                Collections.unmodifiableList(Arrays.asList("id_title_key", "dcterms_title_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//dcterms:identifier",
+                                Collections.unmodifiableList(Arrays.asList("id_identifier_key", "id_manDCTermsIdent_key")),
+                                false);
+                        registerId("Identifier",            "id_identifier_key");
+                        registerId(" - dcterms_ident_holdings", "id_holdDCTermsIdent_key");
                     }
                     if (type.equals("h")) {
-                        addFieldToIndex(ri, doc, "//xc:manifestationHeld", "id_uplink_key", true);
+                        addFieldToIndex(ri, doc, "//xc:manifestationHeld",
+                                Collections.unmodifiableList(Arrays.asList("id_uplink_key", "id_xc_manifestationHeld_key")),
+                                true);
                         //TODO either add to stopwords or strip extraneous junk out of uplink,
                         // TODO i.e. oai:msg.rochester.edu:MetadataServicesToolkit/marctoxctransformation/
                         // TODO is all unneeded.
-                        addFieldToIndex(ri, doc, "//xc:callNumber", "id_callnum_key", false);
+                        addFieldToIndex(ri, doc, "//xc:callNumber",
+                                Collections.unmodifiableList(Arrays.asList("id_callnum_key","xc_callnum_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//dcterms:identifier",
+                                Collections.unmodifiableList(Arrays.asList("id_identifier_key", "id_holdDCTermsIdent_key")),
+                                false);
                     }
                 }
             }
+            //else if (format.equals(dc)) {
+            //}
             else if (r.getFormat().equals(marc21)) {
                 // get identifiers that could be present in ANY marc21 record
-                addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']", "id_uplink_key", false);
+                addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
+                        Collections.unmodifiableList(Arrays.asList("id_uplink_key", "id_001_key")),
+                        false);
 
                 if (type != null) {
                     // get identifiers that could be present only in a bib marc21 record
                     if (type.equals("b")) {
                         LOG.debug("*** SolrIndexService, found a Marc, type=" +type);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']", "id_title_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']", "id_title_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='b']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='c']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='d']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='b']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='c']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='d']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='c']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='d']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='b']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='c']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='d']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='b']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='c']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='d']", "id_author_key", true);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='c']", "id_author_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='d']", "id_author_key", false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_title_key", "id_245a_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList("id_title_key", "id_245b_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100a_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_10b_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100c_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100d_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110a_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110b_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110c_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110d_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111a_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111c_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111d_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700a_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700b_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700c_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700d_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710a_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710b_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710c_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710d_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711a_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='c']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711c_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='d']",
+                                Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711d_key")),
+                                false);
                     }
                     // get identifiers that could be present only in a holdings marc21 record
                     else if (type.equals("h")) {
                         LOG.debug("*** SolrIndexService, found a Marc, type=" +type);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']", "id_uplink_key", true);
-                        addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']", "id_uplink_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']", "id_callnum_key", false);
-                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']", "id_callnum_key", false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList("id_uplink_key","id_004_key")),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
+                                Collections.unmodifiableList(Arrays.asList("id_uplink_key","id_014_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
+                                Collections.unmodifiableList(Arrays.asList("id_callnum_key","id_852h_key")),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']",
+                                Collections.unmodifiableList(Arrays.asList("id_callnum_key","id_852i_key")),
+                                false);
                     }
                 }
             }
             else {
+         LOG.info("***** DO I EVER GET HERE?, unknown / RAW format record to index...");
                 // just do it. for now it == the complete set of marc parsers but in future it could encompass new/unknown formats,
                 // fed from config file.
-                addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']", "id_uplink_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']", "id_title_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']", "id_title_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='b']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='c']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='d']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='b']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='c']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='d']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='c']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='d']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='b']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='c']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='d']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='b']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='c']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='d']", "id_author_key", true);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='c']", "id_author_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='d']", "id_author_key", false);
+                 addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
+                        Collections.unmodifiableList(Arrays.asList("id_uplink_key", "id_001_key")),
+                        false);
 
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']", "id_uplink_key", true);
-                addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']", "id_uplink_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']", "id_callnum_key", false);
-                addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']", "id_callnum_key", false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_title_key", "id_245a_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
+                        Collections.unmodifiableList(Arrays.asList("id_title_key", "id_245b_key")),
+                        false);
+
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100a_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='b']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_10b_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100c_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_100d_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110a_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='b']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110b_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110c_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_110d_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111a_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111c_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_111d_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700a_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='b']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700b_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700c_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_700d_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710a_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='b']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710b_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710c_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_710d_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711a_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='c']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711c_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='d']",
+                        Collections.unmodifiableList(Arrays.asList("id_author_key", "id_711d_key")),
+                        false);
+
+
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
+                        Collections.unmodifiableList(Arrays.asList("id_uplink_key","id_004_key")),
+                        true);
+                addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
+                        Collections.unmodifiableList(Arrays.asList("id_uplink_key","id_014_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
+                        Collections.unmodifiableList(Arrays.asList("id_callnum_key","id_852h_key")),
+                        false);
+                addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']",
+                        Collections.unmodifiableList(Arrays.asList("id_callnum_key","id_852i_key")),
+                        false);
             }
         } catch (DatabaseConfigException e) {
             LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
@@ -322,17 +572,26 @@ public class SolrIndexService extends GenericMetadataService {
     }
 
     private void addFieldToIndex(InputRecord ri, SolrInputDocument doc, String xpStr, String key, boolean repeats) {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(key);
+        addFieldToIndex(ri, doc, xpStr, list, repeats);
+    }
+    private void addFieldToIndex(InputRecord ri, SolrInputDocument doc, String xpStr, List<String> keys, boolean repeats) {
         ri.setMode(Record.STRING_MODE);
         List<Element> elements = getFieldValue(xpStr, ri.getOaiXml());
         if (elements != null) {
             if (repeats) {
                 for (Element element: elements) {
-                    LOG.debug("*** SolrIndexService, adding ident: "+ key +" add data:"+element.getText());
-                    doc.addField(key, element.getText());
+                    for (String key: keys) {
+                        LOG.debug("*** SolrIndexService, adding ident: "+ key +" add data:"+element.getText());
+                        doc.addField(key, element.getText());
+                    }
                 }
             }
             else {
-                doc.addField(key, elements.get(0).getText());
+                for (String key: keys) {
+                    doc.addField(key, elements.get(0).getText());
+                }
             }
         }
         // m_recordRegisteredData.add(new RegisteredData("id_title_key", elements.get(0).getText()));

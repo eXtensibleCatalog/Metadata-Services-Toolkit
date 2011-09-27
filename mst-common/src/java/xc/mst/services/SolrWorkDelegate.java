@@ -78,7 +78,12 @@ public class SolrWorkDelegate extends WorkerThread {
                 for (Provider p : providers) {
                     Repository repo = getRepositoryService().getRepository(p);
                     if (repo.ready4harvest()) {
+                        //TODO debug here!
+                        LOG.info("SolrWorkDelegate, repo IS ready4harvest! provider="+p.getName()+" repo="+repo.getName());
                         solrIndexService.process(repo, null, null, null);
+                    }
+                    else {
+                        LOG.info("SolrWorkDelegate, repo not ready4harvest! provider="+p.getName()+" repo="+repo.getName());
                     }
                 }
             }
