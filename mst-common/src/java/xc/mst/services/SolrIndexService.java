@@ -191,6 +191,25 @@ public class SolrIndexService extends GenericMetadataService {
             }
         }
 
+        /*
+        if (incomingRepository != null) {
+            if (incomingRepository.getProvider() !=null) {
+                if (incomingRepository.getProvider().getName() != null ) {
+                    LOG.info("*** SolrIndexService, process(ri), repo=" +this.incomingRepository.getProvider().getName());
+                }
+                else {
+                    LOG.info("*** SolrIndexService, process(ri), provider (noname)=" +this.incomingRepository.getProvider());
+                }
+            }
+            else {
+                LOG.info("*** SolrIndexService, process(ri), repo, no provider=" +this.incomingRepository);
+            }
+        }
+        else {
+            LOG.info("*** SolrIndexService, process(ri), incomingRepo=null");
+        }
+        */
+
         if (this.incomingRepository.getProvider() != null) {
             doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
             doc.addField("provider_name", this.incomingRepository.getProvider().getName());
