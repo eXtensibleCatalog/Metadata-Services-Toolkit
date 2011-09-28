@@ -77,6 +77,7 @@ public interface MetadataService {
     public Map<String, String> getIdentifiers();
 
     // on a record by record basis SolrIndexService will ask a service for that records registered identifiers
+    //  (now switched strategy to have SolrIndexService parse for the identifiers, leaving this in place for flexibility)
     public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri);
 
 
