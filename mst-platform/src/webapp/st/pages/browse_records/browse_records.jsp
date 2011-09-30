@@ -188,7 +188,8 @@ text-decoration:underline;
           </div>
           <!-- facet_search_results  end -->
 
-          <div >
+	 <div>
+          <div style="float:left;">
             <!-- Display of filters -->
             <c:if test="${(query != '' || result.facetFilters != '[]') && (predecessorRecord == null && successorRecord == null)}">
               <p class="searched_for">You Searched for : <c:if test="${query != ''}">"${query}"</c:if><c:if test="${result.facetFilters != '[]' && query != ''}">, </c:if>
@@ -336,22 +337,39 @@ text-decoration:underline;
             <!-- Display of filters In case of successor - end -->
           </div>
 
-          <!-- Display of Search text box - begin TODO this is going to get changed to include identifiers...-->
-          <div class="search_box_div">
+          <div class="search_box_div" style="float:left;">
             <form name="browseRecordsForm" method="post" action="browseRecords.action">
 
-              <input type="text" id="search_text" name="query" value="<c:out escapeXml="true" value="${query}" />" size="40"/>&nbsp;&nbsp;&nbsp;
-              <button class="xc_button" type="submit" name="save" >Search</button>
-	      <br>
-
-	      <s:combobox label="Identifier?" 
-		headerKey="-1" headerValue="--- Select ---"
-		list="idKeys" 
-		name="identifier" />
-  
+	         <div>
+                    <div style="width:100px;float:left;">
+                       Select Index:
+                    </div>
+                    <div style="width:200px;float:right;">
+                           <s:select 
+                             list="idKeys"
+	                     name="identifier"
+                            />
+                    </div>
+                 </div>
+                 <br><br>
+	         <div>
+                    <div style="width:100px;float:left;">
+                          Search Term(s)
+                    </div>
+                    <div style="width:200px;float:right;">
+                          <input type="text" id="search_text" name="query" value="<c:out escapeXml="true" value="${query}" />" size="40"/>&nbsp;&nbsp;&nbsp;
+                    </div>
+                 </div>
+                 <br><br>
+	         <div>
+                    <div style="width:100px;float:left;">
+                            <button class="xc_button" type="submit" name="save" >Search</button>
+                    </div>
+                 </div>
             </form>
           </div>
-          <!-- Display of Search text box - end -->
+	</div>
+
 
         <div class="facet_line"/>
 
