@@ -48,7 +48,7 @@ public class SolrIndexService extends GenericMetadataService {
     protected String name4progressBar = null;
 
     private static final String id_identifier_key =  "id_identifier_key";
-    private static final String  xc_record_id_l =  "xc_record_id_l";
+    private static final String  xc_record_id_key =  "xc_record_id_key";
     private static final String  record_id_l = "record_id_l";
     private static final String  id_001bib_key = "id_001bib_key";  // can be alphanumeric
     private static final String  id_001hold_key = "id_001hold_key";  // can be alphanumeric
@@ -56,7 +56,7 @@ public class SolrIndexService extends GenericMetadataService {
     private static final String  id_manDCTermsIdent_key = "id_manDCTermsIdent_key";
     private static final String  id_holdDCTermsIdent_key = "id_holdDCTermsIdent_key";
     private static final String  id_title_key =   "id_title_key";
-    private static final String  id_245a_key = "id_245a_key";
+    private static final String  id_245_key = "id_245_key";
     private static final String  rdvocab_titleOfWork_key = "rdvocab_titleOfWork_key";
     private static final String  xc_titleOfExpression_key = "xc_titleOfExpression_key";
     private static final String  dcterms_title_key = "dcterms_title_key";
@@ -96,7 +96,7 @@ public class SolrIndexService extends GenericMetadataService {
         //  note, for solr to recognize as dynamic field I've add _key, and others like _l,
         //  see solr's schema.xml for all the dynamic fields you can choose from.
         registerId("Record Identifier",        id_identifier_key);
-        registerId(" - xc:recordID",           xc_record_id_l);
+        registerId(" - xc:recordID",           xc_record_id_key);
         registerId(" - OAI Header ID",         record_id_l);
         registerId(" - marc:controlfield 001 Bibliographic", id_001bib_key);  // can be alphanumeric
         registerId(" - marc:controlfield 001 Holdings", id_001hold_key);  // can be alphanumeric
@@ -104,7 +104,7 @@ public class SolrIndexService extends GenericMetadataService {
         registerId(" - dcterms:identifier Manifestation", id_manDCTermsIdent_key);
         registerId(" - dcterms:identifier Holdings", id_holdDCTermsIdent_key);
         registerId("Title",                 id_title_key);
-        registerId(" - marc:datafield 245$a", id_245a_key);
+        registerId(" - marc:datafield 245$ab", id_245_key);
         registerId(" - rdvocab:titleOfWork", rdvocab_titleOfWork_key);
         registerId(" - xc:titleOfExpression", xc_titleOfExpression_key);
         registerId(" - dcterms:title", dcterms_title_key);
@@ -343,7 +343,8 @@ public class SolrIndexService extends GenericMetadataService {
                                 Collections.unmodifiableList(Arrays.asList(id_resIdent_key, id_manDCTermsIdent_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//xc:recordID",
-                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, xc_record_id_l)),
+                                // this produces some mixed values, could strip it but for now, just accept text.
+                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, xc_record_id_key)),
                                 true);
                     }
                     if (type.equals("h")) {
@@ -373,7 +374,10 @@ public class SolrIndexService extends GenericMetadataService {
                                 Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001bib_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
-                                Collections.unmodifiableList(Arrays.asList(id_title_key, id_245a_key)),
+                                Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
                                 Collections.unmodifiableList(Arrays.asList(id_author_key, id_100a_key)),
@@ -424,7 +428,10 @@ public class SolrIndexService extends GenericMetadataService {
                             false);
 
                     addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_title_key, id_245a_key)),
+                            Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
+                            false);
+                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
+                            Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
                             false);
 
                     addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
@@ -515,9 +522,20 @@ public class SolrIndexService extends GenericMetadataService {
                 for (Element element: elements) {
                     for (String key: keys) {
                         LOG.debug("*** SolrIndexService, adding ident: "+ key +" add data:"+element.getText());
+                        //if (key.endsWith("_l")) {
+                        //    LOG.info("*** SolrIndexService, adding ident: "+ key +" add data:"+element.getText());
+                        //}
+
                         if (strip) {
-                            String stripped = element.getText().replaceAll("[^\\d]", "");
-                            doc.addField(key, stripped);
+                            String stripped=null;
+                            try {
+                                stripped = element.getText().replaceAll("[^\\d]", "");
+                                Long.parseLong(stripped);
+                                doc.addField(key, stripped);
+                            }catch(NumberFormatException e) {
+                                LOG.error("** Problem with stripped string, not numeric, key="+key+" all_data="+element.getText()+ " stripped="+stripped);
+                            }
+
                         }
                         else {
                             doc.addField(key, element.getText());
@@ -527,9 +545,18 @@ public class SolrIndexService extends GenericMetadataService {
             }
             else {
                 for (String key: keys) {
+                    //if (key.endsWith("_l")) {
+                    //    LOG.info("*** SolrIndexService, adding ident: "+ key +" add data:"+elements.get(0).getText());
+                    //}
                     if (strip) {
-                        String stripped = elements.get(0).getText().replaceAll("[^\\d]", "");
-                        doc.addField(key, stripped);
+                        String stripped=null;
+                        try {
+                            stripped = elements.get(0).getText().replaceAll("[^\\d]", "");
+                            Long.parseLong(stripped);
+                            doc.addField(key, stripped);
+                        }catch(NumberFormatException e) {
+                            LOG.error("**2) Problem with stripped string, not numeric, key="+key+" all_data="+elements.get(0).getText()+ " stripped="+stripped);
+                        }
                     }
                     else {
                         doc.addField(key, elements.get(0).getText());

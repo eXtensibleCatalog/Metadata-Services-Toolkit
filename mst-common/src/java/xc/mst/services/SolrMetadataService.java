@@ -76,7 +76,7 @@ public abstract class SolrMetadataService extends BaseManager {
     protected long timeDiff = 0;
 
     /**
-     * 
+     *
      * @param serviceId
      * @param outputSetId
      */
@@ -152,7 +152,7 @@ public abstract class SolrMetadataService extends BaseManager {
     /**
      * This method gets called to give the service the service specific configuration
      * which was defined for it in its configuration file.
-     * 
+     *
      * @param config
      *            The service specific configuration defined in the service's configuration file
      */
@@ -163,15 +163,15 @@ public abstract class SolrMetadataService extends BaseManager {
      * The MST calls this method to signal the Metadata Service to process the records. Depending on the
      * service, this method might look at all records in the database or it might just look at the
      * unprocessed ones. The type of processing that occurs will also be service specific.
-     * 
+     *
      * This method will process as many records as possible, creating a new list of records which contains
      * the records which resulted from processing the existing ones. Each record in the Lucene index will
      * store a list of the record(s) it was processed from. A record may be processed from multiple
      * records, and more than one record may be processed from a single record.
-     * 
+     *
      * This method will return true if all processing worked perfectly and false if there were errors. If
      * it returns false, it will still have performed as much processing as possible.
-     * 
+     *
      * @param outputSetId
      *            The set to which processed records should be added, or -1 if they should not be added to an additional set
      * @return true if all processing worked perfectly, false if there were errors.
@@ -339,7 +339,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Processes the records in the given set.
-     * 
+     *
      * @throws IndexException
      * @throws InterruptedException
      */
@@ -435,7 +435,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the cancel status of the service.
-     * 
+     *
      * @return true if service is canceled else false
      */
     public boolean isCanceled() {
@@ -444,7 +444,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the pause status of the service.
-     * 
+     *
      * @return true if service is paused else false
      */
     public boolean isPaused() {
@@ -460,7 +460,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Sets the cancel status of the service.
-     * 
+     *
      * @param isCanceled
      *            Flag indicating the cancel status of the service
      */
@@ -470,7 +470,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the name for this service
-     * 
+     *
      * @return This service's name
      */
     public String getServiceName() {
@@ -479,7 +479,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the status of the service
-     * 
+     *
      * @return This service's status
      */
     public Status getServiceStatus() {
@@ -494,7 +494,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the count of records processed
-     * 
+     *
      * @return the processedRecordCount
      */
     public int getProcessedRecordCount() {
@@ -503,7 +503,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Gets the count of total records
-     * 
+     *
      * @return the totalRecordCount
      */
     public long getTotalRecordCount() {
@@ -512,7 +512,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * This method validates that the service is able to be run.
-     * 
+     *
      * @throws ServiceValidationException
      *             When the service is invalid
      */
@@ -521,7 +521,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * This method processes a single record.
-     * 
+     *
      * @param record
      *            The record to process
      * @return A list of outgoing records that should be added, modified, or deleted
@@ -545,7 +545,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Updates a record in the index
-     * 
+     *
      * @param record
      *            The record to be updated.
      */
@@ -562,7 +562,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Adds a new set to the database
-     * 
+     *
      * @param setSpec
      *            The setSpec of the new set
      * @param setName
@@ -585,7 +585,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Logs a debug message in the service's log file
-     * 
+     *
      * @param message
      *            The message to log
      */
@@ -596,7 +596,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Logs an info message in the service's log file
-     * 
+     *
      * @param message
      *            The message to log
      */
@@ -607,7 +607,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Logs a warning message in the service's log file
-     * 
+     *
      * @param message
      *            The message to log
      */
@@ -619,7 +619,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Logs an error message in the service's log file
-     * 
+     *
      * @param message
      *            The message to log
      */
@@ -634,7 +634,7 @@ public abstract class SolrMetadataService extends BaseManager {
      * Inserts a record in the Lucene index and sets up RecordInput values
      * for any processing directives the record matched so the appropriate
      * services process the record
-     * 
+     *
      * @param record
      *            The record to insert
      */
@@ -662,7 +662,7 @@ public abstract class SolrMetadataService extends BaseManager {
      * Updates a record in the Lucene index and sets up RecordInput values
      * for any processing directives the record matched so the appropriate
      * services reprocess the record after the update
-     * 
+     *
      * @param newRecord
      *            The record as it should look after the update (the record ID is not set)
      * @param oldRecord
@@ -697,7 +697,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Logs the status of the service to the database
-     * 
+     *
      * @throws DataException
      */
     public void setStatus(Status status) {
@@ -711,6 +711,17 @@ public abstract class SolrMetadataService extends BaseManager {
                 service.setStatus(status);
                 getServiceDAO().update(service);
             }
+            /*
+             // this generates too many lines of setting...solr-indexer as: complete
+            else {
+                if (this instanceof GenericMetadataService) {
+                    if (((GenericMetadataService)this).isSolrIndexer()) {
+                        LOG.info("** Setting the status of the service solr-indexer as:"+ status);
+                    }
+
+                }
+            }
+             */
         } catch (DatabaseConfigException e1) {
             LOG.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
 
@@ -721,7 +732,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Sets the list of processing directives for this service
-     * 
+     *
      * @param processingDirectives
      *            The list of processing directives which should be run on records processed by this service
      */
@@ -734,7 +745,7 @@ public abstract class SolrMetadataService extends BaseManager {
      * processing directives, adds the appropriate recordInput objects to the Lucene index.
      * Also adds the service ID for all matched processing directives to the list of services
      * to run when this service finishes.
-     * 
+     *
      * @param record
      *            The record to match against the processing directives
      */
@@ -804,7 +815,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Reprocesses the passed record by all service that had processed it in the past
-     * 
+     *
      * @param record
      *            The record to reprocess
      */
@@ -832,7 +843,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Builds and sends an email report about the harvest to the schedule's notify email address.
-     * 
+     *
      * @param problem
      *            The problem which prevented the harvest from finishing, or null if the harvest was successful
      */
@@ -904,7 +915,7 @@ public abstract class SolrMetadataService extends BaseManager {
 
     /**
      * Executes the sql scripts in the folder provided
-     * 
+     *
      * @param sqlFolderName
      *            Path of the folder that contains the sql scripts
      * @throws IOException

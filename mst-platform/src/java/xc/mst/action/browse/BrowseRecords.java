@@ -197,6 +197,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                         query = "(" + query + ")";
                     }
                     if (qFld != null) {
+                        query = query.replaceAll(":", "\\\\:");  // replacing with \\: and solr ends up thinking the token before : is a field
+                                                                 //  warning:  replacing the 1st : (the delim between field and text) breaks
+                                                                 //             the search, no results returned.
                         String q = new String(qFld+":"+query);
                         solrQuery.setQuery(q);
                         if (log.isDebugEnabled()) {
@@ -212,8 +215,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
                             query = "(" + query + ")";
                         }
                         // TODO having trouble getting this working, leave as a TODO for now, and drop back to default search on record_id.
+                        // (should never get here anyways, an identifier will always be picked.
                         //solrQuery.setQuery("text:"+ query);
-                        solrQuery.setQuery(query);
+                        solrQuery.setQuery(query.replaceAll(":", "\\\\:"));
                     }
                 } else {
                     if (log.isDebugEnabled()) {
@@ -316,13 +320,6 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
 
             rowEnd = rowStart + numberOfResultsToShow;
 
-            Record idExactMatch = null;
-            try {
-                long id = Long.parseLong(query);
-                idExactMatch = getRepositoryService().getRecord(id);
-            } catch (Throwable t) {
-            }
-
             // In initial page load, we are not going to show any records. Only facets will be shown
             if (isInitialLoad) {
                 solrQuery.setStart(0);
@@ -330,23 +327,9 @@ public class BrowseRecords extends Pager implements ServletResponseAware {
             } else {
                 solrQuery.setStart(rowStart);
                 solrQuery.setRows(numberOfResultsToShow);
-                if (idExactMatch != null) {
-                    if (rowStart < 2) {
-                        solrQuery.setRows(numberOfResultsToShow - 1);
-                    } else {
-                        solrQuery.setStart(rowStart - 1);
-                    }
-                }
             }
             BrowseRecordService browseRecordService = (BrowseRecordService) MSTConfiguration.getInstance().getBean("BrowseRecordService");
             result = browseRecordService.search(solrQuery);
-
-            if (idExactMatch != null) {
-                if (rowStart < 2) {
-                    result.getRecords().add(0, idExactMatch);
-                }
-                result.setTotalNumberOfResults(result.getTotalNumberOfResults() + 1);
-            }
 
             if (log.isDebugEnabled()) {
                 log.debug("Search result::" + result);
