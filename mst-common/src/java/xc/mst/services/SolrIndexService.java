@@ -48,7 +48,7 @@ public class SolrIndexService extends GenericMetadataService {
     protected String name4progressBar = null;
 
     private static final String id_identifier_key =  "id_identifier_key";
-    private static final String  xc_record_id_key =  "xc_record_id_key";
+    private static final String  xc_record_id_w =  "xc_record_id_w";
     private static final String  record_id_l = "record_id_l";
     private static final String  id_001bib_key = "id_001bib_key";  // can be alphanumeric
     private static final String  id_001hold_key = "id_001hold_key";  // can be alphanumeric
@@ -96,7 +96,7 @@ public class SolrIndexService extends GenericMetadataService {
         //  note, for solr to recognize as dynamic field I've add _key, and others like _l,
         //  see solr's schema.xml for all the dynamic fields you can choose from.
         registerId("Record Identifier",        id_identifier_key);
-        registerId(" - xc:recordID",           xc_record_id_key);
+        registerId(" - xc:recordID",           xc_record_id_w);
         registerId(" - OAI Header ID",         record_id_l);
         registerId(" - marc:controlfield 001 Bibliographic", id_001bib_key);  // can be alphanumeric
         registerId(" - marc:controlfield 001 Holdings", id_001hold_key);  // can be alphanumeric
@@ -343,8 +343,8 @@ public class SolrIndexService extends GenericMetadataService {
                                 Collections.unmodifiableList(Arrays.asList(id_resIdent_key, id_manDCTermsIdent_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//xc:recordID",
-                                // this produces some mixed values, could strip it but for now, just accept text.
-                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, xc_record_id_key)),
+                                // this produces some mixed values, could strip it but for now, just accept text.  require exact match for now.
+                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, xc_record_id_w)),
                                 true);
                     }
                     if (type.equals("h")) {
