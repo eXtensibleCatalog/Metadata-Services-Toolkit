@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10345">
-		<xc:location>SibRstrctd</xc:location>
-		<xc:callNumber>ML159.B5 V8</xc:callNumber>
-		<xc:recordID type="NRU">31649</xc:recordID>
-		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10205</xc:manifestationHeld>
-	</xc:entity>
-</xc:frbr>

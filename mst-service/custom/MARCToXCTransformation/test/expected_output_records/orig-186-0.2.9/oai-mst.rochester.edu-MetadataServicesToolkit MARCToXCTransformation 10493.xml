@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10493">
-		<dcterms:subject xsi:type="dcterms:LCC">M3</dcterms:subject>
-		<rdarole:composer>Mahler, Gustav, 1860-1911.</rdarole:composer>
-		<rdvocab:titleOfWork>Works.</rdvocab:titleOfWork></xc:entity>
-</xc:frbr>

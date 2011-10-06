@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10342">
-		<dcterms:subject xsi:type="dcterms:LCC">M215.C434</dcterms:subject>
-		<rdarole:composer>Tchaikovsky, Peter Ilich, 1840-1893.</rdarole:composer>
-		<rdvocab:titleOfWork>Shchelkunchik. Suite; arr.</rdvocab:titleOfWork>
-		<xc:subject xsi:type="dcterms:LCSH">Suites (Pianos (2)), Arranged-Scores.</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Suites (Pianos (2)), Arranged</xc:subject>
-		<xc:type xsi:type="dcterms:LCSH">Scores.</xc:type></xc:entity>
-</xc:frbr>

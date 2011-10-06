@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-  <xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10097">
-    <rdarole:author>Gregory, William, fl. 1800.</rdarole:author>
-    <rdvocab:titleOfWork>Visible display of divine providence, or, The journal of a captured missionary</rdvocab:titleOfWork>
-    <xc:subject xsi:type="dcterms:LCSH">Voyages and travels.</xc:subject>
-    <xc:subject xsi:type="dcterms:LCSH">Missions.</xc:subject>
-    <xc:coverage>United States-Pennsylvania-Greensburg.</xc:coverage>
-    <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent></xc:entity>
-</xc:frbr>
