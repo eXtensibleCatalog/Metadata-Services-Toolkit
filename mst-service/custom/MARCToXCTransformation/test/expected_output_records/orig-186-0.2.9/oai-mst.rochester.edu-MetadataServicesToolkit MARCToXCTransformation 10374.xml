@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="holdings" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10374">
-		<xc:location>Internet</xc:location>
-		<dcterms:identifier>http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=SERVMARQU Full text.</dcterms:identifier>
-		<xc:recordID type="NRU">3571217</xc:recordID>
-		<xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10357</xc:manifestationHeld>
-	</xc:entity>
-</xc:frbr>

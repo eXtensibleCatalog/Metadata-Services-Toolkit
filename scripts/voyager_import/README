@@ -21,3 +21,7 @@ I uploaded the actual file here: http://www.extensiblecatalog.org/doc/MST/large_
 
 1) execute create_table.sql
 2) execute import.sql
+3) then I ran this query (this obviously could be improved upon, but it should meet our needs for now):
+
+$ mysql -s -u root --password=root -D voyager_searches -e "select distinct search_string from voyager_searches where search_string like '%GKEY%' and stat_string <> '' and stat_string is not null;"  | sed 's/([GNS]KEY \([^)]*\))/\1/g' | sed 's/\(AND\|[GNS]KEY\) //g' | uniq > searches
+

@@ -9,13 +9,26 @@
 
 package xc.mst.common.test;
 
+import java.io.File;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Namespace;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import antlr.NameSpace;
+
+import xc.mst.utils.Util;
+import xc.mst.utils.XmlHelper;
 
 public class GenericTest extends BaseTest {
 
@@ -33,10 +46,98 @@ public class GenericTest extends BaseTest {
         super.shutdown();
     }
 
+    Namespace xsiNS = null;
+    Namespace oaiNS = null;
+
+    public void putStuffIn(List l, Map<String, List<Element>> marcRecordElMap) throws Throwable {
+        for (Object elObj : l) {
+            Element recordEl = (Element)elObj;
+            Element metadataEl = recordEl.getChild("metadata", oaiNS);
+            Element marcRecordEl = (Element)metadataEl.getChildren().get(0);
+
+
+            Element firstEl = (Element)((Element)marcRecordEl.getChildren().get(0)).getChildren().get(0);
+            String md5input = xmlHelper.getString(firstEl);
+            Element secondEl = null;
+            try {
+                secondEl = (Element)((Element)marcRecordEl.getChildren().get(0)).getChildren().get(1);
+                md5input = md5input+xmlHelper.getString(secondEl);
+            } catch (Throwable t) {
+                System.out.println(xmlHelper.getString(marcRecordEl));
+            }
+            md5input = md5input.replaceAll("oai:mst.rochester.edu[^\"<]*", "");
+            byte[] bytesOfMessage = md5input.getBytes("UTF-8");
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] thedigest = md.digest(bytesOfMessage);
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0;i<thedigest.length;i++) {
+                hexString.append(Integer.toHexString(0xFF & thedigest[i]));
+            }
+            System.out.println(hexString+": "+md5input);
+            marcRecordEl.addNamespaceDeclaration(xsiNS);
+            List<Element> marcRecordList = marcRecordElMap.get(hexString.toString());
+            if (marcRecordList == null) {
+                marcRecordList = new ArrayList<Element>();
+                marcRecordElMap.put(hexString.toString(), marcRecordList);
+            }
+            marcRecordList.add(marcRecordEl);
+        }
+    }
+
+    public void getStuffOut(StringBuilder out, Map<String, List<Element>> marcRecordElMap) {
+        for (Map.Entry<String, List<Element>> me : marcRecordElMap.entrySet()) {
+            out.append("<md5>"+me.getKey()+"</md5>");
+            for (Element e : me.getValue()) {
+                out.append(xmlHelper.getString(e));
+            }
+        }
+    }
+
     @Test
     public void goTest() {
 
         try {
+            Util util = new Util();
+            XmlHelper xmlHelper = new XmlHelper();
+
+            xsiNS = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+            String contents = util.slurp(new File("C:/dev/xc/mst/svn/trunk/mst-service/custom/MARCToXCTransformation/build/test/mock_harvest_actual_output/orig_186/001.xml"));
+            Document doc = xmlHelper.getJDomDocument(contents);
+            Map<String, List<Element>> marcRecordElMap = new TreeMap<String, List<Element>>();
+
+            StringBuilder out = new StringBuilder();
+
+            oaiNS = doc.getRootElement().getNamespace();
+
+            out.append("<root>");
+            List l = doc.getRootElement().getChild("ListRecords", oaiNS).getChildren("record", oaiNS);
+            System.out.println("l.size(): "+l.size());
+            putStuffIn(l, marcRecordElMap);
+            getStuffOut(out, marcRecordElMap);
+
+            marcRecordElMap.clear();
+            out.append("</root>");
+            util.spit("C:/dev/xc/mst/svn/trunk/new.xml", out.toString());
+
+            out = new StringBuilder();
+            out.append("<root>");
+
+            File folder = new File("C:/dev/xc/mst/svn/trunk/mst-service/custom/MARCToXCTransformation/test/expected_output_records/orig-186");
+            for (String fStr : folder.list()) {
+                if (fStr != null && fStr.indexOf("svn") == -1) {
+                    contents = util.slurp(new File("C:/dev/xc/mst/svn/trunk/mst-service/custom/MARCToXCTransformation/test/expected_output_records/orig-186/"+fStr));
+                    doc = xmlHelper.getJDomDocument(contents);
+
+                    l = doc.getRootElement().getChildren("record", oaiNS);
+                    System.out.println("l.size(): "+l.size());
+                    putStuffIn(l, marcRecordElMap);
+                }
+            }
+            getStuffOut(out, marcRecordElMap);
+            out.append("</root>");
+            util.spit("C:/dev/xc/mst/svn/trunk/old.xml", out.toString());
+            /*
             System.out.println("beluga");
             LOG.error("beluga");
 
@@ -69,6 +170,7 @@ public class GenericTest extends BaseTest {
                 }
                 LOG.error("done.");
             }
+            */
             /*
             */
 

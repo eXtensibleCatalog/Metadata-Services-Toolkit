@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-  <xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10137">
-    <dcterms:subject xsi:type="dcterms:LCC">M1495</dcterms:subject>
-
-    <xc:subject xsi:type="dcterms:LCSH">Part-songs.</xc:subject>
-    <xc:subject xsi:type="dcterms:LCSH">Part-songs, Sacred.</xc:subject>
-    <rdvocab:titleOfWork>Madrigals, voices (3-6), set 1. Thus saith my Cloris bright </rdvocab:titleOfWork>
-    <xc:creator>Wilbye, John, 1574-1638.</xc:creator></xc:entity>
-</xc:frbr>
