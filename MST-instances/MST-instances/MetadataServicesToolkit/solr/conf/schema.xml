@@ -529,6 +529,7 @@
    <dynamicField name="*_key"  type="text_norm_icu"  indexed="true"  stored="false" multiValued="true"/>
    <dynamicField name="*_t"  type="text"  indexed="true"  stored="false" multiValued="true"/>
    <dynamicField name="*_s"  type="string"  indexed="true"  stored="false" multiValued="true"/>
+   <dynamicField name="*_w"  type="text_ws"  indexed="true"  stored="false" multiValued="true"/>
    <dynamicField name="*_l"  type="long"   indexed="true"  stored="false" multiValued="true"/>
    <dynamicField name="*_i"  type="int"    indexed="true"  stored="false" multiValued="true"/>
    <dynamicField name="*_b"  type="boolean" indexed="true"  stored="false" multiValued="true"/>

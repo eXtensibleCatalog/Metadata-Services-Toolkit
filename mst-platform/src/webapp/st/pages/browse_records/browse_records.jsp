@@ -134,6 +134,7 @@ text-decoration:underline;
                           <c:param name="removeFacetValue" value="${filter.value}"/>
                           <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
                           <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+                          <c:param name="identifier" value ="${identifier}"/>
 
                         </c:url>
                         : ${filter.value} (<a href="${removeFacet}">Remove</a>)
@@ -159,6 +160,7 @@ text-decoration:underline;
                           <c:param name="addFacetValue" value="${fcount.name}"/>
                           <c:param name="selectedFacetNames" value="${selectedFacetNames}"/>
                           <c:param name="selectedFacetValues" value="${selectedFacetValues}"/>
+                          <c:param name="identifier" value ="${identifier}"/>
 
                        </c:url>
                       <div style="text-indent: -25px; padding-left: 25px;">
@@ -337,6 +339,8 @@ text-decoration:underline;
             <!-- Display of filters In case of successor - end -->
           </div>
 
+          <c:set var="identifier" scope="session" value="${identifier}"/>
+
           <div class="search_box_div" style="float:left;">
             <form name="browseRecordsForm" method="post" action="browseRecords.action">
 
@@ -349,6 +353,9 @@ text-decoration:underline;
                              list="idKeys"
 	                     name="identifier"
                             />
+
+ 
+			    
                     </div>
                  </div>
                  <br><br>
