@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import org.jdom.Element;
@@ -36,6 +37,7 @@ import xc.mst.repo.Repository;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
+import xc.mst.utils.index.SolrIndexManager;
 
 public class SolrIndexService extends GenericMetadataService {
 
@@ -180,6 +182,14 @@ public class SolrIndexService extends GenericMetadataService {
         this.incomingRepository = repo;
         this.preserveStatuses = false;
         super.process(repo, inputFormat, inputSet, outputSet);
+
+        try {
+            ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
+            LOG.debug("process, Solr Index Service, completed optimizeIndex.");
+
+        } catch (IndexException ie) {
+            LOG.error("Error optimizing solr index.", ie);
+        }
     }
 
     public List<OutputRecord> process(InputRecord ri) {
@@ -516,7 +526,15 @@ public class SolrIndexService extends GenericMetadataService {
     //
     private void addFieldToIndex(InputRecord ri, SolrInputDocument doc, String xpStr, List<String> keys, boolean repeats, boolean strip) {
         ri.setMode(Record.STRING_MODE);
-        List<Element> elements = getFieldValue(xpStr, ri.getOaiXml());
+        List<Element> elements = null;
+        String xStr = ri.getOaiXml();
+        if (!StringUtils.isEmpty(xStr)) {
+            try {
+                elements = getFieldValue(xpStr, xStr);
+            } catch (Throwable t) {
+                LOG.debug("", t);
+            }
+        }
         if (elements != null) {
             if (repeats) {
                 for (Element element: elements) {
