@@ -28,59 +28,63 @@ import xc.mst.services.impl.service.GenericMetadataService;
 public class MarcAggregationService extends GenericMetadataService {
 	
 	private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
-	public static final String FOO_NS = "foo:bar";
+	protected Map<String, Matcher> matcherMap = null;
+	protected Map<String, MatchRule> matchRuleMap = null;
+    	public void setup() {
+		this.matcherMap = new HashMap<String, Matcher>();
+		String[] mpStrs = new String {
+			"LCCN", 
+			"SystemControlNumber"};
+		for (String mp : mpStrs) {
+			Matcher m = (Matcher)config.getBean(mp+"Matcher");
+			matcherMap.put(mp, m);
+			m.loadFromDB();
+		}	
+		this.matchRuleMap = new HashMap<String, MatchRule>();
+		String[] mrStrs = new String[] {
+			"Step1a",
+			"Step2a",
+		};
+		for (String mrStr : mrStrs) {
+			MatchRule mr = (MatchRule)config.getBean(mrStr+"MatchRule");
+			matcherMap.put(mrStr, mr);
+		}	
+	}
 
 	public List<OutputRecord> process(InputRecord r) {
-		List<OutputRecord> records = new ArrayList<OutputRecord>();
+		
+		SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+
+		Set<Long> recordsWithCommonMatchPoints = new HashSet<Long>();
+		Set<Long> matchedRecords = new HashSet<Long>();
+		Map<String, String> recordMatchPoints = new HashMap<String, String>();
 		try {
-			OutputRecord out = null;
-			if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
-				out = r.getSuccessors().get(0);
-				((Record)out).getMessages().clear();
-			} else {
-				out = getRecordService().createRecord();
+			for (Map.Entry<String, Matcher> me : this.matcherMap.entrySet()) {
+				String matchPointKey = me.getKey();
+				Matcher matcher = me.getValue();
+				recordsWithCommonMatchPoints.addAll(
+					matcher.getMatchingOutputIds(smr));
+				recordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(r.getId());
 			}
-			out.setFormat(getFormatDAO().getById(1));
-			if (r.getStatus() == Record.DELETED) {
-				out.setStatus(Record.DELETED);
-				LOG.debug("deleted r.getId():"+r.getId()+" out.getId():"+out.getId());
-				LOG.debug("out.getIndexedObjectType():"+((Record)out).getType());
-			} else {
-				out.setStatus(Record.ACTIVE);
-				r.setMode(Record.JDOM_MODE);
-				Element foo = r.getOaiXmlEl();
-				if (foo != null && "foo".equals(foo.getName())) {
-					LOG.debug("foo is not null");
-					if ("true".equals(foo.getAttributeValue("message"))) {
-						addMessage(r, 101, RecordMessage.ERROR);
-						addMessage(out, 102, RecordMessage.ERROR);
+			for (Long recordWithCommonMatchPoint : recordsWithCommonMatchPoints) {
+				Map<String, String> otherRecordMatchPoints = new HashMap<String, String>();
+				for (Map.Entry<String, Matcher> me : this.matcherMap) {
+					String matchPointKey = me.getKey();
+					Matcher matcher = me.getValue();
+					otherRecordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(recordWithCommonMatchPoint);
+				}
+				// applyRules
+				for (Map.Entry<String, MatchRule> me : this.matchRuleMap.entrySet()) {
+					String matchRuleKey = me.getKey();
+					MatchRule matchRule = me.getValue();
+					if (matchRule.isMatch(recordMatchPoints, otherRecordMatchPoints)) {
+						LOG.info("matched according to: "+matchRuleKey);
+						matchedRecords.add(recordWithCommonMatchPoint);
+					} else {
+						LOG.info("not matched according to: "+matchRuleKey);
 					}
-					if ("true".equals(foo.getAttributeValue("hold"))) {
-						LOG.debug("record should be held");
-						out.setStatus(Record.HELD);
-					}
-					LOG.debug("type: "+foo.getAttributeValue("type"));
-					out.setType(foo.getAttributeValue("type"));
-					LOG.debug("out.getIndexedObjectType(): "+((Record)out).getType());
-					if ("true".equals(foo.getAttributeValue("exception"))) {
-						LOG.debug("record throws exception");
-						throw new RuntimeException("unanticipated exception from service");
-					}
-					// you could do this 
-					// out.setOaiXml("<bar>you've been barred: "+StringEscapeUtils.escapeXml(foo.getText())+"</bar>");
-					// or you could do this
-					Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
-					barEl.setText("you've been barred: "+foo.getText());
-					out.setOaiXmlEl(barEl);
-				} else {
-					LOG.debug("foo is null");
-					Element barEl = new Element("bar", Namespace.getNamespace(FOO_NS));
-					barEl.setText("you've been foobarred!");
-					//metadataEl.addContent(barEl);
-					out.setOaiXmlEl(barEl);
 				}
 			}
-			records.add(out);
 		} catch (Throwable t) {
 			util.throwIt(t);
 		}

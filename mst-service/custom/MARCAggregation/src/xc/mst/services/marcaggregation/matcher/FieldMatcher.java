@@ -31,7 +31,7 @@ public interface FieldMatcher {
      * @param ir the input record from which to retrieve the match point value
      * @return the list of record ids of other input records that match ir 
      */
-    public abstract List<Long> getMatchingOutputIds(InputRecord ir);
+    public abstract List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir);
     
     /**
      * In order to perform matching, an instance of this class
@@ -43,7 +43,7 @@ public interface FieldMatcher {
      *          
      * @param r The record to preserve 
      */
-    public void addRecordToMatcher(Record r);
+    public void addRecordToMatcher(SaxMarcXmlRecord r);
 
     /**
      * Since this class preserves state, we need to know when that state changes.
@@ -55,4 +55,12 @@ public interface FieldMatcher {
      * @return the ids of the records that previously matched this record on this field
      */
     public List<Long> getPreviousMatchPoint(long inputId);
+
+    /**
+     * 
+     * @param inputId
+     * @return the matched String representation if match found else null
+     *         EXAMPLE:  (NRU)123   // exmple string returned for found match for SystemControlNumberMatcher
+     */
+    public String getMatchPointValue(long inputId);
 }
