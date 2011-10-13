@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-08-24T12:53:15Z</responseDate>
+  <request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/5</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slimhttp://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00219cx  a22000973  4500</marc:leader>
+          <marc:controlfield tag="001">1457598</marc:controlfield>
+          <marc:controlfield tag="004">1340549</marc:controlfield>
+          <marc:controlfield tag="005">20061121110501.0</marc:controlfield>
+          <marc:controlfield tag="008">9612090u    0  4001uu  0000000</marc:controlfield>
+          <marc:datafield ind1="1" ind2=" " tag="014">
+            <marc:subfield code="a">ocm20885504</marc:subfield>
+            <marc:subfield code="b">OCoLC</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="8" ind2=" " tag="852">
+            <marc:subfield code="b">NewsMicro</marc:subfield>
+            <marc:subfield code="h">FILM</marc:subfield>
+            <marc:subfield code="i">.G6185</marc:subfield>
+            <marc:subfield code="i">no. 1190.</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00235cx  a22001093  4500</marc:leader>
+          <marc:controlfield tag="001">4675</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="004">2867</marc:controlfield>
+          <marc:controlfield tag="005">20071227104212.0</marc:controlfield>
+          <marc:controlfield tag="008">9812230u    0   4001uu   0000000</marc:controlfield>
+          <marc:datafield ind1="1" ind2=" " tag="014">
+            <marc:subfield code="a">00051342</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="8" ind2=" " tag="852">
+            <marc:subfield code="b">MinerSer2</marc:subfield>
+            <marc:subfield code="h">Serial</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="866">
+            <marc:subfield code="a">v. 1 (1964)- v. 44 (2007)</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/7</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00234cx  a22001093  4500</marc:leader>
+          <marc:controlfield tag="001">4677</marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="004">2868</marc:controlfield>
+          <marc:controlfield tag="005">20010711144540.0</marc:controlfield>
+          <marc:controlfield tag="008">9812230u    0   4001uu   0000000</marc:controlfield>
+          <marc:datafield ind1="1" ind2=" " tag="014">
+            <marc:subfield code="a">00051374</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="8" ind2=" " tag="852">
+            <marc:subfield code="b">MinerSer2</marc:subfield>
+            <marc:subfield code="h">Serial</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="866">
+            <marc:subfield code="a">v. 1 (1976)-v. 25 (2000)</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/8</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00168nx  a22000854  4500</marc:leader>
+          <marc:controlfield tag="001">1670220 </marc:controlfield>
+          <marc:controlfield tag="003">NRU</marc:controlfield>
+          <marc:controlfield tag="004">28      </marc:controlfield>
+          <marc:controlfield tag="005">20000831100000.0</marc:controlfield>
+          <marc:controlfield tag="008">0008310p    8   1001uu   0000000</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="852">
+            <marc:subfield code="b">CarlStack</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="manifestation" id="oai:URMST:Transformation Service/15632">
-		<xc:recordID type="OCoLC">33026495</xc:recordID>
-		<xc:recordID type="NRU">3724338</xc:recordID>
-		<rdvocab:statementOfResponsibilityRelatingToTitle>Kuraibu Kassurā ; Nakayama Yoshiyuki yaku.</rdvocab:statementOfResponsibilityRelatingToTitle>
-		<dcterms:title>QD dantō o kaishū seyo /</dcterms:title>
-		<rdvocab:placeOfProduction>Tōkyō :</rdvocab:placeOfProduction>
-		<dcterms:publisher>Shinchōsha,</dcterms:publisher>
-		<dcterms:issued>Shōwa 55 [1980]</dcterms:issued>
-		<dcterms:extent>503 p. ;</dcterms:extent>
-		<rdvocab:dimensions>16 cm.</rdvocab:dimensions>
-		<xc:isPartOf>Shinchō bunko</xc:isPartOf>
-		<xc:typeLeader06>Language material</xc:typeLeader06>
-		<xc:type007>Text</xc:type007>
-		<rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
-		<xc:link>oai:URMST:Transformation Service/15631</xc:link></xc:entity>
+  <xc:entity type="manifestation" id="oai:URMST:Transformation Service/15632">
+    <xc:recordID type="OCoLC">33026495</xc:recordID>
+    <xc:recordID type="NRU">3724338</xc:recordID>
+    <rdvocab:statementOfResponsibilityRelatingToTitle>Kuraibu Kassurā ; Nakayama Yoshiyuki yaku.</rdvocab:statementOfResponsibilityRelatingToTitle>
+    <dcterms:title>QD dantō o kaishū seyo /</dcterms:title>
+    <rdvocab:placeOfProduction>Tōkyō :</rdvocab:placeOfProduction>
+    <dcterms:publisher>Shinchōsha,</dcterms:publisher>
+    <dcterms:issued>Shōwa 55 [1980]</dcterms:issued>
+    <dcterms:extent>503 p. ;</dcterms:extent>
+    <rdvocab:dimensions>16 cm.</rdvocab:dimensions>
+    <xc:isPartOf>Shinchō bunko</xc:isPartOf>
+    <xc:typeLeader06>Language material</xc:typeLeader06>
+    <xc:type007>Text</xc:type007>
+    <rdvocab:modeOfIssuance>Monograph/Item</rdvocab:modeOfIssuance>
+    <xc:link>oai:URMST:Transformation Service/15631</xc:link></xc:entity>
 </xc:frbr>

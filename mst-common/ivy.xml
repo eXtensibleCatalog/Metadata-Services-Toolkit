@@ -12,7 +12,7 @@
 <ivy-module version="2.0">
     <info organisation="xc" module="mst-common"/>
     <dependencies>
-		<dependency org="xc" name="mst-instances" rev="${mi.version}" changing="true"/>
+    <dependency org="xc" name="mst-instances" rev="${mi.version}" changing="true"/>
 
         <dependency org="javax.mail" name="mail" rev="1.4.1" transitive="false">
             <artifact name="mail" type="jar"/>
@@ -21,7 +21,7 @@
         <dependency org="javax.mail" name="mail" rev="1.4.1" transitive="false">
             <artifact name="mail" type="jar"/>
         </dependency>
-       
+
         <dependency org="commons-io" name="commons-io" rev="1.4">
             <artifact name="commons-io" type="jar"/>
         </dependency>
@@ -33,41 +33,41 @@
         <dependency org="commons-lang" name="commons-lang" rev="2.5">
             <artifact name="commons-lang" type="jar"/>
         </dependency>
-       
+
         <dependency org="commons-httpclient" name="commons-httpclient" rev="3.1">
             <artifact name="commons-httpclient" type="jar"/>
         </dependency>
 
-		<dependency org="org.testng" name="testng" rev="5.8" transitive="false">
-			<artifact name="testng" type="jar"
+    <dependency org="org.testng" name="testng" rev="5.8" transitive="false">
+      <artifact name="testng" type="jar"
                 url="http://repo1.maven.org/maven2/org/testng/testng/5.8/testng-5.8-jdk15.jar"/>
         </dependency>
-       
+
         <dependency org="org.apache.tomcat" name="jsp-api" rev="6.0.18" transitive="false">
             <artifact name="jsp-api" type="jar"/>
         </dependency>
-       
+
         <dependency org="org.apache.tomcat" name="servlet-api" rev="6.0.18" transitive="false">
             <artifact name="servlet-api" type="jar"/>
         </dependency>
-       
+
         <dependency org="jstl" name="jstl" rev="1.1.2" transitive="false">
             <artifact name="jstl" type="jar"/>
         </dependency>
-        
+
         <dependency org="org.apache.struts" name="struts2-core" rev="2.2.1" transitive="false">
             <artifact name="struts2-core" type="jar"/>
         </dependency>
-       
+
         <dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" transitive="false">
             <artifact name="commons-fileupload" type="jar"/>
-			<exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="javax.servlet" name="servlet-api" />
         </dependency>
 
         <dependency org="commons-configuration" name="commons-configuration" rev="1.4" transitive="false">
             <artifact name="commons-configuration" type="jar"/>
         </dependency>
-       
+
         <dependency org="org.freemarker" name="freemarker" rev="2.3.14">
             <artifact name="freemarker" type="jar"/>
         </dependency>
@@ -75,200 +75,240 @@
         <dependency org="ognl" name="ognl" rev="3.0">
             <artifact name="ognl" type="jar"/>
         </dependency>
-       
+
         <dependency org="org.apache.struts.xwork" name="xwork-core" rev="2.2.1" transitive="false">
             <artifact name="xwork-core" type="jar"/>
         </dependency>
-        
+
         <dependency org="org.codehaus.castor" name="castor-xml" rev="1.3" transitive="false">
             <artifact name="castor-xml" type="jar"/>
         </dependency>
-        
+
         <dependency org="org.codehaus.castor" name="castor-core" rev="1.3" transitive="false">
             <artifact name="castor-core" type="jar"/>
-        </dependency>        
+        </dependency>
 
         <dependency org="commons-beanutils" name="commons-beanutils" rev="1.7.0" transitive="false">
             <artifact name="commons-beanutils" type="jar"/>
-        </dependency>        
- 
-         <dependency org="commons-collections" name="commons-collections" rev="3.2" transitive="false">
+        </dependency>
+
+         <dependency org="commons-collections" name="commons-collections" rev="3.2.1"  transitive="false">
             <artifact name="commons-collections" type="jar"/>
-        </dependency>                  
+        </dependency>
+	<!--
+	-->
 
-		<dependency org="jaxen" name="jaxen" rev="1.1.1" transitive="false">
+    <dependency org="jaxen" name="jaxen" rev="1.1.1" transitive="false">
             <artifact name="jaxen" type="jar"/>
-        </dependency>   
+        </dependency>
 
-		<dependency org="org.jdom" name="jdom" rev="1.1" transitive="false">
+    <dependency org="org.jdom" name="jdom" rev="1.1" transitive="false">
             <artifact name="jdom" type="jar"/>
-        </dependency> 
-        
-		<dependency org="org.jconfig" name="jconfig" rev="2.9" transitive="false">
-            <artifact name="jconfig" type="jar"/>
-        </dependency>  
+        </dependency>
 
-        <dependency org="org.apache.lucene" name="lucene-core" rev="2.9.1" transitive="false">
+    <dependency org="org.jconfig" name="jconfig" rev="2.9" transitive="false">
+            <artifact name="jconfig" type="jar"/>
+        </dependency>
+
+        <dependency org="org.apache.solr" name="solr-analysis-extras" rev="3.3.0" transitive="true">
+		<artifact name="solr-analysis-extras" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
+        </dependency>
+	
+
+        <dependency org="org.apache.solr" name="solr-solrj" rev="3.3.0" transitive="true">
+            <artifact name="solr-solrj" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
+        </dependency>
+
+        <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="3.3.0" transitive="true">
+            <artifact name="solr-dataimporthandler" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
+        </dependency>
+
+        <dependency org="org.apache.solr" name="solr-core" rev="3.3.0" transitive="true">
+            <artifact name="solr-core" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
+        </dependency>
+
+        <dependency org="org.apache.solr" name="solr-commons-csv" rev="3.3.0" transitive="true">
+            <artifact name="solr-commons-csv" type="jar"/>
+      <exclude org="javax.servlet" name="servlet-api" />
+      <exclude org="dom4j" />
+      <exclude org="org.slf4j" />
+      <exclude org="log4j" />
+      <exclude org="org.mortbay.jetty" />
+        </dependency>
+
+        <dependency org="org.apache.lucene" name="lucene-core" rev="3.3.0" transitive="false">
             <artifact name="lucene-core" type="jar"/>
         </dependency>
 
-        <dependency org="org.apache.solr" name="solr-solrj" rev="1.4.0" transitive="true">
-            <artifact name="solr-solrj" type="jar"/>
-			<exclude org="javax.servlet" name="servlet-api" />
-        </dependency>
-        
-        <dependency org="org.apache.solr" name="solr-dataimporthandler" rev="1.4.0" transitive="true">
-            <artifact name="solr-dataimporthandler" type="jar"/>
-        </dependency>
-
-		<!--
-        <dependency org="org.apache.solr" name="solr-dataimporthandler-extras" rev="1.4.0" transitive="true">
-            <artifact name="solr-dataimporthandler-extras" type="jar"/>
-        </dependency>
-        <dependency org="org.apache.solr" name="solr-cell" rev="1.4.0" transitive="true">
-            <artifact name="solr-cell" type="jar"/>
-        </dependency>
-		-->
-
-        <dependency org="org.apache.solr" name="solr-core" rev="1.4.0" transitive="true">
-            <artifact name="solr-core" type="jar"/>
-			<exclude org="javax.servlet" name="servlet-api" />
-        </dependency>
-
-        <dependency org="org.apache.lucene" name="lucene-highlighter" rev="2.9.1" transitive="false">
+        <dependency org="org.apache.lucene" name="lucene-highlighter" rev="3.3.0" transitive="false">
             <artifact name="lucene-highlighter" type="jar"/>
         </dependency>
-        <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.9.1" transitive="false">
-            <artifact name="lucene-snowball" type="jar"/>
-        </dependency>
-        <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="2.9.1" transitive="false">
+
+        <dependency org="org.apache.lucene" name="lucene-spellchecker" rev="3.3.0" transitive="false">
             <artifact name="lucene-spellchecker" type="jar"/>
+        </dependency>
+
+        <dependency org="org.apache.lucene" name="lucene-analyzers" rev="3.3.0" transitive="false">
+            <artifact name="lucene-analyzers" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-icu" rev="3.3.0" transitive="false">
+            <artifact name="lucene-icu" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-memory" rev="3.3.0" transitive="false">
+            <artifact name="lucene-memory" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-misc" rev="3.3.0" transitive="false">
+            <artifact name="lucene-misc" type="jar"/>
+        </dependency>
+        <dependency org="org.apache.lucene" name="lucene-queries" rev="3.3.0" transitive="false">
+            <artifact name="lucene-queries" type="jar"/>
         </dependency>
         <dependency org="stax-utils" name="stax-utils" rev="snapshot-20040917" transitive="false">
             <artifact name="stax-utils" type="jar"/>
         </dependency>
-        
+
         <dependency org="mysql" name="mysql-connector-java" rev="5.0.8" transitive="false">
             <artifact name="mysql-connector-java" type="jar"/>
-        </dependency>                
+        </dependency>
 
-        <dependency org="log4j" name="log4j" rev="1.2.14">
+        <dependency org="log4j" name="log4j" rev="1.2.15" conf="default->master,javadoc">
             <artifact name="log4j" type="jar"/>
         </dependency>
 
-        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.0" transitive="true">
+        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" transitive="true">
             <artifact name="slf4j-log4j12" type="jar"/>
+      <exclude org="log4j" />
         </dependency>
-        
+
         <dependency org="taglibs" name="standard" rev="1.1.1">
             <artifact name="standard" type="jar"/>
-        </dependency> 
-        
+        </dependency>
+
         <dependency org="ant-contrib" name="cpptasks" rev="1.0b3">
             <artifact name="cpptasks" type="jar"/>
-        </dependency>         
+        </dependency>
 
-		<dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2">
+    <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2">
             <artifact name="commons-dbcp" type="jar"/>
         </dependency>
 
-		<dependency org="org.springframework" name="spring-core" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-core" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-core" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-aop" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-aop" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-aop" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-asm" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-asm" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-asm" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-jdbc" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-jdbc" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-jdbc" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-tx" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-tx" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-tx" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-beans" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-beans" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-beans" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-context" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-context" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-context" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-expression" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-expression" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-expression" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-web" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-web" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-web" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="org.springframework" name="spring-orm" rev="3.0.2.RELEASE" transitive="false">
+    <dependency org="org.springframework" name="spring-orm" rev="3.0.2.RELEASE" transitive="false">
             <artifact name="spring-orm" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="javax.xml" name="jaxp-api" rev="1.4.2" transitive="true">
+    <dependency org="javax.xml" name="jaxp-api" rev="1.4.2" transitive="true">
             <artifact name="jaxp-api" type="jar" url="http://repo1.maven.org/maven2/javax/xml/jaxp-api/1.4.2/jaxp-api-1.4.2.jar"/>
-		</dependency>
+    </dependency>
 
-		<!-- I'm not sure that I need either of the following 2 -->
-		<dependency org="javax.activation" name="activation" rev="1.1.1" transitive="true">
+    <!-- I'm not sure that I need either of the following 2 -->
+    <dependency org="javax.activation" name="activation" rev="1.1.1" transitive="true">
             <artifact name="activation" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="xerces" name="xercesImpl" rev="2.8.1" transitive="false">
+    <dependency org="xerces" name="xercesImpl" rev="2.8.1" transitive="false">
             <artifact name="xercesImpl" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<dependency org="trove" name="trove" rev="2.1.0" transitive="false">
-			<artifact name="trove" type="jar"
+    <dependency org="trove" name="trove" rev="2.1.0" transitive="false">
+      <artifact name="trove" type="jar"
                 url="http://www.extensiblecatalog.org/doc/Ivy/trove/trove/trove-2.1.0.jar" />
-		</dependency>
+    </dependency>
 
-		<dependency org="joda-time" name="joda-time" rev="1.6" transitive="false">
+    <dependency org="joda-time" name="joda-time" rev="1.6" transitive="false">
             <artifact name="joda-time" type="jar"/>
-		</dependency>
+    </dependency>
 
-		<!--
-		<dependency org="org.hibernate" name="hibernate" rev="3.5.1-Final" transitive="true" />
-		-->
+    <!--
+    <dependency org="org.hibernate" name="hibernate" rev="3.5.1-Final" transitive="true" />
+    -->
 
-		<dependency org="org.hibernate" name="hibernate-core" rev="3.5.1-Final" transitive="false">
-			<artifact name="hibernate-core" type="jar" />
-		</dependency>
+    <dependency org="org.hibernate" name="hibernate-core" rev="3.5.1-Final" transitive="false">
+      <artifact name="hibernate-core" type="jar" />
+    </dependency>
 
-		<dependency org="javax.transaction" name="jta" rev="1.1" transitive="false">
-			<artifact name="jta" type="jar" />
-		</dependency>
+    <dependency org="javax.transaction" name="jta" rev="1.1" transitive="false">
+      <artifact name="jta" type="jar" />
+    </dependency>
 
-		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false">
-			<artifact name="dom4j" type="jar" />
-		</dependency>
+    <dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false">
+      <artifact name="dom4j" type="jar" />
+    </dependency>
 
-		<dependency org="cglib" name="cglib" rev="2.2" transitive="true">
-			<artifact name="cglib" type="jar" />
-		</dependency>
+    <dependency org="cglib" name="cglib" rev="2.2" transitive="true">
+      <artifact name="cglib" type="jar" />
+    </dependency>
 
-		<dependency org="antlr" name="antlr" rev="2.7.6" transitive="false">
-			<artifact name="antlr" type="jar" />
-		</dependency>
+    <dependency org="antlr" name="antlr" rev="2.7.6" transitive="false">
+      <artifact name="antlr" type="jar" />
+    </dependency>
 
-		<dependency org="javassist" name="javassist" rev="3.8.0.GA" transitive="false">
-			<artifact name="javassist" type="jar" />
-		</dependency>
+    <dependency org="javassist" name="javassist" rev="3.8.0.GA" transitive="false">
+      <artifact name="javassist" type="jar" />
+    </dependency>
 
-		<dependency org="oro" name="oro" rev="2.0.8" transitive="false">
-			<artifact name="oro" type="jar" />
-		</dependency>
+    <dependency org="oro" name="oro" rev="2.0.8" transitive="false">
+      <artifact name="oro" type="jar" />
+    </dependency>
 
-		<dependency org="commons-net" name="commons-net" rev="2.0" transitive="false">
-			<artifact name="commons-net" type="jar" />
-		</dependency>
+    <dependency org="commons-net" name="commons-net" rev="2.0" transitive="false">
+      <artifact name="commons-net" type="jar" />
+    </dependency>
 
     </dependencies>
 </ivy-module>

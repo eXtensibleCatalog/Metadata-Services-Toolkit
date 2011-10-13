@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -17,7 +17,7 @@
         <div class="bd">
             <ul class="first-of-type">
 
-       			<mst:checkUserPermission permission="Repositories">
+             <mst:checkUserPermission permission="Repositories">
                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000"><span class="wrenchImg">&nbsp;</span>Repository</a>
                    <div id="repository" class="yuimenu">
                        <div class="bd">
@@ -30,7 +30,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Harvest">
+             <mst:checkUserPermission permission="Harvest">
                    <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Harvest</a>
                    <div id="schedule" class="yuimenu">
                        <div class="bd">
@@ -43,7 +43,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Services">
+             <mst:checkUserPermission permission="Services">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Services</a>
                    <div id="Services" class="yuimenu">
                        <div class="bd">
@@ -70,12 +70,12 @@
                  </mst:checkUserPermission>
 
 
-       			<mst:checkUserPermission permission="Browse Records">
+             <mst:checkUserPermission permission="Browse Records">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000" href="<c:url value="viewBrowseRecords.action?addFacetName=status&addFacetValue=active"/>">Browse Records</a>
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Logs">
+             <mst:checkUserPermission permission="Logs">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Logs</a>
                    <div id="logs" class="yuimenu">
                        <div class="bd">
@@ -90,7 +90,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			 <mst:checkUserPermission permission="Users/Groups">
+              <mst:checkUserPermission permission="Users/Groups">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Users/Groups</a>
                    <div id="UsersGroups" class="yuimenu">
                        <div class="bd">
@@ -105,7 +105,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-       			<mst:checkUserPermission permission="Configuration">
+             <mst:checkUserPermission permission="Configuration">
                     <li class="yuimenubaritemleft"><a class="yuimenubaritemlabel" style="text-decoration:none;color:#000000">Configuration</a>
                    <div id="configuration" class="yuimenu">
                        <div class="bd">
@@ -119,7 +119,7 @@
                     </li>
                  </mst:checkUserPermission>
 
-	        </ul>
-	     </div>
+          </ul>
+       </div>
     </div>
 </c:if>

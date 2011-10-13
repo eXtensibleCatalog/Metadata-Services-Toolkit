@@ -8,9 +8,9 @@ version: 2.7.0
 
     /**
     * Config is a utility used within an Object to allow the implementer to
-    * maintain a list of local configuration properties and listen for changes 
-    * to those properties dynamically using CustomEvent. The initial values are 
-    * also maintained so that the configuration can be reset at any given point 
+    * maintain a list of local configuration properties and listen for changes
+    * to those properties dynamically using CustomEvent. The initial values are
+    * also maintained so that the configuration can be reset at any given point
     * to its initial state.
     * @namespace YAHOO.util
     * @class Config
@@ -41,7 +41,7 @@ version: 2.7.0
      * @final
      */
     Config.CONFIG_CHANGED_EVENT = "configChanged";
-    
+
     /**
      * Constant representing the boolean type string
      * @property YAHOO.util.Config.BOOLEAN_TYPE
@@ -50,89 +50,89 @@ version: 2.7.0
      * @final
      */
     Config.BOOLEAN_TYPE = "boolean";
-    
+
     Config.prototype = {
-     
+
         /**
         * Object reference to the owner of this Config Object
         * @property owner
         * @type Object
         */
         owner: null,
-        
+
         /**
-        * Boolean flag that specifies whether a queue is currently 
+        * Boolean flag that specifies whether a queue is currently
         * being executed
         * @property queueInProgress
         * @type Boolean
         */
         queueInProgress: false,
-        
+
         /**
-        * Maintains the local collection of configuration property objects and 
+        * Maintains the local collection of configuration property objects and
         * their specified values
         * @property config
         * @private
         * @type Object
-        */ 
+        */
         config: null,
-        
+
         /**
-        * Maintains the local collection of configuration property objects as 
+        * Maintains the local collection of configuration property objects as
         * they were initially applied.
         * This object is used when resetting a property.
         * @property initialConfig
         * @private
         * @type Object
-        */ 
+        */
         initialConfig: null,
-        
+
         /**
         * Maintains the local, normalized CustomEvent queue
         * @property eventQueue
         * @private
         * @type Object
-        */ 
+        */
         eventQueue: null,
-        
+
         /**
-        * Custom Event, notifying subscribers when Config properties are set 
+        * Custom Event, notifying subscribers when Config properties are set
         * (setProperty is called without the silent flag
         * @event configChangedEvent
         */
         configChangedEvent: null,
-    
+
         /**
         * Initializes the configuration Object and all of its local members.
         * @method init
-        * @param {Object} owner The owner Object to which this Config 
+        * @param {Object} owner The owner Object to which this Config
         * Object belongs
         */
         init: function (owner) {
-    
+
             this.owner = owner;
-    
-            this.configChangedEvent = 
+
+            this.configChangedEvent =
                 this.createEvent(Config.CONFIG_CHANGED_EVENT);
-    
+
             this.configChangedEvent.signature = CustomEvent.LIST;
             this.queueInProgress = false;
             this.config = {};
             this.initialConfig = {};
             this.eventQueue = [];
-        
+
         },
-        
+
         /**
         * Validates that the value passed in is a Boolean.
         * @method checkBoolean
         * @param {Object} val The value to validate
         * @return {Boolean} true, if the value is valid
-        */ 
+        */
         checkBoolean: function (val) {
             return (typeof val == Config.BOOLEAN_TYPE);
         },
-        
+
         /**
         * Validates that the value passed in is a number.
         * @method checkNumber
@@ -142,68 +142,68 @@ version: 2.7.0
         checkNumber: function (val) {
             return (!isNaN(val));
         },
-        
+
         /**
-        * Fires a configuration property event using the specified value. 
+        * Fires a configuration property event using the specified value.
         * @method fireEvent
         * @private
         * @param {String} key The configuration property's name
         * @param {value} Object The value of the correct type for the property
-        */ 
+        */
         fireEvent: function ( key, value ) {
             YAHOO.log("Firing Config event: " + key + "=" + value, "info", "Config");
             var property = this.config[key];
-        
+
             if (property && property.event) {
                 property.event.fire(value);
-            } 
+            }
         },
-        
+
         /**
         * Adds a property to the Config Object's private config hash.
         * @method addProperty
         * @param {String} key The configuration property's name
-        * @param {Object} propertyObject The Object containing all of this 
+        * @param {Object} propertyObject The Object containing all of this
         * property's arguments
         */
         addProperty: function ( key, propertyObject ) {
             key = key.toLowerCase();
             YAHOO.log("Added property: " + key, "info", "Config");
-        
+
             this.config[key] = propertyObject;
-        
+
             propertyObject.event = this.createEvent(key, { scope: this.owner });
             propertyObject.event.signature = CustomEvent.LIST;
-            
-            
+
+
             propertyObject.key = key;
-        
+
             if (propertyObject.handler) {
-                propertyObject.event.subscribe(propertyObject.handler, 
+                propertyObject.event.subscribe(propertyObject.handler,
                     this.owner);
             }
-        
+
             this.setProperty(key, propertyObject.value, true);
-            
+
             if (! propertyObject.suppressEvent) {
                 this.queueProperty(key, propertyObject.value);
             }
-            
+
         },
-        
+
         /**
-        * Returns a key-value configuration map of the values currently set in  
+        * Returns a key-value configuration map of the values currently set in
         * the Config Object.
         * @method getConfig
         * @return {Object} The current config, represented in a key-value map
         */
         getConfig: function () {
-        
+
             var cfg = {},
                 currCfg = this.config,
                 prop,
                 property;
-                
+
             for (prop in currCfg) {
                 if (Lang.hasOwnProperty(currCfg, prop)) {
                     property = currCfg[prop];
@@ -215,7 +215,7 @@ version: 2.7.0
 
             return cfg;
         },
-        
+
         /**
         * Returns the value of specified property.
         * @method getProperty
@@ -230,7 +230,7 @@ version: 2.7.0
                 return undefined;
             }
         },
-        
+
         /**
         * Resets the specified property's value to its initial value.
         * @method resetProperty
@@ -238,51 +238,51 @@ version: 2.7.0
         * @return {Boolean} True is the property was reset, false if not
         */
         resetProperty: function (key) {
-    
+
             key = key.toLowerCase();
-        
+
             var property = this.config[key];
-    
+
             if (property && property.event) {
-    
-                if (this.initialConfig[key] && 
+
+                if (this.initialConfig[key] &&
                     !Lang.isUndefined(this.initialConfig[key])) {
-    
+
                     this.setProperty(key, this.initialConfig[key]);
 
                     return true;
-    
+
                 }
-    
+
             } else {
-    
+
                 return false;
             }
-    
+
         },
-        
+
         /**
-        * Sets the value of a property. If the silent property is passed as 
+        * Sets the value of a property. If the silent property is passed as
         * true, the property's event will not be fired.
         * @method setProperty
         * @param {String} key The name of the property
         * @param {String} value The value to set the property to
-        * @param {Boolean} silent Whether the value should be set silently, 
+        * @param {Boolean} silent Whether the value should be set silently,
         * without firing the property event.
         * @return {Boolean} True, if the set was successful, false if it failed.
         */
         setProperty: function (key, value, silent) {
-        
+
             var property;
-        
+
             key = key.toLowerCase();
             YAHOO.log("setProperty: " + key + "=" + value, "info", "Config");
-        
+
             if (this.queueInProgress && ! silent) {
-                // Currently running through a queue... 
+                // Currently running through a queue...
                 this.queueProperty(key,value);
                 return true;
-    
+
             } else {
                 property = this.config[key];
                 if (property && property.event) {
@@ -301,22 +301,22 @@ version: 2.7.0
                 }
             }
         },
-        
+
         /**
-        * Sets the value of a property and queues its event to execute. If the 
+        * Sets the value of a property and queues its event to execute. If the
         * event is already scheduled to execute, it is
         * moved from its current position to the end of the queue.
         * @method queueProperty
         * @param {String} key The name of the property
         * @param {String} value The value to set the property to
-        * @return {Boolean}  true, if the set was successful, false if 
+        * @return {Boolean}  true, if the set was successful, false if
         * it failed.
-        */ 
+        */
         queueProperty: function (key, value) {
-        
+
             key = key.toLowerCase();
             YAHOO.log("queueProperty: " + key + "=" + value, "info", "Config");
-        
+
             var property = this.config[key],
                 foundDuplicate = false,
                 iLen,
@@ -332,56 +332,56 @@ version: 2.7.0
                 i,
                 s,
                 q;
-                                
+
             if (property && property.event) {
-    
-                if (!Lang.isUndefined(value) && property.validator && 
+
+                if (!Lang.isUndefined(value) && property.validator &&
                     !property.validator(value)) { // validator
                     return false;
                 } else {
-        
+
                     if (!Lang.isUndefined(value)) {
                         property.value = value;
                     } else {
                         value = property.value;
                     }
-        
+
                     foundDuplicate = false;
                     iLen = this.eventQueue.length;
-        
+
                     for (i = 0; i < iLen; i++) {
                         queueItem = this.eventQueue[i];
-        
+
                         if (queueItem) {
                             queueItemKey = queueItem[0];
                             queueItemValue = queueItem[1];
 
                             if (queueItemKey == key) {
-    
+
                                 /*
-                                    found a dupe... push to end of queue, null 
+                                    found a dupe... push to end of queue, null
                                     current item, and break
                                 */
-    
+
                                 this.eventQueue[i] = null;
-    
+
                                 this.eventQueue.push(
-                                    [key, (!Lang.isUndefined(value) ? 
+                                    [key, (!Lang.isUndefined(value) ?
                                     value : queueItemValue)]);
-    
+
                                 foundDuplicate = true;
                                 break;
                             }
                         }
                     }
-                    
+
                     // this is a refire, or a new property in the queue
-    
-                    if (! foundDuplicate && !Lang.isUndefined(value)) { 
+
+                    if (! foundDuplicate && !Lang.isUndefined(value)) {
                         this.eventQueue.push([key, value]);
                     }
                 }
-        
+
                 if (property.supercedes) {
 
                     sLen = property.supercedes.length;
@@ -398,10 +398,10 @@ version: 2.7.0
                                 queueItemCheckKey = queueItemCheck[0];
                                 queueItemCheckValue = queueItemCheck[1];
 
-                                if (queueItemCheckKey == 
+                                if (queueItemCheckKey ==
                                     supercedesCheck.toLowerCase() ) {
 
-                                    this.eventQueue.push([queueItemCheckKey, 
+                                    this.eventQueue.push([queueItemCheckKey,
                                         queueItemCheckValue]);
 
                                     this.eventQueue[q] = null;
@@ -420,48 +420,48 @@ version: 2.7.0
                 return false;
             }
         },
-        
+
         /**
         * Fires the event for a property using the property's current value.
         * @method refireEvent
         * @param {String} key The name of the property
         */
         refireEvent: function (key) {
-    
+
             key = key.toLowerCase();
-        
+
             var property = this.config[key];
-    
-            if (property && property.event && 
-    
+
+            if (property && property.event &&
+
                 !Lang.isUndefined(property.value)) {
-    
+
                 if (this.queueInProgress) {
-    
+
                     this.queueProperty(key);
-    
+
                 } else {
-    
+
                     this.fireEvent(key, property.value);
-    
+
                 }
-    
+
             }
         },
-        
+
         /**
-        * Applies a key-value Object literal to the configuration, replacing  
+        * Applies a key-value Object literal to the configuration, replacing
         * any existing values, and queueing the property events.
-        * Although the values will be set, fireQueue() must be called for their 
+        * Although the values will be set, fireQueue() must be called for their
         * associated events to execute.
         * @method applyConfig
         * @param {Object} userConfig The configuration Object literal
-        * @param {Boolean} init  When set to true, the initialConfig will 
-        * be set to the userConfig passed in, so that calling a reset will 
+        * @param {Boolean} init  When set to true, the initialConfig will
+        * be set to the userConfig passed in, so that calling a reset will
         * reset the properties to the passed values.
         */
         applyConfig: function (userConfig, init) {
-        
+
             var sKey,
                 oConfig;
 
@@ -481,9 +481,9 @@ version: 2.7.0
                 }
             }
         },
-        
+
         /**
-        * Refires the events for all configuration properties using their 
+        * Refires the events for all configuration properties using their
         * current values.
         * @method refresh
         */
@@ -497,31 +497,31 @@ version: 2.7.0
                 }
             }
         },
-        
+
         /**
         * Fires the normalized list of queued property change events
         * @method fireQueue
         */
         fireQueue: function () {
-        
-            var i, 
+
+            var i,
                 queueItem,
                 key,
                 value,
                 property;
-        
+
             this.queueInProgress = true;
             for (i = 0;i < this.eventQueue.length; i++) {
                 queueItem = this.eventQueue[i];
                 if (queueItem) {
-        
+
                     key = queueItem[0];
                     value = queueItem[1];
                     property = this.config[key];
 
                     property.value = value;
 
-                    // Clear out queue entry, to avoid it being 
+                    // Clear out queue entry, to avoid it being
                     // re-added to the queue by any queueProperty/supercedes
                     // calls which are invoked during fireEvent
                     this.eventQueue[i] = null;
@@ -529,29 +529,29 @@ version: 2.7.0
                     this.fireEvent(key,value);
                 }
             }
-            
+
             this.queueInProgress = false;
             this.eventQueue = [];
         },
-        
+
         /**
-        * Subscribes an external handler to the change event for any 
-        * given property. 
+        * Subscribes an external handler to the change event for any
+        * given property.
         * @method subscribeToConfigEvent
         * @param {String} key The property name
-        * @param {Function} handler The handler function to use subscribe to 
+        * @param {Function} handler The handler function to use subscribe to
         * the property's event
-        * @param {Object} obj The Object to use for scoping the event handler 
+        * @param {Object} obj The Object to use for scoping the event handler
         * (see CustomEvent documentation)
-        * @param {Boolean} override Optional. If true, will override "this"  
+        * @param {Boolean} override Optional. If true, will override "this"
         * within the handler to map to the scope Object passed into the method.
-        * @return {Boolean} True, if the subscription was successful, 
+        * @return {Boolean} True, if the subscription was successful,
         * otherwise false.
-        */ 
+        */
         subscribeToConfigEvent: function (key, handler, obj, override) {
-    
+
             var property = this.config[key.toLowerCase()];
-    
+
             if (property && property.event) {
                 if (!Config.alreadySubscribed(property.event, handler, obj)) {
                     property.event.subscribe(handler, obj, override);
@@ -560,19 +560,19 @@ version: 2.7.0
             } else {
                 return false;
             }
-    
+
         },
-        
+
         /**
-        * Unsubscribes an external handler from the change event for any 
-        * given property. 
+        * Unsubscribes an external handler from the change event for any
+        * given property.
         * @method unsubscribeFromConfigEvent
         * @param {String} key The property name
-        * @param {Function} handler The handler function to use subscribe to 
+        * @param {Function} handler The handler function to use subscribe to
         * the property's event
-        * @param {Object} obj The Object to use for scoping the event 
+        * @param {Object} obj The Object to use for scoping the event
         * handler (see CustomEvent documentation)
-        * @return {Boolean} True, if the unsubscription was successful, 
+        * @return {Boolean} True, if the unsubscription was successful,
         * otherwise false.
         */
         unsubscribeFromConfigEvent: function (key, handler, obj) {
@@ -583,7 +583,7 @@ version: 2.7.0
                 return false;
             }
         },
-        
+
         /**
         * Returns a string representation of the Config object
         * @method toString
@@ -596,12 +596,12 @@ version: 2.7.0
             }
             return output;
         },
-        
+
         /**
-        * Returns a string representation of the Config object's current 
+        * Returns a string representation of the Config object's current
         * CustomEvent queue
         * @method outputEventQueue
-        * @return {String} The string list of CustomEvents currently queued 
+        * @return {String} The string list of CustomEvents currently queued
         * for execution
         */
         outputEventQueue: function () {
@@ -610,7 +610,7 @@ version: 2.7.0
                 queueItem,
                 q,
                 nQueue = this.eventQueue.length;
-              
+
             for (q = 0; q < nQueue; q++) {
                 queueItem = this.eventQueue[q];
                 if (queueItem) {
@@ -621,7 +621,7 @@ version: 2.7.0
         },
 
         /**
-        * Sets all properties to null, unsubscribes all listeners from each 
+        * Sets all properties to null, unsubscribes all listeners from each
         * property's change event and all listeners from the configChangedEvent.
         * @method destroy
         */
@@ -633,7 +633,7 @@ version: 2.7.0
 
 
             for (sProperty in oConfig) {
-            
+
                 if (Lang.hasOwnProperty(oConfig, sProperty)) {
 
                     oProperty = oConfig[sProperty];
@@ -642,37 +642,37 @@ version: 2.7.0
                     oProperty.event = null;
 
                 }
-            
+
             }
-            
+
             this.configChangedEvent.unsubscribeAll();
-            
+
             this.configChangedEvent = null;
             this.owner = null;
             this.config = null;
             this.initialConfig = null;
             this.eventQueue = null;
-        
+
         }
 
     };
-    
-    
-    
+
+
+
     /**
-    * Checks to determine if a particular function/Object pair are already 
+    * Checks to determine if a particular function/Object pair are already
     * subscribed to the specified CustomEvent
     * @method YAHOO.util.Config.alreadySubscribed
     * @static
-    * @param {YAHOO.util.CustomEvent} evt The CustomEvent for which to check 
+    * @param {YAHOO.util.CustomEvent} evt The CustomEvent for which to check
     * the subscriptions
     * @param {Function} fn The function to look for in the subscribers list
     * @param {Object} obj The execution scope Object for the subscription
-    * @return {Boolean} true, if the function/Object pair is already subscribed 
+    * @return {Boolean} true, if the function/Object pair is already subscribed
     * to the CustomEvent passed in
     */
     Config.alreadySubscribed = function (evt, fn, obj) {
-    
+
         var nSubscribers = evt.subscribers.length,
             subsc,
             i;
@@ -699,39 +699,39 @@ version: 2.7.0
 (function () {
 
     /**
-    * The Container family of components is designed to enable developers to 
-    * create different kinds of content-containing modules on the web. Module 
-    * and Overlay are the most basic containers, and they can be used directly 
-    * or extended to build custom containers. Also part of the Container family 
-    * are four UI controls that extend Module and Overlay: Tooltip, Panel, 
+    * The Container family of components is designed to enable developers to
+    * create different kinds of content-containing modules on the web. Module
+    * and Overlay are the most basic containers, and they can be used directly
+    * or extended to build custom containers. Also part of the Container family
+    * are four UI controls that extend Module and Overlay: Tooltip, Panel,
     * Dialog, and SimpleDialog.
     * @module container
     * @title Container
-    * @requires yahoo, dom, event 
+    * @requires yahoo, dom, event
     * @optional dragdrop, animation, button
     */
-    
+
     /**
-    * Module is a JavaScript representation of the Standard Module Format. 
-    * Standard Module Format is a simple standard for markup containers where 
-    * child nodes representing the header, body, and footer of the content are 
-    * denoted using the CSS classes "hd", "bd", and "ft" respectively. 
-    * Module is the base class for all other classes in the YUI 
+    * Module is a JavaScript representation of the Standard Module Format.
+    * Standard Module Format is a simple standard for markup containers where
+    * child nodes representing the header, body, and footer of the content are
+    * denoted using the CSS classes "hd", "bd", and "ft" respectively.
+    * Module is the base class for all other classes in the YUI
     * Container package.
     * @namespace YAHOO.widget
     * @class Module
     * @constructor
     * @param {String} el The element ID representing the Module <em>OR</em>
     * @param {HTMLElement} el The element representing the Module
-    * @param {Object} userConfig The configuration Object literal containing 
-    * the configuration that should be set for this module. See configuration 
+    * @param {Object} userConfig The configuration Object literal containing
+    * the configuration that should be set for this module. See configuration
     * documentation for more details.
     */
     YAHOO.widget.Module = function (el, userConfig) {
         if (el) {
             this.init(el, userConfig);
         } else {
-            YAHOO.log("No element or element ID specified" + 
+            YAHOO.log("No element or element ID specified" +
                 " for Module instantiation", "error");
         }
     };
@@ -771,7 +771,7 @@ version: 2.7.0
             "BEFORE_HIDE": "beforeHide",
             "HIDE": "hide"
         },
-            
+
         /**
         * Constant representing the Module's configuration properties
         * @property DEFAULT_CONFIG
@@ -780,11 +780,11 @@ version: 2.7.0
         * @type Object
         */
         DEFAULT_CONFIG = {
-        
-            "VISIBLE": { 
-                key: "visible", 
-                value: true, 
-                validator: YAHOO.lang.isBoolean 
+
+            "VISIBLE": {
+                key: "visible",
+                value: true,
+                validator: YAHOO.lang.isBoolean
             },
 
             "EFFECT": {
@@ -812,7 +812,7 @@ version: 2.7.0
     * @type String
     */
     Module.IMG_ROOT = null;
-    
+
     /**
     * Constant representing the prefix path to use for securely served images
     * @property YAHOO.widget.Module.IMG_ROOT_SSL
@@ -821,7 +821,7 @@ version: 2.7.0
     * @type String
     */
     Module.IMG_ROOT_SSL = null;
-    
+
     /**
     * Constant for the default CSS class name that represents a Module
     * @property YAHOO.widget.Module.CSS_MODULE
@@ -830,7 +830,7 @@ version: 2.7.0
     * @type String
     */
     Module.CSS_MODULE = "yui-module";
-    
+
     /**
     * Constant representing the module header
     * @property YAHOO.widget.Module.CSS_HEADER
@@ -848,7 +848,7 @@ version: 2.7.0
     * @type String
     */
     Module.CSS_BODY = "bd";
-    
+
     /**
     * Constant representing the module footer
     * @property YAHOO.widget.Module.CSS_FOOTER
@@ -857,9 +857,9 @@ version: 2.7.0
     * @type String
     */
     Module.CSS_FOOTER = "ft";
-    
+
     /**
-    * Constant representing the url for the "src" attribute of the iframe 
+    * Constant representing the url for the "src" attribute of the iframe
     * used to monitor changes to the browser's base font size
     * @property YAHOO.widget.Module.RESIZE_MONITOR_SECURE_URL
     * @static
@@ -872,7 +872,7 @@ version: 2.7.0
     * Constant representing the buffer amount (in pixels) to use when positioning
     * the text resize monitor offscreen. The resize monitor is positioned
     * offscreen by an amount eqaul to its offsetHeight + the buffer value.
-    * 
+    *
     * @property YAHOO.widget.Module.RESIZE_MONITOR_BUFFER
     * @static
     * @type Number
@@ -882,14 +882,14 @@ version: 2.7.0
 
     /**
     * Singleton CustomEvent fired when the font size is changed in the browser.
-    * Opera's "zoom" functionality currently does not support text 
+    * Opera's "zoom" functionality currently does not support text
     * size detection.
     * @event YAHOO.widget.Module.textResizeEvent
     */
     Module.textResizeEvent = new CustomEvent("textResize");
 
     /**
-     * Helper utility method, which forces a document level 
+     * Helper utility method, which forces a document level
      * redraw for Opera, which can help remove repaint
      * irregularities after applying DOM changes.
      *
@@ -908,10 +908,10 @@ version: 2.7.0
 
         if (!m_oModuleTemplate) {
             m_oModuleTemplate = document.createElement("div");
-            
-            m_oModuleTemplate.innerHTML = ("<div class=\"" + 
-                Module.CSS_HEADER + "\"></div>" + "<div class=\"" + 
-                Module.CSS_BODY + "\"></div><div class=\"" + 
+
+            m_oModuleTemplate.innerHTML = ("<div class=\"" +
+                Module.CSS_HEADER + "\"></div>" + "<div class=\"" +
+                Module.CSS_BODY + "\"></div><div class=\"" +
                 Module.CSS_FOOTER + "\"></div>");
 
             m_oHeaderTemplate = m_oModuleTemplate.firstChild;
@@ -951,7 +951,7 @@ version: 2.7.0
         * @type Function
         */
         constructor: Module,
-        
+
         /**
         * The main module element that contains the header, body, and footer
         * @property element
@@ -998,7 +998,7 @@ version: 2.7.0
         imageRoot: Module.IMG_ROOT,
 
         /**
-        * Initializes the custom events for Module which are fired 
+        * Initializes the custom events for Module which are fired
         * automatically at appropriate times by the Module class.
         * @method initEvents
         */
@@ -1009,7 +1009,7 @@ version: 2.7.0
             /**
             * CustomEvent fired prior to class initalization.
             * @event beforeInitEvent
-            * @param {class} classRef class reference of the initializing 
+            * @param {class} classRef class reference of the initializing
             * class, such as this.beforeInitEvent.fire(Module)
             */
             this.beforeInitEvent = this.createEvent(EVENT_TYPES.BEFORE_INIT);
@@ -1018,9 +1018,9 @@ version: 2.7.0
             /**
             * CustomEvent fired after class initalization.
             * @event initEvent
-            * @param {class} classRef class reference of the initializing 
+            * @param {class} classRef class reference of the initializing
             * class, such as this.beforeInitEvent.fire(Module)
-            */  
+            */
             this.initEvent = this.createEvent(EVENT_TYPES.INIT);
             this.initEvent.signature = SIGNATURE;
 
@@ -1037,43 +1037,43 @@ version: 2.7.0
             */
             this.beforeRenderEvent = this.createEvent(EVENT_TYPES.BEFORE_RENDER);
             this.beforeRenderEvent.signature = SIGNATURE;
-        
+
             /**
             * CustomEvent fired after the Module is rendered
             * @event renderEvent
             */
             this.renderEvent = this.createEvent(EVENT_TYPES.RENDER);
             this.renderEvent.signature = SIGNATURE;
-        
+
             /**
-            * CustomEvent fired when the header content of the Module 
+            * CustomEvent fired when the header content of the Module
             * is modified
             * @event changeHeaderEvent
-            * @param {String/HTMLElement} content String/element representing 
+            * @param {String/HTMLElement} content String/element representing
             * the new header content
             */
             this.changeHeaderEvent = this.createEvent(EVENT_TYPES.CHANGE_HEADER);
             this.changeHeaderEvent.signature = SIGNATURE;
-            
+
             /**
             * CustomEvent fired when the body content of the Module is modified
             * @event changeBodyEvent
-            * @param {String/HTMLElement} content String/element representing 
+            * @param {String/HTMLElement} content String/element representing
             * the new body content
-            */  
+            */
             this.changeBodyEvent = this.createEvent(EVENT_TYPES.CHANGE_BODY);
             this.changeBodyEvent.signature = SIGNATURE;
-            
+
             /**
-            * CustomEvent fired when the footer content of the Module 
+            * CustomEvent fired when the footer content of the Module
             * is modified
             * @event changeFooterEvent
-            * @param {String/HTMLElement} content String/element representing 
+            * @param {String/HTMLElement} content String/element representing
             * the new footer content
             */
             this.changeFooterEvent = this.createEvent(EVENT_TYPES.CHANGE_FOOTER);
             this.changeFooterEvent.signature = SIGNATURE;
-        
+
             /**
             * CustomEvent fired when the content of the Module is modified
             * @event changeContentEvent
@@ -1115,7 +1115,7 @@ version: 2.7.0
             */
             this.hideEvent = this.createEvent(EVENT_TYPES.HIDE);
             this.hideEvent.signature = SIGNATURE;
-        }, 
+        },
 
         /**
         * String representing the current user-agent platform
@@ -1133,7 +1133,7 @@ version: 2.7.0
                 return false;
             }
         }(),
-        
+
         /**
         * String representing the user-agent of the browser
         * @deprecated Use YAHOO.env.ua
@@ -1146,13 +1146,13 @@ version: 2.7.0
                  Check Opera first in case of spoof and check Safari before
                  Gecko since Safari's user agent string includes "like Gecko"
             */
-            if (ua.indexOf('opera') != -1) { 
+            if (ua.indexOf('opera') != -1) {
                 return 'opera';
             } else if (ua.indexOf('msie 7') != -1) {
                 return 'ie7';
             } else if (ua.indexOf('msie') != -1) {
                 return 'ie';
-            } else if (ua.indexOf('safari') != -1) { 
+            } else if (ua.indexOf('safari') != -1) {
                 return 'safari';
             } else if (ua.indexOf('gecko') != -1) {
                 return 'gecko';
@@ -1160,9 +1160,9 @@ version: 2.7.0
                 return false;
             }
         }(),
-        
+
         /**
-        * Boolean representing whether or not the current browsing context is 
+        * Boolean representing whether or not the current browsing context is
         * secure (https)
         * @property isSecure
         * @type Boolean
@@ -1174,9 +1174,9 @@ version: 2.7.0
                 return false;
             }
         }(),
-        
+
         /**
-        * Initializes the custom events for Module which are fired 
+        * Initializes the custom events for Module which are fired
         * automatically at appropriate times by the Module class.
         */
         initDefaultConfig: function () {
@@ -1188,22 +1188,22 @@ version: 2.7.0
             * @default true
             */
             this.cfg.addProperty(DEFAULT_CONFIG.VISIBLE.key, {
-                handler: this.configVisible, 
-                value: DEFAULT_CONFIG.VISIBLE.value, 
+                handler: this.configVisible,
+                value: DEFAULT_CONFIG.VISIBLE.value,
                 validator: DEFAULT_CONFIG.VISIBLE.validator
             });
 
             /**
             * <p>
-            * Object or array of objects representing the ContainerEffect 
+            * Object or array of objects representing the ContainerEffect
             * classes that are active for animating the container.
             * </p>
             * <p>
-            * <strong>NOTE:</strong> Although this configuration 
+            * <strong>NOTE:</strong> Although this configuration
             * property is introduced at the Module level, an out of the box
             * implementation is not shipped for the Module class so setting
-            * the proroperty on the Module class has no effect. The Overlay 
-            * class is the first class to provide out of the box ContainerEffect 
+            * the proroperty on the Module class has no effect. The Overlay
+            * class is the first class to provide out of the box ContainerEffect
             * support.
             * </p>
             * @config effect
@@ -1211,12 +1211,12 @@ version: 2.7.0
             * @default null
             */
             this.cfg.addProperty(DEFAULT_CONFIG.EFFECT.key, {
-                suppressEvent: DEFAULT_CONFIG.EFFECT.suppressEvent, 
+                suppressEvent: DEFAULT_CONFIG.EFFECT.suppressEvent,
                 supercedes: DEFAULT_CONFIG.EFFECT.supercedes
             });
 
             /**
-            * Specifies whether to create a special proxy iframe to monitor 
+            * Specifies whether to create a special proxy iframe to monitor
             * for user font resizing in the document
             * @config monitorresize
             * @type Boolean
@@ -1228,15 +1228,15 @@ version: 2.7.0
             });
 
             /**
-            * Specifies if the module should be rendered as the first child 
+            * Specifies if the module should be rendered as the first child
             * of document.body or appended as the last child when render is called
             * with document.body as the "appendToNode".
             * <p>
-            * Appending to the body while the DOM is still being constructed can 
-            * lead to Operation Aborted errors in IE hence this flag is set to 
+            * Appending to the body while the DOM is still being constructed can
+            * lead to Operation Aborted errors in IE hence this flag is set to
             * false by default.
             * </p>
-            * 
+            *
             * @config appendtodocumentbody
             * @type Boolean
             * @default false
@@ -1248,9 +1248,9 @@ version: 2.7.0
 
         /**
         * The Module class's initialization method, which is executed for
-        * Module and all of its subclasses. This method is automatically 
-        * called by the constructor, and  sets up all DOM references for 
-        * pre-existing markup, and creates required markup if it is not 
+        * Module and all of its subclasses. This method is automatically
+        * called by the constructor, and  sets up all DOM references for
+        * pre-existing markup, and creates required markup if it is not
         * already present.
         * <p>
         * If the element passed in does not have an id, one will be generated
@@ -1259,8 +1259,8 @@ version: 2.7.0
         * @method init
         * @param {String} el The element ID representing the Module <em>OR</em>
         * @param {HTMLElement} el The element representing the Module
-        * @param {Object} userConfig The configuration Object literal 
-        * containing the configuration that should be set for this module. 
+        * @param {Object} userConfig The configuration Object literal
+        * containing the configuration that should be set for this module.
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
@@ -1271,7 +1271,7 @@ version: 2.7.0
             this.beforeInitEvent.fire(Module);
 
             /**
-            * The Module's Config object used for monitoring 
+            * The Module's Config object used for monitoring
             * configuration properties.
             * @property cfg
             * @type YAHOO.util.Config
@@ -1324,10 +1324,10 @@ version: 2.7.0
             }
 
             /*
-                Subscribe to the fireQueue() method of Config so that any 
-                queued configuration changes are excecuted upon render of 
+                Subscribe to the fireQueue() method of Config so that any
+                queued configuration changes are excecuted upon render of
                 the Module
-            */ 
+            */
 
             if (!Config.alreadySubscribed(this.renderEvent, this.cfg.fireQueue, this.cfg)) {
                 this.renderEvent.subscribe(this.cfg.fireQueue, this.cfg, true);
@@ -1337,7 +1337,7 @@ version: 2.7.0
         },
 
         /**
-        * Initialize an empty IFRAME that is placed out of the visible area 
+        * Initialize an empty IFRAME that is placed out of the visible area
         * that can be used to detect text resize.
         * @method initResizeMonitor
         */
@@ -1345,7 +1345,7 @@ version: 2.7.0
 
             var isGeckoWin = (UA.gecko && this.platform == "windows");
             if (isGeckoWin) {
-                // Help prevent spinning loading icon which 
+                // Help prevent spinning loading icon which
                 // started with FireFox 2.0.0.8/Win
                 var self = this;
                 setTimeout(function(){self._initResizeMonitor();}, 0);
@@ -1356,14 +1356,14 @@ version: 2.7.0
 
         /**
          * Create and initialize the text resize monitoring iframe.
-         * 
+         *
          * @protected
          * @method _initResizeMonitor
          */
         _initResizeMonitor : function() {
 
-            var oDoc, 
-                oIFrame, 
+            var oDoc,
+                oIFrame,
                 sHTML;
 
             function fireTextResize() {
@@ -1398,9 +1398,9 @@ version: 2.7.0
                     oIFrame.id = "_yuiResizeMonitor";
                     oIFrame.title = "Text Resize Monitor";
                     /*
-                        Need to set "position" property before inserting the 
-                        iframe into the document or Safari's status bar will 
-                        forever indicate the iframe is loading 
+                        Need to set "position" property before inserting the
+                        iframe into the document or Safari's status bar will
+                        forever indicate the iframe is loading
                         (See SourceForge bug #1723064)
                     */
                     oIFrame.style.position = "absolute";
@@ -1439,8 +1439,8 @@ version: 2.7.0
                         if (supportsCWResize) {
                             if (!Event.on(oIFrame.contentWindow, "resize", fireTextResize)) {
                                 /*
-                                     This will fail in IE if document.domain has 
-                                     changed, so we must change the listener to 
+                                     This will fail in IE if document.domain has
+                                     changed, so we must change the listener to
                                      use the oIFrame element instead
                                 */
                                 Event.on(oIFrame, "resize", fireTextResize);
@@ -1456,7 +1456,7 @@ version: 2.7.0
         /**
          * Text resize monitor helper method.
          * Determines if the browser supports resize events on iframe content windows.
-         * 
+         *
          * @private
          * @method _supportsCWResize
          */
@@ -1490,20 +1490,20 @@ version: 2.7.0
         },
 
         /**
-        * Sets the Module's header content to the string specified, or appends 
-        * the passed element to the header. If no header is present, one will 
+        * Sets the Module's header content to the string specified, or appends
+        * the passed element to the header. If no header is present, one will
         * be automatically created. An empty string can be passed to the method
         * to clear the contents of the header.
-        * 
+        *
         * @method setHeader
         * @param {String} headerContent The string used to set the header.
-        * As a convenience, non HTMLElement objects can also be passed into 
+        * As a convenience, non HTMLElement objects can also be passed into
         * the method, and will be treated as strings, with the header innerHTML
         * set to their default toString implementations.
         * <em>OR</em>
-        * @param {HTMLElement} headerContent The HTMLElement to append to 
+        * @param {HTMLElement} headerContent The HTMLElement to append to
         * <em>OR</em>
-        * @param {DocumentFragment} headerContent The document fragment 
+        * @param {DocumentFragment} headerContent The document fragment
         * containing elements which are to be added to the header
         */
         setHeader: function (headerContent) {
@@ -1522,10 +1522,10 @@ version: 2.7.0
         },
 
         /**
-        * Appends the passed element to the header. If no header is present, 
+        * Appends the passed element to the header. If no header is present,
         * one will be automatically created.
         * @method appendToHeader
-        * @param {HTMLElement | DocumentFragment} element The element to 
+        * @param {HTMLElement | DocumentFragment} element The element to
         * append to the header. In the case of a document fragment, the
         * children of the fragment will be appended to the header.
         */
@@ -1540,21 +1540,21 @@ version: 2.7.0
         },
 
         /**
-        * Sets the Module's body content to the HTML specified. 
-        * 
-        * If no body is present, one will be automatically created. 
-        * 
+        * Sets the Module's body content to the HTML specified.
+        *
+        * If no body is present, one will be automatically created.
+        *
         * An empty string can be passed to the method to clear the contents of the body.
         * @method setBody
-        * @param {String} bodyContent The HTML used to set the body. 
-        * As a convenience, non HTMLElement objects can also be passed into 
+        * @param {String} bodyContent The HTML used to set the body.
+        * As a convenience, non HTMLElement objects can also be passed into
         * the method, and will be treated as strings, with the body innerHTML
         * set to their default toString implementations.
         * <em>OR</em>
         * @param {HTMLElement} bodyContent The HTMLElement to add as the first and only
         * child of the body element.
         * <em>OR</em>
-        * @param {DocumentFragment} bodyContent The document fragment 
+        * @param {DocumentFragment} bodyContent The document fragment
         * containing elements which are to be added to the body
         */
         setBody: function (bodyContent) {
@@ -1572,39 +1572,39 @@ version: 2.7.0
         },
 
         /**
-        * Appends the passed element to the body. If no body is present, one 
+        * Appends the passed element to the body. If no body is present, one
         * will be automatically created.
         * @method appendToBody
-        * @param {HTMLElement | DocumentFragment} element The element to 
+        * @param {HTMLElement | DocumentFragment} element The element to
         * append to the body. In the case of a document fragment, the
         * children of the fragment will be appended to the body.
-        * 
+        *
         */
         appendToBody: function (element) {
             var oBody = this.body || (this.body = createBody());
-        
+
             oBody.appendChild(element);
 
             this.changeBodyEvent.fire(element);
             this.changeContentEvent.fire();
 
         },
-        
+
         /**
-        * Sets the Module's footer content to the HTML specified, or appends 
-        * the passed element to the footer. If no footer is present, one will 
+        * Sets the Module's footer content to the HTML specified, or appends
+        * the passed element to the footer. If no footer is present, one will
         * be automatically created. An empty string can be passed to the method
         * to clear the contents of the footer.
         * @method setFooter
-        * @param {String} footerContent The HTML used to set the footer 
-        * As a convenience, non HTMLElement objects can also be passed into 
+        * @param {String} footerContent The HTML used to set the footer
+        * As a convenience, non HTMLElement objects can also be passed into
         * the method, and will be treated as strings, with the footer innerHTML
         * set to their default toString implementations.
         * <em>OR</em>
-        * @param {HTMLElement} footerContent The HTMLElement to append to 
+        * @param {HTMLElement} footerContent The HTMLElement to append to
         * the footer
         * <em>OR</em>
-        * @param {DocumentFragment} footerContent The document fragment containing 
+        * @param {DocumentFragment} footerContent The document fragment containing
         * elements which are to be added to the footer
         */
         setFooter: function (footerContent) {
@@ -1623,10 +1623,10 @@ version: 2.7.0
         },
 
         /**
-        * Appends the passed element to the footer. If no footer is present, 
+        * Appends the passed element to the footer. If no footer is present,
         * one will be automatically created.
         * @method appendToFooter
-        * @param {HTMLElement | DocumentFragment} element The element to 
+        * @param {HTMLElement | DocumentFragment} element The element to
         * append to the footer. In the case of a document fragment, the
         * children of the fragment will be appended to the footer
         */
@@ -1642,29 +1642,29 @@ version: 2.7.0
         },
 
         /**
-        * Renders the Module by inserting the elements that are not already 
-        * in the main Module into their correct places. Optionally appends 
-        * the Module to the specified node prior to the render's execution. 
+        * Renders the Module by inserting the elements that are not already
+        * in the main Module into their correct places. Optionally appends
+        * the Module to the specified node prior to the render's execution.
         * <p>
-        * For Modules without existing markup, the appendToNode argument 
-        * is REQUIRED. If this argument is ommitted and the current element is 
-        * not present in the document, the function will return false, 
+        * For Modules without existing markup, the appendToNode argument
+        * is REQUIRED. If this argument is ommitted and the current element is
+        * not present in the document, the function will return false,
         * indicating that the render was a failure.
         * </p>
         * <p>
         * NOTE: As of 2.3.1, if the appendToNode is the document's body element
-        * then the module is rendered as the first child of the body element, 
-        * and not appended to it, to avoid Operation Aborted errors in IE when 
-        * rendering the module before window's load event is fired. You can 
-        * use the appendtodocumentbody configuration property to change this 
+        * then the module is rendered as the first child of the body element,
+        * and not appended to it, to avoid Operation Aborted errors in IE when
+        * rendering the module before window's load event is fired. You can
+        * use the appendtodocumentbody configuration property to change this
         * to append to document.body if required.
         * </p>
         * @method render
-        * @param {String} appendToNode The element id to which the Module 
+        * @param {String} appendToNode The element id to which the Module
         * should be appended to prior to rendering <em>OR</em>
-        * @param {HTMLElement} appendToNode The element to which the Module 
+        * @param {HTMLElement} appendToNode The element to which the Module
         * should be appended to prior to rendering
-        * @param {HTMLElement} moduleElement OPTIONAL. The element that 
+        * @param {HTMLElement} moduleElement OPTIONAL. The element that
         * represents the actual Standard Module container.
         * @return {Boolean} Success or failure of the render
         */
@@ -1692,7 +1692,7 @@ version: 2.7.0
 
             if (appendToNode) {
                 appendTo(appendToNode);
-            } else { 
+            } else {
                 // No node was passed in. If the element is not already in the Dom, this fails
                 if (! Dom.inDocument(this.element)) {
                     YAHOO.log("Render failed. Must specify appendTo node if " + " Module isn't already in the DOM.", "error");
@@ -1712,7 +1712,7 @@ version: 2.7.0
             }
 
             if (this.body && ! Dom.inDocument(this.body)) {
-                // There is a body, but it's not in the DOM yet. Need to add it.		
+                // There is a body, but it's not in the DOM yet. Need to add it.
                 if (this.footer && Dom.isAncestor(this.moduleElement, this.footer)) {
                     moduleElement.insertBefore(this.body, this.footer);
                 } else {
@@ -1730,7 +1730,7 @@ version: 2.7.0
         },
 
         /**
-        * Removes the Module element from the DOM and sets all child elements 
+        * Removes the Module element from the DOM and sets all child elements
         * to null.
         * @method destroy
         */
@@ -1746,7 +1746,7 @@ version: 2.7.0
             if (parent) {
                 parent.removeChild(this.element);
             }
-        
+
             this.element = null;
             this.header = null;
             this.body = null;
@@ -1761,8 +1761,8 @@ version: 2.7.0
         },
 
         /**
-        * Shows the Module element by setting the visible configuration 
-        * property to true. Also fires two events: beforeShowEvent prior to 
+        * Shows the Module element by setting the visible configuration
+        * property to true. Also fires two events: beforeShowEvent prior to
         * the visibility change, and showEvent after.
         * @method show
         */
@@ -1771,25 +1771,25 @@ version: 2.7.0
         },
 
         /**
-        * Hides the Module element by setting the visible configuration 
-        * property to false. Also fires two events: beforeHideEvent prior to 
+        * Hides the Module element by setting the visible configuration
+        * property to false. Also fires two events: beforeHideEvent prior to
         * the visibility change, and hideEvent after.
         * @method hide
         */
         hide: function () {
             this.cfg.setProperty("visible", false);
         },
-        
+
         // BUILT-IN EVENT HANDLERS FOR MODULE //
         /**
-        * Default event handler for changing the visibility property of a 
-        * Module. By default, this is achieved by switching the "display" style 
+        * Default event handler for changing the visibility property of a
+        * Module. By default, this is achieved by switching the "display" style
         * between "block" and "none".
         * This method is responsible for firing showEvent and hideEvent.
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         * @method configVisible
         */
@@ -1809,9 +1809,9 @@ version: 2.7.0
         /**
         * Default event handler for the "monitorresize" configuration property
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         * @method configMonitorResize
         */
@@ -1826,8 +1826,8 @@ version: 2.7.0
         },
 
         /**
-         * This method is a protected helper, used when constructing the DOM structure for the module 
-         * to account for situations which may cause Operation Aborted errors in IE. It should not 
+         * This method is a protected helper, used when constructing the DOM structure for the module
+         * to account for situations which may cause Operation Aborted errors in IE. It should not
          * be used for general DOM construction.
          * <p>
          * If the parentNode is not document.body, the element is appended as the last element.
@@ -1867,19 +1867,19 @@ version: 2.7.0
 (function () {
 
     /**
-    * Overlay is a Module that is absolutely positioned above the page flow. It 
-    * has convenience methods for positioning and sizing, as well as options for 
-    * controlling zIndex and constraining the Overlay's position to the current 
-    * visible viewport. Overlay also contains a dynamicly generated IFRAME which 
-    * is placed beneath it for Internet Explorer 6 and 5.x so that it will be 
+    * Overlay is a Module that is absolutely positioned above the page flow. It
+    * has convenience methods for positioning and sizing, as well as options for
+    * controlling zIndex and constraining the Overlay's position to the current
+    * visible viewport. Overlay also contains a dynamicly generated IFRAME which
+    * is placed beneath it for Internet Explorer 6 and 5.x so that it will be
     * properly rendered above SELECT elements.
     * @namespace YAHOO.widget
     * @class Overlay
     * @extends YAHOO.widget.Module
     * @param {String} el The element ID representing the Overlay <em>OR</em>
     * @param {HTMLElement} el The element representing the Overlay
-    * @param {Object} userConfig The configuration object literal containing 
-    * the configuration that should be set for this Overlay. See configuration 
+    * @param {Object} userConfig The configuration object literal containing
+    * the configuration that should be set for this Overlay. See configuration
     * documentation for more details.
     * @constructor
     */
@@ -1923,48 +1923,48 @@ version: 2.7.0
         */
         DEFAULT_CONFIG = {
 
-            "X": { 
-                key: "x", 
-                validator: Lang.isNumber, 
-                suppressEvent: true, 
+            "X": {
+                key: "x",
+                validator: Lang.isNumber,
+                suppressEvent: true,
                 supercedes: ["iframe"]
             },
 
-            "Y": { 
-                key: "y", 
-                validator: Lang.isNumber, 
-                suppressEvent: true, 
+            "Y": {
+                key: "y",
+                validator: Lang.isNumber,
+                suppressEvent: true,
                 supercedes: ["iframe"]
             },
 
-            "XY": { 
-                key: "xy", 
-                suppressEvent: true, 
-                supercedes: ["iframe"] 
+            "XY": {
+                key: "xy",
+                suppressEvent: true,
+                supercedes: ["iframe"]
             },
 
-            "CONTEXT": { 
-                key: "context", 
-                suppressEvent: true, 
-                supercedes: ["iframe"] 
+            "CONTEXT": {
+                key: "context",
+                suppressEvent: true,
+                supercedes: ["iframe"]
             },
 
-            "FIXED_CENTER": { 
-                key: "fixedcenter", 
-                value: false, 
-                supercedes: ["iframe", "visible"] 
+            "FIXED_CENTER": {
+                key: "fixedcenter",
+                value: false,
+                supercedes: ["iframe", "visible"]
             },
 
-            "WIDTH": { 
+            "WIDTH": {
                 key: "width",
                 suppressEvent: true,
                 supercedes: ["context", "fixedcenter", "iframe"]
-            }, 
+            },
 
-            "HEIGHT": { 
-                key: "height", 
-                suppressEvent: true, 
-                supercedes: ["context", "fixedcenter", "iframe"] 
+            "HEIGHT": {
+                key: "height",
+                suppressEvent: true,
+                supercedes: ["context", "fixedcenter", "iframe"]
             },
 
             "AUTO_FILL_HEIGHT" : {
@@ -1973,29 +1973,29 @@ version: 2.7.0
                 value:"body"
             },
 
-            "ZINDEX": { 
-                key: "zindex", 
-                value: null 
+            "ZINDEX": {
+                key: "zindex",
+                value: null
             },
 
-            "CONSTRAIN_TO_VIEWPORT": { 
-                key: "constraintoviewport", 
-                value: false, 
-                validator: Lang.isBoolean, 
+            "CONSTRAIN_TO_VIEWPORT": {
+                key: "constraintoviewport",
+                value: false,
+                validator: Lang.isBoolean,
                 supercedes: ["iframe", "x", "y", "xy"]
-            }, 
+            },
 
-            "IFRAME": { 
-                key: "iframe", 
-                value: (UA.ie == 6 ? true : false), 
-                validator: Lang.isBoolean, 
-                supercedes: ["zindex"] 
+            "IFRAME": {
+                key: "iframe",
+                value: (UA.ie == 6 ? true : false),
+                validator: Lang.isBoolean,
+                supercedes: ["zindex"]
             },
 
             "PREVENT_CONTEXT_OVERLAP": {
                 key: "preventcontextoverlap",
                 value: false,
-                validator: Lang.isBoolean,  
+                validator: Lang.isBoolean,
                 supercedes: ["constraintoviewport"]
             }
 
@@ -2011,7 +2011,7 @@ version: 2.7.0
     Overlay.IFRAME_SRC = "javascript:false;";
 
     /**
-    * Number representing how much the iframe shim should be offset from each 
+    * Number representing how much the iframe shim should be offset from each
     * side of an Overlay instance, in pixels.
     * @property YAHOO.widget.Overlay.IFRAME_SRC
     * @default 3
@@ -2022,7 +2022,7 @@ version: 2.7.0
     Overlay.IFRAME_OFFSET = 3;
 
     /**
-    * Number representing the minimum distance an Overlay instance should be 
+    * Number representing the minimum distance an Overlay instance should be
     * positioned relative to the boundaries of the browser's viewport, in pixels.
     * @property YAHOO.widget.Overlay.VIEWPORT_OFFSET
     * @default 10
@@ -2033,7 +2033,7 @@ version: 2.7.0
     Overlay.VIEWPORT_OFFSET = 10;
 
     /**
-    * Constant representing the top left corner of an element, used for 
+    * Constant representing the top left corner of an element, used for
     * configuring the context element alignment
     * @property YAHOO.widget.Overlay.TOP_LEFT
     * @static
@@ -2043,7 +2043,7 @@ version: 2.7.0
     Overlay.TOP_LEFT = "tl";
 
     /**
-    * Constant representing the top right corner of an element, used for 
+    * Constant representing the top right corner of an element, used for
     * configuring the context element alignment
     * @property YAHOO.widget.Overlay.TOP_RIGHT
     * @static
@@ -2053,7 +2053,7 @@ version: 2.7.0
     Overlay.TOP_RIGHT = "tr";
 
     /**
-    * Constant representing the top bottom left corner of an element, used for 
+    * Constant representing the top bottom left corner of an element, used for
     * configuring the context element alignment
     * @property YAHOO.widget.Overlay.BOTTOM_LEFT
     * @static
@@ -2063,7 +2063,7 @@ version: 2.7.0
     Overlay.BOTTOM_LEFT = "bl";
 
     /**
-    * Constant representing the bottom right corner of an element, used for 
+    * Constant representing the bottom right corner of an element, used for
     * configuring the context element alignment
     * @property YAHOO.widget.Overlay.BOTTOM_RIGHT
     * @static
@@ -2092,7 +2092,7 @@ version: 2.7.0
     Overlay.STD_MOD_RE = /^\s*?(body|footer|header)\s*?$/i;
 
     /**
-    * A singleton CustomEvent used for reacting to the DOM event for 
+    * A singleton CustomEvent used for reacting to the DOM event for
     * window scroll
     * @event YAHOO.widget.Overlay.windowScrollEvent
     */
@@ -2118,8 +2118,8 @@ version: 2.7.0
         // - FF2/3 and IE6/7, Opera 9.5x don't bubble scroll events from elements to window
         // - IE doesn't recognize scroll registered on the document.
         //
-        // Also, when document view is scrolled, IE doesn't provide a target, 
-        // rest of the browsers set target to window.document, apart from opera 
+        // Also, when document view is scrolled, IE doesn't provide a target,
+        // rest of the browsers set target to window.document, apart from opera
         // which sets target to window.
         if (!t || t === window || t === window.document) {
             if (UA.ie) {
@@ -2129,11 +2129,11 @@ version: 2.7.0
                 }
 
                 clearTimeout(window.scrollEnd);
-        
-                window.scrollEnd = setTimeout(function () { 
-                    Overlay.windowScrollEvent.fire(); 
+
+                window.scrollEnd = setTimeout(function () {
+                    Overlay.windowScrollEvent.fire();
                 }, 1);
-        
+
             } else {
                 Overlay.windowScrollEvent.fire();
             }
@@ -2156,7 +2156,7 @@ version: 2.7.0
             clearTimeout(window.resizeEnd);
 
             window.resizeEnd = setTimeout(function () {
-                Overlay.windowResizeEvent.fire(); 
+                Overlay.windowResizeEvent.fire();
             }, 100);
         } else {
             Overlay.windowResizeEvent.fire();
@@ -2164,7 +2164,7 @@ version: 2.7.0
     };
 
     /**
-    * A boolean that indicated whether the window resize and scroll events have 
+    * A boolean that indicated whether the window resize and scroll events have
     * already been subscribed to.
     * @property YAHOO.widget.Overlay._initialized
     * @private
@@ -2180,7 +2180,7 @@ version: 2.7.0
 
     /**
      * Internal map of special event types, which are provided
-     * by the instance. It maps the event type to the custom event 
+     * by the instance. It maps the event type to the custom event
      * instance. Contains entries for the "windowScroll", "windowResize" and
      * "textResize" static container events.
      *
@@ -2205,14 +2205,14 @@ version: 2.7.0
          * <p>The array is empty by default for Overlay,
          * but maybe populated in future releases, so classes extending
          * Overlay which need to define their own set of CONTEXT_TRIGGERS
-         * should concatenate their super class's prototype.CONTEXT_TRIGGERS 
+         * should concatenate their super class's prototype.CONTEXT_TRIGGERS
          * value with their own array of values.
          * </p>
          * <p>
          * E.g.:
          * <code>CustomOverlay.prototype.CONTEXT_TRIGGERS = YAHOO.widget.Overlay.prototype.CONTEXT_TRIGGERS.concat(["windowScroll"]);</code>
          * </p>
-         * 
+         *
          * @property CONTEXT_TRIGGERS
          * @type Array
          * @final
@@ -2220,15 +2220,15 @@ version: 2.7.0
         CONTEXT_TRIGGERS : [],
 
         /**
-        * The Overlay initialization method, which is executed for Overlay and  
-        * all of its subclasses. This method is automatically called by the 
-        * constructor, and  sets up all DOM references for pre-existing markup, 
+        * The Overlay initialization method, which is executed for Overlay and
+        * all of its subclasses. This method is automatically called by the
+        * constructor, and  sets up all DOM references for pre-existing markup,
         * and creates required markup if it is not already present.
         * @method init
         * @param {String} el The element ID representing the Overlay <em>OR</em>
         * @param {HTMLElement} el The element representing the Overlay
-        * @param {Object} userConfig The configuration object literal 
-        * containing the configuration that should be set for this Overlay. 
+        * @param {Object} userConfig The configuration object literal
+        * containing the configuration that should be set for this Overlay.
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
@@ -2253,15 +2253,15 @@ version: 2.7.0
                 if (! Config.alreadySubscribed(this.showEvent,
                     this.showMacGeckoScrollbars, this)) {
 
-                    this.showEvent.subscribe(this.showMacGeckoScrollbars, 
+                    this.showEvent.subscribe(this.showMacGeckoScrollbars,
                         this, true);
 
                 }
 
-                if (! Config.alreadySubscribed(this.hideEvent, 
+                if (! Config.alreadySubscribed(this.hideEvent,
                     this.hideMacGeckoScrollbars, this)) {
 
-                    this.hideEvent.subscribe(this.hideMacGeckoScrollbars, 
+                    this.hideEvent.subscribe(this.hideMacGeckoScrollbars,
                         this, true);
 
                 }
@@ -2269,9 +2269,9 @@ version: 2.7.0
 
             this.initEvent.fire(Overlay);
         },
-        
+
         /**
-        * Initializes the custom events for Overlay which are fired  
+        * Initializes the custom events for Overlay which are fired
         * automatically at appropriate times by the Overlay class.
         * @method initEvents
         */
@@ -2300,33 +2300,33 @@ version: 2.7.0
             this.moveEvent.signature = SIGNATURE;
 
         },
-        
+
         /**
-        * Initializes the class's configurable properties which can be changed 
+        * Initializes the class's configurable properties which can be changed
         * using the Overlay's Config object (cfg).
         * @method initDefaultConfig
         */
         initDefaultConfig: function () {
-    
+
             Overlay.superclass.initDefaultConfig.call(this);
 
             var cfg = this.cfg;
 
             // Add overlay config properties //
-            
+
             /**
             * The absolute x-coordinate position of the Overlay
             * @config x
             * @type Number
             * @default null
             */
-            cfg.addProperty(DEFAULT_CONFIG.X.key, { 
-    
-                handler: this.configX, 
-                validator: DEFAULT_CONFIG.X.validator, 
-                suppressEvent: DEFAULT_CONFIG.X.suppressEvent, 
+            cfg.addProperty(DEFAULT_CONFIG.X.key, {
+
+                handler: this.configX,
+                validator: DEFAULT_CONFIG.X.validator,
+                suppressEvent: DEFAULT_CONFIG.X.suppressEvent,
                 supercedes: DEFAULT_CONFIG.X.supercedes
-    
+
             });
 
             /**
@@ -2337,9 +2337,9 @@ version: 2.7.0
             */
             cfg.addProperty(DEFAULT_CONFIG.Y.key, {
 
-                handler: this.configY, 
-                validator: DEFAULT_CONFIG.Y.validator, 
-                suppressEvent: DEFAULT_CONFIG.Y.suppressEvent, 
+                handler: this.configY,
+                validator: DEFAULT_CONFIG.Y.validator,
+                suppressEvent: DEFAULT_CONFIG.Y.suppressEvent,
                 supercedes: DEFAULT_CONFIG.Y.supercedes
 
             });
@@ -2351,14 +2351,14 @@ version: 2.7.0
             * @default null
             */
             cfg.addProperty(DEFAULT_CONFIG.XY.key, {
-                handler: this.configXY, 
-                suppressEvent: DEFAULT_CONFIG.XY.suppressEvent, 
+                handler: this.configXY,
+                suppressEvent: DEFAULT_CONFIG.XY.suppressEvent,
                 supercedes: DEFAULT_CONFIG.XY.supercedes
             });
 
             /**
             * <p>
-            * The array of context arguments for context-sensitive positioning. 
+            * The array of context arguments for context-sensitive positioning.
             * </p>
             *
             * <p>
@@ -2370,16 +2370,16 @@ version: 2.7.0
             * <dt>contextElementOrId &#60;String|HTMLElement&#62;</dt>
             * <dd>A reference to the context element to which the overlay should be aligned (or it's id).</dd>
             * <dt>overlayCorner &#60;String&#62;</dt>
-            * <dd>The corner of the overlay which is to be used for alignment. This corner will be aligned to the 
-            * corner of the context element defined by the "contextCorner" entry which follows. Supported string values are: 
+            * <dd>The corner of the overlay which is to be used for alignment. This corner will be aligned to the
+            * corner of the context element defined by the "contextCorner" entry which follows. Supported string values are:
             * "tr" (top right), "tl" (top left), "br" (bottom right), or "bl" (bottom left).</dd>
             * <dt>contextCorner &#60;String&#62;</dt>
             * <dd>The corner of the context element which is to be used for alignment. Supported string values are the same ones listed for the "overlayCorner" entry above.</dd>
             * <dt>arrayOfTriggerEvents (optional) &#60;Array[String|CustomEvent]&#62;</dt>
             * <dd>
             * <p>
-            * By default, context alignment is a one time operation, aligning the Overlay to the context element when context configuration property is set, or when the <a href="#method_align">align</a> 
-            * method is invoked. However, you can use the optional "arrayOfTriggerEvents" entry to define the list of events which should force the overlay to re-align itself with the context element. 
+            * By default, context alignment is a one time operation, aligning the Overlay to the context element when context configuration property is set, or when the <a href="#method_align">align</a>
+            * method is invoked. However, you can use the optional "arrayOfTriggerEvents" entry to define the list of events which should force the overlay to re-align itself with the context element.
             * This is useful in situations where the layout of the document may change, resulting in the context element's position being modified.
             * </p>
             * <p>
@@ -2390,7 +2390,7 @@ version: 2.7.0
             * </dl>
             *
             * <p>
-            * For example, setting this property to <code>["img1", "tl", "bl"]</code> will 
+            * For example, setting this property to <code>["img1", "tl", "bl"]</code> will
             * align the Overlay's top left corner to the bottom left corner of the
             * context element with id "img1".
             * </p>
@@ -2404,46 +2404,46 @@ version: 2.7.0
             * @default null
             */
             cfg.addProperty(DEFAULT_CONFIG.CONTEXT.key, {
-                handler: this.configContext, 
-                suppressEvent: DEFAULT_CONFIG.CONTEXT.suppressEvent, 
+                handler: this.configContext,
+                suppressEvent: DEFAULT_CONFIG.CONTEXT.suppressEvent,
                 supercedes: DEFAULT_CONFIG.CONTEXT.supercedes
             });
 
             /**
-            * Determines whether or not the Overlay should be anchored 
+            * Determines whether or not the Overlay should be anchored
             * to the center of the viewport.
-            * 
+            *
             * <p>This property can be set to:</p>
-            * 
+            *
             * <dl>
             * <dt>true</dt>
             * <dd>
             * To enable fixed center positioning
             * <p>
-            * When enabled, the overlay will 
-            * be positioned in the center of viewport when initially displayed, and 
-            * will remain in the center of the viewport whenever the window is 
+            * When enabled, the overlay will
+            * be positioned in the center of viewport when initially displayed, and
+            * will remain in the center of the viewport whenever the window is
             * scrolled or resized.
             * </p>
             * <p>
-            * If the overlay is too big for the viewport, 
+            * If the overlay is too big for the viewport,
             * it's top left corner will be aligned with the top left corner of the viewport.
             * </p>
             * </dd>
             * <dt>false</dt>
             * <dd>
             * To disable fixed center positioning.
-            * <p>In this case the overlay can still be 
+            * <p>In this case the overlay can still be
             * centered as a one-off operation, by invoking the <code>center()</code> method,
             * however it will not remain centered when the window is scrolled/resized.
             * </dd>
             * <dt>"contained"<dt>
             * <dd>To enable fixed center positioning, as with the <code>true</code> option.
-            * <p>However, unlike setting the property to <code>true</code>, 
-            * when the property is set to <code>"contained"</code>, if the overlay is 
-            * too big for the viewport, it will not get automatically centered when the 
-            * user scrolls or resizes the window (until the window is large enough to contain the 
-            * overlay). This is useful in cases where the Overlay has both header and footer 
+            * <p>However, unlike setting the property to <code>true</code>,
+            * when the property is set to <code>"contained"</code>, if the overlay is
+            * too big for the viewport, it will not get automatically centered when the
+            * user scrolls or resizes the window (until the window is large enough to contain the
+            * overlay). This is useful in cases where the Overlay has both header and footer
             * UI controls which the user may need to access.
             * </p>
             * </dd>
@@ -2455,11 +2455,11 @@ version: 2.7.0
             */
             cfg.addProperty(DEFAULT_CONFIG.FIXED_CENTER.key, {
                 handler: this.configFixedCenter,
-                value: DEFAULT_CONFIG.FIXED_CENTER.value, 
-                validator: DEFAULT_CONFIG.FIXED_CENTER.validator, 
+                value: DEFAULT_CONFIG.FIXED_CENTER.value,
+                validator: DEFAULT_CONFIG.FIXED_CENTER.validator,
                 supercedes: DEFAULT_CONFIG.FIXED_CENTER.supercedes
             });
-    
+
             /**
             * CSS width of the Overlay.
             * @config width
@@ -2467,8 +2467,8 @@ version: 2.7.0
             * @default null
             */
             cfg.addProperty(DEFAULT_CONFIG.WIDTH.key, {
-                handler: this.configWidth, 
-                suppressEvent: DEFAULT_CONFIG.WIDTH.suppressEvent, 
+                handler: this.configWidth,
+                suppressEvent: DEFAULT_CONFIG.WIDTH.suppressEvent,
                 supercedes: DEFAULT_CONFIG.WIDTH.supercedes
             });
 
@@ -2479,8 +2479,8 @@ version: 2.7.0
             * @default null
             */
             cfg.addProperty(DEFAULT_CONFIG.HEIGHT.key, {
-                handler: this.configHeight, 
-                suppressEvent: DEFAULT_CONFIG.HEIGHT.suppressEvent, 
+                handler: this.configHeight,
+                suppressEvent: DEFAULT_CONFIG.HEIGHT.suppressEvent,
                 supercedes: DEFAULT_CONFIG.HEIGHT.supercedes
             });
 
@@ -2493,7 +2493,7 @@ version: 2.7.0
             * @default null
             */
             cfg.addProperty(DEFAULT_CONFIG.AUTO_FILL_HEIGHT.key, {
-                handler: this.configAutoFillHeight, 
+                handler: this.configAutoFillHeight,
                 value : DEFAULT_CONFIG.AUTO_FILL_HEIGHT.value,
                 validator : this._validateAutoFill,
                 supercedes: DEFAULT_CONFIG.AUTO_FILL_HEIGHT.supercedes
@@ -2511,7 +2511,7 @@ version: 2.7.0
             });
 
             /**
-            * True if the Overlay should be prevented from being positioned 
+            * True if the Overlay should be prevented from being positioned
             * out of the viewport.
             * @config constraintoviewport
             * @type Boolean
@@ -2519,18 +2519,18 @@ version: 2.7.0
             */
             cfg.addProperty(DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.key, {
 
-                handler: this.configConstrainToViewport, 
-                value: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.value, 
-                validator: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.validator, 
+                handler: this.configConstrainToViewport,
+                value: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.value,
+                validator: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.validator,
                 supercedes: DEFAULT_CONFIG.CONSTRAIN_TO_VIEWPORT.supercedes
 
             });
 
             /**
             * @config iframe
-            * @description Boolean indicating whether or not the Overlay should 
-            * have an IFRAME shim; used to prevent SELECT elements from 
-            * poking through an Overlay instance in IE6.  When set to "true", 
+            * @description Boolean indicating whether or not the Overlay should
+            * have an IFRAME shim; used to prevent SELECT elements from
+            * poking through an Overlay instance in IE6.  When set to "true",
             * the iframe shim is created when the Overlay instance is intially
             * made visible.
             * @type Boolean
@@ -2538,25 +2538,25 @@ version: 2.7.0
             */
             cfg.addProperty(DEFAULT_CONFIG.IFRAME.key, {
 
-                handler: this.configIframe, 
-                value: DEFAULT_CONFIG.IFRAME.value, 
-                validator: DEFAULT_CONFIG.IFRAME.validator, 
+                handler: this.configIframe,
+                value: DEFAULT_CONFIG.IFRAME.value,
+                validator: DEFAULT_CONFIG.IFRAME.validator,
                 supercedes: DEFAULT_CONFIG.IFRAME.supercedes
 
             });
 
             /**
             * @config preventcontextoverlap
-            * @description Boolean indicating whether or not the Overlay should overlap its 
-            * context element (defined using the "context" configuration property) when the 
+            * @description Boolean indicating whether or not the Overlay should overlap its
+            * context element (defined using the "context" configuration property) when the
             * "constraintoviewport" configuration property is set to "true".
             * @type Boolean
             * @default false
             */
             cfg.addProperty(DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.key, {
 
-                value: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.value, 
-                validator: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.validator, 
+                value: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.value,
+                validator: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.validator,
                 supercedes: DEFAULT_CONFIG.PREVENT_CONTEXT_OVERLAP.supercedes
 
             });
@@ -2564,7 +2564,7 @@ version: 2.7.0
         },
 
         /**
-        * Moves the Overlay to the specified position. This function is  
+        * Moves the Overlay to the specified position. This function is
         * identical to calling this.cfg.setProperty("xy", [x,y]);
         * @method moveTo
         * @param {Number} x The Overlay's new x position
@@ -2575,8 +2575,8 @@ version: 2.7.0
         },
 
         /**
-        * Adds a CSS class ("hide-scrollbars") and removes a CSS class 
-        * ("show-scrollbars") to the Overlay to fix a bug in Gecko on Mac OS X 
+        * Adds a CSS class ("hide-scrollbars") and removes a CSS class
+        * ("show-scrollbars") to the Overlay to fix a bug in Gecko on Mac OS X
         * (https://bugzilla.mozilla.org/show_bug.cgi?id=187435)
         * @method hideMacGeckoScrollbars
         */
@@ -2585,8 +2585,8 @@ version: 2.7.0
         },
 
         /**
-        * Adds a CSS class ("show-scrollbars") and removes a CSS class 
-        * ("hide-scrollbars") to the Overlay to fix a bug in Gecko on Mac OS X 
+        * Adds a CSS class ("show-scrollbars") and removes a CSS class
+        * ("hide-scrollbars") to the Overlay to fix a bug in Gecko on Mac OS X
         * (https://bugzilla.mozilla.org/show_bug.cgi?id=187435)
         * @method showMacGeckoScrollbars
         */
@@ -2613,14 +2613,14 @@ version: 2.7.0
 
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
         /**
-        * The default event handler fired when the "visible" property is 
+        * The default event handler fired when the "visible" property is
         * changed.  This method is responsible for firing showEvent
         * and hideEvent.
         * @method configVisible
         * @param {String} type The CustomEvent type (usually the property name)
         * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configVisible: function (type, args, obj) {
@@ -2659,12 +2659,12 @@ version: 2.7.0
 
                     for (i = 0; i < nEffects; i++) {
                         eff = effect[i];
-                        effectInstances[effectInstances.length] = 
+                        effectInstances[effectInstances.length] =
                             eff.effect(this, eff.duration);
 
                     }
                 } else {
-                    effectInstances[effectInstances.length] = 
+                    effectInstances[effectInstances.length] =
                         effect.effect(this, effect.duration);
                 }
             }
@@ -2683,11 +2683,11 @@ version: 2.7.0
                             for (j = 0; j < nEffectInstances; j++) {
                                 ei = effectInstances[j];
                                 if (j === 0 && !alreadySubscribed(
-                                        ei.animateInCompleteEvent, 
+                                        ei.animateInCompleteEvent,
                                         this.showEvent.fire, this.showEvent)) {
 
                                     /*
-                                         Delegate showEvent until end 
+                                         Delegate showEvent until end
                                          of animateInComplete
                                     */
 
@@ -2723,19 +2723,19 @@ version: 2.7.0
                         nEffectInstances = effectInstances.length;
                         for (k = 0; k < nEffectInstances; k++) {
                             h = effectInstances[k];
-    
+
                             if (k === 0 && !alreadySubscribed(
-                                h.animateOutCompleteEvent, this.hideEvent.fire, 
+                                h.animateOutCompleteEvent, this.hideEvent.fire,
                                 this.hideEvent)) {
-    
+
                                 /*
-                                     Delegate hideEvent until end 
+                                     Delegate hideEvent until end
                                      of animateOutComplete
                                 */
-    
+
                                 h.animateOutCompleteEvent.subscribe(
                                     this.hideEvent.fire, this.hideEvent, true);
-    
+
                             }
                             h.animateOut();
                         }
@@ -2758,8 +2758,8 @@ version: 2.7.0
         },
 
         /**
-        * Fixed center event handler used for centering on scroll/resize, but only if 
-        * the overlay is visible and, if "fixedcenter" is set to "contained", only if 
+        * Fixed center event handler used for centering on scroll/resize, but only if
+        * the overlay is visible and, if "fixedcenter" is set to "contained", only if
         * the overlay fits within the viewport.
         *
         * @method doCenterOnDOMEvent
@@ -2776,9 +2776,9 @@ version: 2.7.0
         },
 
         /**
-         * Determines if the Overlay (including the offset value defined by Overlay.VIEWPORT_OFFSET) 
+         * Determines if the Overlay (including the offset value defined by Overlay.VIEWPORT_OFFSET)
          * will fit entirely inside the viewport, in both dimensions - width and height.
-         * 
+         *
          * @method fitsInViewport
          * @return boolean true if the Overlay will fit, false if not
          */
@@ -2794,13 +2794,13 @@ version: 2.7.0
         },
 
         /**
-        * The default event handler fired when the "fixedcenter" property 
+        * The default event handler fired when the "fixedcenter" property
         * is changed.
         * @method configFixedCenter
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configFixedCenter: function (type, args, obj) {
@@ -2837,9 +2837,9 @@ version: 2.7.0
         * The default event handler fired when the "height" property is changed.
         * @method configHeight
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configHeight: function (type, args, obj) {
@@ -2856,9 +2856,9 @@ version: 2.7.0
          * @method configAutoFillHeight
          *
          * @param {String} type The CustomEvent type (usually the property name)
-         * @param {Object[]} args The CustomEvent arguments. For configuration 
+         * @param {Object[]} args The CustomEvent arguments. For configuration
          * handlers, args[0] will equal the newly applied value for the property.
-         * @param {Object} obj The scope object. For configuration handlers, 
+         * @param {Object} obj The scope object. For configuration handlers,
          * this will usually equal the owner.
          */
         configAutoFillHeight: function (type, args, obj) {
@@ -2892,9 +2892,9 @@ version: 2.7.0
         * The default event handler fired when the "width" property is changed.
         * @method configWidth
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configWidth: function (type, args, obj) {
@@ -2910,9 +2910,9 @@ version: 2.7.0
         * The default event handler fired when the "zIndex" property is changed.
         * @method configzIndex
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configzIndex: function (type, args, obj) {
@@ -2945,9 +2945,9 @@ version: 2.7.0
         * The default event handler fired when the "xy" property is changed.
         * @method configXY
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configXY: function (type, args, obj) {
@@ -2974,9 +2974,9 @@ version: 2.7.0
         * The default event handler fired when the "x" property is changed.
         * @method configX
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configX: function (type, args, obj) {
@@ -2991,7 +2991,7 @@ version: 2.7.0
 
             x = this.cfg.getProperty("x");
             y = this.cfg.getProperty("y");
-            
+
             Dom.setX(this.element, x, true);
 
             this.cfg.setProperty("xy", [x, y], true);
@@ -3004,9 +3004,9 @@ version: 2.7.0
         * The default event handler fired when the "y" property is changed.
         * @method configY
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configY: function (type, args, obj) {
@@ -3029,7 +3029,7 @@ version: 2.7.0
             this.cfg.refireEvent("iframe");
             this.moveEvent.fire([x, y]);
         },
-        
+
         /**
         * Shows the iframe shim, if it has been enabled.
         * @method showIframe
@@ -3060,7 +3060,7 @@ version: 2.7.0
         },
 
         /**
-        * Syncronizes the size and position of iframe shim to that of its 
+        * Syncronizes the size and position of iframe shim to that of its
         * corresponding Overlay instance.
         * @method syncIframe
         */
@@ -3090,13 +3090,13 @@ version: 2.7.0
 
         /**
          * Sets the zindex of the iframe shim, if it exists, based on the zindex of
-         * the Overlay element. The zindex of the iframe is set to be one less 
+         * the Overlay element. The zindex of the iframe is set to be one less
          * than the Overlay element's zindex.
-         * 
+         *
          * <p>NOTE: This method will not bump up the zindex of the Overlay element
          * to ensure that the iframe shim has a non-negative zindex.
-         * If you require the iframe zindex to be 0 or higher, the zindex of 
-         * the Overlay element should be set to a value greater than 0, before 
+         * If you require the iframe zindex to be 0 or higher, the zindex of
+         * the Overlay element should be set to a value greater than 0, before
          * this method is called.
          * </p>
          * @method stackIframe
@@ -3114,9 +3114,9 @@ version: 2.7.0
         * The default event handler fired when the "iframe" property is changed.
         * @method configIframe
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configIframe: function (type, args, obj) {
@@ -3138,16 +3138,16 @@ version: 2.7.0
                         }
 
                         /*
-                            Set the opacity of the <iframe> to 0 so that it 
-                            doesn't modify the opacity of any transparent 
+                            Set the opacity of the <iframe> to 0 so that it
+                            doesn't modify the opacity of any transparent
                             elements that may be on top of it (like a shadow).
                         */
                         if (UA.ie) {
                             m_oIFrameTemplate.style.filter = "alpha(opacity=0)";
                             /*
-                                 Need to set the "frameBorder" property to 0 
-                                 supress the default <iframe> border in IE.  
-                                 Setting the CSS "border" property alone 
+                                 Need to set the "frameBorder" property to 0
+                                 supress the default <iframe> border in IE.
+                                 Setting the CSS "border" property alone
                                  doesn't supress it.
                             */
                             m_oIFrameTemplate.frameBorder = 0;
@@ -3174,14 +3174,14 @@ version: 2.7.0
                 }
 
                 /*
-                     Show the <iframe> before positioning it since the "setXY" 
-                     method of DOM requires the element be in the document 
+                     Show the <iframe> before positioning it since the "setXY"
+                     method of DOM requires the element be in the document
                      and visible.
                 */
                 this.showIframe();
 
                 /*
-                     Syncronize the size and position of the <iframe> to that 
+                     Syncronize the size and position of the <iframe> to that
                      of the Overlay.
                 */
                 this.syncIframe();
@@ -3229,11 +3229,11 @@ version: 2.7.0
 
         /**
          * Set's the container's XY value from DOM if not already set.
-         * 
-         * Differs from syncPosition, in that the XY value is only sync'd with DOM if 
+         *
+         * Differs from syncPosition, in that the XY value is only sync'd with DOM if
          * not already set. The method also refire's the XY config property event, so any
          * beforeMove, Move event listeners are invoked.
-         * 
+         *
          * @method _primeXYFromDOM
          * @protected
          */
@@ -3248,14 +3248,14 @@ version: 2.7.0
         },
 
         /**
-        * The default event handler fired when the "constraintoviewport" 
+        * The default event handler fired when the "constraintoviewport"
         * property is changed.
         * @method configConstrainToViewport
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
-        * handlers, args[0] will equal the newly applied value for 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
+        * handlers, args[0] will equal the newly applied value for
         * the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configConstrainToViewport: function (type, args, obj) {
@@ -3277,12 +3277,12 @@ version: 2.7.0
          /**
         * The default event handler fired when the "context" property
         * is changed.
-        * 
+        *
         * @method configContext
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configContext: function (type, args, obj) {
@@ -3308,7 +3308,7 @@ version: 2.7.0
                 if (contextEl) {
                     if (typeof contextEl == "string") {
                         this.cfg.setProperty("context", [
-                                document.getElementById(contextEl), 
+                                document.getElementById(contextEl),
                                 elementMagnetCorner,
                                 contextMagnetCorner,
                                 triggers ],
@@ -3335,10 +3335,10 @@ version: 2.7.0
 
         /**
          * Custom Event handler for context alignment triggers. Invokes the align method
-         * 
+         *
          * @method _alignOnTrigger
          * @protected
-         * 
+         *
          * @param {String} type The event type (not used by the default implementation)
          * @param {Any[]} args The array of arguments for the trigger event (not used by the default implementation)
          */
@@ -3353,7 +3353,7 @@ version: 2.7.0
          * @method _findTriggerCE
          * @private
          *
-         * @param {String|CustomEvent} t Either a CustomEvent, or event type (e.g. "windowScroll") for which a 
+         * @param {String|CustomEvent} t Either a CustomEvent, or event type (e.g. "windowScroll") for which a
          * custom event instance needs to be looked up from the Overlay._TRIGGER_MAP.
          */
         _findTriggerCE : function(t) {
@@ -3367,21 +3367,21 @@ version: 2.7.0
         },
 
         /**
-         * Utility method that subscribes or unsubscribes the given 
+         * Utility method that subscribes or unsubscribes the given
          * function from the list of trigger events provided.
          *
          * @method _processTriggers
-         * @protected 
+         * @protected
          *
-         * @param {Array[String|CustomEvent]} triggers An array of either CustomEvents, event type strings 
-         * (e.g. "beforeShow", "windowScroll") to/from which the provided function should be 
+         * @param {Array[String|CustomEvent]} triggers An array of either CustomEvents, event type strings
+         * (e.g. "beforeShow", "windowScroll") to/from which the provided function should be
          * subscribed/unsubscribed respectively.
          *
          * @param {String} mode Either "subscribe" or "unsubscribe", specifying whether or not
          * we are subscribing or unsubscribing trigger listeners
-         * 
+         *
          * @param {Function} fn The function to be subscribed/unsubscribed to/from the trigger event.
-         * Context is always set to the overlay instance, and no additional object argument 
+         * Context is always set to the overlay instance, and no additional object argument
          * get passed to the subscribed function.
          */
         _processTriggers : function(triggers, mode, fn) {
@@ -3400,13 +3400,13 @@ version: 2.7.0
 
         // END BUILT-IN PROPERTY EVENT HANDLERS //
         /**
-        * Aligns the Overlay to its context element using the specified corner 
-        * points (represented by the constants TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, 
+        * Aligns the Overlay to its context element using the specified corner
+        * points (represented by the constants TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT,
         * and BOTTOM_RIGHT.
         * @method align
-        * @param {String} elementAlign  The String representing the corner of 
+        * @param {String} elementAlign  The String representing the corner of
         * the Overlay that should be aligned to the context element
-        * @param {String} contextAlign  The corner of the context element 
+        * @param {String} contextAlign  The corner of the context element
         * that the elementAlign corner should stick to.
         */
         align: function (elementAlign, contextAlign) {
@@ -3418,84 +3418,84 @@ version: 2.7.0
                 contextRegion;
 
             function doAlign(v, h) {
-    
+
                 switch (elementAlign) {
-    
+
                 case Overlay.TOP_LEFT:
                     me.moveTo(h, v);
                     break;
-    
+
                 case Overlay.TOP_RIGHT:
                     me.moveTo((h - element.offsetWidth), v);
                     break;
-    
+
                 case Overlay.BOTTOM_LEFT:
                     me.moveTo(h, (v - element.offsetHeight));
                     break;
-    
+
                 case Overlay.BOTTOM_RIGHT:
-                    me.moveTo((h - element.offsetWidth), 
+                    me.moveTo((h - element.offsetWidth),
                         (v - element.offsetHeight));
                     break;
                 }
             }
-    
-    
+
+
             if (contextArgs) {
-            
+
                 context = contextArgs[0];
                 element = this.element;
                 me = this;
-                
+
                 if (! elementAlign) {
                     elementAlign = contextArgs[1];
                 }
-                
+
                 if (! contextAlign) {
                     contextAlign = contextArgs[2];
                 }
-                
+
                 if (element && context) {
                     contextRegion = Dom.getRegion(context);
 
                     switch (contextAlign) {
-    
+
                     case Overlay.TOP_LEFT:
                         doAlign(contextRegion.top, contextRegion.left);
                         break;
-    
+
                     case Overlay.TOP_RIGHT:
                         doAlign(contextRegion.top, contextRegion.right);
                         break;
-    
+
                     case Overlay.BOTTOM_LEFT:
                         doAlign(contextRegion.bottom, contextRegion.left);
                         break;
-    
+
                     case Overlay.BOTTOM_RIGHT:
                         doAlign(contextRegion.bottom, contextRegion.right);
                         break;
                     }
-    
+
                 }
-    
+
             }
-            
+
         },
 
         /**
-        * The default event handler executed when the moveEvent is fired, if the 
+        * The default event handler executed when the moveEvent is fired, if the
         * "constraintoviewport" is set to true.
         * @method enforceConstraints
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         enforceConstraints: function (type, args, obj) {
             var pos = args[0];
-            
+
             var cXY = this.getConstrainedXY(pos[0], pos[1]);
             this.cfg.setProperty("x", cXY[0], true);
             this.cfg.setProperty("y", cXY[1], true);
@@ -3504,13 +3504,13 @@ version: 2.7.0
 
 
         /**
-         * Given x coordinate value, returns the calculated x coordinate required to 
-         * position the Overlay if it is to be constrained to the viewport, based on the 
+         * Given x coordinate value, returns the calculated x coordinate required to
+         * position the Overlay if it is to be constrained to the viewport, based on the
          * current element size, viewport dimensions and scroll values.
          *
          * @param {Number} x The X coordinate value to be constrained
          * @return {Number} The constrained x coordinate
-         */		
+         */
         getConstrainedX: function (x) {
 
             var oOverlay = this,
@@ -3544,32 +3544,32 @@ version: 2.7.0
                     "blbr": true,
                     "brbl": true,
                     "trtl": true
-                
+
                 };
 
 
             var flipHorizontal = function () {
-            
+
                 var nNewX;
-            
+
                 if ((oOverlay.cfg.getProperty("x") - scrollX) > nContextElX) {
                     nNewX = (nContextElX - nOverlayOffsetWidth);
                 }
                 else {
                     nNewX = (nContextElX + nContextElWidth);
                 }
-                
-    
+
+
                 oOverlay.cfg.setProperty("x", (nNewX + scrollX), true);
-    
+
                 return nNewX;
-    
+
             };
 
 
 
             /*
-                 Uses the context element's position to calculate the availble width 
+                 Uses the context element's position to calculate the availble width
                  to the right and left of it to display its corresponding Overlay.
             */
 
@@ -3583,52 +3583,52 @@ version: 2.7.0
                 else {	// The Overlay is to the left of the context element
                     return (nLeftRegionWidth - nViewportOffset);
                 }
-            
+
             };
-    
+
 
             /*
-                Positions the Overlay to the left or right of the context element so that it remains 
+                Positions the Overlay to the left or right of the context element so that it remains
                 inside the viewport.
             */
-    
+
             var setHorizontalPosition = function () {
-            
+
                 var nDisplayRegionWidth = getDisplayRegionWidth(),
                     fnReturnVal;
 
                 if (nOverlayOffsetWidth > nDisplayRegionWidth) {
-        
+
                     if (bFlipped) {
-        
+
                         /*
-                             All possible positions and values have been 
-                             tried, but none were successful, so fall back 
+                             All possible positions and values have been
+                             tried, but none were successful, so fall back
                              to the original size and position.
                         */
-    
+
                         flipHorizontal();
-                        
+
                     }
                     else {
-        
+
                         flipHorizontal();
 
                         bFlipped = true;
-        
+
                         fnReturnVal = setHorizontalPosition();
-        
+
                     }
-                
+
                 }
-        
+
                 return fnReturnVal;
-            
+
             };
 
             // Determine if the current value for the Overlay's "x" configuration property will
             // result in the Overlay being positioned outside the boundaries of the viewport
-            
+
             if (x < leftConstraint || x > rightConstraint) {
 
                 // The current value for the Overlay's "x" configuration property WILL
@@ -3636,23 +3636,23 @@ version: 2.7.0
 
                 if (bCanConstrain) {
 
-                    //	If the "preventcontextoverlap" configuration property is set to "true", 
-                    //	try to flip the Overlay to both keep it inside the boundaries of the 
+                    //	If the "preventcontextoverlap" configuration property is set to "true",
+                    //	try to flip the Overlay to both keep it inside the boundaries of the
                     //	viewport AND from overlaping its context element.
-    
-                    if (this.cfg.getProperty("preventcontextoverlap") && aContext && 
+
+                    if (this.cfg.getProperty("preventcontextoverlap") && aContext &&
                         oOverlapPositions[(aContext[1] + aContext[2])]) {
-        
+
                         oContextEl = aContext[0];
                         nContextElX = Dom.getX(oContextEl) - scrollX;
                         nContextElWidth = oContextEl.offsetWidth;
                         nLeftRegionWidth = nContextElX;
                         nRightRegionWidth = (viewPortWidth - (nContextElX + nContextElWidth));
-        
+
                         setHorizontalPosition();
-                        
+
                         xNew = this.cfg.getProperty("x");
-                    
+
                     }
                     else {
 
@@ -3666,33 +3666,33 @@ version: 2.7.0
 
                 } else {
                     //	The "x" configuration property cannot be set to a value that will keep
-                    //	entire Overlay inside the boundary of the viewport.  Therefore, set  
-                    //	the "x" configuration property to scrollY to keep as much of the 
-                    //	Overlay inside the viewport as possible.                
+                    //	entire Overlay inside the boundary of the viewport.  Therefore, set
+                    //	the "x" configuration property to scrollY to keep as much of the
+                    //	Overlay inside the viewport as possible.
                     xNew = nViewportOffset + scrollX;
                 }
 
             }
 
             return xNew;
-        
+
         },
 
 
         /**
-         * Given y coordinate value, returns the calculated y coordinate required to 
-         * position the Overlay if it is to be constrained to the viewport, based on the 
+         * Given y coordinate value, returns the calculated y coordinate required to
+         * position the Overlay if it is to be constrained to the viewport, based on the
          * current element size, viewport dimensions and scroll values.
          *
          * @param {Number} y The Y coordinate value to be constrained
          * @return {Number} The constrained y coordinate
-         */		
+         */
         getConstrainedY: function (y) {
 
             var oOverlay = this,
                 oOverlayEl = oOverlay.element,
                 nOverlayOffsetHeight = oOverlayEl.offsetHeight,
-            
+
                 nViewportOffset = Overlay.VIEWPORT_OFFSET,
                 viewPortHeight = Dom.getViewportHeight(),
                 scrollY = Dom.getDocumentScrollTop(),
@@ -3713,7 +3713,7 @@ version: 2.7.0
                 bottomConstraint = scrollY + viewPortHeight - nOverlayOffsetHeight - nViewportOffset,
 
                 yNew = y,
-                
+
                 oOverlapPositions = {
                     "trbr": true,
                     "tlbl": true,
@@ -3725,24 +3725,24 @@ version: 2.7.0
             var flipVertical = function () {
 
                 var nNewY;
-            
+
                 // The Overlay is below the context element, flip it above
-                if ((oOverlay.cfg.getProperty("y") - scrollY) > nContextElY) { 
+                if ((oOverlay.cfg.getProperty("y") - scrollY) > nContextElY) {
                     nNewY = (nContextElY - nOverlayOffsetHeight);
                 }
                 else {	// The Overlay is above the context element, flip it below
                     nNewY = (nContextElY + nContextElHeight);
                 }
-    
+
                 oOverlay.cfg.setProperty("y", (nNewY + scrollY), true);
-                
+
                 return nNewY;
-            
+
             };
 
 
             /*
-                 Uses the context element's position to calculate the availble height 
+                 Uses the context element's position to calculate the availble height
                  above and below it to display its corresponding Overlay.
             */
 
@@ -3750,54 +3750,54 @@ version: 2.7.0
 
                 // The Overlay is below the context element
                 if ((oOverlay.cfg.getProperty("y") - scrollY) > nContextElY) {
-                    return (nBottomRegionHeight - nViewportOffset);				
+                    return (nBottomRegionHeight - nViewportOffset);
                 }
                 else {	// The Overlay is above the context element
-                    return (nTopRegionHeight - nViewportOffset);				
+                    return (nTopRegionHeight - nViewportOffset);
                 }
-        
+
             };
 
 
             /*
-                Trys to place the Overlay in the best possible position (either above or 
+                Trys to place the Overlay in the best possible position (either above or
                 below its corresponding context element).
             */
-        
+
             var setVerticalPosition = function () {
-        
+
                 var nDisplayRegionHeight = getDisplayRegionHeight(),
                     fnReturnVal;
-                    
+
 
                 if (nOverlayOffsetHeight > nDisplayRegionHeight) {
-                   
+
                     if (bFlipped) {
-        
+
                         /*
-                             All possible positions and values for the 
-                             "maxheight" configuration property have been 
-                             tried, but none were successful, so fall back 
+                             All possible positions and values for the
+                             "maxheight" configuration property have been
+                             tried, but none were successful, so fall back
                              to the original size and position.
                         */
-    
+
                         flipVertical();
-                        
+
                     }
                     else {
-        
+
                         flipVertical();
 
                         bFlipped = true;
-        
+
                         fnReturnVal = setVerticalPosition();
-        
+
                     }
-                
+
                 }
-        
+
                 return fnReturnVal;
-        
+
             };
 
 
@@ -3805,30 +3805,30 @@ version: 2.7.0
             // result in the Overlay being positioned outside the boundaries of the viewport
 
             if (y < topConstraint || y  > bottomConstraint) {
-        
+
                 // The current value for the Overlay's "y" configuration property WILL
                 // result in the Overlay being positioned outside the boundaries of the viewport
 
-                if (bCanConstrain) {	
+                if (bCanConstrain) {
 
-                    //	If the "preventcontextoverlap" configuration property is set to "true", 
-                    //	try to flip the Overlay to both keep it inside the boundaries of the 
+                    //	If the "preventcontextoverlap" configuration property is set to "true",
+                    //	try to flip the Overlay to both keep it inside the boundaries of the
                     //	viewport AND from overlaping its context element.
-        
-                    if (this.cfg.getProperty("preventcontextoverlap") && aContext && 
+
+                    if (this.cfg.getProperty("preventcontextoverlap") && aContext &&
                         oOverlapPositions[(aContext[1] + aContext[2])]) {
-        
+
                         oContextEl = aContext[0];
                         nContextElHeight = oContextEl.offsetHeight;
                         nContextElY = (Dom.getY(oContextEl) - scrollY);
-        
+
                         nTopRegionHeight = nContextElY;
                         nBottomRegionHeight = (viewPortHeight - (nContextElY + nContextElHeight));
-        
+
                         setVerticalPosition();
-        
+
                         yNew = oOverlay.cfg.getProperty("y");
-        
+
                     }
                     else {
 
@@ -3837,20 +3837,20 @@ version: 2.7.0
                         } else if (y  > bottomConstraint) {
                             yNew  = bottomConstraint;
                         }
-                    
+
                     }
-                
+
                 }
                 else {
-                
+
                     //	The "y" configuration property cannot be set to a value that will keep
-                    //	entire Overlay inside the boundary of the viewport.  Therefore, set  
-                    //	the "y" configuration property to scrollY to keep as much of the 
+                    //	entire Overlay inside the boundary of the viewport.  Therefore, set
+                    //	the "y" configuration property to scrollY to keep as much of the
                     //	Overlay inside the viewport as possible.
-                
+
                     yNew = nViewportOffset + scrollY;
                 }
-        
+
             }
 
             return yNew;
@@ -3858,8 +3858,8 @@ version: 2.7.0
 
 
         /**
-         * Given x, y coordinate values, returns the calculated coordinates required to 
-         * position the Overlay if it is to be constrained to the viewport, based on the 
+         * Given x, y coordinate values, returns the calculated coordinates required to
+         * position the Overlay if it is to be constrained to the viewport, based on the
          * current element size, viewport dimensions and scroll values.
          *
          * @param {Number} x The X coordinate value to be constrained
@@ -3905,8 +3905,8 @@ version: 2.7.0
         },
 
         /**
-        * Synchronizes the Panel's "xy", "x", and "y" properties with the 
-        * Panel's position in the DOM. This is primarily used to update  
+        * Synchronizes the Panel's "xy", "x", and "y" properties with the
+        * Panel's position in the DOM. This is primarily used to update
         * position information during drag & drop.
         * @method syncPosition
         */
@@ -3972,7 +3972,7 @@ version: 2.7.0
         })(),
 
         /**
-         * autofillheight validator. Verifies that the autofill value is either null 
+         * autofillheight validator. Verifies that the autofill value is either null
          * or one of the strings : "body", "header" or "footer".
          *
          * @method _validateAutoFillHeight
@@ -3985,7 +3985,7 @@ version: 2.7.0
         },
 
         /**
-         * The default custom event handler executed when the overlay's height is changed, 
+         * The default custom event handler executed when the overlay's height is changed,
          * if the autofillheight property has been set.
          *
          * @method _autoFillOnHeightChange
@@ -4023,15 +4023,15 @@ version: 2.7.0
 
         /**
          * <p>
-         * Sets the height on the provided header, body or footer element to 
-         * fill out the height of the container. It determines the height of the 
-         * containers content box, based on it's configured height value, and 
-         * sets the height of the autofillheight element to fill out any 
-         * space remaining after the other standard module element heights 
+         * Sets the height on the provided header, body or footer element to
+         * fill out the height of the container. It determines the height of the
+         * containers content box, based on it's configured height value, and
+         * sets the height of the autofillheight element to fill out any
+         * space remaining after the other standard module element heights
          * have been accounted for.
          * </p>
-         * <p><strong>NOTE:</strong> This method is not designed to work if an explicit 
-         * height has not been set on the container, since for an "auto" height container, 
+         * <p><strong>NOTE:</strong> This method is not designed to work if an explicit
+         * height has not been set on the container, since for an "auto" height container,
          * the heights of the header/body/footer will drive the height of the container.</p>
          *
          * @method fillHeight
@@ -4074,11 +4074,11 @@ version: 2.7.0
                         total = container.clientHeight; // Content, No Border, 0 Padding (set by yui-override-padding)
                         Dom.removeClass(container, "yui-override-padding");
                     }
-    
+
                     remaining = Math.max(total - filled, 0);
-    
+
                     Dom.setStyle(el, "height", remaining + "px");
-    
+
                     // Re-adjust height if required, to account for el padding and border
                     if (el.offsetHeight != remaining) {
                         remaining = Math.max(remaining - (el.offsetHeight - remaining), 0);
@@ -4089,7 +4089,7 @@ version: 2.7.0
         },
 
         /**
-        * Places the Overlay on top of all other instances of 
+        * Places the Overlay on top of all other instances of
         * YAHOO.widget.Overlay.
         * @method bringToTop
         */
@@ -4159,7 +4159,7 @@ version: 2.7.0
         },
 
         /**
-        * Removes the Overlay element from the DOM and sets all child 
+        * Removes the Overlay element from the DOM and sets all child
         * elements to null.
         * @method destroy
         */
@@ -4173,7 +4173,7 @@ version: 2.7.0
 
             Overlay.windowResizeEvent.unsubscribe(
                 this.doCenterOnDOMEvent, this);
-    
+
             Overlay.windowScrollEvent.unsubscribe(
                 this.doCenterOnDOMEvent, this);
 
@@ -4185,11 +4185,11 @@ version: 2.7.0
         /**
          * Can be used to force the container to repaint/redraw it's contents.
          * <p>
-         * By default applies and then removes a 1px bottom margin through the 
+         * By default applies and then removes a 1px bottom margin through the
          * application/removal of a "yui-force-redraw" class.
          * </p>
          * <p>
-         * It is currently used by Overlay to force a repaint for webkit 
+         * It is currently used by Overlay to force a repaint for webkit
          * browsers, when centering.
          * </p>
          * @method forceContainerRedraw
@@ -4217,15 +4217,15 @@ version: 2.7.0
 (function () {
 
     /**
-    * OverlayManager is used for maintaining the focus status of 
+    * OverlayManager is used for maintaining the focus status of
     * multiple Overlays.
     * @namespace YAHOO.widget
     * @namespace YAHOO.widget
     * @class OverlayManager
     * @constructor
-    * @param {Array} overlays Optional. A collection of Overlays to register 
+    * @param {Array} overlays Optional. A collection of Overlays to register
     * with the manager.
-    * @param {Object} userConfig  The object literal representing the user 
+    * @param {Object} userConfig  The object literal representing the user
     * configuration of the OverlayManager
     */
     YAHOO.widget.OverlayManager = function (userConfig) {
@@ -4270,7 +4270,7 @@ version: 2.7.0
         */
         initDefaultConfig: function () {
             /**
-            * The collection of registered Overlays in use by 
+            * The collection of registered Overlays in use by
             * the OverlayManager
             * @config overlays
             * @type YAHOO.widget.Overlay[]
@@ -4290,15 +4290,15 @@ version: 2.7.0
         /**
         * Initializes the OverlayManager
         * @method init
-        * @param {Overlay[]} overlays Optional. A collection of Overlays to 
+        * @param {Overlay[]} overlays Optional. A collection of Overlays to
         * register with the manager.
-        * @param {Object} userConfig  The object literal representing the user 
+        * @param {Object} userConfig  The object literal representing the user
         * configuration of the OverlayManager
         */
         init: function (userConfig) {
 
             /**
-            * The OverlayManager's Config object used for monitoring 
+            * The OverlayManager's Config object used for monitoring
             * configuration properties.
             * @property cfg
             * @type Config
@@ -4350,7 +4350,7 @@ version: 2.7.0
             */
             this.remove = function (overlay) {
 
-                var o = this.find(overlay), 
+                var o = this.find(overlay),
                         originalZ;
 
                 if (o) {
@@ -4410,7 +4410,7 @@ version: 2.7.0
             /**
              * Updates the state of the OverlayManager and overlay, as a result of the overlay
              * being blurred.
-             * 
+             *
              * @method _manageBlur
              * @param {Overlay} overlay The overlay instance which got blurred.
              * @protected
@@ -4426,7 +4426,7 @@ version: 2.7.0
             };
 
             /**
-             * Updates the state of the OverlayManager and overlay, as a result of the overlay 
+             * Updates the state of the OverlayManager and overlay, as a result of the overlay
              * receiving focus.
              *
              * @method _manageFocus
@@ -4461,11 +4461,11 @@ version: 2.7.0
 
         /**
         * @method _onOverlayElementFocus
-        * @description Event handler for the DOM event that is used to focus 
-        * the Overlay instance as specified by the "focusevent" 
+        * @description Event handler for the DOM event that is used to focus
+        * the Overlay instance as specified by the "focusevent"
         * configuration property.
         * @private
-        * @param {Event} p_oEvent Object representing the DOM event 
+        * @param {Event} p_oEvent Object representing the DOM event
         * object passed back by the event utility (Event).
         */
         _onOverlayElementFocus: function (p_oEvent) {
@@ -4484,11 +4484,11 @@ version: 2.7.0
         * @method _onOverlayDestroy
         * @description "destroy" event handler for the Overlay.
         * @private
-        * @param {String} p_sType String representing the name of the event  
+        * @param {String} p_sType String representing the name of the event
         * that was fired.
-        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * @param {Array} p_aArgs Array of arguments sent when the event
         * was fired.
-        * @param {Overlay} p_oOverlay Object representing the overlay that 
+        * @param {Overlay} p_oOverlay Object representing the overlay that
         * fired the event.
         */
         _onOverlayDestroy: function (p_sType, p_aArgs, p_oOverlay) {
@@ -4498,15 +4498,15 @@ version: 2.7.0
         /**
         * @method _onOverlayFocusHandler
         *
-        * focusEvent Handler, used to delegate to _manageFocus with the 
+        * focusEvent Handler, used to delegate to _manageFocus with the
         * correct arguments.
         *
         * @private
-        * @param {String} p_sType String representing the name of the event  
+        * @param {String} p_sType String representing the name of the event
         * that was fired.
-        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * @param {Array} p_aArgs Array of arguments sent when the event
         * was fired.
-        * @param {Overlay} p_oOverlay Object representing the overlay that 
+        * @param {Overlay} p_oOverlay Object representing the overlay that
         * fired the event.
         */
         _onOverlayFocusHandler: function(p_sType, p_aArgs, p_oOverlay) {
@@ -4516,15 +4516,15 @@ version: 2.7.0
         /**
         * @method _onOverlayBlurHandler
         *
-        * blurEvent Handler, used to delegate to _manageBlur with the 
+        * blurEvent Handler, used to delegate to _manageBlur with the
         * correct arguments.
         *
         * @private
-        * @param {String} p_sType String representing the name of the event  
+        * @param {String} p_sType String representing the name of the event
         * that was fired.
-        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * @param {Array} p_aArgs Array of arguments sent when the event
         * was fired.
-        * @param {Overlay} p_oOverlay Object representing the overlay that 
+        * @param {Overlay} p_oOverlay Object representing the overlay that
         * fired the event.
         */
         _onOverlayBlurHandler: function(p_sType, p_aArgs, p_oOverlay) {
@@ -4534,12 +4534,12 @@ version: 2.7.0
         /**
          * Subscribes to the Overlay based instance focusEvent, to allow the OverlayManager to
          * monitor focus state.
-         * 
-         * If the instance already has a focusEvent (e.g. Menu), OverlayManager will subscribe 
+         *
+         * If the instance already has a focusEvent (e.g. Menu), OverlayManager will subscribe
          * to the existing focusEvent, however if a focusEvent or focus method does not exist
-         * on the instance, the _bindFocus method will add them, and the focus method will 
+         * on the instance, the _bindFocus method will add them, and the focus method will
          * update the OverlayManager's state directly.
-         * 
+         *
          * @method _bindFocus
          * @param {Overlay} overlay The overlay for which focus needs to be managed
          * @protected
@@ -4574,9 +4574,9 @@ version: 2.7.0
          * Subscribes to the Overlay based instance's blurEvent to allow the OverlayManager to
          * monitor blur state.
          *
-         * If the instance already has a blurEvent (e.g. Menu), OverlayManager will subscribe 
+         * If the instance already has a blurEvent (e.g. Menu), OverlayManager will subscribe
          * to the existing blurEvent, however if a blurEvent or blur method does not exist
-         * on the instance, the _bindBlur method will add them, and the blur method 
+         * on the instance, the _bindBlur method will add them, and the blur method
          * update the OverlayManager's state directly.
          *
          * @method _bindBlur
@@ -4609,7 +4609,7 @@ version: 2.7.0
         /**
          * Subscribes to the Overlay based instance's destroyEvent, to allow the Overlay
          * to be removed for the OverlayManager when destroyed.
-         * 
+         *
          * @method _bindDestroy
          * @param {Overlay} overlay The overlay instance being managed
          * @protected
@@ -4637,13 +4637,13 @@ version: 2.7.0
         },
 
         /**
-        * Registers an Overlay or an array of Overlays with the manager. Upon 
-        * registration, the Overlay receives functions for focus and blur, 
+        * Registers an Overlay or an array of Overlays with the manager. Upon
+        * registration, the Overlay receives functions for focus and blur,
         * along with CustomEvents for each.
         *
         * @method register
         * @param {Overlay} overlay  An Overlay to register with the manager.
-        * @param {Overlay[]} overlay  An array of Overlays to register with 
+        * @param {Overlay[]} overlay  An array of Overlays to register with
         * the manager.
         * @return {boolean} true if any Overlays are registered.
         */
@@ -4679,14 +4679,14 @@ version: 2.7.0
         },
 
         /**
-        * Places the specified Overlay instance on top of all other 
+        * Places the specified Overlay instance on top of all other
         * Overlay instances.
         * @method bringToTop
-        * @param {YAHOO.widget.Overlay} p_oOverlay Object representing an 
+        * @param {YAHOO.widget.Overlay} p_oOverlay Object representing an
         * Overlay instance.
-        * @param {String} p_oOverlay String representing the id of an 
+        * @param {String} p_oOverlay String representing the id of an
         * Overlay instance.
-        */        
+        */
         bringToTop: function (p_oOverlay) {
 
             var oOverlay = this.find(p_oOverlay),
@@ -4732,7 +4732,7 @@ version: 2.7.0
         * @method find
         * @param {Overlay} overlay  An Overlay to locate within the manager
         * @param {String} overlay  An Overlay id to locate within the manager
-        * @return {Overlay} The requested Overlay, if found, or null if it 
+        * @return {Overlay} The requested Overlay, if found, or null if it
         * cannot be located.
         */
         find: function (overlay) {
@@ -4761,7 +4761,7 @@ version: 2.7.0
         * Used for sorting the manager's Overlays by z-index.
         * @method compareZIndexDesc
         * @private
-        * @return {Number} 0, 1, or -1, depending on where the Overlay should 
+        * @return {Number} 0, 1, or -1, depending on where the Overlay should
         * fall in the stacking order.
         */
         compareZIndexDesc: function (o1, o2) {
@@ -4826,8 +4826,8 @@ version: 2.7.0
 (function () {
 
     /**
-    * Tooltip is an implementation of Overlay that behaves like an OS tooltip, 
-    * displaying when the user mouses over a particular element, and 
+    * Tooltip is an implementation of Overlay that behaves like an OS tooltip,
+    * displaying when the user mouses over a particular element, and
     * disappearing on mouse out.
     * @namespace YAHOO.widget
     * @class Tooltip
@@ -4835,8 +4835,8 @@ version: 2.7.0
     * @constructor
     * @param {String} el The element ID representing the Tooltip <em>OR</em>
     * @param {HTMLElement} el The element representing the Tooltip
-    * @param {Object} userConfig The configuration object literal containing 
-    * the configuration that should be set for this Overlay. See configuration 
+    * @param {Object} userConfig The configuration object literal containing
+    * the configuration that should be set for this Overlay. See configuration
     * documentation for more details.
     */
     YAHOO.widget.Tooltip = function (el, userConfig) {
@@ -4862,37 +4862,37 @@ version: 2.7.0
         */
         DEFAULT_CONFIG = {
 
-            "PREVENT_OVERLAP": { 
-                key: "preventoverlap", 
-                value: true, 
-                validator: Lang.isBoolean, 
-                supercedes: ["x", "y", "xy"] 
+            "PREVENT_OVERLAP": {
+                key: "preventoverlap",
+                value: true,
+                validator: Lang.isBoolean,
+                supercedes: ["x", "y", "xy"]
             },
 
-            "SHOW_DELAY": { 
-                key: "showdelay", 
-                value: 200, 
-                validator: Lang.isNumber 
-            }, 
+            "SHOW_DELAY": {
+                key: "showdelay",
+                value: 200,
+                validator: Lang.isNumber
+            },
 
-            "AUTO_DISMISS_DELAY": { 
-                key: "autodismissdelay", 
-                value: 5000, 
-                validator: Lang.isNumber 
-            }, 
+            "AUTO_DISMISS_DELAY": {
+                key: "autodismissdelay",
+                value: 5000,
+                validator: Lang.isNumber
+            },
 
-            "HIDE_DELAY": { 
-                key: "hidedelay", 
-                value: 250, 
-                validator: Lang.isNumber 
-            }, 
+            "HIDE_DELAY": {
+                key: "hidedelay",
+                value: 250,
+                validator: Lang.isNumber
+            },
 
-            "TEXT": { 
-                key: "text", 
-                suppressEvent: true 
-            }, 
+            "TEXT": {
+                key: "text",
+                suppressEvent: true
+            },
 
-            "CONTAINER": { 
+            "CONTAINER": {
                 key: "container"
             },
 
@@ -4935,9 +4935,9 @@ version: 2.7.0
         }
     }
 
-    /* 
+    /*
         changeContent event handler that sets a Tooltip instance's "width"
-        configuration property to the value of its root HTML 
+        configuration property to the value of its root HTML
         elements's offsetWidth if a specific width has not been set.
     */
 
@@ -4953,9 +4953,9 @@ version: 2.7.0
             sNewWidth,
             oClone;
 
-        if ((!sOriginalWidth || sOriginalWidth == "auto") && 
-            (oConfig.getProperty("container") != oBody || 
-            oConfig.getProperty("x") >= Dom.getViewportWidth() || 
+        if ((!sOriginalWidth || sOriginalWidth == "auto") &&
+            (oConfig.getProperty("container") != oBody ||
+            oConfig.getProperty("x") >= Dom.getViewportWidth() ||
             oConfig.getProperty("y") >= Dom.getViewportHeight())) {
 
             oClone = this.element.cloneNode(true);
@@ -4990,18 +4990,18 @@ version: 2.7.0
         Event.onDOMReady(onDOMReady, this.cfg.getProperty("container"), this);
     }
 
-    YAHOO.extend(Tooltip, YAHOO.widget.Overlay, { 
+    YAHOO.extend(Tooltip, YAHOO.widget.Overlay, {
 
         /**
-        * The Tooltip initialization method. This method is automatically 
-        * called by the constructor. A Tooltip is automatically rendered by 
-        * the init method, and it also is set to be invisible by default, 
+        * The Tooltip initialization method. This method is automatically
+        * called by the constructor. A Tooltip is automatically rendered by
+        * the init method, and it also is set to be invisible by default,
         * and constrained to viewport by default as well.
         * @method init
         * @param {String} el The element ID representing the Tooltip <em>OR</em>
         * @param {HTMLElement} el The element representing the Tooltip
-        * @param {Object} userConfig The configuration object literal 
-        * containing the configuration that should be set for this Tooltip. 
+        * @param {Object} userConfig The configuration object literal
+        * containing the configuration that should be set for this Tooltip.
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
@@ -5043,7 +5043,7 @@ version: 2.7.0
             * CustomEvent fired when user mouses over a context element. Returning false from
             * a subscriber to this event will prevent the tooltip from being displayed for
             * the current context element.
-            * 
+            *
             * @event contextMouseOverEvent
             * @param {HTMLElement} context The context element which the user just moused over
             * @param {DOMEvent} e The DOM event object, associated with the mouse over
@@ -5053,7 +5053,7 @@ version: 2.7.0
 
             /**
             * CustomEvent fired when the user mouses out of a context element.
-            * 
+            *
             * @event contextMouseOutEvent
             * @param {HTMLElement} context The context element which the user just moused out of
             * @param {DOMEvent} e The DOM event object, associated with the mouse out
@@ -5064,7 +5064,7 @@ version: 2.7.0
             /**
             * CustomEvent fired just before the tooltip is displayed for the current context.
             * <p>
-            *  You can subscribe to this event if you need to set up the text for the 
+            *  You can subscribe to this event if you need to set up the text for the
             *  tooltip based on the context element for which it is about to be displayed.
             * </p>
             * <p>This event differs from the beforeShow event in following respects:</p>
@@ -5077,7 +5077,7 @@ version: 2.7.0
             *    a new context.
             *   </li>
             *   <li>
-            *    The trigger event provides access to the context element, allowing you to 
+            *    The trigger event provides access to the context element, allowing you to
             *    set the text of the tooltip based on context element for which the tooltip is
             *    triggered.
             *   </li>
@@ -5095,7 +5095,7 @@ version: 2.7.0
         },
 
         /**
-        * Initializes the class's configurable properties which can be 
+        * Initializes the class's configurable properties which can be
         * changed using the Overlay's Config object (cfg).
         * @method initDefaultConfig
         */
@@ -5104,20 +5104,20 @@ version: 2.7.0
             Tooltip.superclass.initDefaultConfig.call(this);
 
             /**
-            * Specifies whether the Tooltip should be kept from overlapping 
+            * Specifies whether the Tooltip should be kept from overlapping
             * its context element.
             * @config preventoverlap
             * @type Boolean
             * @default true
             */
             this.cfg.addProperty(DEFAULT_CONFIG.PREVENT_OVERLAP.key, {
-                value: DEFAULT_CONFIG.PREVENT_OVERLAP.value, 
-                validator: DEFAULT_CONFIG.PREVENT_OVERLAP.validator, 
+                value: DEFAULT_CONFIG.PREVENT_OVERLAP.value,
+                validator: DEFAULT_CONFIG.PREVENT_OVERLAP.validator,
                 supercedes: DEFAULT_CONFIG.PREVENT_OVERLAP.supercedes
             });
 
             /**
-            * The number of milliseconds to wait before showing a Tooltip 
+            * The number of milliseconds to wait before showing a Tooltip
             * on mouseover.
             * @config showdelay
             * @type Number
@@ -5125,13 +5125,13 @@ version: 2.7.0
             */
             this.cfg.addProperty(DEFAULT_CONFIG.SHOW_DELAY.key, {
                 handler: this.configShowDelay,
-                value: 200, 
+                value: 200,
                 validator: DEFAULT_CONFIG.SHOW_DELAY.validator
             });
 
             /**
-            * The number of milliseconds to wait before automatically 
-            * dismissing a Tooltip after the mouse has been resting on the 
+            * The number of milliseconds to wait before automatically
+            * dismissing a Tooltip after the mouse has been resting on the
             * context element.
             * @config autodismissdelay
             * @type Number
@@ -5144,7 +5144,7 @@ version: 2.7.0
             });
 
             /**
-            * The number of milliseconds to wait before hiding a Tooltip 
+            * The number of milliseconds to wait before hiding a Tooltip
             * after mouseout.
             * @config hidedelay
             * @type Number
@@ -5152,12 +5152,12 @@ version: 2.7.0
             */
             this.cfg.addProperty(DEFAULT_CONFIG.HIDE_DELAY.key, {
                 handler: this.configHideDelay,
-                value: DEFAULT_CONFIG.HIDE_DELAY.value, 
+                value: DEFAULT_CONFIG.HIDE_DELAY.value,
                 validator: DEFAULT_CONFIG.HIDE_DELAY.validator
             });
 
             /**
-            * Specifies the Tooltip's text. 
+            * Specifies the Tooltip's text.
             * @config text
             * @type String
             * @default null
@@ -5168,7 +5168,7 @@ version: 2.7.0
             });
 
             /**
-            * Specifies the container element that the Tooltip's markup 
+            * Specifies the container element that the Tooltip's markup
             * should be rendered into.
             * @config container
             * @type HTMLElement/String
@@ -5182,9 +5182,9 @@ version: 2.7.0
             /**
             * Specifies whether or not the tooltip is disabled. Disabled tooltips
             * will not be displayed. If the tooltip is driven by the title attribute
-            * of the context element, the title attribute will still be removed for 
+            * of the context element, the title attribute will still be removed for
             * disabled tooltips, to prevent default tooltip behavior.
-            * 
+            *
             * @config disabled
             * @type Boolean
             * @default false
@@ -5196,42 +5196,42 @@ version: 2.7.0
             });
 
             /**
-            * Specifies the element or elements that the Tooltip should be 
+            * Specifies the element or elements that the Tooltip should be
             * anchored to on mouseover.
             * @config context
             * @type HTMLElement[]/String[]
             * @default null
-            */ 
+            */
 
             /**
             * String representing the width of the Tooltip.  <em>Please note:
-            * </em> As of version 2.3 if either no value or a value of "auto" 
+            * </em> As of version 2.3 if either no value or a value of "auto"
             * is specified, and the Toolip's "container" configuration property
-            * is set to something other than <code>document.body</code> or 
-            * its "context" element resides outside the immediately visible 
-            * portion of the document, the width of the Tooltip will be 
-            * calculated based on the offsetWidth of its root HTML and set just 
-            * before it is made visible.  The original value will be 
-            * restored when the Tooltip is hidden. This ensures the Tooltip is 
-            * rendered at a usable width.  For more information see 
-            * SourceForge bug #1685496 and SourceForge 
+            * is set to something other than <code>document.body</code> or
+            * its "context" element resides outside the immediately visible
+            * portion of the document, the width of the Tooltip will be
+            * calculated based on the offsetWidth of its root HTML and set just
+            * before it is made visible.  The original value will be
+            * restored when the Tooltip is hidden. This ensures the Tooltip is
+            * rendered at a usable width.  For more information see
+            * SourceForge bug #1685496 and SourceForge
             * bug #1735423.
             * @config width
             * @type String
             * @default null
             */
-        
+
         },
-        
+
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
-        
+
         /**
         * The default event handler fired when the "text" property is changed.
         * @method configText
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configText: function (type, args, obj) {
@@ -5240,14 +5240,14 @@ version: 2.7.0
                 this.setBody(text);
             }
         },
-        
+
         /**
-        * The default event handler fired when the "container" property 
+        * The default event handler fired when the "container" property
         * is changed.
         * @method configContainer
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For 
-        * configuration handlers, args[0] will equal the newly applied value 
+        * @param {Object[]} args The CustomEvent arguments. For
+        * configuration handlers, args[0] will equal the newly applied value
         * for the property.
         * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
@@ -5259,7 +5259,7 @@ version: 2.7.0
                 this.cfg.setProperty("container", document.getElementById(container), true);
             }
         },
-        
+
         /**
         * @method _removeEventListeners
         * @description Removes all of the DOM event handlers from the HTML
@@ -5267,7 +5267,7 @@ version: 2.7.0
         * @protected
         */
         _removeEventListeners: function () {
-        
+
             var aElements = this._context,
                 nElements,
                 oElement,
@@ -5287,13 +5287,13 @@ version: 2.7.0
                 }
             }
         },
-        
+
         /**
-        * The default event handler fired when the "context" property 
+        * The default event handler fired when the "context" property
         * is changed.
         * @method configContext
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
         * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
@@ -5347,7 +5347,7 @@ version: 2.7.0
         // BEGIN BUILT-IN DOM EVENT HANDLERS //
 
         /**
-        * The default event handler fired when the user moves the mouse while 
+        * The default event handler fired when the user moves the mouse while
         * over the context element.
         * @method onContextMouseMove
         * @param {DOMEvent} e The current DOM event
@@ -5359,7 +5359,7 @@ version: 2.7.0
         },
 
         /**
-        * The default event handler fired when the user mouses over the 
+        * The default event handler fired when the user mouses over the
         * context element.
         * @method onContextMouseOver
         * @param {DOMEvent} e The current DOM event
@@ -5374,7 +5374,7 @@ version: 2.7.0
             }
 
             // Fire first, to honor disabled set in the listner
-            if (obj.fireEvent("contextMouseOver", context, e) !== false 
+            if (obj.fireEvent("contextMouseOver", context, e) !== false
                     && !obj.cfg.getProperty("disabled")) {
 
                 // Stop the tooltip from being hidden (set on last mouseout)
@@ -5387,7 +5387,7 @@ version: 2.7.0
                 Event.on(context, "mousemove", obj.onContextMouseMove, obj);
 
                 /**
-                * The unique process ID associated with the thread responsible 
+                * The unique process ID associated with the thread responsible
                 * for showing the Tooltip.
                 * @type int
                 */
@@ -5397,7 +5397,7 @@ version: 2.7.0
         },
 
         /**
-        * The default event handler fired when the user mouses out of 
+        * The default event handler fired when the user mouses out of
         * the context element.
         * @method onContextMouseOut
         * @param {DOMEvent} e The current DOM event
@@ -5433,12 +5433,12 @@ version: 2.7.0
         // END BUILT-IN DOM EVENT HANDLERS //
 
         /**
-        * Processes the showing of the Tooltip by setting the timeout delay 
+        * Processes the showing of the Tooltip by setting the timeout delay
         * and offset of the Tooltip.
         * @method doShow
         * @param {DOMEvent} e The current DOM event
         * @param {HTMLElement} context The current context element
-        * @return {Number} The process ID of the timeout function associated 
+        * @return {Number} The process ID of the timeout function associated
         * with doShow
         */
         doShow: function (e, context) {
@@ -5446,7 +5446,7 @@ version: 2.7.0
             var yOffset = 25,
                 me = this;
 
-            if (UA.opera && context.tagName && 
+            if (UA.opera && context.tagName &&
                 context.tagName.toUpperCase() == "A") {
                 yOffset += 12;
             }
@@ -5482,8 +5482,8 @@ version: 2.7.0
         },
 
         /**
-        * Sets the timeout for the auto-dismiss delay, which by default is 5 
-        * seconds, meaning that a tooltip will automatically dismiss itself 
+        * Sets the timeout for the auto-dismiss delay, which by default is 5
+        * seconds, meaning that a tooltip will automatically dismiss itself
         * after 5 seconds of being displayed.
         * @method doHide
         */
@@ -5503,26 +5503,26 @@ version: 2.7.0
         },
 
         /**
-        * Fired when the Tooltip is moved, this event handler is used to 
+        * Fired when the Tooltip is moved, this event handler is used to
         * prevent the Tooltip from overlapping with its context element.
         * @method preventOverlay
         * @param {Number} pageX The x coordinate position of the mouse pointer
         * @param {Number} pageY The y coordinate position of the mouse pointer
         */
         preventOverlap: function (pageX, pageY) {
-        
+
             var height = this.element.offsetHeight,
                 mousePoint = new YAHOO.util.Point(pageX, pageY),
                 elementRegion = Dom.getRegion(this.element);
-        
+
             elementRegion.top -= 5;
             elementRegion.left -= 5;
             elementRegion.right += 5;
             elementRegion.bottom += 5;
-        
+
             this.logger.log("context " + elementRegion, "ttip");
             this.logger.log("mouse " + mousePoint, "ttip");
-        
+
             if (elementRegion.contains(mousePoint)) {
                 this.logger.log("OVERLAP", "warn");
                 this.cfg.setProperty("y", (pageY - height - 5));
@@ -5533,23 +5533,23 @@ version: 2.7.0
         /**
         * @method onRender
         * @description "render" event handler for the Tooltip.
-        * @param {String} p_sType String representing the name of the event  
+        * @param {String} p_sType String representing the name of the event
         * that was fired.
-        * @param {Array} p_aArgs Array of arguments sent when the event 
+        * @param {Array} p_aArgs Array of arguments sent when the event
         * was fired.
         */
         onRender: function (p_sType, p_aArgs) {
-    
+
             function sizeShadow() {
-    
+
                 var oElement = this.element,
                     oShadow = this.underlay;
-            
+
                 if (oShadow) {
                     oShadow.style.width = (oElement.offsetWidth + 6) + "px";
-                    oShadow.style.height = (oElement.offsetHeight + 1) + "px"; 
+                    oShadow.style.height = (oElement.offsetHeight + 1) + "px";
                 }
-            
+
             }
 
             function addShadowVisibleClass() {
@@ -5565,15 +5565,15 @@ version: 2.7.0
             }
 
             function createShadow() {
-    
+
                 var oShadow = this.underlay,
                     oElement,
                     Module,
                     nIE,
                     me;
-    
+
                 if (!oShadow) {
-    
+
                     oElement = this.element;
                     Module = YAHOO.widget.Module;
                     nIE = UA.ie;
@@ -5590,7 +5590,7 @@ version: 2.7.0
 
                     this.underlay = oShadow;
 
-                    // Backward compatibility, even though it's probably 
+                    // Backward compatibility, even though it's probably
                     // intended to be "private", it isn't marked as such in the api docs
                     this._shadow = this.underlay;
 
@@ -5600,10 +5600,10 @@ version: 2.7.0
                     this.subscribe("hide", removeShadowVisibleClass);
 
                     if (bIEQuirks) {
-                        window.setTimeout(function () { 
-                            sizeShadow.call(me); 
+                        window.setTimeout(function () {
+                            sizeShadow.call(me);
                         }, 0);
-    
+
                         this.cfg.subscribeToConfigEvent("width", sizeShadow);
                         this.cfg.subscribeToConfigEvent("height", sizeShadow);
                         this.subscribe("changeContent", sizeShadow);
@@ -5626,13 +5626,13 @@ version: 2.7.0
             } else {
                 this.subscribe("beforeShow", onBeforeShow);
             }
-        
+
         },
 
         /**
          * Forces the underlay element to be repainted, through the application/removal
          * of a yui-force-redraw class to the underlay element.
-         * 
+         *
          * @method forceUnderlayRedraw
          */
         forceUnderlayRedraw : function() {
@@ -5642,19 +5642,19 @@ version: 2.7.0
         },
 
         /**
-        * Removes the Tooltip element from the DOM and sets all child 
+        * Removes the Tooltip element from the DOM and sets all child
         * elements to null.
         * @method destroy
         */
         destroy: function () {
-        
+
             // Remove any existing mouseover/mouseout listeners
             this._removeEventListeners();
 
-            Tooltip.superclass.destroy.call(this);  
-        
+            Tooltip.superclass.destroy.call(this);
+
         },
-        
+
         /**
         * Returns a string representation of the object.
         * @method toString
@@ -5663,7 +5663,7 @@ version: 2.7.0
         toString: function () {
             return "Tooltip " + this.id;
         }
-    
+
     });
 
 }());
@@ -5671,7 +5671,7 @@ version: 2.7.0
 (function () {
 
     /**
-    * Panel is an implementation of Overlay that behaves like an OS window, 
+    * Panel is an implementation of Overlay that behaves like an OS window,
     * with a draggable header and an optional close icon at the top right.
     * @namespace YAHOO.widget
     * @class Panel
@@ -5679,8 +5679,8 @@ version: 2.7.0
     * @constructor
     * @param {String} el The element ID representing the Panel <em>OR</em>
     * @param {HTMLElement} el The element representing the Panel
-    * @param {Object} userConfig The configuration object literal containing 
-    * the configuration that should be set for this Panel. See configuration 
+    * @param {Object} userConfig The configuration object literal containing
+    * the configuration that should be set for this Panel. See configuration
     * documentation for more details.
     */
     YAHOO.widget.Panel = function (el, userConfig) {
@@ -5728,18 +5728,18 @@ version: 2.7.0
         */
         DEFAULT_CONFIG = {
 
-            "CLOSE": { 
-                key: "close", 
-                value: true, 
-                validator: Lang.isBoolean, 
-                supercedes: ["visible"] 
+            "CLOSE": {
+                key: "close",
+                value: true,
+                validator: Lang.isBoolean,
+                supercedes: ["visible"]
             },
 
             "DRAGGABLE": {
-                key: "draggable", 
-                value: (Util.DD ? true : false), 
-                validator: Lang.isBoolean, 
-                supercedes: ["visible"]  
+                key: "draggable",
+                value: (Util.DD ? true : false),
+                validator: Lang.isBoolean,
+                supercedes: ["visible"]
             },
 
             "DRAG_ONLY" : {
@@ -5749,16 +5749,16 @@ version: 2.7.0
                 supercedes: ["draggable"]
             },
 
-            "UNDERLAY": { 
-                key: "underlay", 
-                value: "shadow", 
-                supercedes: ["visible"] 
+            "UNDERLAY": {
+                key: "underlay",
+                value: "shadow",
+                supercedes: ["visible"]
             },
 
-            "MODAL": { 
-                key: "modal", 
-                value: false, 
-                validator: Lang.isBoolean, 
+            "MODAL": {
+                key: "modal",
+                value: false,
+                validator: Lang.isBoolean,
                 supercedes: ["visible", "zindex"]
             },
 
@@ -5786,9 +5786,9 @@ version: 2.7.0
     * @type String
     */
     Panel.CSS_PANEL = "yui-panel";
-    
+
     /**
-    * Constant representing the default CSS class used for a Panel's 
+    * Constant representing the default CSS class used for a Panel's
     * wrapping container
     * @property YAHOO.widget.Panel.CSS_PANEL_CONTAINER
     * @static
@@ -5798,10 +5798,10 @@ version: 2.7.0
     Panel.CSS_PANEL_CONTAINER = "yui-panel-container";
 
     /**
-     * Constant representing the default set of focusable elements 
+     * Constant representing the default set of focusable elements
      * on the pagewhich Modal Panels will prevent access to, when
      * the modal mask is displayed
-     * 
+     *
      * @property YAHOO.widget.Panel.FOCUSABLE
      * @static
      * @type Array
@@ -5817,9 +5817,9 @@ version: 2.7.0
 
     // Private CustomEvent listeners
 
-    /* 
-        "beforeRender" event handler that creates an empty header for a Panel 
-        instance if its "draggable" configuration property is set to "true" 
+    /*
+        "beforeRender" event handler that creates an empty header for a Panel
+        instance if its "draggable" configuration property is set to "true"
         and no header has been created.
     */
 
@@ -5829,12 +5829,12 @@ version: 2.7.0
         }
     }
 
-    /* 
+    /*
         "hide" event handler that sets a Panel instance's "width"
-        configuration property back to its original value before 
+        configuration property back to its original value before
         "setWidthToOffsetWidth" was called.
     */
-    
+
     function restoreOriginalWidth(p_sType, p_aArgs, p_oObject) {
 
         var sOriginalWidth = p_oObject[0],
@@ -5849,9 +5849,9 @@ version: 2.7.0
         this.unsubscribe("hide", restoreOriginalWidth, p_oObject);
     }
 
-    /* 
+    /*
         "beforeShow" event handler that sets a Panel instance's "width"
-        configuration property to the value of its root HTML 
+        configuration property to the value of its root HTML
         elements's offsetWidth
     */
 
@@ -5865,16 +5865,16 @@ version: 2.7.0
 
             oConfig = this.cfg;
             sOriginalWidth = oConfig.getProperty("width");
-            
+
             if (!sOriginalWidth || sOriginalWidth == "auto") {
-    
+
                 sNewWidth = (this.element.offsetWidth + "px");
-    
+
                 oConfig.setProperty("width", sNewWidth);
 
-                this.subscribe("hide", restoreOriginalWidth, 
+                this.subscribe("hide", restoreOriginalWidth,
                     [(sOriginalWidth || ""), sNewWidth]);
-            
+
             }
         }
     }
@@ -5882,20 +5882,20 @@ version: 2.7.0
     YAHOO.extend(Panel, Overlay, {
 
         /**
-        * The Overlay initialization method, which is executed for Overlay and 
-        * all of its subclasses. This method is automatically called by the 
-        * constructor, and  sets up all DOM references for pre-existing markup, 
+        * The Overlay initialization method, which is executed for Overlay and
+        * all of its subclasses. This method is automatically called by the
+        * constructor, and  sets up all DOM references for pre-existing markup,
         * and creates required markup if it is not already present.
         * @method init
         * @param {String} el The element ID representing the Overlay <em>OR</em>
         * @param {HTMLElement} el The element representing the Overlay
-        * @param {Object} userConfig The configuration object literal 
-        * containing the configuration that should be set for this Overlay. 
+        * @param {Object} userConfig The configuration object literal
+        * containing the configuration that should be set for this Overlay.
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
             /*
-                 Note that we don't pass the user config in here yet because 
+                 Note that we don't pass the user config in here yet because
                  we only want it executed once, at the lowest subclass level
             */
 
@@ -5943,7 +5943,7 @@ version: 2.7.0
                     doc = document.documentElement,
                     insideDoc = (target !== doc && target !== window);
 
-                // mask and documentElement checks added for IE, which focuses on the mask when it's clicked on, and focuses on 
+                // mask and documentElement checks added for IE, which focuses on the mask when it's clicked on, and focuses on
                 // the documentElement, when the document scrollbars are clicked on
                 if (insideDoc && target !== this.element && target !== this.mask && !Dom.isAncestor(this.element, target)) {
                     try {
@@ -5968,12 +5968,12 @@ version: 2.7.0
             }
         },
 
-        /** 
+        /**
          *  @method _addFocusHandlers
          *  @protected
-         *  
+         *
          *  "showMask" event handler that adds a "focus" event handler to all
-         *  focusable elements in the document to enforce a Panel instance's 
+         *  focusable elements in the document to enforce a Panel instance's
          *  modality from being compromised.
          *
          *  @param p_sType {String} Custom event type
@@ -5998,7 +5998,7 @@ version: 2.7.0
          * Creates a hidden focusable element, used to focus on,
          * to enforce modality for browsers in which focus cannot
          * be applied to the container box.
-         * 
+         *
          * @method _createHiddenFocusElement
          * @private
          */
@@ -6018,7 +6018,7 @@ version: 2.7.0
          *  @method _removeFocusHandlers
          *  @protected
          *
-         *  "hideMask" event handler that removes all "focus" event handlers added 
+         *  "hideMask" event handler that removes all "focus" event handlers added
          *  by the "addFocusEventHandlers" method.
          *
          *  @param p_sType {String} Event type
@@ -6104,7 +6104,7 @@ version: 2.7.0
             }
 
             if (firstElement) {
-                this.preventBackTab = new KeyListener(firstElement, 
+                this.preventBackTab = new KeyListener(firstElement,
                     {shift:true, keys:9},
                     {fn:this.focusLast, scope:this, correctScope:true}
                 );
@@ -6115,8 +6115,8 @@ version: 2.7.0
             }
 
             if (lastElement) {
-                this.preventTabOut = new KeyListener(lastElement, 
-                    {shift:false, keys:9}, 
+                this.preventTabOut = new KeyListener(lastElement,
+                    {shift:false, keys:9},
                     {fn:this.focusFirst, scope:this, correctScope:true}
                 );
                 tab = this.preventTabOut;
@@ -6179,7 +6179,7 @@ version: 2.7.0
         },
 
         /**
-         * Initializes the custom events for Module which are fired 
+         * Initializes the custom events for Module which are fired
          * automatically at appropriate times by the Module class.
          */
         initEvents: function () {
@@ -6210,7 +6210,7 @@ version: 2.7.0
         },
 
         /**
-         * Initializes the class's configurable properties which can be changed 
+         * Initializes the class's configurable properties which can be changed
          * using the Panel's Config object (cfg).
          * @method initDefaultConfig
          */
@@ -6225,29 +6225,29 @@ version: 2.7.0
             * @type Boolean
             * @default true
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.CLOSE.key, { 
-                handler: this.configClose, 
-                value: DEFAULT_CONFIG.CLOSE.value, 
-                validator: DEFAULT_CONFIG.CLOSE.validator, 
-                supercedes: DEFAULT_CONFIG.CLOSE.supercedes 
+            this.cfg.addProperty(DEFAULT_CONFIG.CLOSE.key, {
+                handler: this.configClose,
+                value: DEFAULT_CONFIG.CLOSE.value,
+                validator: DEFAULT_CONFIG.CLOSE.validator,
+                supercedes: DEFAULT_CONFIG.CLOSE.supercedes
             });
 
             /**
-            * Boolean specifying if the Panel should be draggable.  The default 
-            * value is "true" if the Drag and Drop utility is included, 
-            * otherwise it is "false." <strong>PLEASE NOTE:</strong> There is a 
-            * known issue in IE 6 (Strict Mode and Quirks Mode) and IE 7 
-            * (Quirks Mode) where Panels that either don't have a value set for 
-            * their "width" configuration property, or their "width" 
+            * Boolean specifying if the Panel should be draggable.  The default
+            * value is "true" if the Drag and Drop utility is included,
+            * otherwise it is "false." <strong>PLEASE NOTE:</strong> There is a
+            * known issue in IE 6 (Strict Mode and Quirks Mode) and IE 7
+            * (Quirks Mode) where Panels that either don't have a value set for
+            * their "width" configuration property, or their "width"
             * configuration property is set to "auto" will only be draggable by
             * placing the mouse on the text of the Panel's header element.
-            * To fix this bug, draggable Panels missing a value for their 
-            * "width" configuration property, or whose "width" configuration 
-            * property is set to "auto" will have it set to the value of 
-            * their root HTML element's offsetWidth before they are made 
-            * visible.  The calculated width is then removed when the Panel is   
-            * hidden. <em>This fix is only applied to draggable Panels in IE 6 
-            * (Strict Mode and Quirks Mode) and IE 7 (Quirks Mode)</em>. For 
+            * To fix this bug, draggable Panels missing a value for their
+            * "width" configuration property, or whose "width" configuration
+            * property is set to "auto" will have it set to the value of
+            * their root HTML element's offsetWidth before they are made
+            * visible.  The calculated width is then removed when the Panel is
+            * hidden. <em>This fix is only applied to draggable Panels in IE 6
+            * (Strict Mode and Quirks Mode) and IE 7 (Quirks Mode)</em>. For
             * more information on this issue see:
             * SourceForge bugs #1726972 and #1589210.
             * @config draggable
@@ -6262,81 +6262,81 @@ version: 2.7.0
             });
 
             /**
-            * Boolean specifying if the draggable Panel should be drag only, not interacting with drop 
+            * Boolean specifying if the draggable Panel should be drag only, not interacting with drop
             * targets on the page.
             * <p>
             * When set to true, draggable Panels will not check to see if they are over drop targets,
-            * or fire the DragDrop events required to support drop target interaction (onDragEnter, 
+            * or fire the DragDrop events required to support drop target interaction (onDragEnter,
             * onDragOver, onDragOut, onDragDrop etc.).
-            * If the Panel is not designed to be dropped on any target elements on the page, then this 
+            * If the Panel is not designed to be dropped on any target elements on the page, then this
             * flag can be set to true to improve performance.
             * </p>
             * <p>
             * When set to false, all drop target related events will be fired.
             * </p>
             * <p>
-            * The property is set to false by default to maintain backwards compatibility but should be 
+            * The property is set to false by default to maintain backwards compatibility but should be
             * set to true if drop target interaction is not required for the Panel, to improve performance.</p>
-            * 
+            *
             * @config dragOnly
             * @type Boolean
             * @default false
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.DRAG_ONLY.key, { 
-                value: DEFAULT_CONFIG.DRAG_ONLY.value, 
-                validator: DEFAULT_CONFIG.DRAG_ONLY.validator, 
-                supercedes: DEFAULT_CONFIG.DRAG_ONLY.supercedes 
+            this.cfg.addProperty(DEFAULT_CONFIG.DRAG_ONLY.key, {
+                value: DEFAULT_CONFIG.DRAG_ONLY.value,
+                validator: DEFAULT_CONFIG.DRAG_ONLY.validator,
+                supercedes: DEFAULT_CONFIG.DRAG_ONLY.supercedes
             });
 
             /**
-            * Sets the type of underlay to display for the Panel. Valid values 
-            * are "shadow," "matte," and "none".  <strong>PLEASE NOTE:</strong> 
-            * The creation of the underlay element is deferred until the Panel 
+            * Sets the type of underlay to display for the Panel. Valid values
+            * are "shadow," "matte," and "none".  <strong>PLEASE NOTE:</strong>
+            * The creation of the underlay element is deferred until the Panel
             * is initially made visible.  For Gecko-based browsers on Mac
-            * OS X the underlay elment is always created as it is used as a 
-            * shim to prevent Aqua scrollbars below a Panel instance from poking 
+            * OS X the underlay elment is always created as it is used as a
+            * shim to prevent Aqua scrollbars below a Panel instance from poking
             * through it (See SourceForge bug #836476).
             * @config underlay
             * @type String
             * @default shadow
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.UNDERLAY.key, { 
-                handler: this.configUnderlay, 
-                value: DEFAULT_CONFIG.UNDERLAY.value, 
-                supercedes: DEFAULT_CONFIG.UNDERLAY.supercedes 
+            this.cfg.addProperty(DEFAULT_CONFIG.UNDERLAY.key, {
+                handler: this.configUnderlay,
+                value: DEFAULT_CONFIG.UNDERLAY.value,
+                supercedes: DEFAULT_CONFIG.UNDERLAY.supercedes
             });
-        
+
             /**
-            * True if the Panel should be displayed in a modal fashion, 
+            * True if the Panel should be displayed in a modal fashion,
             * automatically creating a transparent mask over the document that
             * will not be removed until the Panel is dismissed.
             * @config modal
             * @type Boolean
             * @default false
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.MODAL.key, { 
-                handler: this.configModal, 
+            this.cfg.addProperty(DEFAULT_CONFIG.MODAL.key, {
+                handler: this.configModal,
                 value: DEFAULT_CONFIG.MODAL.value,
-                validator: DEFAULT_CONFIG.MODAL.validator, 
-                supercedes: DEFAULT_CONFIG.MODAL.supercedes 
+                validator: DEFAULT_CONFIG.MODAL.validator,
+                supercedes: DEFAULT_CONFIG.MODAL.supercedes
             });
 
             /**
-            * A KeyListener (or array of KeyListeners) that will be enabled 
+            * A KeyListener (or array of KeyListeners) that will be enabled
             * when the Panel is shown, and disabled when the Panel is hidden.
             * @config keylisteners
             * @type YAHOO.util.KeyListener[]
             * @default null
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.KEY_LISTENERS.key, { 
-                handler: this.configKeyListeners, 
-                suppressEvent: DEFAULT_CONFIG.KEY_LISTENERS.suppressEvent, 
-                supercedes: DEFAULT_CONFIG.KEY_LISTENERS.supercedes 
+            this.cfg.addProperty(DEFAULT_CONFIG.KEY_LISTENERS.key, {
+                handler: this.configKeyListeners,
+                suppressEvent: DEFAULT_CONFIG.KEY_LISTENERS.suppressEvent,
+                supercedes: DEFAULT_CONFIG.KEY_LISTENERS.supercedes
             });
 
             /**
             * UI Strings used by the Panel
-            * 
+            *
             * @config strings
             * @type Object
             * @default An object literal with the properties shown below:
@@ -6344,7 +6344,7 @@ version: 2.7.0
             *         <dt>close</dt><dd><em>String</em> : The string to use for the close icon. Defaults to "Close".</dd>
             *     </dl>
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.STRINGS.key, { 
+            this.cfg.addProperty(DEFAULT_CONFIG.STRINGS.key, {
                 value:DEFAULT_CONFIG.STRINGS.value,
                 handler:this.configStrings,
                 validator:DEFAULT_CONFIG.STRINGS.validator,
@@ -6353,16 +6353,16 @@ version: 2.7.0
         },
 
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
-        
+
         /**
         * The default event handler fired when the "close" property is changed.
-        * The method controls the appending or hiding of the close icon at the 
+        * The method controls the appending or hiding of the close icon at the
         * top right of the Panel.
         * @method configClose
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configClose: function (type, args, obj) {
@@ -6403,10 +6403,10 @@ version: 2.7.0
 
         /**
          * Event handler for the close icon
-         * 
+         *
          * @method _doClose
          * @protected
-         * 
+         *
          * @param {DOMEvent} e
          */
         _doClose : function (e) {
@@ -6415,13 +6415,13 @@ version: 2.7.0
         },
 
         /**
-        * The default event handler fired when the "draggable" property 
+        * The default event handler fired when the "draggable" property
         * is changed.
         * @method configDraggable
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configDraggable: function (type, args, obj) {
@@ -6454,15 +6454,15 @@ version: 2.7.0
                 this.unsubscribe("beforeShow", setWidthToOffsetWidth);
             }
         },
-      
+
         /**
-        * The default event handler fired when the "underlay" property 
+        * The default event handler fired when the "underlay" property
         * is changed.
         * @method configUnderlay
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configUnderlay: function (type, args, obj) {
@@ -6566,16 +6566,16 @@ version: 2.7.0
                 }
             }
         },
-        
+
         /**
-        * The default event handler fired when the "modal" property is 
+        * The default event handler fired when the "modal" property is
         * changed. This handler subscribes or unsubscribes to the show and hide
         * events to handle the display or hide of the modality mask.
         * @method configModal
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configModal: function (type, args, obj) {
@@ -6589,7 +6589,7 @@ version: 2.7.0
                     this.subscribe("beforeShow", this.showMask);
                     this.subscribe("hide", this.hideMask);
 
-                    Overlay.windowResizeEvent.subscribe(this.sizeMask, 
+                    Overlay.windowResizeEvent.subscribe(this.sizeMask,
                         this, true);
 
                     this._hasModalityEventListeners = true;
@@ -6638,15 +6638,15 @@ version: 2.7.0
                 this.mask = null;
             }
         },
-        
+
         /**
-        * The default event handler fired when the "keylisteners" property 
+        * The default event handler fired when the "keylisteners" property
         * is changed.
         * @method configKeyListeners
         * @param {String} type The CustomEvent type (usually the property name)
         * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configKeyListeners: function (type, args, obj) {
@@ -6655,7 +6655,7 @@ version: 2.7.0
                 listener,
                 nListeners,
                 i;
-        
+
             if (listeners) {
 
                 if (listeners instanceof Array) {
@@ -6665,42 +6665,42 @@ version: 2.7.0
                     for (i = 0; i < nListeners; i++) {
 
                         listener = listeners[i];
-        
-                        if (!Config.alreadySubscribed(this.showEvent, 
+
+                        if (!Config.alreadySubscribed(this.showEvent,
                             listener.enable, listener)) {
 
-                            this.showEvent.subscribe(listener.enable, 
+                            this.showEvent.subscribe(listener.enable,
                                 listener, true);
 
                         }
 
-                        if (!Config.alreadySubscribed(this.hideEvent, 
+                        if (!Config.alreadySubscribed(this.hideEvent,
                             listener.disable, listener)) {
 
-                            this.hideEvent.subscribe(listener.disable, 
+                            this.hideEvent.subscribe(listener.disable,
                                 listener, true);
 
-                            this.destroyEvent.subscribe(listener.disable, 
+                            this.destroyEvent.subscribe(listener.disable,
                                 listener, true);
                         }
                     }
 
                 } else {
 
-                    if (!Config.alreadySubscribed(this.showEvent, 
+                    if (!Config.alreadySubscribed(this.showEvent,
                         listeners.enable, listeners)) {
 
-                        this.showEvent.subscribe(listeners.enable, 
+                        this.showEvent.subscribe(listeners.enable,
                             listeners, true);
                     }
 
-                    if (!Config.alreadySubscribed(this.hideEvent, 
+                    if (!Config.alreadySubscribed(this.hideEvent,
                         listeners.disable, listeners)) {
 
-                        this.hideEvent.subscribe(listeners.disable, 
+                        this.hideEvent.subscribe(listeners.disable,
                             listeners, true);
 
-                        this.destroyEvent.subscribe(listeners.disable, 
+                        this.destroyEvent.subscribe(listeners.disable,
                             listeners, true);
 
                     }
@@ -6724,9 +6724,9 @@ version: 2.7.0
         * The default event handler fired when the "height" property is changed.
         * @method configHeight
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configHeight: function (type, args, obj) {
@@ -6738,7 +6738,7 @@ version: 2.7.0
         },
 
         /**
-         * The default custom event handler executed when the Panel's height is changed, 
+         * The default custom event handler executed when the Panel's height is changed,
          * if the autofillheight property has been set.
          *
          * @method _autoFillOnHeightChange
@@ -6762,28 +6762,28 @@ version: 2.7.0
         * The default event handler fired when the "width" property is changed.
         * @method configWidth
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configWidth: function (type, args, obj) {
-    
+
             var width = args[0],
                 el = this.innerElement;
-    
+
             Dom.setStyle(el, "width", width);
             this.cfg.refireEvent("iframe");
-    
+
         },
-        
+
         /**
         * The default event handler fired when the "zIndex" property is changed.
         * @method configzIndex
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configzIndex: function (type, args, obj) {
@@ -6807,9 +6807,9 @@ version: 2.7.0
 
         // END BUILT-IN PROPERTY EVENT HANDLERS //
         /**
-        * Builds the wrapping container around the Panel that is used for 
-        * positioning the shadow and matte underlays. The container element is 
-        * assigned to a  local instance variable called container, and the 
+        * Builds the wrapping container around the Panel that is used for
+        * positioning the shadow and matte underlays. The container element is
+        * assigned to a  local instance variable called container, and the
         * element is reinserted inside of it.
         * @method buildWrapper
         */
@@ -6950,9 +6950,9 @@ version: 2.7.0
                 this.dd.addInvalidHandleType("TEXTAREA");
             }
         },
-        
+
         /**
-        * Builds the mask that is laid over the document when the Panel is 
+        * Builds the mask that is laid over the document when the Panel is
         * configured to be modal.
         * @method buildMask
         */
@@ -7006,7 +7006,7 @@ version: 2.7.0
         },
 
         /**
-        * Sets the size of the modality mask to cover the entire scrollable 
+        * Sets the size of the modality mask to cover the entire scrollable
         * area of the document
         * @method sizeMask
         */
@@ -7033,13 +7033,13 @@ version: 2.7.0
         },
 
         /**
-         * Sets the zindex of the mask, if it exists, based on the zindex of 
-         * the Panel element. The zindex of the mask is set to be one less 
+         * Sets the zindex of the mask, if it exists, based on the zindex of
+         * the Panel element. The zindex of the mask is set to be one less
          * than the Panel element's zindex.
-         * 
+         *
          * <p>NOTE: This method will not bump up the zindex of the Panel
          * to ensure that the mask has a non-negative zindex. If you require the
-         * mask zindex to be 0 or higher, the zindex of the Panel 
+         * mask zindex to be 0 or higher, the zindex of the Panel
          * should be set to a value higher than 0, before this method is called.
          * </p>
          * @method stackMask
@@ -7054,27 +7054,27 @@ version: 2.7.0
         },
 
         /**
-        * Renders the Panel by inserting the elements that are not already in 
-        * the main Panel into their correct places. Optionally appends the 
-        * Panel to the specified node prior to the render's execution. NOTE: 
-        * For Panels without existing markup, the appendToNode argument is 
-        * REQUIRED. If this argument is ommitted and the current element is 
-        * not present in the document, the function will return false, 
+        * Renders the Panel by inserting the elements that are not already in
+        * the main Panel into their correct places. Optionally appends the
+        * Panel to the specified node prior to the render's execution. NOTE:
+        * For Panels without existing markup, the appendToNode argument is
+        * REQUIRED. If this argument is ommitted and the current element is
+        * not present in the document, the function will return false,
         * indicating that the render was a failure.
         * @method render
-        * @param {String} appendToNode The element id to which the Module 
+        * @param {String} appendToNode The element id to which the Module
         * should be appended to prior to rendering <em>OR</em>
-        * @param {HTMLElement} appendToNode The element to which the Module 
+        * @param {HTMLElement} appendToNode The element to which the Module
         * should be appended to prior to rendering
         * @return {boolean} Success or failure of the render
         */
         render: function (appendToNode) {
 
-            return Panel.superclass.render.call(this, 
+            return Panel.superclass.render.call(this,
                 appendToNode, this.innerElement);
 
         },
-        
+
         /**
         * Removes the Panel element from the DOM and sets all child elements
         * to null.
@@ -7086,11 +7086,11 @@ version: 2.7.0
             if (this.close) {
                 Event.purgeElement(this.close);
             }
-            Panel.superclass.destroy.call(this);  
+            Panel.superclass.destroy.call(this);
         },
 
         /**
-         * Forces the underlay element to be repainted through the application/removal 
+         * Forces the underlay element to be repainted through the application/removal
          * of a yui-force-redraw class to the underlay element.
          *
          * @method forceUnderlayRedraw
@@ -7109,7 +7109,7 @@ version: 2.7.0
         toString: function () {
             return "Panel " + this.id;
         }
-    
+
     });
 
 }());
@@ -7118,17 +7118,17 @@ version: 2.7.0
 
     /**
     * <p>
-    * Dialog is an implementation of Panel that can be used to submit form 
+    * Dialog is an implementation of Panel that can be used to submit form
     * data.
     * </p>
     * <p>
-    * Built-in functionality for buttons with event handlers is included. 
+    * Built-in functionality for buttons with event handlers is included.
     * If the optional YUI Button dependancy is included on the page, the buttons
     * created will be instances of YAHOO.widget.Button, otherwise regular HTML buttons
     * will be created.
     * </p>
     * <p>
-    * Forms can be processed in 3 ways -- via an asynchronous Connection utility call, 
+    * Forms can be processed in 3 ways -- via an asynchronous Connection utility call,
     * a simple form POST or GET, or manually. The YUI Connection utility should be
     * included if you're using the default "async" postmethod, but is not required if
     * you're using any of the other postmethod values.
@@ -7139,8 +7139,8 @@ version: 2.7.0
     * @constructor
     * @param {String} el The element ID representing the Dialog <em>OR</em>
     * @param {HTMLElement} el The element representing the Dialog
-    * @param {Object} userConfig The configuration object literal containing 
-    * the configuration that should be set for this Dialog. See configuration 
+    * @param {Object} userConfig The configuration object literal containing
+    * the configuration that should be set for this Dialog. See configuration
     * documentation for more details.
     */
     YAHOO.widget.Dialog = function (el, userConfig) {
@@ -7178,8 +7178,8 @@ version: 2.7.0
         */
         DEFAULT_CONFIG = {
 
-            "POST_METHOD": { 
-                key: "postmethod", 
+            "POST_METHOD": {
+                key: "postmethod",
                 value: "async"
             },
 
@@ -7238,20 +7238,20 @@ version: 2.7.0
         }
     }
 
-    YAHOO.extend(Dialog, YAHOO.widget.Panel, { 
+    YAHOO.extend(Dialog, YAHOO.widget.Panel, {
 
         /**
         * @property form
-        * @description Object reference to the Dialog's 
+        * @description Object reference to the Dialog's
         * <code>&#60;form&#62;</code> element.
-        * @default null 
+        * @default null
         * @type <a href="http://www.w3.org/TR/2000/WD-DOM-Level-1-20000929/
         * level-one-html.html#ID-40002357">HTMLFormElement</a>
         */
         form: null,
-    
+
         /**
-        * Initializes the class's configurable properties which can be changed 
+        * Initializes the class's configurable properties which can be changed
         * using the Dialog's Config object (cfg).
         * @method initDefaultConfig
         */
@@ -7259,10 +7259,10 @@ version: 2.7.0
             Dialog.superclass.initDefaultConfig.call(this);
 
             /**
-            * The internally maintained callback object for use with the 
-            * Connection utility. The format of the callback object is 
-            * similar to Connection Manager's callback object and is 
-            * simply passed through to Connection Manager when the async 
+            * The internally maintained callback object for use with the
+            * Connection utility. The format of the callback object is
+            * similar to Connection Manager's callback object and is
+            * simply passed through to Connection Manager when the async
             * request is made.
             * @property callback
             * @type Object
@@ -7270,17 +7270,17 @@ version: 2.7.0
             this.callback = {
 
                 /**
-                * The function to execute upon success of the 
+                * The function to execute upon success of the
                 * Connection submission (when the form does not
                 * contain a file input element).
-                * 
+                *
                 * @property callback.success
                 * @type Function
                 */
                 success: null,
 
                 /**
-                * The function to execute upon failure of the 
+                * The function to execute upon failure of the
                 * Connection submission
                 * @property callback.failure
                 * @type Function
@@ -7289,7 +7289,7 @@ version: 2.7.0
 
                 /**
                 *<p>
-                * The function to execute upon success of the 
+                * The function to execute upon success of the
                 * Connection submission, when the form contains
                 * a file input element.
                 * </p>
@@ -7308,7 +7308,7 @@ version: 2.7.0
                 */
 
                 /**
-                * The arbitraty argument or arguments to pass to the Connection 
+                * The arbitraty argument or arguments to pass to the Connection
                 * callback functions
                 * @property callback.argument
                 * @type Object
@@ -7319,17 +7319,17 @@ version: 2.7.0
 
             // Add form dialog config properties //
             /**
-            * The method to use for posting the Dialog's form. Possible values 
+            * The method to use for posting the Dialog's form. Possible values
             * are "async", "form", and "manual".
             * @config postmethod
             * @type String
             * @default async
             */
             this.cfg.addProperty(DEFAULT_CONFIG.POST_METHOD.key, {
-                handler: this.configPostMethod, 
-                value: DEFAULT_CONFIG.POST_METHOD.value, 
+                handler: this.configPostMethod,
+                value: DEFAULT_CONFIG.POST_METHOD.value,
                 validator: function (val) {
-                    if (val != "form" && val != "async" && val != "none" && 
+                    if (val != "form" && val != "async" && val != "none" &&
                         val != "manual") {
                         return false;
                     } else {
@@ -7339,10 +7339,10 @@ version: 2.7.0
             });
 
             /**
-            * Any additional post data which needs to be sent when using the 
+            * Any additional post data which needs to be sent when using the
             * <a href="#config_postmethod">async</a> postmethod for dialog POST submissions.
-            * The format for the post data string is defined by Connection Manager's 
-            * <a href="YAHOO.util.Connect.html#method_asyncRequest">asyncRequest</a> 
+            * The format for the post data string is defined by Connection Manager's
+            * <a href="YAHOO.util.Connect.html#method_asyncRequest">asyncRequest</a>
             * method.
             * @config postdata
             * @type String
@@ -7353,9 +7353,9 @@ version: 2.7.0
             });
 
             /**
-            * This property is used to configure whether or not the 
+            * This property is used to configure whether or not the
             * dialog should be automatically hidden after submit.
-            * 
+            *
             * @config hideaftersubmit
             * @type Boolean
             * @default true
@@ -7365,26 +7365,26 @@ version: 2.7.0
             });
 
             /**
-            * Array of object literals, each containing a set of properties 
+            * Array of object literals, each containing a set of properties
             * defining a button to be appended into the Dialog's footer.
             *
             * <p>Each button object in the buttons array can have three properties:</p>
             * <dl>
             *    <dt>text:</dt>
             *    <dd>
-            *       The text that will display on the face of the button. The text can 
+            *       The text that will display on the face of the button. The text can
             *       include HTML, as long as it is compliant with HTML Button specifications.
             *    </dd>
             *    <dt>handler:</dt>
             *    <dd>Can be either:
             *    <ol>
-            *       <li>A reference to a function that should fire when the 
-            *       button is clicked.  (In this case scope of this function is 
+            *       <li>A reference to a function that should fire when the
+            *       button is clicked.  (In this case scope of this function is
             *       always its Dialog instance.)</li>
             *
-            *       <li>An object literal representing the code to be 
+            *       <li>An object literal representing the code to be
             *       executed when the button is clicked.
-            *       
+            *
             *       <p>Format:</p>
             *
             *       <p>
@@ -7393,10 +7393,10 @@ version: 2.7.0
             *       <strong>fn:</strong> Function, &#47;&#47;
             *       The handler to call when  the event fires.
             *       <br>
-            *       <strong>obj:</strong> Object, &#47;&#47; 
+            *       <strong>obj:</strong> Object, &#47;&#47;
             *       An  object to pass back to the handler.
             *       <br>
-            *       <strong>scope:</strong> Object &#47;&#47; 
+            *       <strong>scope:</strong> Object &#47;&#47;
             *       The object to use for the scope of the handler.
             *       <br>
             *       }</code>
@@ -7406,14 +7406,14 @@ version: 2.7.0
             *     </dd>
             *     <dt>isDefault:</dt>
             *     <dd>
-            *        An optional boolean value that specifies that a button 
+            *        An optional boolean value that specifies that a button
             *        should be highlighted and focused by default.
             *     </dd>
             * </dl>
             *
-            * <em>NOTE:</em>If the YUI Button Widget is included on the page, 
-            * the buttons created will be instances of YAHOO.widget.Button. 
-            * Otherwise, HTML Buttons (<code>&#60;BUTTON&#62;</code>) will be 
+            * <em>NOTE:</em>If the YUI Button Widget is included on the page,
+            * the buttons created will be instances of YAHOO.widget.Button.
+            * Otherwise, HTML Buttons (<code>&#60;BUTTON&#62;</code>) will be
             * created.
             *
             * @config buttons
@@ -7424,12 +7424,12 @@ version: 2.7.0
                 handler: this.configButtons,
                 value: DEFAULT_CONFIG.BUTTONS.value,
                 supercedes : DEFAULT_CONFIG.BUTTONS.supercedes
-            }); 
+            });
 
         },
 
         /**
-        * Initializes the custom events for Dialog which are fired 
+        * Initializes the custom events for Dialog which are fired
         * automatically at appropriate times by the Dialog class.
         * @method initEvents
         */
@@ -7441,23 +7441,23 @@ version: 2.7.0
             /**
             * CustomEvent fired prior to submission
             * @event beforeSubmitEvent
-            */ 
-            this.beforeSubmitEvent = 
+            */
+            this.beforeSubmitEvent =
                 this.createEvent(EVENT_TYPES.BEFORE_SUBMIT);
             this.beforeSubmitEvent.signature = SIGNATURE;
-            
+
             /**
             * CustomEvent fired after submission
             * @event submitEvent
             */
             this.submitEvent = this.createEvent(EVENT_TYPES.SUBMIT);
             this.submitEvent.signature = SIGNATURE;
-        
+
             /**
             * CustomEvent fired for manual submission, before the generic submit event is fired
             * @event manualSubmitEvent
             */
-            this.manualSubmitEvent = 
+            this.manualSubmitEvent =
                 this.createEvent(EVENT_TYPES.MANUAL_SUBMIT);
             this.manualSubmitEvent.signature = SIGNATURE;
 
@@ -7483,30 +7483,30 @@ version: 2.7.0
             */
             this.cancelEvent = this.createEvent(EVENT_TYPES.CANCEL);
             this.cancelEvent.signature = SIGNATURE;
-        
+
         },
-        
+
         /**
-        * The Dialog initialization method, which is executed for Dialog and 
-        * all of its subclasses. This method is automatically called by the 
-        * constructor, and  sets up all DOM references for pre-existing markup, 
+        * The Dialog initialization method, which is executed for Dialog and
+        * all of its subclasses. This method is automatically called by the
+        * constructor, and  sets up all DOM references for pre-existing markup,
         * and creates required markup if it is not already present.
-        * 
+        *
         * @method init
         * @param {String} el The element ID representing the Dialog <em>OR</em>
         * @param {HTMLElement} el The element representing the Dialog
-        * @param {Object} userConfig The configuration object literal 
-        * containing the configuration that should be set for this Dialog. 
+        * @param {Object} userConfig The configuration object literal
+        * containing the configuration that should be set for this Dialog.
         * See configuration documentation for more details.
         */
         init: function (el, userConfig) {
 
             /*
-                 Note that we don't pass the user config in here yet because 
+                 Note that we don't pass the user config in here yet because
                  we only want it executed once, at the lowest subclass level
             */
 
-            Dialog.superclass.init.call(this, el/*, userConfig*/); 
+            Dialog.superclass.init.call(this, el/*, userConfig*/);
 
             this.beforeInitEvent.fire(Dialog);
 
@@ -7527,15 +7527,15 @@ version: 2.7.0
         },
 
         /**
-        * Submits the Dialog's form depending on the value of the 
+        * Submits the Dialog's form depending on the value of the
         * "postmethod" configuration property.  <strong>Please note:
-        * </strong> As of version 2.3 this method will automatically handle 
-        * asyncronous file uploads should the Dialog instance's form contain 
-        * <code>&#60;input type="file"&#62;</code> elements.  If a Dialog 
-        * instance will be handling asyncronous file uploads, its 
-        * <code>callback</code> property will need to be setup with a 
-        * <code>upload</code> handler rather than the standard 
-        * <code>success</code> and, or <code>failure</code> handlers.  For more 
+        * </strong> As of version 2.3 this method will automatically handle
+        * asyncronous file uploads should the Dialog instance's form contain
+        * <code>&#60;input type="file"&#62;</code> elements.  If a Dialog
+        * instance will be handling asyncronous file uploads, its
+        * <code>callback</code> property will need to be setup with a
+        * <code>upload</code> handler rather than the standard
+        * <code>success</code> and, or <code>failure</code> handlers.  For more
         * information, see the <a href="http://developer.yahoo.com/yui/
         * connection/#file">Connection Manager documenation on file uploads</a>.
         * @method doSubmit
@@ -7597,7 +7597,7 @@ version: 2.7.0
 
         /**
          * Retrieves important attributes (currently method and action) from
-         * the form element, accounting for any elements which may have the same name 
+         * the form element, accounting for any elements which may have the same name
          * as the attributes. Defaults to "POST" and "" for method and action respectively
          * if the attribute cannot be retrieved.
          *
@@ -7699,7 +7699,7 @@ version: 2.7.0
         },
 
         /**
-         * Configures instance properties, pointing to the 
+         * Configures instance properties, pointing to the
          * first and last focusable elements in the Dialog's form.
          *
          * @method setFirstLastFocusable
@@ -7736,15 +7736,15 @@ version: 2.7.0
 
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
         /**
-        * The default event handler fired when the "close" property is 
+        * The default event handler fired when the "close" property is
         * changed. The method controls the appending or hiding of the close
         * icon at the top right of the Dialog.
         * @method configClose
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For 
-        * configuration handlers, args[0] will equal the newly applied value 
+        * @param {Object[]} args The CustomEvent arguments. For
+        * configuration handlers, args[0] will equal the newly applied value
         * for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configClose: function (type, args, obj) {
@@ -7753,10 +7753,10 @@ version: 2.7.0
 
         /**
          * Event handler for the close icon
-         * 
+         *
          * @method _doClose
          * @protected
-         * 
+         *
          * @param {DOMEvent} e
          */
          _doClose : function(e) {
@@ -7768,9 +7768,9 @@ version: 2.7.0
         * The default event handler for the "buttons" configuration property
         * @method configButtons
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configButtons: function (type, args, obj) {
@@ -7815,18 +7815,18 @@ version: 2.7.0
 
                         if (Lang.isFunction(oButton.handler)) {
 
-                            oYUIButton.set("onclick", { 
-                                fn: oButton.handler, 
-                                obj: this, 
-                                scope: this 
+                            oYUIButton.set("onclick", {
+                                fn: oButton.handler,
+                                obj: this,
+                                scope: this
                             });
 
                         } else if (Lang.isObject(oButton.handler) && Lang.isFunction(oButton.handler.fn)) {
 
-                            oYUIButton.set("onclick", { 
-                                fn: oButton.handler.fn, 
-                                obj: ((!Lang.isUndefined(oButton.handler.obj)) ? oButton.handler.obj : this), 
-                                scope: (oButton.handler.scope || this) 
+                            oYUIButton.set("onclick", {
+                                fn: oButton.handler.fn,
+                                obj: ((!Lang.isUndefined(oButton.handler.obj)) ? oButton.handler.obj : this),
+                                scope: (oButton.handler.scope || this)
                             });
 
                         }
@@ -7847,12 +7847,12 @@ version: 2.7.0
 
                         if (Lang.isFunction(oButton.handler)) {
                             Event.on(oButtonEl, "click", oButton.handler, this, true);
-                        } else if (Lang.isObject(oButton.handler) && 
+                        } else if (Lang.isObject(oButton.handler) &&
                             Lang.isFunction(oButton.handler.fn)) {
-    
-                            Event.on(oButtonEl, "click", 
-                                oButton.handler.fn, 
-                                ((!Lang.isUndefined(oButton.handler.obj)) ? oButton.handler.obj : this), 
+
+                            Event.on(oButtonEl, "click",
+                                oButton.handler.fn,
+                                ((!Lang.isUndefined(oButton.handler.obj)) ? oButton.handler.obj : this),
                                 (oButton.handler.scope || this));
                         }
 
@@ -7898,11 +7898,11 @@ version: 2.7.0
 
         /**
         * @method getButtons
-        * @description Returns an array containing each of the Dialog's 
-        * buttons, by default an array of HTML <code>&#60;BUTTON&#62;</code> 
-        * elements.  If the Dialog's buttons were created using the 
-        * YAHOO.widget.Button class (via the inclusion of the optional Button 
-        * dependancy on the page), an array of YAHOO.widget.Button instances 
+        * @description Returns an array containing each of the Dialog's
+        * buttons, by default an array of HTML <code>&#60;BUTTON&#62;</code>
+        * elements.  If the Dialog's buttons were created using the
+        * YAHOO.widget.Button class (via the inclusion of the optional Button
+        * dependancy on the page), an array of YAHOO.widget.Button instances
         * is returned.
         * @return {Array}
         */
@@ -7912,8 +7912,8 @@ version: 2.7.0
 
         /**
          * <p>
-         * Sets focus to the first focusable element in the Dialog's form if found, 
-         * else, the default button if found, else the first button defined via the 
+         * Sets focus to the first focusable element in the Dialog's form if found,
+         * else, the default button if found, else the first button defined via the
          * "buttons" configuration property.
          * </p>
          * <p>
@@ -7945,7 +7945,7 @@ version: 2.7.0
         },
 
         /**
-        * Sets focus to the last element in the Dialog's form or the last 
+        * Sets focus to the last element in the Dialog's form or the last
         * button defined via the "buttons" configuration property.
         * @method focusLast
         */
@@ -7972,7 +7972,7 @@ version: 2.7.0
         },
 
         /**
-         * Helper method to normalize button references. It either returns the 
+         * Helper method to normalize button references. It either returns the
          * YUI Button instance for the given element if found,
          * or the passes back the HTMLElement reference if a corresponding YUI Button
          * reference is not found or YAHOO.widget.Button does not exist on the page.
@@ -7985,7 +7985,7 @@ version: 2.7.0
         _getButton : function(button) {
             var Button = YAHOO.widget.Button;
 
-            // If we have an HTML button and YUI Button is on the page, 
+            // If we have an HTML button and YUI Button is on the page,
             // get the YUI Button reference if available.
             if (Button && button && button.nodeName && button.id) {
                 button = Button.getButton(button.id) || button;
@@ -7995,8 +7995,8 @@ version: 2.7.0
         },
 
         /**
-        * Sets the focus to the button that is designated as the default via 
-        * the "buttons" configuration property. By default, this method is 
+        * Sets the focus to the button that is designated as the default via
+        * the "buttons" configuration property. By default, this method is
         * called when the Dialog is made visible.
         * @method focusDefaultButton
         */
@@ -8016,12 +8016,12 @@ version: 2.7.0
         },
 
         /**
-        * Blurs all the buttons defined via the "buttons" 
+        * Blurs all the buttons defined via the "buttons"
         * configuration property.
         * @method blurButtons
         */
         blurButtons: function () {
-            
+
             var aButtons = this.cfg.getProperty("buttons"),
                 nButtons,
                 oButton,
@@ -8038,9 +8038,9 @@ version: 2.7.0
                             oElement = this._getButton(oButton.htmlButton);
                             if (oElement) {
                                 /*
-                                    Place the call to the "blur" method inside  
-                                    a try/catch block to prevent IE from  
-                                    throwing JavaScript errors if the element 
+                                    Place the call to the "blur" method inside
+                                    a try/catch block to prevent IE from
+                                    throwing JavaScript errors if the element
                                     is disabled or hidden.
                                 */
                                 try {
@@ -8072,9 +8072,9 @@ version: 2.7.0
                     oElement = this._getButton(oButton.htmlButton);
                     if (oElement) {
                         /*
-                            Place the call to the "focus" method inside a 
-                            try/catch block to prevent IE from throwing 
-                            JavaScript errors if the element is disabled 
+                            Place the call to the "focus" method inside a
+                            try/catch block to prevent IE from throwing
+                            JavaScript errors if the element is disabled
                             or hidden.
                         */
                         try {
@@ -8088,7 +8088,7 @@ version: 2.7.0
         },
 
         /**
-        * Sets the focus to the last button created via the "buttons" 
+        * Sets the focus to the last button created via the "buttons"
         * configuration property.
         * @method focusLastButton
         */
@@ -8108,12 +8108,12 @@ version: 2.7.0
                         oElement = this._getButton(oButton.htmlButton);
                         if (oElement) {
                             /*
-                                Place the call to the "focus" method inside a 
-                                try/catch block to prevent IE from throwing 
+                                Place the call to the "focus" method inside a
+                                try/catch block to prevent IE from throwing
                                 JavaScript errors if the element is disabled
                                 or hidden.
                             */
-        
+
                             try {
                                 oElement.focus();
                             } catch(oException) {
@@ -8129,10 +8129,10 @@ version: 2.7.0
         * The default event handler for the "postmethod" configuration property
         * @method configPostMethod
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For 
-        * configuration handlers, args[0] will equal the newly applied value 
+        * @param {Object[]} args The CustomEvent arguments. For
+        * configuration handlers, args[0] will equal the newly applied value
         * for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configPostMethod: function (type, args, obj) {
@@ -8140,25 +8140,25 @@ version: 2.7.0
         },
 
         // END BUILT-IN PROPERTY EVENT HANDLERS //
-        
+
         /**
-        * Built-in function hook for writing a validation function that will 
-        * be checked for a "true" value prior to a submit. This function, as 
-        * implemented by default, always returns true, so it should be 
+        * Built-in function hook for writing a validation function that will
+        * be checked for a "true" value prior to a submit. This function, as
+        * implemented by default, always returns true, so it should be
         * overridden if validation is necessary.
         * @method validate
         */
         validate: function () {
             return true;
         },
-        
+
         /**
-        * Executes a submit of the Dialog if validation 
+        * Executes a submit of the Dialog if validation
         * is successful. By default the Dialog is hidden
         * after submission, but you can set the "hideaftersubmit"
         * configuration property to false, to prevent the Dialog
         * from being hidden.
-        * 
+        *
         * @method submit
         */
         submit: function () {
@@ -8185,12 +8185,12 @@ version: 2.7.0
             this.cancelEvent.fire();
             this.hide();
         },
-        
+
         /**
-        * Returns a JSON-compatible data structure representing the data 
+        * Returns a JSON-compatible data structure representing the data
         * currently contained in the form.
         * @method getData
-        * @return {Object} A JSON object reprsenting the data of the 
+        * @return {Object} A JSON object reprsenting the data of the
         * current form.
         */
         getData: function () {
@@ -8212,11 +8212,11 @@ version: 2.7.0
                 oRadio,
                 oCheckbox,
                 i,
-                n;    
-    
+                n;
+
             function isFormElement(p_oElement) {
                 var sTag = p_oElement.tagName.toUpperCase();
-                return ((sTag == "INPUT" || sTag == "TEXTAREA" || 
+                return ((sTag == "INPUT" || sTag == "TEXTAREA" ||
                         sTag == "SELECT") && p_oElement.name == sName);
             }
 
@@ -8230,13 +8230,13 @@ version: 2.7.0
                     sName = aElements[i].name;
 
                     /*
-                        Using "Dom.getElementsBy" to safeguard user from JS 
-                        errors that result from giving a form field (or set of 
-                        fields) the same name as a native method of a form 
+                        Using "Dom.getElementsBy" to safeguard user from JS
+                        errors that result from giving a form field (or set of
+                        fields) the same name as a native method of a form
                         (like "submit") or a DOM collection (such as the "item"
-                        method). Originally tried accessing fields via the 
-                        "namedItem" method of the "element" collection, but 
-                        discovered that it won't return a collection of fields 
+                        method). Originally tried accessing fields via the
+                        "namedItem" method of the "element" collection, but
+                        discovered that it won't return a collection of fields
                         in Gecko.
                     */
 
@@ -8262,15 +8262,15 @@ version: 2.7.0
                                 case "TEXTAREA":
                                     oData[sName] = oElement.value;
                                     break;
-    
+
                                 case "SELECT":
                                     aOptions = oElement.options;
                                     nOptions = aOptions.length;
                                     aValues = [];
-    
+
                                     for (n = 0; n < nOptions; n++) {
                                         oOption = aOptions[n];
-    
+
                                         if (oOption.selected) {
                                             sValue = oOption.value;
                                             if (!sValue || sValue === "") {
@@ -8282,7 +8282,7 @@ version: 2.7.0
                                     oData[sName] = aValues;
                                     break;
                             }
-        
+
                         } else {
                             sType = oElement[0].type;
                             switch (sType) {
@@ -8295,7 +8295,7 @@ version: 2.7.0
                                         }
                                     }
                                     break;
-        
+
                                 case "checkbox":
                                     aValues = [];
                                     for (n = 0; n < nElements; n++) {
@@ -8316,7 +8316,7 @@ version: 2.7.0
         },
 
         /**
-        * Removes the Panel element from the DOM and sets all child elements 
+        * Removes the Panel element from the DOM and sets all child elements
         * to null.
         * @method destroy
         */
@@ -8350,7 +8350,7 @@ version: 2.7.0
         toString: function () {
             return "Dialog " + this.id;
         }
-    
+
     });
 
 }());
@@ -8358,31 +8358,31 @@ version: 2.7.0
 (function () {
 
     /**
-    * SimpleDialog is a simple implementation of Dialog that can be used to 
-    * submit a single value. Forms can be processed in 3 ways -- via an 
-    * asynchronous Connection utility call, a simple form POST or GET, 
+    * SimpleDialog is a simple implementation of Dialog that can be used to
+    * submit a single value. Forms can be processed in 3 ways -- via an
+    * asynchronous Connection utility call, a simple form POST or GET,
     * or manually.
     * @namespace YAHOO.widget
     * @class SimpleDialog
     * @extends YAHOO.widget.Dialog
     * @constructor
-    * @param {String} el The element ID representing the SimpleDialog 
+    * @param {String} el The element ID representing the SimpleDialog
     * <em>OR</em>
     * @param {HTMLElement} el The element representing the SimpleDialog
-    * @param {Object} userConfig The configuration object literal containing 
-    * the configuration that should be set for this SimpleDialog. See 
+    * @param {Object} userConfig The configuration object literal containing
+    * the configuration that should be set for this SimpleDialog. See
     * configuration documentation for more details.
     */
     YAHOO.widget.SimpleDialog = function (el, userConfig) {
-    
-        YAHOO.widget.SimpleDialog.superclass.constructor.call(this, 
+
+        YAHOO.widget.SimpleDialog.superclass.constructor.call(this,
             el, userConfig);
-    
+
     };
 
     var Dom = YAHOO.util.Dom,
         SimpleDialog = YAHOO.widget.SimpleDialog,
-    
+
         /**
         * Constant representing the SimpleDialog's configuration properties
         * @property DEFAULT_CONFIG
@@ -8391,20 +8391,20 @@ version: 2.7.0
         * @type Object
         */
         DEFAULT_CONFIG = {
-        
-            "ICON": { 
-                key: "icon", 
-                value: "none", 
-                suppressEvent: true  
+
+            "ICON": {
+                key: "icon",
+                value: "none",
+                suppressEvent: true
             },
-        
-            "TEXT": { 
-                key: "text", 
-                value: "", 
-                suppressEvent: true, 
-                supercedes: ["icon"] 
+
+            "TEXT": {
+                key: "text",
+                value: "",
+                suppressEvent: true,
+                supercedes: ["icon"]
             }
-        
+
         };
 
     /**
@@ -8415,7 +8415,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_BLOCK = "blckicon";
-    
+
     /**
     * Constant for the standard network icon for alarm
     * @property YAHOO.widget.SimpleDialog.ICON_ALARM
@@ -8424,7 +8424,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_ALARM = "alrticon";
-    
+
     /**
     * Constant for the standard network icon for help
     * @property YAHOO.widget.SimpleDialog.ICON_HELP
@@ -8433,7 +8433,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_HELP  = "hlpicon";
-    
+
     /**
     * Constant for the standard network icon for info
     * @property YAHOO.widget.SimpleDialog.ICON_INFO
@@ -8442,7 +8442,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_INFO  = "infoicon";
-    
+
     /**
     * Constant for the standard network icon for warn
     * @property YAHOO.widget.SimpleDialog.ICON_WARN
@@ -8451,7 +8451,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_WARN  = "warnicon";
-    
+
     /**
     * Constant for the standard network icon for a tip
     * @property YAHOO.widget.SimpleDialog.ICON_TIP
@@ -8462,7 +8462,7 @@ version: 2.7.0
     SimpleDialog.ICON_TIP   = "tipicon";
 
     /**
-    * Constant representing the name of the CSS class applied to the element 
+    * Constant representing the name of the CSS class applied to the element
     * created by the "icon" configuration property.
     * @property YAHOO.widget.SimpleDialog.ICON_CSS_CLASSNAME
     * @static
@@ -8470,7 +8470,7 @@ version: 2.7.0
     * @type String
     */
     SimpleDialog.ICON_CSS_CLASSNAME = "yui-icon";
-    
+
     /**
     * Constant representing the default CSS class used for a SimpleDialog
     * @property YAHOO.widget.SimpleDialog.CSS_SIMPLEDIALOG
@@ -8480,20 +8480,20 @@ version: 2.7.0
     */
     SimpleDialog.CSS_SIMPLEDIALOG = "yui-simple-dialog";
 
-    
+
     YAHOO.extend(SimpleDialog, YAHOO.widget.Dialog, {
-    
+
         /**
-        * Initializes the class's configurable properties which can be changed 
+        * Initializes the class's configurable properties which can be changed
         * using the SimpleDialog's Config object (cfg).
         * @method initDefaultConfig
         */
         initDefaultConfig: function () {
-        
+
             SimpleDialog.superclass.initDefaultConfig.call(this);
-        
+
             // Add dialog config properties //
-        
+
             /**
             * Sets the informational icon for the SimpleDialog
             * @config icon
@@ -8505,68 +8505,68 @@ version: 2.7.0
                 value: DEFAULT_CONFIG.ICON.value,
                 suppressEvent: DEFAULT_CONFIG.ICON.suppressEvent
             });
-        
+
             /**
             * Sets the text for the SimpleDialog
             * @config text
             * @type String
             * @default ""
             */
-            this.cfg.addProperty(DEFAULT_CONFIG.TEXT.key, { 
-                handler: this.configText, 
-                value: DEFAULT_CONFIG.TEXT.value, 
-                suppressEvent: DEFAULT_CONFIG.TEXT.suppressEvent, 
-                supercedes: DEFAULT_CONFIG.TEXT.supercedes 
+            this.cfg.addProperty(DEFAULT_CONFIG.TEXT.key, {
+                handler: this.configText,
+                value: DEFAULT_CONFIG.TEXT.value,
+                suppressEvent: DEFAULT_CONFIG.TEXT.suppressEvent,
+                supercedes: DEFAULT_CONFIG.TEXT.supercedes
             });
-        
+
         },
-        
-        
+
+
         /**
-        * The SimpleDialog initialization method, which is executed for 
-        * SimpleDialog and all of its subclasses. This method is automatically 
-        * called by the constructor, and  sets up all DOM references for 
-        * pre-existing markup, and creates required markup if it is not 
+        * The SimpleDialog initialization method, which is executed for
+        * SimpleDialog and all of its subclasses. This method is automatically
+        * called by the constructor, and  sets up all DOM references for
+        * pre-existing markup, and creates required markup if it is not
         * already present.
         * @method init
-        * @param {String} el The element ID representing the SimpleDialog 
+        * @param {String} el The element ID representing the SimpleDialog
         * <em>OR</em>
         * @param {HTMLElement} el The element representing the SimpleDialog
-        * @param {Object} userConfig The configuration object literal 
-        * containing the configuration that should be set for this 
+        * @param {Object} userConfig The configuration object literal
+        * containing the configuration that should be set for this
         * SimpleDialog. See configuration documentation for more details.
         */
         init: function (el, userConfig) {
 
             /*
-                Note that we don't pass the user config in here yet because we 
+                Note that we don't pass the user config in here yet because we
                 only want it executed once, at the lowest subclass level
             */
 
             SimpleDialog.superclass.init.call(this, el/*, userConfig*/);
-        
+
             this.beforeInitEvent.fire(SimpleDialog);
-        
+
             Dom.addClass(this.element, SimpleDialog.CSS_SIMPLEDIALOG);
-        
+
             this.cfg.queueProperty("postmethod", "manual");
-        
+
             if (userConfig) {
                 this.cfg.applyConfig(userConfig, true);
             }
-        
+
             this.beforeRenderEvent.subscribe(function () {
                 if (! this.body) {
                     this.setBody("");
                 }
             }, this, true);
-        
+
             this.initEvent.fire(SimpleDialog);
-        
+
         },
-        
+
         /**
-        * Prepares the SimpleDialog's internal FORM object, creating one if one 
+        * Prepares the SimpleDialog's internal FORM object, creating one if one
         * is not currently present, and adding the value hidden field.
         * @method registerForm
         */
@@ -8574,30 +8574,30 @@ version: 2.7.0
 
             SimpleDialog.superclass.registerForm.call(this);
 
-            this.form.innerHTML += "<input type=\"hidden\" name=\"" + 
+            this.form.innerHTML += "<input type=\"hidden\" name=\"" +
                 this.id + "\" value=\"\"/>";
 
         },
-        
+
         // BEGIN BUILT-IN PROPERTY EVENT HANDLERS //
-        
+
         /**
         * Fired when the "icon" property is set.
         * @method configIcon
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configIcon: function (type,args,obj) {
-        
+
             var sIcon = args[0],
                 oBody = this.body,
                 sCSSClass = SimpleDialog.ICON_CSS_CLASSNAME,
                 oIcon,
                 oIconParent;
-        
+
             if (sIcon && sIcon != "none") {
 
                 oIcon = Dom.getElementsByClassName(sCSSClass, "*" , oBody);
@@ -8605,13 +8605,13 @@ version: 2.7.0
                 if (oIcon) {
 
                     oIconParent = oIcon.parentNode;
-                    
+
                     if (oIconParent) {
-                    
+
                         oIconParent.removeChild(oIcon);
-                        
+
                         oIcon = null;
-                    
+
                     }
 
                 }
@@ -8630,12 +8630,12 @@ version: 2.7.0
                     oIcon.className = sCSSClass;
 
                 }
-                
+
 
                 if (oIcon) {
-                
+
                     oBody.insertBefore(oIcon, oBody.firstChild);
-                
+
                 }
 
             }
@@ -8646,9 +8646,9 @@ version: 2.7.0
         * Fired when the "text" property is set.
         * @method configText
         * @param {String} type The CustomEvent type (usually the property name)
-        * @param {Object[]} args The CustomEvent arguments. For configuration 
+        * @param {Object[]} args The CustomEvent arguments. For configuration
         * handlers, args[0] will equal the newly applied value for the property.
-        * @param {Object} obj The scope object. For configuration handlers, 
+        * @param {Object} obj The scope object. For configuration handlers,
         * this will usually equal the owner.
         */
         configText: function (type,args,obj) {
@@ -8658,9 +8658,9 @@ version: 2.7.0
                 this.cfg.refireEvent("icon");
             }
         },
-        
+
         // END BUILT-IN PROPERTY EVENT HANDLERS //
-        
+
         /**
         * Returns a string representation of the object.
         * @method toString
@@ -8672,27 +8672,27 @@ version: 2.7.0
 
         /**
         * <p>
-        * Sets the SimpleDialog's body content to the HTML specified. 
-        * If no body is present, one will be automatically created. 
+        * Sets the SimpleDialog's body content to the HTML specified.
+        * If no body is present, one will be automatically created.
         * An empty string can be passed to the method to clear the contents of the body.
         * </p>
         * <p><strong>NOTE:</strong> SimpleDialog provides the <a href="#config_text">text</a>
         * and <a href="#config_icon">icon</a> configuration properties to set the contents
-        * of it's body element in accordance with the UI design for a SimpleDialog (an 
-        * icon and message text). Calling setBody on the SimpleDialog will not enforce this 
-        * UI design constraint and will replace the entire contents of the SimpleDialog body. 
-        * It should only be used if you wish the replace the default icon/text body structure 
+        * of it's body element in accordance with the UI design for a SimpleDialog (an
+        * icon and message text). Calling setBody on the SimpleDialog will not enforce this
+        * UI design constraint and will replace the entire contents of the SimpleDialog body.
+        * It should only be used if you wish the replace the default icon/text body structure
         * of a SimpleDialog with your own custom markup.</p>
-        * 
+        *
         * @method setBody
-        * @param {String} bodyContent The HTML used to set the body. 
-        * As a convenience, non HTMLElement objects can also be passed into 
+        * @param {String} bodyContent The HTML used to set the body.
+        * As a convenience, non HTMLElement objects can also be passed into
         * the method, and will be treated as strings, with the body innerHTML
         * set to their default toString implementations.
         * <em>OR</em>
         * @param {HTMLElement} bodyContent The HTMLElement to add as the first and only child of the body element.
         * <em>OR</em>
-        * @param {DocumentFragment} bodyContent The document fragment 
+        * @param {DocumentFragment} bodyContent The document fragment
         * containing elements which are to be added to the body
         */
     });
@@ -8702,24 +8702,24 @@ version: 2.7.0
 (function () {
 
     /**
-    * ContainerEffect encapsulates animation transitions that are executed when 
+    * ContainerEffect encapsulates animation transitions that are executed when
     * an Overlay is shown or hidden.
     * @namespace YAHOO.widget
     * @class ContainerEffect
     * @constructor
-    * @param {YAHOO.widget.Overlay} overlay The Overlay that the animation 
+    * @param {YAHOO.widget.Overlay} overlay The Overlay that the animation
     * should be associated with
-    * @param {Object} attrIn The object literal representing the animation 
-    * arguments to be used for the animate-in transition. The arguments for 
-    * this literal are: attributes(object, see YAHOO.util.Anim for description), 
+    * @param {Object} attrIn The object literal representing the animation
+    * arguments to be used for the animate-in transition. The arguments for
+    * this literal are: attributes(object, see YAHOO.util.Anim for description),
     * duration(Number), and method(i.e. Easing.easeIn).
-    * @param {Object} attrOut The object literal representing the animation 
-    * arguments to be used for the animate-out transition. The arguments for  
-    * this literal are: attributes(object, see YAHOO.util.Anim for description), 
+    * @param {Object} attrOut The object literal representing the animation
+    * arguments to be used for the animate-out transition. The arguments for
+    * this literal are: attributes(object, see YAHOO.util.Anim for description),
     * duration(Number), and method(i.e. Easing.easeIn).
-    * @param {HTMLElement} targetElement Optional. The target element that  
+    * @param {HTMLElement} targetElement Optional. The target element that
     * should be animated during the transition. Defaults to overlay.element.
-    * @param {class} Optional. The animation class to instantiate. Defaults to 
+    * @param {class} Optional. The animation class to instantiate. Defaults to
     * YAHOO.util.Anim. Other options include YAHOO.util.Motion.
     */
     YAHOO.widget.ContainerEffect = function (overlay, attrIn, attrOut, targetElement, animClass) {
@@ -8734,35 +8734,35 @@ version: 2.7.0
         * @type YAHOO.widget.Overlay
         */
         this.overlay = overlay;
-    
+
         /**
         * The animation attributes to use when transitioning into view
         * @property attrIn
         * @type Object
         */
         this.attrIn = attrIn;
-    
+
         /**
         * The animation attributes to use when transitioning out of view
         * @property attrOut
         * @type Object
         */
         this.attrOut = attrOut;
-    
+
         /**
         * The target element to be animated
         * @property targetElement
         * @type HTMLElement
         */
         this.targetElement = targetElement || overlay.element;
-    
+
         /**
         * The animation class to use for animating the overlay
         * @property animClass
         * @type class
         */
         this.animClass = animClass;
-    
+
     };
 
 
@@ -8772,7 +8772,7 @@ version: 2.7.0
 
 
     /**
-    * A pre-configured ContainerEffect instance that can be used for fading 
+    * A pre-configured ContainerEffect instance that can be used for fading
     * an overlay in and out.
     * @method FADE
     * @static
@@ -8860,10 +8860,10 @@ version: 2.7.0
         fade.init();
         return fade;
     };
-    
-    
+
+
     /**
-    * A pre-configured ContainerEffect instance that can be used for sliding an 
+    * A pre-configured ContainerEffect instance that can be used for sliding an
     * overlay in and out.
     * @method SLIDE
     * @static
@@ -8879,16 +8879,16 @@ version: 2.7.0
             clientWidth = Dom.getClientWidth(),
             offsetWidth = overlay.element.offsetWidth,
 
-            sin =  { 
+            sin =  {
                 attributes: { points: { to: [x, y] } },
                 duration: dur,
-                method: Easing.easeIn 
+                method: Easing.easeIn
             },
 
             sout = {
                 attributes: { points: { to: [(clientWidth + 25), y] } },
                 duration: dur,
-                method: Easing.easeOut 
+                method: Easing.easeOut
             },
 
             slide = new ContainerEffect(overlay, sin, sout, overlay.element, YAHOO.util.Motion);
@@ -8899,22 +8899,22 @@ version: 2.7.0
         };
 
         slide.handleTweenAnimateIn = function (type, args, obj) {
-        
+
             var pos = Dom.getXY(obj.overlay.element),
                 currentX = pos[0],
                 currentY = pos[1];
-        
-            if (Dom.getStyle(obj.overlay.element, "visibility") == 
+
+            if (Dom.getStyle(obj.overlay.element, "visibility") ==
                 "hidden" && currentX < x) {
 
                 obj.overlay._setDomVisibility(true);
 
             }
-        
+
             obj.overlay.cfg.setProperty("xy", [currentX, currentY], true);
             obj.overlay.cfg.refireEvent("iframe");
         };
-        
+
         slide.handleCompleteAnimateIn = function (type, args, obj) {
             obj.overlay.cfg.setProperty("xy", [x, y], true);
             obj.startX = x;
@@ -8922,26 +8922,26 @@ version: 2.7.0
             obj.overlay.cfg.refireEvent("iframe");
             obj.animateInCompleteEvent.fire();
         };
-        
+
         slide.handleStartAnimateOut = function (type, args, obj) {
-    
+
             var vw = Dom.getViewportWidth(),
                 pos = Dom.getXY(obj.overlay.element),
                 yso = pos[1];
-    
+
             obj.animOut.attributes.points.to = [(vw + 25), yso];
         };
-        
+
         slide.handleTweenAnimateOut = function (type, args, obj) {
-    
+
             var pos = Dom.getXY(obj.overlay.element),
                 xto = pos[0],
                 yto = pos[1];
-        
+
             obj.overlay.cfg.setProperty("xy", [xto, yto], true);
             obj.overlay.cfg.refireEvent("iframe");
         };
-        
+
         slide.handleCompleteAnimateOut = function (type, args, obj) {
             obj.overlay._setDomVisibility(false);
 
@@ -8963,38 +8963,38 @@ version: 2.7.0
 
             this.beforeAnimateInEvent = this.createEvent("beforeAnimateIn");
             this.beforeAnimateInEvent.signature = CustomEvent.LIST;
-            
+
             this.beforeAnimateOutEvent = this.createEvent("beforeAnimateOut");
             this.beforeAnimateOutEvent.signature = CustomEvent.LIST;
-        
+
             this.animateInCompleteEvent = this.createEvent("animateInComplete");
             this.animateInCompleteEvent.signature = CustomEvent.LIST;
-        
-            this.animateOutCompleteEvent = 
+
+            this.animateOutCompleteEvent =
                 this.createEvent("animateOutComplete");
             this.animateOutCompleteEvent.signature = CustomEvent.LIST;
-        
-            this.animIn = new this.animClass(this.targetElement, 
-                this.attrIn.attributes, this.attrIn.duration, 
+
+            this.animIn = new this.animClass(this.targetElement,
+                this.attrIn.attributes, this.attrIn.duration,
                 this.attrIn.method);
 
             this.animIn.onStart.subscribe(this.handleStartAnimateIn, this);
             this.animIn.onTween.subscribe(this.handleTweenAnimateIn, this);
 
-            this.animIn.onComplete.subscribe(this.handleCompleteAnimateIn, 
+            this.animIn.onComplete.subscribe(this.handleCompleteAnimateIn,
                 this);
-        
-            this.animOut = new this.animClass(this.targetElement, 
-                this.attrOut.attributes, this.attrOut.duration, 
+
+            this.animOut = new this.animClass(this.targetElement,
+                this.attrOut.attributes, this.attrOut.duration,
                 this.attrOut.method);
 
             this.animOut.onStart.subscribe(this.handleStartAnimateOut, this);
             this.animOut.onTween.subscribe(this.handleTweenAnimateOut, this);
-            this.animOut.onComplete.subscribe(this.handleCompleteAnimateOut, 
+            this.animOut.onComplete.subscribe(this.handleCompleteAnimateOut,
                 this);
 
         },
-        
+
         /**
         * Triggers the in-animation.
         * @method animateIn
@@ -9066,7 +9066,7 @@ version: 2.7.0
         * @param {Object} obj The scope object
         */
         handleCompleteAnimateOut: function (type, args, obj) { },
-        
+
         /**
         * Returns a string representation of the object.
         * @method toString

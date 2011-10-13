@@ -8,153 +8,153 @@
   -->
 <project name="mp" default="mp.help" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<target name="mp.help">
-		<echo>
+  <target name="mp.help">
+    <echo>
 commands (mp.help)
 
     mp.deploy
-        compiles src, creates war, and pushes it to tomcat dir 
-		</echo>
-	</target>
+        compiles src, creates war, and pushes it to tomcat dir
+    </echo>
+  </target>
 
-	<dirname property="mp.dir" file="${ant.file.mp}" />
-	
-	<property file="${mp.dir}/build.properties" />
+  <dirname property="mp.dir" file="${ant.file.mp}" />
 
-	<path id="webapp.path">
-		<fileset dir="${mp.build.webapp}">
-			<exclude name="**/jsp-api*.jar"/>
-			<exclude name="**/servlet-api*.jar"/>
-		</fileset>
-	</path>
+  <property file="${mp.dir}/build.properties" />
 
-	<path id="mp.classpath.compile">
-		<fileset dir="${mp.build.lib}">
-			<include name="*.jar" />
-			<exclude name="mst-service-impl*.jar" />
-		</fileset>
-	</path>
+  <path id="webapp.path">
+    <fileset dir="${mp.build.webapp}">
+      <exclude name="**/jsp-api*.jar"/>
+      <exclude name="**/servlet-api*.jar"/>
+    </fileset>
+  </path>
 
-	<target name="mp.clean" depends="init">
-		<delete dir="${mp.build.dir}" />
-		<echo>${tomcat.dir}/webapps/${mp.project-name}</echo>
-		<delete dir="${tomcat.dir}/webapps/${mp.project-name}" />
-		<delete file="${tomcat.dir}/webapps/${mp.project-name}.war" />
-	</target>
+  <path id="mp.classpath.compile">
+    <fileset dir="${mp.build.lib}">
+      <include name="*.jar" />
+      <exclude name="mst-service-impl*.jar" />
+    </fileset>
+  </path>
 
-	<target name="mp.clean.classes">
-		<delete dir="${mp.build.classes}" />
-	</target>
+  <target name="mp.clean" depends="init">
+    <delete dir="${mp.build.dir}" />
+    <echo>${tomcat.dir}/webapps/${mp.project-name}</echo>
+    <delete dir="${tomcat.dir}/webapps/${mp.project-name}" />
+    <delete file="${tomcat.dir}/webapps/${mp.project-name}.war" />
+  </target>
 
-	<target name="mp.clean.lib">
-		<delete dir="${mp.build.lib}" />
-	</target>
+  <target name="mp.clean.classes">
+    <delete dir="${mp.build.classes}" />
+  </target>
 
-	<target name="mp.init" depends="init">
-		<mkdir dir="${mp.build.classes}" />
-		<mkdir dir="${mp.build.lib}" />
-		<echo>${tomcat.dir}: tomcat.dir</echo>
-	</target>
+  <target name="mp.clean.lib">
+    <delete dir="${mp.build.lib}" />
+  </target>
 
-	<target name="mp.resolve" depends="mp.init">
-		<ivy:resolve file="${mp.dir}/ivy.xml"/>
-	</target>
+  <target name="mp.init" depends="init">
+    <mkdir dir="${mp.build.classes}" />
+    <mkdir dir="${mp.build.lib}" />
+    <echo>${tomcat.dir}: tomcat.dir</echo>
+  </target>
 
-	<target name="mp.ivy-report" depends="mp.resolve"
-			description="--> report the resolve actions">
-		<mkdir dir="${mp.build.ivy.report}" />
-		<ivy:report todir="${mp.build.ivy.report}" />
-	</target>
+  <target name="mp.resolve" depends="mp.init">
+    <ivy:resolve file="${mp.dir}/ivy.xml"/>
+  </target>
 
-	<target name="mp.retrieve" depends="mp.ivy-report">
-		<ivy:retrieve sync="true" pattern="${mp.build.lib}/[artifact]-[revision].[ext]"/>
-	</target>
+  <target name="mp.ivy-report" depends="mp.resolve"
+      description="--> report the resolve actions">
+    <mkdir dir="${mp.build.ivy.report}" />
+    <ivy:report todir="${mp.build.ivy.report}" />
+  </target>
 
-	<target name="mp.compile" depends="mp.retrieve, mp.compile.nodep" />
+  <target name="mp.retrieve" depends="mp.ivy-report">
+    <ivy:retrieve sync="true" pattern="${mp.build.lib}/[artifact]-[revision].[ext]"/>
+  </target>
 
-	<target name="mp.compile.nodep" depends="mp.init">
-		<javac srcdir="${mp.src.java}"
-			destdir="${mp.build.classes}"
-			classpathref="mp.classpath.compile"
-			debug="on"
-			deprecation="on"
-			debuglevel="lines,vars,source"/>
-	</target>
+  <target name="mp.compile" depends="mp.retrieve, mp.compile.nodep" />
 
-	<!-- Copy non java resources -->
-	<target name="mp.copy-resources" depends="mp.compile, mp.copy-resources.nodep" />
+  <target name="mp.compile.nodep" depends="mp.init">
+    <javac srcdir="${mp.src.java}"
+      destdir="${mp.build.classes}"
+      classpathref="mp.classpath.compile"
+      debug="on"
+      deprecation="on"
+      debuglevel="lines,vars,source"/>
+  </target>
 
-	<target name="mp.copy-resources.nodep" depends="mp.compile.nodep">
-		<copy todir="${mp.build.classes}">
-			<fileset dir="${mp.src.java}">
-				<include name="**/*" />
-				<include name="default.properties" />
-				<exclude name="**/*.java" />
-				<exclude name="*.properties" />
-			</fileset>
-		</copy>
-		<copy tofile="${mp.build.classes}/env.properties" file="${box}.properties" overwrite="true" />
-		<copy todir="${mp.build.webapp}">
-			<fileset dir="${mp.src.webapp}" />
-		</copy>
-		<replaceregexp file="${mp.build.webapp}/st/inc/footer.jsp"
-			match="MetadataServicesToolkit v .*$"
-			replace="MetadataServicesToolkit v ${mp.version} - svn.version: ${svn.version}"
-			byline="true" />
-	</target>
+  <!-- Copy non java resources -->
+  <target name="mp.copy-resources" depends="mp.compile, mp.copy-resources.nodep" />
 
-	<target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
-		<jar destfile="${mp.build.dir}/${mp.project-name}.war" >
-			<fileset dir="${mp.build.webapp}">
-				<exclude name="**/jsp-api*.jar"/>
-				<exclude name="**/servlet-api*.jar"/>
-				<exclude name="**/MST-instance*.jar"/>
-				<exclude name="**/mst-instance*.jar"/>
-				<exclude name="**/env.properties"/>
-			</fileset>
-		</jar>
-		<copy todir="${mst-instances}/MST-instances" file="${mp.build.dir}/${mp.project-name}.war" />
-	</target>
+  <target name="mp.copy-resources.nodep" depends="mp.compile.nodep">
+    <copy todir="${mp.build.classes}">
+      <fileset dir="${mp.src.java}">
+        <include name="**/*" />
+        <include name="default.properties" />
+        <exclude name="**/*.java" />
+        <exclude name="*.properties" />
+      </fileset>
+    </copy>
+    <copy tofile="${mp.build.classes}/env.properties" file="${box}.properties" overwrite="true" />
+    <copy todir="${mp.build.webapp}">
+      <fileset dir="${mp.src.webapp}" />
+    </copy>
+    <replaceregexp file="${mp.build.webapp}/st/inc/footer.jsp"
+      match="MetadataServicesToolkit v .*$"
+      replace="MetadataServicesToolkit v ${mp.version} - svn.version: ${svn.version}"
+      byline="true" />
+  </target>
 
-	<!--
-	<target name="hotswap" depends="init">
-		<taskdef name="hotswap" classname="dak.ant.taskdefs.Hotswap"/>
-		<tstamp>
-			<format property="class.tstamp" pattern="MM/dd/yyyy kk:mm:ss" />
-		</tstamp>
+  <target name="mp.war" depends="mp.compile, mp.copy-resources, mc.jar">
+    <jar destfile="${mp.build.dir}/${mp.project-name}.war" >
+      <fileset dir="${mp.build.webapp}">
+        <exclude name="**/jsp-api*.jar"/>
+        <exclude name="**/servlet-api*.jar"/>
+        <exclude name="**/MST-instance*.jar"/>
+        <exclude name="**/mst-instance*.jar"/>
+        <exclude name="**/env.properties"/>
+      </fileset>
+    </jar>
+    <copy todir="${mst-instances}/MST-instances" file="${mp.build.dir}/${mp.project-name}.war" />
+  </target>
 
-		<javac srcdir="${sourcedir}"
-				destdir="${targetdir.classes}"
-				target="${java.target}"
-				classpathref="libraries"
-				debug="on"
-				deprecation="on"
-				debuglevel="lines,vars,source"/>
+  <!--
+  <target name="hotswap" depends="init">
+    <taskdef name="hotswap" classname="dak.ant.taskdefs.Hotswap"/>
+    <tstamp>
+      <format property="class.tstamp" pattern="MM/dd/yyyy kk:mm:ss" />
+    </tstamp>
 
-		<copy todir="${tomcat.dir}\webapps\MetadataServicesToolkit\WEB-INF\classes">
-			<fileset dir="${targetdir.classes}"/>
-		</copy>
+    <javac srcdir="${sourcedir}"
+        destdir="${targetdir.classes}"
+        target="${java.target}"
+        classpathref="libraries"
+        debug="on"
+        deprecation="on"
+        debuglevel="lines,vars,source"/>
 
-		<hotswap verbose="true" port="9000">
-			<fileset dir="${targetdir.classes}" includes="**/*.class">
-			<date datetime="${class.tstamp}" pattern="MM/dd/yyyy kk:mm:ss" when="after" granularity="0"/>
-			</fileset>
-		</hotswap>
-	</target>
-	-->
+    <copy todir="${tomcat.dir}\webapps\MetadataServicesToolkit\WEB-INF\classes">
+      <fileset dir="${targetdir.classes}"/>
+    </copy>
 
-	<target name="mp.deploy" depends="mp.copy-resources.nodep">
-		<copy todir="${tomcat.dir}/webapps/${mp.project-name}">
-			<path refid="webapp.path" />
-		</copy>
-	</target>
+    <hotswap verbose="true" port="9000">
+      <fileset dir="${targetdir.classes}" includes="**/*.class">
+      <date datetime="${class.tstamp}" pattern="MM/dd/yyyy kk:mm:ss" when="after" granularity="0"/>
+      </fileset>
+    </hotswap>
+  </target>
+  -->
 
-	<!--
-	<target name="deploy-webapp-quick" depends="mp.init, mp.copy-resources">
-		<copy todir="${tomcat.dir}/webapps/${mp.project.name}">
-			<fileset dir="${targetdir.webapp}" />
-		</copy>
-	</target>
-	-->
+  <target name="mp.deploy" depends="mp.copy-resources.nodep">
+    <copy todir="${tomcat.dir}/webapps/${mp.project-name}">
+      <path refid="webapp.path" />
+    </copy>
+  </target>
+
+  <!--
+  <target name="deploy-webapp-quick" depends="mp.init, mp.copy-resources">
+    <copy todir="${tomcat.dir}/webapps/${mp.project.name}">
+      <fileset dir="${targetdir.webapp}" />
+    </copy>
+  </target>
+  -->
 
 </project>

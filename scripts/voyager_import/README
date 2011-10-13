@@ -1,0 +1,27 @@
+email from Dunham, Denise on 2011-09-19 (there was a table in that email which I saved to column_detail.png)
+---------------------------------------------------------------------------------------------------------------
+
+I’ve uploaded a file containing the voyager search logs for the past week, about 30,000 searches.  (voysearchlog20110919.dat   26MB)  Search_string contains the search terms.  It may also contain search type codes as well. Log fields and search types descriptions are bellow.  If you need any more information about the logs or you need another file just let me know. 
+
+GKEY    Keyword(s
+TALL    Title 
+TKEY    Title Keyword(s
+JALL    Journal Title 
+JKEY    Journal Title Keyword(s)
+NAME    Author (last name, first name
+NKEY    Author Keyword(s)
+SUBJ    Subject Heading
+CMD     Boolean (and/or/not)
+AUTH    Author/Composer--Sorted by Title
+CALL    Call Number
+TITL    Staff Title
+-------------------------------------------------------------------------------------------------------------------
+
+I uploaded the actual file here: http://www.extensiblecatalog.org/doc/MST/large_files/voysearchlog20110919.csv
+
+1) execute create_table.sql
+2) execute import.sql
+3) then I ran this query (this obviously could be improved upon, but it should meet our needs for now):
+
+$ mysql -s -u root --password=root -D voyager_searches -e "select distinct search_string from voyager_searches where search_string like '%GKEY%' and stat_string <> '' and stat_string is not null;"  | sed 's/([GNS]KEY \([^)]*\))/\1/g' | sed 's/\(AND\|[GNS]KEY\) //g' | uniq > searches
+

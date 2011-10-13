@@ -107,7 +107,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
     protected void holdingsProcess014(SaxMarcXmlRecord transformMe,
             AggregateXCRecord transformInto) {
-        List<String> the014s = transformMe.get014s('1', 'a');
+
+        String field003 = transformMe.getControlField(3);
+        List<String> the014s = transformMe.get014s('1', 'a', 'b', field003);
+
         if (the014s != null && the014s.size() > 0) {
             transformInto.getReferencedBibs().addAll(the014s);
         }

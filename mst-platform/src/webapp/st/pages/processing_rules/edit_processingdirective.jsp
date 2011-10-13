@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -83,7 +83,7 @@
                 <div class="stepsStructure">
                     <span style="position: relative; top: 13px;"><img src="page-resources/img/3.4_step1_highlight.gif"></span>
                     <span style="position: relative; top: 12px;"><img src="page-resources/img/3.4_step2_grey.gif"></span>
-                   
+
                 </div>
                 <div align="right" style="margin-bottom:10px;">
                     <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirective.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
@@ -178,7 +178,7 @@
                     </form>
              </div>
                          <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>
            </div>
        </body>
      </html>

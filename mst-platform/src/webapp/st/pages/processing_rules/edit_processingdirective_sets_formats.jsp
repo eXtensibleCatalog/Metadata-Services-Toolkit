@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
@@ -15,7 +15,7 @@
 <c:import url="/st/inc/doctype-frag.jsp"/>
 
 <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-    
+
 <html>
     <head>
         <title>Edit Processing Directive</title>
@@ -27,8 +27,8 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
 
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
@@ -37,13 +37,13 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/edit_processingdirective_sets_formats.js"></SCRIPT>
-        
+
     </head>
 
 
  <body class="yui-skin-sam">
 
-        
+
         <!--  yahoo doc 2 template creates a page 950 pixels wide -->
         <div id="doc2">
 
@@ -60,13 +60,13 @@
                     <jsp:param name="bread" value="Processing Rules | <a href='listProcessingDirectives.action'><U>List Processing Rules</U></a> | Show Processing Rule (Step 2)" />
 
                 </jsp:include>
-                
+
             </div>
             <!--  end header -->
 
             <!-- body -->
             <div id="bd">
-                
+
                <!-- Display of error message -->
                  <c:if test="${errorType != null}">
                     <div id="server_error_div">
@@ -81,14 +81,14 @@
                  </c:if>
                  <div id="error_div"></div>
                  <div id="clear">&nbsp;</div>
-                 
+
               <c:set var="sessionSourceType" scope="session" value="${sourceType}"/>
 
 
                 <div class="stepsStructure">
                     <span style="position: relative; top: 12px;"><img src="page-resources/img/3.4_step1_grey.gif"></span>
                     <span style="position: relative; top: 13px;"><img src="page-resources/img/3.4_step2_highlight.gif"></span>
-                    
+
                 </div>
 
                  <div class="StepsHeader">
@@ -120,7 +120,7 @@
                                             <B>${temporaryProcessingDirective.sourceService.name}</B>&nbsp;&nbsp;
                                         </c:otherwise>
                                     </c:choose>
-                                    
+
                                 </div>
 
                             </td>
@@ -135,7 +135,7 @@
                     </table>
                  </div>
 
-              
+
            <form method="post" name="editProcessingDirectiveSetsFormats">
 
                     <div style="margin-top:10px;margin-bottom:15px;font-family: verdana,sans-serif;font-size: 13px;">
@@ -147,7 +147,7 @@
                     <table class="basicTable">
 
 
-                        
+
                         <tr>
                             <td>
                                 <c:choose>
@@ -185,7 +185,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                      
+
                             <td>
 
                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
@@ -196,10 +196,10 @@
                                     Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40" disabled>
                                 </div>
 
-                                
+
                             </td>
                         </tr>
-                        
+
                         <tr>
                             <td>
                                 <c:choose>
@@ -210,7 +210,7 @@
                                          </div>
                                     </c:when>
                                      <c:otherwise>
-                                         <div  class="listBox" style="display:none;">  
+                                         <div  class="listBox" style="display:none;">
                                             <B>Sets</B> <br>
                                             <select multiple size="10" id="setsSelected" name="setsSelected">
                                                 <option value="0"
@@ -239,7 +239,7 @@
                                                 </c:forEach>
                                             </select>
                                          </div>
-                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left">  
+                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left">
                                             <B>Sets</B> <br>
                                             <select multiple size="10" id="setsSelectedShown" name="setsSelectedShown" disabled>
                                                 <option value="0"
@@ -272,10 +272,10 @@
                                  </c:choose>
                             </td>
                         </tr>
-                        
+
                         <tr>
                             <td colspan="2">
-                                
+
                                 <hr size="1" style="color:#cfd2d4"><br>
                                 <div align="right">
                                   <button style="vertical-align:bottom;" class="xc_button_small" type="button" onclick="javascript:YAHOO.xc.mst.processingDirective.editDirectiveSetsFormats.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp;
@@ -289,7 +289,7 @@
                 </form>
             </div>
                         <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>
        </div>
 </body>
 </html>

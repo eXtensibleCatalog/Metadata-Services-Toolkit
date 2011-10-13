@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="expression" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10109">
-		<xc:titleOfExpression>Abenteuer unter den Indianern =</xc:titleOfExpression>
-		<dcterms:relation>Issued with the reprint of the 1860 ed. of Bone, J. H. A. The Indian captive. New York, 1977.</dcterms:relation>
-		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-		<dcterms:language>English</dcterms:language>
-		<xc:workExpressed>oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10108</xc:workExpressed></xc:entity>
-</xc:frbr>

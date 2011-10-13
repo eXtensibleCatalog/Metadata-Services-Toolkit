@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
@@ -16,12 +16,12 @@
 <c:set var="breadcrumb" value="${param.bread}"/>
 
 <html>
-   
+
     <body>
-       
+
         <div class="breadcrumb">
              <ul>
-           
+
                                 <c:forTokens var="str" delims="|" varStatus="a" items="${breadcrumb}">
                                     <c:choose>
                                         <c:when test = "${a.last}">
@@ -33,8 +33,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forTokens>
-                                            
-                        
+
+
             </ul>
 
         </div>

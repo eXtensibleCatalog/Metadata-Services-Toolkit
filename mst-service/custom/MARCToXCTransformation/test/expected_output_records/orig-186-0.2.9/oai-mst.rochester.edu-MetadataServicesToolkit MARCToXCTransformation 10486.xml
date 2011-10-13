@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:mst.rochester.edu:MetadataServicesToolkit/MARCToXCTransformation/10486">
-		<dcterms:subject xsi:type="dcterms:LCC">M3</dcterms:subject>
-		<rdarole:composer>Cage, John.</rdarole:composer>
-		<rdvocab:titleOfWork>Music for</rdvocab:titleOfWork>
-		<xc:subject xsi:type="dcterms:LCSH">Instrumental ensembles-Parts.</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Instrumental ensembles</xc:subject>
-		<xc:type xsi:type="dcterms:LCSH">Parts.</xc:type></xc:entity>
-</xc:frbr>

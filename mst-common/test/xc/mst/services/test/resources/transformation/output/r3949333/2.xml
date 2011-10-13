@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="expression" id="oai:URMST:Transformation Service/15649">
-		<xc:titleOfExpression>Economics to econometrics :</xc:titleOfExpression>
-		<rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
-		<dcterms:relation>Publisher description http://www.loc.gov/catdir/enhancements/fy0806/2007050332-d.html</dcterms:relation>
-		<dcterms:hasVersion>Table of contents only http://www.loc.gov/catdir/enhancements/fy0806/2007050332-t.html</dcterms:hasVersion>
-		<dcterms:relation>Contributor biographical information http://www.loc.gov/catdir/enhancements/fy0806/2007050332-b.html</dcterms:relation>
-		<dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
-		<dcterms:language>English</dcterms:language>
-		<xc:contributor>McFadden, Daniel.</xc:contributor>
-		<xc:contributor>Wright, Randall, 1956-</xc:contributor>
-		<xc:contributor>Manski, Charles F.</xc:contributor>
-		<xc:contributor>Newey, Whitney K.</xc:contributor>
-		<xc:link>oai:URMST:Transformation Service/15648</xc:link></xc:entity>
+  <xc:entity type="expression" id="oai:URMST:Transformation Service/15649">
+    <xc:titleOfExpression>Economics to econometrics :</xc:titleOfExpression>
+    <rdvocab:illustrationContent>ill. ;</rdvocab:illustrationContent>
+    <dcterms:relation>Publisher description http://www.loc.gov/catdir/enhancements/fy0806/2007050332-d.html</dcterms:relation>
+    <dcterms:hasVersion>Table of contents only http://www.loc.gov/catdir/enhancements/fy0806/2007050332-t.html</dcterms:hasVersion>
+    <dcterms:relation>Contributor biographical information http://www.loc.gov/catdir/enhancements/fy0806/2007050332-b.html</dcterms:relation>
+    <dcterms:type xsi:type="dcterms:DCMIType">Text</dcterms:type>
+    <dcterms:language>English</dcterms:language>
+    <xc:contributor>McFadden, Daniel.</xc:contributor>
+    <xc:contributor>Wright, Randall, 1956-</xc:contributor>
+    <xc:contributor>Manski, Charles F.</xc:contributor>
+    <xc:contributor>Newey, Whitney K.</xc:contributor>
+    <xc:link>oai:URMST:Transformation Service/15648</xc:link></xc:entity>
 </xc:frbr>

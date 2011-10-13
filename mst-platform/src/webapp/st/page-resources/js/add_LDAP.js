@@ -1,19 +1,19 @@
  /*
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   */
-  
+
 YAHOO.namespace("xc.mst.configuration.ldap");
 
 YAHOO.xc.mst.configuration.ldap = {
 
   converter :function(c)
     {
-        
+
         // restrict input to a single character
         c = c . charAt (0);
 
@@ -38,17 +38,17 @@ YAHOO.xc.mst.configuration.ldap = {
         }
         return i;
     },
-    
+
      addLDAP : function()
      {
 
-         
+
              var displayName = document.getElementById("displayName").value;
              var serverURL = document.getElementById("serverURL").value;
              var userNameAttribute = document.getElementById("userNameAttribute").value;
              var startLocation = document.getElementById("startLocation").value;
              var port = document.getElementById("port").value;
-            
+
              if((displayName=='')||(serverURL=='')||(userNameAttribute=='')||(startLocation=='')||(port==''))
              {
                 if(displayName=='')
@@ -71,19 +71,19 @@ YAHOO.xc.mst.configuration.ldap = {
                     {
                         createErrorDiv("error","Port is a required field");
                     }
-               
+
              }
              else
              {
-             
+
                 if (document.addLDAP.showForgotPasswordLink.checked) {
-                	 if (document.getElementById("forgotPasswordUrl").value == '') {
-                	 	createErrorDiv("error","Forgot password URL is required.");
-                	 	return false;
-                	 }
+                   if (document.getElementById("forgotPasswordUrl").value == '') {
+                     createErrorDiv("error","Forgot password URL is required.");
+                     return false;
+                   }
                 }
                  var arr = serverURL.split("://");
-                
+
 
                  if(arr[1]==null)
                      {
@@ -92,14 +92,14 @@ YAHOO.xc.mst.configuration.ldap = {
                  else
                      {
                         var flag = true;
-                       
+
                         for(var i=0;i<port.length;i++)
                             {
-                               
+
 
                                 var j;
                                 j = YAHOO.xc.mst.configuration.ldap.converter(port.charAt(i));
-                               
+
                                 if((j<48)||(j>57))
                                     {
                                         flag = false;
@@ -108,17 +108,17 @@ YAHOO.xc.mst.configuration.ldap = {
                             }
                         if(flag==true)
                             {
-                               
+
                                 document.addLDAP.submit();
                             }
                         else
                             {
-                               
+
                                 createErrorDiv("error","Port Number should be an integer value");
                             }
                      }
              }
-         
+
      },
 
     cancel: function()

@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
@@ -25,9 +25,9 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-            
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
@@ -43,7 +43,7 @@
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
+    <!-- page header - this uses the yahoo page styling -->
             <div id="hd">
 
                 <!--  this is the header of the page -->
@@ -61,7 +61,7 @@
 
             <!-- body -->
             <div id="bd">
-                
+
 
                 <!-- Display of error message -->
                 <c:if test="${errorType != null}">
@@ -69,17 +69,17 @@
                     <div id="server_message_div" class="${errorType}">
                         <img  src="${pageContext.request.contextPath}/page-resources/img/${errorType}.jpg">
                         <c:if test="${errorType == 'error'}">
-                        	<span class="errorText">
+                          <span class="errorText">
                                 <mst:fielderror error="${fieldErrors}">
                                 </mst:fielderror>
                             </span>
-                       	</c:if>
+                         </c:if>
                         <c:if test="${errorType == 'info'}">
-                        	<div class="jsErrorMessage"> ${message}</div>
+                          <div class="jsErrorMessage"> ${message}</div>
                         </c:if>
                     </div>
                     </div>
-                 </c:if> 
+                 </c:if>
                  <div id="error_div"></div>
                  <div class="clear">&nbsp;</div>
 
@@ -95,7 +95,7 @@
                             <td valign="top"><B>Server URL</B> &nbsp;&nbsp;<br>
                             <input type="text" id="serverURL" name ="serverURL" class="textfield" value="${server.url}" maxlength="255" size="40"><br><br></td>
                         </tr>
-                                      
+
                         <tr>
                             <td valign="top"> <B>Port</B> &nbsp;&nbsp;<br>
                             <input type="text" id="port" name ="port" class="textfield" value="${server.port}" maxlength="11" size="40"><br><br></td>
@@ -115,23 +115,23 @@
                             <td valign="center"> <B>Show forgot password URL </B> &nbsp;&nbsp;<br>
                             <input type="radio" name ="showForgotPasswordLink" value="yes"
                             <c:if test="${server.showForgotPasswordLink == 'true'}">
-                            	checked
+                              checked
                             </c:if> > Yes
                             <input type="radio" name ="showForgotPasswordLink" value="no"
                             <c:if test="${server.showForgotPasswordLink == 'false'}">
-                            	checked
+                              checked
                             </c:if> > No
                             </td>
                         </tr>
-                                                
+
                         <tr>
                             <td valign="top"> <B>Forgot password URL</B> &nbsp;&nbsp;<br>
                             <input type="text" id="forgotPasswordUrl" name ="forgotPasswordUrl" class="textfield" value="${server.forgotPasswordUrl}" maxlength="255" size="60"></td>
-                        </tr>                                                
+                        </tr>
 
-		<tr><td>
+    <tr><td>
                    <br><br><br>
-                       
+
                     <div align="left">
                         <!-- <button class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.MyObject.cancel();" name="cancel">Cancel</button> &nbsp;&nbsp;&nbsp; -->
                         <button style="width:150px;" class="xc_button" type="button" onclick="javascript:YAHOO.xc.mst.configuration.ldap.deleteLDAP();" name="deleteLDAP">Clear LDAP Server</button>
@@ -143,7 +143,7 @@
                 </form>
             </div>
                         <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>  
+            <c:import url="/st/inc/footer.jsp"/>
         </div>
     </body>
 </html>

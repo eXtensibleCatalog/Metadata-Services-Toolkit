@@ -466,11 +466,11 @@ public class XCRecordService extends GenericMetadataServiceService {
             Long manifestationId,
             Long a_expressionId,
             Long a_workId)
-            throws TransformerConfigurationException, TransformerException, DatabaseConfigException{
-        //Bridget method
+            throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
+        // Bridget method
         return getSplitXCRecordXML(repo,
                 ar, manifestationId);
-        //TODO make this method public, utilize a_expressionId, a_workId
+        // TODO make this method public, utilize a_expressionId, a_workId
     }
 
     /**
@@ -828,7 +828,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
             ar.xcRootElement.addContent(holdingsElement);
             Record r = createRecord(ar, holdingId,
-                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds);
+                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds);  // <-the uplinks
             records.add(r);
             ar.xcRootElement.removeContent();
         }

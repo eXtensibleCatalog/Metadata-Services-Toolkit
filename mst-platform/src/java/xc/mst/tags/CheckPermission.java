@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.tags;
 
@@ -21,17 +21,16 @@ import xc.mst.bo.user.User;
 
 /**
  * Tag to check user permissions
- *
+ * 
  * @author Sharmila Ranganathan
  */
 public class CheckPermission extends SimpleTagSupport {
 
-	/** Permission to check on the user */
-	private String permission;
+    /** Permission to check on the user */
+    private String permission;
 
     @Override
-    public void doTag() throws JspException
-    {
+    public void doTag() throws JspException {
         Boolean permissionGranted = false;
         PageContext pageContext = (PageContext) getJspContext();
 
@@ -39,44 +38,38 @@ public class CheckPermission extends SimpleTagSupport {
 
         List<Group> groups = user.getGroups();
 
-        for(Group group:groups)
-        {
-        	for (Permission p: group.getPermissions()) {
-        		if (p.getTabName().equalsIgnoreCase(permission)) {
-        			permissionGranted = true;
-        			break;
-        		}
-        	}
+        for (Group group : groups) {
+            for (Permission p : group.getPermissions()) {
+                if (p.getTabName().equalsIgnoreCase(permission)) {
+                    permissionGranted = true;
+                    break;
+                }
+            }
 
-        	if (permissionGranted) {
-        		break;
-        	}
+            if (permissionGranted) {
+                break;
+            }
         }
 
         // If permission exist then execute the JSP
         if (permissionGranted) {
-    	    try
-    		{
-    	    	if( getJspBody() != null )
-    	    	{
-    		        getJspBody().invoke(null);
-    	    	}
-    		}
-    		catch(Exception e)
-    		{
-    			throw new JspException("could not invoke body",e);
-    		}
+            try {
+                if (getJspBody() != null) {
+                    getJspBody().invoke(null);
+                }
+            } catch (Exception e) {
+                throw new JspException("could not invoke body", e);
+            }
         }
-
 
     }
 
-	public String getPermission() {
-		return permission;
-	}
+    public String getPermission() {
+        return permission;
+    }
 
-	public void setPermission(String permission) {
-		this.permission = permission;
-	}
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 
 }

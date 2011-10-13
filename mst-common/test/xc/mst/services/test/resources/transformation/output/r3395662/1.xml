@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdvocab="http://rdvocab.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles">
-	<xc:entity type="work" id="oai:URMST:Transformation Service/15622">
-		<dcterms:subject xsi:type="dcterms:LCC">Z673.A5</dcterms:subject>
-		<dcterms:subject xsi:type="dcterms:NLM">Z 673 A508</dcterms:subject>
-		<dcterms:subject xsi:type="dcterms:DDC">020.973</dcterms:subject>
-		<rdvocab:titleOfWork>American libraries (Online)</rdvocab:titleOfWork>
-		<xc:subject type="rvm">American Library Association-Périodiques.</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Library science-Periodicals.</xc:subject>
-		<xc:subject xsi:type="dcterms:MESH">Library Science-Periodicals.</xc:subject>
-		<dcterms:relation dcterms:ISSN="0084-6406">American Library Association. ALA handbook of organization &lt;1998/99-&gt;</dcterms:relation>
-		<dcterms:relation>American Library Association. Annual report &lt;2000-&gt;</dcterms:relation>
-		<dcterms:replaces dcterms:ISSN="0364-4006">American Library Association. ALA bulletin</dcterms:replaces>
-		<rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
-		<xc:subject type="rvm">American Library Association</xc:subject>
-		<xc:subject xsi:type="dcterms:LCSH">Library science</xc:subject>
-		<xc:subject xsi:type="dcterms:MESH">Library Science</xc:subject>
-		<xc:type type="rvm">Périodiques.</xc:type>
-		<xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
-		<xc:type xsi:type="dcterms:MESH">Periodicals.</xc:type></xc:entity>
+  <xc:entity type="work" id="oai:URMST:Transformation Service/15622">
+    <dcterms:subject xsi:type="dcterms:LCC">Z673.A5</dcterms:subject>
+    <dcterms:subject xsi:type="dcterms:NLM">Z 673 A508</dcterms:subject>
+    <dcterms:subject xsi:type="dcterms:DDC">020.973</dcterms:subject>
+    <rdvocab:titleOfWork>American libraries (Online)</rdvocab:titleOfWork>
+    <xc:subject type="rvm">American Library Association-Périodiques.</xc:subject>
+    <xc:subject xsi:type="dcterms:LCSH">Library science-Periodicals.</xc:subject>
+    <xc:subject xsi:type="dcterms:MESH">Library Science-Periodicals.</xc:subject>
+    <dcterms:relation dcterms:ISSN="0084-6406">American Library Association. ALA handbook of organization &lt;1998/99-&gt;</dcterms:relation>
+    <dcterms:relation>American Library Association. Annual report &lt;2000-&gt;</dcterms:relation>
+    <dcterms:replaces dcterms:ISSN="0364-4006">American Library Association. ALA bulletin</dcterms:replaces>
+    <rdvocab:natureOfContent>Non-Fiction</rdvocab:natureOfContent>
+    <xc:subject type="rvm">American Library Association</xc:subject>
+    <xc:subject xsi:type="dcterms:LCSH">Library science</xc:subject>
+    <xc:subject xsi:type="dcterms:MESH">Library Science</xc:subject>
+    <xc:type type="rvm">Périodiques.</xc:type>
+    <xc:type xsi:type="dcterms:LCSH">Periodicals.</xc:type>
+    <xc:type xsi:type="dcterms:MESH">Periodicals.</xc:type></xc:entity>
 </xc:frbr>

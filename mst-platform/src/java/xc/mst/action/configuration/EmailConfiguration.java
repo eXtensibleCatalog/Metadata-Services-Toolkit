@@ -1,12 +1,11 @@
-
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.action.configuration;
 
@@ -19,66 +18,59 @@ import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
 
 /**
- *  The action method that is used to add/edit an email Server
- *
+ * The action method that is used to add/edit an email Server
+ * 
  * @author Tejaswi Haramurali
  */
-public class EmailConfiguration extends BaseActionSupport
-{
+public class EmailConfiguration extends BaseActionSupport {
 
-    /**  Serial id */
-	private static final long serialVersionUID = 4328003705417402790L;
+    /** Serial id */
+    private static final long serialVersionUID = 4328003705417402790L;
 
-	/** A reference to the logger for this class */
-	static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
+    /** A reference to the logger for this class */
+    static Logger log = Logger.getLogger(Constants.LOGGER_GENERAL);
 
     /** The temporary emailConfig object that is used to populate JSP page fields **/
     private EmailConfig temporaryEmailConfig;
 
-    /**The URL of the email server **/
+    /** The URL of the email server **/
     private String emailServerAddress;
 
-    /**The from address **/
+    /** The from address **/
     private String fromAddress;
 
-    /**The port number of the email server **/
+    /** The port number of the email server **/
     private int port;
 
-    /**The password for the email server **/
+    /** The password for the email server **/
     private String password;
 
-    /**The timeout period **/
+    /** The timeout period **/
     private int timeout;
 
-    /**The type of encrypted connection (can also ne 'none') **/
+    /** The type of encrypted connection (can also ne 'none') **/
     private String encryptedConnection;
 
     /** Information message that describes whether the email server was added correctly */
     private String message;
 
     private EmailConfig emailConfig = new EmailConfig();
-    
-	/** Error type */
-	private String errorType; 
 
-    
+    /** Error type */
+    private String errorType;
 
-     /**
+    /**
      * Overrides default implementation to view the email server configuration page.
-      *
+     * 
      * @return {@link #SUCCESS}
      */
     @Override
-    public String execute()
-    {
-        try
-        {
+    public String execute() {
+        try {
             emailConfig = getEmailConfigService().getEmailConfiguration();
             return SUCCESS;
-        }
-        catch(DatabaseConfigException dce)
-        {
-            log.error(dce.getMessage(),dce);
+        } catch (DatabaseConfigException dce) {
+            log.error(dce.getMessage(), dce);
             this.addFieldError("emailConfigError", "Unable to connect to the database. Database configuration may be incorrect");
             errorType = "error";
             return INPUT;
@@ -88,13 +80,11 @@ public class EmailConfiguration extends BaseActionSupport
 
     /**
      * Method that changes the details of the email server
-     *
+     * 
      * @return {@link #SUCCESS}
      */
-    public String changeEmailConfig()
-    {
-        try
-        {            
+    public String changeEmailConfig() {
+        try {
             emailConfig.setEmailServerAddress(emailServerAddress);
             emailConfig.setEncryptedConnection(encryptedConnection);
             emailConfig.setFromAddress(fromAddress);
@@ -105,10 +95,8 @@ public class EmailConfiguration extends BaseActionSupport
             message = "Email Configuration details saved.";
             errorType = "info";
             return SUCCESS;
-        }
-        catch(DataException de)
-        {
-            log.error(de.getMessage(),de);
+        } catch (DataException de) {
+            log.error(de.getMessage(), de);
             this.addFieldError("changeEmailConfigError", "Error occurred while updating email configuration. An email has been sent to the administrator.");
             getUserService().sendEmailErrorReport();
             errorType = "error";
@@ -118,197 +106,186 @@ public class EmailConfiguration extends BaseActionSupport
 
     /**
      * Sets the URL address of the email server
-     *
-     * @param emailServerAddress email server address
+     * 
+     * @param emailServerAddress
+     *            email server address
      */
-    public void setEmailServerAddress(String emailServerAddress)
-    {
+    public void setEmailServerAddress(String emailServerAddress) {
         this.emailServerAddress = emailServerAddress.trim();
     }
 
     /**
      * Gets the URL address of the server
-     *
+     * 
      * @return email server address
      */
-    public String getEmailServerAddress()
-    {
+    public String getEmailServerAddress() {
         return emailServerAddress;
     }
 
     /**
      * Sets the from address
-     *
-     * @param fromAddress from address
+     * 
+     * @param fromAddress
+     *            from address
      */
-    public void setFromAddress(String fromAddress)
-    {
+    public void setFromAddress(String fromAddress) {
         this.fromAddress = fromAddress.trim();
     }
 
     /**
      * Returns the from address
-     *
+     * 
      * @return from address
      */
-    public String getFromAddress()
-    {
+    public String getFromAddress() {
         return fromAddress;
     }
 
     /**
      * Sets the port of the email server
-     *
-     * @param port port number
+     * 
+     * @param port
+     *            port number
      */
-    public void setPort(int port)
-    {
+    public void setPort(int port) {
 
         this.port = port;
     }
 
     /**
      * Returns the port number of the email server
-     *
+     * 
      * @return port number
      */
-    public int getPort()
-    {
+    public int getPort() {
 
         return port;
     }
 
     /**
      * Sets the password
-     *
+     * 
      * @param password
      */
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     /**
      * Returns the password
-     *
+     * 
      * @return password
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
     /**
      * Sets the timeout period
-     *
+     * 
      * @param timeout
      */
-    public void setTimeout(int timeout)
-    {
+    public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
 
     /**
      * Returns the timeout period
-     *
+     * 
      * @return timeout period
      */
-    public int getTimeout()
-    {
+    public int getTimeout() {
         return timeout;
     }
 
     /**
      * Sets the type of encrypted connection. 'None' is also an option
-     *
+     * 
      * @param encryptedConnection
      */
-    public void setEncryptedConnection(String encryptedConnection)
-    {
+    public void setEncryptedConnection(String encryptedConnection) {
         this.encryptedConnection = encryptedConnection;
     }
 
     /**
      * Returns the encrypted connection
-     *
+     * 
      * @return encrypted connection
      */
-    public String getEncryptedConnection()
-    {
+    public String getEncryptedConnection() {
         return this.encryptedConnection;
     }
 
     /**
      * Sets the temporary email config object
-     *
+     * 
      * @param emailConfig
      */
-    public void setTemporaryEmailConfig(EmailConfig emailConfig)
-    {
+    public void setTemporaryEmailConfig(EmailConfig emailConfig) {
         this.temporaryEmailConfig = emailConfig;
     }
 
     /**
      * Returns the temporary email config object
-     *
+     * 
      * @return temporary email configuration object
      */
-    public EmailConfig getTemporaryEmailConfig()
-    {
+    public EmailConfig getTemporaryEmailConfig() {
         return temporaryEmailConfig;
     }
 
     /**
      * Returns the information message
-     *
+     * 
      * @return information message
      */
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
     /**
      * Sets the information message which describes whether the email server was added correctly or not
-     *
-     * @param message 
+     * 
+     * @param message
      */
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     /**
      * Returns the temporary email config object
-     *
+     * 
      * @return temporary email configuration object
      */
-	public EmailConfig getEmailConfig() {
-		return emailConfig;
-	}
+    public EmailConfig getEmailConfig() {
+        return emailConfig;
+    }
 
     /**
      * Sets the email config object which is used to populate JSP fields
-     *
-     * @param emailConfig 
+     * 
+     * @param emailConfig
      */
-	public void setEmailConfig(EmailConfig emailConfig) {
-		this.emailConfig = emailConfig;
-	}
+    public void setEmailConfig(EmailConfig emailConfig) {
+        this.emailConfig = emailConfig;
+    }
 
     /**
      * Returns the error type
-     *
+     * 
      * @return error type
      */
-	public String getErrorType() {
-		return errorType;
-	}
+    public String getErrorType() {
+        return errorType;
+    }
 
     /**
      * Sets the error type
      * 
-     * @param errorType 
+     * @param errorType
      */
-	public void setErrorType(String errorType) {
-		this.errorType = errorType;
-	}
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
 }

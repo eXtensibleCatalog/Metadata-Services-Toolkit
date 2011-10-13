@@ -13,13 +13,7 @@ import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 
 import org.apache.log4j.Logger;
@@ -35,6 +29,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.bo.record.RegisteredData;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.constants.Constants;
@@ -96,6 +91,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected long timeDiff = 0;
 
     protected Repository repository = null;
+
+    /**
+     * A list of identifiers to add to the record currently being processed
+     */
+    protected LinkedHashMap<String, String> m_identifiers = new LinkedHashMap<String, String>();
 
     static {
         LOG.debug("GenericMetadataService class loaded!!!");
@@ -555,7 +555,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 previouslyPaused = false;
             }
             if (++getRecordLoops % 100 == 0) {
-                //TODO here is the place to display performance!
+                // TODO here is the place to display performance!
                 // processedRecordCount is a sensible count to pass here as the number of records updated.
                 TimingLogger.reset(processedRecordCount);
             }
@@ -722,7 +722,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 } /*else if (mostRecentIncomingRecordCounts.getHarvestStartDate()
                         .getTime() >= (startTime - 1000)) {
                     processServiceRecordCounts(mostRecentIncomingRecordCounts);
-                } */else if (atLeastOneRecordProcessed) {
+                  } */else if (atLeastOneRecordProcessed) {
                     processServiceRecordCounts(mostRecentIncomingRecordCounts);
                 }
             } catch (Throwable t) {
@@ -768,8 +768,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
         applyRulesToRecordCounts(mostRecentIncomingRecordCounts);
     }
 
-
-    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {}
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+    }
 
     protected boolean isSolrIndexer() {
         boolean ret = getRepository() == null;
@@ -848,6 +848,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     protected void addMessage(InputRecord record, int code, char level,
             String detail) {
+        if (!isMessageEnabled(code, level)) {
+            LOG.debug("Will not addMessage, because the message is disabled. level=" + level + " code=" + code);
+            return;
+        }
         Record r = (Record) record;
         RecordMessage rm = new RecordMessage();
         getMessageDAO().injectId(rm);
@@ -861,13 +865,31 @@ public abstract class GenericMetadataService extends SolrMetadataService
         messages2insert.add(rm);
     }
 
-    public String getMessage(int code) {
-        return getMessage(code, RecordMessage.ERROR);
+    public String getMessage(int code, char type) {
+        return getMessage(code, type, new String[] {});
     }
 
-    public String getMessage(int code, char type) {
+    public String getMessage(int code, char type, String[] args) {
         // don't use type as part of message retrieval...yet.
-        return config.getProperty("error." + code + ".text");
+        // also, don't use args as part of message retrieval yet (need to debug it more) but:
+        //    think it is useful to be able to build messages with variable parts included in them,
+        //    that is what the args are for.
+
+        final String prop = "error." + code + ".text";
+        String s;
+/*
+        if (args.length > 0) {
+            s= MSTConfiguration.getMSTString(prop, args);   //TODO problem with this method.  Returns null?
+        }
+
+        if (s == null) {
+            LOG.error("ERROR with getMessage, code=" + code + " type=" + type + " config type details: " + config.getClass().getName() + " toStr: " + config.toString());
+        } else {
+            LOG.debug("INFO with getMessage, code=" + code + " type=" + type + " config type details: " + config.getClass().getName() + " toStr: " + config.toString());
+        }
+*/
+        s= config.getProperty(prop);
+        return s;
     }
 
     // look for an entry like error.852.enabled=true
@@ -878,6 +900,20 @@ public abstract class GenericMetadataService extends SolrMetadataService
             return config.getPropertyAsBoolean("error." + code + "enabled", true);
         }
         return config.getPropertyAsBoolean("error." + code + "enabled", false);
+    }
+
+    // stuff you want to end up displaying in browse records, to make searching for known interesting data easier.
+    // fogbugz 828
+    public void registerId(String readable, String identifier) {
+        m_identifiers.put(readable, identifier);
+    }
+    public LinkedHashMap<String, String> getIdentifiers() {
+        return m_identifiers;
+    }
+    // For now, SolrIndexService overrides this only.  But leave at this level to give option later for services to provide this
+    // information directly.
+    public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
+        return new ArrayList<RegisteredData> ();
     }
 
 }

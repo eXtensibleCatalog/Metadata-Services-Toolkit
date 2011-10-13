@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2009 eXtensible Catalog Organization
-  *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
-  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/.
-  *
-  */
+ * Copyright (c) 2009 eXtensible Catalog Organization
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
+ * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
+ * website http://www.extensiblecatalog.org/.
+ *
+ */
 
 package xc.mst.bo.harvest;
 
@@ -20,479 +20,464 @@ import xc.mst.constants.Status;
 
 /**
  * Represents a schedule for running a harvest
- *
+ * 
  * @author Eric Osisek
  */
-public class HarvestSchedule
-{
-	/**
-	 * The harvest schedule's ID
-	 */
-	private int id = -1;
-
-	/**
-	 * The harvest schedule's name
-	 */
-	private String scheduleName = null;
+public class HarvestSchedule {
+    /**
+     * The harvest schedule's ID
+     */
+    private int id = -1;
 
     /**
-	 * The harvest schedule's recurrence pattern
-	 */
-	private String recurrence = null;
+     * The harvest schedule's name
+     */
+    private String scheduleName = null;
 
     /**
-	 * The provider harvested when this schedule is run
-	 */
-	private Provider provider = null;
+     * The harvest schedule's recurrence pattern
+     */
+    private String recurrence = null;
 
-	/**
-	 * The earliest date this harvest schedule should be run
-	 */
-	private Date startDate = null;
+    /**
+     * The provider harvested when this schedule is run
+     */
+    private Provider provider = null;
 
-	/**
-	 * The latest date this harvest schedule should be run
-	 */
-	private Date endDate = null;
+    /**
+     * The earliest date this harvest schedule should be run
+     */
+    private Date startDate = null;
 
-	/**
-	 * The number of minutes after the hour when this harvest schedule should be run
-	 */
-	private int minute = -1;
+    /**
+     * The latest date this harvest schedule should be run
+     */
+    private Date endDate = null;
 
-	/**
-	 * The day of the week when this harvest schedule should be run
-	 */
-	private int dayOfWeek = 0;
+    /**
+     * The number of minutes after the hour when this harvest schedule should be run
+     */
+    private int minute = -1;
 
-	/**
-	 * The hour (0 - 23) when this harvest schedule should be run
-	 */
-	private int hour = -1;
+    /**
+     * The day of the week when this harvest schedule should be run
+     */
+    private int dayOfWeek = 0;
 
-	/**
-	 * The email address to be notified of the results of running the schedule
-	 */
-	private String notifyEmail = null;
-	
-	/**
-	 * The current status of the harvest.
-	 */
-	private Status status = null;
-	
-	/**
-	 * The OAI requests placed when the harvest schedule was run
-	 */
-	private String request = null;
+    /**
+     * The hour (0 - 23) when this harvest schedule should be run
+     */
+    private int hour = -1;
 
-	/**
-	 * A list of sets to be harvested by the schedule
-	 */
-	private List<Set> sets = new ArrayList<Set>();
+    /**
+     * The email address to be notified of the results of running the schedule
+     */
+    private String notifyEmail = null;
 
-	/**
-	 * A list of formats to be harvested by the schedule
-	 */
-	private List<Format> formats = new ArrayList<Format>();
+    /**
+     * The current status of the harvest.
+     */
+    private Status status = null;
 
-	/**
-	 * A list of the schedule's steps
-	 */
-	private List<HarvestScheduleStep> steps = new ArrayList<HarvestScheduleStep>();
+    /**
+     * The OAI requests placed when the harvest schedule was run
+     */
+    private String request = null;
 
-	/**
-	 * Gets the harvest schedule's ID
-	 *
-	 * @return The harvest schedule's ID
-	 */
-	public int getId()
-	{
-		return id;
-	} // end method getId()
+    /**
+     * A list of sets to be harvested by the schedule
+     */
+    private List<Set> sets = new ArrayList<Set>();
 
-	/**
-	 * Sets the harvest schedule's ID
-	 *
-	 * @param id The harvest schedule's new ID
-	 */
-	public void setId(int id)
-	{
-		this.id = id;
-	} // end method setId(int)
+    /**
+     * A list of formats to be harvested by the schedule
+     */
+    private List<Format> formats = new ArrayList<Format>();
 
-	/**
-	 * Gets the harvest schedule's name
-	 *
-	 * @return The harvest schedule's name
-	 */
-	public String getScheduleName()
-	{
-		return scheduleName;
-	} // end method getScheduleName()
+    /**
+     * A list of the schedule's steps
+     */
+    private List<HarvestScheduleStep> steps = new ArrayList<HarvestScheduleStep>();
 
-	/**
-	 * Sets the harvest schedule's name
-	 *
-	 * @param scheduleName The harvest schedule's new name
-	 */
-	public void setScheduleName(String scheduleName)
-	{
-		this.scheduleName = scheduleName;
-	} // end method setScheduleName(String)
+    /**
+     * Gets the harvest schedule's ID
+     * 
+     * @return The harvest schedule's ID
+     */
+    public int getId() {
+        return id;
+    } // end method getId()
 
-	/**
-	 * Gets the harvest schedule's recurrence
-	 *
-	 * @return The harvest schedule'srecurrence
-	 */
-	public String getRecurrence()
-	{
-		return recurrence;
-	} // end method getRecurrence()
+    /**
+     * Sets the harvest schedule's ID
+     * 
+     * @param id
+     *            The harvest schedule's new ID
+     */
+    public void setId(int id) {
+        this.id = id;
+    } // end method setId(int)
 
-	/**
-	 * Sets the harvest schedule's recurrence
-	 *
-	 * @param recurrence The harvest schedule's new recurrence
-	 */
-	public void setRecurrence(String recurrence)
-	{
-		this.recurrence = recurrence;
-	} // end method setRecurrence(String)
+    /**
+     * Gets the harvest schedule's name
+     * 
+     * @return The harvest schedule's name
+     */
+    public String getScheduleName() {
+        return scheduleName;
+    } // end method getScheduleName()
 
-	/**
-	 * Gets the provider harvested by this schedule
-	 *
-	 * @return The provider harvested by this schedule
-	 */
-	public Provider getProvider()
-	{
-		return provider;
-	} // end method getProvider()
+    /**
+     * Sets the harvest schedule's name
+     * 
+     * @param scheduleName
+     *            The harvest schedule's new name
+     */
+    public void setScheduleName(String scheduleName) {
+        this.scheduleName = scheduleName;
+    } // end method setScheduleName(String)
 
-	/**
-	 * Sets the provider harvested by this schedule
-	 *
-	 * @param provider The provider harvested by this schedule
-	 */
-	public void setProvider(Provider provider)
-	{
-		this.provider = provider;
-	} // end method setProvider(Provider)
+    /**
+     * Gets the harvest schedule's recurrence
+     * 
+     * @return The harvest schedule'srecurrence
+     */
+    public String getRecurrence() {
+        return recurrence;
+    } // end method getRecurrence()
 
-	/**
-	 * Gets the earliest date the schedule should be run
-	 *
-	 * @return The earliest date the schedule should be run
-	 */
-	public Date getStartDate()
-	{
-		return startDate;
-	} // end method getStartDate()
+    /**
+     * Sets the harvest schedule's recurrence
+     * 
+     * @param recurrence
+     *            The harvest schedule's new recurrence
+     */
+    public void setRecurrence(String recurrence) {
+        this.recurrence = recurrence;
+    } // end method setRecurrence(String)
 
-	/**
-	 * Sets the earliest date the schedule should be run
-	 *
-	 * @param startDate The earliest date the schedule should be run
-	 */
-	public void setStartDate(Date startDate)
-	{
-		this.startDate = startDate ;
-	} // end method setStartDate(Date)
+    /**
+     * Gets the provider harvested by this schedule
+     * 
+     * @return The provider harvested by this schedule
+     */
+    public Provider getProvider() {
+        return provider;
+    } // end method getProvider()
 
-	/**
-	 * Gets the latest date the schedule should be run
-	 *
-	 * @return The the latest date the schedule should be run
-	 */
-	public Date getEndDate()
-	{
-		return endDate;
-	} // end method getEndDate()
+    /**
+     * Sets the provider harvested by this schedule
+     * 
+     * @param provider
+     *            The provider harvested by this schedule
+     */
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    } // end method setProvider(Provider)
 
-	/**
-	 * Sets the the latest date the schedule should be run
-	 *
-	 * @param endDate The latest date the schedule should be run
-	 */
-	public void setEndDate(Date endDate)
-	{
-		this.endDate = endDate;
-	} // end method setEndDate(Date)
+    /**
+     * Gets the earliest date the schedule should be run
+     * 
+     * @return The earliest date the schedule should be run
+     */
+    public Date getStartDate() {
+        return startDate;
+    } // end method getStartDate()
 
-	/**
-	 * Gets the number of minutes after the hour when this harvest schedule should be run
-	 *
-	 * @return The number of minutes after the hour when this harvest schedule should be run
-	 */
-	public int getMinute()
-	{
-		return minute;
-	} // end method getMinute()
+    /**
+     * Sets the earliest date the schedule should be run
+     * 
+     * @param startDate
+     *            The earliest date the schedule should be run
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    } // end method setStartDate(Date)
 
-	/**
-	 * Sets the number of minutes after the hour when this harvest schedule should be run
-	 *
-	 * @param minute The number of minutes after the hour when this harvest schedule should be run
-	 */
-	public void setMinute(int minute)
-	{
-		this.minute = minute;
-	} // end method setMinute(int)
+    /**
+     * Gets the latest date the schedule should be run
+     * 
+     * @return The the latest date the schedule should be run
+     */
+    public Date getEndDate() {
+        return endDate;
+    } // end method getEndDate()
 
-	/**
-	 * Gets the day of the week when this harvest schedule should be run (1 = Sunday, 2 = Monday, etc.)
-	 *
-	 * @return The day of the week when this harvest schedule should be run
-	 */
-	public int getDayOfWeek()
-	{
-		return dayOfWeek;
-	} // end method getDayOfWeek()
+    /**
+     * Sets the the latest date the schedule should be run
+     * 
+     * @param endDate
+     *            The latest date the schedule should be run
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    } // end method setEndDate(Date)
 
-	/**
-	 * Sets the day of the week when this harvest schedule should be run (1 = Sunday, 2 = Monday, etc.)
-	 *
-	 * @param dayOfWeek The day of the week when this harvest schedule should be run
-	 */
-	public void setDayOfWeek(int dayOfWeek)
-	{
-		this.dayOfWeek = dayOfWeek;
-	} // end method setDayOfWeek(int)
+    /**
+     * Gets the number of minutes after the hour when this harvest schedule should be run
+     * 
+     * @return The number of minutes after the hour when this harvest schedule should be run
+     */
+    public int getMinute() {
+        return minute;
+    } // end method getMinute()
 
-	/**
-	 * Gets the hour (0 - 23) when this harvest schedule should be run
-	 *
-	 * @return The hour (0 - 23) when this harvest schedule should be run
-	 */
-	public int getHour()
-	{
-		return hour;
-	} // end method getHour()
+    /**
+     * Sets the number of minutes after the hour when this harvest schedule should be run
+     * 
+     * @param minute
+     *            The number of minutes after the hour when this harvest schedule should be run
+     */
+    public void setMinute(int minute) {
+        this.minute = minute;
+    } // end method setMinute(int)
 
-	/**
-	 * Sets the hour (0 - 23) when this harvest schedule should be run
-	 *
-	 * @param hour The hour (0 - 23) when this harvest schedule should be run
-	 */
-	public void setHour(int hour)
-	{
-		this.hour = hour;
-	} // end method setHour(int)
+    /**
+     * Gets the day of the week when this harvest schedule should be run (1 = Sunday, 2 = Monday, etc.)
+     * 
+     * @return The day of the week when this harvest schedule should be run
+     */
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    } // end method getDayOfWeek()
 
-	/**
-	 * Gets the email address to be notified of the results of running the schedule
-	 *
-	 * @return The email address to be notified of the results of running the schedule
-	 */
-	public String getNotifyEmail()
-	{
-		return notifyEmail;
-	} // end method getNotifyEmail()
+    /**
+     * Sets the day of the week when this harvest schedule should be run (1 = Sunday, 2 = Monday, etc.)
+     * 
+     * @param dayOfWeek
+     *            The day of the week when this harvest schedule should be run
+     */
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    } // end method setDayOfWeek(int)
 
-	/**
-	 * Sets the email address to be notified of the results of running the schedule
-	 *
-	 * @param notifyEmail The email address to be notified of the results of running the schedule
-	 */
-	public void setNotifyEmail(String notifyEmail)
-	{
-		this.notifyEmail = notifyEmail;
-	} // end method setNotifyEmail(String)
+    /**
+     * Gets the hour (0 - 23) when this harvest schedule should be run
+     * 
+     * @return The hour (0 - 23) when this harvest schedule should be run
+     */
+    public int getHour() {
+        return hour;
+    } // end method getHour()
 
-	/**
-	 * Gets the current status of the harvest.
-	 * @return The current status of the harvest.
-	 */
-	public Status getStatus() {
-		return status;
-	}
+    /**
+     * Sets the hour (0 - 23) when this harvest schedule should be run
+     * 
+     * @param hour
+     *            The hour (0 - 23) when this harvest schedule should be run
+     */
+    public void setHour(int hour) {
+        this.hour = hour;
+    } // end method setHour(int)
 
-	/**
-	 * Sets the current status of the harvest.
-	 * @param status The status of the harvest.
-	 */
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	
-	/**
-	 * Gets the harvest schedule's request
-	 *
-	 * @return The harvest schedule's request
-	 */
-	public String getRequest()
-	{
-		return request;
-	} // end method getRequest()
+    /**
+     * Gets the email address to be notified of the results of running the schedule
+     * 
+     * @return The email address to be notified of the results of running the schedule
+     */
+    public String getNotifyEmail() {
+        return notifyEmail;
+    } // end method getNotifyEmail()
 
-	/**
-	 * Sets the harvest schedule's request
-	 *
-	 * @param request The harvest schedule's new request
-	 */
-	public void setRequest(String request)
-	{
-		this.request = request;
-	} // end method setRequest(String)
-	
-	/**
-	 * Gets the sets to be harvested by the schedule
-	 *
-	 * @return The sets to be harvested by the schedule
-	 */
-	public List<Set> getSets()
-	{
-		return sets;
-	} // end method getSets()
+    /**
+     * Sets the email address to be notified of the results of running the schedule
+     * 
+     * @param notifyEmail
+     *            The email address to be notified of the results of running the schedule
+     */
+    public void setNotifyEmail(String notifyEmail) {
+        this.notifyEmail = notifyEmail;
+    } // end method setNotifyEmail(String)
 
-	/**
-	 * Sets the sets to be harvested by the schedule
-	 *
-	 * @param sets A list of sets to be harvested by the schedule
-	 */
-	public void setSets(List<Set> sets)
-	{
-		this.sets = sets;
-	} // end method setSets(List<Set>)
+    /**
+     * Gets the current status of the harvest.
+     * 
+     * @return The current status of the harvest.
+     */
+    public Status getStatus() {
+        return status;
+    }
 
-	/**
-	 * Adds a set to the list of sets to be harvested by the schedule
-	 *
-	 * @param set The set to add
-	 */
-	public void addSet(Set set)
-	{
-		if(!sets.contains(set))
-			sets.add(set);
-	} // end method addSet(Set)
+    /**
+     * Sets the current status of the harvest.
+     * 
+     * @param status
+     *            The status of the harvest.
+     */
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-	/**
-	 * Removes a set from the list of sets to be harvested by the schedule
-	 *
-	 * @param set The set to remove
-	 */
-	public void removeSet(Set set)
-	{
-		if(sets.contains(set))
-			sets.remove(set);
-	} // end method removeSet(Set)
+    /**
+     * Gets the harvest schedule's request
+     * 
+     * @return The harvest schedule's request
+     */
+    public String getRequest() {
+        return request;
+    } // end method getRequest()
 
-	/**
-	 * Removes all sets
-	 */
-	public void removeAllSets()
-	{
-		sets.clear();
-	} // end method removeAllSets()
+    /**
+     * Sets the harvest schedule's request
+     * 
+     * @param request
+     *            The harvest schedule's new request
+     */
+    public void setRequest(String request) {
+        this.request = request;
+    } // end method setRequest(String)
 
-	/**
-	 * Gets the formats to be harvested by the schedule
-	 *
-	 * @return The formats to be harvested by the schedule
-	 */
-	public List<Format> getFormats()
-	{
-		return formats;
-	} // end method getFormats()
+    /**
+     * Gets the sets to be harvested by the schedule
+     * 
+     * @return The sets to be harvested by the schedule
+     */
+    public List<Set> getSets() {
+        return sets;
+    } // end method getSets()
 
-	/**
-	 * Sets the formats to be harvested by the schedule
-	 *
-	 * @param formats A list of formats to be harvested by the schedule
-	 */
-	public void setFormats(List<Format> formats)
-	{
-		this.formats = formats;
-	} // end method setFormats(List<Format>)
+    /**
+     * Sets the sets to be harvested by the schedule
+     * 
+     * @param sets
+     *            A list of sets to be harvested by the schedule
+     */
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
+    } // end method setSets(List<Set>)
 
-	/**
-	 * Adds a format to the list of formats to be harvested by the schedule
-	 *
-	 * @param format The format to add
-	 */
-	public void addFormat(Format format)
-	{
-		if(!formats.contains(format))
-			formats.add(format);
-	} // end method addFormat(Format)
+    /**
+     * Adds a set to the list of sets to be harvested by the schedule
+     * 
+     * @param set
+     *            The set to add
+     */
+    public void addSet(Set set) {
+        if (!sets.contains(set))
+            sets.add(set);
+    } // end method addSet(Set)
 
-	/**
-	 * Removes a format from the list of formats to be harvested by the schedule
-	 *
-	 * @param format The format to remove
-	 */
-	public void removeFormat(Format format)
-	{
-		if(formats.contains(format))
-			formats.remove(format);
-	} // end method removeFormat(Format)
+    /**
+     * Removes a set from the list of sets to be harvested by the schedule
+     * 
+     * @param set
+     *            The set to remove
+     */
+    public void removeSet(Set set) {
+        if (sets.contains(set))
+            sets.remove(set);
+    } // end method removeSet(Set)
 
-	/**
-	 * Removes all formats
-	 */
-	public void removeAllFormats()
-	{
-		formats.clear();
-	} // end method removeAllFormats()
+    /**
+     * Removes all sets
+     */
+    public void removeAllSets() {
+        sets.clear();
+    } // end method removeAllSets()
 
-	/**
-	 * Gets the schedule's steps
-	 *
-	 * @return The schedule's steps
-	 */
-	public List<HarvestScheduleStep> getSteps()
-	{
-		return steps;
-	} // end method getSteps()
+    /**
+     * Gets the formats to be harvested by the schedule
+     * 
+     * @return The formats to be harvested by the schedule
+     */
+    public List<Format> getFormats() {
+        return formats;
+    } // end method getFormats()
 
-	/**
-	 * Sets the schedule's steps
-	 *
-	 * @param steps The schedule's steps
-	 */
-	public void setSteps(List<HarvestScheduleStep> steps)
-	{
-		this.steps = steps;
-	} // end method setSteps(List<HarvestScheduleStep>)
+    /**
+     * Sets the formats to be harvested by the schedule
+     * 
+     * @param formats
+     *            A list of formats to be harvested by the schedule
+     */
+    public void setFormats(List<Format> formats) {
+        this.formats = formats;
+    } // end method setFormats(List<Format>)
 
-	/**
-	 * Adds a step to the list of the schedule's steps
-	 *
-	 * @param step The step to add
-	 */
-	public void addStep(HarvestScheduleStep step)
-	{
-		if(!steps.contains(step))
-			steps.add(step);
-	} // end method addStep(HarvestScheduleStep)
+    /**
+     * Adds a format to the list of formats to be harvested by the schedule
+     * 
+     * @param format
+     *            The format to add
+     */
+    public void addFormat(Format format) {
+        if (!formats.contains(format))
+            formats.add(format);
+    } // end method addFormat(Format)
 
-	/**
-	 * Removes a step from the list of the schedule's steps
-	 *
-	 * @param step The step to remove
-	 */
-	public void removeStep(HarvestScheduleStep step)
-	{
-		if(steps.contains(step))
-			steps.remove(step);
-	} // end method removeStep(HarvestScheduleStep)
+    /**
+     * Removes a format from the list of formats to be harvested by the schedule
+     * 
+     * @param format
+     *            The format to remove
+     */
+    public void removeFormat(Format format) {
+        if (formats.contains(format))
+            formats.remove(format);
+    } // end method removeFormat(Format)
 
-	/**
-	 * Removes all steps
-	 */
-	public void removeAllSteps()
-	{
-		steps.clear();
-	} // end method removeAllSteps()
-	
-	@Override
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("[Id="+id);
-		sb.append(" provider= "+ provider);
-		sb.append(" recurrence= "+ recurrence+"]");
-		
-		return sb.toString();
-	}
+    /**
+     * Removes all formats
+     */
+    public void removeAllFormats() {
+        formats.clear();
+    } // end method removeAllFormats()
+
+    /**
+     * Gets the schedule's steps
+     * 
+     * @return The schedule's steps
+     */
+    public List<HarvestScheduleStep> getSteps() {
+        return steps;
+    } // end method getSteps()
+
+    /**
+     * Sets the schedule's steps
+     * 
+     * @param steps
+     *            The schedule's steps
+     */
+    public void setSteps(List<HarvestScheduleStep> steps) {
+        this.steps = steps;
+    } // end method setSteps(List<HarvestScheduleStep>)
+
+    /**
+     * Adds a step to the list of the schedule's steps
+     * 
+     * @param step
+     *            The step to add
+     */
+    public void addStep(HarvestScheduleStep step) {
+        if (!steps.contains(step))
+            steps.add(step);
+    } // end method addStep(HarvestScheduleStep)
+
+    /**
+     * Removes a step from the list of the schedule's steps
+     * 
+     * @param step
+     *            The step to remove
+     */
+    public void removeStep(HarvestScheduleStep step) {
+        if (steps.contains(step))
+            steps.remove(step);
+    } // end method removeStep(HarvestScheduleStep)
+
+    /**
+     * Removes all steps
+     */
+    public void removeAllSteps() {
+        steps.clear();
+    } // end method removeAllSteps()
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("[Id=" + id);
+        sb.append(" provider= " + provider);
+        sb.append(" recurrence= " + recurrence + "]");
+
+        return sb.toString();
+    }
 } // end class HarvestSchedule

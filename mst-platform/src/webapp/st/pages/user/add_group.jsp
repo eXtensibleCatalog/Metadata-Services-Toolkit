@@ -1,9 +1,9 @@
 <!--
   * Copyright (c) 2009 eXtensible Catalog Organization
   *
-  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the  
+  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
   * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
-  * website http://www.extensiblecatalog.org/. 
+  * website http://www.extensiblecatalog.org/.
   *
   -->
 
@@ -27,9 +27,9 @@
         <LINK href="page-resources/css/global.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/main_menu.css" rel="stylesheet" type="text/css" >
         <LINK href="page-resources/css/tables.css" rel="stylesheet" type="text/css" >
-		<LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
-		<LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
-            
+    <LINK href="page-resources/css/header.css" rel="stylesheet" type="text/css">
+    <LINK href="page-resources/css/bodylayout.css" rel="stylesheet" type="text/css">
+
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/yahoo-dom-event/yahoo-dom-event.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" src="page-resources/yui/connection/connection-min.js"></SCRIPT>
@@ -37,16 +37,16 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/yui/menu/menu-min.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_group.js"></SCRIPT>
-             
+
     </head>
 
     <body class="yui-skin-sam">
-      
+
         <!--  yahoo doc 2 template creates a page 950 pixles wide -->
         <div id="doc2">
 
-		<!-- page header - this uses the yahoo page styling -->
-		<div id="hd">
+    <!-- page header - this uses the yahoo page styling -->
+    <div id="hd">
 
             <!--  this is the header of the page -->
             <c:import url="/st/inc/header.jsp"/>
@@ -58,12 +58,12 @@
                     <jsp:param name="bread" value="Users & Groups | Add Group" />
 
             </jsp:include>
- 		</div>
-		<!--  end header -->
+     </div>
+    <!--  end header -->
 
-		<!-- body -->
-		<div id="bd">
-            
+    <!-- body -->
+    <div id="bd">
+
              <!-- Display of error message -->
                 <c:if test="${errorType != null}">
                     <div id="server_error_div">
@@ -85,7 +85,7 @@
                 <table style="margin-left:10px">
 
                    <tr>
-                       <td valign="top"><B>Group Name</B> <br> 
+                       <td valign="top"><B>Group Name</B> <br>
                        <input type="text" id="groupName" name ="groupName" class="textfield" value="${temporaryGroup.name}" maxlength="255" size="46"><br><br></td>
                    </tr>
 
@@ -93,7 +93,7 @@
                        <td valign="top"><B>Description</B>  <br>
                        <textarea id="groupDescription" name ="groupDescription" cols="40" rows="5" maxlength="1023">${temporaryGroup.description}</textarea><br><br></td>
                    </tr>
-                   
+
                    <tr>
                        <td>
                             <B>Permissions</B> <br>
@@ -132,7 +132,7 @@
 
      </div>
             <!--  this is the footer of the page -->
-            <c:import url="/st/inc/footer.jsp"/>       
+            <c:import url="/st/inc/footer.jsp"/>
  </div>
 </body>
 </html>

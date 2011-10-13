@@ -16,7 +16,7 @@
  limitations under the License.
 --%>
 
-<%-- $Id: index.jsp 793088 2009-07-10 19:37:30Z hossman $ --%>
+<%-- $Id: index.jsp 1089340 2011-04-06 07:49:14Z uschindler $ --%>
 <%-- $Source: /cvs/main/searching/SolrServer/resources/admin/index.jsp,v $ --%>
 <%-- $Name:  $ --%>
 
@@ -39,10 +39,10 @@
   </td>
   <td>
     <% if (null != core.getSchemaResource()) { %>
-    [<a href="file/?file=<%=core.getSchemaResource()%>">Schema</a>]
+    [<a href="file/?contentType=text/xml;charset=utf-8&file=<%=core.getSchemaResource()%>">Schema</a>]
     <% }
        if (null != core.getConfigResource()) { %>
-    [<a href="file/?file=<%=core.getConfigResource()%>">Config</a>]
+    [<a href="file/?contentType=text/xml;charset=utf-8&file=<%=core.getConfigResource()%>">Config</a>]
     <% } %>
     [<a href="analysis.jsp?highlight=on">Analysis</a>]
     [<a href="schema.jsp">Schema Browser</a>] <%if(replicationhandler){%>[<a href="replication/index.jsp">Replication</a>]<%}%>
@@ -60,8 +60,14 @@
   if (cores!=null) {
     Collection<String> names = cores.getCoreNames();
     if (names.size() > 1) {%><tr><td><strong>Cores:</strong><br></td><td><%
+    String url = request.getContextPath();
     for (String name : names) {
-    %>[<a href="../../<%=name%>/admin/"><%=name%></a>]<%         
+      String lname = name.length()==0 ? cores.getDefaultCoreName() : name; // use the real core name rather than the default
+      if(name.equals(core.getName())) {
+        %>[<%=lname%>]<%
+      } else {
+        %>[<a href="<%=url%>/<%=lname%>/admin/"><%=lname%></a>]<%
+      }
   }%></td></tr><%
 }}%>
 
@@ -118,7 +124,7 @@
 	<input name="rows" type="hidden" value="10">
 	<input name="indent" type="hidden" value="on">
         <br><input class="stdbutton" type="submit" value="search" 
-        	onclick="if (queryForm.q.value.length==0) { alert('no empty queries, please'); return false; } else { queryForm.submit(); } ">
+        	onclick="if (queryForm.q.value.length==0) { alert('no empty queries, please'); return false; } else { queryForm.submit(); return false;} ">
 	</form>
   </td>
 </tr>
