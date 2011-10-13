@@ -45,7 +45,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
  * record from the data in the unprocessed record.
- * 
+ *
  * @author Eric Osisek
  * @author Benjamin D. Anderson
  */
@@ -59,8 +59,12 @@ public class TransformationService extends SolrTransformationService {
     // which begs the question about the lack of transactions... I need a way to
     // rollback if something bad happens. Probably the easiest thing to do is just to delete
     // records with some id higher than something.
+
+    // 001 to man record_id
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+
+    // 001 to man record_id
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, Long>>();
 
