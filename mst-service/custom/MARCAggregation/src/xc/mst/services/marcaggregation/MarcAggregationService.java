@@ -8,8 +8,7 @@
   */
 package xc.mst.services.marcaggregation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.jdom.Element;
@@ -28,15 +27,15 @@ import xc.mst.services.impl.service.GenericMetadataService;
 public class MarcAggregationService extends GenericMetadataService {
 	
 	private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
-	protected Map<String, Matcher> matcherMap = null;
+	protected Map<String, FieldMatcher> matcherMap = null;
 	protected Map<String, MatchRule> matchRuleMap = null;
     	public void setup() {
-		this.matcherMap = new HashMap<String, Matcher>();
-		String[] mpStrs = new String {
+		this.matcherMap = new HashMap<String, FieldMatcher>();
+		String[] mpStrs = new String[] {
 			"LCCN", 
 			"SystemControlNumber"};
 		for (String mp : mpStrs) {
-			Matcher m = (Matcher)config.getBean(mp+"Matcher");
+			FieldMatcher m = (FieldMatcher)config.getBean(mp+"FieldMatcher");
 			matcherMap.put(mp, m);
 			m.loadFromDB();
 		}	
@@ -59,19 +58,19 @@ public class MarcAggregationService extends GenericMetadataService {
 		Set<Long> matchedRecords = new HashSet<Long>();
 		Map<String, String> recordMatchPoints = new HashMap<String, String>();
 		try {
-			for (Map.Entry<String, Matcher> me : this.matcherMap.entrySet()) {
+			for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
 				String matchPointKey = me.getKey();
-				Matcher matcher = me.getValue();
+				FieldMatcher matcher = me.getValue();
 				recordsWithCommonMatchPoints.addAll(
 					matcher.getMatchingOutputIds(smr));
-				recordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(r.getId());
+				recordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(r.getId()));
 			}
 			for (Long recordWithCommonMatchPoint : recordsWithCommonMatchPoints) {
 				Map<String, String> otherRecordMatchPoints = new HashMap<String, String>();
-				for (Map.Entry<String, Matcher> me : this.matcherMap) {
+				for (Map.Entry<String, FieldMatcher> me : this.matcherMap) {
 					String matchPointKey = me.getKey();
-					Matcher matcher = me.getValue();
-					otherRecordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(recordWithCommonMatchPoint);
+					FieldMatcher matcher = me.getValue();
+					otherRecordMatchPoints.put(matchPointKey, matcher.getMatchPointValue(recordWithCommonMatchPoint));
 				}
 				// applyRules
 				for (Map.Entry<String, MatchRule> me : this.matchRuleMap.entrySet()) {
