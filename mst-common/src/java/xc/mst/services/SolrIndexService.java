@@ -72,6 +72,7 @@ public class SolrIndexService extends GenericMetadataService {
     private static final String  dcterms_contributor_key = "dcterms_contributor_key";
     private static final String  dcterms_creator_key = "dcterms_creator_key";
     private static final String  xc_rdarole_compiler_key = "xc_rdarole_compiler_key";
+    private static final String  xc_rdarole_author_key = "xc_rdarole_author_key";
     private static final String  xc_rdarole_composer_key = "xc_rdarole_composer_key";
     private static final String  xc_rdarole_director_key =  "xc_rdarole_director_key";
     private static final String  xc_rdarole_editor_key = "xc_rdarole_editor_key";
@@ -119,6 +120,7 @@ public class SolrIndexService extends GenericMetadataService {
         registerId(" - xc:creator",   xc_creator_key);
         registerId(" - dcterms:contributor", dcterms_contributor_key);
         registerId(" - dcterms:creator", dcterms_creator_key);
+        registerId(" - rdarole:author", xc_rdarole_author_key);
         registerId(" - rdarole:compiler", xc_rdarole_compiler_key);
         registerId(" - rdarole:composer", xc_rdarole_composer_key);
         registerId(" - rdarole:director",   xc_rdarole_director_key);
@@ -170,6 +172,10 @@ public class SolrIndexService extends GenericMetadataService {
                 getSolrIndexManager().commitIndex();
                 TimingLogger.stop("commitIndex");
                 recordsProcessedSinceCommit=0;
+                if (force) {
+                    ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
+                    LOG.debug("process, Solr Index Service, completed optimizeIndex.");
+                }
                 return true;
             } catch (Throwable t) {
                 getUtil().throwIt(t);
@@ -183,13 +189,15 @@ public class SolrIndexService extends GenericMetadataService {
         this.preserveStatuses = false;
         super.process(repo, inputFormat, inputSet, outputSet);
 
-        try {
-            ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
-            LOG.debug("process, Solr Index Service, completed optimizeIndex.");
-
-        } catch (IndexException ie) {
-            LOG.error("Error optimizing solr index.", ie);
-        }
+//        try {
+//            if (this.recordsProcessedSinceCommit > 0) {
+//
+//                ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
+//                LOG.debug("process, Solr Index Service, completed optimizeIndex.");
+//            }
+//        } catch (IndexException ie) {
+//            LOG.error("Error optimizing solr index.", ie);
+//        }
     }
 
     public List<OutputRecord> process(InputRecord ri) {
@@ -289,6 +297,9 @@ public class SolrIndexService extends GenericMetadataService {
                                 false);
                         addFieldToIndex(ri, doc, "//xc:creator",
                                 Collections.unmodifiableList(Arrays.asList(id_author_key, xc_creator_key)),
+                                true);
+                        addFieldToIndex(ri, doc, "//rdarole:author",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, xc_rdarole_author_key)),
                                 true);
                         addFieldToIndex(ri, doc, "//rdarole:compiler",
                                 Collections.unmodifiableList(Arrays.asList(id_author_key, xc_rdarole_compiler_key)),

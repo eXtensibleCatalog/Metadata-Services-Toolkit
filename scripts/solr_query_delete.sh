@@ -1,5 +1,6 @@
 #export SERVER=localhost:8080;
 #export JSESSIONID=blah-blah;
+# currently need to manually find the JSESSIONID and supply it, log in via browser, inspect its variables to grab JSESSIONID
 
 echo curl "http://${SERVER}/MetadataServicesToolkit/solr/update;jsessionid=${JSESSIONID}" -H "Content-Type: text/xml" --data-binary '<delete><query>*:*</query></delete>'
 curl "http://${SERVER}/MetadataServicesToolkit/solr/update;jsessionid=${JSESSIONID}" -H "Content-Type: text/xml" --data-binary '<delete><query>*:*</query></delete>'
