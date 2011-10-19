@@ -1,8 +1,11 @@
-tomcat.dir=C:/dev/java/tomcat_6.0
-mst.root.dir=c:/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/impl/build/
+tomcat.dir=C:/dev/java/Tomcat_6
+#tomcat.dir=C:/dev/java/tomcat_6.0
+mst.root.dir=c:/dev/xc/mst/svn/branches/johns_perma_branch/mst-service/impl/build/
+#mst.root.dir=c:/dev/xc/mst/svn/branches/bens_perma_branch/mst-service/impl/build/
 dist.dir=../../dist/
-mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.1
-svn.home=c:/Program\ Files/CollabNet/Subversion\ Server
+mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.5
+svn.home=c:/dev/csvn/bin
+#svn.home=c:/Program\ Files/CollabNet/Subversion\ Server
 
 ftp.server=
 ftp.userid=

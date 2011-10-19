@@ -45,6 +45,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
     protected List<long[]> uplinks = new ArrayList<long[]>();
 
+    // really parentIDsOfRecordsToActivate
     protected TLongHashSet recordsToActivate = new TLongHashSet();
     protected Map<String, AtomicInteger> recordCountsToActivateByType = new HashMap<String, AtomicInteger>();
     protected Map<String, Long> completeListSizeMap = new LinkedHashMap<String, Long>(1000);

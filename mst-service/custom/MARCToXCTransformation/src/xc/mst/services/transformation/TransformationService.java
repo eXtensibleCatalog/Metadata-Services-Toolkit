@@ -45,7 +45,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
  * record from the data in the unprocessed record.
- * 
+ *
  * @author Eric Osisek
  * @author Benjamin D. Anderson
  */
@@ -59,16 +59,22 @@ public class TransformationService extends SolrTransformationService {
     // which begs the question about the lack of transactions... I need a way to
     // rollback if something bad happens. Probably the easiest thing to do is just to delete
     // records with some id higher than something.
+
+    // 001 to man record_id; reflects db state
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+
+    // 001 to man record_id; reflects db state
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, Long>>();
 
+    // for adding to the above maps
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap = new HashMap<String, Map<String, Long>>();
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, Long>>();
 
+    // for removing to the above maps
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
@@ -142,7 +148,7 @@ public class TransformationService extends SolrTransformationService {
 
     protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             long l = longLongMap.get(bibMarcId);
             if (l == 0) {
                 return null;
@@ -157,7 +163,7 @@ public class TransformationService extends SolrTransformationService {
     protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.put(bibMarcId, lv);
             longLongMapAdded.put(bibMarcId, lv);
         } catch (NumberFormatException nfe) {
@@ -169,7 +175,7 @@ public class TransformationService extends SolrTransformationService {
     protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.remove(bibMarcId);
             longLongMapRemoved.remove(bibMarcId);
         } catch (NumberFormatException nfe) {
