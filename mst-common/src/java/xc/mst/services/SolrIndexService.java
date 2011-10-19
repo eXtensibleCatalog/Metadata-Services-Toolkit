@@ -23,10 +23,7 @@ import org.jdom.xpath.XPath;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.provider.Set;
-import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.OutputRecord;
-import xc.mst.bo.record.Record;
-import xc.mst.bo.record.RecordMessage;
+import xc.mst.bo.record.*;
 import xc.mst.bo.service.Service;
 import xc.mst.bo.service.ServiceHarvest;
 import xc.mst.dao.DatabaseConfigException;
@@ -440,52 +437,69 @@ public class SolrIndexService extends GenericMetadataService {
                     }
                 }
                 else {
-                    // just do it. the complete set of marc parsers - won't be very efficient cause check for all these in all raw.
-                    addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
-                            Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001hold_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
-                            Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001bib_key)),
-                            false);
+                    // TODO this should be refactored to use common code along with TransfromationService where the exact same thing is done
+                    ri.setMode(Record.STRING_MODE);
+                    SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(ri.getOaiXml());
 
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
-                            Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
-                            false);
+                    boolean isBib = false;
+                    boolean isHolding = false;
 
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_100a_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_110a_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_111a_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_700a_key)),
-                            true);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_710a_key)),
-                            true);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_author_key, id_711a_key)),
-                            false);
-
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
-                            Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
-                            true);
-                    addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
-                            Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
-                            Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852h_key)),
-                            false);
-                    addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']",
-                            Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852i_key)),
-                            false);
+                    char leader06 = originalRecord.getLeader().charAt(6);
+                    if ("abcdefghijkmnoprt".contains("" + leader06)) {
+                        isBib = true;
+                    } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+                        isHolding = true;
+                    } else { // If leader 6th character is invalid, then log error and do not process that record.
+                        logDebug("Record Id " + ri.getId() + " with leader character " + leader06 + " not processed.");
+                    }
+                    if (isBib) {
+                        addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
+                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001bib_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='b']",
+                                Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='100']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_100a_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='110']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_110a_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='111']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_111a_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='700']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_700a_key)),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='710']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_710a_key)),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_author_key, id_711a_key)),
+                                false);
+                    }
+                    // get identifiers that could be present only in a holdings marc21 record
+                    else if (isHolding) {
+                        LOG.debug("*** SolrIndexService, found a Marc, type=" +type);
+                        addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
+                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001hold_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
+                                true);
+                        addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
+                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
+                                Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852h_key)),
+                                false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='i']",
+                                Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852i_key)),
+                                false);
+                    }
                 }
             }
             else {

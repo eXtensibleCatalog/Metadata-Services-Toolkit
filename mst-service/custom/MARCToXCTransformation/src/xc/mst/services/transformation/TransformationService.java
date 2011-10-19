@@ -148,7 +148,7 @@ public class TransformationService extends SolrTransformationService {
 
     protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             long l = longLongMap.get(bibMarcId);
             if (l == 0) {
                 return null;
@@ -163,7 +163,7 @@ public class TransformationService extends SolrTransformationService {
     protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.put(bibMarcId, lv);
             longLongMapAdded.put(bibMarcId, lv);
         } catch (NumberFormatException nfe) {
@@ -175,7 +175,7 @@ public class TransformationService extends SolrTransformationService {
     protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.remove(bibMarcId);
             longLongMapRemoved.remove(bibMarcId);
         } catch (NumberFormatException nfe) {
