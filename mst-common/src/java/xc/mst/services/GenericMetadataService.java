@@ -560,6 +560,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 TimingLogger.reset(processedRecordCount);
             }
             for (Record in : records) {
+            /*
+            for (int i=0; i<records.size();) {
+                Record in = customProcessQueue.pop();
+                if (in == null) {
+                    in = records.get(i);
+                    i++;
+                }
+                */
+
                 // TODO: currently the injected records here only contain ids.
                 // This is helpful enough if you simply want to overwrite the
                 // the existing record. Although I can't think of a reason

@@ -8,7 +8,19 @@
   */
 package xc.mst.services.marcaggregation.matchrules;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import xc.mst.services.marcaggregation.matcher.MatchSet;
+
 public class Step1aMatchRule extends BaseMatchRule {
-      	public boolean isMatch(Map<String, String> record1, Map<String, String> record2) {
-	}
+
+    public Set<Long> determineMatches(MatchSet ms) {
+        Set<Long> matchedIds = new HashSet<Long>();
+
+        //
+
+        return matchedIds;
+    }
+
 }

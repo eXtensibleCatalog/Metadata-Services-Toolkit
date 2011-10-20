@@ -1,0 +1,23 @@
+package xc.mst.services.marcaggregation.matchrules;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import xc.mst.services.marcaggregation.matcher.MatchSet;
+
+public class Step3aMatchRule extends BaseMatchRule {
+
+    public Set<Long> determineMatches(MatchSet ms) {
+        Set<Long> matchedIds = new HashSet<Long>();
+
+        for (long matchedRecordId : ms.getMatches("ISBN")) {
+            if (ms.getMatches("x130a").contains(matchedRecordId) ||
+                    (ms.getMatches("x240a").contains(matchedRecordId) ||
+                    (ms.getMatches("x245ah").contains(matchedRecordId)))) {
+                matchedIds.add(matchedRecordId);
+            }
+        }
+
+        return matchedIds;
+    }
+}

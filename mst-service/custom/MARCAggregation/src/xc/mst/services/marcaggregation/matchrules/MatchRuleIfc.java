@@ -8,6 +8,12 @@
   */
 package xc.mst.services.marcaggregation.matchrules;
 
+import java.util.Set;
+
+import xc.mst.services.marcaggregation.matcher.MatchSet;
+
 public interface MatchRuleIfc {
-      public boolean isMatch(Map<String, String> record1, Map<String, String> record2);
+
+    public Set<Long> determineMatches(MatchSet ms);
+
 }
