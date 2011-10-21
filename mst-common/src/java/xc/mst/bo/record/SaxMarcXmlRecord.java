@@ -48,6 +48,14 @@ public class SaxMarcXmlRecord implements ContentHandler {
 
     protected MarcRecord marcRecord = new MarcRecord();
 
+    public long getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
+    }
+
     public String getLeader() {
         return marcRecord.getLeader();
     }

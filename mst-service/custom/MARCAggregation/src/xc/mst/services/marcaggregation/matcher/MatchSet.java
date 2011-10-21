@@ -32,15 +32,19 @@ public class MatchSet {
     protected Map<FieldMatcher, Set<Long>> matches =
         new HashMap<FieldMatcher, Set<Long>>();
 
+    public MatchSet(SaxMarcXmlRecord smr) {
+        this.inProcessRecord = smr;
+    }
+
     public void addMatcher(String s, FieldMatcher fm) {
         matchers.put(s, fm);
     }
 
     public Set<Long> getMatches(String matcherKey) {
-        Set<Long> matchSet = matches.get(matcherKey);
+        FieldMatcher fm = matchers.get(matcherKey);
+        Set<Long> matchSet = matches.get(fm);
         if (matchSet == null) {
             matchSet = new HashSet<Long>();
-            FieldMatcher fm = matchers.get(matcherKey);
             matchSet.addAll(fm.getMatchingOutputIds(this.inProcessRecord));
         }
         return matchSet;

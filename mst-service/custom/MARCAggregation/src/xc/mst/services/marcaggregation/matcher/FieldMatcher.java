@@ -33,7 +33,8 @@ public interface FieldMatcher {
      * @param ir the input record from which to retrieve the match point value
      * @return the list of record ids of other input records that match ir
      */
-    public abstract List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir);
+    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir);
+    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy);
 
     /**
      * In order to perform matching, an instance of this class

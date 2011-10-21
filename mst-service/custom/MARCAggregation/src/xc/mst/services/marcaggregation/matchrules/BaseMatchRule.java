@@ -8,5 +8,7 @@
   */
 package xc.mst.services.marcaggregation.matchrules;
 
-public abstract class BaseMatchRule implements MatchRuleIfc {
+import xc.mst.manager.BaseService;
+
+public abstract class BaseMatchRule extends BaseService implements MatchRuleIfc {
 }

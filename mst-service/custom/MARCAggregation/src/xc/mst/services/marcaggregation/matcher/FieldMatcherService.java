@@ -8,6 +8,9 @@
   */
 package xc.mst.services.marcaggregation.matcher;
 
+import java.util.List;
+
+import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.manager.BaseService;
 
 /**
@@ -18,5 +21,9 @@ import xc.mst.manager.BaseService;
  *
  */
 public abstract class FieldMatcherService extends BaseService implements FieldMatcher {
+
+    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
+        return null;
+    }
 
 }
