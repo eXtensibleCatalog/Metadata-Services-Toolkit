@@ -4626,6 +4626,7 @@
           <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
           <marc:datafield tag="014" ind1="1" ind2=" ">
             <marc:subfield code="a">ocm15436930</marc:subfield>
+            <marc:subfield code="b">OCoLC</marc:subfield>
           </marc:datafield>
           <marc:datafield tag="852" ind1="8" ind2=" ">
             <marc:subfield code="b">NewsMicro</marc:subfield>
