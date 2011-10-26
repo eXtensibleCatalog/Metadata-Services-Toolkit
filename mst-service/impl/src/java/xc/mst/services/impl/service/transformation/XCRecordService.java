@@ -461,39 +461,13 @@ public class XCRecordService extends GenericMetadataServiceService {
      * @param transformationService
      * @return
      */
-    private List<OutputRecord> getSplitXCRecordXML(Repository repo,
+    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
             AggregateXCRecord ar,
             Long manifestationId,
             Long a_expressionId,
-            Long a_workId)
+            Long a_workId,
+            long nextNewId /* nextNewId unused in this method. */)
             throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
-        // Bridget method
-        return getSplitXCRecordXML(repo,
-                ar, manifestationId);
-        // TODO make this method public, utilize a_expressionId, a_workId
-    }
-
-    /**
-     * Gets a list of documents that represent the output of transformation
-     * service. Each document in the list represents a FRBR level with its own
-     * OAI id.
-     * (this one does not appear to be used anywhere!)
-     *
-     * @param transformationService
-     * @return
-     */
-    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
-            AggregateXCRecord ar, Long manifestationId)
-            throws TransformerConfigurationException, TransformerException,
-            DatabaseConfigException {
-        return getSplitXCRecordXML(repo, ar, manifestationId, 0l);
-    }
-
-    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
-            AggregateXCRecord ar, Long manifestationId, long nextNewId)
-            throws TransformerConfigurationException, TransformerException,
-            DatabaseConfigException {
-
         List<Long> expressionIds = new ArrayList<Long>();
         List<Long> holdingIds = new ArrayList<Long>();
         List<OutputRecord> records = new ArrayList<OutputRecord>();
@@ -511,7 +485,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 
         /* $$ WORK $$ */
         // Create original Work Document
-        Long workId = getId(ar.getPreviousWorkIds());
+        Long workId = null;
+        if (a_workId == null) {
+            workId = getId(ar.getPreviousWorkIds());
+        } else {
+            workId = a_workId;
+        }
         String workOaiID = getRecordService().getOaiIdentifier(workId,
                 getMetadataService().getService());
         Element tempXcWorkElement = (Element) ar.xcWorkElement.clone();
@@ -524,7 +503,12 @@ public class XCRecordService extends GenericMetadataServiceService {
 
         /* $$ EXPRESSION $$ */
         // Create original Expression Document
-        Long expressionId = getId(ar.getPreviousExpressionIds());
+        Long expressionId = null;
+        if (a_expressionId == null) {
+            expressionId = getId(ar.getPreviousExpressionIds());
+        } else {
+            expressionId = a_expressionId;
+        }
         expressionIds.add(expressionId);
         Element expressionToWorkLinkingElement = new Element("workExpressed",
                 AggregateXCRecord.XC_NAMESPACE);
@@ -624,7 +608,12 @@ public class XCRecordService extends GenericMetadataServiceService {
             Element newExpressionElement = (Element) ar.xcExpressionElement
                     .clone();
             // Generate the OAI id
-            long newExpressionId = getId(ar.getPreviousExpressionIds());
+            Long newExpressionId = null;
+            if (a_expressionId != null) {
+                newExpressionId = a_expressionId;
+            } else {
+                newExpressionId = getId(ar.getPreviousExpressionIds());
+            }
             expressionIds.add(newExpressionId);
             String newExpressionOaiID = getRecordService().getOaiIdentifier(
                     newExpressionId, getMetadataService().getService());
@@ -773,6 +762,52 @@ public class XCRecordService extends GenericMetadataServiceService {
         }
 
         return records;
+
+    }
+
+    /**
+     * Version of getSplitXCRecordXML which uses supplied work and expression ids
+     * // Bridget method
+     * // -- utilizes a_expressionId, a_workId
+     *
+     * @param transformationService
+     * @return
+     */
+    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
+            AggregateXCRecord ar,
+            Long manifestationId,
+            Long a_expressionId,
+            Long a_workId)
+            throws TransformerConfigurationException, TransformerException, DatabaseConfigException {
+        return getSplitXCRecordXML(repo,
+                ar,
+                manifestationId,
+                a_expressionId,
+                a_workId,
+                0l);
+    }
+
+    /**
+     * Gets a list of documents that represent the output of transformation
+     * service. Each document in the list represents a FRBR level with its own
+     * OAI id.
+     * (this one does not appear to be used anywhere!)
+     *
+     * @param transformationService
+     * @return
+     */
+    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
+            AggregateXCRecord ar, Long manifestationId)
+            throws TransformerConfigurationException, TransformerException,
+            DatabaseConfigException {
+        return getSplitXCRecordXML(repo, ar, manifestationId, 0l);
+    }
+
+    public List<OutputRecord> getSplitXCRecordXML(Repository repo,
+            AggregateXCRecord ar, Long manifestationId, long nextNewId)
+            throws TransformerConfigurationException, TransformerException,
+            DatabaseConfigException {
+        return getSplitXCRecordXML(repo, ar, manifestationId, null, null, 0l);
     }
 
     /**
@@ -828,7 +863,7 @@ public class XCRecordService extends GenericMetadataServiceService {
 
             ar.xcRootElement.addContent(holdingsElement);
             Record r = createRecord(ar, holdingId,
-                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds);  // <-the uplinks
+                    (Element) ar.xcRootElement.clone(), manifestationHeldOAIIds); // <-the uplinks
             records.add(r);
             ar.xcRootElement.removeContent();
         }

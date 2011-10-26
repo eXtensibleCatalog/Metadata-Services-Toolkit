@@ -160,7 +160,7 @@ public class TransformationService extends SolrTransformationService {
         }
     }
 
-    protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+    private void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
         try {
             Long bibMarcId = Long.parseLong(s.trim());
@@ -172,7 +172,7 @@ public class TransformationService extends SolrTransformationService {
         }
     }
 
-    protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+    private void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s) {
         try {
             Long bibMarcId = Long.parseLong(s.trim());
@@ -225,13 +225,23 @@ public class TransformationService extends SolrTransformationService {
                 s, l);
     }
 
-    protected void removeManifestationId4BibYet2Arrive(String orgCode, String s) {
+    protected void removeManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
         removeFromMap(
+                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
+                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
+//                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),   // this makes no sense?
+//                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
+                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdAddedMap),
+                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdAddedMap),
+                s);
+        //TODO  test this fix: do you need to add these to removed map?  I would think so in case they got persisted.
+        add2Map(
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
-                s);
+                s, l);
+ LOG.info("** END removeManifestationId4BibYet2Arrive "+s);
     }
 
     @Override
@@ -405,11 +415,14 @@ public class TransformationService extends SolrTransformationService {
                     String bib001 = originalRecord.getControlField(1);
                     Long manifestationId = getManifestationId4BibYet2Arrive(
                             originalRecord.getOrgCode(), bib001);
+                    //TODO test more!
+      LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
                     if (manifestationId != null) {
                         TimingLogger.add("found BibYet2Arrive", 1);
                         removeManifestationId4BibYet2Arrive(
-                                originalRecord.getOrgCode(), bib001);
+                                originalRecord.getOrgCode(), bib001, manifestationId);
                         previouslyHeldManifestationIds.add(manifestationId);
+         LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
                     } else {
                         if (ar.getPreviousManifestationId() != null) {
                             manifestationId = ar.getPreviousManifestationId();
