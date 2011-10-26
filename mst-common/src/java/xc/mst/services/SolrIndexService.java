@@ -412,10 +412,10 @@ public class SolrIndexService extends GenericMetadataService {
                                 Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001hold_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
-                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
+                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
                                 true);
                         addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
-                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
+                                Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
                                 false);
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
                                 Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852h_key)),
@@ -478,10 +478,10 @@ public class SolrIndexService extends GenericMetadataService {
                                     Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001hold_key)),
                                     false);
                             addFieldToIndex(ri, doc, "//marc:datafield[@tag='014']/marc:subfield[@code='a']",
-                                    Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
+                                    Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
                                     true);
                             addFieldToIndex(ri, doc, "//marc:controlfield[@tag='004']",
-                                    Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_014_key)),
+                                    Collections.unmodifiableList(Arrays.asList(id_uplink_key,id_004_key)),
                                     false);
                             addFieldToIndex(ri, doc, "//marc:datafield[@tag='852']/marc:subfield[@code='h']",
                                     Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_852h_key)),
