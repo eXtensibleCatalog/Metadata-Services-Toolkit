@@ -9,6 +9,7 @@
 
 package xc.mst.action;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +32,9 @@ import xc.mst.utils.MSTConfiguration;
 
 /**
  * Action class for user login
- * 
+ *
  * @author Sharmila Ranganathan
- * 
+ *
  */
 public class Login extends BaseActionSupport implements ServletRequestAware {
 
@@ -77,7 +78,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Overriding default implementation to login the user.
-     * 
+     *
      * @return {@link #SUCCESS}
      */
     @Override
@@ -210,7 +211,42 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
                     return "no-permission";
                 }
 
-                resultName = SUCCESS;
+                try {
+                    // Check various permissions proactively!  (can add to these as we see issues...)
+                    String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                    File dbLoadFile = new File(dbLoadFileStr);
+                    String jobsFileStr = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "JobsInQueue.txt";
+                    File jobsFile = new File(jobsFileStr);
+                    if (!dbLoadFile.canRead()) {
+                        addFieldError("permissionsError", "Can not read file "+dbLoadFileStr);
+                        errorType = "error";
+                        resultName = INPUT;
+                    }
+                    else if (!dbLoadFile.canWrite()) {
+                        addFieldError("permissionsError", "Can not write to file "+dbLoadFileStr);
+                        errorType = "error";
+                        resultName = INPUT;
+                    }
+                    else if (!jobsFile.canWrite()) {
+                        addFieldError("permissionsError", "Can not write to file "+jobsFileStr);
+                        errorType = "error";
+                        resultName = INPUT;
+                    }
+                    else if (!jobsFile.canRead()) {
+                        addFieldError("permissionsError", "Can not read file "+jobsFileStr);
+                        errorType = "error";
+                        resultName = INPUT;
+                    }
+                    else {
+                        resultName = SUCCESS;
+                    }
+                } catch (Exception e) {
+                    addFieldError("permissionsError", "Check permissions to: "+MSTConfiguration.getUrlPath());
+                    errorType = "error";
+                    resultName = INPUT;
+                }
+
+
             } else {
                 servers = getServerService().getAll();
                 addFieldError("loginError", "Invalid username / password. Please try again");
@@ -228,7 +264,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Get user name
-     * 
+     *
      * @return
      */
     public String getUserName() {
@@ -237,7 +273,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set User name
-     * 
+     *
      * @param userName
      *            User name of the user logging in
      */
@@ -247,7 +283,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Get password
-     * 
+     *
      * @return
      */
     public String getPassword() {
@@ -256,7 +292,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set password
-     * 
+     *
      * @param password
      */
     public void setPassword(String password) {
@@ -265,7 +301,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * Set the servlet request.
-     * 
+     *
      * @see org.apache.struts2.interceptor.ServletRequestAware#setServletRequest(javax.servlet.http.HttpServletRequest)
      */
     public void setServletRequest(HttpServletRequest request) {
@@ -274,7 +310,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * sets the link that the user should be forwarded to.
-     * 
+     *
      * @param forwardLink
      *            page link
      */
@@ -284,7 +320,7 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
     /**
      * returns the link that the user should be forwarded to
-     * 
+     *
      * @return forward link
      */
     public String getForwardLink() {
