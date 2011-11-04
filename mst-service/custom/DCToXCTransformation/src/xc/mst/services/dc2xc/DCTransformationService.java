@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
@@ -22,9 +24,12 @@ import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordMessage;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.services.impl.service.GenericMetadataService;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.XmlHelper;
 
 public class DCTransformationService extends GenericMetadataService {
@@ -115,6 +120,7 @@ public class DCTransformationService extends GenericMetadataService {
                     for (OutputRecord or : processMe.getSuccessors()) {
                         or.setStatus(Record.DELETED);
                         results.add(or);
+                        //TODO do anything with record counts?
                     }
                 }
             } else {
@@ -158,6 +164,8 @@ public class DCTransformationService extends GenericMetadataService {
                     for (OutputRecord or : processMe.getSuccessors()) {
                         Record succ = getRepository().getRecord(or.getId());
                         String type = getXCRecordService().getType(succ);
+                        or.setType(type);
+
                         if (AggregateXCRecord.HOLDINGS.equals(type)) {
                             ar.getPreviousHoldingIds().add(or.getId());
                         } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -172,6 +180,7 @@ public class DCTransformationService extends GenericMetadataService {
                     }
                 } else {
                     inputRecordCount++;
+                    //TODO
                 }
                 results = getXCRecordService().getSplitXCRecordXML(getRepository(), ar, null, 0);
             }
@@ -206,10 +215,12 @@ public class DCTransformationService extends GenericMetadataService {
 
     private AggregateXCRecord dctermsTransform(AggregateXCRecord transformInto, String element, String frbrLevel) {
         FrbrLevel level = FrbrLevel.MANIFESTATION;
-        if (frbrLevel.equals("work"))
+        if (frbrLevel.equals("work")) {
             level = FrbrLevel.WORK;
-        else if (frbrLevel.equals("expression"))
+        }
+        else if (frbrLevel.equals("expression")) {
             level = FrbrLevel.EXPRESSION;
+        }
 
         return processFieldBasic(transformInto, dcValues, element, level);
     }
@@ -240,4 +251,106 @@ public class DCTransformationService extends GenericMetadataService {
         return transformInto;
     }
 
+
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+
+        if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {
+            final Logger LOG2 = getRulesLogger();
+
+            try {
+                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.3", 3);
+                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.3", 3);
+                RecordCounts rc1, rc2 = null;
+
+                try {
+                    Service s1 = getServicesService().getServiceById(serviceNum1);
+                    if (s1 == null) {
+                        LOG2.error("*** can not calculate record counts, no service found");
+                        return;
+                    }
+                    Service s2 = getServicesService().getServiceById(serviceNum2);
+                    if (s2 == null) {
+                        LOG2.error("*** can not calculate record counts, no 2nd service found");
+                        return;
+                    }
+                    rc1 = getRecordCountsDAO().getTotalIncomingRecordCounts(s1.getName());
+                    if (rc1 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s1.getName());
+                        return;
+                    }
+                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s2.getName());
+                    if (rc2 == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s2.getName());
+                        return;
+                    }
+                } catch (Exception e) {
+                    LOG2.error("*** can not calculate record counts: ", e);
+                    return;
+                }
+                Map<String, AtomicInteger> counts4typeN_tot = rc1.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeT_tot = rc2.getCounts().get(RecordCounts.TOTALS);
+//TODO need to counts of these types for this service.
+//                Map<String, AtomicInteger> counts4typeT_e = rc2.getCounts().get("expression");
+//                Map<String, AtomicInteger> counts4typeT_w = rc2.getCounts().get("work");
+//                Map<String, AtomicInteger> counts4typeT_m = rc2.getCounts().get("manifestation");
+
+                // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
+                LOG2.info("%%%");
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderDCTransformation"));
+                // (3 * DC Transformation In Bibs Active) = DC Transformation Totals Out Active
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleDCTransformationDCTBIA_3x_DCT_TOT"));
+                String result = "";
+                try {
+                    if ((counts4typeN_tot.get(RecordCounts.NEW_ACTIVE).get() * 3) == counts4typeT_tot.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("DCTBIA=" + counts4typeN_tot.get(RecordCounts.NEW_ACTIVE) + ", DCTTOA=" + counts4typeT_tot.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+/*
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleDCTransformationDCTIBA_eq_DCTOMA"));
+                try {
+                    if (counts4typeN_tot.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("DCTBIA=" + counts4typeN_tot.get(RecordCounts.NEW_ACTIVE) + ", DCTMOA=" + counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleDCTransformationDCTBIA_eq_DCTWOA"));
+                try {
+                    if (counts4typeN_tot.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("DCTBIA=" + counts4typeN_tot.get(RecordCounts.NEW_ACTIVE) + ", DCTWOA=" + counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleDCTransformationDCTBIA_eq_DCTEOA"));
+                try {
+                    if (counts4typeN_tot.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("DCTBIA=" + counts4typeN_tot.get(RecordCounts.NEW_ACTIVE) + ", DCTEOA=" + counts4typeT_e.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+*/
+                LOG2.info("%%%");
+
+            } catch (Exception e) {
+                LOG.error("", e);
+                LOG2.error("", e);
+            }
+        }
+    }
 }

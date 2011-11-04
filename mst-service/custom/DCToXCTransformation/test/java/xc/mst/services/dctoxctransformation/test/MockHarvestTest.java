@@ -6,7 +6,7 @@
  * website http://www.extensiblecatalog.org/.
  *
  */
-package xc.mst.services.example.test;
+package xc.mst.services.dctoxctransformation.test;
 
 import org.apache.log4j.Logger;
 
@@ -18,11 +18,11 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
     @Override
     public Format[] getIncomingFormats() throws Exception {
-        return new Format[] { getFooBarFormat() };
+        return new Format[] { getDCTermsFormat() };
     }
 
     public Format getHarvestOutFormat() throws Exception {
-        return getFooBarFormat();
+        return getXCFormat();
     }
 
     @Override
