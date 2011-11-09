@@ -25,9 +25,9 @@ import xc.mst.constants.Constants;
 
 /**
  * Configuration for Metadata services toolkit
- * 
+ *
  * @author Sharmila Ranganathan
- * 
+ *
  */
 public class MSTConfiguration extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
 
@@ -147,7 +147,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get value of given property
-     * 
+     *
      * @param name
      *            name of property
      * @return value of property
@@ -199,7 +199,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get property value as int
-     * 
+     *
      * @param name
      *            name of property to retrieve
      * @param def
@@ -210,7 +210,35 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
         String strValue = properties.getProperty(name);
         int value = 0;
         if (strValue != null) {
-            value = Integer.parseInt(strValue);
+            try {
+                value = Integer.parseInt(strValue);
+            } catch (NumberFormatException e) {
+                value = def;
+            }
+        } else {
+            value = def;
+        }
+        return value;
+    }
+
+    /**
+     * Get property value as double
+     *
+     * @param name
+     *            name of property to retrieve
+     * @param def
+     *            default value
+     * @return Value defined in configuration file
+     */
+    public double getPropertyAsDouble(String name, double def) {
+        String strValue = properties.getProperty(name);
+        double value = 0;
+        if (strValue != null) {
+            try {
+                value = Double.parseDouble(strValue);
+            } catch (NumberFormatException e) {
+                value = def;
+            }
         } else {
             value = def;
         }
@@ -219,7 +247,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
 
     /**
      * Get relative path from tomcat working directory to MST configuration folder
-     * 
+     *
      * @return path to MST configuration folder
      */
     public static String getUrlPath() {

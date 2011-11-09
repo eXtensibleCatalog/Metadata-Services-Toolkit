@@ -180,6 +180,10 @@ public class TimingStats {
         LOG.debug("Increased by: " + StringUtils.leftPad(memIncrease + "", 7) + " MB.");
         LOG.debug("Total memory: " + StringUtils.leftPad(totalMem + "", 7) + " MB.");
         LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem + "", 7) + " MB.");
+
+        //double percentageUsed = ((double) usedMem) / maxMem;
+        //System.out.println("percentageUsed = " + percentageUsed);
+        //MemoryWarningSystem.setPercentageUsageThreshold(0.8);  // 80%
     }
 
     private void resetIfNecessary(boolean displayPerformanceData) {
