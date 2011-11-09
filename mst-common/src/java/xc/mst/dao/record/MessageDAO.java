@@ -29,6 +29,7 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.BaseDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 
 public class MessageDAO extends BaseDAO {
 
@@ -185,8 +186,15 @@ public class MessageDAO extends BaseDAO {
         List<RecordMessage> messages = this.jdbcTemplate.query(
                 sql, new Object[] { r.getId() }, new MessageMapper());
 
-        for (RecordMessage rm : messages) {
-            r.addMessage(rm);
+        LOG.debug("** MessageDAO, injectMessages, num messages="+messages.size());
+        getUtil().printStackTrace("** MessageDAO, injectMessages, num messages="+messages.size());
+        // don't inject messages 2x.
+        if (r.getMessages().size() == 0) {
+            for (RecordMessage rm : messages) {
+                LOG.debug("** MessageDAO, injectMessages, message="+rm.getCode()+" "+rm.getDetail()+
+                        " before add msgs, how many does record have? => "+r.getMessages().size());
+                r.addMessage(rm);
+            }
         }
     }
 

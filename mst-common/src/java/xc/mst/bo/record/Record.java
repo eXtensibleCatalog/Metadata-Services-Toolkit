@@ -31,7 +31,7 @@ import xc.mst.utils.XmlHelper;
 
 /**
  * Represents a record
- * 
+ *
  * @author Eric Osisek
  */
 public class Record implements InputRecord, OutputRecord, Comparable<Record> {
@@ -284,7 +284,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's ID
-     * 
+     *
      * @return The record's ID
      */
     public long getId() {
@@ -293,7 +293,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's ID
-     * 
+     *
      * @param id
      *            The record's new ID
      */
@@ -303,7 +303,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the time when the record was created
-     * 
+     *
      * @return The time when the record was created
      */
     public Date getCreatedAt() {
@@ -312,7 +312,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the time when the record was created
-     * 
+     *
      * @param createdAt
      *            The new time when the record was created
      */
@@ -322,7 +322,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the time when the record was last updated
-     * 
+     *
      * @return The new time when the record was last updated
      */
     public Date getUpdatedAt() {
@@ -331,7 +331,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the time when the record was last updated
-     * 
+     *
      * @param updatedAt
      *            The new time when the record was last updated
      */
@@ -351,7 +351,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's format
-     * 
+     *
      * @return The record's format
      */
     public Format getFormat() {
@@ -360,7 +360,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's format
-     * 
+     *
      * @param format
      *            The record's new format
      */
@@ -370,7 +370,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the provider from which the record was harvested
-     * 
+     *
      * @return The provider from which the record was harvested, or null if the record wasn't harvested
      */
     public Provider getProvider() {
@@ -379,7 +379,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the provider from which the record was harvested
-     * 
+     *
      * @param provider
      *            The new provider from which the record was harvested, or null if the record wasn't harvested
      */
@@ -389,7 +389,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the service which created the record
-     * 
+     *
      * @return The service that create the record, or null if the record was not created by a service
      */
     public Service getService() {
@@ -398,7 +398,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the service that create the record
-     * 
+     *
      * @param service
      *            The new service that create the record, or null if the record was not created by a service
      */
@@ -408,7 +408,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the harvest which the record was harvested by
-     * 
+     *
      * @return The harvest which the record was harvested by, or null if the record did not come from a harvest
      */
     public Harvest getHarvest() {
@@ -417,7 +417,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the harvest which the record was harvested by
-     * 
+     *
      * @param harvest
      *            The new harvest which the record was harvested by, or null if the record did not come from a harvest
      */
@@ -444,7 +444,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's OAI datestamp
-     * 
+     *
      * @return The record's OAI datestamp
      */
     public Date getOaiDatestamp() {
@@ -453,7 +453,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's OAI datestamp
-     * 
+     *
      * @param oaiDatestamp
      *            The record's new OAI datestamp
      */
@@ -463,7 +463,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the the record's OAI header
-     * 
+     *
      * @return The record's OAI header
      */
     public String getOaiHeader() {
@@ -472,7 +472,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's OAI header
-     * 
+     *
      * @param oaiHeader
      *            The record's new OAI header
      */
@@ -482,7 +482,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's OAI XML
-     * 
+     *
      * @return The record's OAI XML
      */
     public String getOaiXml() {
@@ -497,7 +497,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's OAI XML
-     * 
+     *
      * @param oaiXml
      *            The record's new OAI XML
      */
@@ -513,7 +513,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the sets the record belongs to
-     * 
+     *
      * @return The record's sets
      */
     public List<Set> getSets() {
@@ -522,7 +522,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the sets the record belongs to
-     * 
+     *
      * @param sets
      *            A list of sets for the record
      */
@@ -532,7 +532,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a set to the list of sets the record belongs to
-     * 
+     *
      * @param set
      *            The set to add
      */
@@ -543,7 +543,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes a set from the list of sets the record belongs to
-     * 
+     *
      * @param set
      *            The set to remove
      */
@@ -554,7 +554,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the records which this record was processed from
-     * 
+     *
      * @return The records which this record was processed from
      */
     public List<Record> getProcessedFrom() {
@@ -563,7 +563,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the records which this record was processed from
-     * 
+     *
      * @param processedFrom
      *            A list of records which this record was processed from
      */
@@ -573,7 +573,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a record to the records which this record was processed from
-     * 
+     *
      * @param record
      *            The record to add to the list of records which this record was processed from
      */
@@ -584,7 +584,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes a set from the list of records which this record was processed from
-     * 
+     *
      * @param record
      *            The set to remove from the list of records which this record was processed from
      */
@@ -595,7 +595,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the records which were processed from this record
-     * 
+     *
      * @return A list of records which were processed from this record
      */
     public List<OutputRecord> getSuccessors() {
@@ -604,7 +604,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the records which were processed from this record
-     * 
+     *
      * @param successors
      *            The new list of records which were processed from this record
      */
@@ -614,7 +614,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a record to the list of records which were processed from this record
-     * 
+     *
      * @param successor
      *            The new record which was processed from this record
      */
@@ -624,7 +624,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the services which the record is input for
-     * 
+     *
      * @return The services which the record is input for
      */
     public List<Service> getInputForServices() {
@@ -633,7 +633,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the services which the record is input for
-     * 
+     *
      * @param inputForServices
      *            A list of services which the record is input for
      */
@@ -643,7 +643,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a service to the services which the record is input for
-     * 
+     *
      * @param service
      *            The service to add to the list of services which the record is input for
      */
@@ -654,7 +654,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes a set from the list of services which the record is input for
-     * 
+     *
      * @param service
      *            The set to remove from the list of services which the record is input for
      */
@@ -665,7 +665,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the services which the record is output for
-     * 
+     *
      * @return The services which the record is output for
      */
     public List<Service> getProcessedByServices() {
@@ -674,7 +674,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the services which the record is output for
-     * 
+     *
      * @param processedByServices
      *            A list of services which the record is output for
      */
@@ -684,7 +684,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a service to the services which the record is output for
-     * 
+     *
      * @param service
      *            The service to add to the list of services which the record is output for
      */
@@ -695,7 +695,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes a set from the list of services which the record is output for
-     * 
+     *
      * @param service
      *            The set to remove from the list of services which the record is output for
      */
@@ -706,7 +706,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's traits
-     * 
+     *
      * @return The record's traits
      */
     public List<String> getTraits() {
@@ -715,7 +715,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's traits
-     * 
+     *
      * @param traits
      *            The record's new traits
      */
@@ -725,7 +725,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a trait to the record
-     * 
+     *
      * @param trait
      *            The trait to add to the record
      */
@@ -736,7 +736,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes a trait from the record
-     * 
+     *
      * @param trait
      *            The trait to remove from the record
      */
@@ -747,7 +747,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's errors
-     * 
+     *
      * @return The record's errors
      */
     public List<RecordMessage> getMessages() {
@@ -756,7 +756,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's errors
-     * 
+     *
      * @param errors
      *            The record's new errors
      */
@@ -767,19 +767,23 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds a error to the record
-     * 
+     *
      * @param error
      *            The error to add to the record
      */
     public void addMessage(RecordMessage message) {
         // LOG.debug("Record.addMessage() called on record.id:"+getId());
-        if (!messages.contains(message))
+        if (!messages.contains(message)) {
             messages.add(message);
+        }
+        else {
+            LOG.debug("Record.addMessage() called, but already have that message!!!, size of messages ="+messages.size());
+        }
     } // end method addMessage(RecordMessage)
 
     /**
      * Removes a error from the record
-     * 
+     *
      * @param error
      *            The error to remove from the record
      */
@@ -791,7 +795,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Gets the record's up links
-     * 
+     *
      * @return The record's uplinks
      */
     public List<String> getUpLinks() {
@@ -800,7 +804,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Sets the record's up links
-     * 
+     *
      * @param traits
      *            The record's new up links
      */
@@ -810,7 +814,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Adds an up link to the record
-     * 
+     *
      * @param upLink
      *            The record to add as an uplink
      */
@@ -821,7 +825,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Removes an up link from the record
-     * 
+     *
      * @param upLink
      *            The record to remove as an up link
      */
@@ -833,7 +837,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
     /**
      * Creates a Record from an existing record with all fields the same except for the
      * record ID
-     * 
+     *
      * @param otherRecord
      *            The record we're copying fields from
      * @return A record identical to otherRecord except that the record ID is -1.
@@ -898,7 +902,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Returns the number of predecessors of the record
-     * 
+     *
      * @return The number of predecessors the record has
      */
     public int getNumberOfPredecessors() {
@@ -907,7 +911,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Returns the number of successors of the record
-     * 
+     *
      * @return The number of successors the record has
      */
     public int getNumberOfSuccessors() {
@@ -916,7 +920,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Get harvest schedule name
-     * 
+     *
      * @return name of schedule
      */
     public String getHarvestScheduleName() {
@@ -925,7 +929,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * Set harvest schedule name
-     * 
+     *
      * @param harvestScheduleName
      *            name of schedule
      */

@@ -256,13 +256,51 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
+    private double getMemUsage() {
+        Runtime r = Runtime.getRuntime();
+        long maxMem = r.maxMemory() / 1048576;
+        long totalMem = r.totalMemory() / 1048576;
+
+        long freeBytes = r.freeMemory();
+        long freeMem = freeBytes / 1048576;
+
+        long usedMem = totalMem - freeMem;
+        double percentageUsed = ((double) usedMem) / maxMem;
+
+        LOG.debug("");
+        LOG.debug("Free  memory: " + StringUtils.leftPad(freeMem + "", 7) + " MB.");
+        LOG.debug("Used  memory: " + StringUtils.leftPad(usedMem + "", 7) + " MB.");
+        LOG.debug("Total memory: " + StringUtils.leftPad(totalMem + "", 7) + " MB.");
+        LOG.debug("Max'm memory: " + StringUtils.leftPad(maxMem + "", 7) + " MB.");
+        LOG.debug("memory percentageUsed: " +  StringUtils.leftPad(Double.toString(percentageUsed), 7));
+
+        return percentageUsed;
+    }
+
+    protected boolean isNecessaryToCommit(boolean force, int batchSize, double memoryPercentageUsed) {
+        if (recordsToAdd != null) {
+            if (force) {
+                return true;
+            }
+            if (batchSize <= recordsToAdd.size()) {
+                return true;
+            }
+//            double memoryUsageThreshold = MSTConfiguration.getInstance().getPropertyAsDouble("memoryUsageThreshold", .99);
+//            if (memoryPercentageUsed >= memoryUsageThreshold) {
+//                return true;
+//            }
+        }
+        return false;
+    }
+
     protected boolean commitIfNecessary(String name, boolean force, long processedRecordsCount) {
         // LOG.debug("commitIfNecessary:Inbatch : " + inBatch);
         int batchSize = MSTConfiguration.getInstance().getPropertyAsInt("db.insertsAtOnce", 10000);
+        double memoryPercentageUsed = getMemUsage();
         if (recordsToAdd != null) {
             // LOG.error("beluga highest id: "+recordsToAdd.get(recordsToAdd.size()-1).getId());
         }
-        if (recordsToAdd != null && (force || batchSize <= recordsToAdd.size())) {
+        if (isNecessaryToCommit(force, batchSize, memoryPercentageUsed)) {
             // LOG.error("beluga commit!!!");
             TimingLogger.start("commit to db");
             final long startTime = System.currentTimeMillis();

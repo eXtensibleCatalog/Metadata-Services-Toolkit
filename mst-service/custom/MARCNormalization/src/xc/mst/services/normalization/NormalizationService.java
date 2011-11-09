@@ -1348,7 +1348,7 @@ public class NormalizationService extends GenericMetadataService {
         // supplied had the correct format, so all incorrect 035 records must
         // be contained in this list
         ArrayList<Element> field035Elements = marcXml.getOriginal035Fields();
-
+        LOG.debug("*** field035Elements size="+field035Elements.size());
         // Loop over the 035 elements
         for (Element field035 : field035Elements) {
             // The $a and $b subfields of
@@ -1364,27 +1364,27 @@ public class NormalizationService extends GenericMetadataService {
             for (Element subfield : subfields) {
 
                 // Initialize the aSubfield if we found the $a
-                if (subfield.getAttribute("code").getValue().equals("a"))
+                if (subfield.getAttribute("code").getValue().equals("a")) {
                     aSubfield = subfield;
+                }
 
                 // Initialize the bSubfield if we found the $b
                 if (subfield.getAttribute("code").getValue().equals("b")) {
                     err_sb.append("subfield b");
                     bSubfield = subfield;
-                    // addMessage(marcXml.getInputRecord(), 107, RecordMessage.INFO);
                 }
 
                 // Initialize the subfield9 if we found the $9
                 if (subfield.getAttribute("code").getValue().equals("9")) {
                     err_sb.append("subfield 9");
                     subfield9 = subfield;
-                    // addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR);
                 }
 
             } // end loop over 035 subfields
 
             if (bSubfield != null || subfield9 != null) {
                 // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
+                LOG.debug("*** just added 035 error message 107, contents="+err_sb.toString());
 
                 addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
             }
