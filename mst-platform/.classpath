@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/mst-common"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/activation-1.1.1.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/asm-tree-3.1.jar"/>
@@ -51,7 +50,6 @@
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/servlet-api-6.0.18.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/slf4j-log4j12-1.6.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-commons-csv-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-core-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/solr-dataimporthandler-3.3.0.jar"/>
@@ -79,5 +77,7 @@
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/struts2-core-2.2.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/xwork-core-2.2.1.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/trove-2.1.0.jar"/>
+	<classpathentry kind="lib" path="/mst-common/build/lib/ant-1.6.2.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

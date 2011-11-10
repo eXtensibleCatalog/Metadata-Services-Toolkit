@@ -1,4 +1,4 @@
-package xc.mst.services.example.test;
+package xc.mst.services.dctoxctransformation.test;
 
 import org.apache.log4j.Logger;
 

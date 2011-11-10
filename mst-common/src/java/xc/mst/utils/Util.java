@@ -19,6 +19,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
 import java.util.List;
@@ -246,4 +248,20 @@ public class Util {
         return numLongPrim;
     }
 
+    boolean debug = true;
+    //eventually make it configurable via a parameter?
+    public void printStackTrace(String status) {
+        if (debug) {
+            try {
+                throw new RuntimeException(status);
+            } catch (RuntimeException e) {
+                LOG.info(status);
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                String stacktrace = sw.toString();
+                LOG.info(stacktrace);
+                e.printStackTrace(System.out);
+            }
+        }
+    }
 }

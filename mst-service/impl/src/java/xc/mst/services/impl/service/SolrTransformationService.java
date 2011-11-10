@@ -4847,7 +4847,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 holdingsContent.add(textualHolding);
             }
 
-            LOG.info("*** This bib had a holding associated with it (an 852)");
+            LOG.debug("*** This bib had a holding associated with it (an 852)");
             addMessage(inRecord, 104, RecordMessage.INFO);
 
             getXCRecordService().addHoldingsElement(transformInto,

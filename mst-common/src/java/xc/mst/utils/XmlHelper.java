@@ -9,7 +9,9 @@
 package xc.mst.utils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -186,7 +188,8 @@ public class XmlHelper {
                     */
                     "<datestamp>.*?</datestamp>", "",
                     "<request.*?</request>", "",
-                    "<responseDate.*?</responseDate>", ""
+                    "<responseDate.*?</responseDate>", "",
+                    "<resumptionToken.*?</resumptionToken>", ""
             };
             String file1contents = getString(getSaxBuilder().build(new FileInputStream(file1)).getRootElement());
             for (int i = 0; i < regexps.length; i += 2) {
@@ -203,6 +206,28 @@ public class XmlHelper {
             LOG.debug("final chart @@" + file2contents.charAt(file2contents.length() - 1) + "@@");
             LOG.debug("file2contents: " + file2 + "\n" + file2contents);
             LOG.debug("!file1contents.equals(file2contents): " + !file1contents.equals(file2contents));
+
+            boolean debug = false;
+            if (debug) {
+                String f1 = file1 + "_regex.xml";
+                String f2 = file2 + "_regex.xml";
+                File _file1 = new File(f1);
+                File _file2 = new File(f2);
+                if (_file1.exists()) {
+                    _file1.delete();
+                }
+                if (_file2.exists()) {
+                    _file2.delete();
+                }
+                FileOutputStream fos1 = new FileOutputStream(_file1);
+                FileOutputStream fos2 = new FileOutputStream(_file2);
+                System.out.println("**** WILL WROTE debug FILES! " + f1 + " "+f2);
+                fos1.write(file1contents.getBytes());
+                fos2.write(file2contents.getBytes());
+                fos1.close(); fos1 = null;
+                fos2.close(); fos2 = null;
+            }
+
             return !file1contents.equals(file2contents);
         } catch (Throwable t) {
             Util.getUtil().throwIt(t);

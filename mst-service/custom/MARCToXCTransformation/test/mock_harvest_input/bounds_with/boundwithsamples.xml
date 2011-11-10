@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-08-24T12:53:15Z</responseDate>
+  <request verb="ListRecords">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/5</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record>
+          <marc:leader>00229cx a22001093 4500</marc:leader>
+          <marc:controlfield tag="001">1053198</marc:controlfield>
+          <marc:controlfield tag="004">952978</marc:controlfield>
+          <marc:controlfield tag="005">20040712153406.0</marc:controlfield>
+          <marc:controlfield tag="008">9612090u 0 4001uu 0000000</marc:controlfield>
+          <marc:datafield tag="014" ind1=" " ind2=" ">
+              <marc:subfield code="a">00896732</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">952977</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+              <marc:subfield code="b">SibStack</marc:subfield>
+              <marc:subfield code="h">M1013</marc:subfield>
+              <marc:subfield code="i">.B887 FS</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record>
+          <marc:leader>00301cx a22001453 4500</marc:leader>
+          <marc:controlfield tag="001">1299843</marc:controlfield>
+          <marc:controlfield tag="004">1188189</marc:controlfield>
+          <marc:controlfield tag="005">20100223123045.0</marc:controlfield>
+          <marc:controlfield tag="008">9812070u 0 4001uu 0000000</marc:controlfield>
+          <marc:datafield tag="014" ind1=" " ind2=" ">
+              <marc:subfield code="a">01137753</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1188190</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1188191</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1188185</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1188184</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+              <marc:subfield code="b">SibRemSto</marc:subfield>
+              <marc:subfield code="h">M1620</marc:subfield>
+              <marc:subfield code="i">.S378</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record>
+          <marc:leader>00277cx a22001333 4500</marc:leader>
+          <marc:controlfield tag="001">1303386</marc:controlfield>
+          <marc:controlfield tag="004">1191502</marc:controlfield>
+          <marc:controlfield tag="005">19980210163326.0</marc:controlfield>
+          <marc:controlfield tag="008">9802100u 0 4001uu 0000000</marc:controlfield>
+          <marc:datafield tag="014" ind1=" " ind2=" ">
+              <marc:subfield code="a">01141126</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191513</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191506</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191508</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+              <marc:subfield code="b">SibStorage</marc:subfield>
+              <marc:subfield code="h">M1620 .G84n</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
+        <datestamp>2011-08-24T16:53:08Z</datestamp>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+        <marc:record>
+          <marc:leader>00283nx a22001214 4500</marc:leader>
+          <marc:controlfield tag="001">1724781</marc:controlfield>
+          <marc:controlfield tag="004">1191502</marc:controlfield>
+          <marc:controlfield tag="005">19980210163402.0</marc:controlfield>
+          <marc:controlfield tag="008">9802104u 8 1001uu 0901128</marc:controlfield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191513</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191506</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+              <marc:subfield code="a">1191508</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+              <marc:subfield code="b">SibStack</marc:subfield>
+              <marc:subfield code="h">M1620 .G84n</marc:subfield>
+              <marc:subfield code="z">Copy 2. Preservation photocopy.</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

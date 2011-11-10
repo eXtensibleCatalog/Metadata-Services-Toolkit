@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="build/lib/activation-1.1.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="build/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="build/lib/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/asm-tree-3.1.jar"/>
@@ -48,14 +47,12 @@
 	<classpathentry kind="lib" path="build/lib/lucene-queries-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-spellchecker-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/mail-1.4.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/mst-instances-1.0.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/mysql-connector-java-5.0.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/ognl-3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/servlet-api-6.0.18.jar"/>
 	<classpathentry kind="lib" path="build/lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/solr-commons-csv-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/solr-core-3.3.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/solr-dataimporthandler-3.3.0.jar"/>
@@ -79,5 +76,8 @@
 	<classpathentry kind="lib" path="build/lib/wstx-asl-3.2.7.jar"/>
 	<classpathentry kind="lib" path="build/lib/xercesImpl-2.8.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/xwork-core-2.2.1.jar" sourcepath="C:/Documents and Settings/BenjaminA/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1-sources.jar"/>
+	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
+	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/mst-instances-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

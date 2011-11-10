@@ -45,7 +45,7 @@ import xc.mst.utils.XmlHelper;
 /**
  * A Metadata Service which for each unprocessed marcxml record creates an XC schema
  * record from the data in the unprocessed record.
- * 
+ *
  * @author Eric Osisek
  * @author Benjamin D. Anderson
  */
@@ -59,16 +59,22 @@ public class TransformationService extends SolrTransformationService {
     // which begs the question about the lack of transactions... I need a way to
     // rollback if something bad happens. Probably the easiest thing to do is just to delete
     // records with some id higher than something.
+
+    // 001 to man record_id; reflects db state
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+
+    // 001 to man record_id; reflects db state
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, Long>>();
 
+    // for adding to the above maps
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap = new HashMap<String, Map<String, Long>>();
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, Long>>();
 
+    // for removing to the above maps
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
@@ -142,7 +148,7 @@ public class TransformationService extends SolrTransformationService {
 
     protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             long l = longLongMap.get(bibMarcId);
             if (l == 0) {
                 return null;
@@ -154,10 +160,10 @@ public class TransformationService extends SolrTransformationService {
         }
     }
 
-    protected void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+    private void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.put(bibMarcId, lv);
             longLongMapAdded.put(bibMarcId, lv);
         } catch (NumberFormatException nfe) {
@@ -166,10 +172,10 @@ public class TransformationService extends SolrTransformationService {
         }
     }
 
-    protected void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+    private void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
             TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s) {
         try {
-            Long bibMarcId = Long.parseLong(s);
+            Long bibMarcId = Long.parseLong(s.trim());
             longLongMap.remove(bibMarcId);
             longLongMapRemoved.remove(bibMarcId);
         } catch (NumberFormatException nfe) {
@@ -219,13 +225,23 @@ public class TransformationService extends SolrTransformationService {
                 s, l);
     }
 
-    protected void removeManifestationId4BibYet2Arrive(String orgCode, String s) {
+    protected void removeManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
         removeFromMap(
+                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
+                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
+//                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),   // this makes no sense?
+//                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
+                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdAddedMap),
+                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdAddedMap),
+                s);
+        //TODO  test this fix: do you need to add these to removed map?  I would think so in case they got persisted.
+        add2Map(
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
-                s);
+                s, l);
+ LOG.info("** END removeManifestationId4BibYet2Arrive "+s);
     }
 
     @Override
@@ -399,11 +415,14 @@ public class TransformationService extends SolrTransformationService {
                     String bib001 = originalRecord.getControlField(1);
                     Long manifestationId = getManifestationId4BibYet2Arrive(
                             originalRecord.getOrgCode(), bib001);
+                    //TODO test more!
+      LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
                     if (manifestationId != null) {
                         TimingLogger.add("found BibYet2Arrive", 1);
                         removeManifestationId4BibYet2Arrive(
-                                originalRecord.getOrgCode(), bib001);
+                                originalRecord.getOrgCode(), bib001, manifestationId);
                         previouslyHeldManifestationIds.add(manifestationId);
+         LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
                     } else {
                         if (ar.getPreviousManifestationId() != null) {
                             manifestationId = ar.getPreviousManifestationId();
