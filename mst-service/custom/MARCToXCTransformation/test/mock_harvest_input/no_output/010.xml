@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2011-08-24T12:53:15Z</responseDate>
+  <request verb="ListRecords" resumptionToken="7|1004999|1005000|6679727">http://128.151.244.137:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/31</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01978cam a2200445 a 4500</marc:leader>
+	  <marc:controlfield tag="001">3946984</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20090612125327.0</marc:controlfield>
+	  <marc:controlfield tag="008">080918s2008    enka     b    001 0 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">  2007010408</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0195326776 (alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">9780195326772 (alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="7" ind2=" " tag="024">
+	    <marc:subfield code="a">99821523172</marc:subfield>
+	    <marc:subfield code="2">YBP</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="029">
+	    <marc:subfield code="a">NLGGC</marc:subfield>
+	    <marc:subfield code="b">307696405</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)85898999</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">3946984</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">BTCTA</marc:subfield>
+	    <marc:subfield code="d">BAKER</marc:subfield>
+	    <marc:subfield code="d">YDXCP</marc:subfield>
+	    <marc:subfield code="d">C#P</marc:subfield>
+	    <marc:subfield code="d">IXA</marc:subfield>
+	    <marc:subfield code="d">CGU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">BQ9265.4</marc:subfield>
+	    <marc:subfield code="b">.H45 2008</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="082">
+	    <marc:subfield code="a">294.3/927</marc:subfield>
+	    <marc:subfield code="2">22</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Heine, Steven,</marc:subfield>
+	    <marc:subfield code="d">1950-</marc:subfield>
+	    <marc:subfield code="4">aut</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Zen skin, Zen marrow :</marc:subfield>
+	    <marc:subfield code="b">will the real Zen Buddhism please stand up? /</marc:subfield>
+	    <marc:subfield code="c">Steven Heine.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Oxford ;</marc:subfield>
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">Oxford University Press,</marc:subfield>
+	    <marc:subfield code="c">2008.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">vi, 217 p. :</marc:subfield>
+	    <marc:subfield code="b">ill. ;</marc:subfield>
+	    <marc:subfield code="c">25 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographical references (p. [201]-211) and index.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="505">
+	    <marc:subfield code="a">Fore play: the relativity of truth and uncertainty of method -- Zen writes: fun and games with words and letters -- Zen rites: the eclipse of Buddha -- Zen rights: a series of (un)fortunate social events -- The real Zen Buddhism: engaged, enraged or disengaged?</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="530">
+	    <marc:subfield code="a">Also available on the Internet to subscribing institutions.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Zen Buddhism.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="776">
+	    <marc:subfield code="a">Heine, Steven, 1950-</marc:subfield>
+	    <marc:subfield code="t">Zen skin, Zen marrow</marc:subfield>
+	    <marc:subfield code="z">0195326776</marc:subfield>
+	    <marc:subfield code="z">9780195326772</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)224532574</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="856">
+	    <marc:subfield code="u">http://dx.doi.org/10.1093/acprof:oso/9780195326772.001.0001</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="856">
+	    <marc:subfield code="u">http://www.oxfordscholarship.com/oso/public/content/religion/9780195326772/toc.html</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+	    <marc:subfield code="b">BKTY</marc:subfield>
+	    <marc:subfield code="c">24.95</marc:subfield>
+	    <marc:subfield code="d">24.95</marc:subfield>
+	    <marc:subfield code="i">0195326776</marc:subfield>
+	    <marc:subfield code="n">0007284770</marc:subfield>
+	    <marc:subfield code="s">active</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Baker and Taylor</marc:subfield>
+	    <marc:subfield code="b">BTCP</marc:subfield>
+	    <marc:subfield code="n">BK0007284770</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">YBP Library Services</marc:subfield>
+	    <marc:subfield code="b">YANK</marc:subfield>
+	    <marc:subfield code="n">2702503</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="949">
+	    <marc:subfield code="b">39087029434844</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="957">
+	    <marc:subfield code="3">Table of contents only</marc:subfield>
+	    <marc:subfield code="u">http://www.loc.gov/catdir/toc/ecip0713/2007010408.html</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="980">
+	    <marc:subfield code="a">2008-09-30</marc:subfield>
+	    <marc:subfield code="b">24.95</marc:subfield>
+	    <marc:subfield code="e">20.96</marc:subfield>
+	    <marc:subfield code="f">521402</marc:subfield>
+	    <marc:subfield code="g">1</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">92</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Monograph/Item</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)3946984</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">0195326776 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">9780195326772 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="240">
+	    <marc:subfield code="a">Zen skin, Zen marrow :</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/32</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01141caa a2200289Ia 4500</marc:leader>
+	  <marc:controlfield tag="001">3642471</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20080107172444.0</marc:controlfield>
+	  <marc:controlfield tag="008">071119s1985    txu           000 j eng d</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)181592715</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">3642471</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">RRR</marc:subfield>
+	    <marc:subfield code="c">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">n-us---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="4" tag="050">
+	    <marc:subfield code="a">PS3570.Y45</marc:subfield>
+	    <marc:subfield code="b">A95 1985</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Tyler, Anne.</marc:subfield>
+	    <marc:subfield code="4">aut</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Average waves in unprotected waters /</marc:subfield>
+	    <marc:subfield code="c">Anne Tyler.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">p. 62-68 ;</marc:subfield>
+	    <marc:subfield code="c">23 cm</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Caption title.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Originally published in: New Yorker, Feb. 28, 1977.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="590">
+	    <marc:subfield code="a">Rhees Rare Books copy: The Jan Gleason Collection of Anne Tyler.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="590">
+	    <marc:subfield code="a">Rhees Rare Books copy: Typescript letter, signed, from UT Press to Elizabeth Pochoda at The nation magazine.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="590">
+	    <marc:subfield code="a">Rhees Rare Books accession no.: RB-31423.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">People with mental disabilities</marc:subfield>
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="773">
+	    <marc:subfield code="7">nnam</marc:subfield>
+	    <marc:subfield code="t">Despite this flesh.</marc:subfield>
+	    <marc:subfield code="b">1st ed.</marc:subfield>
+	    <marc:subfield code="d">Austin : University of Texas Press, 1985.</marc:subfield>
+	    <marc:subfield code="g">P. 62-68.</marc:subfield>
+	    <marc:subfield code="n">"Uncorrected advance proofs"--Cover.</marc:subfield>
+	    <marc:subfield code="z">0292724497</marc:subfield>
+	    <marc:subfield code="z">0292715501</marc:subfield>
+	    <marc:subfield code="w">(DLC)   85000632</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)11621738</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">C0</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Monographic component part</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)3642471</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="240">
+	    <marc:subfield code="a">Average waves in unprotected waters /</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">People with mental disabilities</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="967">
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/33</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01684cam a2200457 a 4500</marc:leader>
+	  <marc:controlfield tag="001">3813891</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20080528093350.0</marc:controlfield>
+	  <marc:controlfield tag="008">070611s2008    enk      b    001 0 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">  2007024219</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0195328825 (alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">9780195328820 (alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="7" ind2=" " tag="024">
+	    <marc:subfield code="a">40015273317</marc:subfield>
+	    <marc:subfield code="2">YBP</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)144768582</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">BAKER</marc:subfield>
+	    <marc:subfield code="d">BTCTA</marc:subfield>
+	    <marc:subfield code="d">YDXCP</marc:subfield>
+	    <marc:subfield code="d">CGU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">BJ1286.G64</marc:subfield>
+	    <marc:subfield code="b">G66 2008</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="082">
+	    <marc:subfield code="a">296.3/6</marc:subfield>
+	    <marc:subfield code="2">22</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Goodman, Lenn Evan,</marc:subfield>
+	    <marc:subfield code="d">1944-</marc:subfield>
+	    <marc:subfield code="4">aut</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Love thy neighbor as thyself /</marc:subfield>
+	    <marc:subfield code="c">Lenn E. Goodman.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Oxford ;</marc:subfield>
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">Oxford University Press,</marc:subfield>
+	    <marc:subfield code="c">2008.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">x, 235 p. ;</marc:subfield>
+	    <marc:subfield code="c">24 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographical references and indexes.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="530">
+	    <marc:subfield code="a">Also available on the Internet to subscribing institutions.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Golden rule.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Altruism.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Brotherliness.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Equality</marc:subfield>
+	    <marc:subfield code="x">Religious aspects</marc:subfield>
+	    <marc:subfield code="x">Judaism.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Conduct of life.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Judaism</marc:subfield>
+	    <marc:subfield code="x">Doctrines.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Jewish ethics.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="776">
+	    <marc:subfield code="a">Goodman, Lenn Evan, 1944-</marc:subfield>
+	    <marc:subfield code="t">Love thy neighbor as thyself</marc:subfield>
+	    <marc:subfield code="z">0195328825</marc:subfield>
+	    <marc:subfield code="z">9780195328820</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)224529536</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="856">
+	    <marc:subfield code="u">http://dx.doi.org/10.1093/acprof:oso/9780195328820.001.0001</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="1" tag="856">
+	    <marc:subfield code="u">http://www.oxfordscholarship.com/oso/public/content/religion/9780195328820/toc.html</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Baker and Taylor</marc:subfield>
+	    <marc:subfield code="b">BTCP</marc:subfield>
+	    <marc:subfield code="n">BK0007440058</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">YBP Library Services</marc:subfield>
+	    <marc:subfield code="b">YANK</marc:subfield>
+	    <marc:subfield code="n">2781308</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Baker &amp; Taylor</marc:subfield>
+	    <marc:subfield code="b">BKTY</marc:subfield>
+	    <marc:subfield code="c">55.00</marc:subfield>
+	    <marc:subfield code="d">55.00</marc:subfield>
+	    <marc:subfield code="i">0195328825</marc:subfield>
+	    <marc:subfield code="n">0007440058</marc:subfield>
+	    <marc:subfield code="s">active</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="949">
+	    <marc:subfield code="b">39087029462092</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="980">
+	    <marc:subfield code="a">2008-05-08</marc:subfield>
+	    <marc:subfield code="b">55</marc:subfield>
+	    <marc:subfield code="e">46.2</marc:subfield>
+	    <marc:subfield code="f">408286</marc:subfield>
+	    <marc:subfield code="g">1</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">92</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Monograph/Item</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)3813891</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">0195328825 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">9780195328820 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="240">
+	    <marc:subfield code="a">Love thy neighbor as thyself /</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Equality</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Judaism</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="x">Religious aspects</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="x">Judaism.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="x">Doctrines.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/34</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01503cas a2200361 a 4500</marc:leader>
+	  <marc:controlfield tag="001">3403963</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20100216133901.0</marc:controlfield>
+	  <marc:controlfield tag="006">m        d        </marc:controlfield>
+	  <marc:controlfield tag="007">cr  n         </marc:controlfield>
+	  <marc:controlfield tag="008">840222c19839999enkmr p s     0   a0eng c</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">   85646072 </marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="022">
+	    <marc:subfield code="a">0262-4230</marc:subfield>
+	    <marc:subfield code="l">0262-4230</marc:subfield>
+	    <marc:subfield code="2">z</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(WaSeSS)ssj540</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="037">
+	    <marc:subfield code="b">Morgan-Grampian, Ltd., 30 Calderwood St., Woolwich, London, SE18 6QH</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">ScU</marc:subfield>
+	    <marc:subfield code="c">ScU</marc:subfield>
+	    <marc:subfield code="d">AIP</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">AIP</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">NSDP</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">NSDP</marc:subfield>
+	    <marc:subfield code="d">N</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">OCoLC</marc:subfield>
+	    <marc:subfield code="d">WaSeSS</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="042">
+	    <marc:subfield code="a">pcc</marc:subfield>
+	    <marc:subfield code="a">nsdp</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">TP1</marc:subfield>
+	    <marc:subfield code="b">.M26</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="4" tag="082">
+	    <marc:subfield code="a">338.4/76602/05</marc:subfield>
+	    <marc:subfield code="2">19</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="130">
+	    <marc:subfield code="a">Manufacturing chemist (London, England : 1983 : Online)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="210">
+	    <marc:subfield code="a">Manuf. chem.</marc:subfield>
+	    <marc:subfield code="b">(Lond., 1981)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="222">
+	    <marc:subfield code="a">Manufacturing chemist</marc:subfield>
+	    <marc:subfield code="b">(London. 1981)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Manufacturing chemist</marc:subfield>
+	    <marc:subfield code="h">[electronic resource].</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">[London :</marc:subfield>
+	    <marc:subfield code="b">Morgan-Grampian,</marc:subfield>
+	    <marc:subfield code="c">c1983-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="310">
+	    <marc:subfield code="a">Monthly</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="362">
+	    <marc:subfield code="a">[Vol. 54, no. 9] (Sept. 1983)-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Title from cover.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Chemical industry</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">LexisNexis (Firm)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="770">
+	    <marc:subfield code="t">Aerosol review</marc:subfield>
+	    <marc:subfield code="x">0568-062X</marc:subfield>
+	    <marc:subfield code="w">(DLC)   67036176</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)1461331</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="780">
+	    <marc:subfield code="t">Manufacturing chemist incorporating chemical age</marc:subfield>
+	    <marc:subfield code="x">0262-4230</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)7864074</marc:subfield>
+	    <marc:subfield code="w">(DLC)   82641197</marc:subfield>
+	    <marc:subfield code="x">0262-4230</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="850">
+	    <marc:subfield code="a">AAP</marc:subfield>
+	    <marc:subfield code="a">CaAEU</marc:subfield>
+	    <marc:subfield code="a">CaBVaU</marc:subfield>
+	    <marc:subfield code="a">CaOTU</marc:subfield>
+	    <marc:subfield code="a">CoFS</marc:subfield>
+	    <marc:subfield code="a">CoU</marc:subfield>
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="a">ICRL</marc:subfield>
+	    <marc:subfield code="a">ICarbS</marc:subfield>
+	    <marc:subfield code="a">IaAS</marc:subfield>
+	    <marc:subfield code="a">InLP</marc:subfield>
+	    <marc:subfield code="a">MiDW-M</marc:subfield>
+	    <marc:subfield code="a">N</marc:subfield>
+	    <marc:subfield code="a">NNC</marc:subfield>
+	    <marc:subfield code="a">NcRS</marc:subfield>
+	    <marc:subfield code="a">Wa</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="0" tag="856">
+	    <marc:subfield code="z">Full text</marc:subfield>
+	    <marc:subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=MANUCHELO&amp;T=marc</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="999">
+	    <marc:subfield code="a">Journal RCL Internet SS</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Computer file</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Serial</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)3403963</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Electronic resource</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="934">
+	    <marc:subfield code="a">Remote</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="939">
+	    <marc:subfield code="a">1983-    </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Chemical industry</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/35</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>02034cam a2200529 a 4500</marc:leader>
+	  <marc:controlfield tag="001">4434377</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20100607141551.0</marc:controlfield>
+	  <marc:controlfield tag="008">100318s2010    nyu           000 1 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">  2009045198</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="019">
+	    <marc:subfield code="a">525226506</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">9780307271860 (hardcover : alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="020">
+	    <marc:subfield code="a">0307271862 (hardcover : alk. paper)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="7" ind2=" " tag="024">
+	    <marc:subfield code="2">YBP</marc:subfield>
+	    <marc:subfield code="a">99936837011</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="029">
+	    <marc:subfield code="a">NZ1</marc:subfield>
+	    <marc:subfield code="b">13106132</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="029">
+	    <marc:subfield code="a">CDX</marc:subfield>
+	    <marc:subfield code="b">10169384</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)326509270</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">4434377</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">DLC</marc:subfield>
+	    <marc:subfield code="d">BTCTA</marc:subfield>
+	    <marc:subfield code="d">YDXCP</marc:subfield>
+	    <marc:subfield code="d">GO3</marc:subfield>
+	    <marc:subfield code="d">C#P</marc:subfield>
+	    <marc:subfield code="d">OJ4</marc:subfield>
+	    <marc:subfield code="d">B2A</marc:subfield>
+	    <marc:subfield code="d">BWX</marc:subfield>
+	    <marc:subfield code="d">SLV</marc:subfield>
+	    <marc:subfield code="d">CDX</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="041">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="h">swe</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">e-sw---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">PT9876.23.A49</marc:subfield>
+	    <marc:subfield code="b">K5613 2010</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="082">
+	    <marc:subfield code="a">839.73/74</marc:subfield>
+	    <marc:subfield code="2">22</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Mankell, Henning,</marc:subfield>
+	    <marc:subfield code="d">1948-</marc:subfield>
+	    <marc:subfield code="4">aut</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="240">
+	    <marc:subfield code="a">Kinesen.</marc:subfield>
+	    <marc:subfield code="l">English</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="4" tag="245">
+	    <marc:subfield code="a">The man from Beijing /</marc:subfield>
+	    <marc:subfield code="c">Henning Mankell ; translated from the Swedish by Laurie Thompson.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="250">
+	    <marc:subfield code="a">1st North American ed.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">Alfred A. Knopf,</marc:subfield>
+	    <marc:subfield code="c">c2010.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">365 p. ;</marc:subfield>
+	    <marc:subfield code="c">25 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Originally published under title Kinesen : Stockholm : Leopard, 2008.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="520">
+	    <marc:subfield code="a">Hudiksvall, January 2006, police find eighteen people massacred in a small village. They think it's the work of a mad man but Birgitta and August believe they were killed by the same person who killed their mother.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Massacres</marc:subfield>
+	    <marc:subfield code="z">Sweden</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Serial murder investigation</marc:subfield>
+	    <marc:subfield code="z">Sweden</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Women judges</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Mass murder investigation</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Revenge</marc:subfield>
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="7" tag="655">
+	    <marc:subfield code="a">Suspense fiction.</marc:subfield>
+	    <marc:subfield code="2">gsafd</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Thompson, Laurie,</marc:subfield>
+	    <marc:subfield code="d">1938-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="776">
+	    <marc:subfield code="t">Man from Beijing.</marc:subfield>
+	    <marc:subfield code="z">9780307271860</marc:subfield>
+	    <marc:subfield code="z">0307271862</marc:subfield>
+	    <marc:subfield code="w">(DLC)  2009045198</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)326509270</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">YBP Library Services</marc:subfield>
+	    <marc:subfield code="b">YANK</marc:subfield>
+	    <marc:subfield code="n">3143869</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Blackwell Book Service</marc:subfield>
+	    <marc:subfield code="b">BBUS</marc:subfield>
+	    <marc:subfield code="n">R2830104</marc:subfield>
+	    <marc:subfield code="c">$25.95</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="938">
+	    <marc:subfield code="a">Coutts Information Services</marc:subfield>
+	    <marc:subfield code="b">COUT</marc:subfield>
+	    <marc:subfield code="n">10169384</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="949">
+	    <marc:subfield code="b">39087031405816</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="980">
+	    <marc:subfield code="a">2010-03-31</marc:subfield>
+	    <marc:subfield code="b">25.95</marc:subfield>
+	    <marc:subfield code="e">21.80</marc:subfield>
+	    <marc:subfield code="f">945948</marc:subfield>
+	    <marc:subfield code="g">1</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">92</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Monograph/Item</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)4434377</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">9780307271860 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="947">
+	    <marc:subfield code="a">0307271862 </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Massacres</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Serial murder investigation</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Women judges</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Mass murder investigation</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Revenge</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="967">
+	    <marc:subfield code="z">Sweden</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Fiction.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2="0" tag="246">
+	    <marc:subfield code="a">Man from Beijing /</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/36</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01933cas a2200481 a 4500</marc:leader>
+	  <marc:controlfield tag="001">2259458</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20030427080343.0</marc:controlfield>
+	  <marc:controlfield tag="008">830720c19819999nmuar1       f0   a0eng d</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">   84641717 </marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="012">
+	    <marc:subfield code="a">3</marc:subfield>
+	    <marc:subfield code="b">3</marc:subfield>
+	    <marc:subfield code="c">y</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="022">
+	    <marc:subfield code="a">0364-4065</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)9752130</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">2259458</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="037">
+	    <marc:subfield code="b">National Technical Information Service, Springfield, Va. 22161</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">GPO</marc:subfield>
+	    <marc:subfield code="c">GPO</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">NSD</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">GPO</marc:subfield>
+	    <marc:subfield code="d">MvI-ocs</marc:subfield>
+	    <marc:subfield code="d">MvI-ocs</marc:subfield>
+	    <marc:subfield code="d">MvI-edt</marc:subfield>
+	    <marc:subfield code="d">MvI</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="042">
+	    <marc:subfield code="a">lc</marc:subfield>
+	    <marc:subfield code="a">nsdp</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">n-us-nm</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="050">
+	    <marc:subfield code="a">GB1225.N6</marc:subfield>
+	    <marc:subfield code="b">A412</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="074">
+	    <marc:subfield code="a">619-E-31 (MF)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="082">
+	    <marc:subfield code="a">553.7/09789</marc:subfield>
+	    <marc:subfield code="2">19</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="086">
+	    <marc:subfield code="a">I 19.53/2:NM-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="222">
+	    <marc:subfield code="a">Water resources data for New Mexico</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="245">
+	    <marc:subfield code="a">Water resources data.</marc:subfield>
+	    <marc:subfield code="p">New Mexico.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="246">
+	    <marc:subfield code="a">USGS water resources data.</marc:subfield>
+	    <marc:subfield code="p">New Mexico</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="246">
+	    <marc:subfield code="a">New Mexico</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="8" tag="246">
+	    <marc:subfield code="a">U.S.G.S. water resources data.</marc:subfield>
+	    <marc:subfield code="p">New Mexico</marc:subfield>
+	    <marc:subfield code="f">1982-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Albuquerque, N.M. :</marc:subfield>
+	    <marc:subfield code="b">U.S. Dept. of the Interior, Geological Survey ;</marc:subfield>
+	    <marc:subfield code="a">[Springfield, VA :</marc:subfield>
+	    <marc:subfield code="b">National Technical Information Service, distributor],</marc:subfield>
+	    <marc:subfield code="c">1982-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">v. ;</marc:subfield>
+	    <marc:subfield code="c">28 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="310">
+	    <marc:subfield code="a">Annual</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="362">
+	    <marc:subfield code="a">Water year 1981-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="490">
+	    <marc:subfield code="a">U.S. Geological Survey water-data report</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">"Water Resources Division"--Verso of t.p.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="530">
+	    <marc:subfield code="a">Vols. for &lt;1983-&gt; distributed to depository libraries in microfiche.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="550">
+	    <marc:subfield code="a">Prepared in cooperation with the state of New Mexico and with other agencies.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Stream measurements</marc:subfield>
+	    <marc:subfield code="z">New Mexico</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Water quality</marc:subfield>
+	    <marc:subfield code="z">New Mexico</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">Geological Survey (U.S.).</marc:subfield>
+	    <marc:subfield code="b">Water Resources Division.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="760">
+	    <marc:subfield code="t">U.S. Geological Survey water-data report</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="776">
+	    <marc:subfield code="c">Microfiche</marc:subfield>
+	    <marc:subfield code="d">Supt. of Docs., U.S. G.P.O.</marc:subfield>
+	    <marc:subfield code="w">(DLC)sn 92040104</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)11758024</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="780">
+	    <marc:subfield code="t">Water resources data for New Mexico</marc:subfield>
+	    <marc:subfield code="x">0364-4065</marc:subfield>
+	    <marc:subfield code="x">(DLC)  68060776</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)1160553</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="830">
+	    <marc:subfield code="a">U.S. Geological Survey water-data report.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="949">
+	    <marc:subfield code="l">DocFiche</marc:subfield>
+	    <marc:subfield code="m">Gov Doc</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Serial</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)2259458</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="939">
+	    <marc:subfield code="a">1981-    </marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="130">
+	    <marc:subfield code="a">Water resources data.</marc:subfield>
+	    <marc:subfield code="p">New Mexico.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Stream measurements</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Water quality</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="967">
+	    <marc:subfield code="z">New Mexico</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/37</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01579cas a22003730  4500</marc:leader>
+	  <marc:controlfield tag="001">805593</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20030208142840.0</marc:controlfield>
+	  <marc:controlfield tag="008">760616d19741980dcuar1   ys  f0   a0eng d</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">87-659180</marc:subfield>
+	    <marc:subfield code="z">sc 77001253</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="019">
+	    <marc:subfield code="a">4619072</marc:subfield>
+	    <marc:subfield code="a">7119380</marc:subfield>
+	    <marc:subfield code="a">8270617</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="022">
+	    <marc:subfield code="a">0147-7870</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)2231304</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">UDI</marc:subfield>
+	    <marc:subfield code="c">UDI</marc:subfield>
+	    <marc:subfield code="d">COO</marc:subfield>
+	    <marc:subfield code="d">NSD</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">NSD</marc:subfield>
+	    <marc:subfield code="d">OCL</marc:subfield>
+	    <marc:subfield code="d">m.c.</marc:subfield>
+	    <marc:subfield code="d">DLC</marc:subfield>
+	    <marc:subfield code="d">GPO</marc:subfield>
+	    <marc:subfield code="d">NST</marc:subfield>
+	    <marc:subfield code="d">OCL</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="042">
+	    <marc:subfield code="a">nsdp</marc:subfield>
+	    <marc:subfield code="a">lc</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">n-us---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="050">
+	    <marc:subfield code="a">HD7293.A49</marc:subfield>
+	    <marc:subfield code="b">H67</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="074">
+	    <marc:subfield code="a">0582-M</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="082">
+	    <marc:subfield code="a">363.5/0973/021</marc:subfield>
+	    <marc:subfield code="2">19</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="086">
+	    <marc:subfield code="a">HH 1.38:</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="110">
+	    <marc:subfield code="a">United States.</marc:subfield>
+	    <marc:subfield code="b">Dept. of Housing and Urban Development.</marc:subfield>
+	    <marc:subfield code="4">aut</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="222">
+	    <marc:subfield code="a">Statistical yearbook of the United States Department of Housing and Urban Development</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="245">
+	    <marc:subfield code="a">Statistical yearbook of the U.S. Department of Housing and Urban Development /</marc:subfield>
+	    <marc:subfield code="c">HUD.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2=" " tag="246">
+	    <marc:subfield code="a">Housing and Urban Development statistical yearbook</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2=" " tag="246">
+	    <marc:subfield code="a">Statistical yearbook of the United States Department of Housing and Urban Development</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">[Washington, D.C] :</marc:subfield>
+	    <marc:subfield code="b">The Department :</marc:subfield>
+	    <marc:subfield code="b">For sale by the Supt. of Docs., U.S. G.P.O.,</marc:subfield>
+	    <marc:subfield code="c">1976-</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">v. ;</marc:subfield>
+	    <marc:subfield code="c">26 cm.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="310">
+	    <marc:subfield code="a">Annual</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="362">
+	    <marc:subfield code="a">1974-1980.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Issues for 1977-&lt;1979&gt; have title: Statistical yearbook.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Housing</marc:subfield>
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="x">Statistics</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Housing policy</marc:subfield>
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="x">Statistics</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Urban renewal</marc:subfield>
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="x">Statistics</marc:subfield>
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="780">
+	    <marc:subfield code="a">United States.  Dept. of Housing and Urban Development.</marc:subfield>
+	    <marc:subfield code="t">HUD statistical yearbook</marc:subfield>
+	    <marc:subfield code="x">0190-275X</marc:subfield>
+	    <marc:subfield code="x">(DLC) 87659179</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)2231271</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="910">
+	    <marc:subfield code="a">950805</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Serial</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)805593</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="939">
+	    <marc:subfield code="a">1974-1980</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="240">
+	    <marc:subfield code="a">Statistical yearbook of the U.S. Department of Housing and Urban Development /</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Housing</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Housing policy</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">Urban renewal</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="x">Statistics</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="967">
+	    <marc:subfield code="z">United States</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Periodicals.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+      </metadata>
+    </record>
+     <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:marcnormalization/38</identifier>
+        <datestamp>2011-02-23T21:25:48Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+        <setSpec>marcnormalization</setSpec>
+      </header>
+      <metadata>
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01728cam a2200361Ia 4500</marc:leader>
+	  <marc:controlfield tag="001">4034051</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20081203152333.0</marc:controlfield>
+	  <marc:controlfield tag="006">m        d        </marc:controlfield>
+	  <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+	  <marc:controlfield tag="008">080214s2005    enka    sbe   001 0 eng  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)192019147</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">GZM</marc:subfield>
+	    <marc:subfield code="c">GZM</marc:subfield>
+	    <marc:subfield code="d">GZM</marc:subfield>
+	    <marc:subfield code="d">WTU</marc:subfield>
+	    <marc:subfield code="d">ZCU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">n-us---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="4" tag="050">
+	    <marc:subfield code="a">E185.86</marc:subfield>
+	    <marc:subfield code="b">.B542 2005</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="245">
+	    <marc:subfield code="a">Black women in America</marc:subfield>
+	    <marc:subfield code="h">[electronic resource] /</marc:subfield>
+	    <marc:subfield code="c">edited by Darlene Clark Hine.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="250">
+	    <marc:subfield code="a">2nd ed.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">Oxford ;</marc:subfield>
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">Oxford University Press,</marc:subfield>
+	    <marc:subfield code="c">2005.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Title from home page (viewed April 28, 2008).</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="504">
+	    <marc:subfield code="a">Includes bibliographical references.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="506">
+	    <marc:subfield code="a">Available to subscribers of Oxford digital reference shelf.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="520">
+	    <marc:subfield code="a">"Women such as Venus and Serena Williams, Condoleezza Rice, Carol Moseley Braun, Ruth Simmons, and Ann Fudge have become household names for their remarkable contributions to sports, politics, academia, and business. In nearly 600 entries, Black Women in America celebrates the remarkable achievements of black women throughout history, highlights their ongoing contributions in America today, and represents the new research the first edition helped to generate. "</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="538">
+	    <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="550">
+	    <marc:subfield code="a">Issued as part of Oxford digital reference shelf.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">African American women</marc:subfield>
+	    <marc:subfield code="v">Encyclopedias.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Hine, Darlene Clark.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">Oxford University Press.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="740">
+	    <marc:subfield code="a">Oxford digital reference shelf.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="776">
+	    <marc:subfield code="t">Black women in America</marc:subfield>
+	    <marc:subfield code="z">0195156773</marc:subfield>
+	    <marc:subfield code="z">9780195156775</marc:subfield>
+	    <marc:subfield code="w">(OCoLC)57506600</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="4" ind2="0" tag="856">
+	    <marc:subfield code="u">www.oxford-blackwomenamerica.com</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">C0</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="999">
+	    <marc:subfield code="a">Text data RCL Internet</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="931">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Language material</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="932">
+	    <marc:subfield code="a">Computer file</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Text</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="935">
+	    <marc:subfield code="a">Monograph/Item</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(NRU)4034051</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="933">
+	    <marc:subfield code="a">Electronic resource</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="934">
+	    <marc:subfield code="a">Remote</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="937">
+	    <marc:subfield code="a">Non-Fiction</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="941">
+	    <marc:subfield code="a">eng</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="943">
+	    <marc:subfield code="a">English</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="130">
+	    <marc:subfield code="a">Black women in America</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="965">
+	    <marc:subfield code="a">African American women</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="969">
+	    <marc:subfield code="v">Encyclopedias.</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+
+      </metadata>
+    </record>
+
+  </ListRecords>
+</OAI-PMH>
