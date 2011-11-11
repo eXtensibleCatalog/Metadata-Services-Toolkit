@@ -4262,7 +4262,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process773(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4276,7 +4276,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         // dcterms:ISBN based on the corrosponding 773 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 773, "agit3", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE,
-                subfieldToAttribute, FrbrLevel.MANIFESTATION);
+                subfieldToAttribute, FrbrLevel.MANIFESTATION, inRecord);
     }
 
     /**
@@ -4346,7 +4346,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process776(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4360,7 +4360,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         // dcterms:ISBN based on the corrosponding 776 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 776, "agit", "HasFormat", AggregateXCRecord.DCTERMS_NAMESPACE,
-                subfieldToAttribute, FrbrLevel.EXPRESSION);
+                subfieldToAttribute, FrbrLevel.EXPRESSION, inRecord);
     }
 
     /**
@@ -4406,7 +4406,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process780(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create the subfield to attribute map.
         // We'll map the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to the dcterms:ISBN attribute
@@ -4419,7 +4419,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         // Create an dcterms:replaces based on the 780 agitxz values
         return processFieldReqIndicatorAttFromField(transformMe, transformInto,
                 780, "agit", "replaces", AggregateXCRecord.DCTERMS_NAMESPACE,
-                -1, Field.NULL_CHAR, subfieldToAttribute, FrbrLevel.WORK);
+                -1, Field.NULL_CHAR, subfieldToAttribute, FrbrLevel.WORK, inRecord);
     }
 
     /**
@@ -6639,6 +6639,18 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         return transformInto;
     }
 
+
+    protected AggregateXCRecord processFieldAttributeFromSubfield(
+            SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto,
+            int field, String targetSubfields, String elementName,
+            Namespace elementNamespace,
+            HashMap<Character, Attribute> subfieldToAttribute, FrbrLevel level) {
+        return processFieldAttributeFromSubfield(transformMe, transformInto,
+                field, targetSubfields, elementName,
+                elementNamespace,
+                subfieldToAttribute, level, null);
+    }
+
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value
@@ -6669,13 +6681,16 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto,
             int field, String targetSubfields, String elementName,
             Namespace elementNamespace,
-            HashMap<Character, Attribute> subfieldToAttribute, FrbrLevel level) {
+            HashMap<Character, Attribute> subfieldToAttribute, FrbrLevel level, InputRecord inRecord) {
         // Get the elements with the requested tags in the MARC XML record
         List<Field> elements = transformMe.getDataFields(field);
 
         // If there were matching elements, return the unmodified XC record
-        if (elements.size() == 0)
+        if (elements.size() == 0) {
             return transformInto;
+        }
+
+        ArrayList<Character> subfieldCodesSeen = new ArrayList<Character>();
 
         // Add each subfield to the specified level with the specified tag and
         // attribute
@@ -6695,6 +6710,9 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             // is in the list of target subfields
             for (Subfield subfield : subfields) {
                 // Get the subfield's code
+                // it is possible to see the same subfield > once, i.e. z,z,
+                //  in many cases it is valid marc, but we are not going to allow it.
+                //  TODO - that may change in the future!
                 char subfieldCode = subfield.getCode();
 
                 // Append the subfield's value to the processed element's value
@@ -6707,10 +6725,16 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 // attributes to set on the processed element after setting the
                 // attribute's value correctly
                 if (subfieldToAttribute.containsKey((Character) subfieldCode)) {
-                    Attribute attributeToAdd = (Attribute) subfieldToAttribute
-                            .get(subfieldCode).clone();
-                    attributeToAdd.setValue(subfield.getContents());
-                    attributes.add(attributeToAdd);
+                    if (!subfieldCodesSeen.contains((Character) subfieldCode)) {
+                        Attribute attributeToAdd = (Attribute) subfieldToAttribute.get(subfieldCode).clone();
+                        attributeToAdd.setValue(subfield.getContents());
+                        attributes.add(attributeToAdd);
+                        subfieldCodesSeen.add((Character) subfieldCode);
+                    }
+                    else {
+                        addMessage(inRecord, 101, RecordMessage.ERROR);
+                        LOG.error("***** duplicate attribute. already have processed subfield: "+subfieldCode);
+                    }
                 }
             }
 
@@ -7432,6 +7456,16 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         return transformInto;
     }
 
+    protected AggregateXCRecord processFieldReqIndicatorAttFromField(
+            SaxMarcXmlRecord transformMe, AggregateXCRecord transformInto,
+            int field, String targetSubfields, String elementName,
+            Namespace elementNamespace, int targetIndicator,
+            char indicatorRequiredValue,
+            HashMap<Character, Attribute> fieldToAttribute, FrbrLevel level) {
+        return processFieldReqIndicatorAttFromField(transformMe, transformInto, field, targetSubfields, elementName, elementNamespace,
+                targetIndicator, indicatorRequiredValue, fieldToAttribute, level, null);
+    }
+
     /**
      * Process a data field from the SaxMarcXmlRecord we're transforming and
      * create the specified XC record field based on the datafield's value. A
@@ -7471,7 +7505,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             int field, String targetSubfields, String elementName,
             Namespace elementNamespace, int targetIndicator,
             char indicatorRequiredValue,
-            HashMap<Character, Attribute> fieldToAttribute, FrbrLevel level) {
+            HashMap<Character, Attribute> fieldToAttribute, FrbrLevel level, InputRecord inRecord) {
 
         // Get the elements with the requested field
         List<Field> elements = transformMe.getDataFields(field);
@@ -7507,6 +7541,8 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             // Get the subfields of the current element
             List<Subfield> subfields = element.getSubfields();
 
+            ArrayList<Character> subfieldCodesSeen = new ArrayList<Character>();
+
             // Iterate over the subfields, and append each one to the
             // StringBuilder if it
             // is in the list of target subfields
@@ -7520,15 +7556,24 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 try {
                     // If the subfield maps to an Attribute, add it to the
                     // attribute list
-                    if (fieldToAttribute.containsKey(subfieldCode))
-                        attributes.add(((Attribute) fieldToAttribute.get(
-                                subfieldCode).clone()).setValue(subfield
-                                .getContents()));
+                    if (fieldToAttribute.containsKey(subfieldCode)) {
+                        if (!subfieldCodesSeen.contains((Character) subfieldCode)) {
+                            Attribute attributeToAdd = (Attribute) fieldToAttribute.get(subfieldCode).clone();
+                            attributeToAdd.setValue(subfield.getContents());
+                            attributes.add(attributeToAdd);
+                            subfieldCodesSeen.add((Character) subfieldCode);
+                        }
+                        else {
+                            addMessage(inRecord, 101, RecordMessage.ERROR);
+                            LOG.error("***** duplicate attribute. already have processed subfield: "+subfieldCode);
+                        }
+                    }
                 } catch (Exception e) {
                     // TODO
                     // errors.add(service.getId() + "-101: Subfield "+
                     // subfieldCode +" is not repeatable in tag "+field);
                 }
+
             }
 
             // If any target fields were found
