@@ -167,7 +167,9 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     public Date getLastModified(String name) {
-        return (Date) this.jdbcTemplate.queryForObject("select max(date_updated) from " + getTableName(name, RECORD_UPDATES_TABLE), Date.class);
+        // the below change was recommended by Kyushu developers, GC issue 316
+        return (Date) this.jdbcTemplate.queryForObject("select addtime(max(date_updated), '0 0:0:1') from " + getTableName(name,
+                RECORD_UPDATES_TABLE), Date.class);
     }
 
     public Date getLastModifiedOai(String name) {
