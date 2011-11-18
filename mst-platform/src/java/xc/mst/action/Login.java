@@ -213,30 +213,42 @@ public class Login extends BaseActionSupport implements ServletRequestAware {
 
                 try {
                     // Check various permissions proactively!  (can add to these as we see issues...)
-                    String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-                    File dbLoadFile = new File(dbLoadFileStr);
-                    String jobsFileStr = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "JobsInQueue.txt";
-                    File jobsFile = new File(jobsFileStr);
-                    if (!dbLoadFile.canRead()) {
-                        addFieldError("permissionsError", "Can not read file "+dbLoadFileStr);
-                        errorType = "error";
-                        resultName = INPUT;
-                    }
-                    else if (!dbLoadFile.canWrite()) {
-                        addFieldError("permissionsError", "Can not write to file "+dbLoadFileStr);
-                        errorType = "error";
-                        resultName = INPUT;
-                    }
-                    else if (!jobsFile.canWrite()) {
-                        addFieldError("permissionsError", "Can not write to file "+jobsFileStr);
-                        errorType = "error";
-                        resultName = INPUT;
-                    }
-                    else if (!jobsFile.canRead()) {
-                        addFieldError("permissionsError", "Can not read file "+jobsFileStr);
-                        errorType = "error";
-                        resultName = INPUT;
-                    }
+                    String mstBaseDirFileStr = (MSTConfiguration.getUrlPath()).replace('\\', '/');
+                    File mstBaseDirFile = new File(mstBaseDirFileStr);
+//                    String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+//                    File dbLoadFile = new File(dbLoadFileStr);
+//                    String jobsFileStr = MSTConfiguration.getUrlPath() + MSTConfiguration.FILE_SEPARATOR + "JobsInQueue.txt";
+//                    File jobsFile = new File(jobsFileStr);
+//                    if (!dbLoadFile.canRead()) {
+//                        addFieldError("permissionsError", "Can not read file "+dbLoadFileStr);
+//                        errorType = "error";
+//                        resultName = INPUT;
+//                    }
+//                    else if (!dbLoadFile.canWrite()) {
+//                        addFieldError("permissionsError", "Can not write to file "+dbLoadFileStr);
+//                        errorType = "error";
+//                        resultName = INPUT;
+//                    }
+//                    else if (!jobsFile.canWrite()) {
+//                        addFieldError("permissionsError", "Can not write to file "+jobsFileStr);
+//                        errorType = "error";
+//                        resultName = INPUT;
+//                    }
+//                    else if (!jobsFile.canRead()) {
+//                        addFieldError("permissionsError", "Can not read file "+jobsFileStr);
+//                        errorType = "error";
+//                        resultName = INPUT;
+//                    }
+                  if (!mstBaseDirFile.canRead()) {
+                  addFieldError("permissionsError", "Can not read file "+mstBaseDirFile);
+                  errorType = "error";
+                  resultName = INPUT;
+              }
+              else if (!mstBaseDirFile.canWrite()) {
+                  addFieldError("permissionsError", "Can not write to file "+mstBaseDirFile);
+                  errorType = "error";
+                  resultName = INPUT;
+              }
                     else {
                         resultName = SUCCESS;
                     }
