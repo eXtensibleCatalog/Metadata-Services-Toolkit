@@ -24,6 +24,16 @@ public class NormalizationServiceConstants {
      * Parameter for looking up the whether or not the RemoveOCoLC003 normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_REMOVE_OCOLC_003 = "RemoveOCoLC003";
+    
+    /*
+     * Parameters for decided whether or not this is a valid 004 field
+     */
+    public static final String CONFIG_VALID_FIRST_CHAR_014 = "ValidFirstChar014";
+    
+    /*
+     * Parameters for decided whether or not this is an invalid 004 field
+     */
+    public static final String CONFIG_INVALID_FIRST_CHAR_014 = "InvalidFirstChar014";
 
     /**
      * Parameter for looking up the whether or not the DCMIType06 normalization step is enabled.
