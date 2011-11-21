@@ -1931,7 +1931,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     protected AggregateXCRecord process510(SaxMarcXmlRecord transformMe,
             AggregateXCRecord transformInto) {
         // Create an dcterms:isReferencedBy based on the 510 abc3 values with a
-        // dcterms:ISSN based on the corrosponding 510 $x value
+        // dcterms:ISSN based on the corresponding 510 $x value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 510, "abc3", "isReferencedBy",
                 AggregateXCRecord.DCTERMS_NAMESPACE, new Attribute("ISSN",
@@ -4165,7 +4165,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process765(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4175,12 +4175,12 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 AggregateXCRecord.DCTERMS_NAMESPACE));
 
         // Create an dcterms:isVersionOf based on the 765 agit3 values with a
-        // dcterms:ISSN based on the corrosponding 765 $x value and a
-        // dcterms:ISBN based on the corrosponding 765 $z value
+        // dcterms:ISSN based on the corresponding 765 $x value and a
+        // dcterms:ISBN based on the corresponding 765 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 765, "agit3", "isVersionOf",
                 AggregateXCRecord.DCTERMS_NAMESPACE, subfieldToAttribute,
-                FrbrLevel.EXPRESSION);
+                FrbrLevel.EXPRESSION, inRecord);
     }
 
     /**
@@ -4198,7 +4198,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process770(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4208,11 +4208,11 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 AggregateXCRecord.DCTERMS_NAMESPACE));
 
         // Create an dc:relation based on the 770 agit values with a
-        // dcterms:ISSN based on the corrosponding 770 $x value and a
-        // dcterms:ISBN based on the corrosponding 770 $z value
+        // dcterms:ISSN based on the corresponding 770 $x value and a
+        // dcterms:ISBN based on the corresponding 770 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 770, "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE,
-                subfieldToAttribute, FrbrLevel.WORK);
+                subfieldToAttribute, FrbrLevel.WORK, inRecord);
     }
 
     /**
@@ -4272,8 +4272,8 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 AggregateXCRecord.DCTERMS_NAMESPACE));
 
         // Create an dcterms:isPartOf based on the 773 agitwxz3 values with a
-        // dcterms:ISSN based on the corrosponding 773 $x value and a
-        // dcterms:ISBN based on the corrosponding 773 $z value
+        // dcterms:ISSN based on the corresponding 773 $x value and a
+        // dcterms:ISBN based on the corresponding 773 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 773, "agit3", "isPartOf", AggregateXCRecord.DCTERMS_NAMESPACE,
                 subfieldToAttribute, FrbrLevel.MANIFESTATION, inRecord);
@@ -4314,7 +4314,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process775(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4324,11 +4324,11 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 AggregateXCRecord.DCTERMS_NAMESPACE));
 
         // Create an dc:relation based on the 775 agit values with a
-        // dcterms:ISSN based on the corrosponding 775 $x value and a
-        // dcterms:ISBN based on the corrosponding 775 $z value
+        // dcterms:ISSN based on the corresponding 775 $x value and a
+        // dcterms:ISBN based on the corresponding 775 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 775, "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE,
-                subfieldToAttribute, FrbrLevel.EXPRESSION);
+                subfieldToAttribute, FrbrLevel.EXPRESSION, inRecord);
     }
 
     /**
@@ -4502,7 +4502,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
      *         been completed.
      */
     protected AggregateXCRecord process787(SaxMarcXmlRecord transformMe,
-            AggregateXCRecord transformInto) {
+            AggregateXCRecord transformInto, InputRecord inRecord) {
         // Create a HashMap mapping the $x subfield to a dcterms:ISSN attribute
         // and the $z subfield to a dcterms:ISBN attribute
         HashMap<Character, Attribute> subfieldToAttribute = new HashMap<Character, Attribute>();
@@ -4516,7 +4516,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
         // dcterms:ISBN based on the corrosponding 787 $z value
         return processFieldAttributeFromSubfield(transformMe, transformInto,
                 787, "agit", "relation", AggregateXCRecord.DCTERMS_NAMESPACE,
-                subfieldToAttribute, FrbrLevel.EXPRESSION);
+                subfieldToAttribute, FrbrLevel.EXPRESSION, inRecord);
     }
 
     /**
@@ -6732,8 +6732,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                         subfieldCodesSeen.add((Character) subfieldCode);
                     }
                     else {
-                        addMessage(inRecord, 101, RecordMessage.ERROR);
-                        LOG.error("***** duplicate attribute. already have processed subfield: "+subfieldCode);
+                        if (inRecord != null) {
+                            addMessage(inRecord, 101, RecordMessage.ERROR);
+                            LOG.error("***** " + field +" duplicate attribute. already have processed subfield: "+subfieldCode);
+                        }
+                        else {
+                            LOG.error("***** UNEXPECTED: " + field +" duplicate attribute. already have processed subfield: "+subfieldCode);
+                        }
                     }
                 }
             }
@@ -7564,8 +7569,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                             subfieldCodesSeen.add((Character) subfieldCode);
                         }
                         else {
-                            addMessage(inRecord, 101, RecordMessage.ERROR);
-                            LOG.error("***** duplicate attribute. already have processed subfield: "+subfieldCode);
+                            if (inRecord != null) {
+                                addMessage(inRecord, 101, RecordMessage.ERROR);
+                                LOG.error("***** " + field +" duplicate attribute. already have processed subfield: "+subfieldCode + " record: "+ inRecord);
+                            }
+                            else {
+                                LOG.error("***** UNEXPECTED: " + field +" duplicate attribute. already have processed subfield: "+subfieldCode);
+                            }
                         }
                     }
                 } catch (Exception e) {

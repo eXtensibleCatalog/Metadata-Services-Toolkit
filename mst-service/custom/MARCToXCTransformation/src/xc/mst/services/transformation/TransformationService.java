@@ -384,8 +384,8 @@ public class TransformationService extends SolrTransformationService {
                     ((Record) record).setType("bib");
                     processBibliographicRecord(ar, originalRecord, record);
                 } else if (isHolding) {
-                    processHoldingRecord(ar, originalRecord, record);
                     ((Record) record).setType("hold");
+                    processHoldingRecord(ar, originalRecord, record);
                 }
 
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
@@ -607,17 +607,17 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process740(originalRecord, transformedRecord);
         transformedRecord = process752(originalRecord, transformedRecord);
         transformedRecord = process760(originalRecord, transformedRecord);
-        transformedRecord = process765(originalRecord, transformedRecord);
-        transformedRecord = process770(originalRecord, transformedRecord);
+        transformedRecord = process765(originalRecord, transformedRecord, record);
+        transformedRecord = process770(originalRecord, transformedRecord, record);
         transformedRecord = process772(originalRecord, transformedRecord);
         transformedRecord = process773(originalRecord, transformedRecord, record);
-        transformedRecord = process775(originalRecord, transformedRecord);
+        transformedRecord = process775(originalRecord, transformedRecord, record);
         transformedRecord = process776(originalRecord, transformedRecord, record);
         transformedRecord = process777(originalRecord, transformedRecord);
         transformedRecord = process780(originalRecord, transformedRecord, record);
         transformedRecord = process785(originalRecord, transformedRecord);
         transformedRecord = process786(originalRecord, transformedRecord);
-        transformedRecord = process787(originalRecord, transformedRecord);
+        transformedRecord = process787(originalRecord, transformedRecord, record);
         transformedRecord = process800(originalRecord, transformedRecord);
         transformedRecord = process810(originalRecord, transformedRecord);
         transformedRecord = process811(originalRecord, transformedRecord);

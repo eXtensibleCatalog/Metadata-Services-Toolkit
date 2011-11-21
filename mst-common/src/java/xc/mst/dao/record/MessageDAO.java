@@ -113,6 +113,7 @@ public class MessageDAO extends BaseDAO {
             int i = 0;
             TimingLogger.start("MESSAGES_TABLE.insert");
             TimingLogger.start("MESSAGES_TABLE.insert.create_infile");
+            LOG.debug("** MessageDAO, about to write error messages, number of them ="+messages.size());
             for (RecordMessage rm : messages) {
                 if (i++ > 0) {
                     os.write(newLineBytes);
@@ -125,6 +126,10 @@ public class MessageDAO extends BaseDAO {
                     os.write("O".getBytes());
                 }
                 os.write(tabBytes);
+
+                if (rm.getRecord() == null) {
+                    LOG.error("** MessageDAO: record=null");
+                }
                 os.write(String.valueOf(rm.getRecord().getId()).getBytes());
                 os.write(tabBytes);
                 os.write(String.valueOf(rm.getCode()).getBytes());
