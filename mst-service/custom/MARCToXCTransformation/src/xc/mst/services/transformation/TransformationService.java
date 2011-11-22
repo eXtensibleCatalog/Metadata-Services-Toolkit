@@ -609,14 +609,14 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process760(originalRecord, transformedRecord);
         transformedRecord = process765(originalRecord, transformedRecord, record);
         transformedRecord = process770(originalRecord, transformedRecord, record);
-        transformedRecord = process772(originalRecord, transformedRecord);
+        transformedRecord = process772(originalRecord, transformedRecord, record);
         transformedRecord = process773(originalRecord, transformedRecord, record);
         transformedRecord = process775(originalRecord, transformedRecord, record);
         transformedRecord = process776(originalRecord, transformedRecord, record);
-        transformedRecord = process777(originalRecord, transformedRecord);
+        transformedRecord = process777(originalRecord, transformedRecord, record);
         transformedRecord = process780(originalRecord, transformedRecord, record);
         transformedRecord = process785(originalRecord, transformedRecord);
-        transformedRecord = process786(originalRecord, transformedRecord);
+        transformedRecord = process786(originalRecord, transformedRecord, record);
         transformedRecord = process787(originalRecord, transformedRecord, record);
         transformedRecord = process800(originalRecord, transformedRecord);
         transformedRecord = process810(originalRecord, transformedRecord);
