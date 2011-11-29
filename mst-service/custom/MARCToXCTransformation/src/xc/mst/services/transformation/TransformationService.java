@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.provider.Format;
@@ -157,6 +158,8 @@ public class TransformationService extends SolrTransformationService {
             }
         } catch (NumberFormatException nfe) {
             return stringLongMap.get(s);
+        } catch (NullPointerException npe) {
+            return null;
         }
     }
 
@@ -241,7 +244,7 @@ public class TransformationService extends SolrTransformationService {
                 getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
                 s, l);
- LOG.info("** END removeManifestationId4BibYet2Arrive "+s);
+// LOG.info("** END removeManifestationId4BibYet2Arrive "+s);
     }
 
     @Override
@@ -358,7 +361,7 @@ public class TransformationService extends SolrTransformationService {
 
                 // Get the ORG code from the 035 field
                 orgCode = originalRecord.getOrgCode();
-                if (orgCode.equals("")) {
+                if (StringUtils.isEmpty(orgCode)) {
                     // Add error
                     // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
                 }
@@ -381,8 +384,8 @@ public class TransformationService extends SolrTransformationService {
                     ((Record) record).setType("bib");
                     processBibliographicRecord(ar, originalRecord, record);
                 } else if (isHolding) {
-                    processHoldingRecord(ar, originalRecord, record);
                     ((Record) record).setType("hold");
+                    processHoldingRecord(ar, originalRecord, record);
                 }
 
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
@@ -413,54 +416,61 @@ public class TransformationService extends SolrTransformationService {
                 long nextNewId = getRepositoryDAO().getNextId();
                 if (isBib) {
                     String bib001 = originalRecord.getControlField(1);
-                    Long manifestationId = getManifestationId4BibYet2Arrive(
-                            originalRecord.getOrgCode(), bib001);
-                    //TODO test more!
-      LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
-                    if (manifestationId != null) {
-                        TimingLogger.add("found BibYet2Arrive", 1);
-                        removeManifestationId4BibYet2Arrive(
-                                originalRecord.getOrgCode(), bib001, manifestationId);
-                        previouslyHeldManifestationIds.add(manifestationId);
-         LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
-                    } else {
-                        if (ar.getPreviousManifestationId() != null) {
-                            manifestationId = ar.getPreviousManifestationId();
+                    final String orgCode = originalRecord.getOrgCode();
+                    Long manifestationId = null;
+                    if (!StringUtils.isEmpty(orgCode)) {
+                        manifestationId = getManifestationId4BibYet2Arrive(
+                                originalRecord.getOrgCode(), bib001);
+                        //TODO test more!
+//          LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
+                        if (manifestationId != null) {
+                            TimingLogger.add("found BibYet2Arrive", 1);
+                            removeManifestationId4BibYet2Arrive(
+                                    originalRecord.getOrgCode(), bib001, manifestationId);
+                            previouslyHeldManifestationIds.add(manifestationId);
+//             LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
                         } else {
-                            manifestationId = getRepositoryDAO().getNextIdAndIncr();
+                            if (ar.getPreviousManifestationId() != null) {
+                                manifestationId = ar.getPreviousManifestationId();
+                            } else {
+                                manifestationId = getRepositoryDAO().getNextIdAndIncr();
+                            }
                         }
+                        addManifestationId4BibProcessed(
+                                originalRecord.getOrgCode(), bib001, manifestationId);
                     }
-                    addManifestationId4BibProcessed(
-                            originalRecord.getOrgCode(), bib001, manifestationId);
                     List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
-                            getRepository(), ar, manifestationId, nextNewId);
+                            getRepository(), ar, manifestationId, nextNewId);    // note, we are now adding poss. of a null manifestationId
                     if (bibRecords != null) {
                         results.addAll(bibRecords);
                     }
                 } else if (isHolding) {
                     char status = Record.ACTIVE;
                     List<Long> manifestationIds = new ArrayList<Long>();
-                    List<Long> manifestaionsIdsInWaiting = new ArrayList<Long>();
+                    List<Long> manifestationsIdsInWaiting = new ArrayList<Long>();  // unused?
                     if (ar.getReferencedBibs() == null) {
                         LOG.error("ar.getReferencedBibs() == null");
                     } else {
                         for (String ref001 : ar.getReferencedBibs()) {
-                            Long manifestationId = getManifestationId4BibProcessed(
-                                    originalRecord.getOrgCode(), ref001);
+                            final String orgCode = originalRecord.getOrgCode();
+                            if (!StringUtils.isEmpty(orgCode)) {
+                                Long manifestationId = getManifestationId4BibProcessed(
+                                        orgCode, ref001);
 
-                            LOG.debug("input " + record.getId() + "manifestationId: " + manifestationId);
-                            if (manifestationId == null) {
-                                manifestationId = getManifestationId4BibYet2Arrive(
-                                        originalRecord.getOrgCode(), ref001);
-                                status = Record.HELD;
+                                LOG.debug("input " + record.getId() + "manifestationId: " + manifestationId);
                                 if (manifestationId == null) {
-                                    manifestationId = getRepositoryDAO().getNextIdAndIncr();
-                                    addManifestationId4BibYet2Arrive(
-                                            originalRecord.getOrgCode(), ref001, manifestationId);
+                                    manifestationId = getManifestationId4BibYet2Arrive(
+                                            orgCode, ref001);
+                                    status = Record.HELD;
+                                    if (manifestationId == null) {
+                                        manifestationId = getRepositoryDAO().getNextIdAndIncr();
+                                        addManifestationId4BibYet2Arrive(
+                                                orgCode, ref001, manifestationId);
+                                    }
+                                    manifestationsIdsInWaiting.add(manifestationId);
                                 }
-                                manifestaionsIdsInWaiting.add(manifestationId);
+                                manifestationIds.add(manifestationId);
                             }
-                            manifestationIds.add(manifestationId);
                         }
                         List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
                                 getRepository(), ar, manifestationIds, nextNewId);
@@ -597,17 +607,17 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process740(originalRecord, transformedRecord);
         transformedRecord = process752(originalRecord, transformedRecord);
         transformedRecord = process760(originalRecord, transformedRecord);
-        transformedRecord = process765(originalRecord, transformedRecord);
-        transformedRecord = process770(originalRecord, transformedRecord);
-        transformedRecord = process772(originalRecord, transformedRecord);
-        transformedRecord = process773(originalRecord, transformedRecord);
-        transformedRecord = process775(originalRecord, transformedRecord);
-        transformedRecord = process776(originalRecord, transformedRecord);
-        transformedRecord = process777(originalRecord, transformedRecord);
-        transformedRecord = process780(originalRecord, transformedRecord);
+        transformedRecord = process765(originalRecord, transformedRecord, record);
+        transformedRecord = process770(originalRecord, transformedRecord, record);
+        transformedRecord = process772(originalRecord, transformedRecord, record);
+        transformedRecord = process773(originalRecord, transformedRecord, record);
+        transformedRecord = process775(originalRecord, transformedRecord, record);
+        transformedRecord = process776(originalRecord, transformedRecord, record);
+        transformedRecord = process777(originalRecord, transformedRecord, record);
+        transformedRecord = process780(originalRecord, transformedRecord, record);
         transformedRecord = process785(originalRecord, transformedRecord);
-        transformedRecord = process786(originalRecord, transformedRecord);
-        transformedRecord = process787(originalRecord, transformedRecord);
+        transformedRecord = process786(originalRecord, transformedRecord, record);
+        transformedRecord = process787(originalRecord, transformedRecord, record);
         transformedRecord = process800(originalRecord, transformedRecord);
         transformedRecord = process810(originalRecord, transformedRecord);
         transformedRecord = process811(originalRecord, transformedRecord);

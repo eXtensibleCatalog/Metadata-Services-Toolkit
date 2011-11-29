@@ -475,7 +475,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     getMetadataServiceManager().getOutgoingRecordCounts().clear();
                 }
 
-                getRepository().persistPreviousStatuses(tempPreviousStatuses);
+                // the below change was recommended by Kyushu developers, GC issue 316
+                getRepositoryDAO().persistPreviousStatuses(getRepository().getName(), tempPreviousStatuses);
                 tempPreviousStatuses.clear();
 
                 getMessageDAO().deleteMessagesByRecordId(getService().getId(),

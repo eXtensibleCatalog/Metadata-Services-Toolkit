@@ -184,7 +184,11 @@ public class SolrIndexService extends GenericMetadataService {
     public void process(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
         this.incomingRepository = repo;
         this.preserveStatuses = false;
-        super.process(repo, inputFormat, inputSet, outputSet);
+        try {
+            super.process(repo, inputFormat, inputSet, outputSet);
+        } catch (Exception e) {
+            LOG.error("SolrIndexService, processing repo "+ repo.getName()+" failed.", e);
+        }
     }
 
     public List<OutputRecord> process(InputRecord ri) {
@@ -199,55 +203,62 @@ public class SolrIndexService extends GenericMetadataService {
         } else {
         */
         TimingLogger.add(incomingRepository.getName(), 0);
-        Record r = (Record)ri;
+        Record r;
+        SolrInputDocument doc;
+        try {
+            r = (Record)ri;
 
-        TimingLogger.start("SolrIndexService.process add static fields");
+            TimingLogger.start("SolrIndexService.process add static fields");
 
-        LOG.debug("indexing record.getId(): "+r.getId());
-        if (r.getId() % 1000 == 0) {
             LOG.debug("indexing record.getId(): "+r.getId());
-        }
-        SolrInputDocument doc = new SolrInputDocument();
-        doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
-        r.setMode(Record.STRING_MODE);
-        if (r.getFormat() != null) {
-            doc.addField(RecordService.FIELD_FORMAT_ID, r.getFormat().getId());
-            doc.addField("format_name", r.getFormat().getName());
-        } else {
-            doc.addField(RecordService.FIELD_FORMAT_ID, 0);
-        }
-
-        if (r.getSets() != null) {
-            for (Set s : r.getSets()) {
-                doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
-                doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
+            if (r.getId() % 1000 == 0) {
+                LOG.debug("indexing record.getId(): "+r.getId());
             }
-        }
+            doc = new SolrInputDocument();
+            doc.addField(RecordService.FIELD_RECORD_ID, r.getId());
+            r.setMode(Record.STRING_MODE);
+            if (r.getFormat() != null) {
+                doc.addField(RecordService.FIELD_FORMAT_ID, r.getFormat().getId());
+                doc.addField("format_name", r.getFormat().getName());
+            } else {
+                doc.addField(RecordService.FIELD_FORMAT_ID, 0);
+            }
 
-        if (this.incomingRepository.getProvider() != null) {
-            doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
-            doc.addField("provider_name", this.incomingRepository.getProvider().getName());
-        } else {
-            doc.addField(RecordService.FIELD_PROVIDER_ID, 0);
-        }
+            if (r.getSets() != null) {
+                for (Set s : r.getSets()) {
+                    doc.addField(RecordService.FIELD_SET_SPEC, s.getSetSpec());
+                    doc.addField(RecordService.FIELD_SET_NAME, s.getDisplayName());
+                }
+            }
 
-        Service s = this.incomingRepository.getService();
-        if (s != null) {
-            doc.addField(RecordService.FIELD_SERVICE_ID, this.incomingRepository.getService().getId());
-            doc.addField("service_name", this.incomingRepository.getService().getName());
+            if (this.incomingRepository.getProvider() != null) {
+                doc.addField(RecordService.FIELD_PROVIDER_ID, this.incomingRepository.getProvider().getId());
+                doc.addField("provider_name", this.incomingRepository.getProvider().getName());
+            } else {
+                doc.addField(RecordService.FIELD_PROVIDER_ID, 0);
+            }
 
-            //TODO this is the place to ask for the name / value pairs, if you want an individual service to provide it (could be faster)
-            // but, for now, this service will get the data itself.
-        } else {
+            Service s = this.incomingRepository.getService();
+            if (s != null) {
+                doc.addField(RecordService.FIELD_SERVICE_ID, this.incomingRepository.getService().getId());
+                doc.addField("service_name", this.incomingRepository.getService().getName());
 
-            doc.addField(RecordService.FIELD_SERVICE_ID, 0);
-        }
-        if (r.getStatus() == Record.ACTIVE) {
-            doc.addField("status", "active");
-        } else if (r.getStatus() == Record.HELD) {
-            doc.addField("status", "held");
-        } else if (r.getStatus() == Record.DELETED) {
-            doc.addField("status", "deleted");
+                //TODO this is the place to ask for the name / value pairs, if you want an individual service to provide it (could be faster)
+                // but, for now, this service will get the data itself.
+            } else {
+
+                doc.addField(RecordService.FIELD_SERVICE_ID, 0);
+            }
+            if (r.getStatus() == Record.ACTIVE) {
+                doc.addField("status", "active");
+            } else if (r.getStatus() == Record.HELD) {
+                doc.addField("status", "held");
+            } else if (r.getStatus() == Record.DELETED) {
+                doc.addField("status", "deleted");
+            }
+        } catch (Exception e1) {
+            LOG.debug("", e1);
+            return null;
         }
         TimingLogger.stop("SolrIndexService.process add static fields");
 
@@ -501,6 +512,8 @@ public class SolrIndexService extends GenericMetadataService {
             }
         } catch (DatabaseConfigException e) {
             LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+        } catch (Exception e2) {
+            LOG.debug("", e2);
         }
         TimingLogger.stop("SolrIndexService.process add dynamic fields");
 

@@ -928,6 +928,7 @@ public class MarcXmlManager {
         TimingLogger.stop("initializeMarcControlFields");
     } // end method initializeMarcControlFields
 
+            
     /**
      * Initializes the MARC XML data fields' cached values.
      */
@@ -1155,6 +1156,61 @@ public class MarcXmlManager {
         TimingLogger.stop("initializeMarcDataFields");
     } // end method initializeMarcDataFields
 
+    
+    /**
+     * Remove invalid 014$a 
+     *    if indicator1 is "1" and
+     *    first character is either NOT among validFirstChars or first character IS among invalidFirstChars
+     *    
+     *    @param validFirstChars
+     *    			remove subfield if first character is NOT contained in this list of characters 
+     *    @param invalidFirstChars
+     *    			remove subfield if first character IS contained in this list of characters
+     */
+    @SuppressWarnings("unchecked")
+	public void removeInvalid014s(String validFirstChars, String invalidFirstChars) {
+        if (log.isDebugEnabled())
+            log.debug("In removeInvalid014s...");
+
+        List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
+    	ArrayList<Element> badFlds = new ArrayList<Element>();
+
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+            String ind1 = field.getAttributeValue("ind1");
+
+            if (tag.equals("014") && ind1.equals("1")) {
+            	ArrayList<Element> badEls = new ArrayList<Element>();
+               	int totCnt = 0; int badCnt = 0;
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    totCnt++;
+                    if (("a").equals(e.getAttributeValue("code"))) {
+                    	if (e.getText().length() > 0) {
+                    		CharSequence fc = e.getText().subSequence(0, 1);
+                        	if ( (validFirstChars.length() > 0 && !validFirstChars.contains(fc)) || 
+                        		 (invalidFirstChars.length() > 0 && invalidFirstChars.contains(fc)) ) {
+                        		badEls.add(e);
+                        		badCnt++;
+                        	}
+                    	}
+                    }
+                }
+                for (Element badEl : badEls) {
+                	field.removeContent(badEl);
+                }   
+                if (totCnt == badCnt) {
+                	badFlds.add(field);
+                }
+            }
+        }
+        for (Element badFld : badFlds) {
+        	marcXml.removeContent(badFld);
+        }   
+
+        
+    }
+              
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicaters empty and the $a subfield will be set to the specified value.

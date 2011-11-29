@@ -13,6 +13,12 @@ ENABLED STEPS
 # 1 to remove the 003 if its value is "OCoLC"
 RemoveOCoLC003 = 0
 
+# Remove the 014$a subfield if the first character is not one of the following:
+#ValidFirstChar014 = 0123456789
+
+# Remove the 014$a subfield if the first character is one of the following:
+#InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
 DCMIType06 = 1

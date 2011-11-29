@@ -6,6 +6,7 @@ import gnu.trove.TLongIterator;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +30,6 @@ import xc.mst.bo.record.RecordMessage;
 import xc.mst.dao.BaseDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.Util;
 
 public class MessageDAO extends BaseDAO {
 
@@ -97,6 +97,7 @@ public class MessageDAO extends BaseDAO {
 
     @SuppressWarnings("unused")
     public void persistMessages(final List<RecordMessage> messages) {
+        OutputStream os = null;
         try {
             String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
             LOG.debug("dbLoadFileStr: " + dbLoadFileStr);
@@ -108,10 +109,11 @@ public class MessageDAO extends BaseDAO {
             if (dbLoadFile.exists()) {
                 dbLoadFile.delete();
             }
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             int i = 0;
             TimingLogger.start("MESSAGES_TABLE.insert");
             TimingLogger.start("MESSAGES_TABLE.insert.create_infile");
+            LOG.debug("** MessageDAO, about to write error messages, number of them ="+messages.size());
             for (RecordMessage rm : messages) {
                 if (i++ > 0) {
                     os.write(newLineBytes);
@@ -124,6 +126,10 @@ public class MessageDAO extends BaseDAO {
                     os.write("O".getBytes());
                 }
                 os.write(tabBytes);
+
+                if (rm.getRecord() == null) {
+                    LOG.error("** MessageDAO: record=null");
+                }
                 os.write(String.valueOf(rm.getRecord().getId()).getBytes());
                 os.write(tabBytes);
                 os.write(String.valueOf(rm.getCode()).getBytes());
@@ -172,6 +178,14 @@ public class MessageDAO extends BaseDAO {
             TimingLogger.stop("MESSAGES_TABLE.insert.load_infile");
             TimingLogger.stop("MESSAGES_TABLE.insert");
         } catch (Throwable t) {
+            if (os != null) {
+                try {
+                    os.close();
+                    os = null;
+                } catch (IOException e) {
+                    LOG.debug("",e);
+                }
+            }
             getUtil().throwIt(t);
         }
     }
@@ -187,7 +201,7 @@ public class MessageDAO extends BaseDAO {
                 sql, new Object[] { r.getId() }, new MessageMapper());
 
         LOG.debug("** MessageDAO, injectMessages, num messages="+messages.size());
-        getUtil().printStackTrace("** MessageDAO, injectMessages, num messages="+messages.size());
+        //getUtil().printStackTrace("** MessageDAO, injectMessages, num messages="+messages.size());
         // don't inject messages 2x.
         if (r.getMessages().size() == 0) {
             for (RecordMessage rm : messages) {
