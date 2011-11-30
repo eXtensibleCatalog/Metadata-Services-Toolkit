@@ -78,6 +78,6 @@
 	<classpathentry kind="lib" path="build/lib/xwork-core-2.2.1.jar" sourcepath="C:/Documents and Settings/BenjaminA/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1-sources.jar"/>
 	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/dev/xc/mst/svn/branches/johns_perma_branch/mst-platform/src/webapp/st/pages/schedule/mst-instances-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/dev/xc/mst/svn/branches/marc_agg/mst-common/build/mst-common-1.2.0.jar" sourcepath=""/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
