@@ -37,20 +37,21 @@ public class MarcAggregationService extends GenericMetadataService {
     public void setup() {
         this.matcherMap = new HashMap<String, FieldMatcher>();
         String[] mpStrs = new String[] {
-                "LCCN",
+                "Lccn",
+                "ISBN",
                 "SystemControlNumber",
-                "x130aMatcher",
-                "x240aMatcher",
-                "x240ahMatcher"};
+                "x130a",
+                "x240a",
+                "x245ah"};
         for (String mp : mpStrs) {
-            FieldMatcher m = (FieldMatcher) config.getBean(mp + "FieldMatcher");
+            FieldMatcher m = (FieldMatcher) config.getBean(mp + "Matcher");
             matcherMap.put(mp, m);
             m.load();
         }
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         String[] mrStrs = new String[] {
                 "Step1a",
-                "Step2a",
+//                "Step2a",
                 "Step3a",
         };
         for (String mrStr : mrStrs) {
@@ -78,14 +79,17 @@ public class MarcAggregationService extends GenericMetadataService {
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
                     MatchRuleIfc matchRule = me.getValue();
-                    matchedRecordIds.addAll(matchRule.determineMatches(ms));
+                    Set<Long> set = matchRule.determineMatches(ms);
+                    if (set !=null && !set.isEmpty()) {
+                        matchedRecordIds.addAll(set);
+                    }
                 }
 
                 if (r.getSuccessors().size() == 0) {
-                    // NEW-ACTVIE
+                    // NEW-ACTIVE
 
                 } else {
-                    // UPDATE-ACTVIE
+                    // UPDATE-ACTIVE
                         // unmerge
                         /*
                         for (inputBibId : inputBibIds) {

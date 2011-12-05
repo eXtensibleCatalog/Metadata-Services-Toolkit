@@ -39,11 +39,12 @@ public class MatchRulesTest extends MockHarvestTest {
     public void setup() {
         this.matcherMap = new HashMap<String, FieldMatcher>();
         String[] mpStrs = new String[] {
-                "LCCN",
+                "Lccn",
+                "ISBN",
                 "SystemControlNumber",
-                "x130aMatcher",
-                "x240aMatcher",
-                "x240ahMatcher"};
+                "x130a",
+                "x240a",
+                "x245ah"};
         for (String mp : mpStrs) {
             FieldMatcher m = (FieldMatcher) getConfig().getBean(mp + "Matcher");
             matcherMap.put(mp, m);
@@ -52,7 +53,7 @@ public class MatchRulesTest extends MockHarvestTest {
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         String[] mrStrs = new String[] {
                 "Step1a",
-                "Step2a",
+//              "Step2a",
                 "Step3a",
         };
         for (String mrStr : mrStrs) {
@@ -149,10 +150,10 @@ public class MatchRulesTest extends MockHarvestTest {
                 }
 
                 if (r.getSuccessors().size() == 0) {
-                    // NEW-ACTVIE
+                    // NEW-ACTIVE
 
                 } else {
-                    // UPDATE-ACTVIE
+                    // UPDATE-ACTIVE
                         // unmerge
                         /*
                         for (inputBibId : inputBibIds) {

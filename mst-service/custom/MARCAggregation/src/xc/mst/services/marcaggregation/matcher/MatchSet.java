@@ -16,6 +16,7 @@ package xc.mst.services.marcaggregation.matcher;
  */
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
@@ -45,7 +46,10 @@ public class MatchSet {
         Set<Long> matchSet = matches.get(fm);
         if (matchSet == null) {
             matchSet = new HashSet<Long>();
-            matchSet.addAll(fm.getMatchingOutputIds(this.inProcessRecord));
+            List<Long> list = fm.getMatchingOutputIds(this.inProcessRecord);
+            if (list != null && !list.isEmpty()) {
+                matchSet.addAll(list);
+            }
         }
         return matchSet;
     }
