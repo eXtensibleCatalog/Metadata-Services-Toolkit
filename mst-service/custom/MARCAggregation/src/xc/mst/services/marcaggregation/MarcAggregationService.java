@@ -36,12 +36,17 @@ public class MarcAggregationService extends GenericMetadataService {
 
     public void setup() {
         this.matcherMap = new HashMap<String, FieldMatcher>();
+        //TODO refactor these strings to be returned from 1 place (I have this code 2 places now)
         String[] mpStrs = new String[] {
                 "Lccn",
                 "ISBN",
+                "ISSN",
                 "SystemControlNumber",
+                "x024a",
+                "x028ab",
                 "x130a",
                 "x240a",
+                "x260abc",
                 "x245ah"};
         for (String mp : mpStrs) {
             FieldMatcher m = (FieldMatcher) config.getBean(mp + "Matcher");

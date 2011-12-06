@@ -4,17 +4,7 @@ import java.util.List;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
-/**
- *
- * The Library of Congress Control Number corresponds to the
- * <a href="http://www.loc.gov/marc/bibliographic/bd020.html">MARC 020 field</a>
- *
- * 020$a
- *
- * @author JohnB
- *
- */
-public class ISBNMatcher extends FieldMatcherService {
+public class x260abcMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
@@ -37,6 +27,7 @@ public class ISBNMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         // TODO Auto-generated method stub
+
     }
 
 }

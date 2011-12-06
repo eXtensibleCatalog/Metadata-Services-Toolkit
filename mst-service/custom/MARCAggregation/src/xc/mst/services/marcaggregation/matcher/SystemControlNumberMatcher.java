@@ -24,6 +24,8 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
  * The System control number corresponds to the
  * <a href="http://www.loc.gov/marc/bibliographic/bd035.html">MARC 035 field</a>
  *
+ * 035$a
+ *
  * @author Benjamin D. Anderson
  *
  */

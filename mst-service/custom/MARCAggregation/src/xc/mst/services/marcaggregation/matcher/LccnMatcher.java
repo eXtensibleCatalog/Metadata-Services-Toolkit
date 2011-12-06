@@ -23,6 +23,8 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
  * The Library of Congress Control Number corresponds to the
  * <a href="http://www.loc.gov/marc/bibliographic/bd010.html">MARC 010 field</a>
  *
+ * 010$a
+ *
  * @author Benjamin D. Anderson
  *
  */
@@ -34,6 +36,7 @@ public class LccnMatcher extends FieldMatcherService {
         // http://www.loc.gov/marc/bibliographic/bd010.html
         // find the first numeric value and return it
         // This was determined by Jennifer in a phone conversation.
+    	// TODO turn a string into a long
         return 0l;
     }
 

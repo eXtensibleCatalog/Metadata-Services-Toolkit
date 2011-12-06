@@ -7,14 +7,14 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
 /**
  *
  * The Library of Congress Control Number corresponds to the
- * <a href="http://www.loc.gov/marc/bibliographic/bd020.html">MARC 020 field</a>
+ * <a href="http://www.loc.gov/marc/bibliographic/bd024.html">MARC 024 field</a>
  *
- * 020$a
+ * 024$a
  *
  * @author JohnB
  *
  */
-public class ISBNMatcher extends FieldMatcherService {
+public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {

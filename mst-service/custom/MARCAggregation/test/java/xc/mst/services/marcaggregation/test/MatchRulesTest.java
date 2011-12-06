@@ -41,9 +41,13 @@ public class MatchRulesTest extends MockHarvestTest {
         String[] mpStrs = new String[] {
                 "Lccn",
                 "ISBN",
+                "ISSN",
                 "SystemControlNumber",
+                "x024a",
+                "x028ab",
                 "x130a",
                 "x240a",
+                "x260abc",
                 "x245ah"};
         for (String mp : mpStrs) {
             FieldMatcher m = (FieldMatcher) getConfig().getBean(mp + "Matcher");
