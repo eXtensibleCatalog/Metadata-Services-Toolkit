@@ -19,6 +19,7 @@ import java.util.Map;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.bo.record.marc.Field;
 
 /**
  * The System control number corresponds to the
@@ -50,6 +51,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+        List<Field> fields = ir.getDataFields(35);
         //String s = ir.getMARC().getDataFields().get(35).get('a');
         //return lccn2outputIds.get(getMapId(s));
         return null;
@@ -57,6 +59,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r) {
+        List<Field> fields = r.getDataFields(35);
         // String s = r.getMARC().getDataFields().get(35).get('a');
         // lccn2outputIds.add(r.getId(), getMapId(s));
     }
