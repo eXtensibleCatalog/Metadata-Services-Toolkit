@@ -927,12 +927,13 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     public void createTables(Repository repo) {
-        runSql(repo, "sql/create_repo.sql");
+        runSql(repo, "xc/mst/repo/sql/create_repo.sql");
         if (repo.getProvider() != null) {
-			runSql(repo, "sql/harvest_repo.sql");
+			runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");
         } else if (repo.getService() != null) {
-			runSql(repo, "sql/service_repo.sql");
+			runSql(repo, "xc/mst/repo/sql/create_service_repo.sql");
         }
+        //"xc/mst/repo/sql/create_repo_platform.sql"
     }
 
     protected void runSql(Repository repo, String sqlFile) {
