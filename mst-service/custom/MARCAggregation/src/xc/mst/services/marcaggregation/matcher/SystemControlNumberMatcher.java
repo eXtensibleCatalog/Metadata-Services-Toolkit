@@ -10,14 +10,13 @@
   */
 package xc.mst.services.marcaggregation.matcher;
 
-import gnu.trove.TLongLongHashMap;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.Record;
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 
@@ -28,53 +27,152 @@ import xc.mst.bo.record.marc.Field;
  * 035$a
  *
  * @author Benjamin D. Anderson
+ * @author John Brand
  *
  */
 public class SystemControlNumberMatcher extends FieldMatcherService {
 
-    protected Map<String, Long> prefixIds = new HashMap<String, Long>();
-    protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
+//    protected Map<String, Long> prefixIds = new HashMap<String, Long>();
 
-    protected long getPrefixId(String s) {
-        // return the prefix String
-        return 0l;
+	// you can have multiple 035$a fields within a record  (mult 035, each w/1 $a)
+    protected Map<Long, List<String>> outputId2scn = new HashMap<Long, List<String>>();
+
+    //    protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
+
+    // multiple records might have the same normalized 035$a, this would be an indication of a match
+    protected Map<String, List<Long>> scn2outputIds = new HashMap<String, List<Long>>();
+
+    private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
+
+    protected String getPrefixId(String s) {
+    	int start, end;
+    	if (s.contains("(")) {
+    		start = s.indexOf("(");
+    		if (s.contains(")")) {
+    			end = s.indexOf(")");
+                LOG.debug(s);
+                LOG.debug("found a prefix of "+s.substring(start+1,end));
+    			return s.substring(start+1,end);
+    		}
+    	}
+        return "";
     }
 
-    protected long getNumericId(String s) {
-        // return the numeric portion
-        return 0l;
+    protected long getNumericId(final String s) {
+    	String stripped=null;
+    	long strippedL=0l;
+        try {
+            // return the numeric portion, may be SAFER to return the int AFTER the () part,
+        	//     if it exists (to avoid picking up a number within that)
+            stripped = s.replaceAll("[^\\d]", "");
+            strippedL = Long.parseLong(stripped);
+            LOG.debug("numericID:"+strippedL);
+        }catch(NumberFormatException e) {
+            LOG.error("** Problem with stripped string, not numeric, original="+s+" all_data="+ " stripped="+stripped);
+            stripped=null;
+        }
+        if (stripped == null) {
+            return 0l;
+        }
+        return strippedL;
     }
 
-    protected long getMapId(String s) {
-        return (getNumericId(s)*1000)+getPrefixId(s);
+    protected String getMapId(String s) {
+//        return (getNumericId(s)*1000)+getPrefixId(s);
+        LOG.debug("mapID:"+getPrefixId(s) + getNumericId(s));
+        return getPrefixId(s) + getNumericId(s);
     }
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    	//ir.recordId;
+    	ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(35);
         //String s = ir.getMARC().getDataFields().get(35).get('a');
         //return lccn2outputIds.get(getMapId(s));
-        return null;
+
+        for (Field field: fields) {
+        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
+            final int size = subfields.size();
+            if (size>1) {
+            	LOG.error("ERROR: Multiple $a subfields in 035 in record! "+ir.recordId);
+            }
+            for (String subfield : subfields) {
+            	String goods = getMapId(subfield);
+            	if (scn2outputIds.get(goods) != null) {
+                	results.addAll(scn2outputIds.get(goods));
+            	}
+            }
+        }
+        /*
+        if (size >0) {
+        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
+            for (String subfield : subfields) {
+            	String goods = getMapId(subfield);
+            	results.addAll(scn2outputIds.get(goods));
+            }
+        }
+        */
+        return results;
     }
 
     @Override
+    // should be a max of 1 field returned.
     public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    	//ir.recordId;
         List<Field> fields = r.getDataFields(35);
-        // String s = r.getMARC().getDataFields().get(35).get('a');
-        // lccn2outputIds.add(r.getId(), getMapId(s));
+        final int size = fields.size();
+        if (size>1) {
+        	LOG.error("ERROR: Multiple 035 fields in record! "+r.recordId);
+        }
+        if (size >0) {
+        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
+            for (String subfield : subfields) {
+            	Long id = new Long(r.recordId);
+            	String goods = getMapId(subfield);
+            	List<String> goodsList = outputId2scn.get(id);
+            	if (goodsList == null || goodsList.size() == 0) {
+            		goodsList = new ArrayList<String>();
+            		goodsList.add(goods);
+                	outputId2scn.put(id, goodsList);
+            	}
+            	else if (!goodsList.contains(goods)){
+            		goodsList.add(goods);
+                	outputId2scn.put(id, goodsList);
+            	}
+            	else {
+                	LOG.debug("we have already seen "+ goods +" for recordId: "+r.recordId);
+            	}
+
+            	List<Long> idsList = scn2outputIds.get(goods);
+            	if (idsList == null || idsList.size() == 0) {
+            		idsList = new ArrayList<Long>();
+            		idsList.add(id);
+            		scn2outputIds.put(goods, idsList);
+            	}
+            	else if (!idsList.contains(id)){
+            		idsList.add(id);
+            		scn2outputIds.put(goods, idsList);
+            	}
+            	else {  //error?
+                	LOG.debug("we have already seen "+ id +" for recordId: "+r.recordId);
+            	}
+            }
+        }
     }
 
+    // from db
     @Override
     public void load() {
         // TODO Auto-generated method stub
 
     }
 
+    // into db
     @Override
     public void flush(boolean freeUpMemory) {
         // TODO Auto-generated method stub
 
     }
-
 
 }
