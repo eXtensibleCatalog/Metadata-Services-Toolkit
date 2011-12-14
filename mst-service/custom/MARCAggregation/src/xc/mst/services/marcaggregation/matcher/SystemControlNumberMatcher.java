@@ -85,18 +85,17 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
-    	//ir.recordId;
     	ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(35);
-        //String s = ir.getMARC().getDataFields().get(35).get('a');
-        //return lccn2outputIds.get(getMapId(s));
 
         for (Field field: fields) {
-        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
+        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size>1) {
             	LOG.error("ERROR: Multiple $a subfields in 035 in record! "+ir.recordId);
             }
+            // TODO don't return the original record itself as a match, adding record to matcher AFTER this step?, BUT
+            //       should we verify the record is not matching itself?
             for (String subfield : subfields) {
             	String goods = getMapId(subfield);
             	if (scn2outputIds.get(goods) != null) {
@@ -104,29 +103,20 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             	}
             }
         }
-        /*
-        if (size >0) {
-        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
-            for (String subfield : subfields) {
-            	String goods = getMapId(subfield);
-            	results.addAll(scn2outputIds.get(goods));
-            }
-        }
-        */
+        LOG.debug("getMatchingOutputIds, irId="+ ir.recordId+" results.size="+results.size());
         return results;
     }
 
     @Override
     // should be a max of 1 field returned.
     public void addRecordToMatcher(SaxMarcXmlRecord r) {
-    	//ir.recordId;
         List<Field> fields = r.getDataFields(35);
-        final int size = fields.size();
-        if (size>1) {
-        	LOG.error("ERROR: Multiple 035 fields in record! "+r.recordId);
-        }
-        if (size >0) {
-        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(fields.get(0), 'a');
+        for (Field field: fields) {
+        	List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            final int size = subfields.size();
+            if (size>1) {
+            	LOG.error("ERROR: Multiple $a subfields in 035 in record! "+r.recordId);
+            }
             for (String subfield : subfields) {
             	Long id = new Long(r.recordId);
             	String goods = getMapId(subfield);

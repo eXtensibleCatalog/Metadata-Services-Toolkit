@@ -242,9 +242,6 @@ public class MatchRulesTest extends MockHarvestTest {
     protected void ensureMatch(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
         for (Record r : records) {
-//            if (r.getStatus() != status) {
-//                throw new RuntimeException("For repo: " + repo.getName() + ",record with id: " + r.getId() + " has status:" + r.getStatus() + " while expecting:" + status);
-//            }
         	process((InputRecord)r);
         }
     }
@@ -254,6 +251,7 @@ public class MatchRulesTest extends MockHarvestTest {
 
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+                smr.setRecordId(r.getId());
 
                 MatchSet ms = new MatchSet(smr);
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {

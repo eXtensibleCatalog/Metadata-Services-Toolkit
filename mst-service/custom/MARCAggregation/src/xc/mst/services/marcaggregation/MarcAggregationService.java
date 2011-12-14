@@ -70,6 +70,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+                smr.setRecordId(r.getId());
 
                 MatchSet ms = new MatchSet(smr);
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
