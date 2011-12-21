@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.BeforeSuite;
@@ -134,6 +136,7 @@ public class MatchRulesTest extends MockHarvestTest {
 
     public void setup() {
         this.matcherMap = new HashMap<String, FieldMatcher>();
+        /*
         String[] mpStrs = new String[] {
                 "Lccn",
                 "ISBN",
@@ -145,6 +148,7 @@ public class MatchRulesTest extends MockHarvestTest {
                 "x240a",
                 "x260abc",
                 "x245ah"};
+                */
         /*
          * debug stuff, leave it around for now to remind me of the issues I had...
     	System.out.println("*old config=* "+ getConfig().getInstance(). getApplicationContext().toString());
@@ -167,20 +171,40 @@ public class MatchRulesTest extends MockHarvestTest {
         }
          */
 
+        List<String> mpStrs = getConfigFileValues("matchers.value");
         for (String mp : mpStrs) {
             FieldMatcher m = (FieldMatcher) applicationContext.getBean(mp + "Matcher");
             matcherMap.put(mp, m);
             m.load();
         }
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
-        String[] mrStrs = new String[] {
-                "Step1a",
-//              "Step2a",
-                "Step3a",
-        };
+        List<String> mrStrs = getConfigFileValues("match.rules.value");
         for (String mrStr : mrStrs) {
            MatchRuleIfc mr = (MatchRuleIfc) applicationContext.getBean(mrStr + "MatchRule");
            matchRuleMap.put(mrStr, mr);
+        }
+    }
+
+    // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+    // TODO move this UP to common utilities.
+    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+        List<T> r = new ArrayList<T>(c.size());
+        for (Object o : c)
+            r.add(clazz.cast(o));
+        return r;
+    }
+
+    private List<String> getConfigFileValues(String name) {
+        try {
+            // there is probably a more righteous way to grab the service name.
+            final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCAggregation") +
+                    "/META-INF/classes/xc/mst/services/custom.properties");
+
+            final List<String> values = castList(String.class, props.getList(name));
+            return values;
+        } catch (Exception e) {
+            LOG.error("Error loading custom.properties for service: " + this.getServiceName(), e);
+            return null;
         }
     }
 
@@ -244,6 +268,7 @@ public class MatchRulesTest extends MockHarvestTest {
         for (Record r : records) {
         	process((InputRecord)r);
         }
+        LOG.info("* done *");
     }
 
     public List<OutputRecord> process(InputRecord r) {

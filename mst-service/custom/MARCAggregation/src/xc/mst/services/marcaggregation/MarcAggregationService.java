@@ -10,6 +10,7 @@ package xc.mst.services.marcaggregation;
 
 import java.util.*;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -23,9 +24,11 @@ import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
+import xc.mst.utils.MSTConfiguration;
 
 /**
  * @author Benjamin D. Anderson
+ * @author John Brand
  *
  */
 public class MarcAggregationService extends GenericMetadataService {
@@ -36,32 +39,40 @@ public class MarcAggregationService extends GenericMetadataService {
 
     public void setup() {
         this.matcherMap = new HashMap<String, FieldMatcher>();
-        //TODO refactor these strings to be returned from 1 place (I have this code 2 places now)
-        String[] mpStrs = new String[] {
-                "Lccn",
-                "ISBN",
-                "ISSN",
-                "SystemControlNumber",
-                "x024a",
-                "x028ab",
-                "x130a",
-                "x240a",
-                "x260abc",
-                "x245ah"};
-        for (String mp : mpStrs) {
+        List<String> mps = getConfigFileValues("matchers.value");
+        for (String mp : mps) {
             FieldMatcher m = (FieldMatcher) config.getBean(mp + "Matcher");
             matcherMap.put(mp, m);
             m.load();
         }
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
-        String[] mrStrs = new String[] {
-                "Step1a",
-//                "Step2a",
-                "Step3a",
-        };
-        for (String mrStr : mrStrs) {
+        List<String> mrs = getConfigFileValues("match.rules.value");
+        for (String mrStr : mrs) {
             MatchRuleIfc mr = (MatchRuleIfc) config.getBean(mrStr + "MatchRule");
             matchRuleMap.put(mrStr, mr);
+        }
+    }
+
+    // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+    // TODO move this UP to common utilities.
+    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+        List<T> r = new ArrayList<T>(c.size());
+        for (Object o : c)
+            r.add(clazz.cast(o));
+        return r;
+    }
+
+    private List<String> getConfigFileValues(String name) {
+        try {
+            // there is probably a more righteous way to grab the service name.
+            final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCAggregation") +
+                    "/META-INF/classes/xc/mst/services/custom.properties");
+
+            final List<String> values = castList(String.class, props.getList(name));
+            return values;
+        } catch (Exception e) {
+            LOG.error("Error loading custom.properties for service: " + this.getServiceName(), e);
+            return null;
         }
     }
 
