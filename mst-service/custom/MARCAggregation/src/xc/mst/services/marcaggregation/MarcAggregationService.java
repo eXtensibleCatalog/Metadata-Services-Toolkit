@@ -38,6 +38,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
 
     public void setup() {
+        LOG.debug("MAS:  setup()");
         this.matcherMap = new HashMap<String, FieldMatcher>();
         List<String> mps = getConfigFileValues("matchers.value");
         for (String mp : mps) {
@@ -78,6 +79,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
     public List<OutputRecord> process(InputRecord r) {
         try {
+            LOG.debug("MAS:  process record+"+r.getId());
 
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());

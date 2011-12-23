@@ -135,7 +135,8 @@ public class MatchRulesTest extends MockHarvestTest {
 	}
 
     public void setup() {
-        this.matcherMap = new HashMap<String, FieldMatcher>();
+        LOG.debug("MAS:  setup()");
+       this.matcherMap = new HashMap<String, FieldMatcher>();
         /*
         String[] mpStrs = new String[] {
                 "Lccn",
@@ -223,14 +224,32 @@ public class MatchRulesTest extends MockHarvestTest {
 
             System.out.println("****START MatchRulesTest *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
-            ensureMatch(providerRepo);
 
-            Repository serviceRepo = getServiceRepository();
+            Set<Long> results = ensureMatch(providerRepo);
+            LOG.info("ensureMatch results size ="+results.size());
+            assert results.isEmpty();
+
+            results = ensureMatch(providerRepo);
+            LOG.info("ensureMatch results size ="+results.size());
+            assert !results.isEmpty();
+            // the result is number of the 175 records that had 020 fields, result I got was 118, verify this is correct.
+
+            // TODO flush, then results should be empty
+
+            // TODO load, then results should be 118
+
+
+            // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
+            // , ideally harvest from a 2nd repo (that contains some matching records)?
+
+
+
+//            Repository serviceRepo = getServiceRepository();
 //            ensureAllRecordsMatchStatus(serviceRepo, Record.ACTIVE);
 
             // - ensure there are scheduled harvests
-            HarvestSchedule hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
-            assert hs != null : "there should be a harvestSchedule for the provider";
+//            HarvestSchedule hs = getHarvestScheduleDAO().getHarvestScheduleForProvider(this.provider.getId());
+//            assert hs != null : "there should be a harvestSchedule for the provider";
 
 //            getProviderService().markProviderDeleted(this.provider);
 //            waitUntilFinished();
@@ -263,17 +282,21 @@ public class MatchRulesTest extends MockHarvestTest {
         }
     }
 
-    protected void ensureMatch(Repository repo) throws Throwable {
+    protected Set<Long> ensureMatch(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
+        Set<Long> overall = new HashSet<Long>();
         for (Record r : records) {
-        	process((InputRecord)r);
+        	overall.addAll(  process((InputRecord)r)  );
         }
         LOG.info("* done *");
+        return overall;
     }
 
-    public List<OutputRecord> process(InputRecord r) {
+    public Set<Long> process(InputRecord r) {
+        Set<Long> matchedRecordIds = new HashSet<Long>();
         try {
 
+            LOG.debug("test:  process record+"+r.getId());
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
@@ -287,39 +310,23 @@ public class MatchRulesTest extends MockHarvestTest {
 
                 Set<Long> previouslyMatchedRecordIds = null;
 
-                Set<Long> matchedRecordIds = new HashSet<Long>();
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
                     MatchRuleIfc matchRule = me.getValue();
                     matchedRecordIds.addAll(matchRule.determineMatches(ms));
                 }
-
-                if (r.getSuccessors().size() == 0) {
-                    // NEW-ACTIVE
-
-                } else {
-                    // UPDATE-ACTIVE
-                        // unmerge
-                        /*
-                        for (inputBibId : inputBibIds) {
-                            customProcessQueue.push(inputBibId)
-                        }
-                        for (inputHoldingId : inputHoldingIds) {
-                            customProcessQueue.push(inputHoldingId)
-                        }
-                        */
-                }
-            } else {
+            } /*else {
                 if (r.getSuccessors().size() == 0) {
                     // NEW-DELETED
                 } else {
                     // UPDATE-DELETED
                 }
             }
+                */
 
         } catch (Throwable t) {
             getUtil().throwIt(t);
         }
-        return null;
+        return matchedRecordIds;
     }
 }
