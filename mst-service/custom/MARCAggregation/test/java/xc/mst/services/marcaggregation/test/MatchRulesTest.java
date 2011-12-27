@@ -233,6 +233,7 @@ public class MatchRulesTest extends MockHarvestTest {
             LOG.info("ensureMatch results size ="+results.size());
             assert !results.isEmpty();
             // the result is number of the 175 records that had 020 fields, result I got was 118, verify this is correct.
+            // also note, this is really only testing the 1st matchrule and its matcher, perhaps unload that one, then run again. (2x), and so on, and so on.
 
             // TODO flush, then results should be empty
 
