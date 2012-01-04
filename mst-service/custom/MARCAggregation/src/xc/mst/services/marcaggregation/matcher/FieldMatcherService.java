@@ -15,12 +15,22 @@ import xc.mst.manager.BaseService;
 
 /**
  * This abstract class ties the interface into the MST by making use of the platform
- * infrastucture.
+ * infrastucture.  (by subclassing BaseService)
  *
  * @author Benjamin D. Anderson
  *
  */
 public abstract class FieldMatcherService extends BaseService implements FieldMatcher {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
         return null;

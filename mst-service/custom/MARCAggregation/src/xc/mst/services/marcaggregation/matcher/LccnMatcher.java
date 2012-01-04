@@ -13,6 +13,7 @@ package xc.mst.services.marcaggregation.matcher;
 import gnu.trove.TLongLongHashMap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -223,6 +224,29 @@ public class LccnMatcher extends FieldMatcherService {
     // at commit time put stuff into db,
     public void flush(boolean freeUpMemory) {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher() {
+        return recordId2lccn.size();
+    }
+    public Collection<Long> getRecordIdsInMatcher() {
+        List<Long> results = new ArrayList<Long>();
+        for (Long record: recordId2lccn.keys()) {
+            results.add(record);
+        }
+        return results;
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher() {
+        return lccn2recordIds.size();
     }
 
 }

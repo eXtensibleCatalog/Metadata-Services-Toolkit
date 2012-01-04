@@ -1,6 +1,7 @@
 package xc.mst.services.marcaggregation.matcher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,25 @@ public class x024aMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher() {
+        return recordId2x024a.size();
+    }
+    public Collection<Long> getRecordIdsInMatcher() {
+        return recordId2x024a.keySet();
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher() {
+        return x024a2recordIds.size();
     }
 
 }

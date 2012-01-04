@@ -8,6 +8,7 @@
   */
 package xc.mst.services.marcaggregation.matcher;
 
+import java.util.Collection;
 import java.util.List;
 
 import xc.mst.bo.record.InputRecord;
@@ -54,6 +55,22 @@ public interface FieldMatcher {
      * into memory.  This method should be called once per service processing.
      */
     public void load();
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher();
+    public Collection<Long> getRecordIdsInMatcher();
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher();
+
+    public String getName();
+    public void setName(String name);
 
     /**
      * flush is called periodically (every x records processed) to persist to disk the updates made during

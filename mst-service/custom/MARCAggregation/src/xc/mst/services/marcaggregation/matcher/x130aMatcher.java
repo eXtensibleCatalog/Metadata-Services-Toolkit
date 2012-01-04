@@ -1,5 +1,6 @@
 package xc.mst.services.marcaggregation.matcher;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,4 +56,22 @@ public class x130aMatcher extends FieldMatcherService {
         tempTable.clear();
     }
 
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher() {
+        return tempTable.size();
+    }
+    public Collection<Long> getRecordIdsInMatcher() {
+        return tempTable.keySet();
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher() {
+        return 0;
+    }
 }

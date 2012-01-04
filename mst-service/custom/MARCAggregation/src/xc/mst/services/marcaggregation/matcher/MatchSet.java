@@ -50,8 +50,9 @@ public class MatchSet {
             if (list != null && !list.isEmpty()) {
                 matchSet.addAll(list);
             }
+            // I don't think this is the right place to do this.  For one thing, won't get all matchpoints for a records if you do it here.
             // add to matcher, after we make the comparison, so we don't get the record back as a match for itself.
-            fm.addRecordToMatcher(this.inProcessRecord);  // is this the place to do this?  (was originally missing)
+            //fm.addRecordToMatcher(this.inProcessRecord);  // is this the place to do this?  (was originally missing)
         }
         return matchSet;
     }

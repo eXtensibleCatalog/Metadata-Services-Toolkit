@@ -1,5 +1,6 @@
 package xc.mst.services.marcaggregation.matcher;
 
+import java.util.Collection;
 import java.util.List;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
@@ -30,4 +31,24 @@ public class x260abcMatcher extends FieldMatcherService {
 
     }
 
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher() {
+        return 0;
+    }
+
+    public Collection<Long> getRecordIdsInMatcher() {
+        return null;
+        //return recordId2x024a.keySet();
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher() {
+        return 0;
+    }
 }

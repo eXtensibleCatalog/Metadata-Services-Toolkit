@@ -1,6 +1,7 @@
 package xc.mst.services.marcaggregation.matcher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,6 +170,25 @@ public class ISSNMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumRecordIdsInMatcher() {
+        return recordId2issn.size();
+    }
+    public Collection<Long> getRecordIdsInMatcher() {
+        return recordId2issn.keySet();
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
+    public int getNumMatchPointsInMatcher() {
+        return issn2recordIds.size();
     }
 
 }

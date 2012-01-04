@@ -42,7 +42,9 @@ public class MarcAggregationService extends GenericMetadataService {
         this.matcherMap = new HashMap<String, FieldMatcher>();
         List<String> mps = getConfigFileValues("matchers.value");
         for (String mp : mps) {
-            FieldMatcher m = (FieldMatcher) config.getBean(mp + "Matcher");
+            final String n = mp + "Matcher";
+            FieldMatcher m = (FieldMatcher) config.getBean(n);
+            m.setName(n);
             matcherMap.put(mp, m);
             m.load();
         }
@@ -89,6 +91,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
+                    matcher.addRecordToMatcher(smr);  // is this the place to do this?  (was originally missing)
                     ms.addMatcher(matchPointKey, matcher);
                 }
 
