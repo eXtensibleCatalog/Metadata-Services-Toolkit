@@ -83,8 +83,8 @@ public class x024aMatcher extends FieldMatcherService {
                     list = new ArrayList<String>();
                     list.add(subfield.trim());
                     recordId2x024a.put(id, list);
-                    LOG.debug("*** 1.adding to recordId2isbn, for id: " + id + " for x245$a: " + subfield);
-      LOG.info("*** 1.adding to recordId2isbn, for id: " + id + " for x245$a: " + subfield);
+                    LOG.debug("*** 1.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
+      LOG.info("*** 1.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 // TODO fix that!

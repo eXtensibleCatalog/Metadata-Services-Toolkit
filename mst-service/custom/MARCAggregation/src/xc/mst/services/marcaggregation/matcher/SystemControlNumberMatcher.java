@@ -107,7 +107,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 }
             }
         }
-        LOG.error("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
         LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
     }
@@ -137,7 +136,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 }
                 else {
                     LOG.debug("we have already seen " + goods + " for recordId: " + r.recordId);
-  LOG.info("we have already seen " + goods + " for recordId: " + r.recordId);
                 }
 
                 List<Long> idsList = scn2outputIds.get(goods);
@@ -152,7 +150,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 }
                 else { // error?
                     LOG.debug("we have already seen " + id + " for recordId: " + r.recordId);
- LOG.info("we have already seen " + id + " for recordId: " + r.recordId);
                 }
             }
         }
