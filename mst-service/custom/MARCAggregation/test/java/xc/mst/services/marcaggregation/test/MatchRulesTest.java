@@ -39,53 +39,56 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
-
 public class MatchRulesTest extends MockHarvestTest {
 
-  private static final Logger LOG = Logger.getLogger(MatchRulesTest.class);
+    private static final Logger LOG = Logger.getLogger(MatchRulesTest.class);
 
     protected Map<String, FieldMatcher> matcherMap = null;
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
 
+    private HashMap<String, Integer> expectedMatchRecords = new HashMap<String, Integer>();
+    private HashMap<String, Integer> expectedMatchRecordIds = new HashMap<String, Integer>();
+
     @Override
     @BeforeSuite
     public void startup() {
-    	final String sname = "marcaggregation";
+        final String sname = "marcaggregation";
         String serviceFolder = MSTConfiguration.getUrlPath() + "/services/" + sname;
         String metaInfFolderStr = serviceFolder + "/META-INF";
         applicationContext = setParentAndChildApplicationContext(sname, "xc/mst/services/spring-service.xml", metaInfFolderStr);
 
-
-        //TODO get this working in a more generic way - tried below to do it via aggregation, ran into issues.  Perhaps do it via
-        //   my original idea, had a superclass of MockHarvestTest that incorporates this (instead of aggregation, which is really
-        //   what I want as it is more portable.
-    	//ParentAndChildApplicationContextManager m= new ParentAndChildApplicationContextManager();
-        //applicationContext = m.getParentAndChildApplicationContext(sname, "xc/mst/services/spring-service.xml", metaInfFolderStr);
-        //((ClassPathXmlApplicationContext)applicationContext).refresh();
+        // TODO get this working in a more generic way - tried below to do it via aggregation, ran into issues. Perhaps do it via
+        // my original idea, had a superclass of MockHarvestTest that incorporates this (instead of aggregation, which is really
+        // what I want as it is more portable.
+        // ParentAndChildApplicationContextManager m= new ParentAndChildApplicationContextManager();
+        // applicationContext = m.getParentAndChildApplicationContext(sname, "xc/mst/services/spring-service.xml", metaInfFolderStr);
+        // ((ClassPathXmlApplicationContext)applicationContext).refresh();
         super.startup();
     }
 
     /**
      * By default the test framework ends up being part of the Parent/MST applicationContext for Spring.
-     * But sometimes we need to access and test the services child beans.  This allows us to access them.
+     * But sometimes we need to access and test the services child beans. This allows us to access them.
      * Note that in this case, if we create a new applicationContext, we need to make sure its parent is
-     * set correctly so we can access the parent beans.  An alternative to that would be to do it the way
+     * set correctly so we can access the parent beans. An alternative to that would be to do it the way
      * it is done for DefaultServicesService (it subclasses BaseService, thus is loaded as a bean by Spring).
      *
      * @see DefaultServicesService
-     * @param serviceName - we are only setting up child applicationContext for services here in this method
-     * @param xmlLocation - where the spring file is for the child application context.
+     * @param serviceName
+     *            - we are only setting up child applicationContext for services here in this method
+     * @param xmlLocation
+     *            - where the spring file is for the child application context.
      */
-	public ClassPathXmlApplicationContext setParentAndChildApplicationContext(String serviceName,
-			String xmlLocation, String metaInfFolderStr) {
+    public ClassPathXmlApplicationContext setParentAndChildApplicationContext(String serviceName,
+            String xmlLocation, String metaInfFolderStr) {
         ClassPathXmlApplicationContext ac = null;
-		try {
-            //String serviceFolder = MSTConfiguration.getUrlPath() + "/services/" + serviceName;
-            //String metaInfFolderStr = serviceFolder + "/META-INF";
+        try {
+            // String serviceFolder = MSTConfiguration.getUrlPath() + "/services/" + serviceName;
+            // String metaInfFolderStr = serviceFolder + "/META-INF";
             List<URL> urls = new ArrayList<URL>();
             File libFolder = new File(metaInfFolderStr + "/lib");
             String classesFolderStr = metaInfFolderStr + "/classes/";
-            //C:\dev\xc\mst\svn\branches\marc_agg\mst-service\custom\MARCAggregation\build\MST-instances\MetadataServicesToolkit\services\marcaggregation\META-INF\lib
+            // C:\dev\xc\mst\svn\branches\marc_agg\mst-service\custom\MARCAggregation\build\MST-instances\MetadataServicesToolkit\services\marcaggregation\META-INF\lib
             if (libFolder != null) {
                 if (libFolder.listFiles() != null) {
                     for (File f : libFolder.listFiles()) {
@@ -104,13 +107,13 @@ public class MatchRulesTest extends MockHarvestTest {
                 ac = new ClassPathXmlApplicationContext();
                 ac.setClassLoader(loader);
                 ac.setConfigLocation(xmlLocation);
-                ac.setParent(MSTConfiguration.getInstance(). getApplicationContext());
+                ac.setParent(MSTConfiguration.getInstance().getApplicationContext());
                 BufferedReader br = null;
                 try {
                     br = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(
                             xmlLocation)));
                 } catch (Throwable t) {
-                    LOG.error("** Problem encountered reading "+ xmlLocation+ " **", t);
+                    LOG.error("** Problem encountered reading " + xmlLocation + " **", t);
                 }
                 StringBuilder sb = new StringBuilder();
                 String line = null;
@@ -129,31 +132,64 @@ public class MatchRulesTest extends MockHarvestTest {
             LOG.error("** Problem encountered trying to setup applicationContext! ! **", t);
         }
         return ac;
-	}
+    }
 
     public void setup() {
         LOG.debug("MAS:  setup()");
-       this.matcherMap = new HashMap<String, FieldMatcher>();
+        //load expected number of records for each matcher.
+        //TODO figure out how menu of each till end of TODO
+        expectedMatchRecordIds.put("x028abMatcher", 0);
+        expectedMatchRecords.put  ("x028abMatcher", 0);
+
+        expectedMatchRecordIds.put("x245ahMatcher", 0);
+        expectedMatchRecords.put  ("x245ahMatcher", 0);
+
+        expectedMatchRecordIds.put("x240aMatcher", 0);
+        expectedMatchRecords.put  ("x240aMatcher", 0);
+
+        expectedMatchRecordIds.put("x260abcMatcher", 0);
+        expectedMatchRecords.put  ("x260abcMatcher", 0);
+        //TODO end of above TODO
+
+        expectedMatchRecordIds.put("ISSNMatcher", 14);
+        expectedMatchRecords.put  ("ISSNMatcher", 14);
+
+        expectedMatchRecordIds.put("ISBNMatcher", 34);
+        expectedMatchRecords.put  ("ISBNMatcher", 57);
+
+        expectedMatchRecordIds.put("x024aMatcher", 17);
+        expectedMatchRecords.put  ("x024aMatcher", 18);
+
+        expectedMatchRecordIds.put("x130aMatcher", 11);
+        expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
+
+        expectedMatchRecordIds.put("LccnMatcher", 56);
+        expectedMatchRecords.put  ("LccnMatcher", 56);
+
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 118);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 151);
+
+        this.matcherMap = new HashMap<String, FieldMatcher>();
         /*
          * debug stuff, leave it around for now to remind me of the issues I had...
-    	System.out.println("*old config=* "+ getConfig().getInstance(). getApplicationContext().toString());
-    	MSTConfiguration config = getConfig().getInstance();
-        try {
-            config.getApplicationContext().getBean("MetadataServiceMSTConfiguration");
-            System.out.println("TEST: in old ac MetadataServiceMSTConfiguration");
-
-        } catch (NoSuchBeanDefinitionException nsbde) {
-            config.getApplicationContext().getBean("MSTConfiguration");
-            System.out.println("TEST: in old ac MSTConfiguration");
-        }
-        try {
-            applicationContext.getBean("MetadataServiceMSTConfiguration");
-            System.out.println("TEST: in new ac MetadataServiceMSTConfiguration");
-
-        } catch (NoSuchBeanDefinitionException nsbde) {
-            applicationContext.getBean("MSTConfiguration");
-            System.out.println("TEST: in new ac MSTConfiguration");
-        }
+         * System.out.println("*old config=* "+ getConfig().getInstance(). getApplicationContext().toString());
+         * MSTConfiguration config = getConfig().getInstance();
+         * try {
+         * config.getApplicationContext().getBean("MetadataServiceMSTConfiguration");
+         * System.out.println("TEST: in old ac MetadataServiceMSTConfiguration");
+         *
+         * } catch (NoSuchBeanDefinitionException nsbde) {
+         * config.getApplicationContext().getBean("MSTConfiguration");
+         * System.out.println("TEST: in old ac MSTConfiguration");
+         * }
+         * try {
+         * applicationContext.getBean("MetadataServiceMSTConfiguration");
+         * System.out.println("TEST: in new ac MetadataServiceMSTConfiguration");
+         *
+         * } catch (NoSuchBeanDefinitionException nsbde) {
+         * applicationContext.getBean("MSTConfiguration");
+         * System.out.println("TEST: in new ac MSTConfiguration");
+         * }
          */
 
         List<String> mpStrs = getConfigFileValues("matchers.value");
@@ -167,8 +203,8 @@ public class MatchRulesTest extends MockHarvestTest {
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         List<String> mrStrs = getConfigFileValues("match.rules.value");
         for (String mrStr : mrStrs) {
-           MatchRuleIfc mr = (MatchRuleIfc) applicationContext.getBean(mrStr + "MatchRule");
-           matchRuleMap.put(mrStr, mr);
+            MatchRuleIfc mr = (MatchRuleIfc) applicationContext.getBean(mrStr + "MatchRule");
+            matchRuleMap.put(mrStr, mr);
         }
     }
 
@@ -201,9 +237,8 @@ public class MatchRulesTest extends MockHarvestTest {
         return fileStrs;
     }
 
-
     public void finalTest() {
-    	setup();
+        setup();
         try {
             // These first 2 steps are done in MockHarvestTest
             // - harvest records into MST and run them through norm service
@@ -212,16 +247,29 @@ public class MatchRulesTest extends MockHarvestTest {
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
             Set<Long> results = ensureMatch(providerRepo);
-            LOG.info("ensureMatch results size ="+results.size());
-//            if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
+            LOG.info("ensureMatch results size =" + results.size());
+            // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
 
-//            results = ensureMatch(providerRepo);
-//            LOG.info("ensureMatch results size ="+results.size());
-//            if (results.isEmpty()) throw new RuntimeException("FAILURE - expected some results to be returned.");
+            // results = ensureMatch(providerRepo);
+            // LOG.info("ensureMatch results size ="+results.size());
+            // if (results.isEmpty()) throw new RuntimeException("FAILURE - expected some results to be returned.");
 
+            //after parsing all the records, verify the counts are what is expected for our particular record set.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 FieldMatcher matcher = me.getValue();
-                LOG.info("for matcher "+matcher.getName()+" it has "+matcher.getNumRecordIdsInMatcher()+" recordIds and "+matcher.getNumMatchPointsInMatcher()+ " match points.");
+                LOG.info("for matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
+                if (expectedMatchRecordIds.get(matcher.getName()) != matcher.getNumRecordIdsInMatcher()) {
+                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) );
+                }
+                else {
+                    LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) );
+                }
+                if (expectedMatchRecords.get(matcher.getName()) != matcher.getNumMatchPointsInMatcher()) {
+                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" records but expected: "+expectedMatchRecords.get(matcher.getName()) );
+                }
+                else {
+                    LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" records but expected: "+expectedMatchRecords.get(matcher.getName()) );
+                }
             }
 
             // the result is number of the 175 records that had 020 fields, result I got was 118, verify this is correct.
@@ -230,7 +278,6 @@ public class MatchRulesTest extends MockHarvestTest {
             // TODO flush, then results should be empty
 
             // TODO load, then results should be 118
-
 
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
@@ -245,7 +292,7 @@ public class MatchRulesTest extends MockHarvestTest {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
         Set<Long> overall = new HashSet<Long>();
         for (Record r : records) {
-        	overall.addAll(  process((InputRecord)r)  );
+            overall.addAll(process((InputRecord) r));
         }
         LOG.info("* done *");
         return overall;
@@ -255,7 +302,7 @@ public class MatchRulesTest extends MockHarvestTest {
         Set<Long> matchedRecordIds = new HashSet<Long>();
         try {
 
-            LOG.debug("test:  process record+"+r.getId());
+            LOG.debug("test:  process record+" + r.getId());
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
@@ -264,7 +311,7 @@ public class MatchRulesTest extends MockHarvestTest {
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
-                    matcher.addRecordToMatcher(smr);  // is this the place to do this?  (was originally missing)
+                    matcher.addRecordToMatcher(smr); // is this the place to do this? (was originally missing)
                     ms.addMatcher(matchPointKey, matcher);
                 }
 
@@ -275,14 +322,15 @@ public class MatchRulesTest extends MockHarvestTest {
                     MatchRuleIfc matchRule = me.getValue();
                     matchedRecordIds.addAll(matchRule.determineMatches(ms));
                 }
-            } /*else {
-                if (r.getSuccessors().size() == 0) {
-                    // NEW-DELETED
-                } else {
-                    // UPDATE-DELETED
-                }
-            }
-                */
+            } /*
+               * else {
+               * if (r.getSuccessors().size() == 0) {
+               * // NEW-DELETED
+               * } else {
+               * // UPDATE-DELETED
+               * }
+               * }
+               */
 
         } catch (Throwable t) {
             getUtil().throwIt(t);
