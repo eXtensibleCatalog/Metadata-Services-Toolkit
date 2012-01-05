@@ -215,7 +215,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         TimingLogger.start("getBibMaps");
         int recordsAtOnce = 250000;
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
-                "select bib_001, record_id from " + tableName +
+                "select org_code, bib_001, record_id from " + tableName +
                         " limit " + (page * recordsAtOnce) + "," + recordsAtOnce);
         TimingLogger.stop("getBibMaps");
         return rowList;
