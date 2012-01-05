@@ -241,10 +241,10 @@ public abstract class SetDAO extends BaseDAO {
             if (log.isDebugEnabled())
                 log.debug("Checking the non-ID fields");
 
-            if (set.getDisplayName() != null && set.getDisplayName().length() > 127)
+            if (set.getDisplayName() != null && set.getDisplayName().length() > 255)
                 errorMessage.append("The display_name is invalid. ");
 
-            if (set.getSetSpec() == null || set.getSetSpec().length() <= 0 || set.getSetSpec().length() > 127)
+            if (set.getSetSpec() == null || set.getSetSpec().length() <= 0 || set.getSetSpec().length() > 255)
                 errorMessage.append("The set_spec is invalid. ");
 
             if (set.getDescription() != null && set.getDescription().length() >= 255)

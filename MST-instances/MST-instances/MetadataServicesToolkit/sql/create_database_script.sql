@@ -325,9 +325,9 @@ DROP TABLE IF EXISTS sets;
 CREATE TABLE sets
 (
   set_id INT(11) NOT NULL AUTO_INCREMENT,
-  display_name VARCHAR(127),
+  display_name VARCHAR(255),
   description VARCHAR(255),
-  set_spec VARCHAR(127) NOT NULL,
+  set_spec VARCHAR(255) NOT NULL,
   is_provider_set BOOLEAN,
   is_record_set BOOLEAN,
   provider_id INT(11) NOT NULL,
