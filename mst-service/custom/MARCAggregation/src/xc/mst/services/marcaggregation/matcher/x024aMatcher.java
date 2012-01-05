@@ -51,9 +51,9 @@ public class x024aMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 if (StringUtils.isNotEmpty(subfield)) {
-                    String s = subfield.trim();
-                    if (x024a2recordIds.get(s) != null) {
-                        results.addAll(x024a2recordIds.get(s));
+                    String goods = getFieldDataIntoCorrectFormat(field, subfield);
+                    if (x024a2recordIds.get(goods) != null) {
+                        results.addAll(x024a2recordIds.get(goods));
                     }
                 }
             }
@@ -78,35 +78,33 @@ public class x024aMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 List<String> list = recordId2x024a.get(id);
+                String goods = getFieldDataIntoCorrectFormat(field, subfield);
 
                 if (list == null) {
                     list = new ArrayList<String>();
-                    list.add(subfield.trim());
+                    list.add(goods);
                     recordId2x024a.put(id, list);
-                    LOG.debug("*** 1.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
-      LOG.info("*** 1.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
+                    LOG.debug("*** 1.adding to recordId2x024a, for id: " + id + " for x024$a: " + goods);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 // TODO fix that!
-                else if (list.contains(subfield.trim())) {
-                    LOG.debug("** We have already seen x024$a " + subfield + " for recordId: " + r.recordId);
-        LOG.info("** We have already seen x024$a " + subfield + " for recordId: " + r.recordId);
+                else if (list.contains(goods)) {
+                    LOG.debug("** We have already seen x024$a " + goods + " for recordId: " + r.recordId);
                 }
                 else {
-                    list.add(subfield.trim());
+                    list.add(goods);
                     recordId2x024a.put(id, list);
-                    LOG.debug("*** 2.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
-          LOG.info("*** 2.adding to recordId2x024a, for id: " + id + " for x024$a: " + subfield);
+                    LOG.debug("*** 2.adding to recordId2x024a, for id: " + id + " for x024$a: " + goods);
                 }
 
-                List<Long> ids = x024a2recordIds.get(subfield.trim());
+                List<Long> ids = x024a2recordIds.get(goods);
                 if (ids == null) {
                     ids = new ArrayList<Long>();
                 }
                 if (!ids.contains(r.recordId)) {
                     ids.add(r.recordId);
-                    x024a2recordIds.put(subfield.trim(), ids);
-                    LOG.debug("*** adding to x024a2recordIds, for x024$a: " + subfield.trim());
+                    x024a2recordIds.put(goods, ids);
+                    LOG.debug("*** adding to x024a2recordIds, for x024$a: " + goods);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else {
@@ -114,6 +112,16 @@ public class x024aMatcher extends FieldMatcherService {
                 }
             }
         }
+    }
+
+    private String getFieldDataIntoCorrectFormat(Field field, String goods) {
+        goods = goods.trim();
+        char indicator = SaxMarcXmlRecord.getIndicatorOfField(field, 1);
+        goods = goods + indicator;  // thank you java
+        if (indicator == '7') {
+            goods += SaxMarcXmlRecord.getSubfieldOfField(field, '2'); //thanks again!
+        }
+        return goods;
     }
 
     @Override
