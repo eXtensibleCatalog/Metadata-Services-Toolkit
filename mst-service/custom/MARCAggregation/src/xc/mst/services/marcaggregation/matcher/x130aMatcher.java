@@ -1,5 +1,6 @@
 package xc.mst.services.marcaggregation.matcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,13 @@ public class x130aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+        ArrayList<Long> results = new ArrayList<Long>();
         // query db for records with specific ids;
+        final Long id = new Long(ir.recordId);
+        if (results.contains(id)) {
+            results.remove(id);
+        }
+
         return null;
     }
 

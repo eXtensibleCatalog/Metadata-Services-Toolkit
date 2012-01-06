@@ -95,6 +95,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     ms.addMatcher(matchPointKey, matcher);
                 }
 
+                // maybe this will come into play with rules that have parts that are alike...
                 Set<Long> previouslyMatchedRecordIds = null;
 
                 Set<Long> matchedRecordIds = new HashSet<Long>();

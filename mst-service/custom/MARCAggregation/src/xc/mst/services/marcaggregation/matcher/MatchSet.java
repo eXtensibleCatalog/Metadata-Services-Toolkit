@@ -20,10 +20,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
 public class MatchSet {
-
+    boolean debug = true;
+    private static final Logger LOG = Logger.getLogger(MatchSet.class);
     protected SaxMarcXmlRecord inProcessRecord = null;
 
     protected Map<String, FieldMatcher> matchers =
@@ -48,6 +51,13 @@ public class MatchSet {
             matchSet = new HashSet<Long>();
             List<Long> list = fm.getMatchingOutputIds(this.inProcessRecord);
             if (list != null && !list.isEmpty()) {
+
+                if (debug) {
+                    LOG.info("for recordId:"+inProcessRecord.recordId+" matching ids:");
+                    for (Long num: list) {
+                        LOG.info("** for recordId:"+inProcessRecord.recordId+" matching id==>"+num);
+                    }
+                }
                 matchSet.addAll(list);
             }
             // I don't think this is the right place to do this.  For one thing, won't get all matchpoints for a records if you do it here.

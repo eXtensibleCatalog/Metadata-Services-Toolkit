@@ -154,6 +154,10 @@ public class LccnMatcher extends FieldMatcherService {
             }
         }
         LOG.debug("getMatchingOutputIds, irId="+ ir.recordId+" results.size="+results.size());
+        final Long id = new Long(ir.recordId);
+        if (results.contains(id)) {
+            results.remove(id);
+        }
         return results;
     }
 

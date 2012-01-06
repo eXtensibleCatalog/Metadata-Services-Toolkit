@@ -84,6 +84,10 @@ public class ISBNMatcher extends FieldMatcherService {
                 }
             }
         }
+        final Long id = new Long(ir.recordId);
+        if (results.contains(id)) {
+            results.remove(id);
+        }
         LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
     }

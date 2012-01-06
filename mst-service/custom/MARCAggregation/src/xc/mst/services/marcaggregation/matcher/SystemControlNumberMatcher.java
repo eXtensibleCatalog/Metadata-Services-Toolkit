@@ -25,6 +25,13 @@ import xc.mst.bo.record.marc.Field;
  * The System control number corresponds to the
  * <a href="http://www.loc.gov/marc/bibliographic/bd035.html">MARC 035 field</a>
  *
+ * OCLC Number, i.e. 035a, when the prefix= (OCoLC) (The service must match on both the numeric identifier AND the prefix.
+ * Note that the XC MARC Normalization Service has steps to ensure that these identifiers are in a consistent format).
+ * The prefix is defined as the characters within the parentheses.
+ * OCLC numbers may also contain other letters BETWEEN the prefix and the prefix and the number itself.
+ * These should be ignored in matching, as all OCLC numeric values are unique without the numbers.
+ * E.g. (OCoLC)ocm12345 should match with (OCoLC)12345 but NOT with (NRU)12345.
+ *
  * 035$a
  *
  * @author Benjamin D. Anderson
@@ -37,6 +44,9 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     // you can have multiple 035$a fields within a record (mult 035, each w/1 $a)
     protected Map<Long, List<String>> outputId2scn = new HashMap<Long, List<String>>();
+
+    //TODO may need to save the entire existing 035$a also instead of just the normalized version.
+    //     (normalized version will not have alpha after prefix)
 
     // protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
 
@@ -100,12 +110,13 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 String goods = getMapId(subfield);
                 if (scn2outputIds.get(goods) != null) {
-                    if (scn2outputIds.containsValue(ir)) {
-                        LOG.error("PROBLEM: we will return the record as a match for itself!! " + ir.recordId);
-                    }
                     results.addAll(scn2outputIds.get(goods));
                 }
             }
+        }
+        final Long id = new Long(ir.recordId);
+        if (results.contains(id)) {
+            results.remove(id);
         }
         LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
