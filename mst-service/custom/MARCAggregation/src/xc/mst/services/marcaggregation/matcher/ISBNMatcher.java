@@ -46,11 +46,11 @@ import xc.mst.utils.Util;
 public class ISBNMatcher extends FieldMatcherService {
 
     // you can have multiple 020$a fields within a record (mult 020, each w/1 $a)
-    protected Map<Long, List<String>> recordId2isbnStr = new HashMap<Long, List<String>>();
-    protected Map<Long, List<String>> recordId2isbn = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2isbnStr = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2isbn = new HashMap<Long, List<String>>();
 
     // multiple records might have the same normalized 020$a, this would be an indication of a match
-    protected Map<String, List<Long>> isbn2recordIds = new HashMap<String, List<Long>>();
+    protected Map<String, List<Long>> isbn2inputIds = new HashMap<String, List<Long>>();
 
     private static final Logger LOG = Logger.getLogger(ISBNMatcher.class);
 
@@ -67,7 +67,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     @Override
     // return all matching records!!! a match means the same int part of isbn.
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(20);
 
@@ -79,8 +79,8 @@ public class ISBNMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
-                if (isbn2recordIds.get(isbn) != null) {
-                    results.addAll(isbn2recordIds.get(isbn));
+                if (isbn2inputIds.get(isbn) != null) {
+                    results.addAll(isbn2inputIds.get(isbn));
                 }
             }
         }
@@ -88,7 +88,7 @@ public class ISBNMatcher extends FieldMatcherService {
         if (results.contains(id)) {
             results.remove(id);
         }
-        LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
+        LOG.debug("getMatchinginputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
     }
 
@@ -109,13 +109,13 @@ public class ISBNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
-                List<String> isbnList = recordId2isbn.get(id);
+                List<String> isbnList = inputId2isbn.get(id);
 
                 if (isbnList == null) {
                     isbnList = new ArrayList<String>();
                     isbnList.add(isbn);
-                    recordId2isbn.put(id, isbnList);
-                    LOG.debug("*** 1.adding to recordId2isbn, for id: " + id + " for isbn: " + isbn);
+                    inputId2isbn.put(id, isbnList);
+                    LOG.debug("*** 1.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else if (isbnList.contains(isbn)) {
@@ -123,16 +123,16 @@ public class ISBNMatcher extends FieldMatcherService {
                 }
                 else {
                     isbnList.add(isbn);
-                    recordId2isbn.put(id, isbnList);
-                    LOG.debug("*** 2.adding to recordId2isbn, for id: " + id + " for isbn: " + isbn);
+                    inputId2isbn.put(id, isbnList);
+                    LOG.debug("*** 2.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
                 }
 
-                List<String> isbnStrList = recordId2isbnStr.get(id);
+                List<String> isbnStrList = inputId2isbnStr.get(id);
                 if (isbnStrList == null) {
                     isbnStrList = new ArrayList<String>();
                     isbnStrList.add(subfield);
-                    recordId2isbnStr.put(id, isbnStrList);
-                    LOG.debug("*** 1.adding to recordId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
+                    inputId2isbnStr.put(id, isbnStrList);
+                    LOG.debug("*** 1.adding to inputId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else if (isbnStrList.contains(subfield)) {
@@ -140,18 +140,18 @@ public class ISBNMatcher extends FieldMatcherService {
                 }
                 else {
                     isbnStrList.add(subfield);
-                    recordId2isbnStr.put(id, isbnStrList);
-                    LOG.debug("*** 2.adding to recordId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
+                    inputId2isbnStr.put(id, isbnStrList);
+                    LOG.debug("*** 2.adding to inputId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
                 }
 
-                List<Long> ids = isbn2recordIds.get(isbn);
+                List<Long> ids = isbn2inputIds.get(isbn);
                 if (ids == null) {
                     ids = new ArrayList<Long>();
                 }
                 if (!ids.contains(r.recordId)) {
                     ids.add(r.recordId);
-                    isbn2recordIds.put(isbn, ids);
-                    LOG.debug("*** adding to isbn2recordIds, for isbn: " + isbn);
+                    isbn2inputIds.put(isbn, ids);
+                    LOG.debug("*** adding to isbn2inputIds, for isbn: " + isbn);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else {
@@ -177,10 +177,10 @@ public class ISBNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return recordId2isbn.size();
+        return inputId2isbn.size();
     }
     public Collection<Long> getRecordIdsInMatcher() {
-        return recordId2isbn.keySet();
+        return inputId2isbn.keySet();
     }
 
     /**
@@ -188,6 +188,6 @@ public class ISBNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return isbn2recordIds.size();
+        return isbn2inputIds.size();
     }
 }

@@ -13,7 +13,7 @@ public class x130aMatcher extends FieldMatcherService {
     protected Map<Long, String> tempTable = new HashMap<Long, String>();
 
     @Override
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         ArrayList<Long> results = new ArrayList<Long>();
         // query db for records with specific ids;
         final Long id = new Long(ir.recordId);
@@ -25,7 +25,7 @@ public class x130aMatcher extends FieldMatcherService {
     }
 
     @Override
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
         Map<Long, String> filterByFields = null; // query db for records with specific ids;
         //LuceneIndex tempIndex = new MemoryIndex();
         // add tokenizer

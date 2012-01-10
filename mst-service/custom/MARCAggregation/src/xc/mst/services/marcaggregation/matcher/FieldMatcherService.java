@@ -32,7 +32,7 @@ public abstract class FieldMatcherService extends BaseService implements FieldMa
         this.name = name;
     }
 
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
         return null;
     }
 

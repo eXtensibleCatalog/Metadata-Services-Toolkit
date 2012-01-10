@@ -53,13 +53,13 @@ import xc.mst.utils.Util;
 public class ISSNMatcher extends FieldMatcherService {
 
     // you can have multiple 022$a fields within a record (mult 022, each w/1 $a)
-    protected Map<Long, List<String>> recordId2issnStr = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2issnStr = new HashMap<Long, List<String>>();
 
     // 8 digit number so Integer will cover it.  But can include 'X' at end so must use String.
-    protected Map<Long, List<String>> recordId2issn = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2issn = new HashMap<Long, List<String>>();
 
     // multiple records might have the same normalized 022$a, this would be an indication of a match
-    protected Map<String, List<Long>> issn2recordIds = new HashMap<String, List<Long>>();
+    protected Map<String, List<Long>> issn2inputIds = new HashMap<String, List<Long>>();
 
     private static final Logger LOG = Logger.getLogger(ISSNMatcher.class);
 
@@ -72,7 +72,7 @@ public class ISSNMatcher extends FieldMatcherService {
 
     @Override
     // return all matching records!!! a match means the same int part of issn.
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(22);
 
@@ -84,12 +84,12 @@ public class ISSNMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 String issn = getAllButDash(subfield);
-                if (issn2recordIds.get(issn) != null) {
-                    results.addAll(issn2recordIds.get(issn));
+                if (issn2inputIds.get(issn) != null) {
+                    results.addAll(issn2inputIds.get(issn));
                 }
             }
         }
-        LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
+        LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
         final Long id = new Long(ir.recordId);
         if (results.contains(id)) {
             results.remove(id);
@@ -113,13 +113,13 @@ public class ISSNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String issn = getAllButDash(subfield);
-                List<String> issnList = recordId2issn.get(id);
+                List<String> issnList = inputId2issn.get(id);
 
                 if (issnList == null) {
                     issnList = new ArrayList<String>();
                     issnList.add(issn);
-                    recordId2issn.put(id, issnList);
-                    LOG.debug("*** 1.adding to recordId2issn, for id: " + id + " for issn: " + issn);
+                    inputId2issn.put(id, issnList);
+                    LOG.debug("*** 1.adding to inputId2issn, for id: " + id + " for issn: " + issn);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else if (issnList.contains(issn)) {
@@ -127,16 +127,16 @@ public class ISSNMatcher extends FieldMatcherService {
                 }
                 else {
                     issnList.add(issn);
-                    recordId2issn.put(id, issnList);
-                    LOG.debug("*** 2.adding to recordId2issn, for id: " + id + " for issn: " + issn);
+                    inputId2issn.put(id, issnList);
+                    LOG.debug("*** 2.adding to inputId2issn, for id: " + id + " for issn: " + issn);
                 }
 
-                List<String> issnStrList = recordId2issnStr.get(id);
+                List<String> issnStrList = inputId2issnStr.get(id);
                 if (issnStrList == null) {
                     issnStrList = new ArrayList<String>();
                     issnStrList.add(subfield);
-                    recordId2issnStr.put(id, issnStrList);
-                    LOG.debug("*** 1.adding to recordId2issnStr, for id: " + id + " for issnStr: " + subfield);
+                    inputId2issnStr.put(id, issnStrList);
+                    LOG.debug("*** 1.adding to inputId2issnStr, for id: " + id + " for issnStr: " + subfield);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else if (issnStrList.contains(subfield)) {
@@ -144,17 +144,17 @@ public class ISSNMatcher extends FieldMatcherService {
                 }
                 else {
                     issnStrList.add(subfield);
-                    recordId2issnStr.put(id, issnStrList);
-                    LOG.debug("*** 2.adding to recordId2issnStr, for id: " + id + " for issnStr: " + subfield);
+                    inputId2issnStr.put(id, issnStrList);
+                    LOG.debug("*** 2.adding to inputId2issnStr, for id: " + id + " for issnStr: " + subfield);
                 }
 
-                List<Long> ids = issn2recordIds.get(issn);
+                List<Long> ids = issn2inputIds.get(issn);
                 if (ids == null) {
                     ids = new ArrayList<Long>();
                 }
                 if (!ids.contains(r.recordId)) {
                     ids.add(r.recordId);
-                    issn2recordIds.put(issn, ids);
+                    issn2inputIds.put(issn, ids);
                     LOG.debug("*** adding to issn2recordIds, for issn: " + issn);
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
@@ -181,10 +181,10 @@ public class ISSNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return recordId2issn.size();
+        return inputId2issn.size();
     }
     public Collection<Long> getRecordIdsInMatcher() {
-        return recordId2issn.keySet();
+        return inputId2issn.keySet();
     }
 
     /**
@@ -192,7 +192,7 @@ public class ISSNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return issn2recordIds.size();
+        return issn2inputIds.size();
     }
 
 }

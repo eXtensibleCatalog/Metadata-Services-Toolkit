@@ -8,23 +8,28 @@
  */
 package xc.mst.services.marcaggregation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
-import org.jdom.Element;
-import org.jdom.Namespace;
 
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
-import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.services.impl.service.GenericMetadataService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.TimingLogger;
 
 /**
  * @author Benjamin D. Anderson
@@ -36,6 +41,7 @@ public class MarcAggregationService extends GenericMetadataService {
     private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
     protected Map<String, FieldMatcher> matcherMap = null;
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
+    protected MarcAggregationServiceDAO masDAO = null;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -53,6 +59,9 @@ public class MarcAggregationService extends GenericMetadataService {
         for (String mrStr : mrs) {
             MatchRuleIfc mr = (MatchRuleIfc) config.getBean(mrStr + "MatchRule");
             matchRuleMap.put(mrStr, mr);
+        }
+        if (this.masDAO == null) {
+            LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
     }
 
@@ -77,6 +86,14 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("Error loading custom.properties for service: " + this.getServiceName(), e);
             return null;
         }
+    }
+
+    public void setMarcAggregationServiceDAO(MarcAggregationServiceDAO masDAO) {
+        this.masDAO = masDAO;
+    }
+
+    public MarcAggregationServiceDAO getMarcAggregationServiceDAO() {
+        return this.masDAO;
     }
 
     public List<OutputRecord> process(InputRecord r) {
@@ -135,6 +152,24 @@ public class MarcAggregationService extends GenericMetadataService {
             util.throwIt(t);
         }
         return null;
+    }
+
+    @Override
+    protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
+        if (!force) {
+            return super.commitIfNecessary(force, 0);
+        }
+        try {
+            TimingLogger.start("masDAO.");
+            TimingLogger.stop("masDAO.");
+
+//            getRepository().setPersistentProperty("inputBibs", inputBibs);
+//            getRepository().setPersistentProperty("inputHoldings", inputHoldings);
+            TimingLogger.reset();
+        } catch (Throwable t) {
+            getUtil().throwIt(t);
+        }
+        return true;
     }
 
 }

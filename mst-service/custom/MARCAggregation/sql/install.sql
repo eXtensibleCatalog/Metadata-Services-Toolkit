@@ -30,7 +30,7 @@ ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
 
 -- -----------------------------------------------------
--- Table `matchpoints_010a` neither 010 nor $a can repeat
+-- Table `matchpoints_010a` neither 010 nor $a can repeat,Lccn
 -- -----------------------------------------------------
 CREATE  TABLE `matchpoints_010a` (
   `numeric_id` INT UNSIGNED NOT NULL ,
@@ -41,21 +41,21 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `matchpoints_020a` 020 can repeat, $a cannot
+-- Table `matchpoints_020a` 020 can repeat, $a cannot,ISBN
 -- -----------------------------------------------------
 CREATE  TABLE `matchpoints_020a` (
-  `numeric_id` INT UNSIGNED NOT NULL ,
+  `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`, `numeric_id`) )
+  PRIMARY KEY (`input_record_id`, `string_id`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `matchpoints_022a` 022 can repeat, $a cannot
+-- Table `matchpoints_022a` 022 can repeat, $a cannot,ISSN
 -- -----------------------------------------------------
 CREATE  TABLE `matchpoints_022a` (
-  `numeric_id` INT UNSIGNED NOT NULL ,
+  `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
   PRIMARY KEY (`input_record_id`, `string_id`) )
@@ -66,10 +66,9 @@ ENGINE = InnoDB;
 -- Table `matchpoints_024a` 024 can repeat, $a cannot
 -- -----------------------------------------------------
 CREATE  TABLE `matchpoints_024a` (
-  `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`, `numeric_id`,`string_id`) )
+  PRIMARY KEY (`input_record_id`, `string_id`) )
 ENGINE = InnoDB;
 
 
@@ -124,11 +123,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `matchpoints_035a`
+-- Table `matchpoints_035a` system control number
 -- -----------------------------------------------------
 CREATE  TABLE `matchpoints_035a` (
-  `prefix` VARCHAR(255) NOT NULL ,
-  `numeric_id` INT UNSIGNED NOT NULL ,
+  `full_string` VARCHAR(255) NOT NULL ,
+--  `prefix` VARCHAR(255) NOT NULL ,
+--  `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
   PRIMARY KEY  (`input_record_id`) )

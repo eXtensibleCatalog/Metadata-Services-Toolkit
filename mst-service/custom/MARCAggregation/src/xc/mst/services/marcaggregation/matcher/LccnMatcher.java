@@ -55,13 +55,13 @@ public class LccnMatcher extends FieldMatcherService {
     private static final Logger LOG = Logger.getLogger(LccnMatcher.class);
 
     // multiple records might have the same normalized 010$a, this would be an indication of a match
-    protected Map<Long, List<Long>> lccn2recordIds = new HashMap<Long, List<Long>>();
+    protected Map<Long, List<Long>> lccn2inputIds = new HashMap<Long, List<Long>>();
 
     // you can have exactly 1 010$a fields within a record  (1 010, w/1 $a)
     // will this field datastructure be needed? (or do we need recordid to 010$a string, or both?)
-    protected TLongLongHashMap recordId2lccn = new TLongLongHashMap();
+    protected TLongLongHashMap inputId2lccn = new TLongLongHashMap();
 
-    protected Map<Long, String> recordId2lccnStr = new HashMap<Long, String>();
+    protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
 
     // am not sure how much I can count on the int starting at char 3 (0,1,2,3)
     // there is a prefix or spaces before the int, and the prefix can run right
@@ -130,7 +130,7 @@ public class LccnMatcher extends FieldMatcherService {
     }
 
     @Override
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(10);
         if (fields.size()>1) {
@@ -148,12 +148,12 @@ public class LccnMatcher extends FieldMatcherService {
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
-                if (lccn2recordIds.get(goods) != null) {
-                        results.addAll(lccn2recordIds.get(goods));
+                if (lccn2inputIds.get(goods) != null) {
+                        results.addAll(lccn2inputIds.get(goods));
                 }
             }
         }
-        LOG.debug("getMatchingOutputIds, irId="+ ir.recordId+" results.size="+results.size());
+        LOG.debug("getMatchinginputIds, irId="+ ir.recordId+" results.size="+results.size());
         final Long id = new Long(ir.recordId);
         if (results.contains(id)) {
             results.remove(id);
@@ -164,7 +164,7 @@ public class LccnMatcher extends FieldMatcherService {
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r) {
         // String s = r.getMARC().getDataFields().get(10).get('a');
-        // lccn2outputIds.add(r.getId(), getUniqueId(s));
+        // lccn2inputIds.add(r.getId(), getUniqueId(s));
 
         List<Field> fields = r.getDataFields(10);
         if (fields.size()>1) {
@@ -185,31 +185,31 @@ public class LccnMatcher extends FieldMatcherService {
                         Util.getUtil().printStackTrace("who got me here?");
                     }
                 }
-                Long oldGoods = recordId2lccn.get(id);
+                Long oldGoods = inputId2lccn.get(id);
                 // but if the item is not in the longlong map, a 0 is returned???
                 if (oldGoods == null || oldGoods == 0l) {
-                    recordId2lccn.put(id, goods);
+                    inputId2lccn.put(id, goods);
                 }
                 else {
                     if (goods != oldGoods) {
-                        recordId2lccn.put(id, goods);
+                        inputId2lccn.put(id, goods);
                         LOG.debug("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
                         //LOG.info("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
                     }
                     LOG.debug("we have already seen "+ goods +" for recordId: "+r.recordId);
                     //LOG.info("we have already seen "+ goods +" for recordId: "+r.recordId);
                 }
-                recordId2lccnStr.put(id, subfield);
+                inputId2lccnStr.put(id, subfield);
 
-                List<Long> idsList = lccn2recordIds.get(goods);
+                List<Long> idsList = lccn2inputIds.get(goods);
                 if (idsList == null || idsList.size() == 0) {
                         idsList = new ArrayList<Long>();
                         idsList.add(id);
-                        lccn2recordIds.put(goods, idsList);
+                        lccn2inputIds.put(goods, idsList);
                 }
                 else if (!idsList.contains(id)){
                         idsList.add(id);
-                        lccn2recordIds.put(goods, idsList);
+                        lccn2inputIds.put(goods, idsList);
                 }
                 else {  //error?
                         LOG.debug("we have already seen "+ id +" for recordId: "+r.recordId);
@@ -235,11 +235,11 @@ public class LccnMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return recordId2lccn.size();
+        return inputId2lccn.size();
     }
     public Collection<Long> getRecordIdsInMatcher() {
         List<Long> results = new ArrayList<Long>();
-        for (Long record: recordId2lccn.keys()) {
+        for (Long record: inputId2lccn.keys()) {
             results.add(record);
         }
         return results;
@@ -250,7 +250,7 @@ public class LccnMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return lccn2recordIds.size();
+        return lccn2inputIds.size();
     }
 
 }

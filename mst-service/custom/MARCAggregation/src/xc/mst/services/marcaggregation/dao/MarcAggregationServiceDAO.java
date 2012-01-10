@@ -8,7 +8,14 @@
  */
 package xc.mst.services.marcaggregation.dao;
 
-import GenericMetadataServiceDAO;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
+import xc.mst.utils.TimingLogger;
 
 /**
 *
@@ -37,23 +44,36 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     protected final static String matchpoints_260abc_table = "matchpoints_260abc";
 
 
+
     @SuppressWarnings("unchecked")
-    public void persistMaps(
-        TimingLogger.start("MarcAggregationServiceDAO.persistMaps");
+    //perhaps will move this up to the generic layer - since 2 services will end up with identical code.
+    public void persistBibMaps(
+        ) {
+        TimingLogger.start("MarcAggregationServiceDAO.persistBibMaps");
         TimingLogger.stop("MarcAggregationServiceDAO.persistBibMaps");
     }
 
+    @SuppressWarnings("unchecked")
+    public void persistMatchpointMaps(
+        ) {
+        TimingLogger.start("MarcAggregationServiceDAO.persistMatchpointMaps");
+
+
+        TimingLogger.stop("MarcAggregationServiceDAO.persistMatchpointMaps");
+    }
+
     protected List<Map<String, Object>> getMaps(String tableName, int page) {
-        TimingLogger.start("getMaps");
+//        TimingLogger.start("getMaps");
         int recordsAtOnce = 250000;
-        List<Map<String, Object>> rowList ;//= this.jdbcTemplate.queryForList(
+        List<Map<String, Object>> rowList =null;//= this.jdbcTemplate.queryForList(
 //                "select org_code, bib_001, record_id from " + tableName +
 //                        " limit " + (page * recordsAtOnce) + "," + recordsAtOnce);
-        TimingLogger.stop("getMaps");
+//        TimingLogger.stop("getMaps");
         return rowList;
     }
 
     @SuppressWarnings("unchecked")
     public void loadMaps(
+        ) {
     }
 }

@@ -8,7 +8,7 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
 public class x245ahMatcher extends FieldMatcherService {
 
     @Override
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         // TODO Auto-generated method stub
         return null;
     }

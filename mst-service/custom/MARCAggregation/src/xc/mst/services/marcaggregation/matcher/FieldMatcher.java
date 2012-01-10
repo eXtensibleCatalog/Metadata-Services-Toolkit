@@ -11,8 +11,6 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.Collection;
 import java.util.List;
 
-import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
 /**
@@ -34,14 +32,14 @@ public interface FieldMatcher {
      * @param ir the input record from which to retrieve the match point value
      * @return the list of record ids of other input records that match ir
      */
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir);
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir, List<Long> filterBy);
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir);
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy);
 
     /**
      * In order to perform matching, an instance of this class
      * must preserve match point values.  This method signifies
      * this instance to preserve the match-point value for this record.
-     * This could be incorporated as part of the {@link #getMatchingOutputIds(xc.mst.bo.record.InputRecord)}
+     * This could be incorporated as part of the {@link #getMatchingInputIds(xc.mst.bo.record.InputRecord)}
      * implementation, but having it separate allows for the ability to call
      * getMatchingOutputIds without effecting the state of the system.
      *

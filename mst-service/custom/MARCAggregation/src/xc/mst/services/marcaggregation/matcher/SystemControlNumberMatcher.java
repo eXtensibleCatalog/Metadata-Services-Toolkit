@@ -31,6 +31,7 @@ import xc.mst.bo.record.marc.Field;
  * OCLC numbers may also contain other letters BETWEEN the prefix and the prefix and the number itself.
  * These should be ignored in matching, as all OCLC numeric values are unique without the numbers.
  * E.g. (OCoLC)ocm12345 should match with (OCoLC)12345 but NOT with (NRU)12345.
+ * TODO do we need to save original format, i.e. (OCoLC)ocm12345 or can we just save (OCoLC)12345 ?
  *
  * 035$a
  *
@@ -40,10 +41,13 @@ import xc.mst.bo.record.marc.Field;
  */
 public class SystemControlNumberMatcher extends FieldMatcherService {
 
-    // protected Map<String, Long> prefixIds = new HashMap<String, Long>();
-
     // you can have multiple 035$a fields within a record (mult 035, each w/1 $a)
-    protected Map<Long, List<String>> outputId2scn = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2scn = new HashMap<Long, List<String>>();
+    protected Map<Long, List<String>> inputId2scnFull = new HashMap<Long, List<String>>();
+
+    //protected Map<Long, List<Long>> inputId2scnNum = new HashMap<Long, List<Long>>();
+    // I wonder if the prefixes will be unique?  TODO  And how do you assoc. ind prefixes, with ints?  don't bother for now
+    //protected Map<Long, List<String>> inputId2prefix = new HashMap<Long, List<String>>();
 
     //TODO may need to save the entire existing 035$a also instead of just the normalized version.
     //     (normalized version will not have alpha after prefix)
@@ -51,7 +55,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
 
     // multiple records might have the same normalized 035$a, this would be an indication of a match
-    protected Map<String, List<Long>> scn2outputIds = new HashMap<String, List<Long>>();
+    protected Map<String, List<Long>> scn2inputIds = new HashMap<String, List<Long>>();
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
 
@@ -95,7 +99,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     }
 
     @Override
-    public List<Long> getMatchingOutputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(35);
 
@@ -109,8 +113,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             // should we verify the record is not matching itself?
             for (String subfield : subfields) {
                 String goods = getMapId(subfield);
-                if (scn2outputIds.get(goods) != null) {
-                    results.addAll(scn2outputIds.get(goods));
+                if (scn2inputIds.get(goods) != null) {
+                    results.addAll(scn2inputIds.get(goods));
                 }
             }
         }
@@ -118,7 +122,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         if (results.contains(id)) {
             results.remove(id);
         }
-        LOG.debug("getMatchingOutputIds, irId=" + ir.recordId + " results.size=" + results.size());
+        LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
     }
 
@@ -135,29 +139,35 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 String goods = getMapId(subfield);
-                List<String> goodsList = outputId2scn.get(id);
+                List<String> goodsList = inputId2scn.get(id);
+                List<String> fullList = inputId2scnFull.get(id);
                 if (goodsList == null || goodsList.size() == 0) {
                     goodsList = new ArrayList<String>();
+                    fullList = new ArrayList<String>();
                     goodsList.add(goods);
-                    outputId2scn.put(id, goodsList);
+                    fullList.add(subfield);
+                    inputId2scn.put(id, goodsList);
+                    inputId2scnFull.put(id, fullList);
                 }
                 else if (!goodsList.contains(goods)) {
                     goodsList.add(goods);
-                    outputId2scn.put(id, goodsList);
+                    inputId2scn.put(id, goodsList);
+                    fullList.add(subfield);
+                    inputId2scnFull.put(id, fullList);
                 }
                 else {
                     LOG.debug("we have already seen " + goods + " for recordId: " + r.recordId);
                 }
 
-                List<Long> idsList = scn2outputIds.get(goods);
+                List<Long> idsList = scn2inputIds.get(goods);
                 if (idsList == null || idsList.size() == 0) {
                     idsList = new ArrayList<Long>();
                     idsList.add(id);
-                    scn2outputIds.put(goods, idsList);
+                    scn2inputIds.put(goods, idsList);
                 }
                 else if (!idsList.contains(id)) {
                     idsList.add(id);
-                    scn2outputIds.put(goods, idsList);
+                    scn2inputIds.put(goods, idsList);
                 }
                 else { // error?
                     LOG.debug("we have already seen " + id + " for recordId: " + r.recordId);
@@ -186,11 +196,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return outputId2scn.size();
+        return inputId2scn.size();
     }
 
     public Collection<Long> getRecordIdsInMatcher() {
-        return outputId2scn.keySet();
+        return inputId2scn.keySet();
     }
 
     /**
@@ -198,6 +208,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return scn2outputIds.size();
+        return scn2inputIds.size();
     }
 }

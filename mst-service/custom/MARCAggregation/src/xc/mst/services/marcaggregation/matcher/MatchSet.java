@@ -49,7 +49,7 @@ public class MatchSet {
         Set<Long> matchSet = matches.get(fm);
         if (matchSet == null) {
             matchSet = new HashSet<Long>();
-            List<Long> list = fm.getMatchingOutputIds(this.inProcessRecord);
+            List<Long> list = fm.getMatchingInputIds(this.inProcessRecord);
             if (list != null && !list.isEmpty()) {
 
                 if (debug) {
