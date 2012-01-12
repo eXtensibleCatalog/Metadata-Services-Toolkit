@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 
 public class x130aMatcher extends FieldMatcherService {
 
-    protected Map<Long, String> tempTable = new HashMap<Long, String>();
+    protected Map<Long, String> inputId2x130a = new HashMap<Long, String>();
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
@@ -46,7 +48,7 @@ public class x130aMatcher extends FieldMatcherService {
         List<String> subfields = ir.getSubfield(130, 'a');
         if (subfields != null) {
             for (String sf : subfields) {
-                tempTable.put(ir.getRecordId(), sf);
+                inputId2x130a.put(ir.getRecordId(), sf);
             }
         }
     }
@@ -58,9 +60,9 @@ public class x130aMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
-        // write to db
-        tempTable.clear();
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persistOneStrMatchpointMaps(inputId2x130a, MarcAggregationServiceDAO.matchpoints_130a_table);
+        inputId2x130a.clear();
     }
 
     /**
@@ -68,10 +70,10 @@ public class x130aMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return tempTable.size();
+        return inputId2x130a.size();
     }
     public Collection<Long> getRecordIdsInMatcher() {
-        return tempTable.keySet();
+        return inputId2x130a.keySet();
     }
 
     /**

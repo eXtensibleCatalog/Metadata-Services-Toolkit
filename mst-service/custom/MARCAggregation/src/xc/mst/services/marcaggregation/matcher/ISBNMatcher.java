@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.utils.Util;
 
 /**
@@ -46,8 +48,9 @@ import xc.mst.utils.Util;
 public class ISBNMatcher extends FieldMatcherService {
 
     // you can have multiple 020$a fields within a record (mult 020, each w/1 $a)
-    protected Map<Long, List<String>> inputId2isbnStr = new HashMap<Long, List<String>>();
-    protected Map<Long, List<String>> inputId2isbn = new HashMap<Long, List<String>>();
+    // thus use a list of string pairs, the pair values are the original string
+    //    and the normalized string
+    protected Map<Long, List<String[]>> inputId2isbn = new HashMap<Long, List<String[]>>();
 
     // multiple records might have the same normalized 020$a, this would be an indication of a match
     protected Map<String, List<Long>> isbn2inputIds = new HashMap<String, List<Long>>();
@@ -109,11 +112,12 @@ public class ISBNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
-                List<String> isbnList = inputId2isbn.get(id);
+                final String[] isbnArray = new String[] {isbn, subfield};  // its a pair of strings
+                List<String[]> isbnList = inputId2isbn.get(id);
 
                 if (isbnList == null) {
-                    isbnList = new ArrayList<String>();
-                    isbnList.add(isbn);
+                    isbnList = new ArrayList<String[]>();
+                    isbnList.add(isbnArray);
                     inputId2isbn.put(id, isbnList);
                     LOG.debug("*** 1.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
                 }
@@ -122,26 +126,9 @@ public class ISBNMatcher extends FieldMatcherService {
                     LOG.debug("** We have already seen isbn " + isbn + " for recordId: " + r.recordId);
                 }
                 else {
-                    isbnList.add(isbn);
+                    isbnList.add(isbnArray);
                     inputId2isbn.put(id, isbnList);
                     LOG.debug("*** 2.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
-                }
-
-                List<String> isbnStrList = inputId2isbnStr.get(id);
-                if (isbnStrList == null) {
-                    isbnStrList = new ArrayList<String>();
-                    isbnStrList.add(subfield);
-                    inputId2isbnStr.put(id, isbnStrList);
-                    LOG.debug("*** 1.adding to inputId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
-                }
-                // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
-                else if (isbnStrList.contains(subfield)) {
-                    LOG.debug("** We have already seen isbnStr " + subfield + " for recordId: " + r.recordId);
-                }
-                else {
-                    isbnStrList.add(subfield);
-                    inputId2isbnStr.put(id, isbnStrList);
-                    LOG.debug("*** 2.adding to inputId2isbnStr, for id: " + id + " for isbnStr: " + subfield);
                 }
 
                 List<Long> ids = isbn2inputIds.get(isbn);
@@ -169,7 +156,10 @@ public class ISBNMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2isbn, MarcAggregationServiceDAO.matchpoints_020a_table);
+        inputId2isbn.clear();
+        isbn2inputIds.clear();
     }
 
     /**

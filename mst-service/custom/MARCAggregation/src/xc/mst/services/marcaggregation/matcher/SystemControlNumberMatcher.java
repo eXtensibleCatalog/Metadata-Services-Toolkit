@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 
 /**
  * The System control number corresponds to the
@@ -178,7 +179,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persistScnMaps(inputId2scn);
+        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2scn, MarcAggregationServiceDAO.matchpoints_035a_table);
         inputId2scn.clear();
         scn2inputIds.clear();
     }

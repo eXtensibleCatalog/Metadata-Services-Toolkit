@@ -9,10 +9,13 @@
 package xc.mst.services.marcaggregation.dao;
 
 
+import gnu.trove.TLongLongHashMap;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,22 +35,22 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     private final static Logger LOG = Logger.getLogger(MarcAggregationServiceDAO.class);
 
-    protected final static String bibsProcessedLongId_table = "bibsProcessedLongId";
-    protected final static String bibsProcessedStringId_table = "bibsProcessedStringId";
-    protected final static String bibsYet2ArriveLongId_table = "bibsYet2ArriveLongId";
-    protected final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
-    protected final static String held_holdings_table = "held_holdings";
+    public final static String bibsProcessedLongId_table = "bibsProcessedLongId";
+    public final static String bibsProcessedStringId_table = "bibsProcessedStringId";
+    public final static String bibsYet2ArriveLongId_table = "bibsYet2ArriveLongId";
+    public final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
+    public final static String held_holdings_table = "held_holdings";
 
-    protected final static String matchpoints_010a_table = "matchpoints_010a";
-    protected final static String matchpoints_020a_table = "matchpoints_020a";
-    protected final static String matchpoints_022a_table = "matchpoints_022a";
-    protected final static String matchpoints_024a_table = "matchpoints_024a";
-    protected final static String matchpoints_028a_table = "matchpoints_028a";
-    protected final static String matchpoints_035a_table = "matchpoints_035a";
-    protected final static String matchpoints_130a_table = "matchpoints_130a";
-    protected final static String matchpoints_240a_table = "matchpoints_240a";
-    protected final static String matchpoints_245a_table = "matchpoints_245a";
-    protected final static String matchpoints_260abc_table = "matchpoints_260abc";
+    public final static String matchpoints_010a_table = "matchpoints_010a";
+    public final static String matchpoints_020a_table = "matchpoints_020a";
+    public final static String matchpoints_022a_table = "matchpoints_022a";
+    public final static String matchpoints_024a_table = "matchpoints_024a";
+    public final static String matchpoints_028a_table = "matchpoints_028a";
+    public final static String matchpoints_035a_table = "matchpoints_035a";
+    public final static String matchpoints_130a_table = "matchpoints_130a";
+    public final static String matchpoints_240a_table = "matchpoints_240a";
+    public final static String matchpoints_245a_table = "matchpoints_245a";
+    public final static String matchpoints_260abc_table = "matchpoints_260abc";
 
 
 
@@ -60,13 +63,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public void persistScnMaps(Map<Long, List<String[]>> inputId2scnMap) {
+    public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
 
-        TimingLogger.start("MarcAggregationServiceDAO.persistScnMaps");
+        TimingLogger.start("MarcAggregationServiceDAO.persist2StrMaps");
 
-        for (Object keyObj : inputId2scnMap.keySet()) {
+        for (Object keyObj : inputId2matcherMap.keySet()) {
             Long id = (Long) keyObj;
-            Object list = inputId2scnMap.get(id);
+            Object list = inputId2matcherMap.get(id);
 
             try {
                 if (list == null) {
@@ -84,7 +87,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 }
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
-                final String tableName = matchpoints_035a_table;
                 TimingLogger.start(tableName + ".insert");
                 TimingLogger.start(tableName + ".insert.create_infile");
 
@@ -122,14 +124,191 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 getUtil().throwIt(t);
             }
         }
+        TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
     }
 
     @SuppressWarnings("unchecked")
-    public void persistMatchpointMaps(
-        ) {
-        TimingLogger.start("MarcAggregationServiceDAO.persistMatchpointMaps");
-        //this.simpleJdbcTemplate.
-        TimingLogger.stop("MarcAggregationServiceDAO.persistMatchpointMaps");
+    public void persist1StrMatchpointMaps(Map<Long, List<String>> inputId2matcherMap, String tableName) {
+        TimingLogger.start("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+
+        for (Object keyObj : inputId2matcherMap.keySet()) {
+            Long id = (Long) keyObj;
+            Object list = inputId2matcherMap.get(id);
+
+            try {
+                if (list == null) {
+                    continue;
+                }
+                final byte[] idBytes = String.valueOf(id).getBytes();
+
+                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                final byte[] tabBytes = "\t".getBytes();
+                final byte[] newLineBytes = "\n".getBytes();
+
+                File dbLoadFile = new File(dbLoadFileStr);
+                if (dbLoadFile.exists()) {
+                    dbLoadFile.delete();
+                }
+                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+                final MutableInt j = new MutableInt(0);
+                TimingLogger.start(tableName + ".insert");
+                TimingLogger.start(tableName + ".insert.create_infile");
+
+                List<String> strList = (List<String>) list;
+                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                if (strList != null && strList.size() > 0) {
+                    for (String _s: strList) {
+                        try {   // need to loop through all strings associated with id!
+                                if (j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                os.write(_s.getBytes());
+                                os.write(tabBytes);
+                                os.write(idBytes);
+                        } catch (Exception e) {
+                            LOG.error("problem with data - ",e);
+                        }
+                    }
+                }
+                os.close();
+                TimingLogger.stop(tableName + ".insert.create_infile");
+                TimingLogger.start(tableName + ".insert.load_infile");
+                this.jdbcTemplate.execute(
+                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                                tableName +
+                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                        );
+                TimingLogger.stop(tableName + ".insert.load_infile");
+                TimingLogger.stop(tableName + ".insert");
+            } catch (Throwable t) {
+                getUtil().throwIt(t);
+            }
+        }
+
+        TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+    }
+
+    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
+    @SuppressWarnings("unchecked")
+    public void persistLongStrMatchpointMaps(TLongLongHashMap inputId2numMap, Map<Long, String> inputId2matcherMap, String tableName) {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistLongStrMaps");
+
+        for (Object keyObj : inputId2matcherMap.keySet()) {
+            Long id = (Long) keyObj;
+            String str = inputId2matcherMap.get(id);
+            Long num = inputId2numMap.get(id);
+            if (str == null) {
+                continue;
+            }
+            if (num == null) {
+                continue;
+            }
+            try {
+                final byte[] idBytes = String.valueOf(id).getBytes();
+                final byte[] numBytes = String.valueOf(num).getBytes();
+
+                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                final byte[] tabBytes = "\t".getBytes();
+                final byte[] newLineBytes = "\n".getBytes();
+
+                File dbLoadFile = new File(dbLoadFileStr);
+                if (dbLoadFile.exists()) {
+                    dbLoadFile.delete();
+                }
+                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+                final MutableInt j = new MutableInt(0);
+                TimingLogger.start(tableName + ".insert");
+                TimingLogger.start(tableName + ".insert.create_infile");
+                try {   // need to loop through all strings associated with id!
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+                    os.write(numBytes);
+                    os.write(tabBytes);
+                    os.write(str.getBytes());
+                    os.write(tabBytes);
+                    os.write(idBytes);
+                } catch (Exception e) {
+                    LOG.error("problem with data - ",e);
+                }
+
+                os.close();
+                TimingLogger.stop(tableName + ".insert.create_infile");
+                TimingLogger.start(tableName + ".insert.load_infile");
+                this.jdbcTemplate.execute(
+                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                                tableName +
+                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                        );
+                TimingLogger.stop(tableName + ".insert.load_infile");
+                TimingLogger.stop(tableName + ".insert");
+            } catch (Throwable t) {
+                getUtil().throwIt(t);
+            }
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
+    }
+
+    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
+    @SuppressWarnings("unchecked")
+    public void persistOneStrMatchpointMaps(Map<Long, String> inputId2matcherMap, String tableName) {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistOneStrMaps");
+
+        for (Object keyObj : inputId2matcherMap.keySet()) {
+            Long id = (Long) keyObj;
+            String str = inputId2matcherMap.get(id);
+            if (str == null) {
+                continue;
+            }
+            try {
+                final byte[] idBytes = String.valueOf(id).getBytes();
+
+                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                final byte[] tabBytes = "\t".getBytes();
+                final byte[] newLineBytes = "\n".getBytes();
+
+                File dbLoadFile = new File(dbLoadFileStr);
+                if (dbLoadFile.exists()) {
+                    dbLoadFile.delete();
+                }
+                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+                final MutableInt j = new MutableInt(0);
+                TimingLogger.start(tableName + ".insert");
+                TimingLogger.start(tableName + ".insert.create_infile");
+                try {   // need to loop through all strings associated with id!
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+                    os.write(str.getBytes());
+                    os.write(tabBytes);
+                    os.write(idBytes);
+                } catch (Exception e) {
+                    LOG.error("problem with data - ",e);
+                }
+
+                os.close();
+                TimingLogger.stop(tableName + ".insert.create_infile");
+                TimingLogger.start(tableName + ".insert.load_infile");
+                this.jdbcTemplate.execute(
+                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                                tableName +
+                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                        );
+                TimingLogger.stop(tableName + ".insert.load_infile");
+                TimingLogger.stop(tableName + ".insert");
+            } catch (Throwable t) {
+                getUtil().throwIt(t);
+            }
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
     protected List<Map<String, Object>> getMaps(String tableName, int page) {

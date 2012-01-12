@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.utils.Util;
 
 /**
@@ -136,7 +138,10 @@ public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2x024a, MarcAggregationServiceDAO.matchpoints_024a_table);
+        inputId2x024a.clear();
+        x024a2inputIds.clear();
     }
 
     /**

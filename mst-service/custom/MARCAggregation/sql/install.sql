@@ -131,7 +131,7 @@ CREATE  TABLE `matchpoints_035a` (
 --  `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY  (`input_record_id`, `full_string`) )
+  PRIMARY KEY  (`input_record_id`, `string_id`) )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------

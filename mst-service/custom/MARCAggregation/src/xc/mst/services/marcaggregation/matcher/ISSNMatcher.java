@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.utils.Util;
 
 /**
@@ -53,10 +55,11 @@ import xc.mst.utils.Util;
 public class ISSNMatcher extends FieldMatcherService {
 
     // you can have multiple 022$a fields within a record (mult 022, each w/1 $a)
-    protected Map<Long, List<String>> inputId2issnStr = new HashMap<Long, List<String>>();
-
-    // 8 digit number so Integer will cover it.  But can include 'X' at end so must use String.
-    protected Map<Long, List<String>> inputId2issn = new HashMap<Long, List<String>>();
+    // thus use a list of string pairs, the pair values are the original string
+    //    and the normalized string
+    // 8 digit number so thought Integer would cover it.
+    //    But can include 'X' at end so must use String.
+    protected Map<Long, List<String[]>> inputId2issn = new HashMap<Long, List<String[]>>();
 
     // multiple records might have the same normalized 022$a, this would be an indication of a match
     protected Map<String, List<Long>> issn2inputIds = new HashMap<String, List<Long>>();
@@ -113,11 +116,12 @@ public class ISSNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String issn = getAllButDash(subfield);
-                List<String> issnList = inputId2issn.get(id);
+                List<String[]> issnList = inputId2issn.get(id);
+                final String[] issnArray = new String[] {issn, subfield};  // its a pair of strings
 
                 if (issnList == null) {
-                    issnList = new ArrayList<String>();
-                    issnList.add(issn);
+                    issnList = new ArrayList<String[]>();
+                    issnList.add(issnArray);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 1.adding to inputId2issn, for id: " + id + " for issn: " + issn);
                 }
@@ -126,26 +130,9 @@ public class ISSNMatcher extends FieldMatcherService {
                     LOG.debug("** We have already seen issn " + issn + " for recordId: " + r.recordId);
                 }
                 else {
-                    issnList.add(issn);
+                    issnList.add(issnArray);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 2.adding to inputId2issn, for id: " + id + " for issn: " + issn);
-                }
-
-                List<String> issnStrList = inputId2issnStr.get(id);
-                if (issnStrList == null) {
-                    issnStrList = new ArrayList<String>();
-                    issnStrList.add(subfield);
-                    inputId2issnStr.put(id, issnStrList);
-                    LOG.debug("*** 1.adding to inputId2issnStr, for id: " + id + " for issnStr: " + subfield);
-                }
-                // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
-                else if (issnStrList.contains(subfield)) {
-                    LOG.debug("** We have already seen issnStr " + subfield + " for recordId: " + r.recordId);
-                }
-                else {
-                    issnStrList.add(subfield);
-                    inputId2issnStr.put(id, issnStrList);
-                    LOG.debug("*** 2.adding to inputId2issnStr, for id: " + id + " for issnStr: " + subfield);
                 }
 
                 List<Long> ids = issn2inputIds.get(issn);
@@ -173,7 +160,10 @@ public class ISSNMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2issn, MarcAggregationServiceDAO.matchpoints_022a_table);
+        inputId2issn.clear();
+        issn2inputIds.clear();
     }
 
     /**

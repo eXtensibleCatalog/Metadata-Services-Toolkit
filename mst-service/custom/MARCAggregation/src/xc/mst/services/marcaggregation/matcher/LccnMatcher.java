@@ -24,6 +24,8 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.services.marcaggregation.MarcAggregationService;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.utils.Util;
 
 /**
@@ -227,7 +229,10 @@ public class LccnMatcher extends FieldMatcherService {
     @Override
     // at commit time put stuff into db,
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persistLongStrMatchpointMaps(inputId2lccn, inputId2lccnStr, MarcAggregationServiceDAO.matchpoints_010a_table);
+        inputId2lccnStr.clear();
+        inputId2lccn.clear();
     }
 
     /**
