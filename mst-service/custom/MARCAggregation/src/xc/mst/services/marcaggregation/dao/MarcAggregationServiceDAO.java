@@ -9,12 +9,18 @@
 package xc.mst.services.marcaggregation.dao;
 
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
 /**
@@ -54,11 +60,75 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     @SuppressWarnings("unchecked")
+    public void persistScnMaps(Map<Long, List<String[]>> inputId2scnMap) {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistScnMaps");
+
+        for (Object keyObj : inputId2scnMap.keySet()) {
+            Long id = (Long) keyObj;
+            Object list = inputId2scnMap.get(id);
+
+            try {
+                if (list == null) {
+                    continue;
+                }
+                final byte[] idBytes = String.valueOf(id).getBytes();
+
+                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                final byte[] tabBytes = "\t".getBytes();
+                final byte[] newLineBytes = "\n".getBytes();
+
+                File dbLoadFile = new File(dbLoadFileStr);
+                if (dbLoadFile.exists()) {
+                    dbLoadFile.delete();
+                }
+                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+                final MutableInt j = new MutableInt(0);
+                final String tableName = matchpoints_035a_table;
+                TimingLogger.start(tableName + ".insert");
+                TimingLogger.start(tableName + ".insert.create_infile");
+
+                List<String[]> strList = (List<String[]>) list;
+                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                if (strList != null && strList.size() > 0) {
+                    for (String[] _s: strList) {
+                        try {   // need to loop through all strings associated with id!
+                                if (j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                os.write(_s[1].getBytes());
+                                os.write(tabBytes);
+                                os.write(_s[0].getBytes());
+                                os.write(tabBytes);
+                                os.write(idBytes);
+                        } catch (Exception e) {
+                            LOG.error("problem with data - ",e);
+                        }
+                    }
+                }
+                os.close();
+                TimingLogger.stop(tableName + ".insert.create_infile");
+                TimingLogger.start(tableName + ".insert.load_infile");
+                this.jdbcTemplate.execute(
+                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                                tableName +
+                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                        );
+                TimingLogger.stop(tableName + ".insert.load_infile");
+                TimingLogger.stop(tableName + ".insert");
+            } catch (Throwable t) {
+                getUtil().throwIt(t);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     public void persistMatchpointMaps(
         ) {
         TimingLogger.start("MarcAggregationServiceDAO.persistMatchpointMaps");
-
-
+        //this.simpleJdbcTemplate.
         TimingLogger.stop("MarcAggregationServiceDAO.persistMatchpointMaps");
     }
 

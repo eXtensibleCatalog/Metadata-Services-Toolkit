@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.services.marcaggregation.MarcAggregationService;
 
 /**
  * The System control number corresponds to the
@@ -42,17 +43,12 @@ import xc.mst.bo.record.marc.Field;
 public class SystemControlNumberMatcher extends FieldMatcherService {
 
     // you can have multiple 035$a fields within a record (mult 035, each w/1 $a)
-    protected Map<Long, List<String>> inputId2scn = new HashMap<Long, List<String>>();
-    protected Map<Long, List<String>> inputId2scnFull = new HashMap<Long, List<String>>();
+    // thus use a list of string pairs, the pair values are the original string
+    //    and the normalized string
+    protected Map<Long, List<String[]>> inputId2scn = new HashMap<Long, List<String[]>>();
 
-    //protected Map<Long, List<Long>> inputId2scnNum = new HashMap<Long, List<Long>>();
     // I wonder if the prefixes will be unique?  TODO  And how do you assoc. ind prefixes, with ints?  don't bother for now
     //protected Map<Long, List<String>> inputId2prefix = new HashMap<Long, List<String>>();
-
-    //TODO may need to save the entire existing 035$a also instead of just the normalized version.
-    //     (normalized version will not have alpha after prefix)
-
-    // protected TLongLongHashMap scn2outputIds = new TLongLongHashMap();
 
     // multiple records might have the same normalized 035$a, this would be an indication of a match
     protected Map<String, List<Long>> scn2inputIds = new HashMap<String, List<Long>>();
@@ -126,8 +122,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         return results;
     }
 
-    @Override
     // should be a max of 1 field returned.
+    @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r) {
         List<Field> fields = r.getDataFields(35);
         for (Field field : fields) {
@@ -139,21 +135,16 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 String goods = getMapId(subfield);
-                List<String> goodsList = inputId2scn.get(id);
-                List<String> fullList = inputId2scnFull.get(id);
+                List<String[]> goodsList = inputId2scn.get(id);
+                final String[] goodsArray = new String[] {goods, subfield};  // its a pair of strings
                 if (goodsList == null || goodsList.size() == 0) {
-                    goodsList = new ArrayList<String>();
-                    fullList = new ArrayList<String>();
-                    goodsList.add(goods);
-                    fullList.add(subfield);
+                    goodsList = new ArrayList<String[]>();
+                    goodsList.add(goodsArray);
                     inputId2scn.put(id, goodsList);
-                    inputId2scnFull.put(id, fullList);
                 }
-                else if (!goodsList.contains(goods)) {
-                    goodsList.add(goods);
+                else if (!goodsList.contains(goodsArray)) {
+                    goodsList.add(goodsArray);
                     inputId2scn.put(id, goodsList);
-                    fullList.add(subfield);
-                    inputId2scnFull.put(id, fullList);
                 }
                 else {
                     LOG.debug("we have already seen " + goods + " for recordId: " + r.recordId);
@@ -186,8 +177,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // into db
     @Override
     public void flush(boolean freeUpMemory) {
-        // TODO Auto-generated method stub
-
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().persistScnMaps(inputId2scn);
+        inputId2scn.clear();
+        scn2inputIds.clear();
     }
 
 

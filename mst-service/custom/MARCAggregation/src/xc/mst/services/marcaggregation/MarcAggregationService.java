@@ -160,8 +160,19 @@ public class MarcAggregationService extends GenericMetadataService {
             return super.commitIfNecessary(force, 0);
         }
         try {
-            TimingLogger.start("masDAO.");
-            TimingLogger.stop("masDAO.");
+            TimingLogger.start("masDAO.commitIfNecessary");
+            for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+                final FieldMatcher matcher = me.getValue();
+                matcher.flush(force);
+            }
+            TimingLogger.stop("masDAO.commitIfNecessary");
+
+            TimingLogger.start("MarcAggregationServiceDAO.non-generic");
+            super.commitIfNecessary(true, 0);
+            TimingLogger.stop("MarcAggregationServiceDAO.non-generic");
+            // as part of the flush call matcher must clear its memory data structures
+
+            TimingLogger.stop("MarcAggregationServiceDAO.endBatch");
 
 //            getRepository().setPersistentProperty("inputBibs", inputBibs);
 //            getRepository().setPersistentProperty("inputHoldings", inputHoldings);
