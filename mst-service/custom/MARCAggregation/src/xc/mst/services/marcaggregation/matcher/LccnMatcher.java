@@ -139,6 +139,7 @@ public class LccnMatcher extends FieldMatcherService {
             LOG.error("ERROR: Multiple 010 fields in record! "+ir.recordId);
         }
 
+        final Long id = new Long(ir.recordId);
         for (Field field: fields) {
                 List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -152,14 +153,13 @@ public class LccnMatcher extends FieldMatcherService {
                 Long goods = new Long(getUniqueId(subfield));
                 if (lccn2inputIds.get(goods) != null) {
                         results.addAll(lccn2inputIds.get(goods));
+                        if (results.contains(id)) {
+                            results.remove(id);
+                        }
                 }
             }
         }
         LOG.debug("getMatchinginputIds, irId="+ ir.recordId+" results.size="+results.size());
-        final Long id = new Long(ir.recordId);
-        if (results.contains(id)) {
-            results.remove(id);
-        }
         return results;
     }
 

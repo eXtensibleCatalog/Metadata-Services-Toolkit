@@ -74,6 +74,7 @@ public class ISBNMatcher extends FieldMatcherService {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(20);
 
+        final Long id = new Long(ir.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -84,12 +85,11 @@ public class ISBNMatcher extends FieldMatcherService {
                 String isbn = getIsbn(subfield);
                 if (isbn2inputIds.get(isbn) != null) {
                     results.addAll(isbn2inputIds.get(isbn));
+                    if (results.contains(id)) {
+                        results.remove(id);
+                    }
                 }
             }
-        }
-        final Long id = new Long(ir.recordId);
-        if (results.contains(id)) {
-            results.remove(id);
         }
         LOG.debug("getMatchinginputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;

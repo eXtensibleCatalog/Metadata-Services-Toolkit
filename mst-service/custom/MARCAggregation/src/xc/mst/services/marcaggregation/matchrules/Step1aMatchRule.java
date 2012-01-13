@@ -17,7 +17,8 @@ import xc.mst.services.marcaggregation.matcher.MatchSet;
  * compare the normalized 035a to all previously processed records’ 035a’s.
  * (This is done by doing a lookup on the matchpoints_035a data structure using the normalized 035a as a key).
  * If there are any records with equivalent 035a’s, then those records are considered a match.
- * @author JohnB
+
+ * @author John Brand
  *
  */
 public class Step1aMatchRule extends BaseMatchRule {
@@ -25,8 +26,6 @@ public class Step1aMatchRule extends BaseMatchRule {
     public Set<Long> determineMatches(MatchSet ms) {
         Set<Long> matchedIds = new HashSet<Long>();
         matchedIds= ms.getMatches("SystemControlNumber");
-
-        //
 
         return matchedIds;
     }

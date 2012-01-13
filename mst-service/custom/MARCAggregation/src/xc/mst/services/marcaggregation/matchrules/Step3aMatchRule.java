@@ -10,6 +10,8 @@ public class Step3aMatchRule extends BaseMatchRule {
     public Set<Long> determineMatches(MatchSet ms) {
         Set<Long> matchedIds = new HashSet<Long>();
 
+        //TODO, ISBN could already have been checked once in rule 2a,
+        //      figure how to see/save this result?
         for (long matchedRecordId : ms.getMatches("ISBN")) {
             if (ms.getMatches("x130a").contains(matchedRecordId) ||
                     (ms.getMatches("x240a").contains(matchedRecordId) ||

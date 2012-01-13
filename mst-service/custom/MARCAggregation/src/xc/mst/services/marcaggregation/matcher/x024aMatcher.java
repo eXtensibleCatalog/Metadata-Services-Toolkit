@@ -45,6 +45,7 @@ public class x024aMatcher extends FieldMatcherService {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(24);
 
+        final Long id = new Long(ir.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -56,13 +57,12 @@ public class x024aMatcher extends FieldMatcherService {
                     String goods = getFieldDataIntoCorrectFormat(field, subfield);
                     if (x024a2inputIds.get(goods) != null) {
                         results.addAll(x024a2inputIds.get(goods));
+                        if (results.contains(id)) {
+                            results.remove(id);
+                        }
                     }
                 }
             }
-        }
-        final Long id = new Long(ir.recordId);
-        if (results.contains(id)) {
-            results.remove(id);
         }
         LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;

@@ -79,6 +79,7 @@ public class ISSNMatcher extends FieldMatcherService {
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(22);
 
+        final Long id = new Long(ir.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -89,14 +90,13 @@ public class ISSNMatcher extends FieldMatcherService {
                 String issn = getAllButDash(subfield);
                 if (issn2inputIds.get(issn) != null) {
                     results.addAll(issn2inputIds.get(issn));
+                    if (results.contains(id)) {
+                        results.remove(id);
+                    }
                 }
             }
         }
         LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
-        final Long id = new Long(ir.recordId);
-        if (results.contains(id)) {
-            results.remove(id);
-        }
         return results;
     }
 

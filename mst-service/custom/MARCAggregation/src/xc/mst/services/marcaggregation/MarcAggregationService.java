@@ -60,7 +60,7 @@ public class MarcAggregationService extends GenericMetadataService {
             MatchRuleIfc mr = (MatchRuleIfc) config.getBean(mrStr + "MatchRule");
             matchRuleMap.put(mrStr, mr);
         }
-        if (this.masDAO == null) {
+        if (this.masDAO == null) {  // this was really an initial unit test
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
     }
@@ -88,6 +88,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    // for spring to inject.
     public void setMarcAggregationServiceDAO(MarcAggregationServiceDAO masDAO) {
         this.masDAO = masDAO;
     }
@@ -164,6 +165,7 @@ public class MarcAggregationService extends GenericMetadataService {
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 final FieldMatcher matcher = me.getValue();
                 matcher.flush(force);
+                LOG.debug("flush matcher: "+matcher.getName());
             }
             TimingLogger.stop("masDAO.commitIfNecessary");
 

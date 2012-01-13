@@ -12,7 +12,7 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 
 public class x130aMatcher extends FieldMatcherService {
 
-    protected Map<Long, String> inputId2x130a = new HashMap<Long, String>();
+    protected Map<Long, String> inputId2x130a = new HashMap<Long, String>();  // this might be a temp hold place
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
@@ -56,6 +56,7 @@ public class x130aMatcher extends FieldMatcherService {
     @Override
     public void load() {
         // nothing to do here;
+        // nothing to do here?  well sure there is some is persisted, should  it be?
     }
 
     @Override
@@ -63,6 +64,7 @@ public class x130aMatcher extends FieldMatcherService {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
         s.getMarcAggregationServiceDAO().persistOneStrMatchpointMaps(inputId2x130a, MarcAggregationServiceDAO.matchpoints_130a_table);
         inputId2x130a.clear();
+        // the above might be wrong, perist to solr only?
     }
 
     /**
