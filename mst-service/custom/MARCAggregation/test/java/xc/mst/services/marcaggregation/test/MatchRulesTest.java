@@ -56,11 +56,15 @@ public class MatchRulesTest extends MatcherTest {
         expectedMatchRecordIds.put("x130aMatcher", 11);
         expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
 
-        expectedMatchRecordIds.put("LccnMatcher", 58);
+        expectedMatchRecordIds.put("LccnMatcher", 59);
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 124);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 155);
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 125);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 156);
+    }
+
+    protected int getNumberMatchedResultsGoal() {
+        return 4;
     }
 
     public void finalTest() {

@@ -91,6 +91,10 @@ public class MatcherTest extends MASBaseTest {
         return fileStrs;
     }
 
+    protected int getNumberMatchedResultsGoal() {
+        return 0;
+    }
+
     public void finalTest() {
         setup();
         try {
@@ -101,7 +105,7 @@ public class MatcherTest extends MASBaseTest {
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
             Set<Long> results = getRecordsAndAddToMem(providerRepo);
-            LOG.info("ensureMatch results size =" + results.size());
+            checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
             // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
 
             // results = ensureMatch(providerRepo);
@@ -139,6 +143,15 @@ public class MatcherTest extends MASBaseTest {
         } catch (Throwable t) {
             LOG.error("Exception occured when running MarkProviderDeletedTest!", t);
             getUtil().throwIt(t);
+        }
+    }
+
+    protected void checkNumberMatchedResults(Set<Long> results, int goal) {
+        if (results.size() != goal) {
+            throw new RuntimeException("* WRONG number matches, expected"+ goal+" ! got "+results.size() );
+        }
+        else {
+            LOG.info("ensureMatch results size =" + results.size());
         }
     }
 
@@ -188,8 +201,18 @@ public class MatcherTest extends MASBaseTest {
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
                     MatchRuleIfc matchRule = me.getValue();
+                    Set<Long> set = matchRule.determineMatches(ms);
+                    if (set !=null && !set.isEmpty()) {
+                        matchedRecordIds.addAll(set);
+                    }
+                }
+/*
+                for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
+                    String matchRuleKey = me.getKey();
+                    MatchRuleIfc matchRule = me.getValue();
                     matchedRecordIds.addAll(matchRule.determineMatches(ms));
                 }
+                */
             } /*
                * else {
                * if (r.getSuccessors().size() == 0) {
@@ -202,6 +225,9 @@ public class MatcherTest extends MASBaseTest {
 
         } catch (Throwable t) {
             getUtil().throwIt(t);
+        }
+        for (Long result: matchedRecordIds) {
+            LOG.info("recordId " +r.getId()+" has matches==>" + result+"<==");
         }
         return matchedRecordIds;
     }

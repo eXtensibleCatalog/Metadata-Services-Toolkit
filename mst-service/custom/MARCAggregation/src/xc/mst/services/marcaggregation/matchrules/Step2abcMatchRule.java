@@ -20,6 +20,9 @@ public class Step2abcMatchRule extends BaseMatchRule {
 
     private static final Logger LOG = Logger.getLogger(Step2abcMatchRule.class);
 
+    //TODO change this to false
+    boolean debug = false;
+
     @Override
     public Set<Long> determineMatches(MatchSet ms) {
         Set<Long> matchedIds = new HashSet<Long>();
@@ -44,7 +47,17 @@ public class Step2abcMatchRule extends BaseMatchRule {
                 matchedIds.add(matchedRecordId);
             }
             else {
-                LOG.debug("Step 2abc MatchRule, matched on Lccn but not ISBN, ISSN or x024a.");
+                if (debug) {
+                    LOG.info("Step 2abc MatchRule, matched on Lccn but not ISBN, ISSN or x024a.");
+                }
+            }
+        }
+
+        if (debug) {
+            if (matchedIds.size() > 0) {
+                for (Long result: matchedIds) {
+                    LOG.info("step2 has matches==>" + result+"<==");
+                }
             }
         }
 

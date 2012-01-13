@@ -23,9 +23,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.utils.Util;
 
 public class MatchSet {
-    boolean debug = true;
+
+    //TODO set this false
+    boolean debug = false;
+
     private static final Logger LOG = Logger.getLogger(MatchSet.class);
     protected SaxMarcXmlRecord inProcessRecord = null;
 
@@ -53,10 +57,10 @@ public class MatchSet {
             if (list != null && !list.isEmpty()) {
 
                 if (debug) {
-                    LOG.info("for recordId:"+inProcessRecord.recordId+" matching ids:");
                     for (Long num: list) {
-                        LOG.info("** for recordId:"+inProcessRecord.recordId+" matching id==>"+num);
+                        LOG.info("** for recordId:"+inProcessRecord.recordId+" matching id==>"+num+"<=="+" matchingInputIdsSize="+list.size());
                     }
+                    Util.getUtil().printStackTrace("who called me?  this stack trace follows display of matchset records.");
                 }
                 matchSet.addAll(list);
             }

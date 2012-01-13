@@ -11,6 +11,8 @@ package xc.mst.services.marcaggregation.matchrules;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 
 /**
@@ -23,9 +25,17 @@ import xc.mst.services.marcaggregation.matcher.MatchSet;
  */
 public class Step1aMatchRule extends BaseMatchRule {
 
+    private static final Logger LOG = Logger.getLogger(Step1aMatchRule.class);
+
     public Set<Long> determineMatches(MatchSet ms) {
         Set<Long> matchedIds = new HashSet<Long>();
         matchedIds= ms.getMatches("SystemControlNumber");
+
+        if (matchedIds.size() > 0) {
+            for (Long result: matchedIds) {
+                LOG.debug("step1a has matches==>" + result+"<==");
+            }
+        }
 
         return matchedIds;
     }
