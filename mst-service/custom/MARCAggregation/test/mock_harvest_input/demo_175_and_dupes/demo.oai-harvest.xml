@@ -17498,6 +17498,411 @@
         </marc:record>
       </metadata>
     </record>
-
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/517</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>04079cjm a22006371a 4500</marc:leader>
+          <marc:controlfield tag="001">2117963</marc:controlfield>
+          <marc:controlfield tag="005">20101223161713.0</marc:controlfield>
+          <marc:controlfield tag="007">sd fsngnn|||ed</marc:controlfield>
+          <marc:controlfield tag="008">001017p20001999nyuopnn  df       n ita d</marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">ab2001539311</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="024" ind1="1" ind2=" ">
+            <marc:subfield code="a">028946704929</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">NZ1</marc:subfield>
+            <marc:subfield code="b">6247936</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">AU@</marc:subfield>
+            <marc:subfield code="b">000023734575</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="033" ind1="2" ind2="0">
+            <marc:subfield code="a">19990703</marc:subfield>
+            <marc:subfield code="a">19990709</marc:subfield>
+            <marc:subfield code="b">5754</marc:subfield>
+            <marc:subfield code="c">W35</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(FLoYD)ocm45180085</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">GZD</marc:subfield>
+            <marc:subfield code="c">GZD</marc:subfield>
+            <marc:subfield code="d">DLC</marc:subfield>
+            <marc:subfield code="d">CPL</marc:subfield>
+            <marc:subfield code="d">MUQ</marc:subfield>
+            <marc:subfield code="d">OMP</marc:subfield>
+            <marc:subfield code="d">IXA</marc:subfield>
+            <marc:subfield code="d">BTCTA</marc:subfield>
+            <marc:subfield code="d">SMP</marc:subfield>
+            <marc:subfield code="d">RRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="041" ind1="0" ind2=" ">
+            <marc:subfield code="d">ita</marc:subfield>
+            <marc:subfield code="d">fre</marc:subfield>
+            <marc:subfield code="e">ita</marc:subfield>
+            <marc:subfield code="e">fre</marc:subfield>
+            <marc:subfield code="e">eng</marc:subfield>
+            <marc:subfield code="h">ita</marc:subfield>
+            <marc:subfield code="h">fre</marc:subfield>
+            <marc:subfield code="g">eng</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="042" ind1=" " ind2=" ">
+            <marc:subfield code="a">lcderive</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="048" ind1=" " ind2=" ">
+            <marc:subfield code="b">va01</marc:subfield>
+            <marc:subfield code="a">oa</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="048" ind1=" " ind2=" ">
+            <marc:subfield code="b">va01</marc:subfield>
+            <marc:subfield code="a">ca</marc:subfield>
+            <marc:subfield code="a">oa</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RRRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">SDA 23167</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="4">
+            <marc:subfield code="a">782.1</marc:subfield>
+            <marc:subfield code="2">21</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Fleming, Renée.</marc:subfield>
+            <marc:subfield code="4">prf</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Renée Fleming</marc:subfield>
+            <marc:subfield code="h">[sound recording].</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York, NY :</marc:subfield>
+            <marc:subfield code="b">Decca :</marc:subfield>
+            <marc:subfield code="b">Manufactured and marketed by Universal Classics Group,</marc:subfield>
+            <marc:subfield code="c">p2000.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">1 sound disc :</marc:subfield>
+            <marc:subfield code="b">digital, stereo. ;</marc:subfield>
+            <marc:subfield code="c">4 3/4 in.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="306" ind1=" " ind2=" ">
+            <marc:subfield code="a">000251</marc:subfield>
+            <marc:subfield code="a">000451</marc:subfield>
+            <marc:subfield code="a">000247</marc:subfield>
+            <marc:subfield code="a">000254</marc:subfield>
+            <marc:subfield code="a">000459</marc:subfield>
+            <marc:subfield code="a">000353</marc:subfield>
+            <marc:subfield code="a">000501</marc:subfield>
+            <marc:subfield code="a">000355</marc:subfield>
+            <marc:subfield code="a">000428</marc:subfield>
+            <marc:subfield code="a">000626</marc:subfield>
+            <marc:subfield code="a">000339</marc:subfield>
+            <marc:subfield code="a">000612</marc:subfield>
+            <marc:subfield code="a">000733</marc:subfield>
+            <marc:subfield code="a">000430</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Opera excerpts.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Compact disc.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Biographical notes by Albert Innaurato and texts with English translations (25 p. : ill.) inserted in container.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">Gianni Schicchi. O mio babbino caro / Puccini ; Forzano (2:51) -- Madama Butterfly. Un bel dì vedremo / Puccini ; Giacosa &amp; Illica (4:51) -- La Bohème. Quando me n'vò / Puccini ; Giacosa &amp; Illica (2:47) -- Turandot. Signore, ascolta! / Puccini ; compl. Alfano ; Adami &amp; Simoni (2:54) -- Pagliacci. Qual fiamma!-- Stridono lassù / Leoncavallo (4:59) -- Adriana Lecouvreur. Ecco, respiro appena-- Io son l'umile ancella / Cilea ; Colautti (3:53) -- La Wally. Ebben?-- Ne andrò lontana / Catalani ; Illica (5:01) -- Manon. Je suis encor[e] tout étourdie / Massenet ; Meilhac &amp; Gille (3:55) -- Manon. Allons! il le faut! pour lui-même-- Adieu, notre petite table / Massenet ; Meilhac &amp; Gille (4:28) -- Carmen. C'est des contrebandiers le refuge ordinaire-- Je dis que rien ne m'épouvante / Bizet ; Meilhac &amp; Halévy (6:26) -- Romeo et Juliette. Ah! Je veux vivre / Gounod ; Barbier &amp; Carré (3:39) -- Simon Boccanegra. Come in quest'ora bruna / Verdi ; Piave ; rev. Boito (6:12) -- Norma. Casta diva / Bellini ; Romani (7:33) -- Les vêpres siciliennes. Merci, jeunes amies / Verdi ; Scribe &amp; Duveyrier (4:30).</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="511" ind1="0" ind2=" ">
+            <marc:subfield code="a">Renée Fleming, soprano ; London Voices (13th-14th works) ; London Philharmonic Orchestra ; Sir Charles Mackerras, conductor.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="518" ind1=" " ind2=" ">
+            <marc:subfield code="a">Recorded July 3-9, 1999, The Colosseum, Watford.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="546" ind1=" " ind2=" ">
+            <marc:subfield code="a">Sung in Italian and French.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Operas</marc:subfield>
+            <marc:subfield code="v">Excerpts.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="655" ind1=" " ind2="7">
+            <marc:subfield code="a">Operas/Musicals.</marc:subfield>
+            <marc:subfield code="2">local</marc:subfield>
+            <marc:subfield code="5">NRU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Mackerras, Charles,</marc:subfield>
+            <marc:subfield code="d">1925-2010.</marc:subfield>
+            <marc:subfield code="4">cnd</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+            <marc:subfield code="d">1858-1924.</marc:subfield>
+            <marc:subfield code="t">Trittico.</marc:subfield>
+            <marc:subfield code="p">Gianni Schicchi.</marc:subfield>
+            <marc:subfield code="p">O mio babbino caro.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+            <marc:subfield code="d">1858-1924.</marc:subfield>
+            <marc:subfield code="t">Madama Butterfly.</marc:subfield>
+            <marc:subfield code="p">Un bel dì, vedremo.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+            <marc:subfield code="d">1858-1924.</marc:subfield>
+            <marc:subfield code="t">Bohème.</marc:subfield>
+            <marc:subfield code="p">Quando me'n vo.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Puccini, Giacomo,</marc:subfield>
+            <marc:subfield code="d">1858-1924.</marc:subfield>
+            <marc:subfield code="t">Turandot.</marc:subfield>
+            <marc:subfield code="p">Signore, ascolta!</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Leoncavallo, Ruggiero,</marc:subfield>
+            <marc:subfield code="d">1858-1919.</marc:subfield>
+            <marc:subfield code="t">Pagliacci.</marc:subfield>
+            <marc:subfield code="p">Hui! stridono lassù.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Cilèa, Francesco,</marc:subfield>
+            <marc:subfield code="d">1866-1950.</marc:subfield>
+            <marc:subfield code="t">Adriana Lecouvreur.</marc:subfield>
+            <marc:subfield code="p">Io son l'umile ancella.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Catalani, Alfredo,</marc:subfield>
+            <marc:subfield code="d">1854-1893.</marc:subfield>
+            <marc:subfield code="t">Wally.</marc:subfield>
+            <marc:subfield code="p">Ebben? Ne andrò lontana.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Massenet, Jules,</marc:subfield>
+            <marc:subfield code="d">1842-1912.</marc:subfield>
+            <marc:subfield code="t">Manon.</marc:subfield>
+            <marc:subfield code="p">Je suis encore tout étourdie.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Massenet, Jules,</marc:subfield>
+            <marc:subfield code="d">1842-1912.</marc:subfield>
+            <marc:subfield code="t">Manon.</marc:subfield>
+            <marc:subfield code="p">Adieu, notre petite table.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Bizet, Georges,</marc:subfield>
+            <marc:subfield code="d">1838-1875.</marc:subfield>
+            <marc:subfield code="t">Carmen.</marc:subfield>
+            <marc:subfield code="p">Je dis que rien ne m'épouvante.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Gounod, Charles,</marc:subfield>
+            <marc:subfield code="d">1818-1893.</marc:subfield>
+            <marc:subfield code="t">Roméo et Juliette.</marc:subfield>
+            <marc:subfield code="p">Je veux vivre dans le rêve.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Verdi, Giuseppe,</marc:subfield>
+            <marc:subfield code="d">1813-1901.</marc:subfield>
+            <marc:subfield code="t">Simon Boccanegra.</marc:subfield>
+            <marc:subfield code="p">Come in quest'ora bruna.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Bellini, Vincenzo,</marc:subfield>
+            <marc:subfield code="d">1801-1835.</marc:subfield>
+            <marc:subfield code="t">Norma.</marc:subfield>
+            <marc:subfield code="p">Casta diva.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2="2">
+            <marc:subfield code="a">Verdi, Giuseppe,</marc:subfield>
+            <marc:subfield code="d">1813-1901.</marc:subfield>
+            <marc:subfield code="t">Vêpres siciliennes.</marc:subfield>
+            <marc:subfield code="p">Merci jeunes amies.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">London Voices.</marc:subfield>
+            <marc:subfield code="4">prf</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">London Philharmonic Orchestra.</marc:subfield>
+            <marc:subfield code="4">prf</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">C0</marc:subfield>
+            <marc:subfield code="b">RRR</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/518</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>02471cam a22006254a 4500</marc:leader>
+          <marc:controlfield tag="001">2373818</marc:controlfield>
+          <marc:controlfield tag="005">20021001153435.0</marc:controlfield>
+          <marc:controlfield tag="008">020707s20019999miuab    b    001 0 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">jb 00037542 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="016" ind1="7" ind2=" ">
+            <marc:subfield code="a">101090724</marc:subfield>
+            <marc:subfield code="2">DNLM</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">46634953</marc:subfield>
+            <marc:subfield code="a">46768045</marc:subfield>
+            <marc:subfield code="a">48110105</marc:subfield>
+            <marc:subfield code="a">48884717</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="024" ind1="7" ind2=" ">
+            <marc:subfield code="a">99804148031</marc:subfield>
+            <marc:subfield code="2">YBP</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">NLM</marc:subfield>
+            <marc:subfield code="b">101090724</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">UKM</marc:subfield>
+            <marc:subfield code="b">bA156690</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">UKM</marc:subfield>
+            <marc:subfield code="b">bA208691</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(JAMBA)ocm43836551</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">NLM</marc:subfield>
+            <marc:subfield code="d">UKM</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="042" ind1=" " ind2=" ">
+            <marc:subfield code="a">pcc</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RRRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">Q175.46</marc:subfield>
+            <marc:subfield code="b">.S35 2001</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="060" ind1="0" ind2="0">
+            <marc:subfield code="a">Q 175.46</marc:subfield>
+            <marc:subfield code="b">S416 2001</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="0">
+            <marc:subfield code="a">509</marc:subfield>
+            <marc:subfield code="2">21</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="0">
+            <marc:subfield code="a">Science and its times :</marc:subfield>
+            <marc:subfield code="b">understanding the social significance of scientific discovery /</marc:subfield>
+            <marc:subfield code="c">Neil Schlager, editor ; Josh Lauer, associate editor.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Detroit :</marc:subfield>
+            <marc:subfield code="b">Gale Group,</marc:subfield>
+            <marc:subfield code="c">c2001.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">8 v. :</marc:subfield>
+            <marc:subfield code="b">ill., maps ;</marc:subfield>
+            <marc:subfield code="c">29 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references and indexes.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="1" ind2=" ">
+            <marc:subfield code="a">v. 1. 2000 B.C. to A.D. 699 -- v. 2. 700-1449 -- v. 3. 1450-1699 -- v. 4. 1700-1799 -- v. 5. 1800-1899    -- v. 7. 1950-present -- v. 8. Index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="520" ind1="1" ind2=" ">
+            <marc:subfield code="a">"This series discusses how the major fields of science developed during specific time periods. Each volume focuses on a range of years and includes developments in exploration, life sciences, mathematics, physical sciences, and technology. When the series is completed, the seven volumes will cover 2000 B.C. to the present."--"Outstanding Reference Sources," American Libraries, May 2001.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Science</marc:subfield>
+            <marc:subfield code="x">Social aspects</marc:subfield>
+            <marc:subfield code="x">History.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="2">
+            <marc:subfield code="a">Science</marc:subfield>
+            <marc:subfield code="x">history.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="2">
+            <marc:subfield code="a">Social Conditions</marc:subfield>
+            <marc:subfield code="x">history.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Schlager, Neil,</marc:subfield>
+            <marc:subfield code="d">1966-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Lauer, Josh.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="945" ind1=" " ind2=" ">
+            <marc:subfield code="a">PromptCat</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="945" ind1=" " ind2=" ">
+            <marc:subfield code="a">MARS</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021036985</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021036993</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037009</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037017</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037025</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037033</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037041</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="949" ind1=" " ind2=" ">
+            <marc:subfield code="b">39087021037058</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="980" ind1=" " ind2=" ">
+            <marc:subfield code="a">2002-08-14</marc:subfield>
+            <marc:subfield code="b">610</marc:subfield>
+            <marc:subfield code="e">610</marc:subfield>
+            <marc:subfield code="f">67124</marc:subfield>
+            <marc:subfield code="g">1</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">92</marc:subfield>
+            <marc:subfield code="b">RRR</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
   </ListRecords>
 </OAI-PMH>

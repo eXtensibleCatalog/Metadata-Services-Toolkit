@@ -233,6 +233,7 @@ public class LccnMatcher extends FieldMatcherService {
         s.getMarcAggregationServiceDAO().persistLongStrMatchpointMaps(inputId2lccn, inputId2lccnStr, MarcAggregationServiceDAO.matchpoints_010a_table);
         inputId2lccnStr.clear();
         inputId2lccn.clear();
+        lccn2inputIds.clear();
     }
 
     /**

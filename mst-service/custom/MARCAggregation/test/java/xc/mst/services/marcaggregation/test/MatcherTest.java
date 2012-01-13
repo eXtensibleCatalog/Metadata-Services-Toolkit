@@ -142,6 +142,20 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
+    protected void flush(boolean force) {
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            FieldMatcher matcher = me.getValue();
+            matcher.flush(force);
+        }
+    }
+
+    protected void load() {
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            FieldMatcher matcher = me.getValue();
+            matcher.load();
+        }
+    }
+
     protected Set<Long> getRecordsAndAddToMem(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
         Set<Long> overall = new HashSet<Long>();
