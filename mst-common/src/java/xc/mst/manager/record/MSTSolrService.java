@@ -9,6 +9,7 @@
 
 package xc.mst.manager.record;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,8 +18,6 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
-import org.apache.solr.core.CoreDescriptor;
-import org.apache.solr.core.SolrCore;
 import org.xml.sax.SAXException;
 
 import xc.mst.bo.log.Log;
@@ -31,9 +30,9 @@ import xc.mst.utils.MSTConfiguration;
 
 /**
  * Creates Solr Server instance
- * 
+ *
  * @author Sharmila Ranganathan
- * 
+ *
  */
 public class MSTSolrService extends BaseService {
 
@@ -60,12 +59,14 @@ public class MSTSolrService extends BaseService {
         if (log.isDebugEnabled()) {
             log.debug("Initializing the MSTSolrServer instance.");
         }
-        server = createSolrServer();
+        setServer(createSolrServer());
     }
 
     public void refreshServer() {
-        server = null;
-        server = createSolrServer();
+        SolrServer s = getServer();
+        s = null;
+        s = createSolrServer();
+        setServer(s);
     }
 
     public SolrServer getServer() {
@@ -78,12 +79,12 @@ public class MSTSolrService extends BaseService {
 
     /**
      * Get Solr server instance
-     * 
+     *
      * @return
      */
     private SolrServer createSolrServer() {
 
-        if (server == null) {
+        if (getServer() == null) {
             String solrHome = MSTConfiguration.getUrlPath();
             solrHome = solrHome + MSTConfiguration.FILE_SEPARATOR + "solr";
             System.setProperty("solr.home", solrHome);
@@ -101,19 +102,26 @@ public class MSTSolrService extends BaseService {
                 logg.setLevel(logLevel);
                 log.info("2");
 
+                // using multiple cores is a bit different with solrj, followed instructions found here:
+                //    http://wiki.apache.org/solr/Solrj
+                //    These 1st statements are the same regardless of the core, load the file describing the cores:
+                File solrConfHomeBaseFile = new File( solrHome + MSTConfiguration.FILE_SEPARATOR + "conf" );
+                File solrHomeXmlFile = new File( solrConfHomeBaseFile, "solr.xml" );
                 CoreContainer container = new CoreContainer();
-                CoreDescriptor descriptor = new CoreDescriptor(container, "core1", solrHome);
-                log.info("3");
-                SolrCore core = container.create(descriptor);
-                container.register("core1", core, false);
+                container.load( solrHome, solrHomeXmlFile );
 
-                server = new EmbeddedSolrServer(container, "core1");
-                LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome);
+                // now, use the proper core for your EmbeddedSolrServer:
+                //    use:
+                //       "core name as defined in solr.xml"
+                server = new EmbeddedSolrServer(container, getSolrCore());
+
+                log.info("3");
+                LogWriter.addInfo(logObj.getLogFileLocation(), "The Solr server instance was successfully using the configuration in " + solrHome+" for SolrCore: "+getSolrCore());
                 log.info("successfully opened solr: " + server);
             } catch (IOException ioe) {
                 log.error("Failure to create server instance. Solr Server is not created.", ioe);
 
-                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome+" for SolrCore: "+getSolrCore());
 
                 logObj.setErrors(logObj.getErrors() + 1);
                 try {
@@ -124,7 +132,7 @@ public class MSTSolrService extends BaseService {
             } catch (SAXException se) {
                 log.error("Failure to create server instance. Solr Server is not created.", se);
 
-                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome+" for SolrCore: "+getSolrCore());
 
                 logObj.setErrors(logObj.getErrors() + 1);
                 try {
@@ -135,7 +143,7 @@ public class MSTSolrService extends BaseService {
             } catch (ParserConfigurationException pe) {
                 log.error("Failure to create server instance. Solr Server is not created.", pe);
 
-                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome+" for SolrCore: "+getSolrCore());
 
                 logObj.setErrors(logObj.getErrors() + 1);
                 try {
@@ -146,7 +154,7 @@ public class MSTSolrService extends BaseService {
             } catch (Exception e) {
                 log.error("Failure to create server instance. Solr Server is not created.", e);
 
-                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome);
+                LogWriter.addError(logObj.getLogFileLocation(), "Failed to create Solr server instance using the configuration in " + solrHome+" for SolrCore: "+getSolrCore());
 
                 logObj.setErrors(logObj.getErrors() + 1);
                 try {
@@ -158,6 +166,10 @@ public class MSTSolrService extends BaseService {
         }
 
         return server;
+    }
+
+    protected String getSolrCore() {
+        return "core1";
     }
 
     private static java.util.logging.Level getLogLevel(String level) {
