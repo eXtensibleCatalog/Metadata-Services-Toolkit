@@ -6,7 +6,7 @@ dependent.service=marcnormalization
 # This only applies to your local testing.  If you're bundling your service
 # to be plopped in an mst server, don't worry about changing these properties
 # because they will be ignored anyways
-mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.1
+mysql.home=c:/Program\ Files/MySQL/MySQL\ Server\ 5.5
 DatabaseUrl=jdbc:mysql://localhost:3306
 Database=MetadataServicesToolkit
 DatabaseUsername=root

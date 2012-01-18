@@ -1,11 +1,11 @@
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
-  <responseDate>2011-10-26T14:00:56Z</responseDate>
-  <request from="1960-10-26T18:00:56Z" metadataPrefix="xc" until="2011-10-26T18:00:56Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
+  <responseDate>2012-01-18T13:52:52Z</responseDate>
+  <request from="1960-01-18T18:52:52Z" metadataPrefix="xc" until="2012-01-18T18:52:52Z" verb="ListRecords">http://localhost:8080/MetadataServicesToolkit/marctoxctransformation-Service/oaiRepository?verb=ListRecords</request>
   <ListRecords>
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/187</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -37,7 +37,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/188</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -56,7 +56,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/189</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -76,7 +76,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/190</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -108,7 +108,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/191</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -189,7 +189,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/192</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -222,7 +222,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/193</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -244,7 +244,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/194</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -262,7 +262,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/195</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -301,7 +301,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/196</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -318,7 +318,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/197</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -338,7 +338,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/198</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -355,7 +355,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/199</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -375,7 +375,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/200</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -405,7 +405,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/201</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -435,7 +435,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/202</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -453,7 +453,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/203</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -486,7 +486,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/204</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -503,7 +503,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/205</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -521,7 +521,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/206</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -554,7 +554,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/207</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -571,7 +571,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/208</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -600,7 +600,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/209</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -618,7 +618,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/210</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -636,7 +636,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/211</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -671,7 +671,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/212</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -689,7 +689,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/213</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -710,7 +710,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/214</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -752,7 +752,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/215</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -770,7 +770,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/216</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -793,7 +793,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/217</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -811,7 +811,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/218</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -834,7 +834,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/219</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -852,7 +852,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/220</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -875,7 +875,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/221</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -893,7 +893,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/222</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -916,7 +916,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/223</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -934,7 +934,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/224</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -957,7 +957,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/225</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -975,7 +975,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/226</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -998,7 +998,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/227</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1016,7 +1016,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/228</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1039,7 +1039,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/229</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1057,7 +1057,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/230</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1080,7 +1080,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/231</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1098,7 +1098,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/232</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1121,7 +1121,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/233</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1139,7 +1139,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/234</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1162,7 +1162,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/235</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1180,7 +1180,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/236</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1203,7 +1203,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/237</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1235,7 +1235,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/238</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1252,7 +1252,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/239</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1270,7 +1270,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/240</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1301,7 +1301,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/241</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1319,7 +1319,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/242</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1336,7 +1336,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/243</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1368,7 +1368,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/244</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1385,7 +1385,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/245</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1402,7 +1402,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/246</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1432,7 +1432,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/247</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1449,7 +1449,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/248</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1466,7 +1466,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/249</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1496,7 +1496,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/250</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1516,7 +1516,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/251</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1534,7 +1534,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/252</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1568,7 +1568,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/253</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1585,7 +1585,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/254</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1603,7 +1603,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/255</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1638,7 +1638,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/256</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1655,7 +1655,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/257</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1673,7 +1673,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/258</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1707,7 +1707,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/259</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1724,7 +1724,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/260</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1742,7 +1742,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/261</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1776,7 +1776,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/262</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1793,7 +1793,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/263</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1811,7 +1811,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/264</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1843,7 +1843,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/265</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1860,7 +1860,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/266</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1879,7 +1879,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/267</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1911,7 +1911,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/268</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1931,7 +1931,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/269</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1951,7 +1951,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/270</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -1982,7 +1982,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/271</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2003,7 +2003,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/272</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2023,7 +2023,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/273</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2044,7 +2044,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/274</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2064,7 +2064,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/275</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2096,7 +2096,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/276</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2117,7 +2117,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/277</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2137,7 +2137,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/278</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2174,7 +2174,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/279</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2191,7 +2191,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/280</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2212,7 +2212,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/281</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2229,7 +2229,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/282</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2262,7 +2262,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/283</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2279,7 +2279,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/284</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2299,7 +2299,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/285</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2335,7 +2335,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/286</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2353,7 +2353,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/287</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2371,7 +2371,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/288</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2395,7 +2395,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/289</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2410,7 +2410,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/290</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2433,7 +2433,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/291</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2469,7 +2469,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/292</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2494,7 +2494,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/293</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2515,7 +2515,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/294</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2545,7 +2545,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/295</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2564,7 +2564,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/296</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2583,7 +2583,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/297</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2614,7 +2614,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/298</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2643,7 +2643,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/299</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2663,7 +2663,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/300</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2692,7 +2692,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/301</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2721,7 +2721,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/302</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2748,7 +2748,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/303</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2766,7 +2766,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/304</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2783,7 +2783,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/305</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2814,7 +2814,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/306</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2839,7 +2839,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/307</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2857,7 +2857,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/308</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2895,7 +2895,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/309</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2915,7 +2915,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/310</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2936,7 +2936,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/311</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2972,7 +2972,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/312</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -2995,7 +2995,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/313</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3032,7 +3032,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/314</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3070,7 +3070,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/315</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3091,7 +3091,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/316</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3130,7 +3130,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/317</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3160,7 +3160,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/318</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3187,7 +3187,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/319</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3207,7 +3207,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/320</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3237,7 +3237,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/321</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3257,7 +3257,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/322</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3277,7 +3277,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/323</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3310,7 +3310,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/324</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3329,7 +3329,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/325</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3349,7 +3349,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/326</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3401,7 +3401,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/327</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3418,7 +3418,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/328</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3449,7 +3449,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/329</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3467,7 +3467,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/330</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3498,7 +3498,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/331</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3516,7 +3516,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/332</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3547,7 +3547,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/333</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3565,7 +3565,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/334</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3596,7 +3596,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/335</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3614,7 +3614,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/336</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3645,7 +3645,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/337</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3663,7 +3663,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/338</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3694,7 +3694,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/339</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3712,7 +3712,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/340</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3743,7 +3743,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/341</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3761,7 +3761,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/342</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3792,7 +3792,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/343</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3810,7 +3810,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/344</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3841,7 +3841,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/345</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3859,7 +3859,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/346</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3890,7 +3890,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/347</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3908,7 +3908,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/348</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3939,7 +3939,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/349</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3957,7 +3957,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/350</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -3988,7 +3988,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/351</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4006,7 +4006,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/352</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4037,7 +4037,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/353</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4055,7 +4055,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/354</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4086,7 +4086,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/355</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4104,7 +4104,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/356</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4135,7 +4135,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/357</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4153,7 +4153,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/358</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4184,7 +4184,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/359</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4202,7 +4202,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/360</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4233,7 +4233,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/361</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4251,7 +4251,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/362</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4282,7 +4282,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/363</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4299,7 +4299,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/364</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4330,7 +4330,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/365</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4347,7 +4347,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/366</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4378,7 +4378,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/367</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4395,7 +4395,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/368</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4426,7 +4426,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/369</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4456,7 +4456,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/370</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4484,7 +4484,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/371</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4505,7 +4505,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/372</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4541,7 +4541,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/373</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4567,7 +4567,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/374</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4593,7 +4593,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/375</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4610,7 +4610,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/376</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4638,7 +4638,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/377</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4662,7 +4662,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/378</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4680,7 +4680,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/379</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4709,7 +4709,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/380</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4736,7 +4736,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/381</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4757,7 +4757,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/382</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4788,7 +4788,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/383</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4811,7 +4811,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/384</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4834,7 +4834,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/385</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4857,7 +4857,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/386</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4880,7 +4880,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/387</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4903,7 +4903,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/388</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4926,28 +4926,12 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/389</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
         <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
           <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/389" type="holdings">
-            <xc:location>ArtMusicRR</xc:location>
-            <xc:callNumber>RCD 2345</xc:callNumber>
-            <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/382</xc:manifestationHeld>
-          </xc:entity>
-        </xc:frbr>
-      </metadata>
-    </record>
-    <record>
-      <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/390</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
-        <setSpec>marctoxctransformation</setSpec>
-      </header>
-      <metadata>
-        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
-          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/390" type="holdings">
             <xc:location>RheesRare</xc:location>
             <xc:callNumber>F130.2.P74 R63 2006</xc:callNumber>
             <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/382</xc:manifestationHeld>
@@ -4957,8 +4941,24 @@
     </record>
     <record>
       <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/390</identifier>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
+        <setSpec>marctoxctransformation</setSpec>
+      </header>
+      <metadata>
+        <xc:frbr xmlns:xc="http://www.extensiblecatalog.info/Elements" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdarole="http://rdvocab.info/roles" xmlns:rdvocab="http://rdvocab.info/Elements">
+          <xc:entity id="oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/390" type="holdings">
+            <xc:location>ArtMusicRR</xc:location>
+            <xc:callNumber>RCD 2345</xc:callNumber>
+            <xc:manifestationHeld>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/382</xc:manifestationHeld>
+          </xc:entity>
+        </xc:frbr>
+      </metadata>
+    </record>
+    <record>
+      <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/391</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -4978,7 +4978,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/392</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5008,7 +5008,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/393</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5033,7 +5033,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/394</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5054,7 +5054,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/395</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5071,7 +5071,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/396</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5088,7 +5088,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/397</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5105,7 +5105,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/398</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5122,7 +5122,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/399</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5139,7 +5139,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/400</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5170,7 +5170,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/401</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5189,7 +5189,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/402</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5206,7 +5206,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/403</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5224,7 +5224,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/404</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5241,7 +5241,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/405</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5258,7 +5258,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/406</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5300,7 +5300,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/407</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5322,7 +5322,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/408</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5346,7 +5346,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/409</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5395,7 +5395,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/410</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5413,7 +5413,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/411</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5437,7 +5437,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/412</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5456,7 +5456,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/413</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5480,7 +5480,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/414</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5499,7 +5499,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/415</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5523,7 +5523,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/416</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5542,7 +5542,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/417</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5566,7 +5566,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/418</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5585,7 +5585,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/419</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5609,7 +5609,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/420</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5628,7 +5628,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/421</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5652,7 +5652,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/422</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5671,7 +5671,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/423</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5695,7 +5695,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/424</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5714,7 +5714,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/425</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5738,7 +5738,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/426</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5757,7 +5757,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/427</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5781,7 +5781,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/428</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5800,7 +5800,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/429</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5824,7 +5824,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/430</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5843,7 +5843,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/431</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5867,7 +5867,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/432</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5886,7 +5886,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/433</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5910,7 +5910,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/434</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5929,7 +5929,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/435</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5953,7 +5953,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/436</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5972,7 +5972,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/437</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -5996,7 +5996,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/438</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6015,7 +6015,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/439</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6039,7 +6039,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/440</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6080,7 +6080,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/441</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6100,7 +6100,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/442</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6120,7 +6120,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/443</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6152,7 +6152,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/444</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6172,7 +6172,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/445</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6190,7 +6190,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/446</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6227,7 +6227,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/447</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6244,7 +6244,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/448</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6266,7 +6266,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/449</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6282,7 +6282,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/450</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6318,7 +6318,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/451</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6338,7 +6338,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/452</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6361,7 +6361,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/453</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6401,7 +6401,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/454</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6429,7 +6429,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/455</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6449,7 +6449,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/456</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6482,7 +6482,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/457</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6507,7 +6507,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/458</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6546,7 +6546,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/459</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6582,7 +6582,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/460</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6604,7 +6604,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/461</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6624,7 +6624,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/462</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6658,7 +6658,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/463</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6681,7 +6681,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/464</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6703,7 +6703,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/465</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6736,7 +6736,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/466</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6756,7 +6756,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/467</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6776,7 +6776,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/468</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6804,7 +6804,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/469</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6820,7 +6820,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/470</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6840,7 +6840,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/471</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6871,7 +6871,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/472</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6897,7 +6897,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/473</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6916,7 +6916,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/476</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6949,7 +6949,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/477</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6966,7 +6966,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/478</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -6996,7 +6996,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/479</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7038,7 +7038,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/480</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7071,7 +7071,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/481</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7095,7 +7095,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/482</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7128,7 +7128,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/483</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7148,7 +7148,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/484</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7169,7 +7169,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/485</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7201,7 +7201,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/486</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7219,7 +7219,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/487</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7236,7 +7236,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/488</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7253,7 +7253,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/489</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7290,7 +7290,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/490</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7312,7 +7312,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/491</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7332,7 +7332,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/492</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7349,7 +7349,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/493</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7366,7 +7366,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/494</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7399,7 +7399,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/495</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7428,7 +7428,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/496</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7462,7 +7462,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/497</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7498,7 +7498,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/498</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7525,7 +7525,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/499</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7565,7 +7565,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/500</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7602,7 +7602,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/501</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7624,7 +7624,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/502</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7661,7 +7661,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/503</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7697,7 +7697,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/504</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7718,7 +7718,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/505</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7740,7 +7740,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/506</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7757,7 +7757,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/507</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7773,7 +7773,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/508</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7803,7 +7803,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/509</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7824,7 +7824,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/510</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7845,7 +7845,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/511</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7873,7 +7873,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/512</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7902,7 +7902,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/513</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7920,7 +7920,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/514</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7948,7 +7948,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/515</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7972,7 +7972,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/516</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -7989,7 +7989,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/517</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8022,7 +8022,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/518</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8045,7 +8045,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/519</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8064,7 +8064,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/520</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8081,7 +8081,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/521</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8098,7 +8098,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/522</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8130,7 +8130,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/523</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8157,7 +8157,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/524</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8177,7 +8177,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/525</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8211,7 +8211,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/526</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8226,7 +8226,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/527</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8244,7 +8244,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/528</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8276,7 +8276,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/529</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8313,7 +8313,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/530</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8331,7 +8331,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/531</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8361,7 +8361,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/532</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8381,7 +8381,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/533</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8400,7 +8400,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/534</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8432,7 +8432,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/535</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8457,7 +8457,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/536</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8476,7 +8476,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/537</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8510,7 +8510,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/538</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8548,7 +8548,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/539</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8567,7 +8567,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/540</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8599,7 +8599,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/541</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8618,7 +8618,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/542</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8634,7 +8634,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/543</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8651,7 +8651,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/544</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8668,7 +8668,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/545</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8699,7 +8699,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/546</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8721,7 +8721,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/547</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8741,7 +8741,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/548</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8758,7 +8758,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/549</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8792,7 +8792,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/550</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8822,7 +8822,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/551</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8844,7 +8844,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/552</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8858,7 +8858,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/553</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8892,7 +8892,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/554</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8915,7 +8915,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/555</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8934,7 +8934,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/556</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8948,7 +8948,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/557</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -8980,7 +8980,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/558</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9010,7 +9010,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/559</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9032,7 +9032,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/560</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9073,7 +9073,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/561</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9097,7 +9097,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/562</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9127,7 +9127,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/563</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9159,7 +9159,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/564</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9178,7 +9178,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/565</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9197,7 +9197,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/566</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9227,7 +9227,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/567</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9249,7 +9249,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/568</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9268,7 +9268,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/569</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9304,7 +9304,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/570</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9322,7 +9322,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/571</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9339,7 +9339,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/572</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9356,7 +9356,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/573</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9388,7 +9388,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/574</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9411,7 +9411,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/575</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9431,7 +9431,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/576</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9462,7 +9462,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/577</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9487,7 +9487,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/578</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9506,7 +9506,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/579</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9536,7 +9536,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/580</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9553,7 +9553,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/581</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9569,7 +9569,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/582</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9599,7 +9599,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/583</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9627,7 +9627,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/584</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9645,7 +9645,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/585</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9662,7 +9662,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/586</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9700,7 +9700,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/587</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9721,7 +9721,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/588</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9749,7 +9749,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/589</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9783,7 +9783,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/590</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9802,7 +9802,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/591</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9819,7 +9819,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/592</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9846,7 +9846,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/593</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9872,7 +9872,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/594</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9890,7 +9890,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/595</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9920,7 +9920,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/596</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9942,7 +9942,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/597</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9960,7 +9960,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/598</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -9979,7 +9979,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/599</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10016,7 +10016,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/600</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10040,7 +10040,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/601</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10078,7 +10078,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/602</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10112,7 +10112,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/603</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10134,7 +10134,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/604</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10154,7 +10154,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/605</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10195,7 +10195,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/606</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10218,7 +10218,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/607</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10238,7 +10238,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/608</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10274,7 +10274,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/609</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10297,7 +10297,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/610</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10317,7 +10317,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/611</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10348,7 +10348,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/612</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10389,7 +10389,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/613</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10408,7 +10408,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/614</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10435,7 +10435,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/615</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10459,7 +10459,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/616</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10479,7 +10479,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/617</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10511,7 +10511,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/618</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10532,7 +10532,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/619</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10557,7 +10557,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/620</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10574,7 +10574,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/621</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10604,7 +10604,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/622</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10624,7 +10624,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/623</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10643,7 +10643,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/624</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10672,7 +10672,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/625</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10692,7 +10692,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/626</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10711,7 +10711,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/627</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10728,7 +10728,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/628</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10760,7 +10760,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/629</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10783,7 +10783,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/630</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10800,7 +10800,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/631</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10828,7 +10828,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/632</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10851,7 +10851,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/633</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10868,7 +10868,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/634</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10885,7 +10885,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/635</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10902,7 +10902,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/638</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10920,7 +10920,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/639</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10955,7 +10955,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/640</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -10981,7 +10981,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/641</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11003,7 +11003,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/642</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11021,7 +11021,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/643</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11039,7 +11039,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/644</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11068,7 +11068,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/645</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11088,7 +11088,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/646</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11105,7 +11105,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/647</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11122,7 +11122,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/648</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11152,7 +11152,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/649</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11170,7 +11170,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/650</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11189,7 +11189,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/651</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11219,7 +11219,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/652</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11235,7 +11235,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/653</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11253,7 +11253,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/654</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11284,7 +11284,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/655</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11301,7 +11301,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/656</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11319,7 +11319,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/657</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11347,7 +11347,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/658</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11364,7 +11364,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/659</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11382,7 +11382,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/660</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11399,7 +11399,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/661</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11416,7 +11416,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/662</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11444,7 +11444,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/663</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11461,7 +11461,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/664</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11493,7 +11493,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/665</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11509,7 +11509,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/666</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11529,7 +11529,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/667</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11556,7 +11556,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/668</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11580,7 +11580,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/669</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11597,7 +11597,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/670</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11618,7 +11618,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/671</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11650,7 +11650,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/672</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11669,7 +11669,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/673</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11687,7 +11687,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/676</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11719,7 +11719,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/677</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11739,7 +11739,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/678</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11756,7 +11756,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/681</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11777,7 +11777,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/682</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11808,7 +11808,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/683</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11827,7 +11827,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/684</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11846,7 +11846,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/685</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11874,7 +11874,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/686</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11897,7 +11897,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/687</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11914,7 +11914,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/688</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11942,7 +11942,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/689</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11961,7 +11961,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/690</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11977,7 +11977,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/691</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -11999,7 +11999,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/692</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12017,7 +12017,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/693</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12049,7 +12049,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/694</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12065,7 +12065,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/695</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12082,7 +12082,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/696</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12111,7 +12111,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/697</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12131,7 +12131,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/698</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12147,7 +12147,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/699</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12179,7 +12179,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/700</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12197,7 +12197,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/701</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12216,7 +12216,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/702</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12244,7 +12244,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/703</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12263,7 +12263,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/704</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12279,7 +12279,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/705</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12310,7 +12310,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/706</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12330,7 +12330,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/707</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12351,7 +12351,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/708</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12382,7 +12382,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/709</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12402,7 +12402,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/710</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12419,7 +12419,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/713</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12447,7 +12447,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/714</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12469,7 +12469,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/715</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12487,7 +12487,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/716</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12505,7 +12505,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/717</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12525,7 +12525,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/718</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12547,7 +12547,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/719</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12566,7 +12566,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/720</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12583,7 +12583,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/721</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12602,7 +12602,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/722</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12619,7 +12619,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/723</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12638,7 +12638,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/724</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12655,7 +12655,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/725</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12683,7 +12683,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/726</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12700,7 +12700,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/727</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12731,7 +12731,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/728</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
@@ -12749,7 +12749,7 @@
     <record>
       <header>
         <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marctoxctransformation/729</identifier>
-        <datestamp>2011-10-26T18:00:48Z</datestamp>
+        <datestamp>2012-01-18T18:52:44Z</datestamp>
         <setSpec>marctoxctransformation</setSpec>
       </header>
       <metadata>
