@@ -447,7 +447,7 @@ public class TransformationService extends SolrTransformationService {
                 } else if (isHolding) {
                     char status = Record.ACTIVE;
                     List<Long> manifestationIds = new ArrayList<Long>();
-                    List<Long> manifestationsIdsInWaiting = new ArrayList<Long>();  // unused?
+                    List<Long> manifestationsIdsInWaiting = new ArrayList<Long>();
                     if (ar.getReferencedBibs() == null) {
                         LOG.error("ar.getReferencedBibs() == null");
                     } else {
@@ -480,7 +480,7 @@ public class TransformationService extends SolrTransformationService {
                                 // addErrorToOutput(r, 16, RecordMessage.INFO);
                                 // addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
                                 if (status == Record.HELD) {
-                                    for (Long mid : manifestationIds) {
+                                    for (Long mid : manifestationsIdsInWaiting) {
                                         heldHoldings.add(new long[] { r.getId(), mid });
                                     }
                                 }
