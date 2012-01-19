@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.common.SolrInputDocument;
 
 import xc.mst.bo.record.SaxMarcXmlRecord;
-import xc.mst.services.marcaggregation.MASSolrService;
+import xc.mst.manager.IndexException;
+import xc.mst.manager.record.RecordService;
 import xc.mst.services.marcaggregation.MarcAggregationService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
+import xc.mst.utils.TimingLogger;
 
 public class x130aMatcher extends FieldMatcherService {
 
@@ -32,14 +35,13 @@ public class x130aMatcher extends FieldMatcherService {
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
 
-        MASSolrService mss = (MASSolrService)config.getBean("MASSolrService");
-        SolrServer s = mss.getServer();
+        SolrServer s = getMASSolrServer();
 //        s.
         Map<Long, String> filterByFields = null; // query db for records with specific ids;
         //LuceneIndex tempIndex = new MemoryIndex();
         // add tokenizer
         for (Map.Entry<Long, String> fbField : filterByFields.entrySet()) {
-            //Doc doc = new Doc();
+            SolrInputDocument doc = new SolrInputDocument();
             //doc.addField("id", fbField.getKey());
             //doc.addField("field", fbField.getValue());
             //tempIndex.addDoc(doc);
@@ -54,8 +56,29 @@ public class x130aMatcher extends FieldMatcherService {
     public void addRecordToMatcher(SaxMarcXmlRecord ir) {
         List<String> subfields = ir.getSubfield(130, 'a');
         if (subfields != null) {
+            SolrServer s = getMASSolrServer();
+            //LuceneIndex tempIndex = new MemoryIndex();
+            //tempIndex.addDoc(doc);
+            SolrInputDocument doc = null;
             for (String sf : subfields) {
-                inputId2x130a.put(ir.getRecordId(), sf);
+                inputId2x130a.put(ir.getRecordId(), sf);  //TODO elim use of this struct
+//                doc = new SolrInputDocument();
+//                doc.addField("field_key", sf);          // TODO make the field name correct for dynamic, i.e. _l
+            }
+            if (doc != null) {
+                doc.addField(RecordService.FIELD_RECORD_ID, ir.getRecordId());
+
+                //TODO add to the index is not working - trying to use same index.  Separate directories?
+                //  see - http://www.mattfitz.info/library/article/364
+                //      though still not clear to me from this that it will address how indexes in data directory
+                //      are used.
+                try {
+                    TimingLogger.start("SolrIndexService.process add doc");
+                    getMASSolrIndexManager().addDoc(doc);
+                    TimingLogger.stop("SolrIndexService.process add doc");
+                } catch (IndexException ie) {
+                    throw new RuntimeException(ie);
+                }
             }
         }
     }

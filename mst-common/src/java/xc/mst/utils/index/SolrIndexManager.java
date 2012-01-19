@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
@@ -67,7 +68,7 @@ public class SolrIndexManager extends BaseManager {
         }
 
         try {
-            getMSTSolrService().getServer().add(doc);
+            getSolrService().add(doc);
         } catch (SolrServerException se) {
             log.error("Solr server exception occured when adding document to the index. Check the path to solr folder.", se);
 
@@ -103,7 +104,7 @@ public class SolrIndexManager extends BaseManager {
 
     public boolean deleteByQuery(String query) {
         try {
-            getMSTSolrService().getServer().deleteByQuery(query);
+            getSolrService().deleteByQuery(query);
             return true;
         } catch (SolrServerException se) {
             log.error("Solr server exception occured when deleting document in the index. Check the path to solr folder.", se);
@@ -155,13 +156,13 @@ public class SolrIndexManager extends BaseManager {
         }
 
         // Check if solr server is null
-        if (getMSTSolrService().getServer() == null) {
+        if (getSolrService() == null) {
             log.error("Solr server is null");
             return false;
         }
         try {
             LogWriter.addDebug(logObj.getLogFileLocation(), "Committing changes to the Solr index");
-            getMSTSolrService().getServer().commit();
+            getSolrService().commit();
             LogWriter.addDebug(logObj.getLogFileLocation(), "Commited changes to the Solr index");
         } catch (SolrServerException se) {
             log.error("Solr server exception occured when commiting to the index. Check the path to solr folder.", se);
@@ -206,13 +207,13 @@ public class SolrIndexManager extends BaseManager {
     public boolean optimizeIndex() throws IndexException {
 
         // Check if solr server is null
-        if (getMSTSolrService().getServer() == null) {
+        if (getSolrService() == null) {
             log.error("Solr server is null");
             return false;
         }
         try {
             LogWriter.addInfo(logObj.getLogFileLocation(), "Start optimizing Solr index");
-            getMSTSolrService().getServer().optimize(true, true);
+            getSolrService().optimize(true, true);
             LogWriter.addInfo(logObj.getLogFileLocation(), "Finished optimizing Solr index");
         } catch (SolrServerException se) {
             log.error("Solr server exception occured when optimizing index. Check the path to solr folder.", se);
@@ -258,7 +259,7 @@ public class SolrIndexManager extends BaseManager {
         SolrDocumentList docs = null;
 
         // Check if solr server is null
-        if (getMSTSolrService().getServer() == null) {
+        if (getSolrService() == null) {
             log.error("Solr server is null");
             return docs;
         }
@@ -267,7 +268,7 @@ public class SolrIndexManager extends BaseManager {
             if (log.isDebugEnabled()) {
                 log.debug("Executing Solr Query : " + query);
             }
-            QueryResponse rsp = getMSTSolrService().getServer().query(query);
+            QueryResponse rsp = getSolrService().query(query);
             docs = rsp.getResults();
 
         } catch (SolrServerException e) {
@@ -286,5 +287,9 @@ public class SolrIndexManager extends BaseManager {
         }
 
         return docs;
+    }
+
+    protected SolrServer getSolrService() {
+        return getMSTSolrService().getServer();
     }
 }
