@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.solr.client.solrj.SolrServer;
+
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.services.marcaggregation.MASSolrService;
 import xc.mst.services.marcaggregation.MarcAggregationService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 
@@ -28,6 +31,10 @@ public class x130aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
+
+        MASSolrService mss = (MASSolrService)config.getBean("MASSolrService");
+        SolrServer s = mss.getServer();
+//        s.
         Map<Long, String> filterByFields = null; // query db for records with specific ids;
         //LuceneIndex tempIndex = new MemoryIndex();
         // add tokenizer
