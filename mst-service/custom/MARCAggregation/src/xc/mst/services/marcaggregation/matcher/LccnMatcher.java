@@ -84,18 +84,12 @@ public class LccnMatcher extends FieldMatcherService {
     protected long getUniqueId(String s) {
         String stripped=null;
         long strippedL=0l;
-        // I have to learn to use this right.  I want the string tokenizer effect, so I will use that,
-        //  this gave me extra empty tokens, needed to chomp whitespace better.
-        //
-//        String[] tokens = s.split(" ");
-//        String candidate = tokens[0];
         StringTokenizer st = new StringTokenizer(s);
         String candidate = st.nextToken();
         if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {
             return Long.parseLong(candidate);
         }
         else if (candidate.toCharArray().length <=3) {
-//            candidate = tokens[1];
             candidate = st.nextToken();
             if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {
                 return Long.parseLong(candidate);
@@ -146,16 +140,14 @@ public class LccnMatcher extends FieldMatcherService {
             if (size>1) {
                 LOG.error("ERROR: Multiple $a subfields in 010 in record! "+ir.recordId);
             }
-            // TODO don't return the original record itself as a match, adding record to matcher AFTER this step?, BUT
-            //       should we verify the record is not matching itself?
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
                 if (lccn2inputIds.get(goods) != null) {
-                        results.addAll(lccn2inputIds.get(goods));
-                        if (results.contains(id)) {
-                            results.remove(id);
-                        }
+                    results.addAll(lccn2inputIds.get(goods));
+                    if (results.contains(id)) {
+                        results.remove(id);
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@
 package xc.mst.services.marcaggregation.test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,11 +45,13 @@ public class MatchRulesTest extends MatcherTest {
         expectedMatchRecords.put  ("x260abcMatcher", 0);
         //TODO end of above TODO
 
-        expectedMatchRecordIds.put("ISSNMatcher", 14);
+        // 022$a
+        expectedMatchRecordIds.put("ISSNMatcher", 15);
         expectedMatchRecords.put  ("ISSNMatcher", 14);
 
-        expectedMatchRecordIds.put("ISBNMatcher", 34);
-        expectedMatchRecords.put  ("ISBNMatcher", 57);
+        // 020$a
+        expectedMatchRecordIds.put("ISBNMatcher", 35);
+        expectedMatchRecords.put  ("ISBNMatcher", 58);
 
         expectedMatchRecordIds.put("x024aMatcher", 19);
         expectedMatchRecords.put  ("x024aMatcher", 18);
@@ -56,15 +59,36 @@ public class MatchRulesTest extends MatcherTest {
         expectedMatchRecordIds.put("x130aMatcher", 11);
         expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
 
-        expectedMatchRecordIds.put("LccnMatcher", 59);
+        // 010$a
+        expectedMatchRecordIds.put("LccnMatcher", 61);
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 125);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 156);
+        // 035$a
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 127);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 158);
+
+        HashSet<Long> set =  new HashSet<Long>();
+        set.add(176l);
+        expectedResults.put(new Long(178), set);
+        HashSet<Long> set2 =  new HashSet<Long>();
+        set2.add(3l);
+        expectedResults.put(new Long(179), set2);
+        HashSet<Long> set3 =  new HashSet<Long>();
+        set3.add(40l);
+        expectedResults.put(new Long(180), set3);
+        HashSet<Long> set4 =  new HashSet<Long>();
+        set4.add(44l);
+        expectedResults.put(new Long(181), set4);
+        HashSet<Long> set5 =  new HashSet<Long>();
+        set5.add(5l);
+        expectedResults.put(new Long(183), set5);
+        HashSet<Long> set6 =  new HashSet<Long>();
+        set6.add(2l);
+        expectedResults.put(new Long(184), set6);
     }
 
     protected int getNumberMatchedResultsGoal() {
-        return 4;
+        return 6;
     }
 
     public void finalTest() {
@@ -76,8 +100,9 @@ public class MatchRulesTest extends MatcherTest {
             System.out.println("****START MatchRulesTest *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            Set<Long> results = getRecordsAndAddToMem(providerRepo);
-            LOG.info("ensureMatch results size =" + results.size());
+            Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
+            checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
+            LOG.info("MatchRulesTest:ensureMatch results size =" + results.size());
             // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
 
             // results = ensureMatch(providerRepo);

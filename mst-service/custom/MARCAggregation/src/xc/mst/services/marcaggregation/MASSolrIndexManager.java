@@ -15,7 +15,7 @@ import xc.mst.utils.index.SolrIndexManager;
 public class MASSolrIndexManager extends SolrIndexManager {
     public void init() {
         super.init();
-        log.info("** MASSolrIndexManager initialized!");
+        log.debug("** MASSolrIndexManager initialized!");
     }
     protected SolrServer getMASSolrServer() {
         MASSolrService mss = (MASSolrService)config.getBean("MASSolrService");

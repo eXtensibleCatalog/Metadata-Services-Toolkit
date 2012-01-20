@@ -28,6 +28,8 @@ public class MatcherTest extends MASBaseTest {
     protected HashMap<String, Integer> expectedMatchRecords = new HashMap<String, Integer>();
     protected HashMap<String, Integer> expectedMatchRecordIds = new HashMap<String, Integer>();
 
+    protected Map<Long, Set<Long>> expectedResults = new HashMap<Long, Set<Long>>();
+
     public void setup() {
         LOG.debug("MAS:  setup()");
         setupMatcherExpectations();
@@ -104,7 +106,7 @@ public class MatcherTest extends MASBaseTest {
             System.out.println("****START MatcherTest *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            Set<Long> results = getRecordsAndAddToMem(providerRepo);
+            Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
             checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
             // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
 
@@ -146,12 +148,25 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
-    protected void checkNumberMatchedResults(Set<Long> results, int goal) {
+    // check whether we got the matches we expected for a record.  Note this test is order dependent, i.e. we expect the records
+    // to come in in a certain order, we control this, so we will achieve it.  This is for test purposes only, to prove we get
+    // the matches we expect for a certain record when this order is maintained.
+    protected void checkNumberMatchedResults(Map<Long,Set<Long>> results, int goal) {
+        for (long key: results.keySet()) {
+            for (long value: results.get(key)) {
+                if (!expectedResults.get(key).contains(value)) {
+                    throw new RuntimeException("* expected to find "+ value+" ! for key "+key );
+                }
+                else {
+                    LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
+                }
+            }
+        }
         if (results.size() != goal) {
-            throw new RuntimeException("* WRONG number matches, expected"+ goal+" ! got "+results.size() );
+            throw new RuntimeException("* WRONG number matches, expected"+ goal+" ! got "+results.keySet().size() );
         }
         else {
-            LOG.info("ensureMatch results size =" + results.size());
+            LOG.info("ensureMatch results size =" + results.keySet().size() + " goal="+goal);
         }
     }
 
@@ -169,11 +184,15 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
-    protected Set<Long> getRecordsAndAddToMem(Repository repo) throws Throwable {
+    protected Map<Long,Set<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
-        Set<Long> overall = new HashSet<Long>();
+        Map<Long, Set<Long>> overall = new HashMap<Long, Set<Long>>();
         for (Record r : records) {
-            overall.addAll(process((InputRecord) r));
+            // note, you are putting in all the records into the map, even if the record set is null, definitely don't want to
+            Set<Long> set = process((InputRecord) r);
+            if (set.size()>0) {
+                overall.put(r.getId(), process((InputRecord) r));
+            }
         }
         LOG.info("* done *");
         return overall;

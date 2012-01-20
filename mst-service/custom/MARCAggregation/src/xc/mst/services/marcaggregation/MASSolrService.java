@@ -18,7 +18,7 @@ public class MASSolrService extends MSTSolrService {
     private static final Logger LOG = Logger.getLogger(SolrIndexService.class);
     public void init() {
         super.init();
-        LOG.info("*** MASSolrService init complete!");
+        LOG.debug("*** MASSolrService init complete!");
     }
 
     protected String getSolrCore() {
