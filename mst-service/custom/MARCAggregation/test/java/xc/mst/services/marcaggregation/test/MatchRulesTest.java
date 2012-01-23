@@ -31,7 +31,7 @@ public class MatchRulesTest extends MatcherTest {
 
     protected void setupMatcherExpectations() {
         //load expected number of records for each matcher.
-        //TODO figure out how menu of each till end of TODO
+        //TODO figure out how many of each FUZZY till end of TODO
         expectedMatchRecordIds.put("x028abMatcher", 0);
         expectedMatchRecords.put  ("x028abMatcher", 0);
 
@@ -103,24 +103,21 @@ public class MatchRulesTest extends MatcherTest {
             Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
             checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
             LOG.info("MatchRulesTest:ensureMatch results size =" + results.size());
-            // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
-
-            // results = ensureMatch(providerRepo);
-            // LOG.info("ensureMatch results size ="+results.size());
-            // if (results.isEmpty()) throw new RuntimeException("FAILURE - expected some results to be returned.");
 
             //after parsing all the records, verify the counts are what is expected for our particular record set.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 FieldMatcher matcher = me.getValue();
                 LOG.info("for matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
                 if (expectedMatchRecordIds.get(matcher.getName()) != matcher.getNumRecordIdsInMatcher()) {
-                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) );
+                    String result = "* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) ;
+                    reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records expected: "+expectedMatchRecordIds.get(matcher.getName()) );
                 }
                 if (expectedMatchRecords.get(matcher.getName()) != matcher.getNumMatchPointsInMatcher()) {
-                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) );
+                    String result ="* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) ;
+                    reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints expected: "+expectedMatchRecords.get(matcher.getName()) );
@@ -135,7 +132,8 @@ public class MatchRulesTest extends MatcherTest {
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 FieldMatcher matcher = me.getValue();
                 if (matcher.getNumRecordIdsInMatcher() != 0 && matcher.getNumMatchPointsInMatcher() != 0) {
-                    throw new RuntimeException("*FAIL,post-flush,matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
+                    String result = "*FAIL,post-flush,matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.";
+                    reportFailure(result);
                 }
                 else {
                     LOG.info("*PASS:post-flush,matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
@@ -144,17 +142,20 @@ public class MatchRulesTest extends MatcherTest {
             // load, then results should be back to original expectations
             load();
             //after parsing all the records, verify the counts are what is expected for our particular record set.
+            // TODO I have not decided how this should work yet - would I really load all back into memory?  Probably not, comment out test till code supports.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 FieldMatcher matcher = me.getValue();
                 LOG.info("for matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
                 if (expectedMatchRecordIds.get(matcher.getName()) != matcher.getNumRecordIdsInMatcher()) {
-//                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) );
+                    String result = "* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) ;
+//                    reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records expected: "+expectedMatchRecordIds.get(matcher.getName()) );
                 }
                 if (expectedMatchRecords.get(matcher.getName()) != matcher.getNumMatchPointsInMatcher()) {
-//                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) );
+                    String result = "* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) ;
+//                  reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints expected: "+expectedMatchRecords.get(matcher.getName()) );
@@ -166,7 +167,7 @@ public class MatchRulesTest extends MatcherTest {
             // , ideally harvest from a 2nd repo (that contains some matching records)?
 
         } catch (Throwable t) {
-            LOG.error("Exception occured when running MarkProviderDeletedTest!", t);
+            LOG.error("Exception occured when running MatchRulesTest!", t);
             getUtil().throwIt(t);
         }
     }

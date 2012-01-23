@@ -54,7 +54,7 @@ public class MatcherTest extends MASBaseTest {
 
     protected void setupMatcherExpectations() {
         //load expected number of records for each matcher.
-        //TODO figure out how menu of each till end of TODO
+        //TODO figure out how many of each till end of TODO
         expectedMatchRecordIds.put("x028abMatcher", 0);
         expectedMatchRecords.put  ("x028abMatcher", 0);
 
@@ -108,24 +108,22 @@ public class MatcherTest extends MASBaseTest {
 
             Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
             checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
-            // if (!results.isEmpty()) throw new RuntimeException("FAILURE - expected NO results to be returned.");
-
-            // results = ensureMatch(providerRepo);
-            // LOG.info("ensureMatch results size ="+results.size());
-            // if (results.isEmpty()) throw new RuntimeException("FAILURE - expected some results to be returned.");
 
             //after parsing all the records, verify the counts are what is expected for our particular record set.
+            //  the counts we are looking for and comparing are  number of matchpoints for each matcher and number of recordids for each matcher.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 FieldMatcher matcher = me.getValue();
                 LOG.info("for matcher " + matcher.getName() + " it has " + matcher.getNumRecordIdsInMatcher() + " recordIds and " + matcher.getNumMatchPointsInMatcher() + " match points.");
                 if (expectedMatchRecordIds.get(matcher.getName()) != matcher.getNumRecordIdsInMatcher()) {
-                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) );
+                    String result = "* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records but expected: "+expectedMatchRecordIds.get(matcher.getName()) ;
+                    reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumRecordIdsInMatcher()+" records expected: "+expectedMatchRecordIds.get(matcher.getName()) );
                 }
                 if (expectedMatchRecords.get(matcher.getName()) != matcher.getNumMatchPointsInMatcher()) {
-                    throw new RuntimeException("* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) );
+                    String result = "* WRONG, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints but expected: "+expectedMatchRecords.get(matcher.getName()) ;
+                    reportFailure(result);
                 }
                 else {
                     LOG.info("* PASS, for matcher: "+matcher.getName() +" got "+matcher.getNumMatchPointsInMatcher()+" matchpoints expected: "+expectedMatchRecords.get(matcher.getName()) );
@@ -135,9 +133,9 @@ public class MatcherTest extends MASBaseTest {
             // the result is number of the 175 records that had 020 fields, result I got was 118, verify this is correct.
             // also note, this is really only testing the 1st matchrule and its matcher, perhaps unload that one, then run again. (2x), and so on, and so on.
 
-            // TODO flush, then results should be empty
+            // TODO flush, then results should be empty  (this test occurs in MatchRulesTest.)
 
-            // TODO load, then results should be 118
+            // TODO load, then results should be 118  (maybe, or maybe you can't reload all into memory, TBD)
 
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
@@ -152,22 +150,37 @@ public class MatcherTest extends MASBaseTest {
     // to come in in a certain order, we control this, so we will achieve it.  This is for test purposes only, to prove we get
     // the matches we expect for a certain record when this order is maintained.
     protected void checkNumberMatchedResults(Map<Long,Set<Long>> results, int goal) {
-        for (long key: results.keySet()) {
-            for (long value: results.get(key)) {
-                if (!expectedResults.get(key).contains(value)) {
-                    throw new RuntimeException("* expected to find "+ value+" ! for key "+key );
-                }
-                else {
-                    LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
+        try {
+            for (long key: results.keySet()) {
+                for (long value: results.get(key)) {
+                    if (!expectedResults.get(key).contains(value)) {
+                        String result = "* expected to find "+ value+" ! for key "+key ;
+                        reportFailure(result);
+                    }
+                    else {
+                        LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
+                    }
                 }
             }
+            if (results.size() != goal) {
+                String result = "* WRONG number matches, expected"+ goal+" ! got "+results.keySet().size() ;
+                reportFailure(result);
+            }
+            else {
+                LOG.info("ensureMatch results size =" + results.keySet().size() + " goal="+goal);
+            }
+        } catch (Exception e) {
+            reportFailure(e);
         }
-        if (results.size() != goal) {
-            throw new RuntimeException("* WRONG number matches, expected"+ goal+" ! got "+results.keySet().size() );
-        }
-        else {
-            LOG.info("ensureMatch results size =" + results.keySet().size() + " goal="+goal);
-        }
+    }
+
+    protected void reportFailure(String result) {
+        throw new RuntimeException(result);
+    }
+
+    protected void reportFailure(Exception e) {
+        LOG.info(e);
+        throw new RuntimeException(e);
     }
 
     protected void flush(boolean force) {
@@ -252,3 +265,4 @@ public class MatcherTest extends MASBaseTest {
     }
 
 }
+//
