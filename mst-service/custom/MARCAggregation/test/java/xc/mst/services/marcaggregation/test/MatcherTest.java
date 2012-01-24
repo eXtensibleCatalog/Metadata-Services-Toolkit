@@ -14,6 +14,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.repo.Repository;
+import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
@@ -29,6 +30,8 @@ public class MatcherTest extends MASBaseTest {
     protected HashMap<String, Integer> expectedMatchRecordIds = new HashMap<String, Integer>();
 
     protected Map<Long, Set<Long>> expectedResults = new HashMap<Long, Set<Long>>();
+
+    protected MarcAggregationServiceDAO masDao = null;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -50,6 +53,7 @@ public class MatcherTest extends MASBaseTest {
             MatchRuleIfc mr = (MatchRuleIfc) applicationContext.getBean(mrStr + "MatchRule");
             matchRuleMap.put(mrStr, mr);
         }
+        masDao = (MarcAggregationServiceDAO) applicationContext.getBean("MarcAggregationServiceDAO");
     }
 
     protected void setupMatcherExpectations() {

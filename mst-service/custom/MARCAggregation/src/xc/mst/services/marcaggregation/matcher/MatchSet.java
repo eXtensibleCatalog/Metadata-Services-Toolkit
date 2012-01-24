@@ -27,7 +27,6 @@ import xc.mst.utils.Util;
 
 public class MatchSet {
 
-    //TODO set this false
     boolean debug = false;
 
     private static final Logger LOG = Logger.getLogger(MatchSet.class);

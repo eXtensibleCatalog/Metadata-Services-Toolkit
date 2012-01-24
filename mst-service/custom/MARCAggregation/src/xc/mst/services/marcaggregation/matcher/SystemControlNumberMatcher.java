@@ -97,6 +97,9 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(35);
 
@@ -111,10 +114,24 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             // should we verify the record is not matching itself?
             for (String subfield : subfields) {
                 String goods = getMapId(subfield);
+                // look in memory
                 if (scn2inputIds.get(goods) != null) {
                     results.addAll(scn2inputIds.get(goods));
                     if (results.contains(id)) {
                         results.remove(id);
+                    }
+                }
+
+                // now look in the database too!
+                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_035a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,goods);
+                LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("** record id: "+record +" matches id "+id);
+                        }
                     }
                 }
             }
@@ -187,12 +204,14 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     /**
      * For testing.
+     * TODO check in dB too?
      * @return
      */
     public int getNumRecordIdsInMatcher() {
         return inputId2scn.size();
     }
 
+    //TODO check in dB too?
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2scn.keySet();
     }

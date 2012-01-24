@@ -15,7 +15,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +52,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String matchpoints_245a_table = "matchpoints_245a";
     public final static String matchpoints_260abc_table = "matchpoints_260abc";
 
+    public final static String input_record_id_field = "input_record_id";
+    public final static String string_id_field = "string_id";
 
 
-    @SuppressWarnings("unchecked")
     //perhaps will move this up to the generic layer - since 2 services will end up with identical code.
     public void persistBibMaps(
         ) {
@@ -191,7 +192,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
-    @SuppressWarnings("unchecked")
     public void persistLongStrMatchpointMaps(TLongLongHashMap inputId2numMap, Map<Long, String> inputId2matcherMap, String tableName) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistLongStrMaps");
@@ -255,7 +255,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
-    @SuppressWarnings("unchecked")
     public void persistOneStrMatchpointMaps(Map<Long, String> inputId2matcherMap, String tableName) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistOneStrMaps");
@@ -311,17 +310,25 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
-    protected List<Map<String, Object>> getMaps(String tableName, int page) {
-//        TimingLogger.start("getMaps");
-        int recordsAtOnce = 250000;
-        List<Map<String, Object>> rowList =null;//= this.jdbcTemplate.queryForList(
-//                "select org_code, bib_001, record_id from " + tableName +
-//                        " limit " + (page * recordsAtOnce) + "," + recordsAtOnce);
-//        TimingLogger.stop("getMaps");
-        return rowList;
+    // for instance:
+    //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+    //
+    public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
+        TimingLogger.start("getMatchingRecords");
+
+        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field +" = ?";
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemToMatch});
+
+        List<Long> results = new ArrayList<Long>();
+        for (Map<String, Object> row : rowList) {
+            Long id = (Long) row.get("input_record_id");
+            results.add(id);
+        }
+        TimingLogger.stop("getMatchingRecords");
+        return results;
     }
 
-    @SuppressWarnings("unchecked")
     public void loadMaps(
         ) {
     }
