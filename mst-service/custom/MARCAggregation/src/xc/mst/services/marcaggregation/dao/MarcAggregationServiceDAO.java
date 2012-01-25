@@ -52,8 +52,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String matchpoints_245a_table = "matchpoints_245a";
     public final static String matchpoints_260abc_table = "matchpoints_260abc";
 
-    public final static String input_record_id_field = "input_record_id";
-    public final static String string_id_field = "string_id";
+    public final static String input_record_id_field    = "input_record_id";
+    public final static String string_id_field          = "string_id";
+    public final static String numeric_id_field         = "numeric_id";
 
 
     //perhaps will move this up to the generic layer - since 2 services will end up with identical code.
@@ -310,6 +311,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
+    // given a string_id in String form to match on.
+    //
     // for instance:
     //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
     //
@@ -317,6 +320,27 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.start("getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field +" = ?";
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemToMatch});
+
+        List<Long> results = new ArrayList<Long>();
+        for (Map<String, Object> row : rowList) {
+            Long id = (Long) row.get("input_record_id");
+            results.add(id);
+        }
+        TimingLogger.stop("getMatchingRecords");
+        return results;
+    }
+
+    // given a numeric_id in Long form to match on.
+    //
+    // for instance:
+    //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+    //
+    public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, Long itemToMatch) {
+        TimingLogger.start("getMatchingRecords");
+
+        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ numeric_id_field +" = ?";
 
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemToMatch});
 

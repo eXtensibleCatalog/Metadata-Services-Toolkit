@@ -88,6 +88,7 @@ public class MatchRulesTest extends MatcherTest {
         expectedResults.put(new Long(184), set6);
 
         //other way too, with db in the picture
+        // rule 1a
         HashSet<Long> set1 =  new HashSet<Long>();
         set1.add(178l);
         expectedResults.put(new Long(176), set1);
@@ -95,7 +96,8 @@ public class MatchRulesTest extends MatcherTest {
         set20.add(179l);
         expectedResults.put(new Long(3), set20);
 
-        /*
+        //other way too, with db in the picture
+        // rule 2
         HashSet<Long> set30 =  new HashSet<Long>();
         set30.add(180l);
         expectedResults.put(new Long(40), set30);
@@ -108,7 +110,6 @@ public class MatchRulesTest extends MatcherTest {
         HashSet<Long> set60 =  new HashSet<Long>();
         set60.add(184l);
         expectedResults.put(new Long(2), set60);
-        */
     }
 
     protected int getNumberMatchedResultsGoal() {

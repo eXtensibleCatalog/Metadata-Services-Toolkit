@@ -71,6 +71,9 @@ public class ISBNMatcher extends FieldMatcherService {
     @Override
     // return all matching records!!! a match means the same int part of isbn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(20);
 
@@ -87,6 +90,19 @@ public class ISBNMatcher extends FieldMatcherService {
                     results.addAll(isbn2inputIds.get(isbn));
                     if (results.contains(id)) {
                         results.remove(id);
+                    }
+                }
+
+                // now look in the database too!
+                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_020a where string_id = "24094664" '
+                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_020a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,isbn);
+                LOG.debug("ISBN, DAO, getMatching records for "+isbn+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("**ISBN, DAO,  record id: "+record +" matches id "+id);
+                        }
                     }
                 }
             }

@@ -127,6 +127,9 @@ public class LccnMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(10);
         if (fields.size()>1) {
@@ -147,6 +150,19 @@ public class LccnMatcher extends FieldMatcherService {
                     results.addAll(lccn2inputIds.get(goods));
                     if (results.contains(id)) {
                         results.remove(id);
+                    }
+                }
+
+                // now look in the database too!
+                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
+                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
+                LOG.debug("LCCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("**LCCN, DAO,  record id: "+record +" matches id "+id);
+                        }
                     }
                 }
             }
@@ -214,7 +230,7 @@ public class LccnMatcher extends FieldMatcherService {
 
     @Override
     public void load() {
-        // TODO Auto-generated method stub
+        // TODO for this one, because the data is Long, may want to load all from dB to memory.
 
     }
 

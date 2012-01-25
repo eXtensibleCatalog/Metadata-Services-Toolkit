@@ -76,6 +76,9 @@ public class ISSNMatcher extends FieldMatcherService {
     @Override
     // return all matching records!!! a match means the same int part of issn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(22);
 
@@ -92,6 +95,19 @@ public class ISSNMatcher extends FieldMatcherService {
                     results.addAll(issn2inputIds.get(issn));
                     if (results.contains(id)) {
                         results.remove(id);
+                    }
+                }
+
+                // now look in the database too!
+                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_022a where string_id = "24094664" '
+                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_022a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,issn);
+                LOG.debug("ISSN, DAO, getMatching records for "+issn+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("**ISSN, DAO,  record id: "+record +" matches id "+id);
+                        }
                     }
                 }
             }

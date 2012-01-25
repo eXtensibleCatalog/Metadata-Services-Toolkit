@@ -22,11 +22,10 @@ import xc.mst.utils.Util;
  *
  * Other Standard Identifier: 024a2 (Note: 1st indicator must also match.
  * If 1st indicator value is 7, then contents of Subfield 2 must also match)
- * TODO, do the ABOVE!
  *
  * 024$a
  *
- * @author JohnB
+ * @author John Brand
  *
  */
 public class x024aMatcher extends FieldMatcherService {
@@ -42,6 +41,9 @@ public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(24);
 
@@ -59,6 +61,19 @@ public class x024aMatcher extends FieldMatcherService {
                         results.addAll(x024a2inputIds.get(goods));
                         if (results.contains(id)) {
                             results.remove(id);
+                        }
+                    }
+
+                    // now look in the database too!
+                    //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_022a where string_id = "24094664" '
+                    List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_024a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,goods);
+                    LOG.debug("024$a, DAO, getMatching records for "+goods+", numResults="+records.size());
+                    for (Long record: records) {
+                        if (!record.equals(id)) {
+                            if (!results.contains(record)) {
+                                results.add(record);
+                                LOG.debug("**024$a, DAO,  record id: "+record +" matches id "+id);
+                            }
                         }
                     }
                 }
@@ -132,7 +147,7 @@ public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public void load() {
-        // TODO Auto-generated method stub
+        // TODO may not use this for string-based matchers.
 
     }
 
