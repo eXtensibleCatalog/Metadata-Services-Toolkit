@@ -32,6 +32,7 @@ ENGINE = MyISAM DEFAULT CHARSET=utf8;
 -- -----------------------------------------------------
 -- Table `matchpoints_010a` neither 010 nor $a can repeat,Lccn
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_010a;
 CREATE  TABLE `matchpoints_010a` (
   `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
@@ -43,6 +44,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_020a` 020 can repeat, $a cannot,ISBN
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_020a;
 CREATE  TABLE `matchpoints_020a` (
   `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
@@ -54,6 +56,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_022a` 022 can repeat, $a cannot,ISSN
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_022a;
 CREATE  TABLE `matchpoints_022a` (
   `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
@@ -65,6 +68,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_024a` 024 can repeat, $a cannot
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_024a;
 CREATE  TABLE `matchpoints_024a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -75,6 +79,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_028a` 028 can repeat, $ab cannot
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_028a;
 CREATE  TABLE `matchpoints_028a` (
   `string_ab_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -85,6 +90,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_130a` no repeating possible
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_130a;
 CREATE  TABLE `matchpoints_130a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -95,6 +101,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_240a` no repeating possible
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_240a;
 CREATE  TABLE `matchpoints_240a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -105,6 +112,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_245a` no repeating possible
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_245a;
 CREATE  TABLE `matchpoints_245a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -115,6 +123,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_260abc` 260 can repeat, $abc can2!
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_260a;
 CREATE  TABLE `matchpoints_260abc` (
   `string_abc_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
@@ -125,6 +134,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `matchpoints_035a` system control number
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS matchpoints_035a;
 CREATE  TABLE `matchpoints_035a` (
   `full_string` VARCHAR(255) NOT NULL ,
 --  `prefix` VARCHAR(255) NOT NULL ,
@@ -137,6 +147,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `merged_035`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS merged_035;
 CREATE  TABLE `merged_035` (
   `output_record_id` BIGINT NOT NULL ,
   `035a_string` VARCHAR(255) NULL ,
@@ -149,6 +160,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `merged_904`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS merged_904;
 CREATE  TABLE `merged_904` (
   `holding_output_record_id` BIGINT NOT NULL ,
   `bib_output_record_id` BIGINT NOT NULL ,

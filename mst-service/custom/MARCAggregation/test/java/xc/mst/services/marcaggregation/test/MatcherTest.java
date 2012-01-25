@@ -157,6 +157,11 @@ public class MatcherTest extends MASBaseTest {
         try {
             for (long key: results.keySet()) {
                 for (long value: results.get(key)) {
+                    if (expectedResults == null) {
+                        reportFailure("* checkNumberMatched results has nothing to compare to, expectedResults == null, numResults="+results.size());
+                        break;  // just in case the implementation of reportFailure would keep you in the loop.
+                    }
+                    LOG.info( "* checking whether can  find "+ value+" ! for key "+key +" expectedResults getKey: "+expectedResults.get(key) );
                     if (!expectedResults.get(key).contains(value)) {
                         String result = "* expected to find "+ value+" ! for key "+key ;
                         reportFailure(result);

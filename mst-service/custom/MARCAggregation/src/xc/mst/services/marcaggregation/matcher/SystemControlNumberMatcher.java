@@ -130,7 +130,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     if (!record.equals(id)) {
                         if (!results.contains(record)) {
                             results.add(record);
-                            LOG.debug("** record id: "+record +" matches id "+id);
+                            LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
                         }
                     }
                 }
