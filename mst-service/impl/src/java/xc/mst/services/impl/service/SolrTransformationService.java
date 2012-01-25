@@ -6002,7 +6002,32 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                             "identifier", value.trim(),
                             AggregateXCRecord.DCTERMS_NAMESPACE, attributes,
                             FrbrLevel.HOLDINGS);
-                }
+	            } else if (ind2 == '1') {
+	                if (LOG.isDebugEnabled())
+	                    LOG.debug("Adding a "
+	                            + FrbrLevel.HOLDINGS
+	                            + " level alternative based on the concatination of the 856's subfields' value, which is "
+	                            + value);
+	
+	                // Create a dcterms:hasVersion based on the 856
+	                // abcdfhijklmnopqrstuvwxyz23 values
+	                getXCRecordService().addElement(transformInto,
+	                        "hasVersion", value.trim(),
+	                        AggregateXCRecord.DCTERMS_NAMESPACE, attributes,
+	                        FrbrLevel.HOLDINGS);
+	            } else if (ind2 == '2') {
+	                if (LOG.isDebugEnabled())
+	                    LOG.debug("Adding a "
+	                            + FrbrLevel.HOLDINGS
+	                            + " level alternative based on the concatination of the 856's subfields' value, which is "
+	                            + value);
+	
+	                // Create a dc:relation based on the 856
+	                // abcdfhijklmnopqrstuvwxyz23 values
+	                getXCRecordService().addElement(transformInto, "relation",
+	                        value.trim(), AggregateXCRecord.DCTERMS_NAMESPACE,
+	                        attributes, FrbrLevel.HOLDINGS);
+	            }
             }
         }
 
