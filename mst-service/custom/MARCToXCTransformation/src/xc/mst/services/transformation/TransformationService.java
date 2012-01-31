@@ -330,28 +330,12 @@ public class TransformationService extends SolrTransformationService {
 
             if (Record.DELETED == record.getStatus()) {
                 if (record.getSuccessors() != null) {
-                    Long manifestationId = null;
                     for (OutputRecord or : record.getSuccessors()) {
                         or.setStatus(Record.DELETED);
                         results.add(or);
                         Record r = getRepository().getRecord(or.getId());
                         String type = getXCRecordService().getType(r);
                         or.setType(type);
-                        if (AggregateXCRecord.MANIFESTATION.equals(type)) {
-                            manifestationId = or.getId();
-                        }
-                    }
-                    if (manifestationId != null) {
-                        List<Long> holdingIds = getRepository().getLinkedRecordIds(manifestationId);
-                        if (holdingIds != null) {
-                            for (Long holdingId : holdingIds) {
-                                Record orphanedHolding = new Record();
-                                orphanedHolding.setStatus(Record.HELD);
-                                orphanedHolding.setId(holdingId);
-                                orphanedHolding.setType("h");
-                                results.add(orphanedHolding);
-                            }
-                        }
                     }
                 }
             } else {
@@ -391,18 +375,23 @@ public class TransformationService extends SolrTransformationService {
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
                     for (OutputRecord or : record.getSuccessors()) {
                         Record succ = getRepository().getRecord(or.getId());
-                        String type = getXCRecordService().getType(succ);
-                        or.setType(type);
-                        if (AggregateXCRecord.HOLDINGS.equals(type)) {
-                            ar.getPreviousHoldingIds().add(or.getId());
-                        } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
-                            ar.setPreviousManifestationId(or.getId());
-                        } else if (AggregateXCRecord.EXPRESSION.equals(type)) {
-                            ar.getPreviousExpressionIds().add(or.getId());
-                        } else if (AggregateXCRecord.WORK.equals(type)) {
-                            ar.getPreviousWorkIds().add(or.getId());
-                        } else {
-                            throw new RuntimeException("bogus");
+                        // ignore deleted successors
+                        // since they were deleted, so we need to ignore them forever
+                        // (new successors and OAI IDs get generated whenever a deleted record later gets re-activated)
+                        if (! succ.getDeleted()) {
+	                        String type = getXCRecordService().getType(succ);
+	                        or.setType(type);
+	                        if (AggregateXCRecord.HOLDINGS.equals(type)) {
+	                            ar.getPreviousHoldingIds().add(or.getId());
+	                        } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
+	                            ar.setPreviousManifestationId(or.getId());
+	                        } else if (AggregateXCRecord.EXPRESSION.equals(type)) {
+	                            ar.getPreviousExpressionIds().add(or.getId());
+	                        } else if (AggregateXCRecord.WORK.equals(type)) {
+	                            ar.getPreviousWorkIds().add(or.getId());
+	                        } else {
+	                            throw new RuntimeException("bogus");
+	                        }
                         }
                     }
                 } else {
