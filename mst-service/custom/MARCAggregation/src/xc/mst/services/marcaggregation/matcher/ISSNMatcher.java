@@ -60,6 +60,9 @@ public class ISSNMatcher extends FieldMatcherService {
     //    and the normalized string
     // 8 digit number so thought Integer would cover it.
     //    But can include 'X' at end so must use String.
+    //
+    // TODO, to make this perform better could 1st see if match on the integer version
+    //
     protected Map<Long, List<String[]>> inputId2issn = new HashMap<Long, List<String[]>>();
 
     // multiple records might have the same normalized 022$a, this would be an indication of a match
@@ -67,7 +70,8 @@ public class ISSNMatcher extends FieldMatcherService {
 
     private static final Logger LOG = Logger.getLogger(ISSNMatcher.class);
 
-    private boolean debug = false;
+    private boolean debug = true;
+    private boolean debug2 = false;
 
     protected String getAllButDash(final String s) {
         String stripped = s.replaceAll("[-]", "");
@@ -129,7 +133,7 @@ public class ISSNMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
-                if (debug) {
+                if (debug2) {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String issn = getAllButDash(subfield);
@@ -141,15 +145,24 @@ public class ISSNMatcher extends FieldMatcherService {
                     issnList.add(issnArray);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 1.adding to inputId2issn, for id: " + id + " for issn: " + issn);
+                    if (debug) {
+                        LOG.info("*** 1.adding to inputId2issn, for id: " + id + " for issn: " + issn);
+                    }
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else if (issnList.contains(issn)) {
                     LOG.debug("** We have already seen issn " + issn + " for recordId: " + r.recordId);
+                    if (debug) {
+                        LOG.info("** We have already seen issn " + issn + " for recordId: " + r.recordId);
+                    }
                 }
                 else {
                     issnList.add(issnArray);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 2.adding to inputId2issn, for id: " + id + " for issn: " + issn);
+                    if (debug) {
+                        LOG.info("*** 2.adding to inputId2issn, for id: " + id + " for issn: " + issn);
+                    }
                 }
 
                 List<Long> ids = issn2inputIds.get(issn);
@@ -160,10 +173,16 @@ public class ISSNMatcher extends FieldMatcherService {
                     ids.add(r.recordId);
                     issn2inputIds.put(issn, ids);
                     LOG.debug("*** adding to issn2recordIds, for issn: " + issn);
+                    if (debug) {
+                        LOG.info("*** adding to issn2recordIds, for issn: " + issn);
+                    }
                 }
                 // Just because we have seen it, it is not an error, it just means multiple match rules use this matcher.
                 else {
                     LOG.debug("** We have already seen recordId: " + r.recordId);
+                    if (debug) {
+                        LOG.info("** We have already seen recordId: " + r.recordId);
+                    }
                 }
             }
         }
