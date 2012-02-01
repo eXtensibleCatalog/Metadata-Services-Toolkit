@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2012-01-31T14:50:03Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/MetadataServicesToolkit/pub/marcnormalization/oaiRepository</request>
+  <ListRecords>
+    <record>
+      <header status="deleted">
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/4</identifier>
+        <datestamp>2012-01-31T20:54:10Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+      </header>
+    </record>
+  </ListRecords>
+</OAI-PMH>
