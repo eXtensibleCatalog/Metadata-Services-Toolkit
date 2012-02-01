@@ -71,5 +71,9 @@ public class Step2abcMatchRule extends BaseMatchRule {
 
         return matchedIds;
     }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 }
 

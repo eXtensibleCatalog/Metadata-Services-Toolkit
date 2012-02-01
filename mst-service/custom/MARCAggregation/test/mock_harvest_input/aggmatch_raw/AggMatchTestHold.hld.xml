@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?><collection xmlns="http://www.loc.gov/MARC21/slim">
+  <record>
+    <leader>00189cx  a22000851  4500</leader>
+    <controlfield tag="001">2875889</controlfield>
+    <controlfield tag="004">2727551</controlfield>
+    <controlfield tag="005">20050202134122.0</controlfield>
+    <controlfield tag="008">0501060u||||8|||4001uu|||0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PR6068.O93</subfield>
+      <subfield code="i">Z69 2004</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00189nx  a22000852  4500</leader>
+    <controlfield tag="001">5098184</controlfield>
+    <controlfield tag="004">4598043</controlfield>
+    <controlfield tag="005">20110722140541.0</controlfield>
+    <controlfield tag="008">1107222p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PR6068.O93</subfield>
+      <subfield code="i">Z69 2004</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00189nx  a22000852  4500</leader>
+    <controlfield tag="001">4388882</controlfield>
+    <controlfield tag="004">4169623</controlfield>
+    <controlfield tag="005">20090421101245.0</controlfield>
+    <controlfield tag="008">0904212p    8   4001au   0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PZ7.R79835</subfield>
+      <subfield code="i">Hak 2007</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00189nx  a22000852  4500</leader>
+    <controlfield tag="001">5098185</controlfield>
+    <controlfield tag="004">4598044</controlfield>
+    <controlfield tag="005">20110722142555.0</controlfield>
+    <controlfield tag="008">1107222p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PZ7.R79835</subfield>
+      <subfield code="i">Hak 2007</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00263cy  a22000973  4500</leader>
+    <controlfield tag="001">2933685</controlfield>
+    <controlfield tag="004">21163</controlfield>
+    <controlfield tag="005">20060509113558.0</controlfield>
+    <controlfield tag="008">0503155p    8   0001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">Offsite1</subfield>
+      <subfield code="h">Z671</subfield>
+      <subfield code="i">.L698</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.101:no.9 (May 1,1976)-v.124 (1999)</subfield>
+      <subfield code="z">Missing v.124, no.4 (Mar.1 1999)</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00287cy  a22000973  4500</leader>
+    <controlfield tag="001">36808</controlfield>
+    <controlfield tag="004">21163</controlfield>
+    <controlfield tag="005">20050315140856.0</controlfield>
+    <controlfield tag="008">9612094p    8   0001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">Z671</subfield>
+      <subfield code="i">.L698</subfield>
+      <subfield code="z">Current issues in Periodical Reading Room</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.125 (2000)-</subfield>
+      <subfield code="z">Missing v.125, no.7 (April 15, 2000)</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00200cx  a22000854  4500</leader>
+    <controlfield tag="001">1683614</controlfield>
+    <controlfield tag="004">21163</controlfield>
+    <controlfield tag="005">20090618133803.0</controlfield>
+    <controlfield tag="008">9707210p    8   1001uu   0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">MinerSTS</subfield>
+      <subfield code="h">Serial</subfield>
+      <subfield code="z">Retain latest 2 years only.</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00173nx  a22000852  4500</leader>
+    <controlfield tag="001">5098186</controlfield>
+    <controlfield tag="004">4598045</controlfield>
+    <controlfield tag="005">20110725122514.0</controlfield>
+    <controlfield tag="008">1107252p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">Test</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00332cy  a22000973  4500</leader>
+    <controlfield tag="001">53317</controlfield>
+    <controlfield tag="004">32374</controlfield>
+    <controlfield tag="005">20100112140754.0</controlfield>
+    <controlfield tag="008">9612094p    8   0001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">TK5105.5</subfield>
+      <subfield code="i">.W57</subfield>
+      <subfield code="z">Current issues in Newspaper and Microform Center - Newspapers</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.3 (1995)-</subfield>
+      <subfield code="z">Lacking v.14, no.9 (Sept.2006); v.16, no.7-8 (July-Aug.2008)</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00187cx  a22000973  4500</leader>
+    <controlfield tag="001">53316</controlfield>
+    <controlfield tag="004">32374</controlfield>
+    <controlfield tag="005">20110127093912.0</controlfield>
+    <controlfield tag="008">9612090u    0   4001uu   0000000</controlfield>
+    <datafield tag="014" ind1=" " ind2=" ">
+      <subfield code="a">01225823</subfield>
+    </datafield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">MinReview</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00175cx  a22000852  4500</leader>
+    <controlfield tag="001">5098187</controlfield>
+    <controlfield tag="004">4598046</controlfield>
+    <controlfield tag="005">20110725123551.0</controlfield>
+    <controlfield tag="008">1107252p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">Serial</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00269cx  a22001094  4500</leader>
+    <controlfield tag="001">2862744</controlfield>
+    <controlfield tag="004">2714389</controlfield>
+    <controlfield tag="005">20050601135041.0</controlfield>
+    <controlfield tag="008">0411290p    8   1001uu   0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">MMCStack</subfield>
+      <subfield code="k">DVD</subfield>
+      <subfield code="h">PN1993.5.U6</subfield>
+      <subfield code="i">T74 2004</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">3 discs &lt;in container&gt;</subfield>
+    </datafield>
+    <datafield tag="867" ind1="3" ind2="0">
+      <subfield code="a">"Program notes" 1 v.</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00297nx  a22001094  4500</leader>
+    <controlfield tag="001">5073334</controlfield>
+    <controlfield tag="004">2714389</controlfield>
+    <controlfield tag="005">20101208112325.0</controlfield>
+    <controlfield tag="008">1012084u    8   1001uu   0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">MMCSpecial</subfield>
+      <subfield code="k">DVD</subfield>
+      <subfield code="h">PN1993.5.U6</subfield>
+      <subfield code="i">T74 2004</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">3 discs &lt;in separate containers&gt;</subfield>
+    </datafield>
+    <datafield tag="867" ind1="3" ind2="0">
+      <subfield code="a">1 book (186 pgs.) &lt;inside container&gt;</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00190nx  a22000852  4500</leader>
+    <controlfield tag="001">5098188</controlfield>
+    <controlfield tag="004">4598047</controlfield>
+    <controlfield tag="005">20110725124632.0</controlfield>
+    <controlfield tag="008">1107252p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PN1993.5.U6</subfield>
+      <subfield code="i">T74 2004</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00158nx  a22000734  4500</leader>
+    <controlfield tag="001">1661776</controlfield>
+    <controlfield tag="004">1542864</controlfield>
+    <controlfield tag="008">9704142p    8   1001uu   0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">SibStack</subfield>
+      <subfield code="h">ML410.V855</subfield>
+      <subfield code="i">Z69 1996</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00189nx  a22000852  4500</leader>
+    <controlfield tag="001">5098189</controlfield>
+    <controlfield tag="004">4598048</controlfield>
+    <controlfield tag="005">20110725130012.0</controlfield>
+    <controlfield tag="008">1107252p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">ML410.V855</subfield>
+      <subfield code="i">Z69 1996</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00185cx  a22000851  4500</leader>
+    <controlfield tag="001">3857979</controlfield>
+    <controlfield tag="004">3654731</controlfield>
+    <controlfield tag="005">20080110122821.0</controlfield>
+    <controlfield tag="008">0712130u||||8|||4001uu|||0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">HM846</subfield>
+      <subfield code="i">.F74 2007</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00229cx  a22001093  4500</leader>
+    <controlfield tag="001">1096685</controlfield>
+    <controlfield tag="004">992970</controlfield>
+    <controlfield tag="005">19961209130020.0</controlfield>
+    <controlfield tag="008">9612090u    0   4001uu   0000000</controlfield>
+    <datafield tag="014" ind1=" " ind2=" ">
+      <subfield code="a">00937854</subfield>
+    </datafield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">SibRef</subfield>
+      <subfield code="h">ML160 .N532 1990</subfield>
+    </datafield>
+    <datafield tag="866" ind1=" " ind2="0">
+      <subfield code="8">0</subfield>
+      <subfield code="a">v. 2</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00212cx  a22000973  4500</leader>
+    <controlfield tag="001">1096686</controlfield>
+    <controlfield tag="004">992971</controlfield>
+    <controlfield tag="005">20070207132337.0</controlfield>
+    <controlfield tag="008">9612090u    0   4001uu   0000000</controlfield>
+    <datafield tag="014" ind1=" " ind2=" ">
+      <subfield code="a">00937855</subfield>
+    </datafield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">SibStack</subfield>
+      <subfield code="h">ML160</subfield>
+      <subfield code="i">.N532 1990 v.2</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00288cx  a2200097   4500</leader>
+    <controlfield tag="001">3683702</controlfield>
+    <controlfield tag="004">2661237</controlfield>
+    <controlfield tag="005">20070504144737.0</controlfield>
+    <controlfield tag="008">040913                          </controlfield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="b">Internet</subfield>
+      <subfield code="z">Access restricted to the University of Rochester.</subfield>
+    </datafield>
+    <datafield tag="856" ind1=" " ind2=" ">
+      <subfield code="u">http://www.books24x7.com/marc.asp?isbn=0782122000</subfield>
+      <subfield code="2">http</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00191nx  a22000852  4500</leader>
+    <controlfield tag="001">5098191</controlfield>
+    <controlfield tag="004">4598050</controlfield>
+    <controlfield tag="005">20110725134347.0</controlfield>
+    <controlfield tag="008">1107252p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">QA76.73.P22</subfield>
+      <subfield code="i">H47 1999b</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00280cy  a2200097   4500</leader>
+    <controlfield tag="001">4970788</controlfield>
+    <controlfield tag="004">3404724</controlfield>
+    <controlfield tag="005">20100710095347.0</controlfield>
+    <controlfield tag="008">0701020p    8   4001aueng0000000</controlfield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="b">Internet</subfield>
+    </datafield>
+    <datafield tag="856" ind1=" " ind2=" ">
+      <subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=NATULO&amp;T=marc</subfield>
+      <subfield code="z">Full text</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00176nx  a22000852  4500</leader>
+    <controlfield tag="001">5101517</controlfield>
+    <controlfield tag="004">4601376</controlfield>
+    <controlfield tag="005">20110727112717.0</controlfield>
+    <controlfield tag="008">1107272p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">Q1</subfield>
+      <subfield code="i">.N2</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00209cy  a22000973  4500</leader>
+    <controlfield tag="001">37847</controlfield>
+    <controlfield tag="004">21898</controlfield>
+    <controlfield tag="005">20091014134716.0</controlfield>
+    <controlfield tag="008">9804214p    8   0001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">G1</subfield>
+      <subfield code="i">.N277</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.116 no.6 (1959)-</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00165ny  a22000853  4500</leader>
+    <controlfield tag="001">2656928</controlfield>
+    <controlfield tag="004">21898</controlfield>
+    <controlfield tag="005">20030801132228.0</controlfield>
+    <controlfield tag="008">0308014u    8   0001uueng0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">RheesSerAq</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00330cx  a22001212  4500</leader>
+    <controlfield tag="001">2485255</controlfield>
+    <controlfield tag="004">21898</controlfield>
+    <controlfield tag="005">20020423145035.0</controlfield>
+    <controlfield tag="007">ta</controlfield>
+    <controlfield tag="008">0204235p    8   4001bbeng0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">GEHPer</subfield>
+    </datafield>
+    <datafield tag="866" ind1="4" ind2="1">
+      <subfield code="a">v.147:no.1 (1975:Jan.), v.151:no.2 (1977:Feb.)-v.166:no.6 (1984:Dec.), v.175:no.1 (1989:Jan.)-v.187:no.4 (1995:Apr.)</subfield>
+    </datafield>
+    <datafield tag="868" ind1="4" ind2="1">
+      <subfield code="a">1990</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00230cy  a22000853  4500</leader>
+    <controlfield tag="001">2211692</controlfield>
+    <controlfield tag="004">21898</controlfield>
+    <controlfield tag="005">20100107123951.0</controlfield>
+    <controlfield tag="008">0107111p    8   4001uueng0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">BGIL</subfield>
+      <subfield code="z">Current issues shelved in Business and Government Information Library</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00265cy  a22000973  4500</leader>
+    <controlfield tag="001">2903006</controlfield>
+    <controlfield tag="004">3354</controlfield>
+    <controlfield tag="005">20060508154349.0</controlfield>
+    <controlfield tag="008">0502112u    8   2001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">Offsite1</subfield>
+      <subfield code="h">G1</subfield>
+      <subfield code="i">.N277</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.20 (1909); 22 (1911)-38 (1920); 40 (1921)-63 (1933); 65 (1934)-108 (1955)</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00218cy  a22000973  4500</leader>
+    <controlfield tag="001">5399</controlfield>
+    <controlfield tag="004">3354</controlfield>
+    <controlfield tag="005">20050211145454.0</controlfield>
+    <controlfield tag="008">9612092u    8   1001uueng0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">G1</subfield>
+      <subfield code="i">.N277</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">v.1 (1888)-v.116, no.5 (1959)</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00198cx  a22000973  4500</leader>
+    <controlfield tag="001">979541</controlfield>
+    <controlfield tag="004">883841</controlfield>
+    <controlfield tag="005">19961209125757.0</controlfield>
+    <controlfield tag="008">9612090u    0   4001uu   0000000</controlfield>
+    <datafield tag="014" ind1=" " ind2=" ">
+      <subfield code="a">00825467</subfield>
+    </datafield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">SibRecrd</subfield>
+      <subfield code="h">Media 63</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00199cx  a22000973  4500</leader>
+    <controlfield tag="001">1273272</controlfield>
+    <controlfield tag="004">1162756</controlfield>
+    <controlfield tag="005">19961209130351.0</controlfield>
+    <controlfield tag="008">9612090u    0   4001uu   0000000</controlfield>
+    <datafield tag="014" ind1=" " ind2=" ">
+      <subfield code="a">01111811</subfield>
+    </datafield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">SibRecrd</subfield>
+      <subfield code="h">CD 2960</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00213cx  a22000852  4500</leader>
+    <controlfield tag="001">1715300</controlfield>
+    <controlfield tag="004">1162756</controlfield>
+    <controlfield tag="005">19990727084553.0</controlfield>
+    <controlfield tag="008">9907272p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">ArtMusicRR</subfield>
+      <subfield code="h">RCD 338</subfield>
+      <subfield code="z">Sound discs and insert in container</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00198nx  a2200085z  4500</leader>
+    <controlfield tag="001">4391548</controlfield>
+    <controlfield tag="004">4172738</controlfield>
+    <controlfield tag="005">20090514091603.0</controlfield>
+    <controlfield tag="008">0905140u    1   4001uu   0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">MMCSpecial</subfield>
+      <subfield code="k">VIDEO</subfield>
+      <subfield code="h">PN1995.9.D7</subfield>
+      <subfield code="i">P436 1986</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00198nx  a2200085z  4500</leader>
+    <controlfield tag="001">4390196</controlfield>
+    <controlfield tag="004">4171281</controlfield>
+    <controlfield tag="005">20090505092256.0</controlfield>
+    <controlfield tag="008">0905050u    1   4001uu   0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">MMCSpecial</subfield>
+      <subfield code="k">VIDEO</subfield>
+      <subfield code="h">PN1995.9.D7</subfield>
+      <subfield code="i">P436 1987</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00237cx  a22000974  4500</leader>
+    <controlfield tag="001">3237536</controlfield>
+    <controlfield tag="004">3075165</controlfield>
+    <controlfield tag="005">20060417112408.0</controlfield>
+    <controlfield tag="008">0603100p    8   1001uu   0000000</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">MMCStack</subfield>
+      <subfield code="k">DVD</subfield>
+      <subfield code="h">PN1995.9.F36</subfield>
+      <subfield code="i">H37 2006</subfield>
+    </datafield>
+    <datafield tag="866" ind1="3" ind2="0">
+      <subfield code="a">2 discs &lt;in one container&gt;</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00142nx  a22000612  4500</leader>
+    <controlfield tag="004">4601377</controlfield>
+    <controlfield tag="008">1107272p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">PN1995.9.F36</subfield>
+      <subfield code="i">H37 2006</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00246nx  a22000974  4500</leader>
+    <controlfield tag="001">3321661</controlfield>
+    <controlfield tag="004">2039998</controlfield>
+    <controlfield tag="005">20060703112027.0</controlfield>
+    <controlfield tag="008">0607034u    8   1001uu   0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">SibStream</subfield>
+      <subfield code="h">CD 9926</subfield>
+    </datafield>
+    <datafield tag="856" ind1="4" ind2="0">
+      <subfield code="u">http://reserves.esm.rochester.edu/mp3/MMPRL06/CD09926/</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00174cx  a22000854  4500</leader>
+    <controlfield tag="001">2173043</controlfield>
+    <controlfield tag="004">2039998</controlfield>
+    <controlfield tag="005">20010319153710.0</controlfield>
+    <controlfield tag="008">0103014u    8   1001uu   0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">SibRecrd</subfield>
+      <subfield code="h">CD 9926</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00173nx  a22000852  4500</leader>
+    <controlfield tag="001">5101519</controlfield>
+    <controlfield tag="004">4601378</controlfield>
+    <controlfield tag="005">20110727125013.0</controlfield>
+    <controlfield tag="008">1107272p    8   4001au///0901128</controlfield>
+    <datafield tag="852" ind1="0" ind2=" ">
+      <subfield code="b">RheesStack</subfield>
+      <subfield code="h">Test</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00253cv  a22001093  4500</leader>
+    <controlfield tag="001">1866757</controlfield>
+    <controlfield tag="004">1738420</controlfield>
+    <controlfield tag="005">20110901085957.0</controlfield>
+    <controlfield tag="008">9911102d    8   1001aueng0901128</controlfield>
+    <datafield tag="852" ind1="8" ind2=" ">
+      <subfield code="b">NewsSuDoc</subfield>
+      <subfield code="h">CIS Fiche</subfield>
+    </datafield>
+    <datafield tag="866" ind1=" " ind2="0">
+      <subfield code="a">Part 1: CIS 77 H521-2</subfield>
+    </datafield>
+    <datafield tag="866" ind1=" " ind2="0">
+      <subfield code="a">Part 2: CIS 77 H521-3</subfield>
+    </datafield>
+  </record>
+</collection>

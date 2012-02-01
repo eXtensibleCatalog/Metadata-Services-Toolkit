@@ -25,6 +25,8 @@ import xc.mst.services.marcaggregation.matcher.MatchSet;
  */
 public class Step1aMatchRule extends BaseMatchRule {
 
+    private boolean debug = false;
+
     private static final Logger LOG = Logger.getLogger(Step1aMatchRule.class);
 
     public Set<Long> determineMatches(MatchSet ms) {
@@ -38,6 +40,10 @@ public class Step1aMatchRule extends BaseMatchRule {
         }
 
         return matchedIds;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
 }

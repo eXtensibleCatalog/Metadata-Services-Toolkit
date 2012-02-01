@@ -7,6 +7,8 @@ import xc.mst.services.marcaggregation.matcher.MatchSet;
 
 public class Step3aMatchRule extends BaseMatchRule {
 
+    private boolean debug = false;
+
     public Set<Long> determineMatches(MatchSet ms) {
         Set<Long> matchedIds = new HashSet<Long>();
 
@@ -21,5 +23,9 @@ public class Step3aMatchRule extends BaseMatchRule {
         }
 
         return matchedIds;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

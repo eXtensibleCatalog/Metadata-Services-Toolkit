@@ -242,6 +242,7 @@ public class MatcherTest extends MASBaseTest {
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
                     MatchRuleIfc matchRule = me.getValue();
+                    matchRule.setDebug(true);
                     Set<Long> set = matchRule.determineMatches(ms);
                     if (set !=null && !set.isEmpty()) {
                         matchedRecordIds.addAll(set);

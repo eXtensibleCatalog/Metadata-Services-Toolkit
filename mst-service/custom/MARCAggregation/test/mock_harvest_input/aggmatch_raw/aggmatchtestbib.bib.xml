@@ -1,0 +1,3800 @@
+<?xml version="1.0" encoding="UTF-8"?><collection xmlns="http://www.loc.gov/MARC21/slim">
+  <record>
+    <leader>02879pam a22004214a 4500</leader>
+    <controlfield tag="001">2727551</controlfield>
+    <controlfield tag="005">20110722135548.0</controlfield>
+    <controlfield tag="008">050106s2004    ilu      b    001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2004015133</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0812694554</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">2727551</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">YDX</subfield>
+      <subfield code="d">OrPss</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">pcc</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">e-uk---</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PR6068.O93</subfield>
+      <subfield code="b">Z69 2004</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">823/.914</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Harry Potter and philosophy :</subfield>
+      <subfield code="b">if Aristotle ran Hogwarts /</subfield>
+      <subfield code="c">edited by David Baggett and Shawn E. Klein.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Chicago, Ill. :</subfield>
+      <subfield code="b">Open Court,</subfield>
+      <subfield code="c">c2004.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">x, 243 p. ;</subfield>
+      <subfield code="c">23 cm.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">Popular culture and philosophy ;</subfield>
+      <subfield code="v">v. 9</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Includes bibliographical references and index.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2="0">
+      <subfield code="t">The Magic of Philosophy --</subfield>
+      <subfield code="t">Gryffindor: The Characters of Harry's World --</subfield>
+      <subfield code="t">The Courageous Harry Potter /</subfield>
+      <subfield code="r">Tom Morris --</subfield>
+      <subfield code="t">Dursley Duplicity: The Morality and Psychology of Self-Deception /</subfield>
+      <subfield code="r">Diana Mertz Hsieh --</subfield>
+      <subfield code="t">Voldemort's Agents, Malfoy's Cronies, and Hagrid's Chums: Friendship in Harry Potter /</subfield>
+      <subfield code="r">Harald Thorsrud --</subfield>
+      <subfield code="t">Feminism and Equal Opportunity: Hermione and the Women of Hogwarts /</subfield>
+      <subfield code="r">Mimi Gladstein --</subfield>
+      <subfield code="t">Hufflepuff: Morality in Rowling's Universe --</subfield>
+      <subfield code="t">Heaven, Hell, and Harry Potter /</subfield>
+      <subfield code="r">Jerry Walls --</subfield>
+      <subfield code="t">Magic, Science, and the Ethics of Technology /</subfield>
+      <subfield code="r">Benjamin J. Bruxvoort Lipscomb, W. Christopher Stewart --</subfield>
+      <subfield code="t">The Mirror of Erised: Why We Should Heed Dumbledore's Warning /</subfield>
+      <subfield code="r">Shawn Klein --</subfield>
+      <subfield code="t">Kreacher's Lament: S.P.E.W. as a Parable on Discrimination, Indifference, and Social Justice /</subfield>
+      <subfield code="r">Steven W. Patterson --</subfield>
+      <subfield code="t">Slytherin: Knockturn Alley, and the Dark Arts --</subfield>
+      <subfield code="t">Is Ambition a Virtue? Why Slytherin Belongs at Hogwarts /</subfield>
+      <subfield code="r">Steven W. Patterson --</subfield>
+      <subfield code="t">A Skewed Reflection: The Nature of Evil /</subfield>
+      <subfield code="r">David, Catherine Deavel --</subfield>
+      <subfield code="t">Voldemort, Boethius, and the Destructive Effects of Evil /</subfield>
+      <subfield code="r">Jennifer Hart Weed --</subfield>
+      <subfield code="t">Magic, Muggles, and Moral Imagination /</subfield>
+      <subfield code="r">David Baggett --</subfield>
+      <subfield code="t">Ravenclaw: Many-Flavored Topics in Metaphysics --</subfield>
+      <subfield code="t">Finding Platform 9?: The Idea of a Different Reality /</subfield>
+      <subfield code="r">Gareth B. Matthews --</subfield>
+      <subfield code="t">Space, Time, and Magic /</subfield>
+      <subfield code="r">Michael Silberstein --</subfield>
+      <subfield code="t">Why Voldemort Won't Just Die Already: What Wizards Can Teach Us about Personal Identity /</subfield>
+      <subfield code="r">Jason Eberl --</subfield>
+      <subfield code="t">The Prophecy-Driven Life: Foreknowledge and Freedom at Hogwarts /</subfield>
+      <subfield code="r">Gregory Bassham.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="x">Philosophy.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="x">Characters</subfield>
+      <subfield code="x">Harry Potter.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Children's stories, English</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Fantasy fiction, English</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Philosophy in literature.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Baggett, David.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Klein, Shawn.</subfield>
+    </datafield>
+    <datafield tag="830" ind1=" " ind2="0">
+      <subfield code="a">Popular culture and philosophy ;</subfield>
+      <subfield code="v">v. 9.</subfield>
+    </datafield>
+    <datafield tag="905" ind1=" " ind2=" ">
+      <subfield code="a">TP20050304</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">PromptCat</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="949" ind1=" " ind2=" ">
+      <subfield code="b">39087027243163</subfield>
+    </datafield>
+    <datafield tag="980" ind1=" " ind2=" ">
+      <subfield code="a">2005-01-19</subfield>
+      <subfield code="b">17.95</subfield>
+      <subfield code="e">15.08</subfield>
+      <subfield code="f">523803</subfield>
+      <subfield code="g">1</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">92</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01332pam a22004094a 4500</leader>
+    <controlfield tag="001">4598043</controlfield>
+    <controlfield tag="005">20110722140504.0</controlfield>
+    <controlfield tag="008">110722s2004    ilu      b    001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2004015133</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0812694554</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">2727551</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">YDX</subfield>
+      <subfield code="d">OrPss</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">pcc</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">e-uk---</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PR6068.O93</subfield>
+      <subfield code="b">Z69 2004</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">823/.914</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Harry Potter and philosophy :</subfield>
+      <subfield code="b">if Aristotle ran Hogwarts /</subfield>
+      <subfield code="c">edited by David Baggett and Shawn E. Klein.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Chicago, Ill. :</subfield>
+      <subfield code="b">Open Court,</subfield>
+      <subfield code="c">c2004.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">x, 243 p. ;</subfield>
+      <subfield code="c">23 cm.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">Popular culture and philosophy ;</subfield>
+      <subfield code="v">v. 9</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Includes bibliographical references and index.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="x">Philosophy.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="x">Characters</subfield>
+      <subfield code="x">Harry Potter.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Children's stories, English</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Fantasy fiction, English</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Philosophy in literature.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Baggett, David.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Klein, Shawn.</subfield>
+    </datafield>
+    <datafield tag="830" ind1=" " ind2="0">
+      <subfield code="a">Popular culture and philosophy ;</subfield>
+      <subfield code="v">v. 9.</subfield>
+    </datafield>
+    <datafield tag="905" ind1=" " ind2=" ">
+      <subfield code="a">TP20050304</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">PromptCat</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="949" ind1=" " ind2=" ">
+      <subfield code="b">39087027243163</subfield>
+    </datafield>
+    <datafield tag="980" ind1=" " ind2=" ">
+      <subfield code="a">2005-01-19</subfield>
+      <subfield code="b">17.95</subfield>
+      <subfield code="e">15.08</subfield>
+      <subfield code="f">523803</subfield>
+      <subfield code="g">1</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">92</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>03135cam a2200553 a 4500</leader>
+    <controlfield tag="001">4169623</controlfield>
+    <controlfield tag="005">20100128121411.0</controlfield>
+    <controlfield tag="008">070322s2007    nyua   j      000 1 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2007925449</subfield>
+    </datafield>
+    <datafield tag="019" ind1=" " ind2=" ">
+      <subfield code="a">85443494</subfield>
+      <subfield code="a">156991613</subfield>
+      <subfield code="a">212737958</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9780545010221</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9780545029360</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0545029368</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9780545029377 (deluxe ed.)</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0545029376 (deluxe ed.)</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000042057812</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">11497587</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000042796015</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocn155131850</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">DOV</subfield>
+      <subfield code="d">ZPX</subfield>
+      <subfield code="d">BAKER</subfield>
+      <subfield code="d">BTCTA</subfield>
+      <subfield code="d">IUK</subfield>
+      <subfield code="d">IOS</subfield>
+      <subfield code="d">JPL</subfield>
+      <subfield code="d">LF3</subfield>
+      <subfield code="d">SVP</subfield>
+      <subfield code="d">JZ6</subfield>
+      <subfield code="d">YBM</subfield>
+      <subfield code="d">IXA</subfield>
+      <subfield code="d">IHI</subfield>
+      <subfield code="d">YDXCP</subfield>
+      <subfield code="d">JST</subfield>
+      <subfield code="d">EHH</subfield>
+      <subfield code="d">INT</subfield>
+      <subfield code="d">LMR</subfield>
+      <subfield code="d">MBB</subfield>
+      <subfield code="d">NOR</subfield>
+      <subfield code="d">KEC</subfield>
+      <subfield code="d">JNA</subfield>
+      <subfield code="d">XFG</subfield>
+      <subfield code="d">RRR</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">lcac</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">e-uk-en</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PZ7.R79835</subfield>
+      <subfield code="b">Hak 2007</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2="4">
+      <subfield code="a">PR6068.O93</subfield>
+    </datafield>
+    <datafield tag="082" ind1="1" ind2="4">
+      <subfield code="a">[Fic]</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Harry Potter and the deathly hallows /</subfield>
+      <subfield code="c">by J.K. Rowling ; illustrations by Mary GrandPré.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">1st ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY :</subfield>
+      <subfield code="b">Arthur A. Levine Books,</subfield>
+      <subfield code="c">2007.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">759 p. :</subfield>
+      <subfield code="b">ill. ;</subfield>
+      <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Sequel to: Harry Potter and the Half-Blood Prince.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2="0">
+      <subfield code="g">1.</subfield>
+      <subfield code="t">The Dark Lord ascending --</subfield>
+      <subfield code="g">2.</subfield>
+      <subfield code="t">In memoriam --</subfield>
+      <subfield code="g">3.</subfield>
+      <subfield code="t">The Dursleys departing --</subfield>
+      <subfield code="g">4.</subfield>
+      <subfield code="t">The seven Potters --</subfield>
+      <subfield code="g">5.</subfield>
+      <subfield code="t">Fallen warrior --</subfield>
+      <subfield code="g">6.</subfield>
+      <subfield code="t">The ghoul in pajamas --</subfield>
+      <subfield code="g">7.</subfield>
+      <subfield code="t">The will of Albus Dumbledore --</subfield>
+      <subfield code="g">8.</subfield>
+      <subfield code="t">The wedding --</subfield>
+      <subfield code="g">9.</subfield>
+      <subfield code="t">A place to hide --</subfield>
+      <subfield code="g">10.</subfield>
+      <subfield code="t">Kreacher's tale --</subfield>
+      <subfield code="g">11.</subfield>
+      <subfield code="t">The bribe --</subfield>
+      <subfield code="g">12.</subfield>
+      <subfield code="t">Magic is might --</subfield>
+      <subfield code="g">13.</subfield>
+      <subfield code="t">The Muggle-born Registration Commission --</subfield>
+      <subfield code="g">14.</subfield>
+      <subfield code="t">The thief --</subfield>
+      <subfield code="g">15.</subfield>
+      <subfield code="t">The goblin's revenge --</subfield>
+      <subfield code="g">16.</subfield>
+      <subfield code="t">Godric's Hollow --</subfield>
+      <subfield code="g">17.</subfield>
+      <subfield code="t">Bathilda's secret --</subfield>
+      <subfield code="g">18.</subfield>
+      <subfield code="t">The life and lies of Albus Dumbledore --</subfield>
+      <subfield code="g">19.</subfield>
+      <subfield code="t">The silver doe --</subfield>
+      <subfield code="g">20.</subfield>
+      <subfield code="t">Xenophilius Lovegood --</subfield>
+      <subfield code="g">21.</subfield>
+      <subfield code="t">The tale of the three brothers --</subfield>
+      <subfield code="g">22.</subfield>
+      <subfield code="t">The Deathly Hallows --</subfield>
+      <subfield code="g">23.</subfield>
+      <subfield code="t">Malfoy Manor --</subfield>
+      <subfield code="g">24.</subfield>
+      <subfield code="t">The wandmaker --</subfield>
+      <subfield code="g">25.</subfield>
+      <subfield code="t">Shell Cottage --</subfield>
+      <subfield code="g">26.</subfield>
+      <subfield code="t">Gringotts --</subfield>
+      <subfield code="g">27.</subfield>
+      <subfield code="t">The final hiding place --</subfield>
+      <subfield code="g">28.</subfield>
+      <subfield code="t">The missing mirror --</subfield>
+      <subfield code="g">29.</subfield>
+      <subfield code="t">The lost diadem --</subfield>
+      <subfield code="g">30.</subfield>
+      <subfield code="t">The sacking of Severus Snape --</subfield>
+      <subfield code="g">31.</subfield>
+      <subfield code="t">The Battle of Hogwarts --</subfield>
+      <subfield code="g">32.</subfield>
+      <subfield code="t">The Elder Wand --</subfield>
+      <subfield code="g">33.</subfield>
+      <subfield code="t">The prince's tale --</subfield>
+      <subfield code="g">34.</subfield>
+      <subfield code="t">The forest again --</subfield>
+      <subfield code="g">35.</subfield>
+      <subfield code="t">King's Cross --</subfield>
+      <subfield code="g">36.</subfield>
+      <subfield code="t">The flaw in the plan --</subfield>
+      <subfield code="t">Epilogue.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">Burdened with the dark, dangerous, and seemingly impossible task of locating and destroying Voldemort's remaining Horcruxes, Harry, feeling alone and uncertain about his future, struggles to find the inner strength he needs to follow the path set out before him.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Wizards</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Magic</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Coming of age</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Wizards</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Magic</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Schools</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Hogwarts School of Witchcraft and Wizardry (Imaginary organization)</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="1">
+      <subfield code="a">England</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="0">
+      <subfield code="a">England</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Fantasy fiction.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Bildungsromans.</subfield>
+      <subfield code="2">gsafd</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">GrandPré, Mary,</subfield>
+      <subfield code="e">ill.</subfield>
+    </datafield>
+    <datafield tag="800" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="t">Year ... at Hogwarts ;</subfield>
+      <subfield code="v">7.</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02956cam a2200493 a 4500</leader>
+    <controlfield tag="001">4598044</controlfield>
+    <controlfield tag="005">20110722142453.0</controlfield>
+    <controlfield tag="008">110722s2007    nyua   j      000 1 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2007925449</subfield>
+    </datafield>
+    <datafield tag="019" ind1=" " ind2=" ">
+      <subfield code="a">85443494</subfield>
+      <subfield code="a">156991613</subfield>
+      <subfield code="a">212737958</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0545010225</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000042057812</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">11497587</subfield>
+    </datafield>
+    <datafield tag="029" ind1="1" ind2=" ">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000042796015</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">DOV</subfield>
+      <subfield code="d">ZPX</subfield>
+      <subfield code="d">BAKER</subfield>
+      <subfield code="d">BTCTA</subfield>
+      <subfield code="d">IUK</subfield>
+      <subfield code="d">IOS</subfield>
+      <subfield code="d">JPL</subfield>
+      <subfield code="d">LF3</subfield>
+      <subfield code="d">SVP</subfield>
+      <subfield code="d">JZ6</subfield>
+      <subfield code="d">YBM</subfield>
+      <subfield code="d">IXA</subfield>
+      <subfield code="d">IHI</subfield>
+      <subfield code="d">YDXCP</subfield>
+      <subfield code="d">JST</subfield>
+      <subfield code="d">EHH</subfield>
+      <subfield code="d">INT</subfield>
+      <subfield code="d">LMR</subfield>
+      <subfield code="d">MBB</subfield>
+      <subfield code="d">NOR</subfield>
+      <subfield code="d">KEC</subfield>
+      <subfield code="d">JNA</subfield>
+      <subfield code="d">XFG</subfield>
+      <subfield code="d">RRR</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">lcac</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">e-uk-en</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">PZ7.R79835</subfield>
+      <subfield code="b">Hak 2007</subfield>
+    </datafield>
+    <datafield tag="050" ind1=" " ind2="4">
+      <subfield code="a">PR6068.O93</subfield>
+    </datafield>
+    <datafield tag="082" ind1="1" ind2="4">
+      <subfield code="a">[Fic]</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Harry Potter and the deathly hallows /</subfield>
+      <subfield code="c">by J.K. Rowling ; illustrations by Mary GrandPré.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">1st ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY :</subfield>
+      <subfield code="b">Arthur A. Levine Books,</subfield>
+      <subfield code="c">2007.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">759 p. :</subfield>
+      <subfield code="b">ill. ;</subfield>
+      <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Sequel to: Harry Potter and the Half-Blood Prince.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2="0">
+      <subfield code="g">1.</subfield>
+      <subfield code="t">The Dark Lord ascending --</subfield>
+      <subfield code="g">2.</subfield>
+      <subfield code="t">In memoriam --</subfield>
+      <subfield code="g">3.</subfield>
+      <subfield code="t">The Dursleys departing --</subfield>
+      <subfield code="g">4.</subfield>
+      <subfield code="t">The seven Potters --</subfield>
+      <subfield code="g">5.</subfield>
+      <subfield code="t">Fallen warrior --</subfield>
+      <subfield code="g">6.</subfield>
+      <subfield code="t">The ghoul in pajamas --</subfield>
+      <subfield code="g">7.</subfield>
+      <subfield code="t">The will of Albus Dumbledore --</subfield>
+      <subfield code="g">8.</subfield>
+      <subfield code="t">The wedding --</subfield>
+      <subfield code="g">9.</subfield>
+      <subfield code="t">A place to hide --</subfield>
+      <subfield code="g">10.</subfield>
+      <subfield code="t">Kreacher's tale --</subfield>
+      <subfield code="g">11.</subfield>
+      <subfield code="t">The bribe --</subfield>
+      <subfield code="g">12.</subfield>
+      <subfield code="t">Magic is might --</subfield>
+      <subfield code="g">13.</subfield>
+      <subfield code="t">The Muggle-born Registration Commission --</subfield>
+      <subfield code="g">14.</subfield>
+      <subfield code="t">The thief --</subfield>
+      <subfield code="g">15.</subfield>
+      <subfield code="t">The goblin's revenge --</subfield>
+      <subfield code="g">16.</subfield>
+      <subfield code="t">Godric's Hollow --</subfield>
+      <subfield code="g">17.</subfield>
+      <subfield code="t">Bathilda's secret --</subfield>
+      <subfield code="g">18.</subfield>
+      <subfield code="t">The life and lies of Albus Dumbledore --</subfield>
+      <subfield code="g">19.</subfield>
+      <subfield code="t">The silver doe --</subfield>
+      <subfield code="g">20.</subfield>
+      <subfield code="t">Xenophilius Lovegood --</subfield>
+      <subfield code="g">21.</subfield>
+      <subfield code="t">The tale of the three brothers --</subfield>
+      <subfield code="g">22.</subfield>
+      <subfield code="t">The Deathly Hallows --</subfield>
+      <subfield code="g">23.</subfield>
+      <subfield code="t">Malfoy Manor --</subfield>
+      <subfield code="g">24.</subfield>
+      <subfield code="t">The wandmaker --</subfield>
+      <subfield code="g">25.</subfield>
+      <subfield code="t">Shell Cottage --</subfield>
+      <subfield code="g">26.</subfield>
+      <subfield code="t">Gringotts --</subfield>
+      <subfield code="g">27.</subfield>
+      <subfield code="t">The final hiding place --</subfield>
+      <subfield code="g">28.</subfield>
+      <subfield code="t">The missing mirror --</subfield>
+      <subfield code="g">29.</subfield>
+      <subfield code="t">The lost diadem --</subfield>
+      <subfield code="g">30.</subfield>
+      <subfield code="t">The sacking of Severus Snape --</subfield>
+      <subfield code="g">31.</subfield>
+      <subfield code="t">The Battle of Hogwarts --</subfield>
+      <subfield code="g">32.</subfield>
+      <subfield code="t">The Elder Wand --</subfield>
+      <subfield code="g">33.</subfield>
+      <subfield code="t">The prince's tale --</subfield>
+      <subfield code="g">34.</subfield>
+      <subfield code="t">The forest again --</subfield>
+      <subfield code="g">35.</subfield>
+      <subfield code="t">King's Cross --</subfield>
+      <subfield code="g">36.</subfield>
+      <subfield code="t">The flaw in the plan --</subfield>
+      <subfield code="t">Epilogue.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">Burdened with the dark, dangerous, and seemingly impossible task of locating and destroying Voldemort's remaining Horcruxes, Harry, feeling alone and uncertain about his future, struggles to find the inner strength he needs to follow the path set out before him.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Wizards</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Magic</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="1">
+      <subfield code="a">Coming of age</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Wizards</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Magic</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Schools</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Hogwarts School of Witchcraft and Wizardry (Imaginary organization)</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="1">
+      <subfield code="a">England</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="0">
+      <subfield code="a">England</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Fantasy fiction.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Bildungsromans.</subfield>
+      <subfield code="2">gsafd</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">GrandPré, Mary,</subfield>
+      <subfield code="e">ill.</subfield>
+    </datafield>
+    <datafield tag="800" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="t">Year ... at Hogwarts ;</subfield>
+      <subfield code="v">7.</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00716cas a22002290  4500</leader>
+    <controlfield tag="001">21163</controlfield>
+    <controlfield tag="005">20010122131150.0</controlfield>
+    <controlfield tag="008">760803c19769999nyusn1p       0   a0eng d</controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">76645271</subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">0363-0277</subfield>
+      <subfield code="y">0000-0027</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">02351916</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NSD</subfield>
+      <subfield code="c">NSD</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">RCS</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NST</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">lc</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">n-us---</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Libr. j.</subfield>
+      <subfield code="b">(1976)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Library journal</subfield>
+      <subfield code="b">(1976)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Library journal.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">[New York,</subfield>
+      <subfield code="b">Bowker]</subfield>
+    </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">v. 101, no. 9-   May 1, 1976-</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Library science</subfield>
+      <subfield code="x">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Libraries</subfield>
+      <subfield code="z">United States.</subfield>
+    </datafield>
+    <datafield tag="780" ind1="0" ind2="0">
+      <subfield code="t">LJ, Library journal</subfield>
+      <subfield code="x">0360-3113</subfield>
+      <subfield code="w">(OCoLC)2171727</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00663cas a22002050  4500</leader>
+    <controlfield tag="001">4598045</controlfield>
+    <controlfield tag="005">20110725122356.0</controlfield>
+    <controlfield tag="008">110725c19769999nyusn1p       0   a0eng d</controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">76645271</subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">0363-0277</subfield>
+      <subfield code="y">0000-0027</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NSD</subfield>
+      <subfield code="c">NSD</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">RCS</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">NST</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">n-us---</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Libr. j.</subfield>
+      <subfield code="b">(1976)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Library journal</subfield>
+      <subfield code="b">(1976)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Library journal.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">[New York,</subfield>
+      <subfield code="b">Bowker]</subfield>
+    </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">v. 101, no. 9-   May 1, 1976-</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Library science</subfield>
+      <subfield code="x">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Libraries</subfield>
+      <subfield code="z">United States.</subfield>
+    </datafield>
+    <datafield tag="780" ind1="0" ind2="0">
+      <subfield code="t">LJ, Library journal</subfield>
+      <subfield code="x">0360-3113</subfield>
+      <subfield code="w">(OCoLC)2171727</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01011cas a2200313 a 4500</leader>
+    <controlfield tag="001">32374</controlfield>
+    <controlfield tag="005">20010906160223.0</controlfield>
+    <controlfield tag="008">911001c19939999caumr1p       0   a0eng d</controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">   94659076 </subfield>
+      <subfield code="z">sn 91003654 </subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">1059-1028</subfield>
+    </datafield>
+    <datafield tag="030" ind1=" " ind2=" ">
+      <subfield code="a">WREDEM</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">24479723</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NSD</subfield>
+      <subfield code="c">NSD</subfield>
+      <subfield code="d">HUL</subfield>
+      <subfield code="d">CLU</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">CAS</subfield>
+      <subfield code="d">EYM</subfield>
+      <subfield code="d">WAU</subfield>
+      <subfield code="d">RNM</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">lc</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RNMM</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">Serial</subfield>
+    </datafield>
+    <datafield tag="130" ind1="0" ind2=" ">
+      <subfield code="a">Wired (San Francisco, Calif.)</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Wired</subfield>
+      <subfield code="b">(San Franc. Calif.)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Wired</subfield>
+      <subfield code="b">(San Francisco, Calif.)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Wired.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="1" ind2="1">
+      <subfield code="a">Chʻuan lien hao</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">San Francisco, CA :</subfield>
+      <subfield code="b">Wired USA,</subfield>
+    </datafield>
+    <datafield tag="362" ind1="1" ind2=" ">
+      <subfield code="a">Began publication with: 1.1 (1993).</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Issues for Sept./Oct. 1993-    have Chinese title: Chʻuan lien hao.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Imprint varies.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Description based on: 2.08 (August 1994).</subfield>
+    </datafield>
+    <datafield tag="515" ind1=" " ind2=" ">
+      <subfield code="a">Vol. 1.1 also called Premiere issue.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Attitude to Computers</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Computer Communication Networks</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00968cas a2200301 a 4500</leader>
+    <controlfield tag="001">4598046</controlfield>
+    <controlfield tag="005">20110725123448.0</controlfield>
+    <controlfield tag="008">110725c19939999caumr1p       0   a0eng d</controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="z">sn 91003654</subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">1059-1028</subfield>
+    </datafield>
+    <datafield tag="030" ind1=" " ind2=" ">
+      <subfield code="a">WREDEM</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NSD</subfield>
+      <subfield code="c">NSD</subfield>
+      <subfield code="d">HUL</subfield>
+      <subfield code="d">CLU</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">CAS</subfield>
+      <subfield code="d">EYM</subfield>
+      <subfield code="d">WAU</subfield>
+      <subfield code="d">RNM</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">lc</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RNMM</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">Serial</subfield>
+    </datafield>
+    <datafield tag="130" ind1="0" ind2=" ">
+      <subfield code="a">Wired (San Francisco, Calif.)</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Wired</subfield>
+      <subfield code="b">(San Franc. Calif.)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Wired</subfield>
+      <subfield code="b">(San Francisco, Calif.)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Wired.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="1" ind2="1">
+      <subfield code="a">Chʻuan lien hao</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">San Francisco, CA :</subfield>
+      <subfield code="b">Wired USA,</subfield>
+    </datafield>
+    <datafield tag="362" ind1="1" ind2=" ">
+      <subfield code="a">Began publication with: 1.1 (1993).</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Issues for Sept./Oct. 1993-    have Chinese title: Chʻuan lien hao.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Imprint varies.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Description based on: 2.08 (August 1994).</subfield>
+    </datafield>
+    <datafield tag="515" ind1=" " ind2=" ">
+      <subfield code="a">Vol. 1.1 also called Premiere issue.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Attitude to Computers</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Computer Communication Networks</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>04175cgm a2200457Ia 4500</leader>
+    <controlfield tag="001">2714389</controlfield>
+    <controlfield tag="005">20101208112105.0</controlfield>
+    <controlfield tag="007">vd cvaizs</controlfield>
+    <controlfield tag="008">040702s2004    xxu573            vceng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2004640022</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0974709913 (set)</subfield>
+    </datafield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">014381227123 (set)</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">NATD2271DVD (set)</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocm55857065</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">2714389</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="e">amim</subfield>
+      <subfield code="c">DLC</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1993.5.U6</subfield>
+      <subfield code="b">T74 2004</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">More treasures from American film archives, 1894-1931</subfield>
+      <subfield code="h">[videorecording] :</subfield>
+      <subfield code="b">50 films /</subfield>
+      <subfield code="c">Sony Pictures ; produced by the National Film Preservation Foundation ; curator, Scott Simmon ; music curator, Martin Marks.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">50 films</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Fifty films</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">United States :</subfield>
+      <subfield code="b">Image Entertainment,</subfield>
+      <subfield code="c">2004.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">3 videodiscs (573 min.) :</subfield>
+      <subfield code="b">sd., b&amp;w and col. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+      <subfield code="e">1 book (186 p. ; ill. ; 29 cm.)</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">This set was made possible in part by a grant from the National Endowment for the Humanities.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Special features: over 9 1/2 hours on 3 discs ;  commentary by 17 critics, historians, and preservationists ; digitally mastered from the finest archival sources ; newly recorded musical scores ; over 500 interactive screens about the films and music ; 186-page illustrated book with film notes and credits ; postcards from the films ; playable worldwide.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Accompanying book (186 p.) contains full credits, essays by the curators, over 60 illustrations, and indexes.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Films are from five major film archives: the Academy of Motion Picture Arts and Sciences, George Eastman House, the Library of Congress, the Museum of Modern Art, and the UCLA Film and Television Archive.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Sources used: accompanying book; brochure for title in M/B/RS organizations files (National Film Preservation Foundation); National Film Preservation Foundation web site.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2=" ">
+      <subfield code="a">Program 1. Dickson experimental sound film -- Annie Oakley, Buffalo dance, Bucking broncho -- The suburbanite -- The country doctor -- The wonderful Wizard of Oz -- Admiral Cigarette, Flash Cleaner, Buy an electric refrigerator, The stenographer's friend -- The invaders -- The hazards of Helen -- Gretchen the greenhorn -- The breath of a nation -- De-light: making an electric light bulb -- Skyscraper symphony -- Greetings by George Bernard Shaw.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="8" ind2=" ">
+      <subfield code="a">Program 2. What happened on Twenty-Third Street, At the foot of the Flatiron, New York City "ghetto" fish market -- From Leadville to Aspen -- The "Teddy" bears -- Children who labor -- The flute of Krishna -- Surviving reel of Lotus blossom -- Gus Visser and his singing duck -- Clash of the wolves -- International newsreel -- Now you're talking -- There it is -- A Bronx morning.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="8" ind2=" ">
+      <subfield code="a">Program 3. Rip Van Winkle -- Mr. Edison at work in his chemical laboratory -- Life of an American fireman -- Westinghouse works -- Falling leaves -- Hollywood promotional films -- De Forest Phonofilms -- Inklings -- Lady Windermere's fan -- Cockeyed -- Prologue from The Passaic textile strike -- Tramp, tramp, tramp -- Zora Neale Hurston's fieldwork footage -- Trailers for six lost films.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">An anthology of films from American film archives. In addition to rare silent-era features, includes cartoons and animation, documentaries and newsreels, earliest American movies, pioneering sound and color experiments, serial episodes, trailers for lost films, advertisements, avant-garde shorts, ethnographic footage, films of ethnic communities, and other film types invented during the first four decades of the motion picture. Contains 50 films followed by six previews for lost features and serials. Also contains newly recorded musical scores and over 500 interactive screens about the films and music.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">DVD ; NTSC ; Dolby digital stereo sound.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Motion pictures</subfield>
+      <subfield code="z">United States</subfield>
+      <subfield code="x">History.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Simmon, Scott,</subfield>
+      <subfield code="e">research.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Marks, Martin Miller,</subfield>
+      <subfield code="e">music.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Sony Pictures.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">National Film Preservation Foundation (U.S.)</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Image Entertainment (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">E0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>04116cgm a2200433Ia 4500</leader>
+    <controlfield tag="001">4598047</controlfield>
+    <controlfield tag="005">20110725124557.0</controlfield>
+    <controlfield tag="007">vd cvaizs</controlfield>
+    <controlfield tag="008">110725s2004    xxu573            vceng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2004640022</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0974709913 (set)</subfield>
+    </datafield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">014381227123 (set)</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">NATD2271DVD (set)</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="e">amim</subfield>
+      <subfield code="c">DLC</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1993.5.U6</subfield>
+      <subfield code="b">T74 2004</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">More treasures from American film archives, 1894-1931</subfield>
+      <subfield code="h">[videorecording] :</subfield>
+      <subfield code="b">50 films /</subfield>
+      <subfield code="c">Sony Pictures ; produced by the National Film Preservation Foundation ; curator, Scott Simmon ; music curator, Martin Marks.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">50 films</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Fifty films</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">United States :</subfield>
+      <subfield code="b">Image Entertainment,</subfield>
+      <subfield code="c">2004.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">3 videodiscs (573 min.) :</subfield>
+      <subfield code="b">sd., b&amp;w and col. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+      <subfield code="e">1 book (186 p. ; ill. ; 29 cm.)</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">This set was made possible in part by a grant from the National Endowment for the Humanities.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Special features: over 9 1/2 hours on 3 discs ;  commentary by 17 critics, historians, and preservationists ; digitally mastered from the finest archival sources ; newly recorded musical scores ; over 500 interactive screens about the films and music ; 186-page illustrated book with film notes and credits ; postcards from the films ; playable worldwide.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Accompanying book (186 p.) contains full credits, essays by the curators, over 60 illustrations, and indexes.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Films are from five major film archives: the Academy of Motion Picture Arts and Sciences, George Eastman House, the Library of Congress, the Museum of Modern Art, and the UCLA Film and Television Archive.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Sources used: accompanying book; brochure for title in M/B/RS organizations files (National Film Preservation Foundation); National Film Preservation Foundation web site.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2=" ">
+      <subfield code="a">Program 1. Dickson experimental sound film -- Annie Oakley, Buffalo dance, Bucking broncho -- The suburbanite -- The country doctor -- The wonderful Wizard of Oz -- Admiral Cigarette, Flash Cleaner, Buy an electric refrigerator, The stenographer's friend -- The invaders -- The hazards of Helen -- Gretchen the greenhorn -- The breath of a nation -- De-light: making an electric light bulb -- Skyscraper symphony -- Greetings by George Bernard Shaw.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="8" ind2=" ">
+      <subfield code="a">Program 2. What happened on Twenty-Third Street, At the foot of the Flatiron, New York City "ghetto" fish market -- From Leadville to Aspen -- The "Teddy" bears -- Children who labor -- The flute of Krishna -- Surviving reel of Lotus blossom -- Gus Visser and his singing duck -- Clash of the wolves -- International newsreel -- Now you're talking -- There it is -- A Bronx morning.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="8" ind2=" ">
+      <subfield code="a">Program 3. Rip Van Winkle -- Mr. Edison at work in his chemical laboratory -- Life of an American fireman -- Westinghouse works -- Falling leaves -- Hollywood promotional films -- De Forest Phonofilms -- Inklings -- Lady Windermere's fan -- Cockeyed -- Prologue from The Passaic textile strike -- Tramp, tramp, tramp -- Zora Neale Hurston's fieldwork footage -- Trailers for six lost films.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">An anthology of films from American film archives. In addition to rare silent-era features, includes cartoons and animation, documentaries and newsreels, earliest American movies, pioneering sound and color experiments, serial episodes, trailers for lost films, advertisements, avant-garde shorts, ethnographic footage, films of ethnic communities, and other film types invented during the first four decades of the motion picture. Contains 50 films followed by six previews for lost features and serials. Also contains newly recorded musical scores and over 500 interactive screens about the films and music.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">DVD ; NTSC ; Dolby digital stereo sound.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Motion pictures</subfield>
+      <subfield code="z">United States</subfield>
+      <subfield code="x">History.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Simmon, Scott,</subfield>
+      <subfield code="e">research.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Marks, Martin Miller,</subfield>
+      <subfield code="e">music.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Sony Pictures.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">National Film Preservation Foundation (U.S.)</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Image Entertainment (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">E0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01549cam a2200349Ia 4500</leader>
+    <controlfield tag="001">1542864</controlfield>
+    <controlfield tag="005">20010526221341.0</controlfield>
+    <controlfield tag="008">961217s1996    gw a     bk   000 0 ger d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">3920950267</subfield>
+    </datafield>
+    <datafield tag="024" ind1="2" ind2=" ">
+      <subfield code="a">M-005028191-7</subfield>
+    </datafield>
+    <datafield tag="028" ind1="3" ind2="2">
+      <subfield code="a">2819 P.J.T.</subfield>
+      <subfield code="b">P.J. Tonger Musikverlag</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)36099639</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">1542864</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">OSU</subfield>
+      <subfield code="c">OSU</subfield>
+      <subfield code="d">NYP</subfield>
+    </datafield>
+    <datafield tag="041" ind1="1" ind2=" ">
+      <subfield code="a">ger</subfield>
+      <subfield code="e">itager</subfield>
+      <subfield code="h">ita</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESM</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">ML410.V855</subfield>
+      <subfield code="b">Z69 1996</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Zilkens, Udo,</subfield>
+      <subfield code="d">1964-</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Antonio Vivaldi :</subfield>
+      <subfield code="b">zwischen Naturalismus und Pop : die vier Jahreszeiten im Spiegel ihrer Interpretationen durch Musiktheoretiker und Musiker, in Bearbeitungen und auf Plattencovern /</subfield>
+      <subfield code="c">Udo Zilkens ; mit einer Diskographie von Roger-Claude Travers.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Zwischen Naturalismus und Pop</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Vier Jahreszeiten im Spiegel ihrer Interpretationen durch Musiktheoretiker und Musiker, in Bearbeitungen und auf Plattencovern</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Köln-Rodenkirchen :</subfield>
+      <subfield code="b">P.J. Tonger Musikverlag,</subfield>
+      <subfield code="c">c1996.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">95 p. ;</subfield>
+      <subfield code="b">ill. ;</subfield>
+      <subfield code="c">25 cm.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Discography: p. 84-89.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Includes bibliographical references (p. 82-83) and index.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Includes the sonnets in Italian and German : p. 92-95.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741</subfield>
+      <subfield code="x">Criticism and interpretation.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741.</subfield>
+      <subfield code="t">Cimento dell'armonia e dell'inventione.</subfield>
+      <subfield code="n">N. 1-4.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741</subfield>
+      <subfield code="v">Discography.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Concertos (Violin with string orchestra)</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Travers, Roger-Claude.</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01517cam a2200337Ia 4500</leader>
+    <controlfield tag="001">4598048</controlfield>
+    <controlfield tag="005">20110725125849.0</controlfield>
+    <controlfield tag="008">110725s1996    gw a     bk   000 0 ger d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">3920950267</subfield>
+    </datafield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">M-005028191-7</subfield>
+    </datafield>
+    <datafield tag="028" ind1="3" ind2="2">
+      <subfield code="a">2819 P.J.T.</subfield>
+      <subfield code="b">P.J. Tonger Musikverlag</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">1542864</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">OSU</subfield>
+      <subfield code="c">OSU</subfield>
+      <subfield code="d">NYP</subfield>
+    </datafield>
+    <datafield tag="041" ind1="1" ind2=" ">
+      <subfield code="a">ger</subfield>
+      <subfield code="e">itager</subfield>
+      <subfield code="h">ita</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESM</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">ML410.V855</subfield>
+      <subfield code="b">Z69 1996</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Zilkens, Udo,</subfield>
+      <subfield code="d">1964-</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Antonio Vivaldi :</subfield>
+      <subfield code="b">zwischen Naturalismus und Pop : die vier Jahreszeiten im Spiegel ihrer Interpretationen durch Musiktheoretiker und Musiker, in Bearbeitungen und auf Plattencovern /</subfield>
+      <subfield code="c">Udo Zilkens ; mit einer Diskographie von Roger-Claude Travers.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Zwischen Naturalismus und Pop</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2="0">
+      <subfield code="a">Vier Jahreszeiten im Spiegel ihrer Interpretationen durch Musiktheoretiker und Musiker, in Bearbeitungen und auf Plattencovern</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Köln-Rodenkirchen :</subfield>
+      <subfield code="b">P.J. Tonger Musikverlag,</subfield>
+      <subfield code="c">c1996.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">95 p. ;</subfield>
+      <subfield code="b">ill. ;</subfield>
+      <subfield code="c">25 cm.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Discography: p. 84-89.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Includes bibliographical references (p. 82-83) and index.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Includes the sonnets in Italian and German : p. 92-95.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741</subfield>
+      <subfield code="x">Criticism and interpretation.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741.</subfield>
+      <subfield code="t">Cimento dell'armonia e dell'inventione.</subfield>
+      <subfield code="n">N. 1-4.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Vivaldi, Antonio,</subfield>
+      <subfield code="d">1678-1741</subfield>
+      <subfield code="v">Discography.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Concertos (Violin with string orchestra)</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Travers, Roger-Claude.</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02139cam a2200469 a 4500</leader>
+    <controlfield tag="001">3654731</controlfield>
+    <controlfield tag="005">20080516122913.0</controlfield>
+    <controlfield tag="008">071213s2007    nyu           001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2007021424</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9780374292782 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0374292787 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield tag="024" ind1="7" ind2=" ">
+      <subfield code="a">99818674082</subfield>
+      <subfield code="2">YBP</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocn137305761</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">3654731</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)137305761</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">BAKER</subfield>
+      <subfield code="d">BTCTA</subfield>
+      <subfield code="d">OCO</subfield>
+      <subfield code="d">YDXCP</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">HM846</subfield>
+      <subfield code="b">.F74 2007</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">303.48/33</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Friedman, Thomas L.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="4">
+      <subfield code="a">The world is flat :</subfield>
+      <subfield code="b">a brief history of the twenty-first century /</subfield>
+      <subfield code="c">Thomas L. Friedman.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">1st further updated and expanded hardcover ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York :</subfield>
+      <subfield code="b">Farrar, Straus and Giroux,</subfield>
+      <subfield code="c">2007.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">x, 660 p. ;</subfield>
+      <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">[Release] "3.0 expanded ed."--P. ix.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Includes index.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2=" ">
+      <subfield code="a">While I was sleeping -- The ten forces that flattened the world -- The triple convergence -- The great sorting out -- America and free trade -- The untouchables -- The right stuff -- The quiet crisis -- This is not a test -- The Virgin of Guadalupe -- How companies cope -- Globalization of the local -- If it's not happening it's because you're not doing it -- What happens when we all have dog's hearing? -- The unflat world -- The Dell theory of conflict prevention -- 11/9 versus 9/11.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Diffusion of innovations.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Information society.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Globalization</subfield>
+      <subfield code="x">Economic aspects.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Globalization</subfield>
+      <subfield code="x">Social aspects.</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">Baker &amp; Taylor</subfield>
+      <subfield code="b">BKTY</subfield>
+      <subfield code="c">35.00</subfield>
+      <subfield code="d">26.25</subfield>
+      <subfield code="i">0374292787</subfield>
+      <subfield code="n">0007329586</subfield>
+      <subfield code="s">active</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">Baker and Taylor</subfield>
+      <subfield code="b">BTCP</subfield>
+      <subfield code="n">BK0007329586</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">YBP Library Services</subfield>
+      <subfield code="b">YANK</subfield>
+      <subfield code="n">2621210</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">PromptCat</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="949" ind1=" " ind2=" ">
+      <subfield code="b">39087029151281</subfield>
+    </datafield>
+    <datafield tag="957" ind1="4" ind2="1">
+      <subfield code="3">Table of contents only</subfield>
+      <subfield code="u">http://www.loc.gov/catdir/toc/ecip0719/2007021424.html</subfield>
+    </datafield>
+    <datafield tag="960" ind1="4" ind2="1">
+      <subfield code="3">Sample text</subfield>
+      <subfield code="u">http://www.loc.gov/catdir/enhancements/fy0743/2007021424-s.html</subfield>
+    </datafield>
+    <datafield tag="980" ind1=" " ind2=" ">
+      <subfield code="a">2007-12-28</subfield>
+      <subfield code="b">35</subfield>
+      <subfield code="e">29.4</subfield>
+      <subfield code="f">301145</subfield>
+      <subfield code="g">1</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">92</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01269nam a22003618a 4500</leader>
+    <controlfield tag="001">992971</controlfield>
+    <controlfield tag="008">880713s1990    enkag    b    001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">   88022469 </subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0193163292 :</subfield>
+      <subfield code="c">£55.00 (est.) ( 165.00 U.S. : est.)</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">18290176</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">00937855</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">RES</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">[Reference] RESM [copy 1]</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2=" ">
+      <subfield code="a">ML160</subfield>
+      <subfield code="b">.N44 1989 vol. 2</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">ML160</subfield>
+      <subfield code="b">.N532 1990, v.2</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">ML160 .N532 1990, v.2</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="4">
+      <subfield code="a">The Early Middle Ages to 1300 /</subfield>
+      <subfield code="c">edited by Richard Crocker and David Hiley.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">2nd ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Oxford ;</subfield>
+      <subfield code="a">New York :</subfield>
+      <subfield code="b">Oxford University Press,</subfield>
+      <subfield code="c">1990.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">xx, 795 p. :</subfield>
+      <subfield code="b">ill., music ;</subfield>
+      <subfield code="c">26 cm.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">New Oxford history of music ;</subfield>
+      <subfield code="v">v. 2</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Rev ed. of: Early medieval music, up to 1300. 1967.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Includes index.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Bibliography: p. [721]-775.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Music</subfield>
+      <subfield code="y">500-1400</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Crocker, Richard L.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Hiley, David.</subfield>
+    </datafield>
+    <datafield tag="730" ind1="0" ind2=" ">
+      <subfield code="a">Early medieval music, up to 1300.</subfield>
+    </datafield>
+    <datafield tag="830" ind1=" " ind2="0">
+      <subfield code="a">New Oxford history of music (2nd ed.) ;</subfield>
+      <subfield code="v">v. 2.</subfield>
+    </datafield>
+    <datafield tag="910" ind1=" " ind2=" ">
+      <subfield code="a">950805</subfield>
+    </datafield>
+    <datafield tag="911" ind1=" " ind2=" ">
+      <subfield code="a">p</subfield>
+    </datafield>
+    <datafield tag="966" ind1=" " ind2=" ">
+      <subfield code="l">/Ref</subfield>
+      <subfield code="m">SREF</subfield>
+      <subfield code="s">ML160 .N532 1990, v.2</subfield>
+      <subfield code="c">1</subfield>
+      <subfield code="b">39087009870736</subfield>
+    </datafield>
+    <datafield tag="966" ind1=" " ind2=" ">
+      <subfield code="l">GenStk</subfield>
+      <subfield code="m">DIVMTH</subfield>
+      <subfield code="s">ML160 .N44 1990 v.2</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00865cam a22002778a 4500</leader>
+    <controlfield tag="001">992970</controlfield>
+    <controlfield tag="008">880713m19909999enkag    b    001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">   88022471 /MN</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0193163292 (v. 2) :</subfield>
+      <subfield code="c">£55.00 (est.) ( 165.00 U.S. : est.)</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">18290202</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">00937854</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">RES</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">[Reference] RESM [v.2,c.1]</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2=" ">
+      <subfield code="a">ML160</subfield>
+      <subfield code="b">.N44 1989</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">ML160</subfield>
+      <subfield code="b">.N532 1990</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">ML160 .N532 1990</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">New Oxford history of music.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">2nd ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Oxford ;</subfield>
+      <subfield code="a">New York :</subfield>
+      <subfield code="b">Oxford University Press,</subfield>
+      <subfield code="c">1990-</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">v. :</subfield>
+      <subfield code="b">ill., music ;</subfield>
+      <subfield code="c">26 cm.</subfield>
+    </datafield>
+    <datafield tag="504" ind1=" " ind2=" ">
+      <subfield code="a">Includes bibliographies and indexes.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="1" ind2=" ">
+      <subfield code="a">-- v. 2. The early Middle Ages to 1300.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Music</subfield>
+      <subfield code="x">History and criticism.</subfield>
+    </datafield>
+    <datafield tag="910" ind1=" " ind2=" ">
+      <subfield code="a">950805</subfield>
+    </datafield>
+    <datafield tag="911" ind1=" " ind2=" ">
+      <subfield code="a">p</subfield>
+    </datafield>
+    <datafield tag="966" ind1=" " ind2=" ">
+      <subfield code="l">/Ref</subfield>
+      <subfield code="m">SREF</subfield>
+      <subfield code="s">ML160 .N532 1990</subfield>
+      <subfield code="c">1</subfield>
+      <subfield code="d">v. 2</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01030nam a2200301 a 4500</leader>
+    <controlfield tag="001">2661237</controlfield>
+    <controlfield tag="005">20040913143958.0</controlfield>
+    <controlfield tag="006">m        d        </controlfield>
+    <controlfield tag="007">cr zn|</controlfield>
+    <controlfield tag="008">000414s1999    caua    s     000 0 eng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="z">0782122000</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(CtWfDGI)bks00000384</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">CtWfDGI</subfield>
+      <subfield code="c">CtWfDGI</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">QA76.73.P22</subfield>
+      <subfield code="b">H47 1999b</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">005.13/3</subfield>
+      <subfield code="2">21</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Herrmann, Eric.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Mastering Perl 5</subfield>
+      <subfield code="h">[electronic resource] /</subfield>
+      <subfield code="c">Eric C. Herrmann.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2=" ">
+      <subfield code="a">Mastering Perl five</subfield>
+    </datafield>
+    <datafield tag="256" ind1=" " ind2=" ">
+      <subfield code="a">Computer document.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">San Francisco, Calif. :</subfield>
+      <subfield code="b">Sybex,</subfield>
+      <subfield code="c">c1999</subfield>
+      <subfield code="e">(Norwood, Mass. :</subfield>
+      <subfield code="f">Books24x7.com [generator])</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Title from title screen.</subfield>
+    </datafield>
+    <datafield tag="516" ind1=" " ind2=" ">
+      <subfield code="a">Text.</subfield>
+    </datafield>
+    <datafield tag="530" ind1=" " ind2=" ">
+      <subfield code="a">Available also in a print ed.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">Mode of access: Internet via World Wide Web.</subfield>
+    </datafield>
+    <datafield tag="550" ind1=" " ind2=" ">
+      <subfield code="a">Digitized and made available by: Books 24x7.com.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Perl (Computer program language)</subfield>
+    </datafield>
+    <datafield tag="856" ind1="7" ind2=" ">
+      <subfield code="u">http://www.books24x7.com/marc.asp?isbn=0782122000</subfield>
+      <subfield code="2">http</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="a">Text data RCL Internet Books24x7</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>00970nam a2200289 a 4500</leader>
+    <controlfield tag="001">4598050</controlfield>
+    <controlfield tag="005">20110725134321.0</controlfield>
+    <controlfield tag="006">m        d        </controlfield>
+    <controlfield tag="007">cr zn|</controlfield>
+    <controlfield tag="008">110725s1999    caua    s     000 0 eng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="z">0782122000</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">CtWfDGI</subfield>
+      <subfield code="c">CtWfDGI</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">QA76.73.P22</subfield>
+      <subfield code="b">H47 1999b</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">005.13/3</subfield>
+      <subfield code="2">21</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Herrmann, Eric.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Mastering Perl 5 /</subfield>
+      <subfield code="c">Eric C. Herrmann.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2=" ">
+      <subfield code="a">Mastering Perl five</subfield>
+    </datafield>
+    <datafield tag="256" ind1=" " ind2=" ">
+      <subfield code="a">Computer document.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">San Francisco, Calif. :</subfield>
+      <subfield code="b">Sybex,</subfield>
+      <subfield code="c">c1999</subfield>
+      <subfield code="e">(Norwood, Mass. :</subfield>
+      <subfield code="f">Books24x7.com [generator])</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Title from title screen.</subfield>
+    </datafield>
+    <datafield tag="516" ind1=" " ind2=" ">
+      <subfield code="a">Text.</subfield>
+    </datafield>
+    <datafield tag="530" ind1=" " ind2=" ">
+      <subfield code="a">Available also in a print ed.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">Mode of access: Internet via World Wide Web.</subfield>
+    </datafield>
+    <datafield tag="550" ind1=" " ind2=" ">
+      <subfield code="a">Digitized and made available by: Books 24x7.com.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Perl (Computer program language)</subfield>
+    </datafield>
+    <datafield tag="856" ind1="7" ind2=" ">
+      <subfield code="u">http://www.books24x7.com/marc.asp?isbn=0782122000</subfield>
+      <subfield code="2">http</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="a">Text data RCL Internet Books24x7</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02840cas a2200541   4500</leader>
+    <controlfield tag="001">3404724</controlfield>
+    <controlfield tag="005">20100710095346.0</controlfield>
+    <controlfield tag="006">m        d        </controlfield>
+    <controlfield tag="007">cr  n         </controlfield>
+    <controlfield tag="008">750901c18699999enkwn p s     0   a0eng c</controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">   12037118 </subfield>
+    </datafield>
+    <datafield tag="016" ind1="7" ind2=" ">
+      <subfield code="a">N07600000</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">0028-0836</subfield>
+      <subfield code="l">0028-0836</subfield>
+      <subfield code="z">0302-2889</subfield>
+      <subfield code="2">2</subfield>
+    </datafield>
+    <datafield tag="030" ind1=" " ind2=" ">
+      <subfield code="a">NATUAS</subfield>
+    </datafield>
+    <datafield tag="032" ind1=" " ind2=" ">
+      <subfield code="a">082070</subfield>
+      <subfield code="b">USPS</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(WaSeSS)ssj0005174</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">MnMULS</subfield>
+      <subfield code="c">MnMULS</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NIC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">InU</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">ICRL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">DNAL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">MiU</subfield>
+      <subfield code="d">DNLM</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCU-M</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">MiU</subfield>
+      <subfield code="d">WaU</subfield>
+      <subfield code="d">MCM</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">CaQMU</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DIBAM</subfield>
+      <subfield code="d">GU</subfield>
+      <subfield code="d">NLGGC</subfield>
+      <subfield code="d">NYDWH</subfield>
+      <subfield code="d">MiEM</subfield>
+      <subfield code="d">IEN</subfield>
+      <subfield code="d">NIALS</subfield>
+      <subfield code="d">CoU-DA</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">AMAZN</subfield>
+      <subfield code="d">WaSeSS</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">pcc</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">Q1</subfield>
+      <subfield code="b">.N2</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">QC1</subfield>
+    </datafield>
+    <datafield tag="060" ind1="0" ind2=" ">
+      <subfield code="a">W1 NA81</subfield>
+    </datafield>
+    <datafield tag="070" ind1="0" ind2=" ">
+      <subfield code="a">472</subfield>
+      <subfield code="b">N21</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">505</subfield>
+    </datafield>
+    <datafield tag="130" ind1="0" ind2=" ">
+      <subfield code="a">Nature (Online)</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Nature</subfield>
+      <subfield code="b">(Lond.)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Nature</subfield>
+      <subfield code="b">(London)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Nature</subfield>
+      <subfield code="h">[electronic resource].</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2=" ">
+      <subfield code="a">International weekly journal of science</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">[London, etc.,</subfield>
+      <subfield code="b">Macmillan Journals Ltd., etc.]</subfield>
+    </datafield>
+    <datafield tag="310" ind1=" " ind2=" ">
+      <subfield code="a">Weekly, except last week in Dec.,</subfield>
+      <subfield code="b">1981-</subfield>
+    </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">v. 1- Nov. 4, 1869-</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">"International weekly journal of science"--Cover.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Founded and for many years edited by Sir J.N. Lockyer.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Latest issue consulted: Vol. 359, no. 6393 (24 Sept. 1992).</subfield>
+    </datafield>
+    <datafield tag="525" ind1=" " ind2=" ">
+      <subfield code="a">CD-ROM and print supplements accompany many numbers.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Vol. 229-246, Jan. 1971-Dec. 1973, issued in three parts. The two new parts, Nature: new biology, and Nature: physical sciences, continued the volume numbering of Nature in addition to carrying their own issue numbering. With vol. 246, Dec. 1973, Nature: new biology, and Nature: physical sciences, ceased publication and were absorbed by Nature.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Beginning in 1994 complemented by Nature structural biology, which consists of articles on structural biology for a more specialist audience.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Editorially independent from the journal Nature cell biology, but shares with that journal referees' comments on submitted articles, May 1999-</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Science</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Science</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Lockyer, Norman,</subfield>
+      <subfield code="c">Sir,</subfield>
+      <subfield code="d">1836-1920.</subfield>
+      <subfield code="4">edt</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Nature Publishing Group.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">ProQuest Information and Learning Company.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Thomson Gale (Firm)</subfield>
+    </datafield>
+    <datafield tag="776" ind1="0" ind2="8">
+      <subfield code="i">Online version:</subfield>
+      <subfield code="t">Nature (Online)</subfield>
+      <subfield code="w">(DLC)  2005233250</subfield>
+      <subfield code="w">(OCoLC)47076528</subfield>
+    </datafield>
+    <datafield tag="850" ind1=" " ind2=" ">
+      <subfield code="a">AzU</subfield>
+      <subfield code="a">CU</subfield>
+      <subfield code="a">CU-A</subfield>
+      <subfield code="a">CU-I</subfield>
+      <subfield code="a">CU-RivA</subfield>
+      <subfield code="a">CaNBFU</subfield>
+      <subfield code="a">DLC</subfield>
+      <subfield code="a">DNAL</subfield>
+      <subfield code="a">ICRL</subfield>
+      <subfield code="a">In</subfield>
+      <subfield code="a">KyLoU</subfield>
+      <subfield code="a">MCM</subfield>
+      <subfield code="a">MH-PR</subfield>
+      <subfield code="a">MiU</subfield>
+      <subfield code="a">MoSU</subfield>
+      <subfield code="a">NN</subfield>
+      <subfield code="a">NNC</subfield>
+      <subfield code="a">NcD</subfield>
+      <subfield code="a">NcRS</subfield>
+      <subfield code="a">NjR</subfield>
+      <subfield code="a">OrU-S</subfield>
+      <subfield code="a">PU</subfield>
+      <subfield code="a">ViU</subfield>
+    </datafield>
+    <datafield tag="856" ind1="4" ind2="0">
+      <subfield code="z">Full text</subfield>
+      <subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=NATULO&amp;T=marc</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="a">Journal RCL Internet SS</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02811cas a2200529   4500</leader>
+    <controlfield tag="001">4601376</controlfield>
+    <controlfield tag="005">20110727112403.0</controlfield>
+    <controlfield tag="006">m        d        </controlfield>
+    <controlfield tag="007">cr  n         </controlfield>
+    <controlfield tag="008">110727c18699999enkwn p s     0   a0eng c</controlfield>
+    <datafield tag="016" ind1="7" ind2=" ">
+      <subfield code="a">N07600000</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield tag="022" ind1="0" ind2=" ">
+      <subfield code="a">0028-0836</subfield>
+      <subfield code="l">0028-0836</subfield>
+      <subfield code="z">0302-2889</subfield>
+      <subfield code="2">2</subfield>
+    </datafield>
+    <datafield tag="030" ind1=" " ind2=" ">
+      <subfield code="a">NATUAS</subfield>
+    </datafield>
+    <datafield tag="032" ind1=" " ind2=" ">
+      <subfield code="a">082070</subfield>
+      <subfield code="b">USPS</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(WaSeSS)ssj0005174</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">MnMULS</subfield>
+      <subfield code="c">MnMULS</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NIC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">InU</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">ICRL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">DNAL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">NSDP</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">MiU</subfield>
+      <subfield code="d">DNLM</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCU-M</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">MH</subfield>
+      <subfield code="d">MiU</subfield>
+      <subfield code="d">WaU</subfield>
+      <subfield code="d">MCM</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">CaQMU</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">DIBAM</subfield>
+      <subfield code="d">GU</subfield>
+      <subfield code="d">NLGGC</subfield>
+      <subfield code="d">NYDWH</subfield>
+      <subfield code="d">MiEM</subfield>
+      <subfield code="d">IEN</subfield>
+      <subfield code="d">NIALS</subfield>
+      <subfield code="d">CoU-DA</subfield>
+      <subfield code="d">OCoLC</subfield>
+      <subfield code="d">AMAZN</subfield>
+      <subfield code="d">WaSeSS</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">pcc</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">Q1</subfield>
+      <subfield code="b">.N2</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">QC1</subfield>
+    </datafield>
+    <datafield tag="060" ind1="0" ind2=" ">
+      <subfield code="a">W1 NA81</subfield>
+    </datafield>
+    <datafield tag="070" ind1="0" ind2=" ">
+      <subfield code="a">472</subfield>
+      <subfield code="b">N21</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">505</subfield>
+    </datafield>
+    <datafield tag="130" ind1="0" ind2=" ">
+      <subfield code="a">Nature (Online)</subfield>
+    </datafield>
+    <datafield tag="210" ind1="0" ind2=" ">
+      <subfield code="a">Nature</subfield>
+      <subfield code="b">(Lond.)</subfield>
+    </datafield>
+    <datafield tag="222" ind1=" " ind2="0">
+      <subfield code="a">Nature</subfield>
+      <subfield code="b">(London)</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Nature</subfield>
+      <subfield code="h">[electronic resource].</subfield>
+    </datafield>
+    <datafield tag="246" ind1="3" ind2=" ">
+      <subfield code="a">International weekly journal of science</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">[London, etc.,</subfield>
+      <subfield code="b">Macmillan Journals Ltd., etc.]</subfield>
+    </datafield>
+    <datafield tag="310" ind1=" " ind2=" ">
+      <subfield code="a">Weekly, except last week in Dec.,</subfield>
+      <subfield code="b">1981-</subfield>
+    </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">v. 1- Nov. 4, 1869-</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">"International weekly journal of science"--Cover.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Founded and for many years edited by Sir J.N. Lockyer.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Latest issue consulted: Vol. 359, no. 6393 (24 Sept. 1992).</subfield>
+    </datafield>
+    <datafield tag="525" ind1=" " ind2=" ">
+      <subfield code="a">CD-ROM and print supplements accompany many numbers.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Vol. 229-246, Jan. 1971-Dec. 1973, issued in three parts. The two new parts, Nature: new biology, and Nature: physical sciences, continued the volume numbering of Nature in addition to carrying their own issue numbering. With vol. 246, Dec. 1973, Nature: new biology, and Nature: physical sciences, ceased publication and were absorbed by Nature.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Beginning in 1994 complemented by Nature structural biology, which consists of articles on structural biology for a more specialist audience.</subfield>
+    </datafield>
+    <datafield tag="580" ind1=" " ind2=" ">
+      <subfield code="a">Editorially independent from the journal Nature cell biology, but shares with that journal referees' comments on submitted articles, May 1999-</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Science</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="2">
+      <subfield code="a">Science</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Lockyer, Norman,</subfield>
+      <subfield code="c">Sir,</subfield>
+      <subfield code="d">1836-1920.</subfield>
+      <subfield code="4">edt</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Nature Publishing Group.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">ProQuest Information and Learning Company.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Thomson Gale (Firm)</subfield>
+    </datafield>
+    <datafield tag="776" ind1="0" ind2="8">
+      <subfield code="i">Online version:</subfield>
+      <subfield code="t">Nature (Online)</subfield>
+      <subfield code="w">(DLC)  2005233250</subfield>
+      <subfield code="w">(OCoLC)47076528</subfield>
+    </datafield>
+    <datafield tag="850" ind1=" " ind2=" ">
+      <subfield code="a">AzU</subfield>
+      <subfield code="a">CU</subfield>
+      <subfield code="a">CU-A</subfield>
+      <subfield code="a">CU-I</subfield>
+      <subfield code="a">CU-RivA</subfield>
+      <subfield code="a">CaNBFU</subfield>
+      <subfield code="a">DLC</subfield>
+      <subfield code="a">DNAL</subfield>
+      <subfield code="a">ICRL</subfield>
+      <subfield code="a">In</subfield>
+      <subfield code="a">KyLoU</subfield>
+      <subfield code="a">MCM</subfield>
+      <subfield code="a">MH-PR</subfield>
+      <subfield code="a">MiU</subfield>
+      <subfield code="a">MoSU</subfield>
+      <subfield code="a">NN</subfield>
+      <subfield code="a">NNC</subfield>
+      <subfield code="a">NcD</subfield>
+      <subfield code="a">NcRS</subfield>
+      <subfield code="a">NjR</subfield>
+      <subfield code="a">OrU-S</subfield>
+      <subfield code="a">PU</subfield>
+      <subfield code="a">ViU</subfield>
+    </datafield>
+    <datafield tag="856" ind1="4" ind2="0">
+      <subfield code="z">Full text</subfield>
+      <subfield code="u">http://TQ7XH3EE6L.search.serialssolutions.com/?V=1.0&amp;L=TQ7XH3EE6L&amp;S=JCs&amp;C=NATULO&amp;T=marc</subfield>
+    </datafield>
+    <datafield tag="999" ind1=" " ind2=" ">
+      <subfield code="a">Journal RCL Internet SS</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02046cam a2200433 a 4500</leader>
+    <controlfield tag="001">4598049</controlfield>
+    <controlfield tag="005">20110725131706.0</controlfield>
+    <controlfield tag="008">110725s2007    nyu           001 0 eng  </controlfield>
+    <datafield tag="010" ind1=" " ind2=" ">
+      <subfield code="a">  2007021424</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">9780374292782 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0374292787 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield tag="024" ind1="7" ind2=" ">
+      <subfield code="a">99818674082</subfield>
+      <subfield code="2">YBP</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">DLC</subfield>
+      <subfield code="c">DLC</subfield>
+      <subfield code="d">BAKER</subfield>
+      <subfield code="d">BTCTA</subfield>
+      <subfield code="d">OCO</subfield>
+      <subfield code="d">YDXCP</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="0" ind2="0">
+      <subfield code="a">HM846</subfield>
+      <subfield code="b">.F74 2007</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="0">
+      <subfield code="a">303.48/33</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Friedman, Thomas L.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="4">
+      <subfield code="a">The world is flat :</subfield>
+      <subfield code="b">a brief history of the twenty-first century /</subfield>
+      <subfield code="c">Thomas L. Friedman.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">1st further updated and expanded hardcover ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York :</subfield>
+      <subfield code="b">Farrar, Straus and Giroux,</subfield>
+      <subfield code="c">2007.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">x, 660 p. ;</subfield>
+      <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">[Release] "3.0 expanded ed."--P. ix.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Includes index.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="0" ind2=" ">
+      <subfield code="a">While I was sleeping -- The ten forces that flattened the world -- The triple convergence -- The great sorting out -- America and free trade -- The untouchables -- The right stuff -- The quiet crisis -- This is not a test -- The Virgin of Guadalupe -- How companies cope -- Globalization of the local -- If it's not happening it's because you're not doing it -- What happens when we all have dog's hearing? -- The unflat world -- The Dell theory of conflict prevention -- 11/9 versus 9/11.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Diffusion of innovations.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Information society.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Globalization</subfield>
+      <subfield code="x">Economic aspects.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Globalization</subfield>
+      <subfield code="x">Social aspects.</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">Baker &amp; Taylor</subfield>
+      <subfield code="b">BKTY</subfield>
+      <subfield code="c">35.00</subfield>
+      <subfield code="d">26.25</subfield>
+      <subfield code="i">0374292787</subfield>
+      <subfield code="n">0007329586</subfield>
+      <subfield code="s">active</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">Baker and Taylor</subfield>
+      <subfield code="b">BTCP</subfield>
+      <subfield code="n">BK0007329586</subfield>
+    </datafield>
+    <datafield tag="938" ind1=" " ind2=" ">
+      <subfield code="a">YBP Library Services</subfield>
+      <subfield code="b">YANK</subfield>
+      <subfield code="n">2621210</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">PromptCat</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="949" ind1=" " ind2=" ">
+      <subfield code="b">39087029151281</subfield>
+    </datafield>
+    <datafield tag="957" ind1="4" ind2="1">
+      <subfield code="3">Table of contents only</subfield>
+      <subfield code="u">http://www.loc.gov/catdir/toc/ecip0719/2007021424.html</subfield>
+    </datafield>
+    <datafield tag="960" ind1="4" ind2="1">
+      <subfield code="3">Sample text</subfield>
+      <subfield code="u">http://www.loc.gov/catdir/enhancements/fy0743/2007021424-s.html</subfield>
+    </datafield>
+    <datafield tag="980" ind1=" " ind2=" ">
+      <subfield code="a">2007-12-28</subfield>
+      <subfield code="b">35</subfield>
+      <subfield code="e">29.4</subfield>
+      <subfield code="f">301145</subfield>
+      <subfield code="g">1</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">92</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02388cjm a2200625 a 4500</leader>
+    <controlfield tag="001">1162756</controlfield>
+    <controlfield tag="005">20070323162454.0</controlfield>
+    <controlfield tag="007">sd fzngnn   eu</controlfield>
+    <controlfield tag="008">880426p19881987nyuopn   dfhiz      eng d</controlfield>
+    <datafield tag="019" ind1=" " ind2=" ">
+      <subfield code="a">19077572</subfield>
+      <subfield code="a">20166802</subfield>
+      <subfield code="a">20239113</subfield>
+      <subfield code="a">21101033</subfield>
+      <subfield code="a">21200195</subfield>
+    </datafield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">7559791772</subfield>
+    </datafield>
+    <datafield tag="028" ind1="0" ind2="0">
+      <subfield code="a">9 79177-2</subfield>
+      <subfield code="b">Elektra/Nonesuch</subfield>
+    </datafield>
+    <datafield tag="028" ind1="0" ind2="0">
+      <subfield code="a">79177-2</subfield>
+      <subfield code="b">Elektra/Nonesuch</subfield>
+    </datafield>
+    <datafield tag="033" ind1="0" ind2=" ">
+      <subfield code="a">198712--</subfield>
+      <subfield code="b">3804</subfield>
+      <subfield code="c">N4</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">17849781</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">01111811</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">SNN</subfield>
+      <subfield code="c">SNN</subfield>
+      <subfield code="d">ENG</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">RES</subfield>
+    </datafield>
+    <datafield tag="045" ind1="2" ind2=" ">
+      <subfield code="b">d1985</subfield>
+      <subfield code="b">d1987</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESP</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">CD</subfield>
+      <subfield code="a">2960</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">CD 2960</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Adams, John,</subfield>
+      <subfield code="d">1947-</subfield>
+    </datafield>
+    <datafield tag="240" ind1="1" ind2="0">
+      <subfield code="a">Nixon in China</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Nixon in China</subfield>
+      <subfield code="h">[sound recording] /</subfield>
+      <subfield code="c">John Adams ; libretto by Alice Goodman.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, N.Y. :</subfield>
+      <subfield code="b">Elektra/Nonesuch,</subfield>
+      <subfield code="c">p1988.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">3 sound discs (145 min.) :</subfield>
+      <subfield code="b">digital ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+    </datafield>
+    <datafield tag="306" ind1=" " ind2=" ">
+      <subfield code="a">022445</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Elektra/Nonesuch: 79177-2 (on container: 9 79177-2)</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Opera in 3 acts.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Compact discs.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Notes by Alice Goodman and Michael Steinberg, synopsis, biographical notes on the historical characters and the performers, and libretto (64 p. : ill.) inserted in slip case.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Also issued as cassettes and analog discs.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Ed. recorded: Red Dawn Music.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="0" ind2=" ">
+      <subfield code="a">Mari Opatz ; Stephanie Friedman ; Marion Dry ; Carolann Page ; Trudy Ellen Craney ; Sanford Sylvan ; James Maddalena ; Thomas Hammons ; John Duykers ; chorus ; Orchestra of St. Luke's ; Edo de Waart, conductor.</subfield>
+    </datafield>
+    <datafield tag="518" ind1=" " ind2=" ">
+      <subfield code="a">Recorded Dec. 1987 in RCA Studio A, New York City.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Sung in English.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Nixon, Richard M.</subfield>
+      <subfield code="q">(Richard Milhous),</subfield>
+      <subfield code="d">1913-1994</subfield>
+      <subfield code="x">Drama.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Mao, Tse-tung,</subfield>
+      <subfield code="d">1893-1976</subfield>
+      <subfield code="x">Drama.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Operas.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Operas/Musicals.</subfield>
+      <subfield code="2">local</subfield>
+      <subfield code="5">NRU</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Goodman, Alice.</subfield>
+      <subfield code="4">lbt.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Opatz, Mari.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Friedman, Stephanie.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Dry, Marion.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Page, Carolann.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Craney, Trudy Ellen.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Sylvan, Sanford.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Maddalena, James.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Hammons, Thomas.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Duykers, John.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Waart, Edo de.</subfield>
+      <subfield code="4">cnd.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Orchestra of St. Luke's.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="910" ind1=" " ind2=" ">
+      <subfield code="a">950805</subfield>
+    </datafield>
+    <datafield tag="911" ind1=" " ind2=" ">
+      <subfield code="a">p</subfield>
+    </datafield>
+    <datafield tag="966" ind1=" " ind2=" ">
+      <subfield code="l">/Recrd</subfield>
+      <subfield code="m">SRECRD</subfield>
+      <subfield code="s">CD 2960</subfield>
+      <subfield code="c">1</subfield>
+      <subfield code="b">39087013501319</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01807cjm a22004450  4500</leader>
+    <controlfield tag="001">883841</controlfield>
+    <controlfield tag="005">20070323162450.0</controlfield>
+    <controlfield tag="007">ss lknjlc   c</controlfield>
+    <controlfield tag="008">880525s1988    nyuopn   d          eng d</controlfield>
+    <datafield tag="028" ind1="0" ind2="0">
+      <subfield code="a">79177-4</subfield>
+      <subfield code="b">Elektra/Nonesuch</subfield>
+    </datafield>
+    <datafield tag="028" ind1="0" ind2="0">
+      <subfield code="a">9 79177-4</subfield>
+      <subfield code="b">Elektra/Nonesuch</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="b">ocm</subfield>
+      <subfield code="a">17999521</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">00825467</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">UUP</subfield>
+      <subfield code="c">UUP</subfield>
+      <subfield code="d">RES</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESP</subfield>
+    </datafield>
+    <datafield tag="099" ind1=" " ind2=" ">
+      <subfield code="a">Media 63</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Adams, John,</subfield>
+      <subfield code="d">1947-</subfield>
+    </datafield>
+    <datafield tag="240" ind1="1" ind2="0">
+      <subfield code="a">Nixon in China</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Nixon in China</subfield>
+      <subfield code="h">[sound recording] /</subfield>
+      <subfield code="c">John Adams ; libretto by Alice Goodman.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, N.Y. :</subfield>
+      <subfield code="b">Elektra/ Nonesuch,</subfield>
+      <subfield code="c">p1988.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">2 sound cassettes (145 min.) :</subfield>
+      <subfield code="b">analog, Dolby processed +</subfield>
+      <subfield code="e">libretto (64 p. : ill., ports. (some col.) ; 13 x 14 cm.)</subfield>
+    </datafield>
+    <datafield tag="306" ind1=" " ind2=" ">
+      <subfield code="a">022500</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Digital recording.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Elektra/Nonesuch: 79177-4 (on container: 9 79177-4).</subfield>
+    </datafield>
+    <datafield tag="511" ind1="0" ind2=" ">
+      <subfield code="a">Trudy Ellen Craney, soprano; Carolann Page, soprano; Marian Dry, mezzosoprano; Stephanie Friedman, mezzosoprano; Mari Opatz, mezzosoprano; John Duykers, tenor; Thomas Hammons, baritone; James Maddalena, baritone; Sanford Sylvan, baritone; with chorus; Orchestra of St. Luke's; Edo de Waart, conductor.</subfield>
+    </datafield>
+    <datafield tag="518" ind1=" " ind2=" ">
+      <subfield code="a">Recorded December 1987 at RCA Studio A, New York City.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Nixon, Richard M.</subfield>
+      <subfield code="q">(Richard Milhous),</subfield>
+      <subfield code="d">1913-1994</subfield>
+      <subfield code="x">Drama.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Mao, Tse-tung,</subfield>
+      <subfield code="d">1893-1976</subfield>
+      <subfield code="x">Drama.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Operas.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Goodman, Alice.</subfield>
+      <subfield code="4">lbt.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Craney, Trudy Ellen.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Page, Carolann.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Duykers, John.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Waart, Edo de.</subfield>
+      <subfield code="4">cnd.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Maddalena, James.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Sylvan, Sanford.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Orchestra of St. Luke's.</subfield>
+      <subfield code="4">prf.</subfield>
+    </datafield>
+    <datafield tag="910" ind1=" " ind2=" ">
+      <subfield code="a">950805</subfield>
+    </datafield>
+    <datafield tag="911" ind1=" " ind2=" ">
+      <subfield code="a">p</subfield>
+    </datafield>
+    <datafield tag="966" ind1=" " ind2=" ">
+      <subfield code="l">/Media</subfield>
+      <subfield code="m">SMEDIA</subfield>
+      <subfield code="s">Media 63</subfield>
+      <subfield code="c">1</subfield>
+      <subfield code="b">39087009876949</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01714cgm a2200445Ia 4500</leader>
+    <controlfield tag="001">4172738</controlfield>
+    <controlfield tag="005">20090714170752.0</controlfield>
+    <controlfield tag="007">vf bbaho|</controlfield>
+    <controlfield tag="008">870120p19861925nyu079            vleng d</controlfield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">01871305131</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">VGT-5131</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocm15088962</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)15088962</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">VFC</subfield>
+      <subfield code="c">VFC</subfield>
+      <subfield code="d">NRM</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">KZV</subfield>
+      <subfield code="d">OCLCG</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+      <subfield code="a">791.4372</subfield>
+      <subfield code="b">PHA</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1995.9.D7</subfield>
+      <subfield code="b">P436 1986</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="4">
+      <subfield code="a">The Phantom of the opera</subfield>
+      <subfield code="h">[videorecording] /</subfield>
+      <subfield code="c">Universal Pictures Corp. ; presented by Carl Laemmle ; directed by Rupert Julian.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY :</subfield>
+      <subfield code="b">Goodtimes Home Video Corp.,</subfield>
+      <subfield code="c">c1986.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 videocassette (79 min.) :</subfield>
+      <subfield code="b">si., b&amp;w ;</subfield>
+      <subfield code="c">1/2 in.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">Goodtimes Movies Classics</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Released as a motion picture in 1925 by Universal Pictures.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Based on the novel by Gaston Leroux.</subfield>
+    </datafield>
+    <datafield tag="508" ind1=" " ind2=" ">
+      <subfield code="a">Director, Rupert Julian.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="1" ind2=" ">
+      <subfield code="a">Lon Chaney, Mary Philbin and Norman Kerry.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">A melodrama about a hideous-looking man who lives in the catacombs below the Paris Opera House and his unrequited love affair with an opera starlet whom he tutors.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">VHS.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Silent with intertitle cards.</subfield>
+    </datafield>
+    <datafield tag="590" ind1=" " ind2=" ">
+      <subfield code="a">MMC Special FMS Collection copy: Gift of Frank Phillips, UR '42.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Drama.</subfield>
+      <subfield code="2">local</subfield>
+      <subfield code="5">NRU</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Horror.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Chaney, Lon,</subfield>
+      <subfield code="d">1883-1930.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Philbin, Mary.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Kerry, Norman,</subfield>
+      <subfield code="d">1889-1956.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rupert, Julian.</subfield>
+      <subfield code="4">drt</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Leroux, Gaston,</subfield>
+      <subfield code="d">1868-1927.</subfield>
+      <subfield code="t">Fantôme de l'Opéra.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Universal Studios Corp.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">GoodTimes Home Video (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>03915cgm a2200661Ia 4500</leader>
+    <controlfield tag="001">3075165</controlfield>
+    <controlfield tag="005">20100128205013.0</controlfield>
+    <controlfield tag="007">vd cvaizq</controlfield>
+    <controlfield tag="008">051221p20062005cau157 g          vleng d</controlfield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">1419827561</subfield>
+    </datafield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">01256976453</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">76453</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocm62724153</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">3075165</subfield>
+    </datafield>
+    <datafield tag="037" ind1=" " ind2=" ">
+      <subfield code="b">Midwest Tapes</subfield>
+      <subfield code="n">http://www.midwesttapes.com</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">TEFMT</subfield>
+      <subfield code="c">TEFMT</subfield>
+      <subfield code="d">TEF</subfield>
+      <subfield code="d">IUK</subfield>
+      <subfield code="d">MNL</subfield>
+    </datafield>
+    <datafield tag="041" ind1="1" ind2=" ">
+      <subfield code="a">eng</subfield>
+      <subfield code="a">spa</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="b">fre</subfield>
+      <subfield code="b">spa</subfield>
+      <subfield code="h">eng</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">PN1995.9.A3</subfield>
+      <subfield code="b">H3779 2006</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+      <subfield code="a">791.43/72</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1995.9.F36</subfield>
+      <subfield code="b">H37 2006</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Harry Potter and the goblet of fire</subfield>
+      <subfield code="h">[videorecording] /</subfield>
+      <subfield code="c">Warner Bros. Pictures presents a Heyday Films production ; a Mike Newell film ; producer, David Heyman ; screenplay, Steve Kloves ; directed by Mike Newell.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">Widescreen ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Burbank, CA :</subfield>
+      <subfield code="b">Warner Home Video,</subfield>
+      <subfield code="c">2006.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 videodisc (157 min.) :</subfield>
+      <subfield code="b">sd., col. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Based on the novel by J.K. Rowling.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Originally released as a motion picture in 2005.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Special features: additional scenes; conversations with the cast; preparing for the yule ball; reflections on the fourth film; triwizard tournament: dragon arena; triwizard tournament: lake; triwizard tournament: maze; insert this disc into your PC's DVD-ROM drive.</subfield>
+    </datafield>
+    <datafield tag="508" ind1=" " ind2=" ">
+      <subfield code="a">Director of photography, Roger Pratt ; art directors, Mark Bartholomew ... [et al.] ; editor, Mick Audsley ; music, Patrick Doyle ; costume designer, Jany Temime ; production designer, Stuart Craig ; visual effects supervisors, Tim Burke, Charley Henley, Jim Mitchell, Stuart Pitcher ; special effects supervisor, Dominic Tuohy.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="1" ind2=" ">
+      <subfield code="a">Daniel Radcliffe, Emma Watson, Rupert Grint, Maggie Smith, Gary Olman, Miranda Richardson, Ralph Fiennes, Alan Rickman, Jason Isaacs.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">Harry's fourth year at Hogwarts is marked by the Quidditch World Cup and the Triwizard Tournament, in which student representatives from three different wizarding schools compete in a series of increasingly challenging contests. However, Voldemort's Death Eaters are gaining strength and create the Dark Mark - giving evidence that the Dark Lord is ready to rise again. In the unsuspecting lives of the students at Hogwarts, the competitors are selected by the goblet of fire, which this year makes a very surprising announcement: Hogwarts will have two representatives in the tournament, including Harry. Now Harry has to rise to the challenge for the Tri Wizard Tournament while keeping up with school.</subfield>
+    </datafield>
+    <datafield tag="521" ind1="8" ind2=" ">
+      <subfield code="a">MPAA rating: PG-13; for sequences of fantasy violence and frightening images.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">DVD; region 1 encoding; widescreen presentation; dual-layer format.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Closed captioned ; dialogue in English (5.1 Dolby Surround) or Spanish (5.1 Dolby Surround) with optional subtitles in English, French or Spanish.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Hogwarts School of Witchcraft and Wizardry (Imaginary organization)</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Video recordings for the hearing impaired.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Fantasy.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Adventure.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Heyman, David.</subfield>
+      <subfield code="4">pro</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Kloves, Steven.</subfield>
+      <subfield code="4">aus</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Newell, Mike,</subfield>
+      <subfield code="d">1942-</subfield>
+      <subfield code="4">drt</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Radcliffe, Daniel,</subfield>
+      <subfield code="d">1989-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Watson, Emma,</subfield>
+      <subfield code="d">1990-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Grint, Rupert,</subfield>
+      <subfield code="d">1988-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Smith, Maggie,</subfield>
+      <subfield code="d">1934-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Oldman, Gary.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Richardson, Miranda.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Fiennes, Ralph.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rickman, Alan.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Isaacs, Jason.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Pratt, Roger.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Doyle, Patrick,</subfield>
+      <subfield code="d">1953-</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="t">Harry Potter and the goblet of fire.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Warner Bros. Pictures (1923-1967)</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Warner Home Video (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02216cjm a2200529Ia 4500</leader>
+    <controlfield tag="001">2039998</controlfield>
+    <controlfield tag="005">20060428201055.0</controlfield>
+    <controlfield tag="007">sd fzngnnmmnee</controlfield>
+    <controlfield tag="008">950711p19931962nyumun   hi             d</controlfield>
+    <datafield tag="028" ind1="0" ind2="1">
+      <subfield code="a">SMK 47625</subfield>
+      <subfield code="b">Sony Classical</subfield>
+    </datafield>
+    <datafield tag="033" ind1="1" ind2=" ">
+      <subfield code="a">19681024</subfield>
+      <subfield code="a">19621002</subfield>
+      <subfield code="a">19651012</subfield>
+      <subfield code="b">3804</subfield>
+      <subfield code="c">N4</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(OCoLC)ocm33289465</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">2039998</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NYP</subfield>
+      <subfield code="c">NYP</subfield>
+      <subfield code="d">ORU</subfield>
+    </datafield>
+    <datafield tag="041" ind1="0" ind2=" ">
+      <subfield code="g">enggerfreita</subfield>
+      <subfield code="h">ger</subfield>
+    </datafield>
+    <datafield tag="045" ind1="1" ind2=" ">
+      <subfield code="b">d1897</subfield>
+      <subfield code="b">d1913</subfield>
+      <subfield code="b">d1905</subfield>
+    </datafield>
+    <datafield tag="047" ind1=" " ind2=" ">
+      <subfield code="a">sp</subfield>
+      <subfield code="a">vr</subfield>
+      <subfield code="a">pr</subfield>
+      <subfield code="a">df</subfield>
+    </datafield>
+    <datafield tag="048" ind1=" " ind2=" ">
+      <subfield code="a">oa</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESM</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+    </datafield>
+    <datafield tag="240" ind1="1" ind2="0">
+      <subfield code="a">Orchestra music.</subfield>
+      <subfield code="k">Selections</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Don Quixote</subfield>
+      <subfield code="h">[sound recording] :</subfield>
+      <subfield code="b">op. 35 ; Festliches Praeludium : op. 61 ; Tanz der sieben Schleier : aus Salome /</subfield>
+      <subfield code="c">Richard Strauss.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY :</subfield>
+      <subfield code="b">Sony Classical,</subfield>
+      <subfield code="c">p1993.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 sound disc :</subfield>
+      <subfield code="b">digital, stereo. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">The royal edition ;</subfield>
+      <subfield code="v">no. 83</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Compact disc.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Analog recordings.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Program notes by Matthias Henke in German with English, French and Italian translations ([21] p. : ill., ports.) inserted in container.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="0" ind2=" ">
+      <subfield code="a">Lorne Munroe, violoncello, William Lincer, viola (1st work) ; E. Power Biggs, organ (2nd work) ; New York Philharmonic ; Leonard Bernstein, conductor.</subfield>
+    </datafield>
+    <datafield tag="518" ind1=" " ind2=" ">
+      <subfield code="a">Recorded at Avery Fisher Hall, NYC, Oct. 24, 1968 (1st work), and Oct. 2, 1962 (2nd work), and Manhattan Center, NYC, Oct. 12, 1965 (3rd work).</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Symphonic poems.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Variations (Violoncello with orchestra)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Don Quixote (Fictitious character)</subfield>
+      <subfield code="v">Songs and music.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Orchestral music.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Organ with orchestra.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Operas</subfield>
+      <subfield code="v">Excerpts.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Bernstein, Leonard,</subfield>
+      <subfield code="d">1918-1990</subfield>
+      <subfield code="4">cnd</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Munroe, Lorne.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Lincer, William.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Biggs, E. Power</subfield>
+      <subfield code="q">(Edward Power),</subfield>
+      <subfield code="d">1906-1977.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Don Quixote.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Festliches Präludium.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Salome.</subfield>
+      <subfield code="p">Salomes Tanz.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">New York Philharmonic.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="830" ind1=" " ind2="0">
+      <subfield code="a">Royal edition ;</subfield>
+      <subfield code="v">no. 83.</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">E0</subfield>
+      <subfield code="b">RES</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>02181cjm a2200517Ia 4500</leader>
+    <controlfield tag="001">4601378</controlfield>
+    <controlfield tag="005">20110727124942.0</controlfield>
+    <controlfield tag="007">sd fzngnnmmnee</controlfield>
+    <controlfield tag="008">110727p19931962nyumun   hi             d</controlfield>
+    <datafield tag="028" ind1="0" ind2="1">
+      <subfield code="a">SMK 47625</subfield>
+      <subfield code="b">Sony Classical</subfield>
+    </datafield>
+    <datafield tag="033" ind1="1" ind2=" ">
+      <subfield code="a">19681024</subfield>
+      <subfield code="a">19621002</subfield>
+      <subfield code="a">19651012</subfield>
+      <subfield code="b">3804</subfield>
+      <subfield code="c">N4</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">2039998</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">NYP</subfield>
+      <subfield code="c">NYP</subfield>
+      <subfield code="d">ORU</subfield>
+    </datafield>
+    <datafield tag="041" ind1="0" ind2=" ">
+      <subfield code="g">enggerfreita</subfield>
+      <subfield code="h">ger</subfield>
+    </datafield>
+    <datafield tag="045" ind1="1" ind2=" ">
+      <subfield code="b">d1897</subfield>
+      <subfield code="b">d1913</subfield>
+      <subfield code="b">d1905</subfield>
+    </datafield>
+    <datafield tag="047" ind1=" " ind2=" ">
+      <subfield code="a">sp</subfield>
+      <subfield code="a">vr</subfield>
+      <subfield code="a">pr</subfield>
+      <subfield code="a">df</subfield>
+    </datafield>
+    <datafield tag="048" ind1=" " ind2=" ">
+      <subfield code="a">oa</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RESM</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+    </datafield>
+    <datafield tag="240" ind1="1" ind2="0">
+      <subfield code="a">Orchestra music.</subfield>
+      <subfield code="k">Selections</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Don Quixote</subfield>
+      <subfield code="h">[sound recording] :</subfield>
+      <subfield code="b">op. 35 ; Festliches Praeludium : op. 61 ; Tanz der sieben Schleier : aus Salome /</subfield>
+      <subfield code="c">Richard Strauss.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">New York, NY :</subfield>
+      <subfield code="b">Sony Classical,</subfield>
+      <subfield code="c">p1993.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 sound disc :</subfield>
+      <subfield code="b">digital, stereo. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+    </datafield>
+    <datafield tag="490" ind1="1" ind2=" ">
+      <subfield code="a">The royal edition ;</subfield>
+      <subfield code="v">no. 83</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Compact disc.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Analog recordings.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Program notes by Matthias Henke in German with English, French and Italian translations ([21] p. : ill., ports.) inserted in container.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="0" ind2=" ">
+      <subfield code="a">Lorne Munroe, violoncello, William Lincer, viola (1st work) ; E. Power Biggs, organ (2nd work) ; New York Philharmonic ; Leonard Bernstein, conductor.</subfield>
+    </datafield>
+    <datafield tag="518" ind1=" " ind2=" ">
+      <subfield code="a">Recorded at Avery Fisher Hall, NYC, Oct. 24, 1968 (1st work), and Oct. 2, 1962 (2nd work), and Manhattan Center, NYC, Oct. 12, 1965 (3rd work).</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Symphonic poems.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Variations (Violoncello with orchestra)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Don Quixote (Fictitious character)</subfield>
+      <subfield code="v">Songs and music.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Orchestral music.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Organ with orchestra.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Operas</subfield>
+      <subfield code="v">Excerpts.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Bernstein, Leonard,</subfield>
+      <subfield code="d">1918-1990</subfield>
+      <subfield code="4">cnd</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Munroe, Lorne.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Lincer, William.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Biggs, E. Power</subfield>
+      <subfield code="q">(Edward Power),</subfield>
+      <subfield code="d">1906-1977.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Don Quixote.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Festliches Präludium.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2="2">
+      <subfield code="a">Strauss, Richard,</subfield>
+      <subfield code="d">1864-1949.</subfield>
+      <subfield code="t">Salome.</subfield>
+      <subfield code="p">Salomes Tanz.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">New York Philharmonic.</subfield>
+      <subfield code="4">prf</subfield>
+    </datafield>
+    <datafield tag="830" ind1=" " ind2="0">
+      <subfield code="a">Royal edition ;</subfield>
+      <subfield code="v">no. 83.</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">E0</subfield>
+      <subfield code="b">RES</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>01680cgm a2200433Ia 4500</leader>
+    <controlfield tag="001">4171281</controlfield>
+    <controlfield tag="005">20090714165410.0</controlfield>
+    <controlfield tag="007">vf cbaho|</controlfield>
+    <controlfield tag="008">911119p19871943cau093            vleng d</controlfield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">04789780399</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">80399</subfield>
+      <subfield code="b">MCA Home Video</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">JQJ</subfield>
+      <subfield code="c">JQJ</subfield>
+      <subfield code="d">OCLCG</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1995.9.D7</subfield>
+      <subfield code="b">P436 1987</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="4">
+      <subfield code="a">The Phantom of the opera</subfield>
+      <subfield code="h">[videorecording] /</subfield>
+      <subfield code="c">Universal Pictures.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Universal City, Calif. :</subfield>
+      <subfield code="b">MCA Home Video,</subfield>
+      <subfield code="c">1987.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 videocassette (93 min.) :</subfield>
+      <subfield code="b">sd., col. ;</subfield>
+      <subfield code="c">1/2 in.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Originally produced as motion picture in 1943.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Based on the book entitled Le fantome de l'opera, by Gaston Leroux.</subfield>
+    </datafield>
+    <datafield tag="508" ind1=" " ind2=" ">
+      <subfield code="a">Director, Arthur Lubin ; producer, George Waggner ; writers, Erich Taylor, Samuel Hoffenstein ; music, Edward Ward.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="1" ind2=" ">
+      <subfield code="a">Nelson Eddy, Susanna Foster, Claude Rains, Leo Carrillo, Hume Cronyn.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">A melodrama about a strange man who lives in the catacombs below the Paris Opera House and his love affair with an opera starlet whom he tutors.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">VHS ; Hi-fi.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Drama.</subfield>
+      <subfield code="2">local</subfield>
+      <subfield code="5">NRU</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Horror.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Lubin, Arthur.</subfield>
+      <subfield code="4">drt</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Waggner, George.</subfield>
+      <subfield code="4">pro</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Taylor, Erich.</subfield>
+      <subfield code="4">aus</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Hoffenstein, Samuel.</subfield>
+      <subfield code="4">aus</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Eddy, Nelson.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Foster, Susanna.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rains, Claude,</subfield>
+      <subfield code="d">1889-1967.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Carrillo, Leo.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Cronyn, Hume.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Leroux, Gaston,</subfield>
+      <subfield code="d">1868-1927.</subfield>
+      <subfield code="t">Fantôme de l'Opéra.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Universal Pictures (Firm)</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">MCA Home Video (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+  <record>
+    <leader>03829cgm a2200625Ia 4500</leader>
+    <controlfield tag="001">4601377</controlfield>
+    <controlfield tag="005">20110727124450.0</controlfield>
+    <controlfield tag="007">vd cvaizq</controlfield>
+    <controlfield tag="008">110727p20062005cau157 g          vleng d</controlfield>
+    <datafield tag="024" ind1="1" ind2=" ">
+      <subfield code="a">01256976453</subfield>
+    </datafield>
+    <datafield tag="028" ind1="4" ind2="0">
+      <subfield code="a">76453</subfield>
+    </datafield>
+    <datafield tag="037" ind1=" " ind2=" ">
+      <subfield code="b">Midwest Tapes</subfield>
+      <subfield code="n">http://www.midwesttapes.com</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">TEFMT</subfield>
+      <subfield code="c">TEFMT</subfield>
+      <subfield code="d">TEF</subfield>
+      <subfield code="d">IUK</subfield>
+      <subfield code="d">MNL</subfield>
+    </datafield>
+    <datafield tag="041" ind1="1" ind2=" ">
+      <subfield code="a">eng</subfield>
+      <subfield code="a">spa</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="b">fre</subfield>
+      <subfield code="b">spa</subfield>
+      <subfield code="h">eng</subfield>
+    </datafield>
+    <datafield tag="049" ind1=" " ind2=" ">
+      <subfield code="a">RRRR</subfield>
+    </datafield>
+    <datafield tag="050" ind1="1" ind2="4">
+      <subfield code="a">PN1995.9.A3</subfield>
+      <subfield code="b">H3779 2006</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+      <subfield code="a">791.43/72</subfield>
+      <subfield code="2">22</subfield>
+    </datafield>
+    <datafield tag="090" ind1=" " ind2=" ">
+      <subfield code="a">PN1995.9.F36</subfield>
+      <subfield code="b">H37 2006</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Harry Potter and the goblet of fire</subfield>
+      <subfield code="h">[videorecording] /</subfield>
+      <subfield code="c">Warner Bros. Pictures presents a Heyday Films production ; a Mike Newell film ; producer, David Heyman ; screenplay, Steve Kloves ; directed by Mike Newell.</subfield>
+    </datafield>
+    <datafield tag="250" ind1=" " ind2=" ">
+      <subfield code="a">Widescreen ed.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Burbank, CA :</subfield>
+      <subfield code="b">Warner Home Video,</subfield>
+      <subfield code="c">2006.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 videodisc (157 min.) :</subfield>
+      <subfield code="b">sd., col. ;</subfield>
+      <subfield code="c">4 3/4 in.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Based on the novel by J.K. Rowling.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Originally released as a motion picture in 2005.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Special features: additional scenes; conversations with the cast; preparing for the yule ball; reflections on the fourth film; triwizard tournament: dragon arena; triwizard tournament: lake; triwizard tournament: maze; insert this disc into your PC's DVD-ROM drive.</subfield>
+    </datafield>
+    <datafield tag="508" ind1=" " ind2=" ">
+      <subfield code="a">Director of photography, Roger Pratt ; art directors, Mark Bartholomew ... [et al.] ; editor, Mick Audsley ; music, Patrick Doyle ; costume designer, Jany Temime ; production designer, Stuart Craig ; visual effects supervisors, Tim Burke, Charley Henley, Jim Mitchell, Stuart Pitcher ; special effects supervisor, Dominic Tuohy.</subfield>
+    </datafield>
+    <datafield tag="511" ind1="1" ind2=" ">
+      <subfield code="a">Daniel Radcliffe, Emma Watson, Rupert Grint, Maggie Smith, Gary Olman, Miranda Richardson, Ralph Fiennes, Alan Rickman, Jason Isaacs.</subfield>
+    </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+      <subfield code="a">Harry's fourth year at Hogwarts is marked by the Quidditch World Cup and the Triwizard Tournament, in which student representatives from three different wizarding schools compete in a series of increasingly challenging contests. However, Voldemort's Death Eaters are gaining strength and create the Dark Mark - giving evidence that the Dark Lord is ready to rise again. In the unsuspecting lives of the students at Hogwarts, the competitors are selected by the goblet of fire, which this year makes a very surprising announcement: Hogwarts will have two representatives in the tournament, including Harry. Now Harry has to rise to the challenge for the Tri Wizard Tournament while keeping up with school.</subfield>
+    </datafield>
+    <datafield tag="521" ind1="8" ind2=" ">
+      <subfield code="a">MPAA rating: PG-13; for sequences of fantasy violence and frightening images.</subfield>
+    </datafield>
+    <datafield tag="538" ind1=" " ind2=" ">
+      <subfield code="a">DVD; region 1 encoding; widescreen presentation; dual-layer format.</subfield>
+    </datafield>
+    <datafield tag="546" ind1=" " ind2=" ">
+      <subfield code="a">Closed captioned ; dialogue in English (5.1 Dolby Surround) or Spanish (5.1 Dolby Surround) with optional subtitles in English, French or Spanish.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Potter, Harry (Fictitious character)</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Hogwarts School of Witchcraft and Wizardry (Imaginary organization)</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="0">
+      <subfield code="a">Video recordings for the hearing impaired.</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Fantasy.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Adventure.</subfield>
+      <subfield code="2">migfg</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Heyman, David.</subfield>
+      <subfield code="4">pro</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Kloves, Steven.</subfield>
+      <subfield code="4">aus</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Newell, Mike,</subfield>
+      <subfield code="d">1942-</subfield>
+      <subfield code="4">drt</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Radcliffe, Daniel,</subfield>
+      <subfield code="d">1989-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Watson, Emma,</subfield>
+      <subfield code="d">1990-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Grint, Rupert,</subfield>
+      <subfield code="d">1988-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Smith, Maggie,</subfield>
+      <subfield code="d">1934-</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Oldman, Gary.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Richardson, Miranda.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Fiennes, Ralph.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rickman, Alan.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Isaacs, Jason.</subfield>
+      <subfield code="4">act</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Pratt, Roger.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Doyle, Patrick,</subfield>
+      <subfield code="d">1953-</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Rowling, J. K.</subfield>
+      <subfield code="t">Harry Potter and the goblet of fire.</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Warner Bros. Pictures (1923-1967)</subfield>
+    </datafield>
+    <datafield tag="710" ind1="2" ind2=" ">
+      <subfield code="a">Warner Home Video (Firm)</subfield>
+    </datafield>
+    <datafield tag="945" ind1=" " ind2=" ">
+      <subfield code="a">MARS</subfield>
+    </datafield>
+    <datafield tag="994" ind1=" " ind2=" ">
+      <subfield code="a">C0</subfield>
+      <subfield code="b">RRR</subfield>
+    </datafield>
+  </record>
+</collection>

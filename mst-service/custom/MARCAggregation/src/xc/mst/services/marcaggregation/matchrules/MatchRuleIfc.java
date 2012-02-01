@@ -16,4 +16,5 @@ public interface MatchRuleIfc {
 
     public Set<Long> determineMatches(MatchSet ms);
 
+    public void setDebug(boolean debug);
 }
