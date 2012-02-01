@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -70,19 +71,19 @@ public class ISBNMatcher extends FieldMatcherService {
 
     @Override
     // return all matching records!!! a match means the same int part of isbn.
-    public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+    public List<Long> getMatchingInputIds(SaxMarcXmlRecord r) {
 
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
 
         ArrayList<Long> results = new ArrayList<Long>();
-        List<Field> fields = ir.getDataFields(20);
+        List<Field> fields = r.getDataFields(20);
 
-        final Long id = new Long(ir.recordId);
+        final Long id = new Long(r.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size > 1) {
-                LOG.error("ERROR: Multiple $a subfields in 020 in record! " + ir.recordId);
+                LOG.error("ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
             }
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
@@ -107,13 +108,13 @@ public class ISBNMatcher extends FieldMatcherService {
                 }
             }
         }
-        LOG.debug("getMatchinginputIds, irId=" + ir.recordId + " results.size=" + results.size());
+        LOG.debug("getMatchinginputIds, irId=" + r.recordId + " results.size=" + results.size());
         return results;
     }
 
     @Override
     // TODO refactor out the commonalities!
-    public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(20);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');

@@ -97,6 +97,14 @@ public class MarcAggregationService extends GenericMetadataService {
         return this.masDAO;
     }
 
+    public void addMessage(InputRecord record, int code, char level) {
+        super.addMessage(record, code, level);
+    }
+    protected void addMessage(InputRecord record, int code, char level,
+            String detail) {
+        super.addMessage(record, code, level, detail);
+    }
+
     public List<OutputRecord> process(InputRecord r) {
         try {
             LOG.debug("MAS:  process record+"+r.getId());
@@ -109,7 +117,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
-                    matcher.addRecordToMatcher(smr);  // is this the place to do this?  (was originally missing)
+                    matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
                     ms.addMatcher(matchPointKey, matcher);
                 }
 

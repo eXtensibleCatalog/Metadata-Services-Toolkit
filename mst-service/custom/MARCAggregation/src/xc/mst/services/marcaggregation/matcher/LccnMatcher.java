@@ -22,6 +22,7 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -172,7 +173,7 @@ public class LccnMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         // String s = r.getMARC().getDataFields().get(10).get('a');
         // lccn2inputIds.add(r.getId(), getUniqueId(s));
 

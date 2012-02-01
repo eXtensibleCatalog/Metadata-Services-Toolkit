@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
 /**
@@ -36,7 +37,7 @@ public class x028abMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<String> subfields = r.getSubfield(28, 'a');  // need 'b' subfields too...
         if (subfields != null) {
             for (String sf : subfields) {

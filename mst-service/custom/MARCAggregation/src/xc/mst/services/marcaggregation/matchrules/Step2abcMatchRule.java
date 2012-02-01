@@ -20,7 +20,6 @@ public class Step2abcMatchRule extends BaseMatchRule {
 
     private static final Logger LOG = Logger.getLogger(Step2abcMatchRule.class);
 
-    //TODO change this to false
     boolean debug = false;
 
     @Override
@@ -33,18 +32,27 @@ public class Step2abcMatchRule extends BaseMatchRule {
             // look at 010$a (Lccn) and 020$a (ISBN) - both must match.
             if (ms.getMatches("ISBN").contains(matchedRecordId)) {
                 matchedIds.add(matchedRecordId);
+                if (debug) {
+                    LOG.info("Step 2a MatchRule, matched.");
+                }
             }
 
             // rule 2b
             // look at 010$a (Lccn) and 022$a (ISSN) - both must match.
             else if (ms.getMatches("ISSN").contains(matchedRecordId)) {
                 matchedIds.add(matchedRecordId);
+                if (debug) {
+                    LOG.info("Step 2b MatchRule, matched.");
+                }
             }
 
             // rule 2c
             // look at 010$a (Lccn) and 024$a - both must match.
             else if (ms.getMatches("x024a").contains(matchedRecordId)) {
                 matchedIds.add(matchedRecordId);
+                if (debug) {
+                    LOG.info("Step 2c MatchRule, matched.");
+                }
             }
             else {
                 if (debug) {

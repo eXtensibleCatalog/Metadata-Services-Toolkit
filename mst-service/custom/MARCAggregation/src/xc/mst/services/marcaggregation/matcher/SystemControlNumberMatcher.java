@@ -4,9 +4,6 @@
  * This program is free software; you can redistribute it and/or modify it under the terms of the MIT/X11 license. The text of the
  * license can be found at http://www.opensource.org/licenses/mit-license.php and copy of the license can be found on the project
  * website http://www.extensiblecatalog.org/.
- *
- * @author Benjamin D. Anderson
- *
  */
 package xc.mst.services.marcaggregation.matcher;
 
@@ -18,6 +15,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -34,6 +33,8 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
  * These should be ignored in matching, as all OCLC numeric values are unique without the numbers.
  * E.g. (OCoLC)ocm12345 should match with (OCoLC)12345 but NOT with (NRU)12345.
  * TODO do we need to save original format, i.e. (OCoLC)ocm12345 or can we just save (OCoLC)12345 ?
+ *
+ * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
  *
  * 035$a
  *
@@ -110,8 +111,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             if (size > 1) {
                 LOG.error("ERROR: Multiple $a subfields in 035 in record! " + ir.recordId);
             }
-            // TODO don't return the original record itself as a match, adding record to matcher AFTER this step?, BUT
-            // should we verify the record is not matching itself?
             for (String subfield : subfields) {
                 String goods = getMapId(subfield);
                 // look in memory
@@ -141,9 +140,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     }
 
     // should be a max of 1 field returned.
+    // * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
     @Override
-    public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
+        final String oclc = "OCoLC";
         List<Field> fields = r.getDataFields(35);
+        boolean haveSeenOCoLC = false;
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -153,6 +155,14 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 String goods = getMapId(subfield);
+                String prefix = getPrefixId(subfield);
+                if (prefix.equals(oclc)) {
+                    if (haveSeenOCoLC) {
+                        MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
+                        mas.addMessage(ir, 101, RecordMessage.ERROR);
+                    }
+                    haveSeenOCoLC = true;
+                }
                 List<String[]> goodsList = inputId2scn.get(id);
                 final String[] goodsArray = new String[] {goods, subfield};  // its a pair of strings
                 if (goodsList == null || goodsList.size() == 0) {
@@ -188,7 +198,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // from db
     @Override
     public void load() {
-        // TODO Auto-generated method stub
+        // TODO we have string data so will we load some subset?
 
     }
 

@@ -233,7 +233,7 @@ public class MatcherTest extends MASBaseTest {
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
-                    matcher.addRecordToMatcher(smr); // is this the place to do this? (was originally missing)
+                    matcher.addRecordToMatcher(smr, r); // is this the place to do this? (was originally missing)
                     ms.addMatcher(matchPointKey, matcher);
                 }
 

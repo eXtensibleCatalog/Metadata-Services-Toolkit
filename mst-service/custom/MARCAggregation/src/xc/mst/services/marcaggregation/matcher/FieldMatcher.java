@@ -11,6 +11,7 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.Collection;
 import java.util.List;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
 /**
@@ -44,8 +45,9 @@ public interface FieldMatcher {
      * getMatchingOutputIds without effecting the state of the system.
      *
      * @param r The record to preserve
+     * @param ir In order to log errors, must pass along the InputRecord to associate the errors with.
      */
-    public void addRecordToMatcher(SaxMarcXmlRecord r);
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir);
 
     /**
      * A matcher should do as much as it can in memory without the need to do a lookup on disk.  For this

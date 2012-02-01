@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.common.SolrInputDocument;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.manager.IndexException;
 import xc.mst.manager.record.RecordService;
@@ -53,20 +54,20 @@ public class x130aMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void addRecordToMatcher(SaxMarcXmlRecord ir) {
-        List<String> subfields = ir.getSubfield(130, 'a');
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir2) {
+        List<String> subfields = r.getSubfield(130, 'a');
         if (subfields != null) {
             SolrServer s = getMASSolrServer();
             //LuceneIndex tempIndex = new MemoryIndex();
             //tempIndex.addDoc(doc);
             SolrInputDocument doc = null;
             for (String sf : subfields) {
-                inputId2x130a.put(ir.getRecordId(), sf);  //TODO elim use of this struct
+                inputId2x130a.put(r.getRecordId(), sf);  //TODO elim use of this struct
 //                doc = new SolrInputDocument();
 //                doc.addField("field_key", sf);          // TODO make the field name correct for dynamic, i.e. _l
             }
             if (doc != null) {
-                doc.addField(RecordService.FIELD_RECORD_ID, ir.getRecordId());
+                doc.addField(RecordService.FIELD_RECORD_ID, r.getRecordId());
 
                 //TODO add to the index is not working - trying to use same index.  Separate directories?
                 //  see - http://www.mattfitz.info/library/article/364
