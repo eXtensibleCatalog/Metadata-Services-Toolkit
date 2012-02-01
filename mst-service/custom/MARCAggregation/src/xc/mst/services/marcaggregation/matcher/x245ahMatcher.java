@@ -3,6 +3,7 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.Collection;
 import java.util.List;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 
 public class x245ahMatcher extends FieldMatcherService {
@@ -14,7 +15,7 @@ public class x245ahMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void addRecordToMatcher(SaxMarcXmlRecord r) {
+    public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         // TODO Auto-generated method stub
 
     }

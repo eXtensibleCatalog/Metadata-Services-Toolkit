@@ -165,12 +165,7 @@ public class MatchRulesTest extends MatcherTest {
                 }
             }
 
-            //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
-            List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_035a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,"24094664");
-            LOG.info("DAO, getMatching records for 24094664, numResults="+records.size());
-            for (Long record: records) {
-                LOG.info("** record id: "+record +" matches 24094664");
-            }
+            testDAO();
 
             // load, then results should be back to original expectations
             load();
@@ -204,6 +199,15 @@ public class MatchRulesTest extends MatcherTest {
         } catch (Throwable t) {
             LOG.error("Exception occured when running MatchRulesTest!", t);
             getUtil().throwIt(t);
+        }
+    }
+
+    protected void testDAO() {
+        //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+        List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_035a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,"24094664");
+        LOG.info("DAO, getMatching records for 24094664, numResults="+records.size());
+        for (Long record: records) {
+            LOG.info("** record id: "+record +" matches 24094664");
         }
     }
 }
