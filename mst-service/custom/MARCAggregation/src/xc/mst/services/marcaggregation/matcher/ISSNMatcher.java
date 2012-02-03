@@ -70,7 +70,7 @@ public class ISSNMatcher extends FieldMatcherService {
 
     private static final Logger LOG = Logger.getLogger(ISSNMatcher.class);
 
-    private boolean debug = true;
+    private boolean debug = false;
     private boolean debug2 = false;
 
     protected String getAllButDash(final String s) {

@@ -98,11 +98,13 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     public void addMessage(InputRecord record, int code, char level) {
-        super.addMessage(record, code, level);
+//        super.addMessage(record, code, level);
+//TODO bug with adding message, must fix.
     }
     protected void addMessage(InputRecord record, int code, char level,
             String detail) {
-        super.addMessage(record, code, level, detail);
+//        super.addMessage(record, code, level, detail);
+//TODO bug with adding message, must fix.
     }
 
     public List<OutputRecord> process(InputRecord r) {
