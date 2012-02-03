@@ -38,12 +38,15 @@ public class x028abMatcher extends FieldMatcherService {
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
+        // will want to log multiple 028's, they are legal, but track them per requirements.
+        /*
         List<String> subfields = r.getSubfield(28, 'a');  // need 'b' subfields too...
         if (subfields != null) {
             for (String sf : subfields) {
 //                inputId2x028ab.put(r.getRecordId(), sf);
             }
         }
+        */
     }
 
     @Override

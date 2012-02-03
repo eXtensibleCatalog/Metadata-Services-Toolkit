@@ -116,6 +116,10 @@ public class ISBNMatcher extends FieldMatcherService {
     // TODO refactor out the commonalities!
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(20);
+        final int size3 = fields.size();
+        if (size3 > 1) {
+            LOG.info("** INFO: Multiple 020 fields in record! " + r.recordId);
+        }
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();

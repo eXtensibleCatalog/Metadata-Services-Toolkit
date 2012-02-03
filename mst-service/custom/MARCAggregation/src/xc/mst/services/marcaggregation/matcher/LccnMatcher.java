@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -180,12 +181,16 @@ public class LccnMatcher extends FieldMatcherService {
         List<Field> fields = r.getDataFields(10);
         if (fields.size()>1) {
             LOG.error("ERROR: Multiple 010 fields in record! "+r.recordId);
+            MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
+            mas.addMessage(ir, 102, RecordMessage.ERROR);
         }
         for (Field field: fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size>1) {
                 LOG.error("ERROR: Multiple $a subfields in 010 in record! "+r.recordId);
+                MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
+                mas.addMessage(ir, 102, RecordMessage.ERROR);
             }
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
