@@ -36,7 +36,7 @@ public class DedupTest extends MatchRulesTest {
         expectedMatchRecordIds.put("x024aMatcher", 17);
         expectedMatchRecords.put  ("x024aMatcher", 18);
 
-        expectedMatchRecordIds.put("x130aMatcher", 11);
+        expectedMatchRecordIds.put("x130aMatcher", 0);  // if we turn on fuzzy this will go to 11.
         expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
 
         expectedMatchRecordIds.put("LccnMatcher", 56);

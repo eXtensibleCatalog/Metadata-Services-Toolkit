@@ -37,8 +37,8 @@ public class AggmatchTest extends MatchRulesTest {
         expectedMatchRecordIds.put("x024aMatcher", 17);
         expectedMatchRecords.put  ("x024aMatcher", 18);
 
-        expectedMatchRecordIds.put("x130aMatcher", 14);
-        expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
+        expectedMatchRecordIds.put("x130aMatcher", 0);  // if we turn on fuzzy this will go to 14. (or whatever the cnt. is)
+        expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 14.
 
         expectedMatchRecordIds.put("LccnMatcher", 14);
         expectedMatchRecords.put  ("LccnMatcher", 14);

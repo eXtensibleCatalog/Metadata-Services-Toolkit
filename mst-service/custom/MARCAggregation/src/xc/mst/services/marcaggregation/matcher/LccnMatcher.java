@@ -181,8 +181,6 @@ public class LccnMatcher extends FieldMatcherService {
         List<Field> fields = r.getDataFields(10);
         if (fields.size()>1) {
             LOG.error("ERROR: Multiple 010 fields in record! "+r.recordId);
-            MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
-            mas.addMessage(ir, 102, RecordMessage.ERROR);
         }
         for (Field field: fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');

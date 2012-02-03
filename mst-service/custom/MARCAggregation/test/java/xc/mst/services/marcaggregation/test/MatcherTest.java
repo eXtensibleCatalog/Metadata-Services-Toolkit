@@ -81,7 +81,7 @@ public class MatcherTest extends MASBaseTest {
         expectedMatchRecordIds.put("x024aMatcher", 17);
         expectedMatchRecords.put  ("x024aMatcher", 18);
 
-        expectedMatchRecordIds.put("x130aMatcher", 11);
+        expectedMatchRecordIds.put("x130aMatcher", 0);  // if we turn on fuzzy this will go to 11.
         expectedMatchRecords.put  ("x130aMatcher", 0);  //TODO this will need to be modified to 11.
 
         expectedMatchRecordIds.put("LccnMatcher", 56);
@@ -224,7 +224,11 @@ public class MatcherTest extends MASBaseTest {
         Set<Long> matchedRecordIds = new HashSet<Long>();
         try {
 
+ LOG.info("test:  process record+" + r.getId());
             LOG.debug("test:  process record+" + r.getId());
+            if (r.getId() == 18l) {
+                LOG.debug("STOP!");
+            }
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
@@ -273,6 +277,14 @@ public class MatcherTest extends MASBaseTest {
         }
         return matchedRecordIds;
     }
+    /*
 
+package xc.mst.service.impl.test;
+
+public abstract class MockHarvestTest extends StartToFinishTest {
+
+    public void startToFinish() throws Exception {}
+    // executes installService();  // is this enough?
+*/
 }
 //

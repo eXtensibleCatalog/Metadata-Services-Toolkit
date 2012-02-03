@@ -1196,9 +1196,6 @@
     <datafield tag="010" ind1=" " ind2=" ">
       <subfield code="a">  2004640022</subfield>
     </datafield>
-    <datafield tag="020" ind1=" " ind2=" ">
-      <subfield code="a">0974709913 (set)</subfield>
-    </datafield>
     <datafield tag="024" ind1="1" ind2=" ">
       <subfield code="a">014381227123 (set)</subfield>
     </datafield>
@@ -1412,9 +1409,6 @@
     <datafield tag="028" ind1="3" ind2="2">
       <subfield code="a">2819 P.J.T.</subfield>
       <subfield code="b">P.J. Tonger Musikverlag</subfield>
-    </datafield>
-    <datafield tag="035" ind1=" " ind2=" ">
-      <subfield code="a">1542864</subfield>
     </datafield>
     <datafield tag="040" ind1=" " ind2=" ">
       <subfield code="a">OSU</subfield>

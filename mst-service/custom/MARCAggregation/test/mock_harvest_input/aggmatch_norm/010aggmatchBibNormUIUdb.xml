@@ -1867,9 +1867,6 @@
           <marc:datafield ind1=" " ind2=" " tag="010">
             <marc:subfield code="a">  2004640022</marc:subfield>
           </marc:datafield>
-          <marc:datafield ind1=" " ind2=" " tag="020">
-            <marc:subfield code="a">0974709913 (set)</marc:subfield>
-          </marc:datafield>
           <marc:datafield ind1="1" ind2=" " tag="024">
             <marc:subfield code="a">014381227123 (set)</marc:subfield>
           </marc:datafield>
@@ -2203,9 +2200,6 @@
           <marc:datafield ind1="3" ind2="2" tag="028">
             <marc:subfield code="a">2819 P.J.T.</marc:subfield>
             <marc:subfield code="b">P.J. Tonger Musikverlag</marc:subfield>
-          </marc:datafield>
-          <marc:datafield ind1=" " ind2=" " tag="035">
-            <marc:subfield code="a">1542864</marc:subfield>
           </marc:datafield>
           <marc:datafield ind1=" " ind2=" " tag="040">
             <marc:subfield code="a">OSU</marc:subfield>

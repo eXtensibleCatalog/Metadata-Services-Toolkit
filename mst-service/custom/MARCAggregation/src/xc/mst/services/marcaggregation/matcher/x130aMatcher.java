@@ -23,18 +23,23 @@ public class x130aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
+        /*
+         // no fuzzy for now so lets not waste cycles doing anything...
+
         ArrayList<Long> results = new ArrayList<Long>();
         // query db for records with specific ids;
         final Long id = new Long(ir.recordId);
         if (results.contains(id)) {
             results.remove(id);
         }
-
+*/
         return null;
     }
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
+/*
+         // no fuzzy for now so lets not waste cycles doing anything...
 
         SolrServer s = getMASSolrServer();
 //        s.
@@ -50,11 +55,16 @@ public class x130aMatcher extends FieldMatcherService {
         //get scores tempIndex.search(ir.getSubField(130, 'a');
         // for results
         //    if score above x, then consider a match
+
+         */
         return null;
     }
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir2) {
+        /*
+         // no fuzzy for now so lets not waste cycles doing anything...
+
         List<String> subfields = r.getSubfield(130, 'a');
         if (subfields != null) {
             SolrServer s = getMASSolrServer();
@@ -82,6 +92,7 @@ public class x130aMatcher extends FieldMatcherService {
                 }
             }
         }
+        */
     }
 
     @Override
@@ -92,10 +103,15 @@ public class x130aMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
+        /*
+         // no fuzzy for now so lets not waste cycles doing anything...
+
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
         s.getMarcAggregationServiceDAO().persistOneStrMatchpointMaps(inputId2x130a, MarcAggregationServiceDAO.matchpoints_130a_table);
         inputId2x130a.clear();
         // the above might be wrong, persist to solr only?
+
+         */
     }
 
     /**
@@ -103,7 +119,7 @@ public class x130aMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return inputId2x130a.size();
+        return 0;//inputId2x130a.size();
     }
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2x130a.keySet();
