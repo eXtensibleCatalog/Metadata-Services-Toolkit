@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 
@@ -160,6 +161,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 LOG.debug("insert: " + tableName + ".size(): " + strList.size());
                 if (strList != null && strList.size() > 0) {
                     for (String _s: strList) {
+                        if (StringUtils.isEmpty(_s)) {
+                            continue;
+                        }
                         try {   // need to loop through all strings associated with id!
                                 if (j.intValue() > 0) {
                                     os.write(newLineBytes);
@@ -201,10 +205,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long id = (Long) keyObj;
             String str = inputId2matcherMap.get(id);
             Long num = inputId2numMap.get(id);
-            if (str == null) {
+            if (StringUtils.isEmpty(str)) {
                 continue;
             }
             if (num == null) {
+                // should not be.
                 continue;
             }
             try {
@@ -263,7 +268,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         for (Object keyObj : inputId2matcherMap.keySet()) {
             Long id = (Long) keyObj;
             String str = inputId2matcherMap.get(id);
-            if (str == null) {
+            if (StringUtils.isEmpty(str)) {
                 continue;
             }
             try {

@@ -167,9 +167,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
-        if (!force) {
-            return super.commitIfNecessary(force, 0);
-        }
         try {
             TimingLogger.start("masDAO.commitIfNecessary");
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
@@ -178,7 +175,14 @@ public class MarcAggregationService extends GenericMetadataService {
                 LOG.debug("flush matcher: "+matcher.getName());
             }
             TimingLogger.stop("masDAO.commitIfNecessary");
-
+        } catch (Throwable t) {
+            getUtil().throwIt(t);
+        }
+        if (!force) {
+            TimingLogger.reset();
+            return super.commitIfNecessary(force, 0);
+        }
+        try {
             TimingLogger.start("MarcAggregationServiceDAO.non-generic");
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationServiceDAO.non-generic");
