@@ -833,10 +833,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
         return config;
     }
 
+    //addMessage but note, attach to OutputRecord, unused?
     protected void addMessage(OutputRecord record, int code, char level) {
         addMessage(record, code, level, null);
     }
 
+    //addMessage but note, attach to OutputRecord, unused?
     protected void addMessage(OutputRecord record, int code, char level,
             String detail) {
         Record r = (Record) record;
@@ -852,12 +854,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         messages2insert.add(rm);
     }
 
-    protected void addMessage(InputRecord record, int code, char level) {
-        addMessage(record, code, level, null);
-    }
-
-    protected void addMessage(InputRecord record, int code, char level,
-            String detail) {
+    protected void addMessage(InputRecord record, int code, char level, String detail, Service service) {
         if (!isMessageEnabled(code, level)) {
             LOG.debug("Will not addMessage, because the message is disabled. level=" + level + " code=" + code);
             return;
@@ -865,7 +862,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         Record r = (Record) record;
         RecordMessage rm = new RecordMessage();
         getMessageDAO().injectId(rm);
-        rm.setServiceId(getService().getId());
+        rm.setServiceId(service.getId());
         rm.setInputRecord(true);
         rm.setCode(code);
         rm.setLevel(level);
@@ -873,6 +870,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
         rm.setRecord(r);
 
         messages2insert.add(rm);
+    }
+
+    protected void addMessage(InputRecord record, int code, char level) {
+        addMessage(record, code, level, null);
+    }
+
+    protected void addMessage(InputRecord record, int code, char level,
+            String detail) {
+        addMessage(record, code, level, detail, getService());
     }
 
     public String getMessage(int code, char type) {

@@ -23,6 +23,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
@@ -97,14 +98,13 @@ public class MarcAggregationService extends GenericMetadataService {
         return this.masDAO;
     }
 
+    // wrap it.
     public void addMessage(InputRecord record, int code, char level) {
-//        super.addMessage(record, code, level);
-//TODO bug with adding message, must fix.
-    }
-    protected void addMessage(InputRecord record, int code, char level,
-            String detail) {
-//        super.addMessage(record, code, level, detail);
-//TODO bug with adding message, must fix.
+        try {
+            super.addMessage(record, code, level, null, getServicesService().getServiceByName("MARCAggregation"));
+        } catch (DatabaseConfigException e) {
+            LOG.error(e);
+        }
     }
 
     public List<OutputRecord> process(InputRecord r) {

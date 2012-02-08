@@ -28,6 +28,7 @@ import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
+import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
 /**
@@ -186,8 +187,10 @@ public class LccnMatcher extends FieldMatcherService {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size>1) {
-                LOG.error("ERROR: Multiple $a subfields in 010 in record! "+r.recordId);
-                MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
+                LOG.error("*ERROR: Multiple $a subfields in 010 in record! "+r.recordId);
+                // should be no difference below,
+                //MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
+                MarcAggregationService mas = (MarcAggregationService) MSTConfiguration.getInstance().getBean("MarcAggregationService");
                 mas.addMessage(ir, 102, RecordMessage.ERROR);
             }
             for (String subfield : subfields) {
