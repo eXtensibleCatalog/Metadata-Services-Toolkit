@@ -274,7 +274,7 @@ public class NormalizationService extends GenericMetadataService {
 
             // Get the Leader 06. This will allow us to determine the record's type, and we'll put it in the correct set for that type
             char leader06 = normalizedXml.getLeader().charAt(6);
-
+      
             // Remove any invalid 014s
             String valid014 = enabledSteps.getProperty(CONFIG_VALID_FIRST_CHAR_014, "");
             String invalid014 = enabledSteps.getProperty(CONFIG_INVALID_FIRST_CHAR_014, "");
@@ -406,6 +406,16 @@ public class NormalizationService extends GenericMetadataService {
 
                 type = "h";
                 ((Record) record).setType(type);
+                
+                // Remove any invalid 014s
+                String valid014 = enabledSteps.getProperty(CONFIG_VALID_FIRST_CHAR_014, "");
+                String invalid014 = enabledSteps.getProperty(CONFIG_INVALID_FIRST_CHAR_014, "");
+                if (valid014.length() > 0 || invalid014.length() > 0)
+                    normalizedXml = removeInvalid014s(normalizedXml, valid014, invalid014);                                        
+
+                if (enabledSteps.getProperty(CONFIG_ENABLED_REPLACE_014, "0").equals("1"))
+                    normalizedXml = fixMultiple004s(normalizedXml);
+
                 if (enabledSteps.getProperty(CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
                     normalizedXml = holdingsLocationName(normalizedXml);
 
@@ -555,6 +565,23 @@ public class NormalizationService extends GenericMetadataService {
 
         return marcXml;
     }
+   
+    
+    /**
+     * Creates a DCMI Type field based on the record's Leader 06 value.
+     *
+     * @param marcXml
+     *            The original MARCXML record
+     * @return The MARCXML record after performing this normalization step.
+     */
+    private MarcXmlManager fixMultiple004s(MarcXmlManager marcXml) {
+        if (LOG.isDebugEnabled())
+            LOG.debug("Entering fixMultiple004s normalization step.");
+        
+        marcXml.fixMultiple004s();
+
+        return marcXml;
+    }
     
     /**
      * If the 014 is invalid, remove it
@@ -569,7 +596,7 @@ public class NormalizationService extends GenericMetadataService {
      */
     private MarcXmlManager removeInvalid014s(MarcXmlManager marcXml, String validFirstChars, String invalidFirstChars) {
         if (LOG.isDebugEnabled())
-            LOG.debug("Entering removeInvalid014 normalization step.");
+            LOG.debug("Entering removeInvalid014s normalization step.");
         
         marcXml.removeInvalid014s(validFirstChars, invalidFirstChars);
         

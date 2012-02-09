@@ -19,11 +19,14 @@ RemoveOCoLC003 = 0
 # Remove the 014$a subfield if the first character is one of the following:
 #InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
+# 1 to multiple 004 fields are present, move all but the first to valid 014$a fields
+Replace014 = 0
+
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
 DCMIType06 = 1
 
-# 1to create a field with the MARC vocabulary for
+# 1 to create a field with the MARC vocabulary for
 # the original record's Leader 06 value
 Leader06Vocab = 1
 

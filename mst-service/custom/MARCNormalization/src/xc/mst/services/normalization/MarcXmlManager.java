@@ -1210,10 +1210,80 @@ public class MarcXmlManager {
 
         
     }
+    
+    /**
+     * Turn multiple 004 fields into a single 004 and one or more valid 014$a fields
+
+     */
+    @SuppressWarnings("unchecked")
+	public void fixMultiple004s() {
+        if (log.isDebugEnabled())
+            log.debug("In fixMultiple004s...");
+
+        List<Element> fields = marcXml.getChildren("controlfield", marcNamespace);
+    	ArrayList<Element> new014s = new ArrayList<Element>();
+    	ArrayList<Element> old004s = new ArrayList<Element>();
+    	
+    	int cnt004 = 0;
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+            
+            if (tag.equals("004")) {
+            	if (++cnt004 > 1) {            		
+            		new014s.add(field);
+            		old004s.add(field);
+            	}
+            }
+        }
+        
+        if (cnt004 > 1) {
+            for (Element old004 : old004s) {
+            	marcXml.removeContent(old004);
+            } 
+        	
+        	fields = marcXml.getChildren("datafield", marcNamespace);
+        	
+        	ArrayList<Element> removeFlds = new ArrayList<Element>();
+
+            for (Element field : fields) {
+                String tag = field.getAttributeValue("tag");
+                String ind1 = field.getAttributeValue("ind1");
+
+                if (tag.equals("014") && ind1.equals("1")) {
+                	ArrayList<Element> removeEls = new ArrayList<Element>();
+                   	int totCnt = 0; int removeCnt = 0;
+                	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                        Element e = (Element) o;
+                        totCnt++;
+                        if (("a").equals(e.getAttributeValue("code"))) {
+                    		removeEls.add(e);
+                    		removeCnt++;
+                        }
+                    }
+                    for (Element removeEl : removeEls) {
+                    	field.removeContent(removeEl);
+                    }   
+                    if (totCnt == removeCnt) {
+                    	removeFlds.add(field);
+                    }
+                }
+            }
+            for (Element removeFld : removeFlds) {
+            	marcXml.removeContent(removeFld);
+            }   
+            
+            for (Element new014 : new014s) {
+            	addMarcXmlField("014", new014.getText(), null, "1", null);
+            }
+
+        }
+        
+    }    
+    
               
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
-     * both of its indicaters empty and the $a subfield will be set to the specified value.
+     * both of its indicators empty and the $a subfield will be set to the specified value.
      *
      * @param tag
      *            The tag we're adding (i.e. 931)
@@ -1221,12 +1291,12 @@ public class MarcXmlManager {
      *            The value of the $a subfield of the tag we're adding
      */
     public void addMarcXmlField(String tag, String subfieldAValue) {
-        addMarcXmlField(tag, subfieldAValue, null);
+        addMarcXmlField(tag, subfieldAValue, null, null, null);
     }
 
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
-     * both of its indicaters empty and the $a subfield will be set to the specified value.
+     * both of its indicators empty and the $a subfield will be set to the specified value.
      *
      * @param tag
      *            The tag we're adding (i.e. 931)
@@ -1235,17 +1305,25 @@ public class MarcXmlManager {
      * @param linkingField
      *            The value of the $8 subfield of the field we're adding, or null if we do not need a $8 subfield
      */
-    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField) {
+    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField, String ind1Value, String ind2Value) {
         TimingLogger.start("addMarcXmlField");
         if (log.isDebugEnabled())
             log.debug("Adding a new datafield to the MARC XML record with tag " + tag + " and value " + subfieldAValue + (linkingField == null ? "." : " with linking field " + linkingField + "."));
 
         // Add a MARC XML field with the specified tag
-        // Both of its indicaters will be empty
+        // Both of its indicators will be empty
         Element newFieldElement = new Element("datafield", marcNamespace);
         newFieldElement.setAttribute("tag", tag);
-        newFieldElement.setAttribute("ind1", " ");
-        newFieldElement.setAttribute("ind2", " ");
+        if (ind1Value != null) {
+        	newFieldElement.setAttribute("ind1", ind1Value);
+        } else {
+        	newFieldElement.setAttribute("ind1", " ");
+        }
+        if (ind2Value != null) {
+            newFieldElement.setAttribute("ind2", ind2Value);
+        } else {
+            newFieldElement.setAttribute("ind2", " ");        	
+        }
 
         // Add the $a subfield to the MARC XML field to the passed value
         Element newFieldASubfield = new Element("subfield", marcNamespace);
