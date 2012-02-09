@@ -275,12 +275,6 @@ public class NormalizationService extends GenericMetadataService {
             // Get the Leader 06. This will allow us to determine the record's type, and we'll put it in the correct set for that type
             char leader06 = normalizedXml.getLeader().charAt(6);
       
-            // Remove any invalid 014s
-            String valid014 = enabledSteps.getProperty(CONFIG_VALID_FIRST_CHAR_014, "");
-            String invalid014 = enabledSteps.getProperty(CONFIG_INVALID_FIRST_CHAR_014, "");
-            if (valid014.length() > 0 || invalid014.length() > 0)
-                normalizedXml = removeInvalid014s(normalizedXml, valid014, invalid014);                        
-            
             // Run these steps only if the record is a bibliographic record
             String type = null;
             if ("abcdefghijkmnoprt".contains("" + leader06)) {
