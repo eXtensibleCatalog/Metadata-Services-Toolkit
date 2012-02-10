@@ -36,6 +36,11 @@ public class NormalizationServiceConstants {
     public static final String CONFIG_INVALID_FIRST_CHAR_014 = "InvalidFirstChar014";
 
     /**
+     * Parameter for looking up the whether or not the RemoveOCoLC003 normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_REPLACE_014 = "Replace014";
+    
+    /**
      * Parameter for looking up the whether or not the DCMIType06 normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_DCMI_TYPE_06 = "DCMIType06";
