@@ -34,6 +34,7 @@ public abstract class FieldMatcherService extends BaseService implements FieldMa
 
     private static final Logger LOG = Logger.getLogger(FieldMatcherService.class);
 
+    private MarcAggregationService mas;
     private String name;
 
     public String getName() {
@@ -43,6 +44,14 @@ public abstract class FieldMatcherService extends BaseService implements FieldMa
     public void setName(String name) {
         this.name = name;
     }
+
+    public MarcAggregationService getMarcAggregationService() {
+        return mas;
+    }
+    public void setMarcAggregationService(MarcAggregationService mas) {
+        this.mas = mas;
+    }
+
 
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
         return null;

@@ -203,13 +203,20 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         for (Object keyObj : inputId2matcherMap.keySet()) {
             Long id = (Long) keyObj;
+            if (id == null) {
+                // should not be.
+                LOG.error("****   persistLongStrMatchpointMaps, problem with data, id,- id="+id);
+                continue;
+            }
             String str = inputId2matcherMap.get(id);
             Long num = inputId2numMap.get(id);
             if (StringUtils.isEmpty(str)) {
+                LOG.error("****   persistLongStrMatchpointMaps, problem with data, str,- id="+id);
                 continue;
             }
             if (num == null) {
                 // should not be.
+                LOG.error("****   persistLongStrMatchpointMaps, problem with data, num,- id="+id);
                 continue;
             }
             try {
@@ -240,7 +247,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     os.write(tabBytes);
                     os.write(idBytes);
                 } catch (Exception e) {
-                    LOG.error("problem with data - ",e);
+                    LOG.error("*** problem with data - recordid="+id,e);
                 }
 
                 os.close();
@@ -253,6 +260,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                         );
                 TimingLogger.stop(tableName + ".insert.load_infile");
                 TimingLogger.stop(tableName + ".insert");
+            } catch (org.springframework.dao.DataIntegrityViolationException t2) {
+                LOG.error("****   problem with data - not enough for the insert? num="+num+" str="+str+" id="+id,t2);
+//                getUtil().throwIt(t2);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
             }

@@ -158,9 +158,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 String prefix = getPrefixId(subfield);
                 if (prefix.equals(oclc)) {
                     if (haveSeenOCoLC) {
-                        MarcAggregationService mas = (MarcAggregationService) config.getApplicationContext().getBean("MarcAggregationService");
                         LOG.error("ERROR: 035$a prefix (OCoLC) seen > 1 time for recordId: " + r.recordId);
-                        mas.addMessage(ir, 101, RecordMessage.ERROR);
+                        final MarcAggregationService service = getMarcAggregationService();
+                        if (service != null) {
+                            service.addMessage(ir, 101, RecordMessage.ERROR);
+                        }
                     }
                     haveSeenOCoLC = true;
                 }

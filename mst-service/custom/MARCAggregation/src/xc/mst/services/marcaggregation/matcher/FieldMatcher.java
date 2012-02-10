@@ -13,6 +13,7 @@ import java.util.List;
 
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.services.marcaggregation.MarcAggregationService;
 
 /**
  * An implementer of this interface provides operations on match-points pertaining
@@ -71,6 +72,13 @@ public interface FieldMatcher {
 
     public String getName();
     public void setName(String name);
+
+    //TODO maybe, in case the below starts to look like a workaround, it is because tried to get the MAS as a bean,
+    //     but it seemed to be a different instance, even though since it is of type BaseManager it should be
+    //     config'd via spring as a singleton.  So instead of getting it via bean, just keep a pointer to the instance.
+    //
+    public MarcAggregationService getMarcAggregationService();
+    public void setMarcAggregationService(MarcAggregationService mas);
 
     /**
      * flush is called periodically (every x records processed) to persist to disk the updates made during

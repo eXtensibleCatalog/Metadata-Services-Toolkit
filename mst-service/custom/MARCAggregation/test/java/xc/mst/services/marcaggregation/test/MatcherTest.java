@@ -145,7 +145,7 @@ public class MatcherTest extends MASBaseTest {
             // , ideally harvest from a 2nd repo (that contains some matching records)?
 
         } catch (Throwable t) {
-            LOG.error("Exception occured when running MarkProviderDeletedTest!", t);
+            LOG.error("Exception occured when running MatcherTest!", t);
             getUtil().throwIt(t);
         }
     }
@@ -224,11 +224,11 @@ public class MatcherTest extends MASBaseTest {
         Set<Long> matchedRecordIds = new HashSet<Long>();
         try {
 
- LOG.info("test:  process record+" + r.getId());
             LOG.debug("test:  process record+" + r.getId());
-            if (r.getId() == 18l) {
-                LOG.debug("STOP!");
-            }
+
+       if (r.getId() == 18l) {
+          LOG.debug("STOP!");
+       }
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());

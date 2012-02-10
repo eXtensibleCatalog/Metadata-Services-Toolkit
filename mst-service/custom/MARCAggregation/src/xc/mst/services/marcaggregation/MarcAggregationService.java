@@ -23,6 +23,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.bo.service.Service;
 import xc.mst.dao.DatabaseConfigException;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
@@ -52,6 +53,7 @@ public class MarcAggregationService extends GenericMetadataService {
             final String n = mp + "Matcher";
             FieldMatcher m = (FieldMatcher) config.getBean(n);
             m.setName(n);
+            m.setMarcAggregationService(this);
             matcherMap.put(mp, m);
             m.load();
         }
@@ -101,8 +103,11 @@ public class MarcAggregationService extends GenericMetadataService {
     // wrap it.
     public void addMessage(InputRecord record, int code, char level) {
         try {
-            super.addMessage(record, code, level, null, getServicesService().getServiceByName("MARCAggregation"));
-        } catch (DatabaseConfigException e) {
+            // originally had to grab service as below but that was a workaround that didn't help ultimately.
+            //
+            //final Service service= getServicesService().getServiceByName("MARCAggregation");
+            super.addMessage(record, code, level, null, getService());
+        } catch (Exception e) {
             LOG.error(e);
         }
     }
