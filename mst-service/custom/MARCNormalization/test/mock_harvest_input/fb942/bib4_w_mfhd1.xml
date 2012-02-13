@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2012-02-13T20:23:56Z</responseDate>
+	<request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/OAIToolkit/oai-request.do</request>
+
+<ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2012-02-13T20:21:57Z</datestamp><setSpec>hold</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00203cx  a22000973  4500</marc:leader>
+    <marc:controlfield tag="001">140116</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="004">115574</marc:controlfield>
+    <marc:controlfield tag="004">115575</marc:controlfield>
+    <marc:controlfield tag="005">19961209124035.0</marc:controlfield>
+    <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+    <marc:datafield tag="014" ind1="1" ind2=" ">
+      <marc:subfield code="a">115576</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="014" ind1="1" ind2=" ">
+      <marc:subfield code="a">115577</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="852" ind1="0" ind2=" ">
+      <marc:subfield code="b">RheesStack</marc:subfield>
+      <marc:subfield code="h">DC36.9 .C37</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/1</identifier><datestamp>2012-02-13T20:21:57Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00577cas a2200229K  4500</marc:leader>
+    <marc:controlfield tag="001">115574</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20030805183123.0</marc:controlfield>
+    <marc:controlfield tag="008">900530u19uuuuuune uu m r     0   a0ger d</marc:controlfield>
+    <marc:datafield tag="022" ind1=" " ind2=" ">
+      <marc:subfield code="a">0523-4778</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocm07651615</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">AOA-9061</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">UC 08074139</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">MUU</marc:subfield>
+      <marc:subfield code="c">MUU</marc:subfield>
+      <marc:subfield code="d">UIU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">UIUU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="0" ind2="0">
+      <marc:subfield code="a">Bibliotheca organologica.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Amsterdam [etc.] :</marc:subfield>
+      <marc:subfield code="b">Uitgeverij Frits Knaf.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">v.</marc:subfield>
+      <marc:subfield code="b">ill.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">"Facsimiles of rare books on organ and organbuilding."</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="910" ind1=" " ind2=" ">
+      <marc:subfield code="a">rcp3356</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="910" ind1=" " ind2=" ">
+      <marc:subfield code="a">MARS</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">02</marc:subfield>
+      <marc:subfield code="b">UIU</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/2</identifier><datestamp>2012-02-13T20:21:57Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01362nam a22003250  4500</marc:leader>
+    <marc:controlfield tag="001">115575</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="008">730330 1971                        eng u</marc:controlfield>
+    <marc:datafield tag="010" ind1=" " ind2=" ">
+      <marc:subfield code="a">   75593394 </marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="b">ocl</marc:subfield>
+      <marc:subfield code="a">00593519</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">00007888</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="c">DXU</marc:subfield>
+      <marc:subfield code="d">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRM</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="090" ind1=" " ind2=" ">
+      <marc:subfield code="a">QA613.6</marc:subfield>
+      <marc:subfield code="b">.K8</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="099" ind1=" " ind2=" ">
+      <marc:subfield code="a">QA613.6 .K8</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Kuiper, Nicolaas H.</marc:subfield>
+      <marc:subfield code="q">(Nicolaas Hendrik)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Variétés hilbertiennes;</marc:subfield>
+      <marc:subfield code="b">aspects géométriques,</marc:subfield>
+      <marc:subfield code="c">par Nicolaas H. Kuiper, suivi de deux textes de Dan Burghelea.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Montréal,</marc:subfield>
+      <marc:subfield code="b">Les Presses de l'Université de Montréal,</marc:subfield>
+      <marc:subfield code="c">1971 [i. e. 1973]</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">154 p.</marc:subfield>
+      <marc:subfield code="b">illus.</marc:subfield>
+      <marc:subfield code="c">28 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="490" ind1="1" ind2=" ">
+      <marc:subfield code="a">Séminaire de mathématiques supérieures,</marc:subfield>
+      <marc:subfield code="v">38</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">At head of title: Université de Montréal. Département de mathématiques.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographies.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="505" ind1="0" ind2=" ">
+      <marc:subfield code="a">Variétés hilbertiennes; aspects géométriques, par N.H. Kuiper.--Imbedding Hilbert manifolds with given normal bundle, by D. Burghelea.--Diffeomorphisms for Hilbert manifold and handle decomposition, by D. Burghelea.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Differential topology.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Hilbert space.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Banach spaces.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="a">Burghelea, Dan.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="830" ind1=" " ind2="0">
+      <marc:subfield code="a">Séminaire de mathématiques supérieures ;</marc:subfield>
+      <marc:subfield code="v">38</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="910" ind1=" " ind2=" ">
+      <marc:subfield code="a">  961028        </marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="911" ind1=" " ind2=" ">
+      <marc:subfield code="a">p</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="966" ind1=" " ind2=" ">
+      <marc:subfield code="l">Cstack</marc:subfield>
+      <marc:subfield code="m">MSMON </marc:subfield>
+      <marc:subfield code="s">QA613.6 .K8</marc:subfield>
+      <marc:subfield code="b">39087000821126</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/3</identifier><datestamp>2012-02-13T20:21:57Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00919cam a22002770  4500</marc:leader>
+    <marc:controlfield tag="001">115576</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20100817205237.0</marc:controlfield>
+    <marc:controlfield tag="008">770617s1977    dcu      b   f001 0 eng  </marc:controlfield>
+    <marc:datafield tag="010" ind1=" " ind2=" ">
+      <marc:subfield code="a">   77601917 </marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="b">ocl</marc:subfield>
+      <marc:subfield code="a">03119758</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">00007889</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">DLC</marc:subfield>
+      <marc:subfield code="c">DLC</marc:subfield>
+      <marc:subfield code="d">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="043" ind1=" " ind2=" ">
+      <marc:subfield code="a">n-us---</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="050" ind1="0" ind2=" ">
+      <marc:subfield code="a">LC3731</marc:subfield>
+      <marc:subfield code="b">.W444</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="099" ind1=" " ind2=" ">
+      <marc:subfield code="a">LC3731 .W444</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Weinberg, Meyer,</marc:subfield>
+      <marc:subfield code="d">1920-2002.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Minority students :</marc:subfield>
+      <marc:subfield code="b">a research appraisal /</marc:subfield>
+      <marc:subfield code="c">Meyer Weinberg.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Washington :</marc:subfield>
+      <marc:subfield code="b">U.S. Dept. of Health, Education, and Welfare, National Institute of Education : for sale by the Supt. of Docs., U.S. Govt. Print. Off.,</marc:subfield>
+      <marc:subfield code="c">1977.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">vi, 398 p. ;</marc:subfield>
+      <marc:subfield code="c">26 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes indexes.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Bibliography: p. 333-379.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Minorities</marc:subfield>
+      <marc:subfield code="x">Education</marc:subfield>
+      <marc:subfield code="z">United States.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="910" ind1=" " ind2=" ">
+      <marc:subfield code="a">  950805        </marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="911" ind1=" " ind2=" ">
+      <marc:subfield code="a">p</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="966" ind1=" " ind2=" ">
+      <marc:subfield code="l">Stack </marc:subfield>
+      <marc:subfield code="m">RMON  </marc:subfield>
+      <marc:subfield code="s">LC3731 .W444</marc:subfield>
+      <marc:subfield code="b">39087007825104</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/4</identifier><datestamp>2012-02-13T20:21:57Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00927cam a22002898  4500</marc:leader>
+    <marc:controlfield tag="001">115577</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20091002102755.0</marc:controlfield>
+    <marc:controlfield tag="008">761228s1977    nyu           000 0 eng  </marc:controlfield>
+    <marc:datafield tag="010" ind1=" " ind2=" ">
+      <marc:subfield code="a">   76055133 </marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">0807608424 :</marc:subfield>
+      <marc:subfield code="c">$6.95.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="020" ind1=" " ind2=" ">
+      <marc:subfield code="a">0807608432 (pbk.) :</marc:subfield>
+      <marc:subfield code="c">$3.95</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">02695005</marc:subfield>
+      <marc:subfield code="b">ocl</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="9">00007890</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">DLC</marc:subfield>
+      <marc:subfield code="c">DLC</marc:subfield>
+      <marc:subfield code="d">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="050" ind1="0" ind2=" ">
+      <marc:subfield code="a">PS3569.I4725</marc:subfield>
+      <marc:subfield code="b">C5</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="090" ind1=" " ind2=" ">
+      <marc:subfield code="a">PS3569</marc:subfield>
+      <marc:subfield code="b">.S583c</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="099" ind1=" " ind2=" ">
+      <marc:subfield code="a">PS3569 .S583c</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Simic, Charles,</marc:subfield>
+      <marc:subfield code="d">1938-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Charon's cosmology /</marc:subfield>
+      <marc:subfield code="c">by Charles Simic.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">New York :</marc:subfield>
+      <marc:subfield code="b">G. Braziller,</marc:subfield>
+      <marc:subfield code="c">[1977]</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">viii, 47 p. ;</marc:subfield>
+      <marc:subfield code="c">23 cm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="490" ind1="1" ind2=" ">
+      <marc:subfield code="a">The Braziller series of poetry</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="590" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rhees Rare Bks. copy: The William and Hannelore Heyen Collection.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="590" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rhees Rare Bks. copy inscribed to Bill Heyen by the author.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="830" ind1=" " ind2="0">
+      <marc:subfield code="a">Braziller series of poetry.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="966" ind1=" " ind2=" ">
+      <marc:subfield code="l">Stack</marc:subfield>
+      <marc:subfield code="m">RMON</marc:subfield>
+      <marc:subfield code="s">PS3569 .S583c</marc:subfield>
+      <marc:subfield code="b">39087005768231</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record></ListRecords>
+</OAI-PMH>
