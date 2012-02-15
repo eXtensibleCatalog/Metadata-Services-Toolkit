@@ -111,6 +111,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                 os.write(idBytes);
                         } catch (Exception e) {
                             LOG.error("problem with data - ",e);
+                            getUtil().throwIt(e);
                         }
                     }
                 }
@@ -176,6 +177,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                 os.write(idBytes);
                         } catch (Exception e) {
                             LOG.error("problem with data - ",e);
+                            getUtil().throwIt(e);
                         }
                     }
                 }
@@ -309,6 +311,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     os.write(idBytes);
                 } catch (Exception e) {
                     LOG.error("*** problem with data - recordid="+id,e);
+                    getUtil().throwIt(e);
                 }
 
                 os.close();
@@ -322,8 +325,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 TimingLogger.stop(tableName + ".insert.load_infile");
                 TimingLogger.stop(tableName + ".insert");
             } catch (org.springframework.dao.DataIntegrityViolationException t2) {
-                LOG.error("****   problem with data - not enough for the insert? num="+num+" str="+str+" id="+id,t2);
-//                getUtil().throwIt(t2);
+                LOG.error("****   problem with data - num="+num+" str="+str+" id="+id,t2);
+                getUtil().throwIt(t2);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
             }
@@ -368,6 +371,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     os.write(idBytes);
                 } catch (Exception e) {
                     LOG.error("problem with data - ",e);
+                    getUtil().throwIt(e);
                 }
 
                 os.close();
