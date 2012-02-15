@@ -19,12 +19,12 @@ import java.util.Set;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
+import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
-import xc.mst.bo.service.Service;
-import xc.mst.dao.DatabaseConfigException;
+import xc.mst.repo.Repository;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
@@ -112,6 +112,23 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+
+    public void processComplete() {
+//        .createIndiciesIfNecessary(name);
+    }
+
+    // note the 'well' named class Set collides with java.util.Set
+    //
+    // overriding this so you can save the repo/start over?
+    public void process(Repository repo, Format inputFormat, xc.mst.bo.provider.Set inputSet, xc.mst.bo.provider.Set outputSet) {
+        try {
+            super.process(repo, inputFormat, inputSet, outputSet);
+            processComplete();
+        } catch (Exception e) {
+            LOG.error("MarcAggregationService, processing repo "+ repo.getName()+" failed.", e);
+        }
+    }
+
     public List<OutputRecord> process(InputRecord r) {
         try {
             LOG.debug("MAS:  process record+"+r.getId());
@@ -125,6 +142,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
                     matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
+                    // possibly need/want to add all matchpoints 1st, then look for matches.
                     ms.addMatcher(matchPointKey, matcher);
                 }
 

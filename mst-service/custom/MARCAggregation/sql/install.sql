@@ -37,8 +37,13 @@ CREATE  TABLE `matchpoints_010a` (
   `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`) )
-ENGINE = InnoDB;
+
+  PRIMARY KEY (`input_record_id`),
+
+  -- may want to not do this and create it after 1st load create, ala repo
+  INDEX idx_mp_010a_numeric_id (numeric_id)
+
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -49,8 +54,13 @@ CREATE  TABLE `matchpoints_020a` (
   `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`, `string_id`) )
-ENGINE = InnoDB;
+
+  PRIMARY KEY (`input_record_id`, `string_id`),
+
+  -- may want to not do this and create it after 1st load create, ala repo
+  INDEX idx_mp_020a_string_id (string_id)
+
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -61,8 +71,13 @@ CREATE  TABLE `matchpoints_022a` (
   `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`, `string_id`) )
-ENGINE = InnoDB;
+
+  PRIMARY KEY (`input_record_id`, `string_id`),
+
+  -- may want to not do this and create it after 1st load create, ala repo
+  INDEX idx_mp_022a_string_id (string_id)
+
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -72,8 +87,13 @@ DROP TABLE IF EXISTS matchpoints_024a;
 CREATE  TABLE `matchpoints_024a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY (`input_record_id`, `string_id`) )
-ENGINE = InnoDB;
+
+  PRIMARY KEY (`input_record_id`, `string_id`),
+
+  -- may want to not do this and create it after 1st load create, ala repo
+  INDEX idx_mp_024a_string_id (string_id)
+
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -141,8 +161,13 @@ CREATE  TABLE `matchpoints_035a` (
 --  `numeric_id` INT UNSIGNED NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
-  PRIMARY KEY  (`input_record_id`, `string_id`) )
-ENGINE = InnoDB;
+
+  PRIMARY KEY  (`input_record_id`, `string_id`),
+
+  -- may want to not do this and create it after 1st load create, ala repo
+  INDEX idx_mp_035a_string_id (string_id)
+
+) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `merged_035`
