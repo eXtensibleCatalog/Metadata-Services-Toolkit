@@ -10,6 +10,7 @@ package xc.mst.services.marcaggregation.dao;
 
 
 import gnu.trove.TLongLongHashMap;
+import gnu.trove.TLongLongProcedure;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -194,6 +195,66 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         }
 
         TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+    }
+
+    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong only for each record id
+    public void persistLongMatchpointMaps(TLongLongHashMap inputId2numMap, String tableName) {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistLongMaps");
+        try {
+            String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+            final byte[] tabBytes = "\t".getBytes();
+            final byte[] newLineBytes = "\n".getBytes();
+
+            File dbLoadFile = new File(dbLoadFileStr);
+            if (dbLoadFile.exists()) {
+                dbLoadFile.delete();
+            }
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            final MutableInt j = new MutableInt(0);
+            TimingLogger.start(tableName + ".insert");
+            TimingLogger.start(tableName + ".insert.create_infile");
+            final List<Object[]> params = new ArrayList<Object[]>();
+
+            if (inputId2numMap instanceof TLongLongHashMap) {
+                LOG.debug("insert: " + tableName + ".size(): " + inputId2numMap.size());
+                if (inputId2numMap != null && inputId2numMap.size() > 0) {
+                    inputId2numMap.forEachEntry(new TLongLongProcedure() {
+                        public boolean execute(long id, long num) {
+                            try {
+                                if (j.intValue() > 0) {
+                                    LOG.debug("line break!!! j:" + j.intValue());
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                os.write(String.valueOf(num).getBytes());
+                                os.write(tabBytes);
+                                os.write(String.valueOf(id).getBytes());
+                            } catch (Throwable t) {
+                                getUtil().throwIt(t);
+                            }
+                            return true;
+                        }
+                    });
+                }
+            }
+
+            os.close();
+            TimingLogger.stop(tableName + ".insert.create_infile");
+            TimingLogger.start(tableName + ".insert.load_infile");
+            this.jdbcTemplate.execute(
+                    "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                            tableName +
+                            " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                    );
+            TimingLogger.stop(tableName + ".insert.load_infile");
+            TimingLogger.stop(tableName + ".insert");
+        } catch (Throwable t) {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
+            getUtil().throwIt(t);
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id

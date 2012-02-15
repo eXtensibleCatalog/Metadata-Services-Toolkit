@@ -51,7 +51,10 @@ public class ISBNMatcher extends FieldMatcherService {
     // you can have multiple 020$a fields within a record (mult 020, each w/1 $a)
     // thus use a list of string pairs, the pair values are the original string
     //    and the normalized string
-    protected Map<Long, List<String[]>> inputId2isbn = new HashMap<Long, List<String[]>>();
+    //  note, originally were saving the whole string too, now I don't see a need!
+    //
+    //protected Map<Long, List<String[]>> inputId2isbn = new HashMap<Long, List<String[]>>();
+    protected Map<Long, List<String>> inputId2isbn = new HashMap<Long, List<String>>();
 
     // multiple records might have the same normalized 020$a, this would be an indication of a match
     protected Map<String, List<Long>> isbn2inputIds = new HashMap<String, List<Long>>();
@@ -134,12 +137,16 @@ public class ISBNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
-                final String[] isbnArray = new String[] {isbn, subfield};  // its a pair of strings
-                List<String[]> isbnList = inputId2isbn.get(id);
+
+                //note, originally saved orig string too, but I don't see the need
+                //final String[] isbnArray = new String[] {isbn, subfield};  // its a pair of strings
+                //List<String[]> isbnList = inputId2isbn.get(id);
+                List<String> isbnList = inputId2isbn.get(id);
 
                 if (isbnList == null) {
-                    isbnList = new ArrayList<String[]>();
-                    isbnList.add(isbnArray);
+                    //isbnList = new ArrayList<String[]>();
+                    isbnList = new ArrayList<String>();
+                    isbnList.add(isbn);
                     inputId2isbn.put(id, isbnList);
                     LOG.debug("*** 1.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
                 }
@@ -148,7 +155,7 @@ public class ISBNMatcher extends FieldMatcherService {
                     LOG.debug("** We have already seen isbn " + isbn + " for recordId: " + r.recordId);
                 }
                 else {
-                    isbnList.add(isbnArray);
+                    isbnList.add(isbn);
                     inputId2isbn.put(id, isbnList);
                     LOG.debug("*** 2.adding to inputId2isbn, for id: " + id + " for isbn: " + isbn);
                 }
@@ -179,7 +186,7 @@ public class ISBNMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2isbn, MarcAggregationServiceDAO.matchpoints_020a_table);
+        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2isbn, MarcAggregationServiceDAO.matchpoints_020a_table);
         inputId2isbn.clear();
         isbn2inputIds.clear();
     }

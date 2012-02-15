@@ -63,7 +63,9 @@ public class ISSNMatcher extends FieldMatcherService {
     //
     // TODO, to make this perform better could 1st see if match on the integer version
     //
-    protected Map<Long, List<String[]>> inputId2issn = new HashMap<Long, List<String[]>>();
+    // note, orig saved orig string too, now I don't see point.
+    //
+    protected Map<Long, List<String>> inputId2issn = new HashMap<Long, List<String>>();
 
     // multiple records might have the same normalized 022$a, this would be an indication of a match
     protected Map<String, List<Long>> issn2inputIds = new HashMap<String, List<Long>>();
@@ -141,12 +143,11 @@ public class ISSNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String issn = getAllButDash(subfield);
-                List<String[]> issnList = inputId2issn.get(id);
-                final String[] issnArray = new String[] {issn, subfield};  // its a pair of strings
+                List<String> issnList = inputId2issn.get(id);
 
                 if (issnList == null) {
-                    issnList = new ArrayList<String[]>();
-                    issnList.add(issnArray);
+                    issnList = new ArrayList<String>();
+                    issnList.add(issn);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 1.adding to inputId2issn, for id: " + id + " for issn: " + issn);
                     if (debug) {
@@ -161,7 +162,7 @@ public class ISSNMatcher extends FieldMatcherService {
                     }
                 }
                 else {
-                    issnList.add(issnArray);
+                    issnList.add(issn);
                     inputId2issn.put(id, issnList);
                     LOG.debug("*** 2.adding to inputId2issn, for id: " + id + " for issn: " + issn);
                     if (debug) {
@@ -201,7 +202,7 @@ public class ISSNMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2issn, MarcAggregationServiceDAO.matchpoints_022a_table);
+        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2issn, MarcAggregationServiceDAO.matchpoints_022a_table);
         inputId2issn.clear();
         issn2inputIds.clear();
     }

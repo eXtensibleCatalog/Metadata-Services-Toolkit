@@ -65,7 +65,8 @@ public class LccnMatcher extends FieldMatcherService {
     // will this field data structure be needed? (or do we need record id to 010$a string, or both?)
     protected TLongLongHashMap inputId2lccn = new TLongLongHashMap();
 
-    protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
+    //don't need to save this
+    //protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
 
     // am not sure how much I can count on the int starting at char 3 (0,1,2,3)
     // there is a prefix or spaces before the int, and the prefix can run right
@@ -206,12 +207,12 @@ public class LccnMatcher extends FieldMatcherService {
                 //TODO somewhere in the below code is a logic error that causes an exception with, not enough data, or something, when putting into row.
                 if (oldGoods == null || oldGoods == 0l) {
                     inputId2lccn.put(id, goods);
-                    inputId2lccnStr.put(id, subfield);
+                    //inputId2lccnStr.put(id, subfield);
                 }
                 else {
                     if (!goods.equals(oldGoods)) {
                         inputId2lccn.put(id, goods);
-                        inputId2lccnStr.put(id, subfield);
+                        //inputId2lccnStr.put(id, subfield);
                         LOG.debug("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId+ " this 010: "+goods);
                         //LOG.info("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
                     }
@@ -220,7 +221,6 @@ public class LccnMatcher extends FieldMatcherService {
                         //LOG.info("we have already seen "+ goods +" for recordId: "+r.recordId);
                     }
                 }
-//                inputId2lccnStr.put(id, subfield);
 
                 List<Long> idsList = lccn2inputIds.get(goods);
                 if (idsList == null || idsList.size() == 0) {
@@ -249,28 +249,9 @@ public class LccnMatcher extends FieldMatcherService {
     // at commit time put stuff into db,
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        //TODO the below causes:
-        /*
-org.springframework.dao.DataIntegrityViolationException: StatementCallback; SQL [load data infile '/xc/MST-instances/MetadataServicesToolkit/db_load.in' REPLACE into table matchpoints_010a character set utf8 fields terminated by '\t
-terminated by '\n']; Row 1 doesn't contain data for all columns; nested exception is java.sql.SQLException: Row 1 doesn't contain data for all columns
-        at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:101)
-        at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72)
-        at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:80)
-        at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:80)
-        at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:406)
-        at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:427)
-        at xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO.persistLongStrMatchpointMaps(MarcAggregationServiceDAO.java:249)
-        at xc.mst.services.marcaggregation.matcher.LccnMatcher.flush(LccnMatcher.java:248)
-        at xc.mst.services.marcaggregation.MarcAggregationService.commitIfNecessary(MarcAggregationService.java:174)
-        at xc.mst.services.GenericMetadataService.process(GenericMetadataService.java:688)
-        at xc.mst.services.MetadataServiceManager.doSomeWork(MetadataServiceManager.java:81)
-        at xc.mst.scheduling.WorkerThread.run(WorkerThread.java:92)
-        at java.lang.Thread.run(Thread.java:662)
-Caused by: java.sql.SQLException: Row 1 doesn't contain data for all columns
-         */
-        s.getMarcAggregationServiceDAO().persistLongStrMatchpointMaps(inputId2lccn, inputId2lccnStr, MarcAggregationServiceDAO.matchpoints_010a_table);
-        inputId2lccnStr.clear();
-        inputId2lccn.clear();
+        s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table);
+        //inputId2lccnStr.clear();
+        inputId2lccn.clear();    //TODO may want to keep these in memory!
         lccn2inputIds.clear();
     }
 

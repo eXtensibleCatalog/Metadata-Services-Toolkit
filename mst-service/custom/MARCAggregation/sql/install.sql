@@ -34,8 +34,7 @@ ENGINE = MyISAM DEFAULT CHARSET=utf8;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS matchpoints_010a;
 CREATE  TABLE `matchpoints_010a` (
-  `numeric_id` INT UNSIGNED NOT NULL ,
-  `string_id` VARCHAR(255) NOT NULL ,
+  `numeric_id` BIGINT NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
   PRIMARY KEY (`input_record_id`),
@@ -51,7 +50,6 @@ CREATE  TABLE `matchpoints_010a` (
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS matchpoints_020a;
 CREATE  TABLE `matchpoints_020a` (
-  `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
@@ -68,7 +66,6 @@ CREATE  TABLE `matchpoints_020a` (
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS matchpoints_022a;
 CREATE  TABLE `matchpoints_022a` (
-  `full_string` VARCHAR(255) NOT NULL ,
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
