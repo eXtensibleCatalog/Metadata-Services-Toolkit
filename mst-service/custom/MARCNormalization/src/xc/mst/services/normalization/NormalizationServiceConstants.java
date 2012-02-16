@@ -116,6 +116,17 @@ public class NormalizationServiceConstants {
     public static final String CONFIG_ENABLED_008_AUDIENCE = "008Audience";
 
     /**
+     * Parameter for looking up the whether or not the 006FormOfItem normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_006_FORM = "006FormOfItem";
+
+    /**
+     * Parameter for looking up the whether or not the 008FormOfItem normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_008_FORM = "008FormOfItem";
+
+    /**
+
      * Parameter for looking up the whether or not the 008Thesis normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_008_THESIS = "008Thesis";
@@ -340,6 +351,11 @@ public class NormalizationServiceConstants {
     public static final String PROPERTIES_008_22_TO_AUDIENCE = "field008Offset22ToAudience.properties";
 
     /**
+     * Properties file mapping the 008 offset 22 value to the intended audience
+     */
+    public static final String PROPERTIES_006_008_23_TO_FORM = "formFrom006_008Properties.properties";
+
+    /**
      * Properties file mapping location codes to the full name of the location
      */
     public static final String PROPERTIES_LOCATION_CODE_TO_LOCATION_TERM = "locationCodeToLocation.properties";
@@ -397,6 +413,11 @@ public class NormalizationServiceConstants {
      * The 9xx field for the audience
      */
     public static final String FIELD_9XX_AUDIENCE = "945";
+    
+    /**
+     * The 9xx field for the form
+     */
+    public static final String FIELD_9XX_FORM = "977";
 
     /**
      * The 9xx field for the cleaned up ISBN

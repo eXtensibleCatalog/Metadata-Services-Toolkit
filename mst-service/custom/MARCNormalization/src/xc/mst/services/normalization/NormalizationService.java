@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -114,6 +115,11 @@ public class NormalizationService extends GenericMetadataService {
      * The Properties file with the audience information for the 008 offset 22
      */
     protected Properties audienceFrom008Properties = null;
+
+    /**
+     * The Properties file with the audience information for the 006/008 offset 23
+     */
+    protected Properties formFrom006_008Properties = null;
 
     /**
      * The output format (marcxml) for records processed from this service
@@ -324,6 +330,11 @@ public class NormalizationService extends GenericMetadataService {
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_008_AUDIENCE, "0").equals("1"))
                     normalizedXml = audienceFrom008(normalizedXml);
+
+                boolean process006 = enabledSteps.getProperty(CONFIG_ENABLED_006_FORM, "0").equals("1");
+                boolean process008 = enabledSteps.getProperty(CONFIG_ENABLED_008_FORM, "0").equals("1");
+                if (process006 || process008)
+                    normalizedXml = formFrom006_008(normalizedXml, process006, process008);
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_008_THESIS, "0").equals("1"))
                     normalizedXml = thesisFrom008(normalizedXml);
@@ -626,26 +637,27 @@ public class NormalizationService extends GenericMetadataService {
             marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType);
         }
 
-        String field006 = marcXml.getField006();
-        if (!StringUtils.isEmpty(field006)) {
-            // The character at offset 6 of the leader field
-            char field006_0 = field006.charAt(0);
+        for (String field006 : marcXml.getField006()) {
+            if (field006 != null && field006.length() > 0) {
+                // The character at offset 6 of the leader field
+                char field006_0 = field006.charAt(0);
 
-            // Pull the DCMI type mapping from the configuration file based on the leader 06 value.
-            String dcmiType006_0 = dcmiType06Properties.getProperty("" + field006_0, null);
+                // Pull the DCMI type mapping from the configuration file based on the leader 06 value.
+                String dcmiType006_0 = dcmiType06Properties.getProperty("" + field006_0, null);
 
-            // If there was no mapping for the provided leader 06, we can't create the field. In this case return the unmodified MARCXML
-            if (dcmiType006_0 == null) {
-                if (LOG.isDebugEnabled())
-                    LOG.debug("Cannot find a DCMI Type mapping for the 006 offset 0 value of " + dcmiType006_0 + ".");
-            }
+                // If there was no mapping for the provided leader 06, we can't create the field. In this case return the unmodified MARCXML
+                if (dcmiType006_0 == null) {
+                    if (LOG.isDebugEnabled())
+                        LOG.debug("Cannot find a DCMI Type mapping for the 006 offset 0 value of " + dcmiType006_0 + ".");
+                }
 
-            else {
-                if (LOG.isDebugEnabled())
-                    LOG.debug("Found the DCMI Type " + dcmiType006_0 + " for the 006 offset 0 value of " + field006_0 + ".");
+                else {
+                    if (LOG.isDebugEnabled())
+                        LOG.debug("Found the DCMI Type " + dcmiType006_0 + " for the 006 offset 0 value of " + field006_0 + ".");
 
-                // Add a MARCXML field to store the DCMI Type
-                marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType006_0);
+                    // Add a MARCXML field to store the DCMI Type
+                    marcXml.addMarcXmlField(FIELD_9XX_DCMI_TYPE, dcmiType006_0);
+                }
             }
         }
 
@@ -687,27 +699,28 @@ public class NormalizationService extends GenericMetadataService {
             marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab);
         }
 
-        String field006 = marcXml.getField006();
-        if (field006 != null) {
-            // The character at offset 6 of the leader field
-            char field006_0 = field006.charAt(0);
+        for (String field006 : marcXml.getField006()) {
+            if (field006 != null && field006.length() > 0) {
+                // The character at offset 6 of the leader field
+                char field006_0 = field006.charAt(0);
 
-            // Pull the DCMI type mapping from the configuration file based on the leader 06 value.
-            String marcVocab006_0 = leader06MarcVocabProperties.getProperty("" + field006_0, null);
+                // Pull the DCMI type mapping from the configuration file based on the leader 06 value.
+                String marcVocab006_0 = leader06MarcVocabProperties.getProperty("" + field006_0, null);
 
-            // If there was no mapping for the provided leader 06, we can't create the field. In this case return the unmodified MARCXML
-            if (marcVocab006_0 == null) {
-                if (LOG.isDebugEnabled())
-                    LOG.debug("Cannot find a MARC vocabulary mapping for the 006 offset 0 value of " + marcVocab006_0 + ".");
-            }
+                // If there was no mapping for the provided leader 06, we can't create the field. In this case return the unmodified MARCXML
+                if (marcVocab006_0 == null) {
+                    if (LOG.isDebugEnabled())
+                        LOG.debug("Cannot find a MARC vocabulary mapping for the 006 offset 0 value of " + marcVocab006_0 + ".");
+                }
 
-            else {
-                if (LOG.isDebugEnabled())
-                    LOG.debug("Found the MARC vocabulary " + marcVocab006_0 + " for the 006 offset 0 value of " + marcVocab006_0 + ".");
+                else {
+                    if (LOG.isDebugEnabled())
+                        LOG.debug("Found the MARC vocabulary " + marcVocab006_0 + " for the 006 offset 0 value of " + marcVocab006_0 + ".");
 
-                // Add a MARCXML field to store the SMD Vocab
-                marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
-            }
+                    // Add a MARCXML field to store the SMD Vocab
+                    marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
+                }
+            }        	
         }
 
         // Return the modified MARCXML record
@@ -1229,6 +1242,77 @@ public class NormalizationService extends GenericMetadataService {
         return marcXml;
     }
 
+    /**
+     * If leader 06 contains certain values, create a field with the intended audience from the
+     * 008 offset 22 value.
+     *
+     * @param marcXml
+     *            The original MARCXML record
+     * @return The MARCXML record after performing this normalization step.
+     */
+    private MarcXmlManager formFrom006_008(MarcXmlManager marcXml, boolean field006, boolean field008) {
+        if (LOG.isDebugEnabled())
+            LOG.debug("Entering formFrom006_008 normalization step.");
+
+        ArrayList<String> flds = new ArrayList<String>();
+        
+        if (field008) {
+        	flds.add(marcXml.getField008());
+        }
+        if (field006) {
+        	for (String fld : marcXml.getField006()) {
+        		flds.add(fld);
+        	}
+        }
+        
+        //TreeMap<String,String> subfieldValues = new TreeMap<String,String>();
+        
+        for (String field : flds) {
+            // The character at offset 00 of the 006/008 field
+            char offset00 = (field != null && field.length() >= 1 ? field.charAt(0) : ' ');
+
+            // Do nothing if the 00 offset is one of the following:
+            switch (offset00) {
+    	        case 'e':
+    	        case 'q':
+    	        case 'u':
+    	        case 'v':
+    	        case 'w':
+    	        case 'x':
+    	        case 'y':
+    	        case 'z':
+    	        	continue;
+            }
+            
+            // The character at offset 23 of the 006/008 field
+            char offset23 = (field != null && field.length() >= 24 ? field.charAt(23) : ' ');
+
+            // Pull the audience mapping from the configuration file based on the 008 offset 22 value.
+            String form = formFrom006_008Properties.getProperty("" + offset23, null);
+
+            // If there was no mapping for the provided 008 offset 23, we can't create the field. In this case return the unmodified MARCXML
+            if (form == null) {
+                if (LOG.isDebugEnabled())
+                    LOG.debug("Cannot find an form mapping for the 006/008 offset 23 value of " + offset23 + ", returning the unmodified MARCXML.");
+
+                continue;
+            }
+
+            if (LOG.isDebugEnabled())
+                LOG.debug("Found the form " + form + " for the 006/008 offset 23 value of " + offset23 + ".");
+            
+            //subfieldValues.put(String.valueOf(offset23), form);        	
+            marcXml.addMarcXmlField(FIELD_9XX_FORM, form, null, null, null, String.valueOf(offset23));
+        }
+        
+
+        // Add a MARCXML field to store the form(s)
+        //marcXml.addMarcXmlField(FIELD_9XX_FORM, null, null, subfieldValues);
+ 
+        return marcXml;
+    }
+
+    
     /**
      * If there is no 502 field, create one with the value "Thesis" if 08 offset 24, 25, 26 or 27 is 'm'.
      *
@@ -2391,6 +2475,10 @@ public class NormalizationService extends GenericMetadataService {
                     if (audienceFrom008Properties == null)
                         audienceFrom008Properties = new Properties();
                     current = audienceFrom008Properties;
+                } else if (line.equals("FIELD 006/008 OFFSET 23 TO FORM OF ITEM")) {
+                    if (formFrom006_008Properties == null)
+                    	formFrom006_008Properties = new Properties();
+                    current = formFrom006_008Properties;                    
                 } else if (line.equals("ENABLED STEPS")) {
                     if (enabledSteps == null)
                         enabledSteps = new Properties();
@@ -2422,6 +2510,8 @@ public class NormalizationService extends GenericMetadataService {
             throw new ServiceValidationException("Service configuration file is missing the required section: LANGUAGE CODE TO LANGUAGE");
         else if (audienceFrom008Properties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 008 OFFSET 22 TO AUDIENCE");
+        else if (formFrom006_008Properties == null)
+            throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 006/008 OFFSET 23 TO FORM OF ITEM");
         else if (enabledSteps == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
         else if (getOrganizationCode() == null)
