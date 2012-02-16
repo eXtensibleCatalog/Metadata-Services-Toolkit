@@ -196,7 +196,11 @@ public class ISBNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return inputId2isbn.size();
+        //return inputId2isbn.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 020 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_020a_table)+ " unique records in dB & "+inputId2isbn.size() +" records in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_020a_table);
     }
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2isbn.keySet();
@@ -207,6 +211,10 @@ public class ISBNMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return isbn2inputIds.size();
+        //return isbn2inputIds.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 020 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_020a_table)+ " unique strings in dB & "+isbn2inputIds.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_020a_table);
     }
 }

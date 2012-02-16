@@ -216,12 +216,14 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
 
     /**
-     * For testing.
-     * TODO check in dB too?
-     * @return
+     * For testing.  (for my tests, the more reliable number was out of the db)
      */
     public int getNumRecordIdsInMatcher() {
-        return inputId2scn.size();
+        //return inputId2scn.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique records in dB & "+inputId2scn.size() +" records in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_035a_table);
     }
 
     //TODO check in dB too?
@@ -231,9 +233,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     /**
      * For testing.
-     * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return scn2inputIds.size();
+        //return scn2inputIds.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique strings in dB & "+inputId2scn.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_035a_table);
     }
 }

@@ -29,7 +29,7 @@ public class AggmatchTest extends MatchRulesTest {
         //TODO end of above TODO
 
         expectedMatchRecordIds.put("ISSNMatcher", 6); //022a
-        expectedMatchRecords.put  ("ISSNMatcher", 3);
+        expectedMatchRecords.put  ("ISSNMatcher", 3); // confirmed both
 
         // verified the records and matchpoints, ps, this is a good test, has lots of corner cases in the data.
         expectedMatchRecordIds.put("ISBNMatcher", 12); //020
@@ -44,7 +44,7 @@ public class AggmatchTest extends MatchRulesTest {
         expectedMatchRecordIds.put("LccnMatcher", 14);  //verified
         expectedMatchRecords.put  ("LccnMatcher", 9);
 
-        // Hmm I find 53 distinct matchpoints?  Must debug but for now, ....28 record ids/49 matchpoints
+        // confirmed, note in this file the 035's are frequently near the end of the record.
         expectedMatchRecordIds.put("SystemControlNumberMatcher", 28);
         expectedMatchRecords.put  ("SystemControlNumberMatcher", 49);
 

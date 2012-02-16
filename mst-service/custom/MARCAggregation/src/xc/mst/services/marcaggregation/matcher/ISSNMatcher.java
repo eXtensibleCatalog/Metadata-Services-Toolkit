@@ -207,13 +207,6 @@ public class ISSNMatcher extends FieldMatcherService {
         issn2inputIds.clear();
     }
 
-    /**
-     * For testing.
-     * @return
-     */
-    public int getNumRecordIdsInMatcher() {
-        return inputId2issn.size();
-    }
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2issn.keySet();
     }
@@ -222,8 +215,24 @@ public class ISSNMatcher extends FieldMatcherService {
      * For testing.
      * @return
      */
+    public int getNumRecordIdsInMatcher() {
+        //return inputId2issn.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 022 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_022a_table)+ " unique records in dB & "+inputId2issn.size() +" records in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_022a_table);
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
     public int getNumMatchPointsInMatcher() {
-        return issn2inputIds.size();
+        //return issn2inputIds.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 022 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_022a_table)+ " unique strings in dB & "+issn2inputIds.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_022a_table);
     }
 
 }

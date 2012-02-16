@@ -433,6 +433,22 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
+    public int getNumRecords(String tableName) {
+        return this.jdbcTemplate.queryForInt("select count(*) from " + tableName);
+    }
+
+    public int getNumUniqueStringIds(String tableName) {
+        return this.jdbcTemplate.queryForInt("select count(distinct string_id) from " + tableName);
+    }
+
+    public int getNumUniqueNumericIds(String tableName) {
+        return this.jdbcTemplate.queryForInt("select count(distinct numeric_id) from " + tableName);
+    }
+
+    public int getNumUniqueRecordIds(String tableName) {
+        return this.jdbcTemplate.queryForInt("select count(distinct input_record_id) from " + tableName);
+    }
+
     public void loadMaps(
         ) {
     }

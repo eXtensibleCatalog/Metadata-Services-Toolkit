@@ -169,7 +169,11 @@ public class x024aMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumRecordIdsInMatcher() {
-        return inputId2x024a.size();
+        //return inputId2x024a.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 024 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_024a_table)+ " unique records in dB & "+inputId2x024a.size() +" records in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_024a_table);
     }
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2x024a.keySet();
@@ -180,7 +184,11 @@ public class x024aMatcher extends FieldMatcherService {
      * @return
      */
     public int getNumMatchPointsInMatcher() {
-        return x024a2inputIds.size();
+        //return x024a2inputIds.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 024 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_024a_table)+ " unique strings in dB & "+x024a2inputIds.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_024a_table);
     }
 
 }

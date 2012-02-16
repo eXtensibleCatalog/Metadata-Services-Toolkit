@@ -254,14 +254,6 @@ public class LccnMatcher extends FieldMatcherService {
         inputId2lccn.clear();    //TODO may want to keep these in memory!
         lccn2inputIds.clear();
     }
-
-    /**
-     * For testing.
-     * @return
-     */
-    public int getNumRecordIdsInMatcher() {
-        return inputId2lccn.size();
-    }
     public Collection<Long> getRecordIdsInMatcher() {
         List<Long> results = new ArrayList<Long>();
         for (Long record: inputId2lccn.keys()) {
@@ -274,8 +266,24 @@ public class LccnMatcher extends FieldMatcherService {
      * For testing.
      * @return
      */
+    public int getNumRecordIdsInMatcher() {
+        //return inputId2lccn.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 010 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_010a_table)+ " unique records in dB & "+inputId2lccn.size() +" records in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_010a_table);
+    }
+
+    /**
+     * For testing.
+     * @return
+     */
     public int getNumMatchPointsInMatcher() {
-        return lccn2inputIds.size();
+        //return lccn2inputIds.size();
+
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        LOG.debug("** 010 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_010a_table)+ " unique strings in dB & "+lccn2inputIds.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_010a_table);
     }
 
 }
