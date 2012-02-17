@@ -1265,8 +1265,6 @@ public class NormalizationService extends GenericMetadataService {
         	}
         }
         
-        //TreeMap<String,String> subfieldValues = new TreeMap<String,String>();
-        
         for (String field : flds) {
             // The character at offset 00 of the 006/008 field
             char offset00 = (field != null && field.length() >= 1 ? field.charAt(0) : ' ');
@@ -1300,15 +1298,10 @@ public class NormalizationService extends GenericMetadataService {
 
             if (LOG.isDebugEnabled())
                 LOG.debug("Found the form " + form + " for the 006/008 offset 23 value of " + offset23 + ".");
-            
-            //subfieldValues.put(String.valueOf(offset23), form);        	
-            marcXml.addMarcXmlField(FIELD_9XX_FORM, form, null, null, null, String.valueOf(offset23));
+
+            marcXml.addMarcXmlField(FIELD_9XX_FORM, form);
         }
         
-
-        // Add a MARCXML field to store the form(s)
-        //marcXml.addMarcXmlField(FIELD_9XX_FORM, null, null, subfieldValues);
- 
         return marcXml;
     }
 
