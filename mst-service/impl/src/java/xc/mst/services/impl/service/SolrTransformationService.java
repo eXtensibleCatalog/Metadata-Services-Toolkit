@@ -5153,6 +5153,29 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 "type007", AggregateXCRecord.XC_NAMESPACE, null,
                 FrbrLevel.MANIFESTATION);
     }
+    
+    
+     
+    /**
+     * Processes the 977 field from the SaxMarcXmlRecord we're transforming. The
+     * $a subfields become xc:formOfItem fields at the manifestation FRBR level.
+     *
+     * @param transformMe
+     *            The MARC XML record we're transforming
+     * @param transformInto
+     *            The XC record which will store the transformed version of the
+     *            record
+     * @return A reference to transformInto after this transformation step has
+     *         been completed.
+     */
+    protected AggregateXCRecord process977(SaxMarcXmlRecord transformMe,
+            AggregateXCRecord transformInto) {
+        // Create an xc:type007 based on the 933 $a values
+        return processFieldBasic(transformMe, transformInto, 977, 'a',
+                "formOfItem", AggregateXCRecord.XC_NAMESPACE, null,
+                FrbrLevel.MANIFESTATION);
+    }
+    
 
     /**
      * Processes the 934 field from the SaxMarcXmlRecord we're transforming. The

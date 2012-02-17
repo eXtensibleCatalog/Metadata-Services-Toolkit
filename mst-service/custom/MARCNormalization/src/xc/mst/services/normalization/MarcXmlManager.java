@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
@@ -285,14 +287,14 @@ public class MarcXmlManager {
     /**
      * The value of the 006 field
      */
-    private String field006 = null;
+    private ArrayList<String> field006 = new ArrayList<String>();
 
     /**
      * Gets the 006 field
      *
      * @return the MARC XML's 006 field
      */
-    public String getField006() {
+    public ArrayList<String> getField006() {
         return field006;
     }
 
@@ -902,7 +904,7 @@ public class MarcXmlManager {
 
             // Initialize the 006 field if we found it
             else if (controlField.getAttribute("tag").getValue().equals("006")) {
-                field006 = controlField.getText();
+                field006.add(controlField.getText());
 
                 if (log.isDebugEnabled())
                     log.debug("Found the value of the control field 006 to be " + field006 + ".");
@@ -1273,14 +1275,13 @@ public class MarcXmlManager {
             }   
             
             for (Element new014 : new014s) {
-            	addMarcXmlField("014", new014.getText(), null, "1", null);
+            	addMarcXmlField("014", new014.getText(), null, "1", null, null);
             }
 
         }
         
     }    
-    
-              
+        
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicators empty and the $a subfield will be set to the specified value.
@@ -1291,9 +1292,9 @@ public class MarcXmlManager {
      *            The value of the $a subfield of the tag we're adding
      */
     public void addMarcXmlField(String tag, String subfieldAValue) {
-        addMarcXmlField(tag, subfieldAValue, null, null, null);
+        addMarcXmlField(tag, subfieldAValue, null, null, null, null);
     }
-
+        
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
      * both of its indicators empty and the $a subfield will be set to the specified value.
@@ -1304,8 +1305,14 @@ public class MarcXmlManager {
      *            The value of the $a subfield of the tag we're adding
      * @param linkingField
      *            The value of the $8 subfield of the field we're adding, or null if we do not need a $8 subfield
+     * @param ind1Value
+     * 	          Allow user to set ind1
+     * @param ind2Value
+     * 	          Allow user to set ind2
+     * @param subfieldCode
+     * 	          Allow user to set subfield other than 'a'
      */
-    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField, String ind1Value, String ind2Value) {
+    public void addMarcXmlField(String tag, String subfieldAValue, String linkingField, String ind1Value, String ind2Value, String subfieldCode) {
         TimingLogger.start("addMarcXmlField");
         if (log.isDebugEnabled())
             log.debug("Adding a new datafield to the MARC XML record with tag " + tag + " and value " + subfieldAValue + (linkingField == null ? "." : " with linking field " + linkingField + "."));
@@ -1327,7 +1334,10 @@ public class MarcXmlManager {
 
         // Add the $a subfield to the MARC XML field to the passed value
         Element newFieldASubfield = new Element("subfield", marcNamespace);
-        newFieldASubfield.setAttribute("code", "a");
+        if (subfieldCode != null)
+        	newFieldASubfield.setAttribute("code", subfieldCode);
+        else
+        	newFieldASubfield.setAttribute("code", "a");
         newFieldASubfield.setText(subfieldAValue);
 
         // Add the $a subfield to the new datafield
@@ -1376,6 +1386,82 @@ public class MarcXmlManager {
         TimingLogger.stop("addMarcXmlField");
     } // end method addMarcXmlField
 
+    /**
+     * Adds a new datafield to the MARC XML record and returns the result. The tag will have
+     * both of its indicators empty and the $a subfield will be set to the specified value.
+     *
+     * @param tag
+     *            The tag we're adding (i.e. 931)
+     * @param ind1Value
+     * 	          Allow user to set ind1
+     * @param ind2Value
+     * 	          Allow user to set ind2
+     * @param subfieldValues
+     * 	          Allow user to set subfields using a TreeMap
+     */
+    public void addMarcXmlField(String tag,  String ind1Value, String ind2Value, TreeMap<String,String> subfieldValues) {
+        TimingLogger.start("addMarcXmlField");
+        if (log.isDebugEnabled())
+            log.debug("Adding a new datafield to the MARC XML record with tag " + tag + " with multiple subfield values.");
+
+        // Add a MARC XML field with the specified tag
+        // Both of its indicators will be empty
+        Element newFieldElement = new Element("datafield", marcNamespace);
+        newFieldElement.setAttribute("tag", tag);
+        if (ind1Value != null) {
+        	newFieldElement.setAttribute("ind1", ind1Value);
+        } else {
+        	newFieldElement.setAttribute("ind1", " ");
+        }
+        if (ind2Value != null) {
+            newFieldElement.setAttribute("ind2", ind2Value);
+        } else {
+            newFieldElement.setAttribute("ind2", " ");        	
+        }
+
+        // Add the $a subfield to the MARC XML field to the passed value
+        for(Entry<String, String> entry : subfieldValues.entrySet()) {
+        	String subfield = entry.getKey();
+        	String subfieldValue = entry.getValue();
+        	        	
+            Element newFieldSubfield = new Element("subfield", marcNamespace);
+            newFieldSubfield.setAttribute("code", subfield);
+            newFieldSubfield.setText(subfieldValue);
+
+            // Add the $a subfield to the new datafield
+            newFieldElement.addContent("\n\t").addContent(newFieldSubfield).addContent("\n");
+        	
+            // If we just added a language code, add it to the list of new language codes we're maintaining
+            if (tag.equals(NormalizationServiceConstants.FIELD_9XX_LANGUAGE_SPLIT)) {
+                if (log.isDebugEnabled())
+                    log.debug("Added the language code " + subfieldValue + ".");
+
+                addedLanguageCodes.add(subfieldValue.toLowerCase());
+            } // end if (added language code)
+        }
+        
+        // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
+        if (tag.startsWith("9")) {
+            // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
+            Element newField5Subfield = new Element("subfield", marcNamespace);
+            newField5Subfield.setAttribute("code", "5");
+            newField5Subfield.setText(organizationCode);
+
+            // Add the $5 subfield to the new datafield
+            newFieldElement.addContent("\t").addContent(newField5Subfield).addContent("\n");
+        }
+
+        // If we just added a 243 element, cache the new element
+        else if (tag.equals("243"))
+            field243element.add(newFieldElement);
+        
+        // Add the new field to the end of the MARC XML if we didn't insert it already
+        marcXml.addContent(newFieldElement).addContent("\n\n");
+
+        TimingLogger.stop("addMarcXmlField");
+    } // end method addMarcXmlField
+    
+    
     /**
      * Adds a new controlfield to the MARC XML record and returns the result.
      *
@@ -2504,7 +2590,7 @@ public class MarcXmlManager {
                 else if (targetField.equals("001"))
                     field001 = null;
                 else if (targetField.equals("006"))
-                    field006 = null;
+                    field006 = new ArrayList<String>();
                 else if (targetField.equals("007"))
                     field007 = null;
                 else if (targetField.equals("008"))
