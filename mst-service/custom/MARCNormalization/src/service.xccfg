@@ -92,6 +92,17 @@ LanguageTerm = 1
 # value. 
 008Audience = 1
 
+
+# 1 to create an "Form of Item" field for the
+# form suggested by the 006 offset 23 
+# value. 
+006FormOfItem = 1
+
+# 1 to create an "Form of Item" field for the
+# form suggested by the 008 offset 23 
+# value. 
+008FormOfItem = 1
+
 # 1 to create a new 035 field with the
 # organization code in the MST configuration file
 # and the original record's control number 
@@ -1072,3 +1083,27 @@ LOCATION CODE TO LOCATION LIMIT NAME
 MainRef = Main Library
 MainStk = Main Library
 OffStor = Library Annex
+
+#-----------------------------------------
+FIELD 006/008 OFFSET 23 TO FORM OF ITEM
+#-----------------------------------------
+
+#*****************************************
+# This section maps "Form of Item" codes into human readable values.
+#
+# For example, if 006 offset 23 contains a value a, and a mapping of
+# a = Microfilm is set, then the following "Form of Item" field
+# will be created:
+#
+# 977$a Microfilm
+#
+#*****************************************
+a = Microfilm
+b = Microfiche
+c = Microopaque
+d = Large print
+f = Braille
+o = Online
+q = Direct electronic
+r = Regular print reproduction
+s = Electronic
