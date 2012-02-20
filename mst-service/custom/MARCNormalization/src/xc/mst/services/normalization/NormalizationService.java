@@ -1005,21 +1005,37 @@ public class NormalizationService extends GenericMetadataService {
         // The character at offset 6 of the leader field
         char leader06 = marcXml.getLeader().charAt(6);
 
-        // Return the unmodified MARCXML if the leader06 is neither 'a' nor 't'
-        if (leader06 != 'a' && leader06 != 't')
-            return marcXml;
-
         // The value of field 008
         String field008 = marcXml.getField008();
-
+        
         // The character at offset 33 of the 008 field
         char field008offset33 = ((field008 != null && field008.length() >= 34) ? field008.charAt(33) : ' ');
+        
+        boolean isFiction = false; // default to being classified "Non-Fiction"
+        
+        if (leader06 == 'a' && field008offset33 == '1') {
+        	isFiction = true;
+        	
+	        if (LOG.isDebugEnabled())
+	            LOG.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
+	        	
+	    }
+        if (!isFiction) {
+            ArrayList<String> field006s = marcXml.getField006();        
+            for (String field006: field006s) {            	
+            	if (field006 != null && field006.length() >= 34 && field006.charAt(0) == 'a' && field006.charAt(33) == '1' ) {
+            		isFiction = true;
+            		
+        	        if (LOG.isDebugEnabled())
+        	            LOG.debug("006 offset 0 is " + field006.charAt(0) + ".  006 offset 33 is " + field006.charAt(33) + ".");
 
-        if (LOG.isDebugEnabled())
-            LOG.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
+            		break;
+            	}
+            }
+        }
 
         // Add the fiction or nonfiction field
-        if (field008offset33 == '1' || field008offset33 == 'd' || field008offset33 == 'j' || field008offset33 == 'f' || field008offset33 == 'p')
+        if (isFiction)
             marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
         else
             marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");

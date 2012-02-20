@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2012-02-20T20:56:20Z</responseDate>
+	<request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/OAIToolkit/oai-request.do</request>
+
+<ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nam a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932220</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 1 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_fiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/1</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nbm a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932221</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 1 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_nonfiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/2</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nam a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932222</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 0 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_nonfiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/3</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nbm a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932223</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="006">a        d                   001 1 eng d</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 1 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_fiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/4</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nam a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932224</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="006">a                            001 1 eng d</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 0 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_fiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/5</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>01374nam a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">3932225</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
+    <marc:controlfield tag="006">a                            001 0 eng d</marc:controlfield>
+    <marc:controlfield tag="007">cr zn|</marc:controlfield>
+    <marc:controlfield tag="008">080722s2007    enka    s     001 0 eng d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">shouldbe_nonfiction</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record></ListRecords>
+</OAI-PMH>
