@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2011-07-22T12:50:45Z</responseDate>
+	<request verb="ListRecords" from="2011-07-20T00:00:00Z" metadataPrefix="marc21">http://localhost:8080/OAIToolkit-0.6.10/oai-request.do</request>
+
+<ListRecords><record><header><identifier>oai:library.rochester.edu:URVoyager1/0</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>03018nam a2200349Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4699235</marc:controlfield>
+    <marc:controlfield tag="005">20110627103835.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110627s2008    nyua    obm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn733049764</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="099" ind1=" " ind2="9">
+      <marc:subfield code="a">AS38.663</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Nelson, Edward M.,</marc:subfield>
+      <marc:subfield code="d">1979-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="4">
+      <marc:subfield code="a">The adsorption of DNA onto unmodified gold nanoparticles</marc:subfield>
+      <marc:subfield code="h">[electronic resource] /</marc:subfield>
+      <marc:subfield code="c">by Edward M. Nelson.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2008.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (xvi, 111 leaves) :</marc:subfield>
+      <marc:subfield code="b">ill. (some col.))</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Lewis Josiah Rothberg.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Physics, 2009.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"The remarkable observation that single-stranded (ss) oligonucleotides (DNA) adsorb onto like-charged gold nanoparticles (Au-np) while double-stranded DNA (dsDNA) does not was investigated by the use of binding kinetics. The transition enthalpy of the interaction between ssDNA and Au-np was calculated using binding rate data from time-dependent fluorescence quenching measurements. We propose a simple electrostatic model based on DLVO theory for the interaction. The model utilizes a van der Waals type attraction and predicts that ligands irreversibly bind to the surface of gold nanoparticles. Electrostatic screening is achieved via Debye-Hu^ckel theory and the weak-overlap approximation. Experimental results are compared to the peak binding transition energy calculated for 1:1 and 1:2 type salts from the model and show acceptable predictions for ssDNA at low concentrations of salt (up to 20 mM) but not for dsDNA nor for high salt concentrations. Shortcomings to the model are discussed. Enthalpy-entropy compensation plots are used to investigate the role of the hydrophobic effect in the reaction. Exothermodynamic properties such as the change in entropy and the change in enthalpy are compared to the known hydrophobic properties of the ligands. A classification scheme for salt ions is proposed and the results roughly follow the Hofmeister series. Finally, binding kinetics using urea demonstrates an increase in transition enthalpy and entropy and an increase in the binding time constant consistent with a weaker hydrophobic interaction. These results demonstrate that the electrostatic interaction between DNA and gold nanoparticles is of little importance to the overall theory of interaction and the largest effects are from solvation forces, specifically the hydrophobic effect"--Leaf iv.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Biophysics.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Nanotechnology.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">DNA screening assays.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="u">http://hdl.handle.net/1802/14419</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/1</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>05258cam a2200373Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4603413</marc:controlfield>
+    <marc:controlfield tag="005">20110608095925.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110210s2010    nyua    sbm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn701376557</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Bonanno, Lisa,</marc:subfield>
+      <marc:subfield code="d">1982-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Advancing porous silicon biosensor technology for use in clinical diagnostics</marc:subfield>
+      <marc:subfield code="h">[electronic resource] /</marc:subfield>
+      <marc:subfield code="c">by Lisa Bonanno.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2010.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (xix, 237 p.) :</marc:subfield>
+      <marc:subfield code="b">ill. (some col.)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Lisa DeLouise.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Biomedical Engineering, 2011.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"Inexpensive and robust analytical techniques for detecting molecular recognition events are in great demand in healthcare, food safety, and environmental monitoring. Despite vast research in this area, challanges remain to develop practical biomolecular platforms that meet the rigorous demands of real-world applications. This includes maintaining low-cost devices that are sensitive and specific in complex test specimens, are stable after storage, have short assay time, and possess minimal complexity of instrumentation for readout. Nanostructured porous silicon (PSi) material has been identified as an ideal candidate towards achieving these goals and the past decade has seen diverse proof-of-principle studies developing optical-based sensing techniques.  In Part 1 of this thesis, the impact of surface chemistry and PSi morphology on detection sensitivity of target molecules is investigated. Initial proof-of-concept that PSi devices facilitate detection of protein in whole blood is demonstrated. This work highlights the importance of material stability and blocking chemistry for sensor use in real world biological samples. In addition, the intrinisic filtering capability of the 3-D PSi morphology is shown as an advantage in complex solutions, such as whole blood. Ultimately, this initial work identified a need to improve detection sensitivity of the PSi biosensor technique to facilitate clinical diagnostic use over relevant target concentration ranges. The second part of this thesis, builds upon sensitivity challenges that are highlighted in the first part of the thesis and development of a surface-bound competitive inhibition immunoassay facilitated improved detection sensitivity of small molecular weight targets (opiates) over a relevant clinical concentration range. In addition, optimization of assay protocol addressed issues of maintaining stability of sensors after storage. Performance of the developed assay (specificity and sensitivity) was then validated in a blind clinical study that screened real patient urine samples (n=70) for opiates in collaboration with Strong Memorial Hospital Clinical Toxicology Laboratory. PSi sensor results showed improved clinical specificity over current commercial opiate immunoassay techniques and therefore, identified potential for a reduction in false-negative and false-positive screening results. Here, we demonstrate for the first time, successful clinical capability of a PSi sensor to detect opiates as a model target in real-world patient samples.  The final part of this thesis explores novel sensor designs to leverage the tunable optical properties of PSi photonic devices and facilitate colorimetric readout of molecular recognition events by the unaided eye. Such a design is ideal for uncomplicated diagnostic screening at point-of-care as no instrumentation is needed for result readout. The photonic PSi transducers were integrated with target analyte-responsive hydrogels (TRAP-gels) that upon exposure to a target solution would swell and dissolute, inducing material property changes that were optically detected by the incorporated PSi transducer. This strategy extends target detection throughout the 3-D internal volume of the PSi, improving upon current techniques that limit detection to the surface area (2-D) of PSi. Work to acheive this approach involved design of TRAP-gel networks, polymer synthesis and characterization techniques, and optical characterization of the hybrid hydrogel-PSi material sensor. Successful implementation of a hybrid sensor design was exhibited for a model chemical target (reducing agent), in which visual colorimetric change from red to green was observed for above-threshold exposure to the chemical target. In addition, initial proof-of-concept of an opiate responsive TRAP-gel is also demonstrated where cross-links are formed between antibody-antigen interactions and exposure to opiates induces bulk gel dissolution."--Leaves vii-viii.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Sensor.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Point-of-care diagnostic.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Responsive hydrogel.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Porous silicon.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Immunoassay.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="a">http://hdl.handle.net/1802/14133</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="945" ind1=" " ind2=" ">
+      <marc:subfield code="a">MARS</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/2</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>02327cam a2200409Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4615718</marc:controlfield>
+    <marc:controlfield tag="005">20110506145936.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110314s2009    nyu     sbm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn707103331</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Dougherty, Trent.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Against pragmatic encroachment</marc:subfield>
+      <marc:subfield code="h">[electronic resource] :</marc:subfield>
+      <marc:subfield code="b">a defense of simple moderate invariantism /</marc:subfield>
+      <marc:subfield code="c">by Trent Dougherty.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2009.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (vi, 114 leaves) :</marc:subfield>
+      <marc:subfield code="b">digital, PDF file.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Richard Feldman.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Philosophy, 2009.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (leaves 112-114).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="506" ind1=" " ind2=" ">
+      <marc:subfield code="a">Access restricted to current members of the University of Rochester until May 1, 2011. Registration with NetID required.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"I defend the thesis of purism--that whether one knows is determined solely by truth-related factors--against recent attacks. These attacks are based principally on arguments which purport to make knowledge a necessary and/or sufficient condition for action and assertion. The arguments for these logical connections are explanatory arguments taking certain ordinary linguistic behaviors as data. I provide alternative explanations of the data relying on pragmatic rather than semantic features of language as well as cognitive science. In both these regards my arguments are fairly pioneering. Since the foes of purism admit that it is a default position, undercutting the case against purism leaves it as the most acceptable position regarding the relation of knowledge and practical interests"--Leaf iii.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Knowledge, Theory of.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Pragmatic encroachment.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Epistemic probability.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Purism.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Epistemic possibility.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Evidentialism.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Interest.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Relative invariantism.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="a">http://hdl.handle.net/1802/14464</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/3</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>06533cam a2200409Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4616530</marc:controlfield>
+    <marc:controlfield tag="005">20110608101529.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110318s2009    nyua    sbm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn707726150</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Velez, Rodrigo A.,</marc:subfield>
+      <marc:subfield code="d">1976-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Allocating indivisible goods</marc:subfield>
+      <marc:subfield code="h">[electronic resource] :</marc:subfield>
+      <marc:subfield code="b">normative and incentives issues /</marc:subfield>
+      <marc:subfield code="c">by Rodrigo A. Velez.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2009.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (xi, 158 leaves) :</marc:subfield>
+      <marc:subfield code="b">ill.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: William Thomson.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Economics, 2009.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (leaves 105-111).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="506" ind1=" " ind2=" ">
+      <marc:subfield code="a">Access restricted to current members of the University of Rochester until May 1, 2011. Registration with NetID required.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"A manager has to allocate tasks and salary among workers; a judge has to divide a bequest among heirs; roommates have to allocate the rooms and divide the rent in the apartment they share; a  rm goes bankrupt and its assets have to be divided among its creditors. These are examples of resource allocation problems. The three chapters of this dissertation advance our understanding of how to resolve such conflictual situations. They contribute on three levels: (i) the construction of parsimonious models that capture the essence of the situations under study (e.g., special characteristics of resources and preferences), (ii) the formulation of social objectives appropriate in each environment, and (iii) the analysis of the strategic issues that arise when agents are asked to report their preferences in order to reach these objectives. The fi rst chapter studies the problem of allocating a social endowment of objects among a group of agents when monetary compensation is not available to accommodate possible conflict of interests. First, I impose two axioms on rules: Efficiency and consistency. Previous research imposed, besides efficiency and consistency, the requirement that rules should treat objects symmetrically, i.e., neutrality, and arrived at a dictatorship result [Ergin, H., 2000. Consistency in house allocation problems. J. Math. Econ. 34, 77-97]. (i) By dropping neutrality I show that one can recover some fairness and still retain efficiency and consistency. (ii) I defi ne a parametric family of weak forms of efficiency and consistency; under the mild assumption that there are at least four objects, I characterize the family of efficient and consistent rules using minimal forms of these two axioms. (iii) I investigate the restrictions imposed by incentives requirements on this family; I characterize the subfamily of strategy-proof rules and show that they can be described by means of a natural generalization to the variable population setting of the "endowment inheritance rules" [Papai, S., 2000. Strategy-proof assignment by hierarchical exchange, Econometrica 68, 1403-1433]. (iv) As a corollary, I show that efficiency, consistency, and strategy-proofness imply group-strategy-proofness and reallocation-proofness. The second chapter develops a model of fair allocation of a social endowment of objects and money (e.g., tasks and salary, rooms and rent) in which preferences may exhibit externalities. I extend Foley's [1967, Resource allocation and the public sector, Yale Econ Essays 7, 45-98] fairness test as follows: An allocation is fair if no agent prefers the allocation obtained by swapping her consumption bundle with that of any other agent. Under general assumptions on preferences I show that: (i) if individual consumptions of money are unrestricted, then for each social endowment of money, there are fair allocations; (ii) for each common lower bound on individual consumptions of money (e.g., a minimum salary constraint in the allocation of tasks and salary), if there is enough money to distribute, then there are fair allocations meeting the lower bound; (iii) if a budget-balanced fair allocation satisfi es a condition I call "non-wastefulness," then the allocation is efficient. I provide a range of applications that accommodate prominent consumption externalities studied in economics literature. Moreover, the central results in the literature of fair allocation of objects and money whenever externalities are absent, are corollaries of my theorems. The third chapter analyzes incentives for truthful revelation of preferences for the problem of fairly allocating a set of objects when monetary compensations are possible. An example is the allocation of the rooms and the rent among housemates. I investigate the manipulability of a family of solutions which are efficient, attain some intuitive form of distributive justice [Rawls J., 1972, A Theory of Justice, Harvard U. Press], and satisfy a strong form of solidarity under budget changes: the Generalized Money Rawlsian Fair (GMRF) correspondences [Alkan A., Demange G., Gale D., Fair allocation of indivisible goods and criteria of justice. Econometrica 59, 1023-1039]. A solution is strategy-proof if no agent can benefi t by misrepresenting her preferences. (i) I show that even though no selection from these correspondences is strategy-proof, the Nash and strong Nash equilibrium outcomes of the "preference revelation game form" associated to each correspondence, retain the basic objectives of fairness and efficiency. Thus, even though each agent has an incentive to lie if the others truthfully report their preferences, in equilibrium, no agent prefers another agent's allotment to hers according to her true preferences; moreover, in equilibrium, efficiency is preserved according to agents' true preferences. (ii) As a corollary, I show that GMRF correspondences "naturally implement" the fair and efficient correspondence, in both Nash and strong Nash equilibria"--Leaves v-vii.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Resource allocation</marc:subfield>
+      <marc:subfield code="x">Mathematical models.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">House allocation problems.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Consistency.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Fairness.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Strategy-proofness.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Externalities.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Implementation.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Indivisible goods.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="a">http://hdl.handle.net/1802/14511</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/4</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>04444nam a2200313Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4688047</marc:controlfield>
+    <marc:controlfield tag="005">20110524111422.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr nn ---|||||</marc:controlfield>
+    <marc:controlfield tag="008">110524s2011    nyua    obm   000 0 eng  </marc:controlfield>
+    <marc:datafield tag="099" ind1=" " ind2="9">
+      <marc:subfield code="a">AS38.698</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Zhang, Yang,</marc:subfield>
+      <marc:subfield code="d">1981-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Analog readout methods for CMOS (Complementary metal-oxide-semiconductor) image sensors utilizing a global feedback</marc:subfield>
+      <marc:subfield code="h">[electronic resource] /</marc:subfield>
+      <marc:subfield code="c">by Yang Zhang.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2011.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (xv, 139 leaves : ill. (some col.)) :</marc:subfield>
+      <marc:subfield code="b">digital, PDF file.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Zeljko Ignjatovic.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Electrical and Computer Engineering, 2011.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (leaves 136-139).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="506" ind1=" " ind2=" ">
+      <marc:subfield code="a">Access restricted to current members of the University of Rochester until May 24, 2013. Registration with NetID required.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"Ever since the invention of Charged Coupled Devices (CCD) and CMOS image sensors, there have been tremendous development efforts towards the creation of digital cameras, which rapidly replaced traditional analog and film cameras. Despite their leading role in the market today, most digital cameras still exhibit worse image quality than film cameras. Many efforts have been made to improve the performance of digital images, such as increased dynamic range and reduced readout noise. As one of the fastest growing industries worldwide, CMOS imaging ranges from high quality digital still cameras to low quality consumer end products. Compared to CCD image sensors, CMOS image sensors allow low power, low cost and on-chip signal processing, which allow them to become more and more prominent. However, the demand for low noise, high readout speed and high dynamic range is still a big concern for CMOS imagers. The goal of this work is to improve the readout time while decreasing the readout noise by employing a modification to the standard Active Pixel Sensor (APS) design to retain high fill factor. The first part of this work focused on a new design named Current Sensing Active Pixel (CSAP) sensor. The design was an analog CMOS image sensor readout architecture implemented in a standard 0.35 æm CMOS process, operating from a 3.3 V power supply with faster readout settling times than the standard APS design. The standard APS source follower configuration is used in the pixel part of the CSAP design to obtain a high fill factor. The CSAP design also employed an out-of-pixel readout amplifier in the negative feedback topology with respect to the pixel unit to increase the pixel&amp;#x2019;s current driving capabilities and thereby reduce the settling time at the output. As a result of improved settling time, the 1/f noise contributed by the inpixel source follower transistor may be significantly reduced by the correlated double sampling (CDS) operation commonly used in analog image sensor readout methods. The fabricated CSAP chip prototype was successfully tested and some of the performance improvements were also demonstrated. The other part of this thesis was a new design named Reconfigurable Active Pixel Sensor (RAPS). It was also an analog CMOS image sensor readout architecture implemented in a standard 0.35 æm CMOS process operating from a 3.3 V power supply. This design eliminated the need for the external correlated double sampling (CDS) circuit that is used in traditional APS designs. It employed a reconfigurable differential-input readout amplifier that may be used in both the reset and the readout phases of the image sensor operation. As a result, the DC offset was removed, the flicker noise was differentiated, and the reset noise was greatly reduced by employing the amplifier in an active reset configuration. Gain related fixed pattern noise (FPN) was also reduced by the higher open-loop gain of the differential amplifier. This design retained a high fill factor since the pixel unit utilized the same number and size of transistors as the standard APS design"--Leaves iv-v.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Current sensing.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Negative feedback.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Readout speed.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Noise.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="u">http://hdl.handle.net/1802/14813</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/5</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>03224cam a2200301Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4604090</marc:controlfield>
+    <marc:controlfield tag="005">20110506114919.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110214s2010    nyua    sbm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn701731337</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">An, Liwei,</marc:subfield>
+      <marc:subfield code="d">1981-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Analysis of crawling waves and estimation of tissue elasticity</marc:subfield>
+      <marc:subfield code="h">[electronic resource] /</marc:subfield>
+      <marc:subfield code="c">by Liwei An.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2010.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (xiv, 124 leaves : ill. (some col.)) :</marc:subfield>
+      <marc:subfield code="b">digital, PDF file.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Kevin J. Parker.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Dept. of Electrical and Computer Engineering, 2011.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (leaves 115-124).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"The focus of the study is developing signal and imaging processing protocols to obtain and improve the estimation of local tissue elasticity by the Crawling Wave (CrW) sonoelastography method. The task includes two parts: one is to evaluate the frequency dependence, the lesion size bias, and the spatial resolution of the local estimator and to find the optimal estimator parameters; the other is to reduce noise and to improve the contrast of the elasticity map. First of all, a model of crawling waves in the presence of possible artifacts and noise was established and simulated to assist understanding the phenomenon and developing suitable signal and imaging processing algorithms. Secondly, the protocol of the CrW approach was tested on heterogeneous elastic phantoms as a model of prostate cancers. Then the contrast-to-noise ratio of the estimation was calculated iteratively with various estimator parameters and various sequences of algorithms to determine the optimal signal processing settings. Lastly, the optimized signal processing was applied to ex vivo prostate cancer detection. The comparison of the segmented elasticity map and the histology tumor outline was made by quadrants to evaluate the diagnostic performance of the protocol. Furthermore the CrW approach was combined with amplitude sonoelastography to achieve a higher specificity. The results of this study demonstrated the feasibility of the proposed approach for clinical applications. The system response of the approach was described and characterized by the study of tissue-mimicking phantoms. In the application to ex vivo prostate cancer detection, the established approach was tested on 43 excised prostate glands. The combination of the CrW approach and pseudo-sonoelastography achieved an accuracy of over 80% for finding tumors larger than 4 mm in diameter. The elasticity values and contrast found by the CrW approach were in agreement with the previous findings by mechanical testing. This correspondence further supports the ability of the CrW approach to detect prostate cancer"--Leaves vi-vii.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="a">http://hdl.handle.net/1802/14027</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/6</identifier><datestamp>2011-07-21T20:15:53Z</datestamp><setSpec>bib</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit-0.6.10/schema/MARC21slim_custom.xsd">
+    <marc:leader>03851cam a2200433Ka 4500</marc:leader>
+    <marc:controlfield tag="001">4604170</marc:controlfield>
+    <marc:controlfield tag="005">20110506115052.0</marc:controlfield>
+    <marc:controlfield tag="006">m        d        </marc:controlfield>
+    <marc:controlfield tag="007">cr |||||||||||</marc:controlfield>
+    <marc:controlfield tag="008">110215s2010    nyua    sbm   000 0 eng d</marc:controlfield>
+    <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn701842733</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRR</marc:subfield>
+      <marc:subfield code="c">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">RRRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="a">Hallmark, Elizabeth,</marc:subfield>
+      <marc:subfield code="d">1960-</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">Arts as collaborative inquiry</marc:subfield>
+      <marc:subfield code="h">[electronic resource] :</marc:subfield>
+      <marc:subfield code="b">re-defining and re-centering quality arts practice in schools /</marc:subfield>
+      <marc:subfield code="c">by Elizabeth Hallmark.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">Rochester, N.Y. :</marc:subfield>
+      <marc:subfield code="b">University of Rochester,</marc:subfield>
+      <marc:subfield code="c">2010.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 online resource (x, 231 leaves : ill. (some col.)) :</marc:subfield>
+      <marc:subfield code="b">digital, PDF file.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Advisor: Joanne Larson.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes vita and abstract.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="502" ind1=" " ind2=" ">
+      <marc:subfield code="a">Thesis (Ph. D.)--University of Rochester. Margaret Warner Graduate School of Education and Human Development, 2011.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="504" ind1=" " ind2=" ">
+      <marc:subfield code="a">Includes bibliographical references (leaves 215-229).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1="3" ind2=" ">
+      <marc:subfield code="a">"Arts educators have long been concerned about the marginalization of arts in schools. The author posits that the deepest roots of this problem come from implicit curricular assumptions and explicit operational structures surrounding the arts that obstruct their use as tools for inquiry in schools. Such curricular assumptions and structures can be transformed through school design and communities of practice that encourage a high-quality arts teaching approach she calls arts as collaborative inquiry. The study investigates a K-6 charter school with a whole-school integrated curriculum development practice that blends together curriculum from a local river project, Expeditionary Learning, Responsive Classroom, and an arts as collaborative inquiry approach to learning. It focuses on the curriculum development process of seven teams of grade level and arts teachers who designed and implemented arts as collaborative inquiry over the course of 12 weeks. The author seeks to understand these teachers' formative perspectives on inquiry pedagogy, traces the processes by which they developed cross-curricular connections, and marks operational structures that were central to establishing a professional learning community where the arts play a significant role. The author uses grounded theory to develop a triadic model that extends Bresler's 1993 and 1995 language describing arts teaching practices in most schools. She urges consistent language and analysis of teaching that will align the arts with the rest of the academic curriculum. Her detailed qualitative research furthers understanding of high quality arts integration, and provides a model for professional development in teaching, designing and practicing this kind of inquiry at the primary, secondary and higher education level. The study challenges practitioners and scholars to explore a new balance of arts teaching approaches in schools that would de-emphasize competitive exclusivity and increase democratic participation and shared leadership in the arts. It highlights the vital role that collaboration with teachers outside of the arts can play in re-centering expanded ways of learning through and with the arts in schools"--Leaf v.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">System requirements: PDF viewer/reader.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="538" ind1=" " ind2=" ">
+      <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Art</marc:subfield>
+      <marc:subfield code="x">Study and teaching (Elementary)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Inquiry-based learning.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Interdisciplinary approach in education.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Arts integration.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Collaboration.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Art inquiry.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Professional development.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Teaching practice.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Curriculum design.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Expeditionary learning.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="653" ind1=" " ind2=" ">
+      <marc:subfield code="a">Responsive classroom.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Electronic dissertations.</marc:subfield>
+      <marc:subfield code="2">lcgft</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="856" ind1="4" ind2="0">
+      <marc:subfield code="a">http://hdl.handle.net/1802/14131</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">RRR</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">Text data RCL Internet ETD</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record></ListRecords>
+</OAI-PMH>

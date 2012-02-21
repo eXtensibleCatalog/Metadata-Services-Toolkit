@@ -142,6 +142,7 @@ public class Record implements InputRecord, OutputRecord, Comparable<Record> {
 
     /**
      * The record's traits. These are used by the aggregation service for matching
+     * jfb 1/27/12 not used by the aggregation service I am building.
      */
     protected List<String> traits = new ArrayList<String>();
 

@@ -57,7 +57,7 @@ import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordIfc;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.service.Service;
-import xc.mst.cache.DynMap;
+import xc.mst.cache.DynKeyLongMap;
 import xc.mst.constants.Constants;
 import xc.mst.dao.BaseDAO;
 import xc.mst.dao.record.MessageDAO;
@@ -778,7 +778,7 @@ public class RepositoryDAO extends BaseDAO {
         return rowList;
     }
 
-    public void populateHarvestCache(String name, DynMap harvestCache) {
+	public void populateHarvestCache(String name, DynKeyLongMap harvestCache) {
         TimingLogger.start("populateHarvestCache");
         int page = 0;
         List<Map<String, Object>> rowList = getHarvestCache(name, page);
@@ -929,10 +929,11 @@ public class RepositoryDAO extends BaseDAO {
     public void createTables(Repository repo) {
         runSql(repo, "xc/mst/repo/sql/create_repo.sql");
         if (repo.getProvider() != null) {
-            runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");
+			runSql(repo, "xc/mst/repo/sql/create_harvest_repo.sql");
         } else if (repo.getService() != null) {
-            runSql(repo, "xc/mst/repo/sql/create_service_repo.sql");
+			runSql(repo, "xc/mst/repo/sql/create_service_repo.sql");
         }
+        //"xc/mst/repo/sql/create_repo_platform.sql"
     }
 
     protected void runSql(Repository repo, String sqlFile) {
@@ -1021,14 +1022,10 @@ public class RepositoryDAO extends BaseDAO {
 
     /**
      * check if row returned, if so have records with given status
-     *
-     * @param name
-     *            repo_name
+	 * @param name repo_name
      * @param format_id
-     * @param set_id
-     *            - allowed to be null
-     * @param statuses
-     *            - the record statuses we are looking for
+	 * @param set_id - allowed to be null
+	 * @param statuses - the record statuses we are looking for
      * @return false if no rows with statuses, return true if found a row with the status
      */
     public boolean hasRecordsOfStatus(String name, int format_id, Integer set_id, char[] statuses) {
@@ -1347,8 +1344,7 @@ public class RepositoryDAO extends BaseDAO {
                 return allRecords - numOutsideRange.get();
             }
             // Check to see if none match
-        }
-        if (!force) {
+		} if (!force) {
             AtomicInteger numFound = new AtomicInteger();
 
             List<String> sqls = new ArrayList<String>();
@@ -1732,7 +1728,7 @@ public class RepositoryDAO extends BaseDAO {
             long startTime = System.currentTimeMillis();
             TimingLogger.start("activateRecords");
             String sql = "update " + getTableName(name, RepositoryDAO.RECORDS_TABLE) +
-                    " set status='" + Record.ACTIVE + "', prev_status='" + Record.HELD + "' " + // in future may need flex. to pass in prev_status;true today though
+                    " set status='" + Record.ACTIVE + "', prev_status=status "+ // in future may need flex. to pass in prev_status;true today though
                     " where record_id = ?";
             final TLongIterator it = recordIds.iterator();
             int[] updateCount = jdbcTemplate.batchUpdate(

@@ -1,0 +1,6 @@
+<solr persistent="false">
+<cores adminPath="/admin/cores" shareSchema="true">
+  <core name="core1" instanceDir="." />
+  <core name="core2" instanceDir="." />
+ </cores>
+</solr>
