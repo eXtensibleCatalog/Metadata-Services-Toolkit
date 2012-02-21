@@ -42,8 +42,10 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof BaseDAO) {
+            // if currently in the MST platform application context
             try {
                 ((BaseDAO) bean).setDataSource((DataSource) this.applicationContext.getBean("MetadataServiceDataSource"));
+                // else you're in a particular service's application context
             } catch (NoSuchBeanDefinitionException nsbde) {
                 ((BaseDAO) bean).setDataSource((DataSource) this.applicationContext.getBean("DataSource"));
             }
@@ -55,16 +57,33 @@ public class MSTBeanPostProcessor extends MSTAutoBeanHelper implements BeanPostP
             ((BaseDAO) bean).setSessionFactory((SessionFactory) this.applicationContext.getBean("SessionFactory"));
             ((BaseDAO) bean).setUtil((Util) this.applicationContext.getBean("Util"));
         } else if (bean instanceof BaseService) {
-            ((BaseService) bean).setUtil((Util) this.applicationContext.getBean("Util"));
+        	/*
+            try {
+				((BaseService) bean).setUtil((Util) this.applicationContext.getBean("Util"));
+                LOG.info("MSTBeanPostProcessor, FOUND Util bean while processing beanName: "+beanName);
+			} catch (NoSuchBeanDefinitionException e) {
+				// this can happen when in test mode....
+                LOG.error("MSTBeanPostProcessor, could not find Util bean while processing beanName: "+beanName, e);
+			}
+			*/
+			((BaseService) bean).setUtil((Util) this.applicationContext.getBean("Util"));
+            // if currently in the MST platform application context
             try {
                 ((BaseService) bean).setTransactionManager((PlatformTransactionManager) this.applicationContext.getBean("MetadataServiceTransactionManager"));
+            // else you're in a particular service's application context
             } catch (NoSuchBeanDefinitionException nsbde) {
                 ((BaseService) bean).setTransactionManager((PlatformTransactionManager) this.applicationContext.getBean("TransactionManager"));
             }
+            //DEBUG Code:
+            // TODO why does this happen so much:
+            // postProcessBeforeInitialization: put bean Repository in ac MSTConfiguration
             try {
                 ((BaseService) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MetadataServiceMSTConfiguration"));
+                //System.out.println("postProcessBeforeInitialization: put bean "+beanName+ " in ac MetadataServiceMSTConfiguration");
+
             } catch (NoSuchBeanDefinitionException nsbde) {
                 ((BaseService) bean).setConfig((MSTConfiguration) this.applicationContext.getBean("MSTConfiguration"));
+                //System.out.println("postProcessBeforeInitialization: put bean "+beanName+ " in ac MSTConfiguration");
             }
 
             Map<String, Method> serviceSetters = new HashMap<String, Method>();

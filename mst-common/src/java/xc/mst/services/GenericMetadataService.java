@@ -560,7 +560,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 // processedRecordCount is a sensible count to pass here as the number of records updated.
                 TimingLogger.reset(processedRecordCount);
             }
+            //TODO here is the code to break out!!!!!
             for (Record in : records) {
+            /*
+            for (int i=0; i<records.size();) {
+                Record in = customProcessQueue.pop();
+                if (in == null) {
+                    in = records.get(i);
+                    i++;
+                }
+                */
+                //START, intro stuff before processing
+
+
                 // TODO: currently the injected records here only contain ids.
                 // This is helpful enough if you simply want to overwrite the
                 // the existing record. Although I can't think of a reason
@@ -588,6 +600,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
                         origSuccessorMap.put(or.getId(), or.clone());
                     }
                 }
+                //END, intro stuff before processing
+
+                // START, real processing!
                 TimingLogger.start(getServiceName() + ".process");
                 List<OutputRecord> out = null;
                 boolean unexpectedError = false;
@@ -598,6 +613,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     LOG.error("error processing record w/ id: " + in.getId(), t);
                 }
                 TimingLogger.stop(getServiceName() + ".process");
+                // END, real processing!
+
+
+                // START, post-processing record count handling!
                 if (!isSolrIndexer() && !isTestRepository()) {
                     if (in.getType() != null) {
                         getMetadataServiceManager().getIncomingRecordCounts()
@@ -668,6 +687,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                         }
                     }
                 }
+                // END, post-processing record count handling!
+
                 sh.setHighestId(in.getId());
                 updateService(out, sh);
 
@@ -675,6 +696,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 // Update the error message on incoming record
                 // repo.addRecord(in);
             }
+            //TODO end , code to break out!!!
 
             if (commitIfNecessary(false, processedRecordCount)) {
                 getServiceDAO().persist(sh);
@@ -824,10 +846,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
         return config;
     }
 
+    //addMessage but note, attach to OutputRecord, unused?
     protected void addMessage(OutputRecord record, int code, char level) {
         addMessage(record, code, level, null);
     }
 
+    //addMessage but note, attach to OutputRecord, unused?
     protected void addMessage(OutputRecord record, int code, char level,
             String detail) {
         Record r = (Record) record;
@@ -843,12 +867,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         messages2insert.add(rm);
     }
 
-    protected void addMessage(InputRecord record, int code, char level) {
-        addMessage(record, code, level, null);
-    }
-
-    protected void addMessage(InputRecord record, int code, char level,
-            String detail) {
+    protected void addMessage(InputRecord record, int code, char level, String detail, Service service) {
         if (!isMessageEnabled(code, level)) {
             LOG.debug("Will not addMessage, because the message is disabled. level=" + level + " code=" + code);
             return;
@@ -856,7 +875,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         Record r = (Record) record;
         RecordMessage rm = new RecordMessage();
         getMessageDAO().injectId(rm);
-        rm.setServiceId(getService().getId());
+        rm.setServiceId(service.getId());
         rm.setInputRecord(true);
         rm.setCode(code);
         rm.setLevel(level);
@@ -864,6 +883,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
         rm.setRecord(r);
 
         messages2insert.add(rm);
+    }
+
+    protected void addMessage(InputRecord record, int code, char level) {
+        addMessage(record, code, level, null);
+    }
+
+    protected void addMessage(InputRecord record, int code, char level,
+            String detail) {
+        addMessage(record, code, level, detail, getService());
     }
 
     public String getMessage(int code, char type) {

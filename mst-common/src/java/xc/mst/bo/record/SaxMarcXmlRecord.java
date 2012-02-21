@@ -40,12 +40,21 @@ public class SaxMarcXmlRecord implements ContentHandler {
         }
     }
 
+    public long recordId = -1l;
     protected boolean inTextValueField = false;
     protected Field currentField = null;
     protected Subfield currentSubfield = null;
     protected StringBuilder sb = new StringBuilder();
 
     protected MarcRecord marcRecord = new MarcRecord();
+
+    public long getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
+    }
 
     public String getLeader() {
         return marcRecord.getLeader();

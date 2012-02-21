@@ -22,7 +22,7 @@ commands (mc.help)
   </target>
 
   <dirname property="mc.dir" file="${ant.file.mc}" />
-
+  
   <property file="${mc.dir}/build.properties" />
   <property file="${mc.src.java}/default.properties" />
 
@@ -86,7 +86,7 @@ commands (mc.help)
   <target name="mc.compile" depends="mc.retrieve, mc.compile.nodep" />
 
   <target name="mc.compile.nodep" depends="mc.init">
-    <javac
+    <javac 
       includeantruntime="false"
       destdir="${mc.build.classes}"
       classpathref="mc.classpath.compile"
@@ -126,13 +126,13 @@ commands (mc.help)
   </target>
 
   <target name="mc.deploy" depends="mc.compile.test,mc.jar.nodep">
-    <copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib"
+    <copy todir="${tomcat.dir}/webapps/${mp.project-name}/WEB-INF/lib" 
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${mp.build.lib}"
+    <copy todir="${mp.build.lib}" 
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${ms.build.lib}"
+    <copy todir="${ms.build.lib}" 
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
-    <copy todir="${mst-service}/example/build/lib"
+    <copy todir="${mst-service}/example/build/lib" 
       file="${mc.build.dir}/${mc.project-name}-${mc.version}.jar" />
     <copy-to-custom-services subdir="build/lib">
       <macro-file-set>
@@ -158,25 +158,30 @@ commands (mc.help)
 
   <target name="mc.javadoc" depends="mc.compile">
     <javadoc
-         destdir="${mc.build.javadoc}"
-         author="true"
-         version="true"
-         use="true"
-         windowtitle="Metadata Services Toolkit">
+        destdir="${mc.build.javadoc}"
+        classpathref="mc.classpath.compile"
+        author="true"
+        version="true"
+        use="true"
+        windowtitle="mst-common">
 
       <fileset dir="${mc.src.java}" defaultexcludes="yes">
-        <include name="xc/mst/bo/**"/>
+        <include name="**"/>
+        <exclude name="**/*.xml"/>
+        <exclude name="**/*.properties"/>
+        <exclude name="**/*.bak"/>
       </fileset>
 
       <doctitle>
-        <![CDATA[<h1>Metadata Services Toolkit Libraries Web Interface</h1>]]>
+        <![CDATA[<h1>eXtensible Catalog - Metadata Services Toolkit - mst-common</h1>]]>
       </doctitle>
       <bottom>
-        <![CDATA[<i>Copyright &#169; 2009 University of Rochester Libraries</i>]]>
+        <![CDATA[<i>Copyright &#169; 2011 University of Rochester Libraries</i>]]>
       </bottom>
       <tag name="todo" scope="all" description="To do:"/>
       <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/"
         packagelistLoc="${env.JAVA_HOME}\bin"/>
+      <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
     </javadoc>
   </target>
 
@@ -190,12 +195,10 @@ commands (mc.help)
         <include name="**/install.properties" />
       </fileset>
     </copy>
-    <echo>running sql script</echo>
-    <exec executable="${mysql.home}/bin/mysql"
+    <exec executable="${mysql.home}/bin/mysql" 
         input="${mc.build.mst-instance.dir}/sql/create_database_script.sql">
       <arg line="-u ${DatabaseUsername} --password=${DatabasePassword}" />
     </exec>
-    <echo>finished sql script</echo>
   </target>
 
   <target name="mc.test" depends="mc.install-mst, mc.test.nodep" />

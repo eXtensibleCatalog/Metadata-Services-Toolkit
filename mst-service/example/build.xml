@@ -50,7 +50,7 @@ commands
     <touch file="dev.properties" />
   </target>
 
-  <import file="build-custom.xml" />
+  <import file="build-custom.xml" optional="true" />
   <property file="custom.properties" />
   <property file="dev.properties" />
     <scriptdef name="normalize" language="javascript">
@@ -74,6 +74,7 @@ commands
 
   <target name="init" depends="dev.properties.uptodate">
     <delete dir="${build.test}" />
+    <mkdir dir="${build.src}" />
     <mkdir dir="${build.test.classes}" />
     <mkdir dir="${build.test.actual-output-records}" />
     <mkdir dir="${build.test.mock-harvest-actual-output}" />
@@ -133,24 +134,34 @@ ERROR:  The file dev.properties does not exist.  If this is your first time,
      =================================
   -->
 
-  <target name="doc" depends="compile">
-    <javadoc
-      destdir="${build.doc}/api"
-      author="true"
-      version="true"
-      use="true"
-      windowtitle="eXtensinble Catalog">
+  <target name="copy.src" depends="init">
+    <copy todir="${build.src}" overwrite="true">
+      <fileset dir="${src.dir}" />
+    </copy>
+  </target>
 
-      <fileset dir="${src.dir}" defaultexcludes="yes">
+  <target name="javadoc" depends="compile, javadoc.nodep" />
+  <target name="javadoc.nodep">
+    <javadoc
+        destdir="${build.doc}/api"
+        doclet="com.sun.tools.doclets.formats.html.HtmlDoclet"
+        classpathref="classpath.compile"
+        author="true"
+        version="true"
+        use="true"
+        windowtitle="eXtensinble Catalog - ${service.name}">
+
+      <fileset dir="${build.src}" defaultexcludes="yes">
         <include name="**"/>
       </fileset>
 
       <doctitle><![CDATA[<h1>eXtensible Catalog</h1>]]></doctitle>
-        <bottom>
-      <![CDATA[<i>Copyright &#169; 2006 University of Rochester Libraries</i>]]></bottom>
-         <tag name="todo" scope="all" description="To do:"/>
-         <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
-        </javadoc>
+      <bottom><![CDATA[<i>Copyright &#169; 2011 University of Rochester Libraries</i>]]></bottom>
+      <tag name="todo" scope="all" description="To do:"/>
+      <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+      <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
+      <link href="http://www.extensiblecatalog.org/doc/MST/javadoc/mst-common/" />
+    </javadoc>
 
   </target>
 

@@ -136,6 +136,7 @@ public class MSTConfiguration extends PropertyPlaceholderConfigurer implements A
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
+    public ApplicationContext getApplicationContext() {return applicationContext;}
 
     public Object getBean(String name) {
         try {
