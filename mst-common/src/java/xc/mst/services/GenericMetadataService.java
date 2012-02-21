@@ -560,6 +560,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 // processedRecordCount is a sensible count to pass here as the number of records updated.
                 TimingLogger.reset(processedRecordCount);
             }
+            //TODO here is the code to break out!!!!!
             for (Record in : records) {
             /*
             for (int i=0; i<records.size();) {
@@ -569,6 +570,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     i++;
                 }
                 */
+                //START, intro stuff before processing
+
 
                 // TODO: currently the injected records here only contain ids.
                 // This is helpful enough if you simply want to overwrite the
@@ -597,6 +600,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
                         origSuccessorMap.put(or.getId(), or.clone());
                     }
                 }
+                //END, intro stuff before processing
+
+                // START, real processing!
                 TimingLogger.start(getServiceName() + ".process");
                 List<OutputRecord> out = null;
                 boolean unexpectedError = false;
@@ -607,6 +613,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     LOG.error("error processing record w/ id: " + in.getId(), t);
                 }
                 TimingLogger.stop(getServiceName() + ".process");
+                // END, real processing!
+
+
+                // START, post-processing record count handling!
                 if (!isSolrIndexer() && !isTestRepository()) {
                     if (in.getType() != null) {
                         getMetadataServiceManager().getIncomingRecordCounts()
@@ -677,6 +687,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                         }
                     }
                 }
+                // END, post-processing record count handling!
+
                 sh.setHighestId(in.getId());
                 updateService(out, sh);
 
@@ -684,6 +696,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 // Update the error message on incoming record
                 // repo.addRecord(in);
             }
+            //TODO end , code to break out!!!
 
             if (commitIfNecessary(false, processedRecordCount)) {
                 getServiceDAO().persist(sh);
