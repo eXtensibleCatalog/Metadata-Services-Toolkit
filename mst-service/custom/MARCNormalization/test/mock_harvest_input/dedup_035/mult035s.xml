@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2011-03-30T15:15:54Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/338</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>02780cjm a2200577Ia 4500</marc:leader>
+	  <marc:controlfield tag="001">2463939</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20070223095026.0</marc:controlfield>
+	  <marc:controlfield tag="007">sd fungnn|||ee</marc:controlfield>
+	  <marc:controlfield tag="008">030206r20031989nyumun   i          ban d</marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="019">
+	    <marc:subfield code="a">52437142</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2="0" tag="024">
+	    <marc:subfield code="a">075597981421</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="2" tag="028">
+	    <marc:subfield code="a">79814-2</marc:subfield>
+	    <marc:subfield code="b">Nonesuch</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="028">
+	    <marc:subfield code="a">79204-2</marc:subfield>
+	    <marc:subfield code="b">Nonesuch</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2="0" tag="033">
+	    <marc:subfield code="a">198705--</marc:subfield>
+	    <marc:subfield code="a">198710--</marc:subfield>
+	    <marc:subfield code="b">8070</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)ocm52124584</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)52124584</marc:subfield>
+	    <marc:subfield code="z">(OCoLC)52437142</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">NHM</marc:subfield>
+	    <marc:subfield code="c">NHM</marc:subfield>
+	    <marc:subfield code="d">MDY</marc:subfield>
+	    <marc:subfield code="d">OCLCQ</marc:subfield>
+	    <marc:subfield code="d">RBN</marc:subfield>
+	    <marc:subfield code="d">XFF</marc:subfield>
+	    <marc:subfield code="d">RRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="041">
+	    <marc:subfield code="d">ban</marc:subfield>
+	    <marc:subfield code="g">eng</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="043">
+	    <marc:subfield code="a">a-io---</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="047">
+	    <marc:subfield code="a">fm</marc:subfield>
+	    <marc:subfield code="a">zz</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RRRR</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="4" tag="050">
+	    <marc:subfield code="a">M1824.B3</marc:subfield>
+	    <marc:subfield code="b">G35 2003</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="4" tag="082">
+	    <marc:subfield code="a">781.6295</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="245">
+	    <marc:subfield code="a">Bali</marc:subfield>
+	    <marc:subfield code="h">[sound recording] :</marc:subfield>
+	    <marc:subfield code="b">gamelan &amp; kecak.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2="0" tag="246">
+	    <marc:subfield code="a">Gamelan &amp; kecak</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2=" " tag="246">
+	    <marc:subfield code="a">Gamelan and kecak</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="3" ind2=" " tag="246">
+	    <marc:subfield code="a">Indonesia: Bali</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">New York, NY :</marc:subfield>
+	    <marc:subfield code="b">Nonesuch,</marc:subfield>
+	    <marc:subfield code="c">[2003], p1989.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">1 sound disc :</marc:subfield>
+	    <marc:subfield code="b">digital ;</marc:subfield>
+	    <marc:subfield code="c">4 3/4 in.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="306">
+	    <marc:subfield code="a">001218</marc:subfield>
+	    <marc:subfield code="a">001041</marc:subfield>
+	    <marc:subfield code="a">000233</marc:subfield>
+	    <marc:subfield code="a">000411</marc:subfield>
+	    <marc:subfield code="a">000752</marc:subfield>
+	    <marc:subfield code="a">000606</marc:subfield>
+	    <marc:subfield code="a">000739</marc:subfield>
+	    <marc:subfield code="a">000807</marc:subfield>
+	    <marc:subfield code="a">001248</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="490">
+	    <marc:subfield code="a">Explorer series. Indonesia</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Principally instrumental music from Bali; track 8 with vocals.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Gamelan (metallophone orchestra), genggong (Balinese jew's-harp), enggung (palm bark reed), and suling (flute) music, and kecak chant from Bali.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Originally released in 1989 as Nonesuch 79204-2.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Compact disc.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Program notes by David Lewiston (24 p.) inserted in container.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="505">
+	    <marc:subfield code="a">Opening parade, Bali Arts Festival (12:18) -- Gending kebyar kosalya arini (Gamelan Gong Sekaha Sadha ; I Wayan Rai S, Chokorda Raka, I Made Sadia, directors) (10:41) -- Sekar sungsang (I Nyoman Artika, I Made Maji, genggon) (2:33) -- Lagu kodok : (Frog song) (Genggong Batur Sari ; I Nyoman Artika, director) (4:11) -- Gending sekar gadung (Gamelan Salunding ; I Nyoman P. Gunawan, director) (7:52) -- Tabuh teluh (Sadha Budaya Gamelan Gong Suling ; Anak Agung Raku Cameng, director) (6:06) -- Sulendro (Gender Wayang ; I Wayan Loceng, director) (7:39) -- Kecak (Sekaha Ganda Sari ; Gusti Putu Putra, director) (8:07) -- Baris (Gamelan Gong Kebyar, Sekolah Tinggi Seni Indonesia ; I Made Bandem, director) (12:48).</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="511">
+	    <marc:subfield code="a">Various ensembles and directors.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="518">
+	    <marc:subfield code="a">Recorded in Bali, May-Oct. 1987 by David Lewiston.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="546">
+	    <marc:subfield code="a">Vocal selection in Balinese (?).</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Gamelan music.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Kecak (Dance drama)</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Music</marc:subfield>
+	    <marc:subfield code="z">Indonesia</marc:subfield>
+	    <marc:subfield code="z">Bali Island.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Dance music</marc:subfield>
+	    <marc:subfield code="z">Indonesia</marc:subfield>
+	    <marc:subfield code="z">Bali Island.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Folk music</marc:subfield>
+	    <marc:subfield code="z">Indonesia</marc:subfield>
+	    <marc:subfield code="z">Bali Island.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Folk dance music</marc:subfield>
+	    <marc:subfield code="z">Indonesia</marc:subfield>
+	    <marc:subfield code="z">Bali Island.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">World music.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="7" tag="655">
+	    <marc:subfield code="a">World Music.</marc:subfield>
+	    <marc:subfield code="2">local</marc:subfield>
+	    <marc:subfield code="5">NRU</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Lewiston, David.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="830">
+	    <marc:subfield code="a">Explorer series.</marc:subfield>
+	    <marc:subfield code="p">Indonesia/South Pacific.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">C0</marc:subfield>
+	    <marc:subfield code="b">RRR</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+       </metadata>
+     </record>
+     
+     <record>
+      <header>
+       <identifier>oai:library.rochester.edu:URVoyager1/339</identifier>
+       <datestamp>2011-03-23T15:43:35Z</datestamp>
+       <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+
+
+	<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+	  <marc:leader>01703cjm a2200421Ia 4500</marc:leader>
+	  <marc:controlfield tag="001">2461879</marc:controlfield>
+	  <marc:controlfield tag="003">NRU</marc:controlfield>
+	  <marc:controlfield tag="005">20080917121247.0</marc:controlfield>
+	  <marc:controlfield tag="007">sd bsmenn|||||</marc:controlfield>
+	  <marc:controlfield tag="008">780117s1975    nyujzn              zxx  </marc:controlfield>
+	  <marc:datafield ind1=" " ind2=" " tag="010">
+	    <marc:subfield code="a">   76760228 </marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="019">
+	    <marc:subfield code="a">3218133</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="2" tag="028">
+	    <marc:subfield code="a">CTI 6054 SI--CTI 6055 SI</marc:subfield>
+	    <marc:subfield code="b">CTI Records</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)ocm03564449</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">2461879</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="035">
+	    <marc:subfield code="a">(OCoLC)3564449</marc:subfield>
+	    <marc:subfield code="z">(OCoLC)3218133</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="040">
+	    <marc:subfield code="a">DLC</marc:subfield>
+	    <marc:subfield code="c">MAN</marc:subfield>
+	    <marc:subfield code="d">OCL</marc:subfield>
+	    <marc:subfield code="d">CGP</marc:subfield>
+	    <marc:subfield code="d">OCLCQ</marc:subfield>
+	    <marc:subfield code="d">RES</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="045">
+	    <marc:subfield code="a">x7x7</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="049">
+	    <marc:subfield code="a">RESM</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="090">
+	    <marc:subfield code="a">M1366.M8</marc:subfield>
+	    <marc:subfield code="b">C3</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="100">
+	    <marc:subfield code="a">Mulligan, Gerry.</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2="0" tag="245">
+	    <marc:subfield code="a">Carnegie Hall concert</marc:subfield>
+	    <marc:subfield code="h">[sound recording] /</marc:subfield>
+	    <marc:subfield code="c">Gerry Mulligan ; Chet Baker..</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="260">
+	    <marc:subfield code="a">New York :</marc:subfield>
+	    <marc:subfield code="b">CTI Records,</marc:subfield>
+	    <marc:subfield code="c">p1975.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="300">
+	    <marc:subfield code="a">2 sound discs :</marc:subfield>
+	    <marc:subfield code="c">33 1/3 rpm, stereo. ;</marc:subfield>
+	    <marc:subfield code="c">12 in.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Durations on disc labels.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="500">
+	    <marc:subfield code="a">Program notes by D. Ramsey on container.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="505">
+	    <marc:subfield code="a">v.l.  Line for Lyons ; Song for an unfinished woman ;  My funny valentine -- v.2. Song for Strayhorn ; It's sandy at the beach ; Bernie's tune ; K-4 Pacific ; There will never be another you.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="0" ind2=" " tag="511">
+	    <marc:subfield code="a">Gerry Mulligan, baritone saxophone ; Chet Baker, trumpet ; Bob James, piano /electric piano ; Ron Carter, bass ; Harvey Mason, drums ; John Scofield, guitar ; Dave Samuels, vibes/percussion ; Ed Byrne, trombone..</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="518">
+	    <marc:subfield code="a">Recorded live on November 24, 1974.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2="0" tag="650">
+	    <marc:subfield code="a">Jazz</marc:subfield>
+	    <marc:subfield code="y">1971-1980.</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Baker, Chet.</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">James, Bob,</marc:subfield>
+	    <marc:subfield code="d">1939-</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Carter, Ron,</marc:subfield>
+	    <marc:subfield code="d">1937-</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Mason, Harvey,</marc:subfield>
+	    <marc:subfield code="d">1947-</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Scofield, John.</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Samuels, Dave.</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="1" ind2=" " tag="700">
+	    <marc:subfield code="a">Byrne, Ed,</marc:subfield>
+	    <marc:subfield code="c">trombonist.</marc:subfield>
+	    <marc:subfield code="4">prf</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1="2" ind2=" " tag="710">
+	    <marc:subfield code="a">Ron Carter Audio Archive and Collection</marc:subfield>
+	  </marc:datafield>
+	  <marc:datafield ind1=" " ind2=" " tag="994">
+	    <marc:subfield code="a">C0</marc:subfield>
+	    <marc:subfield code="b">RES</marc:subfield>
+	  </marc:datafield>
+	</marc:record>
+
+       </metadata>
+     </record>
+    </ListRecords>
+</OAI-PMH>
+
