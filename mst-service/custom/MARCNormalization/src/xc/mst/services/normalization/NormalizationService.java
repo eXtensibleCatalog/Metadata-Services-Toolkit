@@ -114,7 +114,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * The Properties file with the audience information for the 008 offset 22
      */
-    protected Properties audienceFrom008Properties = null;
+    protected Properties audienceFrom006_008Properties = null;
 
     /**
      * The Properties file with the audience information for the 006/008 offset 23
@@ -328,11 +328,13 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(CONFIG_ENABLED_LANGUAGE_TERM, "0").equals("1"))
                     normalizedXml = languageTerm(normalizedXml);
 
-                if (enabledSteps.getProperty(CONFIG_ENABLED_008_AUDIENCE, "0").equals("1"))
-                    normalizedXml = audienceFrom008(normalizedXml);
+                boolean process006 = enabledSteps.getProperty(CONFIG_ENABLED_006_AUDIENCE, "0").equals("1");
+                boolean process008 = enabledSteps.getProperty(CONFIG_ENABLED_008_AUDIENCE, "0").equals("1");
+                if (process006 || process008)
+                    normalizedXml = audienceFrom006_008(normalizedXml, process006, process008);
 
-                boolean process006 = enabledSteps.getProperty(CONFIG_ENABLED_006_FORM, "0").equals("1");
-                boolean process008 = enabledSteps.getProperty(CONFIG_ENABLED_008_FORM, "0").equals("1");
+                process006 = enabledSteps.getProperty(CONFIG_ENABLED_006_FORM, "0").equals("1");
+                process008 = enabledSteps.getProperty(CONFIG_ENABLED_008_FORM, "0").equals("1");
                 if (process006 || process008)
                     normalizedXml = formFrom006_008(normalizedXml, process006, process008);
 
@@ -1213,46 +1215,81 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If leader 06 contains certain values, create a field with the intended audience from the
      * 008 offset 22 value.
+     * 
+     * If 006 offset 00 contains certain values, create a field with the intended audience from the
+     * 006 offset 22 value
      *
      * @param marcXml
      *            The original MARCXML record
+     * @param field006
+     *            flag determining whether or not to process 006 fields
+     * @param field008
+     *            flag determining whether or not to process 008 fields
      * @return The MARCXML record after performing this normalization step.
      */
-    private MarcXmlManager audienceFrom008(MarcXmlManager marcXml) {
+    private MarcXmlManager audienceFrom006_008(MarcXmlManager marcXml, boolean field006, boolean field008) {
         if (LOG.isDebugEnabled())
-            LOG.debug("Entering 008Audience normalization step.");
-
-        // The character at offset 6 of the leader field
-        char leader06 = marcXml.getLeader().charAt(6);
-
-        // If the leader 06 value is one of those which suggests this record needs an audience field,
-        // add one based on the 008 offset 22 field.
-        if (leader06 == 'a' || leader06 == 'c' || leader06 == 'd' || leader06 == 'g' || leader06 == 'k' || leader06 == 'm' || leader06 == 'o' || leader06 == 'r') {
-            // The value of field 008
-            String field008 = marcXml.getField008();
-
+            LOG.debug("Entering 006/008Audience normalization step.");
+        
+        ArrayList<String> flds = new ArrayList<String>();
+        
+        if (field008) {
+            // The character at offset 6 of the leader field
+        	String leader = marcXml.getLeader();
+            char leader06 = (leader != null && leader.length() >= 6 ? leader.charAt(6) : ' ');
+            switch (leader06) {
+            case 'a':
+            case 'c':
+            case 'd':
+            case 'g':
+            case 'k':
+            case 'm':
+            case 'o':
+            case 'r':
+            	flds.add(marcXml.getField008());
+            }	
+        }
+        if (field006) {
+        	for (String fld : marcXml.getField006()) {
+        		char offset00 = (fld != null && fld.length() >= 1 ? fld.charAt(0) : ' ');
+                switch (offset00) {
+                case 'a':
+                case 'c':
+                case 'd':
+                case 'g':
+                case 'k':
+                case 'm':
+                case 'o':
+                case 'r':
+                	flds.add(fld);
+                }
+        	}
+        }
+        
+        for (String fld: flds) {
             // The character at offset 22 of the 008 field
-            char field008offset22 = (field008 != null && field008.length() >= 23 ? field008.charAt(22) : ' ');
+            char offset22 = (fld != null && fld.length() >= 23 ? fld.charAt(22) : ' ');
 
             // Pull the audience mapping from the configuration file based on the 008 offset 22 value.
-            String audience = audienceFrom008Properties.getProperty("" + field008offset22, null);
-
+            String audience = audienceFrom006_008Properties.getProperty("" + offset22, null);
+            
             // If there was no mapping for the provided 008 offset 22, we can't create the field. In this case return the unmodified MARCXML
             if (audience == null) {
                 if (LOG.isDebugEnabled())
-                    LOG.debug("Cannot find an audience mapping for the 008 offset 22 value of " + field008offset22 + ", returning the unmodified MARCXML.");
+                    LOG.debug("Cannot find an audience mapping for the 006/008 offset 22 value of " + offset22 + ", returning the unmodified MARCXML.");
 
-                return marcXml;
-            } else if (field008offset22 != ' ' && (field008offset22 != 'a' && field008offset22 != 'b' && field008offset22 != 'c' && field008offset22 != 'd' && field008offset22 != 'e' && field008offset22 != 'f' && field008offset22 != 'g' && field008offset22 != 'j' && field008offset22 != '|' && field008offset22 != '#')) {
+                continue;
+            } else if (offset22 != ' ' && (offset22 != 'a' && offset22 != 'b' && offset22 != 'c' && offset22 != 'd' && offset22 != 'e' && offset22 != 'f' && offset22 != 'g' && offset22 != 'j' && offset22 != '|' && offset22 != '#')) {
                 addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO);
                 // addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO, "Invalid value in Control Field 008 offset 22: " + field008offset22);
             }
 
             if (LOG.isDebugEnabled())
-                LOG.debug("Found the audience " + audience + " for the 008 offset 22 value of " + field008offset22 + ".");
+                LOG.debug("Found the audience " + audience + " for the 006/008 offset 22 value of " + offset22 + ".");
 
             // Add a MARCXML field to store the audience
             marcXml.addMarcXmlField(FIELD_9XX_AUDIENCE, audience);
+        	
         }
 
         return marcXml;
@@ -2480,10 +2517,10 @@ public class NormalizationService extends GenericMetadataService {
                     if (languageTermProperties == null)
                         languageTermProperties = new Properties();
                     current = languageTermProperties;
-                } else if (line.equals("FIELD 008 OFFSET 22 TO AUDIENCE")) {
-                    if (audienceFrom008Properties == null)
-                        audienceFrom008Properties = new Properties();
-                    current = audienceFrom008Properties;
+                } else if (line.equals("FIELD 006/008 OFFSET 22 TO AUDIENCE")) {
+                    if (audienceFrom006_008Properties == null)
+                        audienceFrom006_008Properties = new Properties();
+                    current = audienceFrom006_008Properties;
                 } else if (line.equals("FIELD 006/008 OFFSET 23 TO FORM OF ITEM")) {
                     if (formFrom006_008Properties == null)
                     	formFrom006_008Properties = new Properties();
@@ -2517,7 +2554,7 @@ public class NormalizationService extends GenericMetadataService {
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 007 OFFSET 00 TO SMD TYPE");
         else if (languageTermProperties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: LANGUAGE CODE TO LANGUAGE");
-        else if (audienceFrom008Properties == null)
+        else if (audienceFrom006_008Properties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 008 OFFSET 22 TO AUDIENCE");
         else if (formFrom006_008Properties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 006/008 OFFSET 23 TO FORM OF ITEM");
