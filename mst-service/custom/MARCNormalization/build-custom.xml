@@ -6,7 +6,7 @@
   * website http://www.extensiblecatalog.org/.
   *
   -->
-<project name="example-service" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="example-service-custom" xmlns:ivy="antlib:org.apache.ivy.ant">
 
   <target name="copy-custom-libs" depends="init">
     <copy todir="${build.zip.lib}">
