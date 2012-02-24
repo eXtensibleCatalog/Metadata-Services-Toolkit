@@ -26,7 +26,7 @@
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
     <marc:controlfield tag="008">080722s2007    enka    s     001 1 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
-      <marc:subfield code="a">shouldbe_nonfiction</marc:subfield>
+      <marc:subfield code="a">shouldbe_empty</marc:subfield>
     </marc:datafield>
   </marc:record>
 </metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/2</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
@@ -64,7 +64,7 @@
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
     <marc:controlfield tag="008">080722s2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
-      <marc:subfield code="a">shouldbe_fiction</marc:subfield>
+      <marc:subfield code="a">shouldbe_nonfiction_and_fiction</marc:subfield>
     </marc:datafield>
   </marc:record>
 </metadata></record><record><header><identifier>oai:library.rochester.edu:URVoyager1/5</identifier><datestamp>2012-02-20T20:41:25Z</datestamp><setSpec>bib</setSpec></header><metadata>
@@ -77,7 +77,7 @@
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
     <marc:controlfield tag="008">080722s2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
-      <marc:subfield code="a">shouldbe_nonfiction</marc:subfield>
+      <marc:subfield code="a">shouldbe_nonfiction_and_nonfiction</marc:subfield>
     </marc:datafield>
   </marc:record>
 </metadata></record></ListRecords>
