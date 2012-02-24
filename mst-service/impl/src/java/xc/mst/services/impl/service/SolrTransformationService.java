@@ -2443,10 +2443,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2478,10 +2478,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2513,10 +2513,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2548,10 +2548,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2583,10 +2583,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2618,10 +2618,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2653,10 +2653,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -2731,10 +2731,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -5567,10 +5567,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -5600,10 +5600,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -5633,10 +5633,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
@@ -5666,10 +5666,10 @@ public abstract class SolrTransformationService extends GenericMetadataService {
             AggregateXCRecord transformInto) {
         // Setup the map from the 2nd indicator to the type of the xc:subject
         HashMap<Character, Attribute> indicatorToType = new HashMap<Character, Attribute>();
-        indicatorToType.put('0', new Attribute("type", "dcterms:LCSH",
+        indicatorToType.put('0', new Attribute("type", "dcterms:lcsh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('1', new Attribute("type", "lcac"));
-        indicatorToType.put('2', new Attribute("type", "dcterms:MESH",
+        indicatorToType.put('2', new Attribute("type", "dcterms:mesh",
                 AggregateXCRecord.XSI_NAMESPACE));
         indicatorToType.put('3', new Attribute("type", "nal"));
         indicatorToType.put('5', new Attribute("type", "cash"));
