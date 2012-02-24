@@ -1215,13 +1215,19 @@ public class MarcXmlManager {
     
     /**
      * Turn multiple 004 fields into a single 004 and one or more valid 014$a fields
-
+     * @param fixMultiple004s
+     *             on - create 014s for additional 004s
+     *             off - do nothing
+     *             protect - generate error if multiple 004s found
+     * @return false if encountering multiple 004s while "protect" is set             
      */
     @SuppressWarnings("unchecked")
-	public void fixMultiple004s() {
+	public boolean fixMultiple004s(String fixMultiple004s) {
         if (log.isDebugEnabled())
             log.debug("In fixMultiple004s...");
-
+        
+        if (fixMultiple004s.equals("off")) return true;
+        
         List<Element> fields = marcXml.getChildren("controlfield", marcNamespace);
     	ArrayList<Element> new014s = new ArrayList<Element>();
     	ArrayList<Element> old004s = new ArrayList<Element>();
@@ -1239,6 +1245,8 @@ public class MarcXmlManager {
         }
         
         if (cnt004 > 1) {
+        	if (fixMultiple004s.equals("protect")) return false;
+            
             for (Element old004 : old004s) {
             	marcXml.removeContent(old004);
             } 
@@ -1279,6 +1287,8 @@ public class MarcXmlManager {
             }
 
         }
+        
+        return true;
         
     }    
         

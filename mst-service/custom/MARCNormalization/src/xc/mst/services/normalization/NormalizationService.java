@@ -420,8 +420,9 @@ public class NormalizationService extends GenericMetadataService {
                 if (valid014.length() > 0 || invalid014.length() > 0)
                     normalizedXml = removeInvalid014s(normalizedXml, valid014, invalid014);                                        
 
-                if (enabledSteps.getProperty(CONFIG_ENABLED_REPLACE_014, "0").equals("1"))
-                    normalizedXml = fixMultiple004s(normalizedXml);
+                String fixMultiple004s = enabledSteps.getProperty(CONFIG_ENABLED_REPLACE_014, "off").toLowerCase();
+                if (!fixMultiple004s.equals("off"))
+                    normalizedXml = fixMultiple004s(normalizedXml, fixMultiple004s);
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_HOLDINGS_LOCATION_NAME, "0").equals("1"))
                     normalizedXml = holdingsLocationName(normalizedXml);
@@ -579,13 +580,21 @@ public class NormalizationService extends GenericMetadataService {
      *
      * @param marcXml
      *            The original MARCXML record
+     * @param fixMultiple004s
+     *             on - create 014s for additional 004s
+     *             off - do nothing
+     *             protect - generate error if multiple 004s found
      * @return The MARCXML record after performing this normalization step.
+     * @throws Exception 
      */
-    private MarcXmlManager fixMultiple004s(MarcXmlManager marcXml) {
+    private MarcXmlManager fixMultiple004s(MarcXmlManager marcXml, String fixMultiple004s) throws Exception {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering fixMultiple004s normalization step.");
         
-        marcXml.fixMultiple004s();
+        if (! marcXml.fixMultiple004s(fixMultiple004s)) {
+        	addMessage(marcXml.getInputRecord(), 109, RecordMessage.ERROR, "Multiple 004s not allowed.");
+        	throw new Exception("fixMultiple004s error.");
+        }
 
         return marcXml;
     }

@@ -19,8 +19,12 @@ RemoveOCoLC003 = 0
 # Remove the 014$a subfield if the first character is one of the following:
 #InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
-# 1 to multiple 004 fields are present, move all but the first to valid 014$a fields
-Replace014 = 0
+# on - if multiple 004 fields are present, move all but the first 004 to valid 014$a fields
+# off - leave multiple 004 fields alone as they are (but further MST processes, such
+#       as marctoxctransformation, will not process multiple 004s properly)
+# protect - if multiple 004s are present, an error will result and the record will not
+#           get processed
+Replace014 = on
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
