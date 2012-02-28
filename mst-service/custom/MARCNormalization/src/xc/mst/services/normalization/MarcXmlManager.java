@@ -1214,6 +1214,132 @@ public class MarcXmlManager {
     }
     
     /**
+     * Moves any ISBN-13s that were input into 024 fields (OCLC interim practice in ca. 2006) to 020 
+     *    so that they can be used in Aggregation Service matching 
+     *    if indicator1 is "3"
+     *    and 1st 3 digits= 978 OR 1st 4 digits= 9791, 9792, 9793, 9794, 9495, 9796, 9797, 9798, or 9799 (but not 9790)
+     *    and Number itself=13 digits
+     */
+    @SuppressWarnings("unchecked")
+	public void isbnMove024() {
+        if (log.isDebugEnabled())
+            log.debug("In isbnMove024...");
+
+    	ArrayList<Element> badFlds = new ArrayList<Element>();
+    	ArrayList<Element> new020s = new ArrayList<Element>();
+    	HashSet<String> current020s = new HashSet<String>();
+    	Element the020 = null;
+
+        List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
+
+        boolean deduped020 = false;
+        
+    	// First pass: remove valid ISBN-13s from 024 $a (we'll add them to 020 later)
+    	// and keep track of current 020 $a (and dedup)
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+            String ind1 = field.getAttributeValue("ind1");
+
+            if (tag.equals("024") && ind1.equals("3")) {
+            	ArrayList<Element> badEls = new ArrayList<Element>(); // mark for deletion
+               	int totCnt = 0; int badCnt = 0;
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    totCnt++;
+                    if (("a").equals(e.getAttributeValue("code"))) {
+                    	String isbn = e.getText();
+                    	if (isbn.length() == 13 && isbn.startsWith("979")) {
+                    		switch(isbn.charAt(3)) {
+	                    		case '1':
+	                    		case '2':
+	                    		case '3':
+	                    		case '4':
+	                    		case '5':
+	                    		case '6':
+	                    		case '7':
+	                    		case '8':
+	                    		case '9':
+	                    			badEls.add(e); // mark subfield for deletion
+	                    			new020s.add(e); // keep track of "found" new 020
+	                        		badCnt++;
+                    		}
+                    	}
+                    }
+               
+                }
+            	// delete marked subfields
+                for (Element badEl : badEls) {
+                	field.removeContent(badEl);
+                }   
+                // if field is completely empty, mark for deletion
+                if (totCnt == badCnt) {
+                	badFlds.add(field);
+                }
+            }
+            
+            if (tag.equals("020")) {
+            	the020 = field; // save the 020 tag so we can add new Els later
+            	ArrayList<Element> badEls = new ArrayList<Element>();
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    if (("a").equals(e.getAttributeValue("code"))) {
+                    	String isbn = e.getText();
+                    	// dedup while we're at it
+                    	if (current020s.contains(isbn)) {
+                    		badEls.add(e); // mark subfield for deletion
+                    		deduped020 = true;
+                    	} else {
+                    		current020s.add(isbn);
+                    	}
+                    }
+            	}
+            	// delete marked subfields
+                for (Element badEl : badEls) {
+                	field.removeContent(badEl);
+                }   
+
+            }
+            
+        } // end of First Pass
+
+        // remove any marked fields (since they are empty)
+        for (Element badFld : badFlds) {
+        	marcXml.removeContent(badFld);
+        }   
+
+        // in case we don't have a 020 already
+        boolean wasEmpty = false;
+        if (the020 == null) {
+        	the020 = new Element("datafield", marcNamespace);
+            the020.setAttribute("tag", "020");
+            the020.setAttribute("ind1", " ");
+            the020.setAttribute("ind2", " ");
+            wasEmpty = true;
+        }
+        
+        // Only add new 020 values (no duplicates)
+        int cnt = 0;
+        for (Element n : new020s) {
+        	if (! current020s.contains(n.getText())) {
+        		the020.addContent(n);
+        		current020s.add(n.getText());
+        		cnt++;
+        	}
+        }
+        
+        if (wasEmpty && cnt > 0)
+            marcXml.addContent("\n\t").addContent(the020).addContent("\n");
+
+        // Since we've modified the 020, we need to re-initialize the field data
+        if (deduped020 || wasEmpty || cnt > 0) {
+	        field020 = new ArrayList<String>();
+	        field020.addAll(current020s);
+        }
+
+    }
+
+    
+    /**
      * Turn multiple 004 fields into a single 004 and one or more valid 014$a fields
      * @param fixMultiple004s
      *             on - create 014s for additional 004s

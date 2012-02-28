@@ -79,6 +79,9 @@ FictionOrNonfiction = 1
 # leader 06 is '1' and 008 24-27 contains an 'm'
 008Thesis = 1
 
+# 1 to move valid ISBN-13s from 024 to 020
+024ISBNMove = 1
+
 ISBNCleanup = 1
 
 # 1 to create a field with a language code for 

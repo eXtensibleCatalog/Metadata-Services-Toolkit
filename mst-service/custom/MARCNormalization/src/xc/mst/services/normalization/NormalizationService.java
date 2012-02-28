@@ -341,6 +341,9 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(CONFIG_ENABLED_008_THESIS, "0").equals("1"))
                     normalizedXml = thesisFrom008(normalizedXml);
 
+                if (enabledSteps.getProperty(CONFIG_ENABLED_ISBN_MOVE, "0").equals("1"))
+                    normalizedXml = isbnMove024(normalizedXml);
+
                 if (enabledSteps.getProperty(CONFIG_ENABLED_ISBN_CLEANUP, "0").equals("1"))
                     normalizedXml = isbnCleanup(normalizedXml);
 
@@ -615,6 +618,19 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("Entering removeInvalid014s normalization step.");
         
         marcXml.removeInvalid014s(validFirstChars, invalidFirstChars);
+        
+        return marcXml;
+    }
+
+    /**
+     * If the valid ISBN-13s exist in 024, move them to 020
+     * 
+     */
+    private MarcXmlManager isbnMove024(MarcXmlManager marcXml) {
+        if (LOG.isDebugEnabled())
+            LOG.debug("Entering isbnMove024 normalization step.");
+        
+        marcXml.isbnMove024();
         
         return marcXml;
     }

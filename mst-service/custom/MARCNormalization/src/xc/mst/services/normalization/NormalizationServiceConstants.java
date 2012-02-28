@@ -142,6 +142,11 @@ public class NormalizationServiceConstants {
     public static final String CONFIG_ENABLED_ISBN_CLEANUP = "ISBNCleanup";
 
     /**
+     * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_ISBN_MOVE = "024ISBNMove";
+
+    /**
      * Parameter for looking up the whether or not the SupplyMARCOrgCode normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE = "SupplyMARCOrgCode";
