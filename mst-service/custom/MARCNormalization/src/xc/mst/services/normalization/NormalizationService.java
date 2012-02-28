@@ -347,6 +347,9 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(CONFIG_ENABLED_ISBN_CLEANUP, "0").equals("1"))
                     normalizedXml = isbnCleanup(normalizedXml);
 
+                if (enabledSteps.getProperty(CONFIG_ENABLED_LCCN_CLEANUP, "0").equals("1"))
+                    normalizedXml = lccnCleanup(normalizedXml);
+
                 if (enabledSteps.getProperty(CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
                     normalizedXml = supplyMARCOrgCode(normalizedXml);
 
@@ -624,7 +627,10 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * If the valid ISBN-13s exist in 024, move them to 020
-     * 
+     *
+     * @param marcXml
+     *            The original MARCXML record
+     * @return The MARCXML record after performing this normalization step.
      */
     private MarcXmlManager isbnMove024(MarcXmlManager marcXml) {
         if (LOG.isDebugEnabled())
@@ -1464,6 +1470,24 @@ public class NormalizationService extends GenericMetadataService {
 
         return marcXml;
     }
+    
+    
+    /**
+     * Remove everything after (and including) the first forward slash from LCCN
+     * 
+     * @param marcXml
+     *            The original MARCXML record
+     * @return The MARCXML record after performing this normalization step.
+     */
+    private MarcXmlManager lccnCleanup(MarcXmlManager marcXml) {
+        if (LOG.isDebugEnabled())
+            LOG.debug("Entering isbnMove024 normalization step.");
+        
+        marcXml.lccnCleanup();
+        
+        return marcXml;
+    }
+
 
     /**
      * Creates a new 035 field on the record based on the existing 001 field if

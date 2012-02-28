@@ -1214,6 +1214,39 @@ public class MarcXmlManager {
     }
     
     /**
+     * Removes the first forward slash and any characters afterwards from the 010
+     */
+    @SuppressWarnings("unchecked")
+	public void lccnCleanup() {
+        if (log.isDebugEnabled())
+            log.debug("In lccnCleanup...");
+        
+        List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
+        //boolean dirty010 = false;
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+
+            if (tag.equals("010")) {
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    
+                    String lccn = e.getText();
+                    int inx = lccn.indexOf('/');
+                    if (inx > 0) {
+	                    //dirty010 = true;
+	                    e.setText(lccn.substring(0, inx));
+                    }
+            	}
+            }
+        }
+        
+        //if (dirty010) {
+        	// re-initialize field data if necessary 
+        //}
+    }
+    
+    
+    /**
      * Moves any ISBN-13s that were input into 024 fields (OCLC interim practice in ca. 2006) to 020 
      *    so that they can be used in Aggregation Service matching 
      *    if indicator1 is "3"

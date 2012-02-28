@@ -82,7 +82,11 @@ FictionOrNonfiction = 1
 # 1 to move valid ISBN-13s from 024 to 020
 024ISBNMove = 1
 
+# 1 to remove characters after (and including) the first left parenthesis (or first colon)
 ISBNCleanup = 1
+
+# 1 to remove characters after (and including) the first forward slash
+LCCNCleanup = 1
 
 # 1 to create a field with a language code for 
 # each unique language code found in the original 

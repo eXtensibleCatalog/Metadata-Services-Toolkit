@@ -144,6 +144,11 @@ public class NormalizationServiceConstants {
     /**
      * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
      */
+    public static final String CONFIG_ENABLED_LCCN_CLEANUP = "LCCNCleanup";
+
+    /**
+     * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
+     */
     public static final String CONFIG_ENABLED_ISBN_MOVE = "024ISBNMove";
 
     /**
