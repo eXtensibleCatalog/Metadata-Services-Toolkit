@@ -161,13 +161,15 @@ public class MatcherTest extends MASBaseTest {
                         reportFailure("* checkNumberMatched results has nothing to compare to, expectedResults == null, numResults="+results.size());
                         break;  // just in case the implementation of reportFailure would keep you in the loop.
                     }
-                    LOG.info( "* checking whether can  find "+ value+" ! for key "+key +" expectedResults getKey: "+expectedResults.get(key) );
-                    if (!expectedResults.get(key).contains(value)) {
-                        String result = "* expected to find "+ value+" ! for key "+key ;
-                        reportFailure(result);
-                    }
-                    else {
-                        LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
+                    if (key != value) {
+                        LOG.info( "* checking whether can  find "+ value+" ! for key "+key +" expectedResults getKey: "+expectedResults.get(key) );
+                        if (!expectedResults.get(key).contains(value)) {
+                            String result = "* expected to find "+ value+" ! for key "+key ;
+                            reportFailure(result);
+                        }
+                        else {
+                            LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
+                        }
                     }
                 }
             }
@@ -226,9 +228,6 @@ public class MatcherTest extends MASBaseTest {
 
             LOG.debug("test:  process record+" + r.getId());
 
-       if (r.getId() == 18l) {
-          LOG.debug("STOP!");
-       }
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
@@ -273,7 +272,7 @@ public class MatcherTest extends MASBaseTest {
             getUtil().throwIt(t);
         }
         for (Long result: matchedRecordIds) {
-            LOG.info("recordId " +r.getId()+" has matches==>" + result+"<==");
+            LOG.debug("recordId " +r.getId()+" has matches==>" + result+"<==");
         }
         return matchedRecordIds;
     }

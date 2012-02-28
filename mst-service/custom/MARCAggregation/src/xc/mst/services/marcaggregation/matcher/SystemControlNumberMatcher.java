@@ -159,10 +159,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 if (prefix.equals(oclc)) {
                     if (haveSeenOCoLC) {
                         LOG.error("ERROR: 035$a prefix (OCoLC) seen > 1 time for recordId: " + r.recordId);
-                        final MarcAggregationService service = getMarcAggregationService();
-                        if (service != null) {
-                            service.addMessage(ir, 101, RecordMessage.ERROR);
-                        }
+//
+//                      For now, log only, don't add to error facet
+//                        final MarcAggregationService service = getMarcAggregationService();
+//                        if (service != null) {
+//                            service.addMessage(ir, 101, RecordMessage.ERROR);
+//                        }
                     }
                     haveSeenOCoLC = true;
                 }
