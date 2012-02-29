@@ -19,8 +19,12 @@ RemoveOCoLC003 = 0
 # Remove the 014$a subfield if the first character is one of the following:
 #InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
-# 1 to multiple 004 fields are present, move all but the first to valid 014$a fields
-Replace014 = 0
+# on - if multiple 004 fields are present, move all but the first 004 to valid 014$a fields
+# off - leave multiple 004 fields alone as they are (but further MST processes, such
+#       as marctoxctransformation, will not process multiple 004s properly)
+# protect - if multiple 004s are present, an error will result and the record will not
+#           get processed
+Replace014 = on
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
@@ -75,7 +79,14 @@ FictionOrNonfiction = 1
 # leader 06 is '1' and 008 24-27 contains an 'm'
 008Thesis = 1
 
+# 1 to move valid ISBN-13s from 024 to 020
+024ISBNMove = 1
+
+# 1 to remove characters after (and including) the first left parenthesis (or first colon)
 ISBNCleanup = 1
+
+# 1 to remove characters after (and including) the first forward slash
+LCCNCleanup = 1
 
 # 1 to create a field with a language code for 
 # each unique language code found in the original 
@@ -92,6 +103,10 @@ LanguageTerm = 1
 # value. 
 008Audience = 1
 
+# 1 to create an audience field for
+# audience suggested by the 006 offset 22
+# (of which there may be more than one).
+006Audience = 1
 
 # 1 to create an "Form of Item" field for the
 # form suggested by the 006 offset 23 
@@ -109,7 +124,7 @@ LanguageTerm = 1
 SupplyMARCOrgCode = 1
 
 # Organization code 
-OrganizationCode = CHANGE_ME
+OrganizationCode = NRU
 
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
@@ -369,15 +384,15 @@ vr = Videoreel
 zm = Multiple
 
 #-----------------------------------------
-FIELD 008 OFFSET 22 TO AUDIENCE
+FIELD 006/008 OFFSET 22 TO AUDIENCE
 #-----------------------------------------
 
 #*****************************************
-# This section maps 008 offset 22 values to the audience
+# This section maps 006 / 008 offset 22 values to the audience
 # they should be associated with.
 #
 # For example, The line "a = Preschool" says that the
-# audience is "Preschool" if the 008 offset 22 is "a"
+# audience is "Preschool" if the 006 (or 008) offset 22 is "a"
 #
 # Any of the mappings may be changed based on your organization's
 # cataloging policies.  New properties may be added for 008 offset 022
