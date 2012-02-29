@@ -1944,8 +1944,8 @@ public class MarcXmlManager {
      *            The field to copy the target fields into
      */
     @SuppressWarnings("unchecked")
-    public void seperateNames(List<String> targetFields, String copyIntoField) {
-        TimingLogger.start("seperateNames");
+    public void separateNames(List<String> targetFields, String copyIntoField) {
+        TimingLogger.start("separateNames");
         if (log.isDebugEnabled())
             log.debug("Copying " + targetFields.size() + " MARC XML tags into the MARC XML tag " + copyIntoField + " using only subfields before the $t.");
 
@@ -2046,7 +2046,7 @@ public class MarcXmlManager {
         for (Element addMe : newFields)
             marcXml.addContent(addMe).addContent("\n\n");
 
-        TimingLogger.stop("seperateNames");
+        TimingLogger.stop("separateNames");
     }
 
     /**
@@ -2120,7 +2120,7 @@ public class MarcXmlManager {
      * in the same order with the same values. If one or more duplicate
      * fields are found with the specified tag, all but one of them are removed.
      *
-     * 959 fields have a seperate dedup method since they have to handle linking fields
+     * 959 fields have a separate dedup method since they have to handle linking fields
      */
     @SuppressWarnings("unchecked")
     public void deduplicateMarcXml959Field() {

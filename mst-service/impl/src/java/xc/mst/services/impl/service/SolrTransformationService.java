@@ -3397,7 +3397,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                     }
 
                     // Increment the artificial linking ID so the next 710 gets
-                    // mapped to a seperate work element
+                    // mapped to a separate work element
                     artificialLinkingId++;
                 } else {
                     // Get the $0 fields; they contain the authority information
@@ -3758,7 +3758,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                     }
 
                     // Increment the artificial linking ID so the next 711 gets
-                    // mapped to a seperate work element
+                    // mapped to a separate work element
                     artificialLinkingId++;
                 } else {
                     // Get the $0 fields; they contain the authority information
@@ -3990,7 +3990,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
                 }
                 // Increment the artificial linking ID so the next 730 gets
-                // mapped to a seperate work element
+                // mapped to a separate work element
                 artificialLinkingId++;
             } else {
                 // Get the $0 fields; they contain the authority information
@@ -5358,7 +5358,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                 ArrayList<Element> holdingsElements = new ArrayList<Element>();
 
                 if (callNumberBuilder.length() > 0) {
-                    // Create a xc:callNumber in a seperate holdings element
+                    // Create a xc:callNumber in a separate holdings element
                     // based on the 945 ab values
                     Element callNumberElement = new Element("callNumber",
                             AggregateXCRecord.XC_NAMESPACE);
@@ -5368,7 +5368,7 @@ public abstract class SolrTransformationService extends GenericMetadataService {
 
                 if (locationDisplayBuilder.length() > 0) {
 
-                    // Create a xc:callNumber in a seperate holdings element
+                    // Create a xc:callNumber in a separate holdings element
                     // based on the 945 ab values
                     Element callNumberElement = new Element("location",
                             AggregateXCRecord.XC_NAMESPACE);
