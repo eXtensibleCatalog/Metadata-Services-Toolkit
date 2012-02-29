@@ -116,6 +116,11 @@ public class NormalizationServiceConstants {
     public static final String CONFIG_ENABLED_008_AUDIENCE = "008Audience";
 
     /**
+     * Parameter for looking up the whether or not the 008Audience normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_006_AUDIENCE = "006Audience";
+
+    /**
      * Parameter for looking up the whether or not the 006FormOfItem normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_006_FORM = "006FormOfItem";
@@ -135,6 +140,16 @@ public class NormalizationServiceConstants {
      * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_ISBN_CLEANUP = "ISBNCleanup";
+
+    /**
+     * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_LCCN_CLEANUP = "LCCNCleanup";
+
+    /**
+     * Parameter for looking up the whether or not the ISBNCleanup normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_ISBN_MOVE = "024ISBNMove";
 
     /**
      * Parameter for looking up the whether or not the SupplyMARCOrgCode normalization step is enabled.
