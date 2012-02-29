@@ -193,7 +193,7 @@ remove945Field = 1
 # 1 to copy 600, 610, 611, 700, 710, 711, 800, 810, and 811 fields
 # containing a $t subfield into a 9xx field.  This will facilitate 
 # authority matching in other XC services.
-SeperateName = 1
+SeparateName = 1
 
 # 1 to remove duplicate 959, 963, 965, 967, and 969 fields. 
 Dedup9XX = 1
