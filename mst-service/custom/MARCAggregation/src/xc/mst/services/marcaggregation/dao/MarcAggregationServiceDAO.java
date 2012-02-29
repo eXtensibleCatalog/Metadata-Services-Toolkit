@@ -25,6 +25,7 @@ import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
+import xc.mst.services.marcaggregation.MarcAggregationService.RecordOfSourceData;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 
@@ -451,5 +452,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     public void loadMaps(
         ) {
+    }
+
+    public void persistScores(Map<Long, RecordOfSourceData> scores) {
+        // TODO do the work
+
     }
 }

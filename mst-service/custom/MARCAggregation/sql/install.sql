@@ -22,9 +22,11 @@ ENGINE = MyISAM DEFAULT CHARSET=utf8;
 -- -----------------------------------------------------
 -- Table `merge_scores`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS merge_scores;
 CREATE  TABLE `merge_scores` (
   `output_record_id` BIGINT NOT NULL ,
-  `score` TINYINT NOT NULL ,
+  `leaderByte17` char(1) NOT NULL ,
+  `size` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`output_record_id`) )
 ENGINE = MyISAM DEFAULT CHARSET=utf8;
 

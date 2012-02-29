@@ -40,15 +40,32 @@ import xc.mst.utils.TimingLogger;
  */
 public class MarcAggregationService extends GenericMetadataService {
 
-    private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
-
     protected Map<String, FieldMatcher> matcherMap = null;
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
     protected MarcAggregationServiceDAO masDAO = null;
     protected List<Set<Long>> masMatchSetList = null;
+    protected Map<Long,RecordOfSourceData> scores = null;
+
+    private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
+    private List<Character> leaderVals = null;
+    private Repository inputRepo = null;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
+
+        // determine record of source leader character priority, byte 17
+        leaderVals = new ArrayList<Character>();
+        List<String> _leaderVals = getConfigFileValues("leader.order");
+        for (String val: _leaderVals) {
+            LOG.info("Leader val==>"+val+"<== val length="+val.length());
+            if (val.length() == 3) {
+                leaderVals.add(val.charAt(1));  // char between quotes
+            }
+            else {
+                leaderVals.add(val.charAt(0));
+            }
+        }
+
         this.matcherMap = new HashMap<String, FieldMatcher>();
         List<String> mps = getConfigFileValues("matchers.value");
         for (String mp : mps) {
@@ -69,6 +86,7 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
         masMatchSetList = new ArrayList<Set<Long>>();
+        scores = new HashMap<Long,RecordOfSourceData>();
     }
 
     // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
@@ -173,29 +191,64 @@ public class MarcAggregationService extends GenericMetadataService {
         LOG.info("** START processComplete!");
         List<Set<Long>> matches = getCurrentMatchSetList();
         if (matches != null) {
+            //TODO maybe change this to 'debug' vs. 'info' at some point.
             LOG.info("** processComplete, matchset length="+matches.size());
-        }
-        for (Set<Long> set: matches) {
-            StringBuilder sb = new StringBuilder("*** Matchset: {");
-            for (Long num: set) {
-                sb.append(num+", ");
+
+            for (Set<Long> set: matches) {
+                StringBuilder sb = new StringBuilder("*** Matchset: {");
+                for (Long num: set) {
+                    sb.append(num+", ");
+                }
+                sb.append("}");
+                //TODO change this to 'debug' vs. 'info' at some point.
+                LOG.info(sb.toString());
             }
-            sb.append("}");
-            //TODO change this to 'debug' vs. 'info' at some point.
-            LOG.info(sb.toString());
+
+            // TODO
+            // important - this is not going to totally nail it for the long term
+            // need to consider records received during THIS run of the service, and
+            // there status, i.e. if if goes to deleted state and is part of a merge
+            // set.  Future solution still in the works  - could be customProcessQueue
+            // and if that is not enough save more to the current match set list?
+            //
+            merge(matches);
         }
+    }
+
+    private void merge(List<Set<Long>> matches) {
+        for (Set<Long> set: matches) {
+            Long recordOfSource = determineRecordOfSource(set);
+            for (Long num: set) {
+            }
+        }
+    }
+
+    //at long last
+    private Long determineRecordOfSource(Set<Long> set) {
+        //use leaderVals
+        Repository repo = getInputRepo();  //for date tie-breaker
+        for (Long num: set) {
+            // grab leader byte 17 val and size
+        }
+        return null;
     }
 
     // note the 'well' named class Set collides with java.util.Set
     //
     // overriding this so you can save the repo/start over?
     public void process(Repository repo, Format inputFormat, xc.mst.bo.provider.Set inputSet, xc.mst.bo.provider.Set outputSet) {
+        this.inputRepo = repo;
+        LOG.info("MarcAggregationService, processing repo "+ repo.getName()+" started.");
         try {
             super.process(repo, inputFormat, inputSet, outputSet);
             processComplete();
         } catch (Exception e) {
             LOG.error("MarcAggregationService, processing repo "+ repo.getName()+" failed.", e);
         }
+    }
+
+    protected Repository getInputRepo() {
+        return this.inputRepo;
     }
 
     public List<OutputRecord> process(InputRecord r) {
@@ -206,12 +259,16 @@ public class MarcAggregationService extends GenericMetadataService {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
 
+                final char leaderByte17 = smr.getLeader().charAt(17);
+                final int rSize = r.getOaiXml().getBytes().length;
+                scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+
                 MatchSet ms = new MatchSet(smr);
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                     String matchPointKey = me.getKey();
                     FieldMatcher matcher = me.getValue();
                     matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
-                    // possibly need/want to add all matchpoints 1st, then look for matches.
+                    // possibly need/want to add all match points 1st, then look for matches.
                     ms.addMatcher(matchPointKey, matcher);
                 }
 
@@ -249,8 +306,12 @@ public class MarcAggregationService extends GenericMetadataService {
             } else {
                 if (r.getSuccessors().size() == 0) {
                     // NEW-DELETED
+                    //
+                    // nothing to do?
                 } else {
                     // UPDATE-DELETED
+                    //
+                    // TODO - unmerge ramifications, figure out merge set you may be in, remerge?
                 }
             }
 
@@ -264,11 +325,14 @@ public class MarcAggregationService extends GenericMetadataService {
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
             TimingLogger.start("masDAO.commitIfNecessary");
+            // break down timing logger more later if necessary.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 final FieldMatcher matcher = me.getValue();
                 matcher.flush(force);
                 LOG.debug("flush matcher: "+matcher.getName());
             }
+            // this should not need to done in must do, must do frequently section.
+            masDAO.persistScores(scores);
             TimingLogger.stop("masDAO.commitIfNecessary");
         } catch (Throwable t) {
             getUtil().throwIt(t);
@@ -294,4 +358,12 @@ public class MarcAggregationService extends GenericMetadataService {
         return true;
     }
 
+    public class RecordOfSourceData {
+        public RecordOfSourceData(char leaderByte17, int size) {
+            this.leaderByte17 = leaderByte17;
+            this.size = size;
+        }
+        public final char leaderByte17;
+        public final int size;
+    }
 }
