@@ -392,8 +392,8 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_007_VOCAB, "0").equals("1"))
                     normalizedXml = dedup007Vocab(normalizedXml);
 
-                if (enabledSteps.getProperty(CONFIG_ENABLED_SEPERATE_NAME, "0").equals("1"))
-                    normalizedXml = seperateName(normalizedXml);
+                if (enabledSteps.getProperty(CONFIG_ENABLED_SEPARATE_NAME, "0").equals("1"))
+                    normalizedXml = separateName(normalizedXml);
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_DEDUP_9XX, "0").equals("1"))
                     normalizedXml = dedup9XX(normalizedXml);
@@ -2415,9 +2415,9 @@ public class NormalizationService extends GenericMetadataService {
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
      */
-    private MarcXmlManager seperateName(MarcXmlManager marcXml) {
+    private MarcXmlManager separateName(MarcXmlManager marcXml) {
         if (LOG.isDebugEnabled())
-            LOG.debug("Entering SeperateName normalization step.");
+            LOG.debug("Entering SeparateName normalization step.");
 
         // A list of the tags to copy
         ArrayList<String> tagsToCopy = new ArrayList<String>();
@@ -2426,7 +2426,7 @@ public class NormalizationService extends GenericMetadataService {
         tagsToCopy.add("711");
 
         // Copy the fields, but only if they contain a $t subfield
-        marcXml.seperateNames(tagsToCopy, FIELD_9XX_SEPERATE_NAME);
+        marcXml.separateNames(tagsToCopy, FIELD_9XX_SEPARATE_NAME);
 
         return marcXml;
     }
