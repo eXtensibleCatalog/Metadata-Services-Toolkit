@@ -24,14 +24,19 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.constants.Status;
 import xc.mst.repo.Repository;
+import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.service.GenericMetadataService;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 import xc.mst.services.marcaggregation.matcher.FieldMatcher;
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
+import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+
+import gnu.trove.TLongObjectHashMap;
 
 /**
  * @author Benjamin D. Anderson
@@ -44,11 +49,13 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
     protected MarcAggregationServiceDAO masDAO = null;
     protected List<Set<Long>> masMatchSetList = null;
-    protected Map<Long,RecordOfSourceData> scores = null;
+    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
     private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
     private List<Character> leaderVals = null;
     private Repository inputRepo = null;
+    private boolean leader_byte17_weighting_enabled;
+    private boolean bigger_record_weighting_enabled;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -64,6 +71,23 @@ public class MarcAggregationService extends GenericMetadataService {
             else {
                 leaderVals.add(val.charAt(0));
             }
+        }
+        //TODO process the rest of the new config file options for determining record of source
+        leader_byte17_weighting_enabled= config.getPropertyAsBoolean("leader_byte17_weighting_enabled", false);
+        bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
+
+        try {
+            validateService();
+        } catch (ServiceValidationException e) {
+
+            // Update database with status of service
+            service.setStatus(Status.ERROR);
+            LOG.error("Error validating service:", e);
+            LogWriter.addInfo(service.getServicesLogFileName(), "** Error validating service - service will not run " + e.getMessage() + " **");
+            sendReportEmail("Error validating service: " + e.getMessage());
+
+            // in case the WorkerThread code addition causes issues, simply uncomment the below:
+            // throw new RuntimeException(e);
         }
 
         this.matcherMap = new HashMap<String, FieldMatcher>();
@@ -86,7 +110,14 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
         masMatchSetList = new ArrayList<Set<Long>>();
-        scores = new HashMap<Long,RecordOfSourceData>();
+        scores = new TLongObjectHashMap<RecordOfSourceData>();
+    }
+
+    @Override
+    protected void validateService() throws ServiceValidationException {
+        if (!leader_byte17_weighting_enabled && !bigger_record_weighting_enabled) {
+            throw new ServiceValidationException("Service configuration file invalid: leader_byte17_weighting_enabled & bigger_record_weighting_enabled cannot both be disabled!");
+        }
     }
 
     // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
@@ -105,11 +136,11 @@ public class MarcAggregationService extends GenericMetadataService {
         return masMatchSetList;
     }
 
-    // need to look to see if the given matchset impacts existing sets.  i.e if this set  is {1,47,50}
+    // need to look to see if the given match set impacts existing sets.  i.e if this set  is {1,47,50}
     // and we have existing sets {1,3} and {4,47} then we need a superset: {1,3,4,47,50} and need to
     // remove the existing sets {1,3}, {4,47}
     //
-    // disjoint-set datastructure?
+    // disjoint-set data structure?
     //
     private List<Set<Long>> addToMatchSetList(Set<Long> matchset,  final List<Set<Long>> origMasMatchSetList) {
         if (matchset==null) {
@@ -170,6 +201,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     // wrap it.
+    //  (to increase accessibility - classes like Matcher/MatchRules that aren't subclasses may need it.)
     public void addMessage(InputRecord record, int code, char level) {
         try {
             // originally had to grab service as below but that was a workaround that didn't help ultimately.
@@ -223,12 +255,53 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-    //at long last
+    /**
+     # Record of source criteria:
+     #
+     # 1) leader_byte17_weighting_enabled = true/false
+     # 2) bigger_record_weighting_enabled = true/false
+     #
+     # And four cases:
+     #
+     # 1-true, 2-false
+     # In this case we first compare Leader/byte17, pick the earliest (in String leader.order above),
+     #   if they are the same, pick the record that is being processed.
+     #
+     # 1-true, 2-true
+     # In this case we first compare Leader/byte17, pick the earliest (in String leader.order above),
+     #   if they are the same, pick the record that is largest in bytes.
+     #
+     # 1-false, 2-true
+     # Pick the record that is largest in bytes.
+     #
+     # 1-false, 2-false
+     # This is a not-allowed state and the service will throw an error message.
+     #
+     * @param set
+     * @return
+     */
     private Long determineRecordOfSource(Set<Long> set) {
-        //use leaderVals
+        //use leaderVals:
+        // List<Character> leaderVals
+        // leader_byte17_weighting_enabled;
+        // bigger_record_weighting_enabled;
+
         Repository repo = getInputRepo();  //for date tie-breaker
+        Long winner=null;  // to store/update winner as you go along and test records against each other.
         for (Long num: set) {
+            if (winner == null) {
+                winner = num;  // 1st record is temporarily the record of source till proven otherwise.
+            }
+            if (!scores.containsKey(num)) {
+                RecordOfSourceData source = masDAO.getScoreData(num);
+            }
+            else {
+                //get it out of memory.
+            }
             // grab leader byte 17 val and size
+            RecordOfSourceData source = masDAO.getScoreData(num);
+            LOG.info("Source data for id: "+num+" char:"+source.leaderByte17+": "+" size="+source.size);
+
         }
         return null;
     }
@@ -324,7 +397,9 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
+            LOG.debug("***FORCE: masDAO.commitIfNecessary");
             TimingLogger.start("masDAO.commitIfNecessary");
+
             // break down timing logger more later if necessary.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
                 final FieldMatcher matcher = me.getValue();
@@ -356,14 +431,5 @@ public class MarcAggregationService extends GenericMetadataService {
             getUtil().throwIt(t);
         }
         return true;
-    }
-
-    public class RecordOfSourceData {
-        public RecordOfSourceData(char leaderByte17, int size) {
-            this.leaderByte17 = leaderByte17;
-            this.size = size;
-        }
-        public final char leaderByte17;
-        public final int size;
     }
 }

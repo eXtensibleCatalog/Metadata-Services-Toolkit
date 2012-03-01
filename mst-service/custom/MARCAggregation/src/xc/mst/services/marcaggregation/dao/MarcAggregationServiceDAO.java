@@ -11,11 +11,15 @@ package xc.mst.services.marcaggregation.dao;
 
 import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongLongProcedure;
+import gnu.trove.TLongObjectHashMap;
+import gnu.trove.TLongObjectProcedure;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +28,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 
+import org.springframework.jdbc.core.RowMapper;
+
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
-import xc.mst.services.marcaggregation.MarcAggregationService.RecordOfSourceData;
+import xc.mst.services.marcaggregation.RecordOfSourceData;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-
 /**
 *
 * @author John Brand
@@ -44,20 +49,23 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
     public final static String held_holdings_table = "held_holdings";
 
-    public final static String matchpoints_010a_table = "matchpoints_010a";
-    public final static String matchpoints_020a_table = "matchpoints_020a";
-    public final static String matchpoints_022a_table = "matchpoints_022a";
-    public final static String matchpoints_024a_table = "matchpoints_024a";
-    public final static String matchpoints_028a_table = "matchpoints_028a";
-    public final static String matchpoints_035a_table = "matchpoints_035a";
-    public final static String matchpoints_130a_table = "matchpoints_130a";
-    public final static String matchpoints_240a_table = "matchpoints_240a";
-    public final static String matchpoints_245a_table = "matchpoints_245a";
+    public final static String matchpoints_010a_table   = "matchpoints_010a";
+    public final static String matchpoints_020a_table   = "matchpoints_020a";
+    public final static String matchpoints_022a_table   = "matchpoints_022a";
+    public final static String matchpoints_024a_table   = "matchpoints_024a";
+    public final static String matchpoints_028a_table   = "matchpoints_028a";
+    public final static String matchpoints_035a_table   = "matchpoints_035a";
+    public final static String matchpoints_130a_table   = "matchpoints_130a";
+    public final static String matchpoints_240a_table   = "matchpoints_240a";
+    public final static String matchpoints_245a_table   = "matchpoints_245a";
     public final static String matchpoints_260abc_table = "matchpoints_260abc";
+    public final static String merge_scores_table       = "merge_scores";
 
     public final static String input_record_id_field    = "input_record_id";
     public final static String string_id_field          = "string_id";
     public final static String numeric_id_field         = "numeric_id";
+    public final static String leaderByte17_field       = "leaderByte17";
+    public final static String size_field               = "size";
 
 
     //perhaps will move this up to the generic layer - since 2 services will end up with identical code.
@@ -392,6 +400,111 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
+    public void persistScores(TLongObjectHashMap<xc.mst.services.marcaggregation.RecordOfSourceData> scores) {
+
+        final String tableName = merge_scores_table;
+        TimingLogger.start("MarcAggregationServiceDAO.persistScores");
+        try {
+            String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+            final byte[] tabBytes = "\t".getBytes();
+            final byte[] newLineBytes = "\n".getBytes();
+
+            File dbLoadFile = new File(dbLoadFileStr);
+            if (dbLoadFile.exists()) {
+                dbLoadFile.delete();
+            }
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            final MutableInt j = new MutableInt(0);
+            TimingLogger.start(tableName + ".insert");
+            TimingLogger.start(tableName + ".insert.create_infile");
+            final List<Object[]> params = new ArrayList<Object[]>();
+
+            if (scores instanceof TLongObjectHashMap) {
+                LOG.debug("insert: " + tableName + ".size(): " + scores.size());
+                if (scores != null && scores.size() > 0) {
+                    scores.forEachEntry(new TLongObjectProcedure<xc.mst.services.marcaggregation.RecordOfSourceData>() {
+                        public boolean execute(long id, xc.mst.services.marcaggregation.RecordOfSourceData source) {
+                            try {
+                                if (j.intValue() > 0) {
+                                    LOG.debug("line break!!! j:" + j.intValue());
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                os.write(String.valueOf(id).getBytes());
+                                os.write(tabBytes);
+                                os.write(String.valueOf(source.leaderByte17).getBytes());
+                                os.write(tabBytes);
+                                os.write(String.valueOf(source.size).getBytes());
+                            } catch (Throwable t) {
+                                getUtil().throwIt(t);
+                            }
+                            return true;
+                        }
+                    });
+                }
+            }
+
+            os.close();
+            TimingLogger.stop(tableName + ".insert.create_infile");
+            TimingLogger.start(tableName + ".insert.load_infile");
+            this.jdbcTemplate.execute(
+                    "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                            tableName +
+                            " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                    );
+            TimingLogger.stop(tableName + ".insert.load_infile");
+            TimingLogger.stop(tableName + ".insert");
+        } catch (Throwable t) {
+            getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistScores");
+        }
+    }
+
+    public RecordOfSourceData getScoreData(Long num) {
+        TimingLogger.start("getMatchingRecords");
+
+        final String tableName = merge_scores_table;
+
+        String sql = "select "+ leaderByte17_field +", "+ size_field +
+                " from " + tableName+ " where "+ input_record_id_field +" = ?";
+
+        List<RecordOfSourceData> rowList = this.jdbcTemplate.query(sql, new Object[] {num}, new RecordOfSourceDataMapper());
+
+        TimingLogger.stop("getMatchingRecords");
+
+        final int size = rowList.size();
+        if (size == 0) {
+            LOG.error("No rows returned for merge_scores for "+num);
+            return null;
+        }
+        else if (size>1) {
+            // enforce through schema?
+            LOG.error("multiple rows returned for merge_scores for "+num);
+        }
+        return rowList.get(0);
+    }
+
+    private static final class RecordOfSourceDataMapper implements RowMapper<RecordOfSourceData> {
+
+        public RecordOfSourceData mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecordOfSourceData source;
+            char encoding;
+
+            // the ' ' is not getting into the db. Is it a big deal, or is this
+            // hack good enough?
+            //
+            if (StringUtils.isNotEmpty(rs.getString("leaderByte17"))) {
+                encoding = rs.getString("leaderByte17").charAt(0);
+            }
+            else encoding=' ';
+
+            source = new RecordOfSourceData(encoding,rs.getInt("size"));
+            return source;
+        }
+    }
+
     // given a string_id in String form to match on.
     //
     // for instance:
@@ -452,10 +565,5 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     public void loadMaps(
         ) {
-    }
-
-    public void persistScores(Map<Long, RecordOfSourceData> scores) {
-        // TODO do the work
-
     }
 }
