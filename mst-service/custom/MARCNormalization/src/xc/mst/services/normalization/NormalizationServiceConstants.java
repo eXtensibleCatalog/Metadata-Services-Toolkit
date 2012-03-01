@@ -274,7 +274,7 @@ public class NormalizationServiceConstants {
     /**
      * Parameter for looking up the whether or not the SeperateName normalization step is enabled.
      */
-    public static final String CONFIG_ENABLED_SEPERATE_NAME = "SeperateName";
+    public static final String CONFIG_ENABLED_SEPARATE_NAME = "SeparateName";
 
     /**
      * Parameter for looking up the whether or not the Dedup9XX normalization step is enabled.
@@ -500,9 +500,9 @@ public class NormalizationServiceConstants {
     public static final String FIELD_9XX_REL_TITLE_DISPLAY_CONTENT = "958";
 
     /**
-     * The 9xx field for the seperate name
+     * The 9xx field for the separate name
      */
-    public static final String FIELD_9XX_SEPERATE_NAME = "959";
+    public static final String FIELD_9XX_SEPARATE_NAME = "959";
 
     // *******************************************************************
     // Other

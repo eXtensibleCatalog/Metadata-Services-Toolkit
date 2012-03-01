@@ -180,7 +180,7 @@ public class Constants {
 
     /**
      * Parameter for looking up the supported compression types of the OAI repository from the configuration file.
-     * Supported compression types will be seperated by semi colons.
+     * Supported compression types will be separated by semi colons.
      */
     public static final String CONFIG_OAI_REPO_COMPRESSION = "OaiRepoCompression";
 
