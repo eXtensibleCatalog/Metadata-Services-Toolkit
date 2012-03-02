@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
@@ -72,7 +73,6 @@ public class MarcAggregationService extends GenericMetadataService {
                 leaderVals.add(val.charAt(0));
             }
         }
-        //TODO process the rest of the new config file options for determining record of source
         leader_byte17_weighting_enabled= config.getPropertyAsBoolean("leader_byte17_weighting_enabled", false);
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
 
@@ -250,6 +250,8 @@ public class MarcAggregationService extends GenericMetadataService {
     private void merge(List<Set<Long>> matches) {
         for (Set<Long> set: matches) {
             Long recordOfSource = determineRecordOfSource(set);
+            LOG.info("**** Record of Source == "+recordOfSource);
+
             for (Long num: set) {
             }
         }
@@ -281,29 +283,29 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return
      */
     private Long determineRecordOfSource(Set<Long> set) {
-        //use leaderVals:
-        // List<Character> leaderVals
-        // leader_byte17_weighting_enabled;
-        // bigger_record_weighting_enabled;
 
+        TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap = new TreeMap<SortableRecordOfSourceData, RecordOfSourceData>();
         Repository repo = getInputRepo();  //for date tie-breaker
-        Long winner=null;  // to store/update winner as you go along and test records against each other.
         for (Long num: set) {
-            if (winner == null) {
-                winner = num;  // 1st record is temporarily the record of source till proven otherwise.
-            }
+
+            // grab leader byte 17 value and size
+            RecordOfSourceData source;
             if (!scores.containsKey(num)) {
-                RecordOfSourceData source = masDAO.getScoreData(num);
+                source = masDAO.getScoreData(num);
             }
             else {
-                //get it out of memory.
+                //use the data already in memory.
+                source = scores.get(num);
             }
-            // grab leader byte 17 val and size
-            RecordOfSourceData source = masDAO.getScoreData(num);
             LOG.info("Source data for id: "+num+" char:"+source.leaderByte17+": "+" size="+source.size);
 
+            // use leaderVals:
+            // List<Character> leaderVals
+            // leader_byte17_weighting_enabled;
+            // bigger_record_weighting_enabled;
+            sortedMap.put(new SortableRecordOfSourceData(repo,leaderVals,num,source, leader_byte17_weighting_enabled ,bigger_record_weighting_enabled ), source);
         }
-        return null;
+        return sortedMap.firstKey().recordId;
     }
 
     // note the 'well' named class Set collides with java.util.Set
