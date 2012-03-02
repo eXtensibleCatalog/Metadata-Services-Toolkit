@@ -1,30 +1,30 @@
-# Search below for OrganizationCode.  This is one you must change! 
+# See below under Enabled Steps for OrganizationCode.  The OrganizationCode currently must be supplied in order for the service to run correctly! 
+
+# Config file version note:  reordered enabled steps to be in roughly the same order as MARC formats, 3/1/2012 - JB
 
 #-----------------------------------------
 ENABLED STEPS
 #-----------------------------------------
 
 #*****************************************
-# Whether or not to run each of the normalization setps
-# A step will run if its value is 1
-# values can only be either 1 or 0.
+# Specify whether or not to run each normalization step.
+# A step will run if its value is 1 but not if its value is 0
+# Values can only be either 1 or 0.
 #*****************************************
 
-# 1 to remove the 003 if its value is "OCoLC"
-RemoveOCoLC003 = 0
+# Steps are listed roughly in the numeric order of the MARC
+# fields that the step acts upon.
 
-# Remove the 014$a subfield if the first character is not one of the following:
-#ValidFirstChar014 = 0123456789
+# Organization code.  Supply your institution’s code from the 
+# MARC Code List for Organizations 
+#(http://www.loc.gov/marc/organizations/orgshome.html).  If your
+# organization does not yet have a code, you can apply for one 
+# online through this site.   
+OrganizationCode = CHANGE_ME
 
-# Remove the 014$a subfield if the first character is one of the following:
-#InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-
-# on - if multiple 004 fields are present, move all but the first 004 to valid 014$a fields
-# off - leave multiple 004 fields alone as they are (but further MST processes, such
-#       as marctoxctransformation, will not process multiple 004s properly)
-# protect - if multiple 004s are present, an error will result and the record will not
-#           get processed
-Replace014 = on
+#-----------------------------------------
+# Bibliographic Record steps 
+#----------------------------------------- 
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's Leader 06 value
@@ -34,25 +34,22 @@ DCMIType06 = 1
 # the original record's Leader 06 value
 Leader06Vocab = 1
 
-# 1 to create a field with a term based on 
-# the original record's Leader 06 value
-007Vocab06 = 1
-
 # 1 to create a field with a mode of issuance based on 
 # the original record's Leader 07 value 
 ModeOfIssuance = 1
 
-# 1 to create a new 035 field with the
-# organization code in the record and the
-# record's control number 
-MoveMARCOrgCode = 1
+# 1 to remove the 003 if its value is "OCoLC"
+RemoveOCoLC003 = 0
 
-# 1 if the MoveMARCOrgCode step should run regardless of the 
-# 003 value, false if it should only run if the 003 value
-# is the Organization Code defined in the main configuration
-# file.  This value is ignored if the MoveMARCOrgCode step
-# is not configured to run.
-MoveMARCOrgCode_moveAll = 0
+# 1 to create an audience field for
+# audience suggested by the 006 offset 22
+# (of which there may be more than one).
+006Audience = 1
+
+# 1 to create a "Form of Item" field for the
+# form suggested by the 006 offset 23 
+# value. 
+006FormOfItem = 1
 
 # 1 to create a field with a DCMI Type based on 
 # the original record's 007 offset 00  value 
@@ -65,6 +62,10 @@ DCMIType007 = 1
 # 1 to create a field with the SMD vocabulary term based on 
 # the original record's 007 offset 00 and offset 01 values 
 007SMDVocab = 1
+
+# 1 to create a field with a term based on 
+# the original record's Leader 06 value
+007Vocab06 = 1
 
 # 1 to create a field with either "Fiction" or "Non-Fiction"
 # depending on the other fields in the record 
@@ -79,64 +80,60 @@ FictionOrNonfiction = 1
 # leader 06 is '1' and 008 24-27 contains an 'm'
 008Thesis = 1
 
-# 1 to move valid ISBN-13s from 024 to 020
-024ISBNMove = 1
-
-# 1 to remove characters after (and including) the first left parenthesis (or first colon)
-ISBNCleanup = 1
-
-# 1 to remove characters after (and including) the first forward slash
-LCCNCleanup = 1
-
-# 1 to create a field with a language code for 
-# each unique language code found in the original 
-# record's 008 or 041 fields. 
-LanguageSplit = 1
-
-# 1 to create a field with a language term for 
-# each language code created by the LanguageSplit
-# normalization step. 
-LanguageTerm = 1
-
 # 1 to create an audience field for the
 # audience suggested by the 008 offset 22 
 # value. 
 008Audience = 1
-
-# 1 to create an audience field for
-# audience suggested by the 006 offset 22
-# (of which there may be more than one).
-006Audience = 1
-
-# 1 to create an "Form of Item" field for the
-# form suggested by the 006 offset 23 
-# value. 
-006FormOfItem = 1
 
 # 1 to create an "Form of Item" field for the
 # form suggested by the 008 offset 23 
 # value. 
 008FormOfItem = 1
 
+# 1 to remove characters after (and including) the first forward
+# slash
+LCCNCleanup = 1
+
+# 1 to remove characters after (and including) the first left 
+# parenthesis (or first colon)
+ISBNCleanup = 1
+
+# 1 to move valid ISBN-13s from 024 to 020
+024ISBNMove = 1
+
+# 1 to create a new 035 field with the
+# organization code in the record and the
+# record's control number 
+MoveMARCOrgCode = 1
+
+# 1 if the MoveMARCOrgCode step should run regardless of the 
+# 003 value, false if it should only run if the 003 value
+# is the Organization Code defined in the main configuration
+# file.  This value is ignored if the MoveMARCOrgCode step
+# is not configured to run.
+MoveMARCOrgCode_moveAll = 1
+
 # 1 to create a new 035 field with the
 # organization code in the MST configuration file
 # and the original record's control number 
 SupplyMARCOrgCode = 1
 
-# Organization code 
-OrganizationCode = CHANGE_ME
-
 # 1 to cleanup common problems with OCoLC 035 fields. 
 Fix035 = 1
+
+# 1 to remove leading zeros. 
+035LeadingZero = 1
 
 # 1 to cleanup OCoLC 035 fields for $9. By default 0
 Fix035Code9 = 0
 
-# 1 to remove leading zeros . 
-035LeadingZero = 1
-
 # 1 to remove duplicate 035 fields. 
 Dedup035 = 1
+
+# 1 to create a field with a language code for 
+# each unique language code found in the original 
+# record's 008 or 041 fields. 
+LanguageSplit = 1
 
 # 1 to set 100, 110, and 111 $4 fields to
 # "Author" if they are not currently set and
@@ -152,11 +149,11 @@ RoleComposer = 1
 # if there is neither a 130, 240, or 243 field. 
 UniformTitle = 1
 
-# 1 to change 655 $2 to "NRUgenre" and delete the 655 $5 subfield
-# for each 655 field with $2 = "local" and $5 = "NRU"
-NRUGenre = 0
+# 1 to create a 246 field without an initial article . 
+TitleArticle = 1
 
-# 1 to copy 600, 610, 611, 630, and 650 fields and 6xx $x subfields into
+# 1 to copy 600, 610, 611, 630, and 650 fields and 6xx $x
+# subfields into
 # new fields containing information on the topic 
 TopicSplit = 1
 
@@ -172,11 +169,31 @@ GeogSplit = 1
 # new fields containing information on the genre 
 GenreSplit = 1
 
+# 1 to change 655 $2 to "NRUgenre" and delete the 655 $5
+# subfield
+# for each 655 field with $2 = "local" and $5 = "NRU"
+NRUGenre = 0
+
 # 1 to remove duplicate DCMI type fields. 
 DedupDCMIType = 1
 
 # 1 to remove duplicate 007 Vocab fields. 
 Dedup007Vocab = 1
+
+# 1 to create a field with a language term for 
+# each language code created by the LanguageSplit
+# normalization step. 
+LanguageTerm = 1
+
+# 1 to copy 600, 610, 611, 700, 710, 711, 800, 810, and 811
+# fields
+# containing a $t subfield into a 9xx field.  This will
+# facilitate 
+# authority matching in other XC services.
+SeparateName = 1
+
+# 1 to remove duplicate 959, 963, 965, 967, and 969 fields. 
+Dedup9XX = 1
 
 # 1 to replace location codes left by 
 # ILS with the actual location. 
@@ -186,20 +203,42 @@ BibLocationName = 0
 # III with the actual location. 
 IIILocationName = 0
 
-# 1 to remove 945 field if it's  
+# 1 to remove 945 field if its  
 # $5 does not match organization code 
 remove945Field = 1
 
-# 1 to copy 600, 610, 611, 700, 710, 711, 800, 810, and 811 fields
-# containing a $t subfield into a 9xx field.  This will facilitate 
-# authority matching in other XC services.
-SeparateName = 1
+#-----------------------------------------
+# Holdings Record steps 
+#----------------------------------------- 
 
-# 1 to remove duplicate 959, 963, 965, 967, and 969 fields. 
-Dedup9XX = 1
+# Remove the 014$a subfield if the first character is not one of # the following:
+# ValidFirstChar014 = 0123456789
 
-# 1 to create a 246 field without an initial article . 
-TitleArticle = 1
+# Remove the 014$a subfield if the first character is one of the # following:
+# InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+# 1 to add a subfield b to the 014 containing the characters
+# found in MARCNormalization custom.properties file
+# substitutions.014.value, if the field 014 has a value
+# beginning with the chars found in the MARCNormalization
+# custom.properties file substitutions.014.key
+#
+# For example by default the file contains:
+# substitutions.014.key=ocm
+# substitutions.014.value=OCoLC
+# so in this case if 014 starts with ocm then add a subfield b
+# containing the characters 'OCoLC'
+# see custom.properties for more information.
+Add014Source = 0
+
+# on - if multiple 004 fields are present, move all but the
+# first 004 to valid 014$a fields
+# off - leave multiple 004 fields alone as they are (but further
+# MST processes, such as marctoxctransformation, will not
+# process multiple 004s properly)
+# protect - if multiple 004s are present, an error will result
+# and the record will not get processed
+Replace014 = on
 
 # 1 to replace location codes left by 
 # ILS with the actual location. By default 0 
@@ -208,20 +247,6 @@ HoldingsLocationName = 0
 # 1 to replace location codes by 
 # location limit name. By default 0
 LocationLimitName = 0
-
-# 1 to add a subfield b to the 014 containing the characters found in 
-# MARCNormalization custom.properties file substitutions.014.value
-# ,if the field 014 has a value beginning with the chars found in the 
-# MARCNormalization custom.properties file substitutions.014.key
-#
-# For example by default the file contains:
-# substitutions.014.key=ocm
-# substitutions.014.value=OCoLC
-# so in this case if 014 starts with ocm then add a subfield b containing 
-# the characters 'OCoLC'
-#
-# see custom.properties for more information.
-Add014Source = 0
 
 #-----------------------------------------
 FIELD 007 OFFSET 00 TO DCMI TYPE
@@ -1122,3 +1147,4 @@ o = Online
 q = Direct electronic
 r = Regular print reproduction
 s = Electronic
+
