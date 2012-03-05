@@ -88,16 +88,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 if (list == null) {
                     continue;
                 }
+                String dbLoadFileStr = getDbLoadFileStr();
+
                 final byte[] idBytes = String.valueOf(id).getBytes();
+                final byte[] tabBytes = getTabBytes();
+                final byte[] newLineBytes = getNewLineBytes();
 
-                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-                final byte[] tabBytes = "\t".getBytes();
-                final byte[] newLineBytes = "\n".getBytes();
-
-                File dbLoadFile = new File(dbLoadFileStr);
-                if (dbLoadFile.exists()) {
-                    dbLoadFile.delete();
-                }
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
                 TimingLogger.start(tableName + ".insert");
@@ -125,15 +121,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     }
                 }
                 os.close();
-                TimingLogger.stop(tableName + ".insert.create_infile");
-                TimingLogger.start(tableName + ".insert.load_infile");
-                this.jdbcTemplate.execute(
-                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                                tableName +
-                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                        );
-                TimingLogger.stop(tableName + ".insert.load_infile");
-                TimingLogger.stop(tableName + ".insert");
+                replaceIntoTable(tableName, dbLoadFileStr);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
             }
@@ -153,16 +141,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 if (list == null) {
                     continue;
                 }
+                String dbLoadFileStr = getDbLoadFileStr();
+
                 final byte[] idBytes = String.valueOf(id).getBytes();
-
-                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-                final byte[] tabBytes = "\t".getBytes();
-                final byte[] newLineBytes = "\n".getBytes();
-
-                File dbLoadFile = new File(dbLoadFileStr);
-                if (dbLoadFile.exists()) {
-                    dbLoadFile.delete();
-                }
+                final byte[] tabBytes = getTabBytes();
+                final byte[] newLineBytes = getNewLineBytes();
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
                 TimingLogger.start(tableName + ".insert");
@@ -191,15 +174,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     }
                 }
                 os.close();
-                TimingLogger.stop(tableName + ".insert.create_infile");
-                TimingLogger.start(tableName + ".insert.load_infile");
-                this.jdbcTemplate.execute(
-                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                                tableName +
-                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                        );
-                TimingLogger.stop(tableName + ".insert.load_infile");
-                TimingLogger.stop(tableName + ".insert");
+                replaceIntoTable(tableName, dbLoadFileStr);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
             }
@@ -213,19 +188,15 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistLongMaps");
         try {
-            String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-            final byte[] tabBytes = "\t".getBytes();
-            final byte[] newLineBytes = "\n".getBytes();
 
-            File dbLoadFile = new File(dbLoadFileStr);
-            if (dbLoadFile.exists()) {
-                dbLoadFile.delete();
-            }
+            String dbLoadFileStr = getDbLoadFileStr();
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
             TimingLogger.start(tableName + ".insert");
             TimingLogger.start(tableName + ".insert.create_infile");
-            final List<Object[]> params = new ArrayList<Object[]>();
+
+            final byte[] tabBytes = getTabBytes();
+            final byte[] newLineBytes = getNewLineBytes();
 
             if (inputId2numMap instanceof TLongLongHashMap) {
                 LOG.debug("insert: " + tableName + ".size(): " + inputId2numMap.size());
@@ -250,17 +221,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     });
                 }
             }
-
             os.close();
-            TimingLogger.stop(tableName + ".insert.create_infile");
-            TimingLogger.start(tableName + ".insert.load_infile");
-            this.jdbcTemplate.execute(
-                    "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                            tableName +
-                            " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                    );
-            TimingLogger.stop(tableName + ".insert.load_infile");
-            TimingLogger.stop(tableName + ".insert");
+            replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
             TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
             getUtil().throwIt(t);
@@ -292,17 +254,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 continue;
             }
             try {
+                String dbLoadFileStr = getDbLoadFileStr();
+
                 final byte[] idBytes = String.valueOf(id).getBytes();
                 final byte[] numBytes = String.valueOf(num).getBytes();
+                final byte[] tabBytes = getTabBytes();
+                final byte[] newLineBytes = getNewLineBytes();
 
-                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-                final byte[] tabBytes = "\t".getBytes();
-                final byte[] newLineBytes = "\n".getBytes();
-
-                File dbLoadFile = new File(dbLoadFileStr);
-                if (dbLoadFile.exists()) {
-                    dbLoadFile.delete();
-                }
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
                 TimingLogger.start(tableName + ".insert");
@@ -322,17 +280,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     LOG.error("*** problem with data - recordid="+id,e);
                     getUtil().throwIt(e);
                 }
-
                 os.close();
-                TimingLogger.stop(tableName + ".insert.create_infile");
-                TimingLogger.start(tableName + ".insert.load_infile");
-                this.jdbcTemplate.execute(
-                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                                tableName +
-                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                        );
-                TimingLogger.stop(tableName + ".insert.load_infile");
-                TimingLogger.stop(tableName + ".insert");
+                replaceIntoTable(tableName, dbLoadFileStr);
             } catch (org.springframework.dao.DataIntegrityViolationException t2) {
                 LOG.error("****   problem with data - num="+num+" str="+str+" id="+id,t2);
                 getUtil().throwIt(t2);
@@ -355,16 +304,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 continue;
             }
             try {
+                String dbLoadFileStr = getDbLoadFileStr();
+
                 final byte[] idBytes = String.valueOf(id).getBytes();
-
-                String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-                final byte[] tabBytes = "\t".getBytes();
-                final byte[] newLineBytes = "\n".getBytes();
-
-                File dbLoadFile = new File(dbLoadFileStr);
-                if (dbLoadFile.exists()) {
-                    dbLoadFile.delete();
-                }
+                final byte[] tabBytes = getTabBytes();
+                final byte[] newLineBytes = getNewLineBytes();
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
                 TimingLogger.start(tableName + ".insert");
@@ -384,15 +328,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 }
 
                 os.close();
-                TimingLogger.stop(tableName + ".insert.create_infile");
-                TimingLogger.start(tableName + ".insert.load_infile");
-                this.jdbcTemplate.execute(
-                        "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                                tableName +
-                                " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                        );
-                TimingLogger.stop(tableName + ".insert.load_infile");
-                TimingLogger.stop(tableName + ".insert");
+                replaceIntoTable(tableName, dbLoadFileStr);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
             }
@@ -405,19 +341,15 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         final String tableName = merge_scores_table;
         TimingLogger.start("MarcAggregationServiceDAO.persistScores");
         try {
-            String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
-            final byte[] tabBytes = "\t".getBytes();
-            final byte[] newLineBytes = "\n".getBytes();
+            String dbLoadFileStr = getDbLoadFileStr();
 
-            File dbLoadFile = new File(dbLoadFileStr);
-            if (dbLoadFile.exists()) {
-                dbLoadFile.delete();
-            }
+            final byte[] tabBytes = getTabBytes();
+            final byte[] newLineBytes = getNewLineBytes();
+
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
             TimingLogger.start(tableName + ".insert");
             TimingLogger.start(tableName + ".insert.create_infile");
-            final List<Object[]> params = new ArrayList<Object[]>();
 
             if (scores instanceof TLongObjectHashMap) {
                 LOG.debug("insert: " + tableName + ".size(): " + scores.size());
@@ -444,22 +376,46 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     });
                 }
             }
-
             os.close();
-            TimingLogger.stop(tableName + ".insert.create_infile");
-            TimingLogger.start(tableName + ".insert.load_infile");
-            this.jdbcTemplate.execute(
-                    "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
-                            tableName +
-                            " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
-                    );
-            TimingLogger.stop(tableName + ".insert.load_infile");
-            TimingLogger.stop(tableName + ".insert");
+            replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
             getUtil().throwIt(t);
         } finally {
             TimingLogger.stop("MarcAggregationServiceDAO.persistScores");
         }
+    }
+
+    protected static byte[] getTabBytes() {
+        return "\t".getBytes();
+    }
+
+    protected static byte[] getNewLineBytes() {
+        return "\n".getBytes();
+    }
+
+    // not only does it create the string but it has a side effect - it creates a file from the string,
+    // checks for its existence and deletes it if it finds it.
+    protected String getDbLoadFileStr() {
+        String dbLoadFileStr =
+        (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+
+        File dbLoadFile = new File(dbLoadFileStr);
+        if (dbLoadFile.exists()) {
+            dbLoadFile.delete();
+        }
+        return dbLoadFileStr;
+    }
+
+    protected void replaceIntoTable(String tableName, String dbLoadFileStr) {
+        TimingLogger.stop(tableName + ".insert.create_infile");
+        TimingLogger.start(tableName + ".insert.load_infile");
+        this.jdbcTemplate.execute(
+                "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                        tableName +
+                        " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                );
+        TimingLogger.stop(tableName + ".insert.load_infile");
+        TimingLogger.stop(tableName + ".insert");
     }
 
     public RecordOfSourceData getScoreData(Long num) {

@@ -7,6 +7,10 @@ import xc.mst.repo.Repository;
 
 
     /**
+     * This class is used as the key for a TreeMap so that RecordOfSourceData can be sorted from most desirable to least desirable.
+     *       // in MarcAggregationService:
+     *       TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap
+     *
      * assumptions - invalid class state of leader_byte17_wt_en == false && bigger_record_wt_en == false caught before now.
      * BUT, we'll still throw an exception if it is encountered here.
      *
