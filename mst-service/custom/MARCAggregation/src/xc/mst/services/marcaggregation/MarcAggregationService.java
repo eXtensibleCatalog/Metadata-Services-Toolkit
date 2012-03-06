@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
@@ -49,7 +50,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, FieldMatcher> matcherMap = null;
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
     protected MarcAggregationServiceDAO masDAO = null;
-    protected List<Set<Long>> masMatchSetList = null;
+    protected List<TreeSet<Long>> masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
     private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
@@ -109,7 +110,7 @@ public class MarcAggregationService extends GenericMetadataService {
         if (this.masDAO == null) {  // this was really an initial unit test
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
-        masMatchSetList = new ArrayList<Set<Long>>();
+        masMatchSetList = new ArrayList<TreeSet<Long>>();
         scores = new TLongObjectHashMap<RecordOfSourceData>();
     }
 
@@ -132,7 +133,7 @@ public class MarcAggregationService extends GenericMetadataService {
     // this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
     // started off from looking at existing merged stuff in the database.  Based on the current record
     // that comes in, see what it matches, and go from there.
-    public List<Set<Long>> getCurrentMatchSetList() {
+    public List<TreeSet<Long>> getCurrentMatchSetList() {
         return masMatchSetList;
     }
 
@@ -142,7 +143,7 @@ public class MarcAggregationService extends GenericMetadataService {
     //
     // disjoint-set data structure?
     //
-    private List<Set<Long>> addToMatchSetList(Set<Long> matchset,  final List<Set<Long>> origMasMatchSetList) {
+    private List<TreeSet<Long>> addToMatchSetList(TreeSet<Long> matchset,  final List<TreeSet<Long>> origMasMatchSetList) {
         if (matchset==null) {
             return origMasMatchSetList;
         }
@@ -151,11 +152,11 @@ public class MarcAggregationService extends GenericMetadataService {
         }
 
         LOG.debug("** addToMatchSetList, matchset length="+matchset.size()+" TOTAL matchset size ="+origMasMatchSetList.size());
-        List<Set<Long>> newMasMatchSetList = new ArrayList<Set<Long>>();
+        List<TreeSet<Long>> newMasMatchSetList = new ArrayList<TreeSet<Long>>();
         newMasMatchSetList.addAll(origMasMatchSetList);
 
         boolean added = false;
-        for (Set<Long> set: origMasMatchSetList) {
+        for (TreeSet<Long> set: origMasMatchSetList) {
             for (Long number: matchset) {
                 if (set.contains(number)) {
                     newMasMatchSetList.remove(set);
@@ -221,7 +222,7 @@ public class MarcAggregationService extends GenericMetadataService {
         //
         // evaluate match sets here?
         LOG.info("** START processComplete!");
-        List<Set<Long>> matches = getCurrentMatchSetList();
+        List<TreeSet<Long>> matches = getCurrentMatchSetList();
         if (matches != null) {
             //TODO maybe change this to 'debug' vs. 'info' at some point.
             LOG.info("** processComplete, matchset length="+matches.size());
@@ -247,7 +248,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-    private void merge(List<Set<Long>> matches) {
+    private void merge(List<TreeSet<Long>> matches) {
         for (Set<Long> set: matches) {
             Long recordOfSource = determineRecordOfSource(set);
             LOG.info("**** Record of Source == "+recordOfSource);
@@ -350,7 +351,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 // maybe this will come into play with rules that have parts that are alike...
                 Set<Long> previouslyMatchedRecordIds = null;
 
-                Set<Long> matchedRecordIds = new HashSet<Long>();
+                TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
                     MatchRuleIfc matchRule = me.getValue();

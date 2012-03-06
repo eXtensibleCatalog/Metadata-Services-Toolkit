@@ -179,7 +179,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 getUtil().throwIt(t);
             }
         }
-
         TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
     }
 

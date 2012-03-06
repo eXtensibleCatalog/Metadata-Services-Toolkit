@@ -2,16 +2,12 @@ package xc.mst.services.marcaggregation.test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 public class DedupTest extends MatchRulesTest {
 
     private static final Logger LOG = Logger.getLogger(DedupTest.class);
-
-
 
     protected void setupMatcherExpectations() {
         //load expected number of records for each matcher.
@@ -48,20 +44,34 @@ public class DedupTest extends MatchRulesTest {
         expectedMatchRecords.put  ("SystemControlNumberMatcher", 28);
 
 
-        // there are many matches, large match sets, so may need to come up with a different way to express this.
         /*
-{5,14,35,54,75,100,117,179,240,267,326}
-{22,60,89,104,125,154,191,222,248,308,312,333}
-{56,58,82,121,141,164,185,211,243,275,329}
-{12,73,98,115,177,209,264,324}
-{31,68,111,134,173,238,257,320}
-{3,27,50,64,96,109,162,169,203,236,253,318}
-{1,25,48,94,107,167,197,234,251,316}
-         */
-    }
+ rule 2 matchsets?:
+- *** Matchset: {62, 160, 201, }
+- *** Matchset: {10, 29, 52, 66, 132, 171, 205, 255, }
+- *** Matchset: {33, 71, 113, 137, 175, 207, 262, }
 
-    // there are many matches, large match sets, so may need to come up with a different way to express this.
-    protected void checkNumberMatchedResults(Map<Long,Set<Long>> results, int goal) {}
+ 035 matchsets?:
+- *** Matchset: {1, 25, 48, 94, 107, 167, 197, 234, 251, 316, }
+- *** Matchset: {3, 27, 50, 64, 96, 109, 162, 169, 203, 236, 253, 318, }
+- *** Matchset: {31, 68, 111, 134, 173, 238, 257, 320, }
+- *** Matchset: {12, 73, 98, 115, 177, 209, 264, 324, }
+- *** Matchset: {5, 14, 35, 54, 75, 100, 117, 179, 240, 267, 326, }
+- *** Matchset: {56, 58, 82, 121, 141, 164, 185, 211, 243, 275, 329, }
+- *** Matchset: {22, 60, 89, 104, 125, 154, 191, 222, 248, 308, 312, 333, }
+         */
+
+        expectedResults.add(getExpectedMatchSet(new long[]{5,14,35,54,75,100,117,179,240,267,326}));
+        expectedResults.add(getExpectedMatchSet(new long[]{22,60,89,104,125,154,191,222,248,308,312,333}));
+        expectedResults.add(getExpectedMatchSet(new long[]{56,58,82,121,141,164,185,211,243,275,329}));
+        expectedResults.add(getExpectedMatchSet(new long[]{12,73,98,115,177,209,264,324}));
+        expectedResults.add(getExpectedMatchSet(new long[]{31,68,111,134,173,238,257,320}));
+        expectedResults.add(getExpectedMatchSet(new long[]{3,27,50,64,96,109,162,169,203,236,253,318}));
+        expectedResults.add(getExpectedMatchSet(new long[]{1,25,48,94,107,167,197,234,251,316}));
+
+        expectedResults.add(getExpectedMatchSet(new long[]{62, 160, 201}));
+        expectedResults.add(getExpectedMatchSet(new long[]{10, 29, 52, 66, 132, 171, 205, 255}));
+        expectedResults.add(getExpectedMatchSet(new long[]{33, 71, 113, 137, 175, 207, 262}));
+    }
 
     public List<String> getFolders() {
         List<String> fileStrs = new ArrayList<String>();
@@ -69,18 +79,7 @@ public class DedupTest extends MatchRulesTest {
         return fileStrs;
     }
 
-    //TODO need to figure out the right number!
-    protected int getNumberMatchedResultsGoal() {
-        return 0;
-    }
-
-    protected void reportFailure(String result) {
-        //eventually we'll just throw a  runtime exception, and won't need to override this.
-        LOG.info(result);
-    }
-
-    protected void reportFailure(Exception e) {
-        //eventually we'll just throw a  runtime exception, and won't need to override this.
-        LOG.info(e);
+    protected String getTestName() {
+        return "DedupTest";
     }
 }
