@@ -11,7 +11,6 @@ package xc.mst.services.marcaggregation.test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
@@ -101,7 +100,7 @@ public class MatchRulesTest extends MatcherTest {
             System.out.println("****START "+getTestName() +" *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            List<Set<Long>> results = getRecordsAndAddToMem(providerRepo);
+            List<TreeSet<Long>> results = getRecordsAndAddToMem(providerRepo);
             checkNumberMatchedResults(results, expectedResults);
             LOG.info("MatchRulesTest:ensureMatch results size =" + results.size());
 

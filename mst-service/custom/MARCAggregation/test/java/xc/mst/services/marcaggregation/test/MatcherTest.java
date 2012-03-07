@@ -112,7 +112,7 @@ public class MatcherTest extends MASBaseTest {
             System.out.println("****START MatcherTest *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            List<Set<Long>> results = getRecordsAndAddToMem(providerRepo);
+            List<TreeSet<Long>> results = getRecordsAndAddToMem(providerRepo);
             checkNumberMatchedResults(results, expectedResults);
 
             //after parsing all the records, verify the counts are what is expected for our particular record set.
@@ -155,9 +155,9 @@ public class MatcherTest extends MASBaseTest {
     // check whether we got the matches we expected for a record.  Note this test is order dependent, i.e. we expect the records
     // to come in in a certain order, we control this, so we will achieve it.  This is for test purposes only, to prove we get
     // the matches we expect for a certain record when this order is maintained.
-    protected void checkNumberMatchedResults(List<Set<Long>> results, List<Set<Long>> expectedResults) {
+    protected void checkNumberMatchedResults(List<TreeSet<Long>> results, List<Set<Long>> expectedResults) {
         try {
-            for (Set<Long> set: results) {
+            for (TreeSet<Long> set: results) {
                 if (!expectedResults.contains(set)) {
                     printExpectedVsActualMatchSets(results, expectedResults);
                     reportFailure("could not find given match set within expected match sets! "+set);
@@ -185,7 +185,7 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
-    protected void printExpectedVsActualMatchSets(List<Set<Long>> results, List<Set<Long>> expectedResults) {
+    protected void printExpectedVsActualMatchSets(List<TreeSet<Long>> results, List<Set<Long>> expectedResults) {
         for (Set<Long> set: results) {
             StringBuilder sb = new StringBuilder("***Actual Matchset: {");
             for (Long num: set) {
@@ -228,19 +228,16 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
-    protected List<Set<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
+
+
+    protected List<TreeSet<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
-        List<Set<Long>> overall = new ArrayList<Set<Long>>();
         for (Record r : records) {
             Set<Long> set = process((InputRecord) r);
             if (set.size()>0) {
-                if (!overall.contains(set)) {
-                    overall.add(set);
-                }
             }
         }
-        LOG.info("* done *");
-        return overall;
+        return masMatchSetList;
     }
 
     public Set<Long> process(InputRecord r) {
@@ -321,17 +318,23 @@ public class MatcherTest extends MASBaseTest {
         }
 
         LOG.debug("** addToMatchSetList, matchset length="+matchset.size()+" TOTAL matchset size ="+origMasMatchSetList.size());
-        ArrayList<TreeSet<Long>> newMasMatchSetList = new ArrayList<TreeSet<Long>>();
+        List<TreeSet<Long>> newMasMatchSetList = new ArrayList<TreeSet<Long>>();
         newMasMatchSetList.addAll(origMasMatchSetList);
 
         boolean added = false;
         for (TreeSet<Long> set: origMasMatchSetList) {
             for (Long number: matchset) {
                 if (set.contains(number)) {
-                    newMasMatchSetList.remove(set);
-                    set.addAll(matchset);
-                    newMasMatchSetList.add(set);
-                    added = true;
+                    if (!set.containsAll(matchset)) {
+                        newMasMatchSetList.remove(set);
+                        set.addAll(matchset);
+                        newMasMatchSetList.add(set);
+                        LOG.debug("addToMatchSetList, post-merge!  set.contains("+number+") merged newMasMatchSetList set="+set);
+                    }
+                    else {
+                        LOG.debug("addToMatchSetList, will not add in: "+matchset);
+                    }
+                    added = true;  // this flag means that we don't want this set added to the big list below
                     break;   // get you out of THIS set, but still must check the others.
                 }
             }
@@ -341,6 +344,7 @@ public class MatcherTest extends MASBaseTest {
         // of your set, you must add your set explicitly.
         //
         if (!added) {
+            LOG.debug("must add in: "+matchset);
             newMasMatchSetList.add(matchset);
         }
         LOG.debug("** addToMatchSetList, NEW TOTAL matchset size ="+newMasMatchSetList.size());

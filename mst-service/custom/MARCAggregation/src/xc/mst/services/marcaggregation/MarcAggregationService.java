@@ -11,7 +11,6 @@ package xc.mst.services.marcaggregation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -159,10 +158,16 @@ public class MarcAggregationService extends GenericMetadataService {
         for (TreeSet<Long> set: origMasMatchSetList) {
             for (Long number: matchset) {
                 if (set.contains(number)) {
-                    newMasMatchSetList.remove(set);
-                    set.addAll(matchset);
-                    newMasMatchSetList.add(set);
-                    added = true;
+                    if (!set.containsAll(matchset)) {
+                        newMasMatchSetList.remove(set);
+                        set.addAll(matchset);
+                        newMasMatchSetList.add(set);
+                        LOG.debug("addToMatchSetList, post-merge!  set.contains("+number+") merged newMasMatchSetList set="+set);
+                    }
+                    else {
+                        LOG.debug("addToMatchSetList, will not add in: "+matchset);
+                    }
+                    added = true;  // this flag means that we don't want this set added to the big list below
                     break;   // get you out of THIS set, but still must check the others.
                 }
             }
@@ -172,10 +177,12 @@ public class MarcAggregationService extends GenericMetadataService {
         // of your set, you must add your set explicitly.
         //
         if (!added) {
+            LOG.debug("must add in: "+matchset);
             newMasMatchSetList.add(matchset);
         }
         LOG.debug("** addToMatchSetList, NEW TOTAL matchset size ="+newMasMatchSetList.size());
         return newMasMatchSetList;
+
     }
 
     private List<String> getConfigFileValues(String name) {
@@ -298,7 +305,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 //use the data already in memory.
                 source = scores.get(num);
             }
-            LOG.info("Source data for id: "+num+" char:"+source.leaderByte17+": "+" size="+source.size);
+            LOG.debug("Source data for id: "+num+" char:"+source.leaderByte17+": "+" size="+source.size);
 
             // use leaderVals:
             // List<Character> leaderVals
