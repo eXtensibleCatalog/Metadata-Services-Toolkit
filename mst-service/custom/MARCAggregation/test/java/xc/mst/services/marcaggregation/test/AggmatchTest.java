@@ -57,20 +57,20 @@ public class AggmatchTest extends MatchRulesTest {
 
         // 2c
         expectedResults.add(getExpectedMatchSet(new long[]{9,10}));
+
+        // 2a
+        expectedResults.add(getExpectedMatchSet(new long[]{13,20}));
+
+        // rule 1
+        expectedResults.add(getExpectedMatchSet(new long[]{18,19}));
+        expectedResults.add(getExpectedMatchSet(new long[]{25,26}));
+
     }
 
     public List<String> getFolders() {
         List<String> fileStrs = new ArrayList<String>();
         fileStrs.add("aggmatch_norm");
         return fileStrs;
-    }
-
-    protected void reportFailure(String result) {
-        LOG.info(result);
-    }
-
-   protected void reportFailure(Exception e) {
-        LOG.info(e);
     }
     protected void testDAO() {}
 }
