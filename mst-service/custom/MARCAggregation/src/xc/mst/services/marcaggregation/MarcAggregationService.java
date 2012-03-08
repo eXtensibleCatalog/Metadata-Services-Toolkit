@@ -26,6 +26,8 @@ import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.constants.Status;
+import xc.mst.dao.DataException;
+import xc.mst.dao.DatabaseConfigException;
 import xc.mst.repo.Repository;
 import xc.mst.services.ServiceValidationException;
 import xc.mst.services.impl.service.GenericMetadataService;
@@ -52,6 +54,11 @@ public class MarcAggregationService extends GenericMetadataService {
     protected List<TreeSet<Long>> masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
+    /**
+     * The output format (marcxml) for records processed from this service
+     */
+    protected Format marc21 = null;
+
     private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
     private List<Character> leaderVals = null;
     private Repository inputRepo = null;
@@ -61,6 +68,61 @@ public class MarcAggregationService extends GenericMetadataService {
     public void setup() {
         LOG.debug("MAS:  setup()");
 
+        try {
+            marc21 = getFormatService().getFormatByName("marc21");
+        } catch (DatabaseConfigException e) {
+            LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+        } catch (Exception e2) {
+            LOG.error("Problem with init.", e2);
+        }
+
+        setupRecordOfSource();
+        try {
+            validateService();
+        } catch (ServiceValidationException e) {
+
+            // Update database with status of service
+            service.setStatus(Status.ERROR);
+            LOG.error("Error validating service:", e);
+            LogWriter.addInfo(service.getServicesLogFileName(), "** Error validating service - service will not run " + e.getMessage() + " **");
+            sendReportEmail("Error validating service: " + e.getMessage());
+
+            // in case the WorkerThread code addition causes issues, simply uncomment the below:
+            // throw new RuntimeException(e);
+        }
+        setupMatchers();
+        setupMatchRules();
+    }
+
+    protected void setupMatchRules() {
+        this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
+        List<String> mrs = getConfigFileValues("match.rules.value");
+        for (String mrStr : mrs) {
+            MatchRuleIfc mr = (MatchRuleIfc) config.getBean(mrStr + "MatchRule");
+            matchRuleMap.put(mrStr, mr);
+        }
+        if (this.masDAO == null) {  // this was really an initial unit test
+            LOG.error("***  ERROR, DAO did not get initialized by Spring!");
+        }
+        masMatchSetList = new ArrayList<TreeSet<Long>>();
+        scores = new TLongObjectHashMap<RecordOfSourceData>();
+    }
+
+    protected void setupMatchers() {
+        this.matcherMap = new HashMap<String, FieldMatcher>();
+        List<String> mps = getConfigFileValues("matchers.value");
+        for (String mp : mps) {
+            final String n = mp + "Matcher";
+            FieldMatcher m = (FieldMatcher) config.getBean(n);
+            m.setName(n);
+            m.setMarcAggregationService(this);
+            matcherMap.put(mp, m);
+            m.load();
+        }
+    }
+
+    protected void setupRecordOfSource() {
+        // start, record of source setup code
         // determine record of source leader character priority, byte 17
         leaderVals = new ArrayList<Character>();
         List<String> _leaderVals = getConfigFileValues("leader.order");
@@ -75,42 +137,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         leader_byte17_weighting_enabled= config.getPropertyAsBoolean("leader_byte17_weighting_enabled", false);
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
-
-        try {
-            validateService();
-        } catch (ServiceValidationException e) {
-
-            // Update database with status of service
-            service.setStatus(Status.ERROR);
-            LOG.error("Error validating service:", e);
-            LogWriter.addInfo(service.getServicesLogFileName(), "** Error validating service - service will not run " + e.getMessage() + " **");
-            sendReportEmail("Error validating service: " + e.getMessage());
-
-            // in case the WorkerThread code addition causes issues, simply uncomment the below:
-            // throw new RuntimeException(e);
-        }
-
-        this.matcherMap = new HashMap<String, FieldMatcher>();
-        List<String> mps = getConfigFileValues("matchers.value");
-        for (String mp : mps) {
-            final String n = mp + "Matcher";
-            FieldMatcher m = (FieldMatcher) config.getBean(n);
-            m.setName(n);
-            m.setMarcAggregationService(this);
-            matcherMap.put(mp, m);
-            m.load();
-        }
-        this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
-        List<String> mrs = getConfigFileValues("match.rules.value");
-        for (String mrStr : mrs) {
-            MatchRuleIfc mr = (MatchRuleIfc) config.getBean(mrStr + "MatchRule");
-            matchRuleMap.put(mrStr, mr);
-        }
-        if (this.masDAO == null) {  // this was really an initial unit test
-            LOG.error("***  ERROR, DAO did not get initialized by Spring!");
-        }
-        masMatchSetList = new ArrayList<TreeSet<Long>>();
-        scores = new TLongObjectHashMap<RecordOfSourceData>();
+        // end, record of source setup code
     }
 
     @Override
@@ -221,46 +248,24 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-
-    public void processComplete() {
-        //
-        // for performance may want to do this:
-        //        .createIndiciesIfNecessary(name);
-        //
-        // evaluate match sets here?
-        LOG.info("** START processComplete!");
-        List<TreeSet<Long>> matches = getCurrentMatchSetList();
-        if (matches != null) {
-            //TODO maybe change this to 'debug' vs. 'info' at some point.
-            LOG.info("** processComplete, matchset length="+matches.size());
-
-            for (Set<Long> set: matches) {
-                StringBuilder sb = new StringBuilder("*** Matchset: {");
-                for (Long num: set) {
-                    sb.append(num+", ");
-                }
-                sb.append("}");
-                //TODO change this to 'debug' vs. 'info' at some point.
-                LOG.info(sb.toString());
-            }
-
-            // TODO
-            // important - this is not going to totally nail it for the long term
-            // need to consider records received during THIS run of the service, and
-            // there status, i.e. if if goes to deleted state and is part of a merge
-            // set.  Future solution still in the works  - could be customProcessQueue
-            // and if that is not enough save more to the current match set list?
-            //
-            merge(matches);
-        }
-    }
-
-    private void merge(List<TreeSet<Long>> matches) {
+    //createStatic => strip 001/003/035/004/014,  create 035, save 035 (as dynamic)
+    //   returns static xml + saved dynamic content (included or not?)
+    //
+    //getDynamic => create 035 from 001/003, save existing 035?, save existing 010,020,022?
+    //   returns dynamic content
+    //
+    // dynamic:  (create class?)
+    //record_id ->  {{035$a list}, {010 list}, etc.}
+    //
+    private void merge(List<TreeSet<Long>> matches, Repository repo) {
         for (Set<Long> set: matches) {
             Long recordOfSource = determineRecordOfSource(set);
             LOG.info("**** Record of Source == "+recordOfSource);
 
+            //TODO going to need an output record id!
             for (Long num: set) {
+                // need to pass to a method that gets static content and dynamic content and builds a list of it.
+                repo.getRecord(num).getOaiXml();
             }
         }
     }
@@ -316,6 +321,49 @@ public class MarcAggregationService extends GenericMetadataService {
         return sortedMap.firstKey().recordId;
     }
 
+    public void processComplete(Repository repo) {
+        //
+        // for performance may want to do this:
+        //        .createIndiciesIfNecessary(name);
+        //
+        // evaluate match sets here?
+        LOG.info("** START processComplete!");
+
+        // start to do the real work of the service.  Probably belongs
+        // up higher than processCompleted method!!
+        //
+        List<TreeSet<Long>> matches = getCurrentMatchSetList();
+        if (matches != null) {
+            //TODO maybe change this to 'debug' vs. 'info' at some point.
+            LOG.info("** processComplete, matchset length="+matches.size());
+
+            for (Set<Long> set: matches) {
+                StringBuilder sb = new StringBuilder("*** Matchset: {");
+                for (Long num: set) {
+                    sb.append(num+", ");
+                }
+                sb.append("}");
+                //TODO change this to 'debug' vs. 'info' at some point.
+                LOG.info(sb.toString());
+            }
+
+            // TODO
+            // important - this is not going to totally nail it for the long term
+            // need to consider records received during THIS run of the service, and
+            // there status, i.e. if if goes to deleted state and is part of a merge
+            // set.  Future solution still in the works  - could be customProcessQueue
+            // and if that is not enough save more to the current match set list?
+            //
+            // TODO
+            // Do you need to build lists of records to create (part of merge set & not)
+            // and records that will
+            // not being created because they are being merged?
+            //
+            merge(matches, repo);
+        }
+        //end real work of the service (getting matches and merging)
+    }
+
     // note the 'well' named class Set collides with java.util.Set
     //
     // overriding this so you can save the repo/start over?
@@ -324,7 +372,7 @@ public class MarcAggregationService extends GenericMetadataService {
         LOG.info("MarcAggregationService, processing repo "+ repo.getName()+" started.");
         try {
             super.process(repo, inputFormat, inputSet, outputSet);
-            processComplete();
+            processComplete(repo);
         } catch (Exception e) {
             LOG.error("MarcAggregationService, processing repo "+ repo.getName()+" failed.", e);
         }
@@ -334,7 +382,85 @@ public class MarcAggregationService extends GenericMetadataService {
         return this.inputRepo;
     }
 
+    /**
+     *
+     * @param record the record of source
+     * @return
+     */
+    private List<OutputRecord> createNewRecord(InputRecord record, String type) {
+        TimingLogger.start("new");
+//        if (LOG.isDebugEnabled())
+//            LOG.debug("  ");
+
+        // TODO normalization service shows creating/adding errors but this seems unused.
+
+        // The list of records resulting from processing the incoming record
+        ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
+
+        // Create the normalized record
+        OutputRecord oRecord = getRecordService().createRecord();
+// TODO
+//        normalizedRecord.setOaiXmlEl(/* get the merged content */);
+        oRecord.setFormat(marc21);
+
+        // Insert the new (possibly) aggregated record
+
+        // The setSpec and set Description of the "type" set we should add the normalized record to
+        String setSpec = null;
+        String setDescription = null;
+        String setName = null;
+
+        // TODO  see normalization service
+        // Setup the setSpec and description based on the leader 06 (?)
+
+        // Setup the setSpec and description based on the leader 06
+        // TODO is this right?
+        if (type.equals("b")) {
+            setSpec = "MARCXMLbibliographic";
+            setName = "MARCXML Bibliographic Records";
+            setDescription = "A set of all MARCXML Bibliographic records in the repository.";
+        } else if (type.equals("h")) {
+            setSpec = "MARCXMLholding";
+            setName = "MARCXML Holding Records";
+            setDescription = "A set of all MARCXML Holding records in the repository.";
+
+        } // TODO what to do in the case of records not of about types?  Create a 1:1 output record?
+
+        if (setSpec != null) {
+            try {
+                // Get the set for the provider
+                TimingLogger.start("getSetBySetSpec");
+                xc.mst.bo.provider.Set recordTypeSet = getSetService().getSetBySetSpec(setSpec);
+                TimingLogger.stop("getSetBySetSpec");
+
+                // Add the set if it doesn't already exist
+                if (recordTypeSet == null)
+                    recordTypeSet = addSet(setSpec, setName, setDescription);
+
+                // Add the set to the record
+                oRecord.addSet(recordTypeSet);
+            } catch (DatabaseConfigException e) {
+                LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
+                e.printStackTrace();
+            } catch (DataException e) {
+                LOG.error("Error.", e);
+            }
+        }
+
+        // Add the record to the list of records resulting from processing the
+        // incoming record
+        oRecord.setType(type);
+        results.add(oRecord);
+        if (LOG.isDebugEnabled())
+            LOG.debug("Created aggregated record from record with ID " + record.getId());
+
+        TimingLogger.stop("new");
+
+        return results;
+    }
+
     public List<OutputRecord> process(InputRecord r) {
+        String type = null;
         try {
             LOG.debug("MAS:  process record+"+r.getId());
 
@@ -345,6 +471,25 @@ public class MarcAggregationService extends GenericMetadataService {
                 final char leaderByte17 = smr.getLeader().charAt(17);
                 final int rSize = r.getOaiXml().getBytes().length;
                 scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+
+                // Get the Leader 06. This will allow us to determine the record's type
+                char leader06 = smr.getLeader().charAt(6);
+
+                // check if the record is a bibliographic record
+                if ("abcdefghijkmnoprt".contains("" + leader06)) {
+//                    TimingLogger.start("bibsteps");
+                    type = "b";
+                }
+                // check if the record is a holding record
+                if ("uvxy".contains("" + leader06)) {
+//                    TimingLogger.start("holdsteps");
+                    type = "h";
+//                    ((Record) record).setType(type);
+                }
+                //TODO what about authority and any other type?  pass it through or not?
+                if (leader06 == 'z') {
+                    // authority
+                }
 
                 MatchSet ms = new MatchSet(smr);
                 for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
