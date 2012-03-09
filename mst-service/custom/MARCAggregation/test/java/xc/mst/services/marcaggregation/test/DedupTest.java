@@ -41,7 +41,7 @@ public class DedupTest extends MatchRulesTest {
         expectedMatchRecords.put  ("LccnMatcher", 8);
 
         expectedMatchRecordIds.put("SystemControlNumberMatcher", 92); //TODO confirm both of these
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 28);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 27);
 
 
         /*

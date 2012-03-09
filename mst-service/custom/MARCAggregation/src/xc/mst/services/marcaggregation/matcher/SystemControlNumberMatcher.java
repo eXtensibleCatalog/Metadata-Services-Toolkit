@@ -34,6 +34,8 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
  * E.g. (OCoLC)ocm12345 should match with (OCoLC)12345 but NOT with (NRU)12345.
  * TODO do we need to save original format, i.e. (OCoLC)ocm12345 or can we just save (OCoLC)12345 ?
  *
+ * 3/9/12 This just in, ignore the field if there is no prefix.
+ *
  * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
  *
  * 035$a
@@ -154,9 +156,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
-                String goods = getMapId(subfield);
                 String prefix = getPrefixId(subfield);
-                if (prefix.equals(oclc)) {
+                if (prefix.equals("")) {
+                    // must have a prefix to use as a match point.
+                    break;
+                }
+                else if (prefix.equals(oclc)) {
                     if (haveSeenOCoLC) {
                         LOG.error("ERROR: 035$a prefix (OCoLC) seen > 1 time for recordId: " + r.recordId);
 //
@@ -168,6 +173,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     }
                     haveSeenOCoLC = true;
                 }
+                String goods = getMapId(subfield);
                 List<String[]> goodsList = inputId2scn.get(id);
                 final String[] goodsArray = new String[] {goods, subfield};  // its a pair of strings
                 if (goodsList == null || goodsList.size() == 0) {

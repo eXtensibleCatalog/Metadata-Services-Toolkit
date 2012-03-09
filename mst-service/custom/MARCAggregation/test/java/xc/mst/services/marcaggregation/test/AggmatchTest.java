@@ -47,7 +47,7 @@ public class AggmatchTest extends MatchRulesTest {
 
         // confirmed, note in this file the 035's are frequently near the end of the record.
         expectedMatchRecordIds.put("SystemControlNumberMatcher", 28);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 49);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 43);  // reduced from 49 because don't add them if no prefix.
 
         // 2a
         expectedResults.add(getExpectedMatchSet(new long[]{1,2}));
@@ -63,8 +63,6 @@ public class AggmatchTest extends MatchRulesTest {
 
         // rule 1
         expectedResults.add(getExpectedMatchSet(new long[]{18,19}));
-        expectedResults.add(getExpectedMatchSet(new long[]{25,26}));
-
     }
 
     public List<String> getFolders() {

@@ -89,8 +89,8 @@ public class MatcherTest extends MASBaseTest {
         expectedMatchRecordIds.put("LccnMatcher", 56);
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 118);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 151);
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 67);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 67);
     }
 
     public List<String> getFolders() {

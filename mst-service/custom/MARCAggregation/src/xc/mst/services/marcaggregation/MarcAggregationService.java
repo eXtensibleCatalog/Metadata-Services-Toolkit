@@ -11,6 +11,7 @@ package xc.mst.services.marcaggregation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,7 @@ import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.bo.record.marc.Field;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -251,23 +253,129 @@ public class MarcAggregationService extends GenericMetadataService {
     //createStatic => strip 001/003/035/004/014,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
-    //getDynamic => create 035 from 001/003, save existing 035?, save existing 010,020,022?
+    private void merge(List<TreeSet<Long>> matches, Repository repo) {
+        // merge each match set, 1 winning record used to pull static content,
+        // all in the set used to pull dynamic content
+        for (Set<Long> set: matches) {
+            Long recordOfSource = determineRecordOfSource(set);
+            LOG.info("**** Record of Source == "+recordOfSource);
+
+            String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
+            SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+
+            Map<Integer, HashSet<String>> dynamic = getDynamicContent(repo, set);
+            HashSet<String> dyn035 = dynamic.get(35);
+            for (String _035 : dyn035) {
+                LOG.debug("created 035: "+_035);
+            }
+
+            //TODO going to need an output record id!
+        }
+    }
+    private void removeStuff(String validFirstChars, String invalidFirstChars) {
+/*
+*/
+
+}
+
+    //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022?
     //   returns dynamic content
     //
     // dynamic:  (create class?)
     //record_id ->  {{035$a list}, {010 list}, etc.}
     //
-    private void merge(List<TreeSet<Long>> matches, Repository repo) {
-        for (Set<Long> set: matches) {
-            Long recordOfSource = determineRecordOfSource(set);
-            LOG.info("**** Record of Source == "+recordOfSource);
+    protected Map<Integer, HashSet<String>> getDynamicContent(Repository repo, Set<Long> set) {
+        Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
+        HashSet<String> _035s = new HashSet<String>();
+        for (Long num: set) {
+            // need to pass to a method that gets static content and dynamic content and builds a list of it.
+            String oai = repo.getRecord(num).getOaiXml();
+            String _035 = create035(oai);
+            if (_035 != null) {
+                _035s.add(_035);
+            }
+            _035s.addAll(getDynamicField(oai, 35, 'a'));  // add 035$a data
+        }
+        dynamic.put(35, _035s);
+        return dynamic;
+    }
 
-            //TODO going to need an output record id!
-            for (Long num: set) {
-                // need to pass to a method that gets static content and dynamic content and builds a list of it.
-                repo.getRecord(num).getOaiXml();
+    // use HashSet so there will be no duplication
+    private Collection<String> getDynamicField(String oaiXml, int fieldNum, char subfieldC) {
+        HashSet<String> _flds = new HashSet<String>();
+        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String _001 = smr.getControlField(1);
+        if (_001 != null) {
+            _001 = _001.trim();
+        }
+        else {_001="";}
+
+        List<Field> fields = smr.getDataFields(fieldNum);
+
+        for (Field field : fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, subfieldC);
+            for (String subfield : subfields) {
+                // don't want or need both of these 035$a's:
+                //
+                //   <marc:datafield ind1=" " ind2=" " tag="035">
+                //   <marc:subfield code="a">(UIUdb)2727551</marc:subfield>
+                //   </marc:datafield>
+                //
+                //   and
+                //
+                //   <marc:datafield ind1=" " ind2=" " tag="035">
+                //   <marc:subfield code="a">2727551</marc:subfield>
+                //   </marc:datafield>
+                //
+                // decision made to ignore all 035's with no prefix.
+                //
+                if (subfield != null) {
+                    if (fieldNum == 35) {
+                        if (subfield.trim().contains("(")) {
+                            _flds.add(subfield);
+                            LOG.debug("do add 035:"+subfield+"<= 001="+_001+"<=");
+                        }
+                        else {
+                            LOG.debug("do not add 035:"+subfield+"<= 001="+_001+"<=");
+                        }
+                    }
+                    else {
+                        _flds.add(subfield);
+                    }
+                }
             }
         }
+        return _flds;
+    }
+
+    /**
+     * The 001 and 003 from BOTH the Selected Record and the Non-Selected Record will be used to create separate,
+     * new 035 fields in the Output Record,
+     * with the value of the 003 (institution code) set as the prefix for the control number in $a, enclosed in parens.
+     * The number from the 001 will follow the parens without a space.
+     * @param oaiXml
+     * @return can return null, so check for it!
+     */
+    private String create035(String oaiXml) {
+        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String org = smr.getOrgCode();
+        if (org != null) {
+            org = org.trim();
+        }
+        else {
+            LOG.debug("no org code found in "+smr.recordId);
+            return null;
+        }
+        String _001 = smr.getControlField(1);
+        if (_001 != null) {
+            _001 = _001.trim();
+        }
+        else {
+            LOG.debug("no _001 code found in "+smr.recordId);
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("(").append(org).append(")").append(_001);
+        return sb.toString();
     }
 
     /**

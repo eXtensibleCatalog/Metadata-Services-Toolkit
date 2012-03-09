@@ -64,11 +64,10 @@ public class MatchRulesTest extends MatcherTest {
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
         // 035$a
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 127);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 158);
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 75);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 74);
 
         expectedResults.add(getExpectedMatchSet(new long[]{176,178}));
-        expectedResults.add(getExpectedMatchSet(new long[]{3,179}));
         expectedResults.add(getExpectedMatchSet(new long[]{40,180}));
         expectedResults.add(getExpectedMatchSet(new long[]{44,181}));
         expectedResults.add(getExpectedMatchSet(new long[]{5,183}));
