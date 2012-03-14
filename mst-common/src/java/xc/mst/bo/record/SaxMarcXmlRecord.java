@@ -25,7 +25,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
     private static final Logger LOG = Logger.getLogger(SaxMarcXmlRecord.class);
     private static final List<Field> EMPTY_ARRAY_LIST = new ArrayList<Field>();
 
-    private static XMLReader xmlReader = null;
+    protected static XMLReader xmlReader = null;
 
     private static final String LEADER = "leader";
     private static final String CONTROL_FIELD = "controlfield";

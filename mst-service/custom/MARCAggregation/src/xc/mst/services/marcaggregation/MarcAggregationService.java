@@ -8,6 +8,11 @@
  */
 package xc.mst.services.marcaggregation;
 
+import gnu.trove.TLongObjectHashMap;
+
+import java.io.FileInputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,8 +23,15 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
+import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.InputRecord;
@@ -40,8 +52,7 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-
-import gnu.trove.TLongObjectHashMap;
+import xc.mst.utils.XmlHelper;
 
 /**
  * @author Benjamin D. Anderson
@@ -56,6 +67,8 @@ public class MarcAggregationService extends GenericMetadataService {
     protected List<TreeSet<Long>> masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
+    protected XmlHelper xmlHelper ;//= new XmlHelper();
+
     /**
      * The output format (marcxml) for records processed from this service
      */
@@ -66,6 +79,8 @@ public class MarcAggregationService extends GenericMetadataService {
     private Repository inputRepo = null;
     private boolean leader_byte17_weighting_enabled;
     private boolean bigger_record_weighting_enabled;
+
+    private static final String STATIC_TRANSFORM = "createStatic.xsl";
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -261,22 +276,50 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.info("**** Record of Source == "+recordOfSource);
 
             String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
-            SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+            //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
             Map<Integer, HashSet<String>> dynamic = getDynamicContent(repo, set);
             HashSet<String> dyn035 = dynamic.get(35);
             for (String _035 : dyn035) {
                 LOG.debug("created 035: "+_035);
             }
-
+            oaiXml = getStatic(oaiXml);
+LOG.info("STATIC-"+recordOfSource);
+LOG.info(oaiXml);
             //TODO going to need an output record id!
         }
     }
-    private void removeStuff(String validFirstChars, String invalidFirstChars) {
-/*
-*/
 
-}
+    private String getStatic(String oaiXml) {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
+        Transformer transformer = null;
+        String xslFileName = new String(getTransformForStaticFilename());
+        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
+        try {
+            transformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+
+            // Use the parser as a SAX source for input
+            MASSaxMarcXmlRecord record = new MASSaxMarcXmlRecord(oaiXml);
+            InputSource inputSource = new InputSource(new StringReader(oaiXml));
+
+            SAXSource source = new SAXSource(record.getXmlReader(), inputSource);
+            StringWriter sw = new StringWriter();
+            StreamResult result = new StreamResult(sw);
+            transformer.transform(source, result);
+
+            oaiXml = sw.getBuffer().toString();
+            return  oaiXml;
+        } catch (Throwable t) {
+            LOG.error("", t);
+        }
+        return  oaiXml;
+    }
+
+    protected String getTransformForStaticFilename() {
+        return STATIC_TRANSFORM;
+    }
+
 
     //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022?
     //   returns dynamic content
