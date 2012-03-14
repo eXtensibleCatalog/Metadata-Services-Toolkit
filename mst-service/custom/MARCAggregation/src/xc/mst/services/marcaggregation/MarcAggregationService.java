@@ -25,6 +25,7 @@ import java.util.TreeSet;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -52,7 +53,6 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.XmlHelper;
 
 /**
  * @author Benjamin D. Anderson
@@ -67,7 +67,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected List<TreeSet<Long>> masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
-    protected XmlHelper xmlHelper ;//= new XmlHelper();
+//    protected final XmlHelper xmlHelper = new XmlHelper();
 
     /**
      * The output format (marcxml) for records processed from this service
@@ -82,6 +82,8 @@ public class MarcAggregationService extends GenericMetadataService {
 
     private static final String STATIC_TRANSFORM = "createStatic.xsl";
 
+    private Transformer transformer;
+
     public void setup() {
         LOG.debug("MAS:  setup()");
 
@@ -94,6 +96,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
 
         setupRecordOfSource();
+        setupStaticRecordTransformer();
         try {
             validateService();
         } catch (ServiceValidationException e) {
@@ -109,6 +112,18 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         setupMatchers();
         setupMatchRules();
+    }
+
+    protected void setupStaticRecordTransformer() throws TransformerFactoryConfigurationError {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
+        String xslFileName = new String(getTransformForStaticFilename());
+        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
+        try {
+            transformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+        } catch (Throwable t) {
+            LOG.error("", t);
+        }
     }
 
     protected void setupMatchRules() {
@@ -283,22 +298,21 @@ public class MarcAggregationService extends GenericMetadataService {
             for (String _035 : dyn035) {
                 LOG.debug("created 035: "+_035);
             }
-            oaiXml = getStatic(oaiXml);
+            oaiXml = getStaticBase(oaiXml);
 LOG.info("STATIC-"+recordOfSource);
 LOG.info(oaiXml);
             //TODO going to need an output record id!
         }
     }
 
-    private String getStatic(String oaiXml) {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-
-        Transformer transformer = null;
-        String xslFileName = new String(getTransformForStaticFilename());
-        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
+    /**
+     * transform the given xml by stripping 001's,003's & 035's
+     * using an xsl to do the transformation.
+     * @param oaiXml
+     * @return
+     */
+    private String getStaticBase(String oaiXml) {
         try {
-            transformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
-
             // Use the parser as a SAX source for input
             MASSaxMarcXmlRecord record = new MASSaxMarcXmlRecord(oaiXml);
             InputSource inputSource = new InputSource(new StringReader(oaiXml));
