@@ -205,7 +205,7 @@ IIILocationName = 0
 
 # 1 to remove 945 field if its  
 # $5 does not match organization code 
-remove945Field = 1
+remove945Field = 0
 
 #-----------------------------------------
 # Holdings Record steps 

@@ -1892,6 +1892,7 @@ public class RepositoryDAO extends BaseDAO {
                 String inOut = rs.getString("m.rec_in_out");
                 if (inOut != null) {
                     rm = new RecordMessage();
+                    rm.setId(rs.getLong("m.record_id"));
                     rm.setRecord(r);
                     rm.setInputRecord("O".equals(rs.getString("m.rec_in_out")));
                     rm.setCode(rs.getInt("m.msg_code"));
