@@ -74,15 +74,18 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     protected Format marc21 = null;
 
-    private static final Logger LOG = Logger.getLogger(MarcAggregationService.class);
     private List<Character> leaderVals = null;
-    private Repository inputRepo = null;
+    private Repository      inputRepo  = null;
+
     private boolean leader_byte17_weighting_enabled;
     private boolean bigger_record_weighting_enabled;
 
-    private static final String STATIC_TRANSFORM = "createStatic.xsl";
+    private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
+    private static final String STATIC_TRANSFORM  = "createStatic.xsl";
+    private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
 
-    private Transformer transformer;
+    private Transformer staticTransformer;
+    private Transformer holdingTransformer;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -96,7 +99,8 @@ public class MarcAggregationService extends GenericMetadataService {
         }
 
         setupRecordOfSource();
-        setupStaticRecordTransformer();
+        staticTransformer = setupTransformer(getTransformForStaticFilename());
+        holdingTransformer= setupTransformer(getTransformForHoldingFilename());
         try {
             validateService();
         } catch (ServiceValidationException e) {
@@ -114,18 +118,42 @@ public class MarcAggregationService extends GenericMetadataService {
         setupMatchRules();
     }
 
+    protected Transformer setupTransformer(String xslFileName) throws TransformerFactoryConfigurationError {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
+        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
+        try {
+            return transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+        } catch (Throwable t) {
+            LOG.error("", t);
+            throw new RuntimeException(t);
+        }
+    }
+/*
     protected void setupStaticRecordTransformer() throws TransformerFactoryConfigurationError {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
         String xslFileName = new String(getTransformForStaticFilename());
         xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
         try {
-            transformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+            staticTransformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
         } catch (Throwable t) {
             LOG.error("", t);
         }
     }
 
+    protected void setupHoldingRecordTransformer() throws TransformerFactoryConfigurationError {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+
+        String xslFileName = new String(getTransformForHoldingFilename());
+        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
+        try {
+            staticTransformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
+        } catch (Throwable t) {
+            LOG.error("", t);
+        }
+    }
+*/
     protected void setupMatchRules() {
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         List<String> mrs = getConfigFileValues("match.rules.value");
@@ -280,7 +308,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-    //createStatic => strip 001/003/035/004/014,  create 035, save 035 (as dynamic)
+    //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
     private void merge(List<TreeSet<Long>> matches, Repository repo) {
@@ -308,10 +336,31 @@ LOG.info(oaiXml);
     /**
      * transform the given xml by stripping 001's,003's & 035's
      * using an xsl to do the transformation.
+     * The 035 fields are stripped then added back in because we only want well-formed 035's with prefix.
+     * Contrast this to other keep fields that we may leave in the record of source.
+     *
      * @param oaiXml
      * @return
      */
     private String getStaticBase(String oaiXml) {
+        return getTransformedXml(oaiXml, staticTransformer);
+    }
+
+    /**
+     * transform the given xml by stripping 004's & 014's
+     * using an xsl to do the transformation.
+     *
+     *  This is in prep for adding in fields based on 004/014 later
+     *  (so need to saved that info before now! )
+     *
+     * @param oaiXml
+     * @return
+     */
+    private String getHoldingBase(String oaiXml) {
+        return getTransformedXml(oaiXml, holdingTransformer);
+    }
+
+    private String getTransformedXml(String oaiXml, Transformer transformer) {
         try {
             // Use the parser as a SAX source for input
             MASSaxMarcXmlRecord record = new MASSaxMarcXmlRecord(oaiXml);
@@ -335,11 +384,15 @@ LOG.info(oaiXml);
     }
 
 
+    protected String getTransformForHoldingFilename() {
+        return HOLDING_TRANSFORM;
+    }
+
     //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022?
     //   returns dynamic content
     //
     // dynamic:  (create class?)
-    //record_id ->  {{035$a list}, {010 list}, etc.}
+    // record_id ->  {{035$a list}, {010 list}, etc.}
     //
     protected Map<Integer, HashSet<String>> getDynamicContent(Repository repo, Set<Long> set) {
         Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
@@ -354,6 +407,27 @@ LOG.info(oaiXml);
             _035s.addAll(getDynamicField(oai, 35, 'a'));  // add 035$a data
         }
         dynamic.put(35, _035s);
+        return dynamic;
+    }
+
+    //getDynamicHoldingContent => create 904 from 004/014, save existing 035's, save existing 904?
+    //   returns content to dynamically insert into holding records
+    //
+    // dynamic:  (create class?)
+    // record_id ->  {{904 list}, etc.}
+    //
+    protected Map<Integer, HashSet<String>> getDynamicHoldingContent(Repository repo, Long num) {
+        Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
+        HashSet<String> _904s = new HashSet<String>();
+        // need to pass to a method that gets static content and dynamic content and builds a list of it.
+        String oai = repo.getRecord(num).getOaiXml();
+        String _904 = create904(oai);
+        if (_904 != null) {
+            _904s.add(_904);
+        }
+            //TODO is it correct to look for preexisting 904's?
+//////////////////            _904s.addAll(getDynamicField(oai, 904, 'a'));  // add 035$a data
+        dynamic.put(904, _904s);
         return dynamic;
     }
 
@@ -433,6 +507,29 @@ LOG.info(oaiXml);
         }
         StringBuilder sb = new StringBuilder("(").append(org).append(")").append(_001);
         return sb.toString();
+    }
+
+    /**
+     * The 001 and 003 from BOTH the Selected Record and the Non-Selected Record will be used to create separate,
+     * new 035 fields in the Output Record,
+     * with the value of the 003 (institution code) set as the prefix for the control number in $a, enclosed in parens.
+     * The number from the 001 will follow the parens without a space.
+     * @param oaiXml
+     * @return can return null, so check for it!
+     */
+    private String create904(String oaiXml) {
+        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String _004 = smr.getControlField(4);
+        if (_004 != null) {
+            _004 = _004.trim();
+        }
+        else {
+            LOG.debug("no _004 code found in "+smr.recordId);
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("").append(_004);
+        return sb.toString();
+        //TODO fix this.
     }
 
     /**
@@ -644,11 +741,13 @@ LOG.info(oaiXml);
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 //                    TimingLogger.start("bibsteps");
                     type = "b";
+                    processBib(r, smr);
                 }
                 // check if the record is a holding record
                 if ("uvxy".contains("" + leader06)) {
 //                    TimingLogger.start("holdsteps");
                     type = "h";
+                    processHolding(r, smr, inputRepo);
 //                    ((Record) record).setType(type);
                 }
                 //TODO what about authority and any other type?  pass it through or not?
@@ -656,28 +755,8 @@ LOG.info(oaiXml);
                     // authority
                 }
 
-                MatchSet ms = new MatchSet(smr);
-                for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
-                    String matchPointKey = me.getKey();
-                    FieldMatcher matcher = me.getValue();
-                    matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
-                    // possibly need/want to add all match points 1st, then look for matches.
-                    ms.addMatcher(matchPointKey, matcher);
-                }
-
-                // maybe this will come into play with rules that have parts that are alike...
-                Set<Long> previouslyMatchedRecordIds = null;
-
-                TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
-                for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
-                    String matchRuleKey = me.getKey();
-                    MatchRuleIfc matchRule = me.getValue();
-                    Set<Long> set = matchRule.determineMatches(ms);
-                    if (set !=null && !set.isEmpty()) {
-                        matchedRecordIds.addAll(set);
-                    }
-                }
-                masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+                // was here....
+//                processBib(r, smr);
 
                 // will we want to do this on a 2nd loop around all the records?
                 //
@@ -712,6 +791,47 @@ LOG.info(oaiXml);
             util.throwIt(t);
         }
         return null;
+    }
+
+    protected void processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        String oaiXml = repo.getRecord(r.getId()).getOaiXml();
+
+        Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
+        HashSet<String> dyn904 = dynamic.get(904);
+        for (String _904 : dyn904) {
+            LOG.debug("created 904: "+_904);
+        }
+        oaiXml = getHoldingBase(oaiXml);
+LOG.info("HOLDING BASE-"+r.getId());
+LOG.info(oaiXml);
+        //TODO going to need an output record id!
+    }
+
+    protected void processBib(InputRecord r, SaxMarcXmlRecord smr) {
+        MatchSet ms = new MatchSet(smr);
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            String matchPointKey = me.getKey();
+            FieldMatcher matcher = me.getValue();
+            matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
+            // possibly need/want to add all match points 1st, then look for matches.
+            ms.addMatcher(matchPointKey, matcher);
+        }
+
+        // maybe this will come into play with rules that have parts that are alike...
+        Set<Long> previouslyMatchedRecordIds = null;
+
+        TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
+        for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
+            String matchRuleKey = me.getKey();
+            MatchRuleIfc matchRule = me.getValue();
+            Set<Long> set = matchRule.determineMatches(ms);
+            if (set !=null && !set.isEmpty()) {
+                matchedRecordIds.addAll(set);
+            }
+        }
+        masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+
+        //TODO may initially merge as you go along and do that here?
     }
 
     @Override
