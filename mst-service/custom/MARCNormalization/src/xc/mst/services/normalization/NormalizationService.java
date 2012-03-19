@@ -1714,6 +1714,7 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering dedup035 normalization step.");
 
+        marcXml.stripSubfields("035", "a", null);
         marcXml.deduplicateMarcXmlField("035");
 
         return marcXml;
