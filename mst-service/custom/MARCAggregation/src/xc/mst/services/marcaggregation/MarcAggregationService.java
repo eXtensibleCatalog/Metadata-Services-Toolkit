@@ -61,18 +61,17 @@ import xc.mst.utils.TimingLogger;
  */
 public class MarcAggregationService extends GenericMetadataService {
 
-    protected Map<String, FieldMatcher> matcherMap = null;
-    protected Map<String, MatchRuleIfc> matchRuleMap = null;
-    protected MarcAggregationServiceDAO masDAO = null;
-    protected List<TreeSet<Long>> masMatchSetList = null;
-    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
-
-//    protected final XmlHelper xmlHelper = new XmlHelper();
-
     /**
      * The output format (marcxml) for records processed from this service
      */
-    protected Format marc21 = null;
+    protected Format                                 marc21 = null;
+    protected Map<String, FieldMatcher>              matcherMap = null;
+    protected Map<String, MatchRuleIfc>              matchRuleMap = null;
+    protected MarcAggregationServiceDAO              masDAO = null;
+    protected List<TreeSet<Long>>                    masMatchSetList = null;
+    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
+
+//    protected final XmlHelper xmlHelper = new XmlHelper();
 
     private List<Character> leaderVals = null;
     private Repository      inputRepo  = null;
@@ -80,12 +79,13 @@ public class MarcAggregationService extends GenericMetadataService {
     private boolean leader_byte17_weighting_enabled;
     private boolean bigger_record_weighting_enabled;
 
-    private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
-    private static final String STATIC_TRANSFORM  = "createStatic.xsl";
-    private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
-
     private Transformer staticTransformer;
     private Transformer holdingTransformer;
+
+    private static final String STATIC_TRANSFORM  = "createStatic.xsl";
+    private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
+    private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
+
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -129,31 +129,7 @@ public class MarcAggregationService extends GenericMetadataService {
             throw new RuntimeException(t);
         }
     }
-/*
-    protected void setupStaticRecordTransformer() throws TransformerFactoryConfigurationError {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
-        String xslFileName = new String(getTransformForStaticFilename());
-        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
-        try {
-            staticTransformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
-        } catch (Throwable t) {
-            LOG.error("", t);
-        }
-    }
-
-    protected void setupHoldingRecordTransformer() throws TransformerFactoryConfigurationError {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-
-        String xslFileName = new String(getTransformForHoldingFilename());
-        xslFileName = MSTConfiguration.getInstance().getServicePath() + service.getName() + "/xsl/" + xslFileName;
-        try {
-            staticTransformer = transformerFactory.newTransformer(new StreamSource(new FileInputStream(xslFileName)));
-        } catch (Throwable t) {
-            LOG.error("", t);
-        }
-    }
-*/
     protected void setupMatchRules() {
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         List<String> mrs = getConfigFileValues("match.rules.value");
@@ -310,6 +286,23 @@ public class MarcAggregationService extends GenericMetadataService {
 
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
+    /*
+I think we should grab the 5 fields below for all of the records that match,
+IF you can dedup  fields with identical content.
+In most cases you can just grab the $a but I’ve added some comments below:
+
+035- just $a, and only when the field is properly formatted with a prefix in parens followed by the number
+010 – just $a
+020 – just $a (which may contain more than just the ISBN – it may contain additional text, like “ (v. 1)” or “paperback”)
+022 – In addition to $a, also $ l [lowercase L], $m, and $z.
+      The rationale here is that rather than lumping “invalid” and “incorrect” into the $z,
+      in this case the “invalid” ones have their own subfield codes.
+      These may be useful in some cases.  Also, a new kind of ISSN, called the “Linking ISSN” has just been defined in $l,
+      and we may want to do something more with that someday so we need to keep it in the output record.
+024 – just $a.
+
+So the answer to #2:  I would copy all of this to the output record even when not from the record of source.
+     */
     //
     private void merge(List<TreeSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
@@ -322,15 +315,49 @@ public class MarcAggregationService extends GenericMetadataService {
             //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
             Map<Integer, HashSet<String>> dynamic = getDynamicContent(repo, set);
-            HashSet<String> dyn035 = dynamic.get(35);
-            for (String _035 : dyn035) {
-                LOG.debug("created 035: "+_035);
+            /*
+            HashSet<String> dyn = dynamic.get(35);
+            for (String _035 : dyn) {
+                LOG.info("have 035: "+_035);
             }
+            dyn.clear();
+            dyn = dynamic.get(10);
+            for (String _035 : dyn) {
+                LOG.info("have 010: "+_035);
+            }
+            dyn.clear();
+            dyn = dynamic.get(20);
+            for (String _035 : dyn) {
+                LOG.info("have 020: "+_035);
+            }
+            dyn.clear();
+            dyn = dynamic.get(22);
+            for (String _035 : dyn) {
+                LOG.info("have 022: "+_035);
+            }
+            dyn.clear();
+            dyn = dynamic.get(24);
+            for (String _035 : dyn) {
+                LOG.info("have 024: "+_035);
+            }
+            */
             oaiXml = getStaticBase(oaiXml);
-LOG.info("STATIC-"+recordOfSource);
-LOG.info(oaiXml);
+            // this would be a lot of data in the log.
+            //
+            //LOG.debug("STATIC-"+recordOfSource);
+            //LOG.debug(oaiXml);
+
+            oaiXml = updateDynamicRecordWithStaticContent(oaiXml, dynamic);
+//LOG.info("STATIC-"+recordOfSource);
+//LOG.info(oaiXml);
             //TODO going to need an output record id!
         }
+    }
+
+    private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, HashSet<String>> dynamic) {
+        // TODO Auto-generated method stub
+        // must find the right spot in the static doc to insert the block of dynamic data, i.e. 035's!
+        return null;
     }
 
     /**
@@ -394,19 +421,59 @@ LOG.info(oaiXml);
     // dynamic:  (create class?)
     // record_id ->  {{035$a list}, {010 list}, etc.}
     //
+    // need to pass to a method that gets static content and dynamic content and builds a list of it.
     protected Map<Integer, HashSet<String>> getDynamicContent(Repository repo, Set<Long> set) {
         Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
-        HashSet<String> _035s = new HashSet<String>();
+        HashSet<String> fields35 = new HashSet<String>();
+        HashSet<String> fields10 = new HashSet<String>();
+        HashSet<String> fields20 = new HashSet<String>();
+        HashSet<String> fields22 = new HashSet<String>();
+        HashSet<String> fields24 = new HashSet<String>();
         for (Long num: set) {
-            // need to pass to a method that gets static content and dynamic content and builds a list of it.
             String oai = repo.getRecord(num).getOaiXml();
+
+            // make an 035 out of 001/003
             String _035 = create035(oai);
             if (_035 != null) {
-                _035s.add(_035);
+                fields35.add(_035);
             }
-            _035s.addAll(getDynamicField(oai, 35, 'a'));  // add 035$a data
+            // add 035 data already in the documents, but it must be well-formed.
+            // The getDynamicField method makes sure it is.
+            fields35.addAll(getDynamicField(oai, 35, 'a'));  // add 035$a data
         }
-        dynamic.put(35, _035s);
+        dynamic.put(35, fields35);
+
+        for (Long num: set) {
+            // now get 010$a from all in the match set
+            String oai = repo.getRecord(num).getOaiXml();
+            fields10.addAll(getDynamicField(oai,10,'a'));
+        }
+        dynamic.put(10, fields10);
+
+        for (Long num: set) {
+            // now get 020$a from all in the match set
+            String oai = repo.getRecord(num).getOaiXml();
+            fields20.addAll(getDynamicField(oai,20,'a'));
+        }
+        dynamic.put(20, fields20);
+
+        for (Long num: set) {
+            // now get 024$a from all in the match set
+            String oai = repo.getRecord(num).getOaiXml();
+            fields24.addAll(getDynamicField(oai,24,'a'));
+        }
+        dynamic.put(24, fields24);
+
+        for (Long num: set) {
+            // now get 022$almz from all in the match set
+            String oai = repo.getRecord(num).getOaiXml();
+            fields22.addAll(getDynamicField(oai,22,'a'));
+            fields22.addAll(getDynamicField(oai,22,'l'));
+            fields22.addAll(getDynamicField(oai,22,'m'));
+            fields22.addAll(getDynamicField(oai,22,'z'));
+        }
+        dynamic.put(22, fields22);
+
         return dynamic;
     }
 
@@ -435,12 +502,6 @@ LOG.info(oaiXml);
     private Collection<String> getDynamicField(String oaiXml, int fieldNum, char subfieldC) {
         HashSet<String> _flds = new HashSet<String>();
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
-        String _001 = smr.getControlField(1);
-        if (_001 != null) {
-            _001 = _001.trim();
-        }
-        else {_001="";}
-
         List<Field> fields = smr.getDataFields(fieldNum);
 
         for (Field field : fields) {
@@ -464,10 +525,10 @@ LOG.info(oaiXml);
                     if (fieldNum == 35) {
                         if (subfield.trim().contains("(")) {
                             _flds.add(subfield);
-                            LOG.debug("do add 035:"+subfield+"<= 001="+_001+"<=");
+                            LOG.debug("do add 035:"+subfield+"<=");
                         }
                         else {
-                            LOG.debug("do not add 035:"+subfield+"<= 001="+_001+"<=");
+                            LOG.debug("do not add 035:"+subfield+"<=");
                         }
                     }
                     else {
@@ -621,7 +682,7 @@ LOG.info(oaiXml);
             // and records that will
             // not being created because they are being merged?
             //
-            merge(matches, repo);
+            //merge(matches, repo);
         }
         //end real work of the service (getting matches and merging)
     }
@@ -741,7 +802,7 @@ LOG.info(oaiXml);
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 //                    TimingLogger.start("bibsteps");
                     type = "b";
-                    processBib(r, smr);
+                    processBib(r, smr, inputRepo);
                 }
                 // check if the record is a holding record
                 if ("uvxy".contains("" + leader06)) {
@@ -802,12 +863,12 @@ LOG.info(oaiXml);
             LOG.debug("created 904: "+_904);
         }
         oaiXml = getHoldingBase(oaiXml);
-LOG.info("HOLDING BASE-"+r.getId());
-LOG.info(oaiXml);
+//LOG.info("HOLDING BASE-"+r.getId());
+//LOG.info(oaiXml);
         //TODO going to need an output record id!
     }
 
-    protected void processBib(InputRecord r, SaxMarcXmlRecord smr) {
+    protected void processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         MatchSet ms = new MatchSet(smr);
         for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
             String matchPointKey = me.getKey();
@@ -829,9 +890,12 @@ LOG.info(oaiXml);
                 matchedRecordIds.addAll(set);
             }
         }
+        // this is the merge as you go along spot,
+        // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
+        // TODO change to merge at end, looping a 2nd time through the records, if need be.
         masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+        merge(masMatchSetList, repo);
 
-        //TODO may initially merge as you go along and do that here?
     }
 
     @Override
