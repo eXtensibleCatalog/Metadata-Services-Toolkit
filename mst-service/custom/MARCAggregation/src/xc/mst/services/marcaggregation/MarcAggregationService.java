@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -286,23 +287,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
-    /*
-I think we should grab the 5 fields below for all of the records that match,
-IF you can dedup  fields with identical content.
-In most cases you can just grab the $a but I’ve added some comments below:
-
-035- just $a, and only when the field is properly formatted with a prefix in parens followed by the number
-010 – just $a
-020 – just $a (which may contain more than just the ISBN – it may contain additional text, like “ (v. 1)” or “paperback”)
-022 – In addition to $a, also $ l [lowercase L], $m, and $z.
-      The rationale here is that rather than lumping “invalid” and “incorrect” into the $z,
-      in this case the “invalid” ones have their own subfield codes.
-      These may be useful in some cases.  Also, a new kind of ISSN, called the “Linking ISSN” has just been defined in $l,
-      and we may want to do something more with that someday so we need to keep it in the output record.
-024 – just $a.
-
-So the answer to #2:  I would copy all of this to the output record even when not from the record of source.
-     */
     //
     private void merge(List<TreeSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
@@ -314,33 +298,8 @@ So the answer to #2:  I would copy all of this to the output record even when no
             String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
             //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
-            Map<Integer, HashSet<String>> dynamic = getDynamicContent(repo, set);
-            /*
-            HashSet<String> dyn = dynamic.get(35);
-            for (String _035 : dyn) {
-                LOG.info("have 035: "+_035);
-            }
-            dyn.clear();
-            dyn = dynamic.get(10);
-            for (String _035 : dyn) {
-                LOG.info("have 010: "+_035);
-            }
-            dyn.clear();
-            dyn = dynamic.get(20);
-            for (String _035 : dyn) {
-                LOG.info("have 020: "+_035);
-            }
-            dyn.clear();
-            dyn = dynamic.get(22);
-            for (String _035 : dyn) {
-                LOG.info("have 022: "+_035);
-            }
-            dyn.clear();
-            dyn = dynamic.get(24);
-            for (String _035 : dyn) {
-                LOG.info("have 024: "+_035);
-            }
-            */
+            Map<Integer, HashSet<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
+
             oaiXml = getStaticBase(oaiXml);
             // this would be a lot of data in the log.
             //
@@ -354,10 +313,52 @@ So the answer to #2:  I would copy all of this to the output record even when no
         }
     }
 
-    private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, HashSet<String>> dynamic) {
+    /**
+     * we KNOW what data fields we will be getting,
+     * so specifically look for those in the desired order, and build the block of dynamic data.
+     *
+     * @param oaiXml
+     * @param dynamic
+     * @return
+     */
+    private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, HashSet<MarcDatafieldHolder>> dynamic) {
         // TODO Auto-generated method stub
         // must find the right spot in the static doc to insert the block of dynamic data, i.e. 035's!
+        String dynData = getDynamicDataBlock(dynamic);
+        // DEBUG
+  LOG.info("DYNAMIC DATA:");
+  LOG.info(dynData);
+        // END DEBUG
         return null;
+    }
+
+    /**
+     * we KNOW what data fields we will be getting,
+     * so specifically look for those in the desired order, and build the block of dynamic data.
+     *
+     */
+    private String getDynamicDataBlock(Map<Integer, HashSet<MarcDatafieldHolder>> dynamic) {
+
+        StringBuilder results = new StringBuilder();
+        results.append(getDynamicPiece(dynamic.get(10)));
+        results.append(getDynamicPiece(dynamic.get(20)));
+        results.append(getDynamicPiece(dynamic.get(22)));
+        results.append(getDynamicPiece(dynamic.get(24)));
+        results.append(getDynamicPiece(dynamic.get(35)));
+
+        return results.toString();
+    }
+
+    private String getDynamicPiece(HashSet<MarcDatafieldHolder> dynamic) {
+
+        Iterator<MarcDatafieldHolder> _i = dynamic.iterator();
+        StringBuilder results = new StringBuilder();
+
+        while (_i.hasNext()) {
+            results.append(_i.next().toString());
+        }
+
+        return results.toString();
     }
 
     /**
@@ -415,62 +416,103 @@ So the answer to #2:  I would copy all of this to the output record even when no
         return HOLDING_TRANSFORM;
     }
 
-    //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022?
+    /*
+    //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022,024
     //   returns dynamic content
     //
-    // dynamic:  (create class?)
+    // dynamic:
     // record_id ->  {{035$a list}, {010 list}, etc.}
     //
     // need to pass to a method that gets static content and dynamic content and builds a list of it.
-    protected Map<Integer, HashSet<String>> getDynamicContent(Repository repo, Set<Long> set) {
-        Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
-        HashSet<String> fields35 = new HashSet<String>();
-        HashSet<String> fields10 = new HashSet<String>();
-        HashSet<String> fields20 = new HashSet<String>();
-        HashSet<String> fields22 = new HashSet<String>();
-        HashSet<String> fields24 = new HashSet<String>();
+      Grab the 5 fields below for all of the records that match,
+        then dedup  fields with identical content.
+
+        035- just $a, and only when the field is properly formatted with a prefix in parens followed by the number
+        010 – just $a  (1 and only 1 allowed, prefer the record of source version, else grab any other found in the match set)
+        020 – just $a (which may contain more than just the ISBN – it may contain additional text, like “ (v. 1)” or “paperback”)
+        022 – In addition to $a, also $ l [lowercase L], $m, and $z.
+              The rationale here is that rather than lumping “invalid” and “incorrect” into the $z,
+              in this case the “invalid” ones have their own subfield codes.
+              These may be useful in some cases.  Also, a new kind of ISSN, called the “Linking ISSN” has just been defined in $l,
+              and we may want to do something more with that someday so we need to keep it in the output record.
+        024 – just $a.
+
+        Copy all of this to the output record even when not from the record of source.
+     */
+    protected Map<Integer, HashSet<MarcDatafieldHolder>> getDynamicContent(Long recordOfSource, Repository repo, Set<Long> set) {
+
+        Map<Integer, HashSet<MarcDatafieldHolder>> dynamic = new HashMap<Integer, HashSet<MarcDatafieldHolder>>();
+        HashSet<MarcDatafieldHolder> fields35 = new HashSet<MarcDatafieldHolder>();
+        HashSet<MarcDatafieldHolder> fields10 = new HashSet<MarcDatafieldHolder>();
+        HashSet<MarcDatafieldHolder> fields20 = new HashSet<MarcDatafieldHolder>();
+        HashSet<MarcDatafieldHolder> fields22 = new HashSet<MarcDatafieldHolder>();
+        HashSet<MarcDatafieldHolder> fields24 = new HashSet<MarcDatafieldHolder>();
+
+        ArrayList<Character> charListA  = new ArrayList<Character>();
+        ArrayList<Character> charList22 = new ArrayList<Character>();
+
+        // for most we just want the values from the $a subfield
+        charListA.add(new Character('a'));
+
+        // but for datafield 022 we want the values from more subfields:
+        charList22.add(new Character('a'));
+        charList22.add(new Character('l'));
+        charList22.add(new Character('m'));
+        charList22.add(new Character('z'));
+
         for (Long num: set) {
             String oai = repo.getRecord(num).getOaiXml();
 
             // make an 035 out of 001/003
             String _035 = create035(oai);
             if (_035 != null) {
-                fields35.add(_035);
+                MarcSubfieldHolder subfield = new MarcSubfieldHolder('a', _035);
+                List<MarcSubfieldHolder> subfields = new ArrayList<MarcSubfieldHolder>();
+                subfields.add(subfield);
+                fields35.add(new MarcDatafieldHolder("035",subfields," ", " "));
             }
             // add 035 data already in the documents, but it must be well-formed.
             // The getDynamicField method makes sure it is.
-            fields35.addAll(getDynamicField(oai, 35, 'a'));  // add 035$a data
+            fields35.addAll(getDynamicField(oai, 35, "035", charListA));  // add 035$a data
         }
         dynamic.put(35, fields35);
 
-        for (Long num: set) {
-            // now get 010$a from all in the match set
-            String oai = repo.getRecord(num).getOaiXml();
-            fields10.addAll(getDynamicField(oai,10,'a'));
+        // can have 1 and only 1 010, and prefer it to be from record of source.
+        String _oai = repo.getRecord(recordOfSource).getOaiXml();
+        fields10.addAll(getDynamicField(_oai,10, "010",charListA));
+        if (fields10.size() < 1) {
+
+            for (Long num: set) {
+                // now get first 010$a you can find from all non-record of source in the match set
+                if (num != recordOfSource) {
+                    String oai = repo.getRecord(num).getOaiXml();
+                    fields10.addAll(getDynamicField(oai,10, "010",charListA));
+                    if (fields10.size() > 0) {
+                        continue;
+                    }
+                }
+            }
         }
         dynamic.put(10, fields10);
 
         for (Long num: set) {
             // now get 020$a from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields20.addAll(getDynamicField(oai,20,'a'));
+            fields20.addAll(getDynamicField(oai,20, "020", charListA));
         }
         dynamic.put(20, fields20);
 
         for (Long num: set) {
             // now get 024$a from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields24.addAll(getDynamicField(oai,24,'a'));
+            fields24.addAll(getDynamicField(oai,24, "024", charListA));
         }
         dynamic.put(24, fields24);
 
         for (Long num: set) {
             // now get 022$almz from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields22.addAll(getDynamicField(oai,22,'a'));
-            fields22.addAll(getDynamicField(oai,22,'l'));
-            fields22.addAll(getDynamicField(oai,22,'m'));
-            fields22.addAll(getDynamicField(oai,22,'z'));
+            fields22.addAll(getDynamicField(oai,22, "022", charList22));
         }
         dynamic.put(22, fields22);
 
@@ -498,46 +540,51 @@ So the answer to #2:  I would copy all of this to the output record even when no
         return dynamic;
     }
 
-    // use HashSet so there will be no duplication
-    private Collection<String> getDynamicField(String oaiXml, int fieldNum, char subfieldC) {
-        HashSet<String> _flds = new HashSet<String>();
+    /**
+     * package the found Marc datafields into a list of MarcDatafieldHolder, an encapsulating class that collects
+     * ind1, ind2, datafield name, and subfields into one class.
+     *
+     * @param oaiXml
+     * @param fieldNum used to retrieve the datafields from the oaiXml
+     * @param fieldName string representation - need it to pass it to MarcDatafieldHolder
+     * @param subfieldC - list of character subfields of interest
+     * @return
+     */
+    private List<MarcDatafieldHolder> getDynamicField(String oaiXml, int fieldNum, String fieldName, List<Character> subfieldC) {
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
         List<Field> fields = smr.getDataFields(fieldNum);
+        List<MarcDatafieldHolder> marcFields = new ArrayList<MarcDatafieldHolder>();
 
         for (Field field : fields) {
-            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, subfieldC);
-            for (String subfield : subfields) {
-                // don't want or need both of these 035$a's:
-                //
-                //   <marc:datafield ind1=" " ind2=" " tag="035">
-                //   <marc:subfield code="a">(UIUdb)2727551</marc:subfield>
-                //   </marc:datafield>
-                //
-                //   and
-                //
-                //   <marc:datafield ind1=" " ind2=" " tag="035">
-                //   <marc:subfield code="a">2727551</marc:subfield>
-                //   </marc:datafield>
-                //
-                // decision made to ignore all 035's with no prefix.
-                //
-                if (subfield != null) {
-                    if (fieldNum == 35) {
-                        if (subfield.trim().contains("(")) {
-                            _flds.add(subfield);
-                            LOG.debug("do add 035:"+subfield+"<=");
+            ArrayList<MarcSubfieldHolder> _flds = new ArrayList<MarcSubfieldHolder>();
+            char ind1 = field.getInd1();
+            char ind2 = field.getInd2();
+            for (Character c: subfieldC) {
+                List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, c);
+                for (String subfield : subfields) {
+                    //
+                    // ignore all 035's with no prefix.
+                    //
+                    if (subfield != null) {
+                        if (fieldNum == 35) {
+                            if (subfield.trim().contains("(")) {
+                                _flds.add(new MarcSubfieldHolder(new Character(c),subfield));
+                                LOG.debug("add 035:"+subfield+"<=");
+                            }
+                            else {
+                                LOG.debug("do not add 035:"+subfield+"<=");
+                            }
                         }
                         else {
-                            LOG.debug("do not add 035:"+subfield+"<=");
+                            _flds.add(new MarcSubfieldHolder(new Character(c),subfield));
                         }
-                    }
-                    else {
-                        _flds.add(subfield);
                     }
                 }
             }
+            marcFields.add(new MarcDatafieldHolder(fieldName,_flds,
+                    new Character(ind1).toString(),new Character(ind2).toString()));
         }
-        return _flds;
+        return marcFields;
     }
 
     /**
@@ -547,6 +594,8 @@ So the answer to #2:  I would copy all of this to the output record even when no
      * The number from the 001 will follow the parens without a space.
      * @param oaiXml
      * @return can return null, so check for it!
+     *         if it returns a string, it will be subfield contents of the form:
+     *         (OCoLC)1788884
      */
     private String create035(String oaiXml) {
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);

@@ -65,7 +65,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     // filter out stuff after 1st space. trim to be sure. orig thought could use a long but have seen isbn's like this:
     // 123456789X
-    protected String getIsbn(String s) {
+    public static String getIsbn(String s) {
 
         String[] tokens = s.split(" ");
         String isbn = tokens[0];

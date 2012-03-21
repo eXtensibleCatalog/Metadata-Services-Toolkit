@@ -88,7 +88,7 @@ public class LccnMatcher extends FieldMatcherService {
     //TODO
     //change the matching algorithm for Aggregation to ignore a forward slash and any characters that follow it in matching 010 fields
     //
-    protected long getUniqueId(String s) {
+    public static long getUniqueId(String s) {
         String stripped=null;
         long strippedL=0l;
         StringTokenizer st = new StringTokenizer(s);
