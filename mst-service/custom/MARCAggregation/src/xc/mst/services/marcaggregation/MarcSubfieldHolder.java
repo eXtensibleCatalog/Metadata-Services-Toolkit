@@ -2,7 +2,8 @@ package xc.mst.services.marcaggregation;
 
 
 /**
- * A very specific container. This class encapsulates a sub fields and contains data from 1 subfield.
+ * A convenience class. This class encapsulates a subfield and contains data from 1 subfield.
+ * The subfield is represented by its contents and character 'name.'
  *
  * @author John Brand
  *

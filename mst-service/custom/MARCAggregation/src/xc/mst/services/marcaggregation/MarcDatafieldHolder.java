@@ -10,9 +10,11 @@ import xc.mst.services.marcaggregation.matcher.ISSNMatcher;
 import xc.mst.services.marcaggregation.matcher.LccnMatcher;
 
 /**
- * A very specific container. This class encapsulates data fields that contain 1 or more subfields.
+ * A very specific container representing the 'view'. This class encapsulates data fields that contain 1 or more subfields.
  * No error checking will be done for repeating data or enforcement of how many or few fields or few subfields
  * there should be or anything else.
+ *
+ * Implements Comparable so can be placed into TreeSet and 'automatically' get the deduping benefit.
  *
  * Just use this to store and generate a block of
  * text to be placed in an xml file as an output record from the MAS.
@@ -20,7 +22,7 @@ import xc.mst.services.marcaggregation.matcher.LccnMatcher;
  * @author John Brand
  *
  */
-public class MarcDatafieldHolder {
+public class MarcDatafieldHolder implements Comparable<MarcDatafieldHolder> {
 
     private String                   s_datafield;
     private String                   s_ind1;
@@ -134,11 +136,44 @@ public class MarcDatafieldHolder {
         return false;
     }
 
+    // you don't really want to see a string from an 010, but if you get something like that or any other unexpected field
+    // name just return the entire field value.  For others we know about and can trim to actual matching value, return that.
+    // assumption - 1 subfield and only 1, and it will be there.
+    //
+    private String getString(MarcDatafieldHolder h) {
+        if (h.getSubfields().size() <1) {
+            return "";
+        }
+
+        if (h.getDatafield().equals("020")) {
+            return  ISBNMatcher.getIsbn(h.getSubfields().get(0).getSubfieldContents());
+        }
+        else if (h.getDatafield().equals("022")) {
+            return  ISSNMatcher.getAllButDash(h.getSubfields().get(0).getSubfieldContents());
+        }
+        // 035 or 024 unknown
+        return h.getSubfields().get(0).getSubfieldContents();
+    }
+
     public int hashCode() {
         String s = "";
         if (this.getSubfields().size()>0) {
             s= this.getSubfields().get(0).getSubfieldContents();
         }
         return (s_ind1 + s_ind2+ s + s_datafield).hashCode();
+    }
+
+    @Override
+    public int compareTo(MarcDatafieldHolder o2) {
+        MarcDatafieldHolder o1 = this;
+        if (o1.equals(o2)) return 0;
+        if (o1.getDatafield().equals("010")) {
+            Long long0 =LccnMatcher.getUniqueId(this.getSubfields().get(0).getSubfieldContents());
+            Long long1 =LccnMatcher.getUniqueId(o2.getSubfields().get(0).getSubfieldContents());
+            return  long0.compareTo(long1);
+        }
+        else {
+            return getString(this).compareTo(getString(o2));
+        }
     }
 }

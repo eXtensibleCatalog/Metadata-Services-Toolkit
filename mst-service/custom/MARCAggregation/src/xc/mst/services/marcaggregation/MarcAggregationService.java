@@ -298,7 +298,7 @@ public class MarcAggregationService extends GenericMetadataService {
             String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
             //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
-            Map<Integer, HashSet<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
+            Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
 
             oaiXml = getStaticBase(oaiXml);
             // this would be a lot of data in the log.
@@ -321,15 +321,17 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param dynamic
      * @return
      */
-    private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, HashSet<MarcDatafieldHolder>> dynamic) {
-        // TODO Auto-generated method stub
-        // must find the right spot in the static doc to insert the block of dynamic data, i.e. 035's!
+    private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, Set<MarcDatafieldHolder>> dynamic) {
         String dynData = getDynamicDataBlock(dynamic);
         // DEBUG
-  LOG.info("DYNAMIC DATA:");
-  LOG.info(dynData);
+//  LOG.info("DYNAMIC DATA:");
+//  LOG.info(dynData);
         // END DEBUG
-        return null;
+
+        // now insert the dynamic block into the correct spot in oaiXml,
+        // it goes after the 008!
+        //TODO
+        return dynData;
     }
 
     /**
@@ -337,7 +339,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * so specifically look for those in the desired order, and build the block of dynamic data.
      *
      */
-    private String getDynamicDataBlock(Map<Integer, HashSet<MarcDatafieldHolder>> dynamic) {
+    private String getDynamicDataBlock(Map<Integer, Set<MarcDatafieldHolder>> dynamic) {
 
         StringBuilder results = new StringBuilder();
         results.append(getDynamicPiece(dynamic.get(10)));
@@ -349,7 +351,7 @@ public class MarcAggregationService extends GenericMetadataService {
         return results.toString();
     }
 
-    private String getDynamicPiece(HashSet<MarcDatafieldHolder> dynamic) {
+    private String getDynamicPiece(Set<MarcDatafieldHolder> dynamic) {
 
         Iterator<MarcDatafieldHolder> _i = dynamic.iterator();
         StringBuilder results = new StringBuilder();
@@ -439,17 +441,18 @@ public class MarcAggregationService extends GenericMetadataService {
 
         Copy all of this to the output record even when not from the record of source.
      */
-    protected Map<Integer, HashSet<MarcDatafieldHolder>> getDynamicContent(Long recordOfSource, Repository repo, Set<Long> set) {
+    protected Map<Integer, Set<MarcDatafieldHolder>> getDynamicContent(Long recordOfSource, Repository repo, Set<Long> set) {
 
-        Map<Integer, HashSet<MarcDatafieldHolder>> dynamic = new HashMap<Integer, HashSet<MarcDatafieldHolder>>();
+        Map<Integer, Set<MarcDatafieldHolder>> dynamic = new HashMap<Integer, Set<MarcDatafieldHolder>>();
         HashSet<MarcDatafieldHolder> fields35 = new HashSet<MarcDatafieldHolder>();
         HashSet<MarcDatafieldHolder> fields10 = new HashSet<MarcDatafieldHolder>();
-        HashSet<MarcDatafieldHolder> fields20 = new HashSet<MarcDatafieldHolder>();
+        TreeSet<MarcDatafieldHolder> fields20 = new TreeSet<MarcDatafieldHolder>();
         HashSet<MarcDatafieldHolder> fields22 = new HashSet<MarcDatafieldHolder>();
         HashSet<MarcDatafieldHolder> fields24 = new HashSet<MarcDatafieldHolder>();
 
         ArrayList<Character> charListA  = new ArrayList<Character>();
         ArrayList<Character> charList22 = new ArrayList<Character>();
+        ArrayList<Character> charList24 = new ArrayList<Character>();
 
         // for most we just want the values from the $a subfield
         charListA.add(new Character('a'));
@@ -459,6 +462,10 @@ public class MarcAggregationService extends GenericMetadataService {
         charList22.add(new Character('l'));
         charList22.add(new Character('m'));
         charList22.add(new Character('z'));
+
+        // & for datafield 024 we want the values from 1 more subfield:
+        charList24.add(new Character('a'));
+        charList24.add(new Character('2'));
 
         for (Long num: set) {
             String oai = repo.getRecord(num).getOaiXml();
@@ -503,9 +510,9 @@ public class MarcAggregationService extends GenericMetadataService {
         dynamic.put(20, fields20);
 
         for (Long num: set) {
-            // now get 024$a from all in the match set
+            // now get 024$a2 from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields24.addAll(getDynamicField(oai,24, "024", charListA));
+            fields24.addAll(getDynamicField(oai,24, "024", charList24));
         }
         dynamic.put(24, fields24);
 
