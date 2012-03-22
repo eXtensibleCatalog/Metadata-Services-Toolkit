@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -101,7 +103,11 @@ public class MarcAggregationService extends GenericMetadataService {
 
         setupRecordOfSource();
         staticTransformer = setupTransformer(getTransformForStaticFilename());
-        holdingTransformer= setupTransformer(getTransformForHoldingFilename());
+
+        final boolean transformHolding = false;
+        if (transformHolding) {
+            holdingTransformer= setupTransformer(getTransformForHoldingFilename());
+        }
         try {
             validateService();
         } catch (ServiceValidationException e) {
@@ -159,7 +165,6 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     protected void setupRecordOfSource() {
-        // start, record of source setup code
         // determine record of source leader character priority, byte 17
         leaderVals = new ArrayList<Character>();
         List<String> _leaderVals = getConfigFileValues("leader.order");
@@ -174,7 +179,6 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         leader_byte17_weighting_enabled= config.getPropertyAsBoolean("leader_byte17_weighting_enabled", false);
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
-        // end, record of source setup code
     }
 
     @Override
@@ -307,8 +311,8 @@ public class MarcAggregationService extends GenericMetadataService {
             //LOG.debug(oaiXml);
 
             oaiXml = updateDynamicRecordWithStaticContent(oaiXml, dynamic);
-//LOG.info("STATIC-"+recordOfSource);
-//LOG.info(oaiXml);
+          //LOG.info("STATIC-"+recordOfSource);
+          //LOG.info(oaiXml);
             //TODO going to need an output record id!
         }
     }
@@ -323,15 +327,45 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     private String updateDynamicRecordWithStaticContent(String oaiXml, Map<Integer, Set<MarcDatafieldHolder>> dynamic) {
         String dynData = getDynamicDataBlock(dynamic);
-        // DEBUG
-//  LOG.info("DYNAMIC DATA:");
-//  LOG.info(dynData);
-        // END DEBUG
+        //  LOG.info("DYNAMIC DATA:");
+        //  LOG.info(dynData);
 
         // now insert the dynamic block into the correct spot in oaiXml,
         // it goes after the 008!
-        //TODO
-        return dynData;
+        final String regex = "controlfield tag=\"008\".*/marc:controlfield>";
+        oaiXml=insertDynamic(oaiXml, dynData, regex);
+        //LOG.info("DATA WITH DYNAMIC DATA:");
+        //LOG.info(oaiXml);
+        return oaiXml;
+    }
+
+    /**
+     */
+    private String insertDynamic(String inputXml, String dynamic, String regex) {
+        //
+        // Create a Pattern instance
+        //
+        Pattern pattern = Pattern.compile(regex);
+
+        //
+        // Create matcher object
+        //
+        Matcher matcher = pattern.matcher(inputXml);
+        StringBuffer sb = new StringBuffer(inputXml);
+
+        //
+        // Find where to place the text that match the pattern (at end of pattern matching text)
+        //
+        int end = -1;
+        if (matcher.find()) {
+            end = matcher.end();
+            sb.insert(end, dynamic);
+        }
+        else {
+            LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
+            sb.append(dynamic);
+        }
+        return sb.toString();
     }
 
     /**
@@ -341,7 +375,7 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     private String getDynamicDataBlock(Map<Integer, Set<MarcDatafieldHolder>> dynamic) {
 
-        StringBuilder results = new StringBuilder();
+        StringBuilder results = new StringBuilder(System.getProperty("line.separator"));
         results.append(getDynamicPiece(dynamic.get(10)));
         results.append(getDynamicPiece(dynamic.get(20)));
         results.append(getDynamicPiece(dynamic.get(22)));
@@ -627,10 +661,6 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * The 001 and 003 from BOTH the Selected Record and the Non-Selected Record will be used to create separate,
-     * new 035 fields in the Output Record,
-     * with the value of the 003 (institution code) set as the prefix for the control number in $a, enclosed in parens.
-     * The number from the 001 will follow the parens without a space.
      * @param oaiXml
      * @return can return null, so check for it!
      */
@@ -911,16 +941,16 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     protected void processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-        String oaiXml = repo.getRecord(r.getId()).getOaiXml();
 
         Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
         HashSet<String> dyn904 = dynamic.get(904);
         for (String _904 : dyn904) {
             LOG.debug("created 904: "+_904);
         }
-        oaiXml = getHoldingBase(oaiXml);
-//LOG.info("HOLDING BASE-"+r.getId());
-//LOG.info(oaiXml);
+        // originally I thought we were stripping 004/014 from holding.  We are not.
+        //
+        // String oaiXml = repo.getRecord(r.getId()).getOaiXml();
+        // oaiXml = getHoldingBase(oaiXml);
         //TODO going to need an output record id!
     }
 
