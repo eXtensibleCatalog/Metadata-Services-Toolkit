@@ -1158,6 +1158,56 @@ public class MarcXmlManager {
         TimingLogger.stop("initializeMarcDataFields");
     } // end method initializeMarcDataFields
 
+    /**
+     * Remove unwanted subfields
+     *    
+     *    @param fieldTag
+     *    			the field we are editing 
+     *    @param keepSubfields
+     *    			keep subfield if subfield is included in keepSubfields string 
+     *    @param removeSubfields
+     *    			remove subfield if subfield is included in keepSubfields string
+     */
+    @SuppressWarnings("unchecked")
+	public void stripSubfields(String fieldTag, String keepSubfields, String removeSubfields) {
+        if (log.isDebugEnabled())
+            log.debug("In stripSubfields...");
+
+        List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
+    	ArrayList<Element> badFlds = new ArrayList<Element>();
+
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+            //String ind1 = field.getAttributeValue("ind1");
+
+            if (tag.equals(fieldTag)) {
+            	ArrayList<Element> badEls = new ArrayList<Element>();
+               	int totCnt = 0; int badCnt = 0;
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    totCnt++;
+                    CharSequence fc = e.getAttributeValue("code").subSequence(0, 1);
+                    if ((keepSubfields != null && !keepSubfields.contains(fc))
+                    		|| (removeSubfields != null && removeSubfields.contains(fc))) {
+                        		badEls.add(e);
+                        		badCnt++;
+                    }
+                }
+                for (Element badEl : badEls) {
+                	field.removeContent(badEl);
+                }   
+                if (totCnt == badCnt) {
+                	badFlds.add(field);
+                }
+            }
+        }
+        for (Element badFld : badFlds) {
+        	marcXml.removeContent(badFld);
+        }   
+
+        
+    }
+    
     
     /**
      * Remove invalid 014$a 
