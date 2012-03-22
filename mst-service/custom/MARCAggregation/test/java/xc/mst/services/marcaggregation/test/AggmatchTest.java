@@ -1,7 +1,6 @@
 package xc.mst.services.marcaggregation.test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,7 +9,9 @@ public class AggmatchTest extends MatchRulesTest {
 
     private static final Logger LOG = Logger.getLogger(AggmatchTest.class);
 
-
+    protected String getTestName() {
+        return "AggmatchTest";
+    }
 
     protected void setupMatcherExpectations() {
         //load expected number of records for each matcher.
@@ -31,7 +32,7 @@ public class AggmatchTest extends MatchRulesTest {
         expectedMatchRecordIds.put("ISSNMatcher", 6); //022a
         expectedMatchRecords.put  ("ISSNMatcher", 3); // confirmed both
 
-        // verified the records and matchpoints, ps, this is a good test, has lots of corner cases in the data.
+        // verified the records and match points, P.S., this is a good test, has lots of corner cases in the data.
         expectedMatchRecordIds.put("ISBNMatcher", 12); //020
         expectedMatchRecords.put  ("ISBNMatcher", 13);
 
@@ -46,50 +47,28 @@ public class AggmatchTest extends MatchRulesTest {
 
         // confirmed, note in this file the 035's are frequently near the end of the record.
         expectedMatchRecordIds.put("SystemControlNumberMatcher", 28);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 49);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 43);  // reduced from 49 because don't add them if no prefix.
 
         // 2a
-        HashSet<Long> set =  new HashSet<Long>();
-        set.add(1l);
-        expectedResults.put(new Long(2), set);
+        expectedResults.add(getExpectedMatchSet(new long[]{1,2}));
 
         // 2b
-        HashSet<Long> set2 =  new HashSet<Long>();
-        set2.add(5l);
-        expectedResults.put(new Long(6), set2);
+        expectedResults.add(getExpectedMatchSet(new long[]{5,6}));
 
         // 2c
-        HashSet<Long> set3 =  new HashSet<Long>();
-        set3.add(9l);
-        expectedResults.put(new Long(10), set3);
+        expectedResults.add(getExpectedMatchSet(new long[]{9,10}));
 
-        //other way too, with db in the picture
-        // rule
-        HashSet<Long> set1 =  new HashSet<Long>();
-        set1.add(2l);
-        expectedResults.put(new Long(1), set1);
+        // 2a
+        expectedResults.add(getExpectedMatchSet(new long[]{13,20}));
 
-        HashSet<Long> set20 =  new HashSet<Long>();
-        set20.add(6l);
-        expectedResults.put(new Long(5), set20);
-
-        HashSet<Long> set30 =  new HashSet<Long>();
-        set30.add(10l);
-        expectedResults.put(new Long(9), set30);
+        // rule 1
+        expectedResults.add(getExpectedMatchSet(new long[]{18,19}));
     }
 
     public List<String> getFolders() {
         List<String> fileStrs = new ArrayList<String>();
         fileStrs.add("aggmatch_norm");
         return fileStrs;
-    }
-
-    protected void reportFailure(String result) {
-        LOG.info(result);
-    }
-
-   protected void reportFailure(Exception e) {
-        LOG.info(e);
     }
     protected void testDAO() {}
 }

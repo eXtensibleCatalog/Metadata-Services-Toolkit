@@ -75,7 +75,7 @@ public class ISSNMatcher extends FieldMatcherService {
     private boolean debug = false;
     private boolean debug2 = false;
 
-    protected String getAllButDash(final String s) {
+    public static String getAllButDash(final String s) {
         String stripped = s.replaceAll("[-]", "");
         return stripped;
     }

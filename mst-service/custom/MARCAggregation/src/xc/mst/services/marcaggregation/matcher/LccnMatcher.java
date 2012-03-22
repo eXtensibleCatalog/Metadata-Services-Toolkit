@@ -84,7 +84,11 @@ public class LccnMatcher extends FieldMatcherService {
     //  Seems like trimming 1st 3 chars off will work,
     //  then tokenize around spaces, return the numeric portion that
     //  remains (or could test 1st. to verify it is numeric)
-    protected long getUniqueId(String s) {
+    //
+    //TODO
+    //change the matching algorithm for Aggregation to ignore a forward slash and any characters that follow it in matching 010 fields
+    //
+    public static long getUniqueId(String s) {
         String stripped=null;
         long strippedL=0l;
         StringTokenizer st = new StringTokenizer(s);

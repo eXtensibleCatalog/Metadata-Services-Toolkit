@@ -65,7 +65,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     // filter out stuff after 1st space. trim to be sure. orig thought could use a long but have seen isbn's like this:
     // 123456789X
-    protected String getIsbn(String s) {
+    public static String getIsbn(String s) {
 
         String[] tokens = s.split(" ");
         String isbn = tokens[0];
@@ -121,7 +121,7 @@ public class ISBNMatcher extends FieldMatcherService {
         List<Field> fields = r.getDataFields(20);
         final int size3 = fields.size();
         if (size3 > 1) {
-            LOG.debug("** INFO: Multiple 020 fields in record! " + r.recordId);
+            LOG.info("** INFO: Multiple 020 fields in record! " + r.recordId);
             //TODO, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
         }
         for (Field field : fields) {

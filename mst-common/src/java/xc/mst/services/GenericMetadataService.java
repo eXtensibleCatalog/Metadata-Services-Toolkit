@@ -508,6 +508,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         processedRecordCount = 0;
         processStatusDisplay(repo, inputFormat, inputSet, outputSet);
         running.acquireUninterruptibly();
+
         if (!isSolrIndexer() && preserveStatuses) {
             previousStatuses.clear();
             previousStatuses.ensureCapacity(repo.getSize());
