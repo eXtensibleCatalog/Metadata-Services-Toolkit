@@ -9,10 +9,9 @@
 package xc.mst.services.marcaggregation.test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
@@ -65,55 +64,30 @@ public class MatchRulesTest extends MatcherTest {
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
         // 035$a
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 127);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 158);
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 75);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 74);
 
-        HashSet<Long> set =  new HashSet<Long>();
-        set.add(176l);
-        expectedResults.put(new Long(178), set);
-        HashSet<Long> set2 =  new HashSet<Long>();
-        set2.add(3l);
-        expectedResults.put(new Long(179), set2);
-        HashSet<Long> set3 =  new HashSet<Long>();
-        set3.add(40l);
-        expectedResults.put(new Long(180), set3);
-        HashSet<Long> set4 =  new HashSet<Long>();
-        set4.add(44l);
-        expectedResults.put(new Long(181), set4);
-        HashSet<Long> set5 =  new HashSet<Long>();
-        set5.add(5l);
-        expectedResults.put(new Long(183), set5);
-        HashSet<Long> set6 =  new HashSet<Long>();
-        set6.add(2l);
-        expectedResults.put(new Long(184), set6);
-
-        //other way too, with db in the picture
-        // rule 1a
-        HashSet<Long> set1 =  new HashSet<Long>();
-        set1.add(178l);
-        expectedResults.put(new Long(176), set1);
-        HashSet<Long> set20 =  new HashSet<Long>();
-        set20.add(179l);
-        expectedResults.put(new Long(3), set20);
-
-        //other way too, with db in the picture
-        // rule 2
-        HashSet<Long> set30 =  new HashSet<Long>();
-        set30.add(180l);
-        expectedResults.put(new Long(40), set30);
-        HashSet<Long> set40 =  new HashSet<Long>();
-        set40.add(181l);
-        expectedResults.put(new Long(44), set40);
-        HashSet<Long> set50 =  new HashSet<Long>();
-        set50.add(183l);
-        expectedResults.put(new Long(5), set50);
-        HashSet<Long> set60 =  new HashSet<Long>();
-        set60.add(184l);
-        expectedResults.put(new Long(2), set60);
+        expectedResults.add(getExpectedMatchSet(new long[]{176,178}));
+        expectedResults.add(getExpectedMatchSet(new long[]{40,180}));
+        expectedResults.add(getExpectedMatchSet(new long[]{44,181}));
+        expectedResults.add(getExpectedMatchSet(new long[]{5,183}));
+        expectedResults.add(getExpectedMatchSet(new long[]{2,184}));
     }
 
     protected int getNumberMatchedResultsGoal() {
         return expectedResults.size();
+    }
+
+    protected TreeSet<Long> getExpectedMatchSet(long[]nums) {
+        TreeSet<Long> set = new TreeSet<Long>();
+        for (long num: nums) {
+            set.add(num);
+        }
+        return set;
+    }
+
+    protected String getTestName() {
+        return "MatchRulesTest";
     }
 
     public void finalTest() {
@@ -122,11 +96,11 @@ public class MatchRulesTest extends MatcherTest {
             // These first 2 steps are done in MockHarvestTest
             // - harvest records into MST and run them through norm service
 
-            System.out.println("****START MatchRulesTest *****");
+            System.out.println("****START "+getTestName() +" *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
-            checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
+            List<TreeSet<Long>> results = getRecordsAndAddToMem(providerRepo);
+            checkNumberMatchedResults(results, expectedResults);
             LOG.info("MatchRulesTest:ensureMatch results size =" + results.size());
 
             //after parsing all the records, verify the counts are what is expected for our particular record set.
@@ -200,6 +174,8 @@ public class MatchRulesTest extends MatcherTest {
 
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
+
+            verifyCorrectNumberOutputRecords();
 
         } catch (Throwable t) {
             LOG.error("Exception occured when running MatchRulesTest!", t);

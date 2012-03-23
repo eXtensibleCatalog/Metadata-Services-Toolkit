@@ -62,6 +62,7 @@ public class MatchSet {
                     Util.getUtil().printStackTrace("who called me?  this stack trace follows display of matchset records.");
                 }
                 matchSet.addAll(list);
+                matchSet.add(this.inProcessRecord.getRecordId());
             }
             // I don't think this is the right place to do this.  For one thing, won't get all matchpoints for a records if you do it here.
             // add to matcher, after we make the comparison, so we don't get the record back as a match for itself.

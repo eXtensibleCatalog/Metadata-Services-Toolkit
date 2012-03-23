@@ -3,10 +3,10 @@ package xc.mst.services.marcaggregation.test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
@@ -25,13 +25,16 @@ public class MatcherTest extends MASBaseTest {
 
     protected Map<String, FieldMatcher> matcherMap = null;
     protected Map<String, MatchRuleIfc> matchRuleMap = null;
+    protected List<TreeSet<Long>> masMatchSetList = null;
 
     protected HashMap<String, Integer> expectedMatchRecords = new HashMap<String, Integer>();
     protected HashMap<String, Integer> expectedMatchRecordIds = new HashMap<String, Integer>();
 
-    protected Map<Long, Set<Long>> expectedResults = new HashMap<Long, Set<Long>>();
+    protected List<Set<Long>> expectedResults = new ArrayList<Set<Long>>();
 
     protected MarcAggregationServiceDAO masDao = null;
+
+    protected int inputRecordCount = 0;
 
     public void setup() {
         LOG.debug("MAS:  setup()");
@@ -53,6 +56,7 @@ public class MatcherTest extends MASBaseTest {
             MatchRuleIfc mr = (MatchRuleIfc) applicationContext.getBean(mrStr + "MatchRule");
             matchRuleMap.put(mrStr, mr);
         }
+        masMatchSetList = new ArrayList<TreeSet<Long>>();
         masDao = (MarcAggregationServiceDAO) applicationContext.getBean("MarcAggregationServiceDAO");
     }
 
@@ -87,8 +91,8 @@ public class MatcherTest extends MASBaseTest {
         expectedMatchRecordIds.put("LccnMatcher", 56);
         expectedMatchRecords.put  ("LccnMatcher", 56);
 
-        expectedMatchRecordIds.put("SystemControlNumberMatcher", 118);
-        expectedMatchRecords.put  ("SystemControlNumberMatcher", 151);
+        expectedMatchRecordIds.put("SystemControlNumberMatcher", 67);
+        expectedMatchRecords.put  ("SystemControlNumberMatcher", 67);
     }
 
     public List<String> getFolders() {
@@ -110,8 +114,8 @@ public class MatcherTest extends MASBaseTest {
             System.out.println("****START MatcherTest *****");
             Repository providerRepo = getRepositoryService().getRepository(this.provider);
 
-            Map<Long, Set<Long>> results = getRecordsAndAddToMem(providerRepo);
-            checkNumberMatchedResults(results, getNumberMatchedResultsGoal());
+            List<TreeSet<Long>> results = getRecordsAndAddToMem(providerRepo);
+            checkNumberMatchedResults(results, expectedResults);
 
             //after parsing all the records, verify the counts are what is expected for our particular record set.
             //  the counts we are looking for and comparing are  number of matchpoints for each matcher and number of recordids for each matcher.
@@ -144,42 +148,86 @@ public class MatcherTest extends MASBaseTest {
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
 
+            verifyCorrectNumberOutputRecords();
+
         } catch (Throwable t) {
             LOG.error("Exception occured when running MatcherTest!", t);
             getUtil().throwIt(t);
         }
     }
 
+    protected void verifyCorrectNumberOutputRecords() {
+        // output record count = input record count - extra matches, i.e if 1 match set of 4,
+        //                       then output record count = input record count - 3.
+        int actualOutRecordCnt =0;
+        int expectedOutRecordCnt = inputRecordCount; //start with this number, decrement from it based on matches
+        try {
+            actualOutRecordCnt=getServiceRepository().getNumRecords();
+        } catch (Exception e) {
+            LOG.error("Why!",e);
+        }
+        for (Set<Long> set: expectedResults) {
+            expectedOutRecordCnt-= (set.size()-1);
+        }
+
+        if (expectedOutRecordCnt != actualOutRecordCnt) {
+            reportFailure("wrong number of output records, expected: "+expectedOutRecordCnt+" got: "+actualOutRecordCnt);
+        }
+        else {
+            LOG.info("correct number of output records, expected: "+expectedOutRecordCnt+" got: "+actualOutRecordCnt);
+        }
+    }
+
     // check whether we got the matches we expected for a record.  Note this test is order dependent, i.e. we expect the records
     // to come in in a certain order, we control this, so we will achieve it.  This is for test purposes only, to prove we get
     // the matches we expect for a certain record when this order is maintained.
-    protected void checkNumberMatchedResults(Map<Long,Set<Long>> results, int goal) {
+    protected void checkNumberMatchedResults(List<TreeSet<Long>> results, List<Set<Long>> expectedResults) {
         try {
-            for (long key: results.keySet()) {
-                for (long value: results.get(key)) {
-                    if (expectedResults == null) {
-                        reportFailure("* checkNumberMatched results has nothing to compare to, expectedResults == null, numResults="+results.size());
-                        break;  // just in case the implementation of reportFailure would keep you in the loop.
-                    }
-                    LOG.info( "* checking whether can  find "+ value+" ! for key "+key +" expectedResults getKey: "+expectedResults.get(key) );
-                    if (!expectedResults.get(key).contains(value)) {
-                        String result = "* expected to find "+ value+" ! for key "+key ;
-                        reportFailure(result);
-                    }
-                    else {
-                        LOG.info("checkNumberMatchedResults, record_id=" + key+ " matches record_id="+value);
-                    }
+            for (TreeSet<Long> set: results) {
+                if (!expectedResults.contains(set)) {
+                    printExpectedVsActualMatchSets(results, expectedResults);
+                    reportFailure("could not find given match set within expected match sets! "+set);
                 }
             }
-            if (results.size() != goal) {
-                String result = "* WRONG number matches, expected"+ goal+" ! got "+results.keySet().size() ;
+
+            printExpectedVsActualMatchSets(results, expectedResults);
+
+            if (results.size() != expectedResults.size()) {
+                String result = "* WRONG number match sets, expected"+ expectedResults.size()+" ! got "+results.size() ;
                 reportFailure(result);
             }
             else {
-                LOG.info("ensureMatch results size =" + results.keySet().size() + " goal="+goal);
+                LOG.info("#match sets =" + results.size() + " goal="+expectedResults.size());
             }
         } catch (Exception e) {
             reportFailure(e);
+        }
+        List<TreeSet<Long>> sets = getCurrentMatchSetList();
+        if (sets !=null) {
+            LOG.info("** getCurrentMatchSetList, size="+sets.size());
+            for(Set<Long> set: sets) {
+                LOG.info("*** getCurrentMatchSetList, set size="+set.size());
+            }
+        }
+    }
+
+    protected void printExpectedVsActualMatchSets(List<TreeSet<Long>> results, List<Set<Long>> expectedResults) {
+        for (Set<Long> set: results) {
+            StringBuilder sb = new StringBuilder("***Actual Matchset: {");
+            for (Long num: set) {
+                sb.append(num+", ");
+            }
+            sb.append("}");
+            LOG.info(sb.toString());
+        }
+
+        for (Set<Long> set: expectedResults) {
+            StringBuilder sb = new StringBuilder("***Expected Matchset: {");
+            for (Long num: set) {
+                sb.append(num+", ");
+            }
+            sb.append("}");
+            LOG.info(sb.toString());
         }
     }
 
@@ -206,29 +254,25 @@ public class MatcherTest extends MASBaseTest {
         }
     }
 
-    protected Map<Long,Set<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
+
+
+    protected List<TreeSet<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
-        Map<Long, Set<Long>> overall = new HashMap<Long, Set<Long>>();
+        inputRecordCount = records.size();
         for (Record r : records) {
-            // note, you are putting in all the records into the map, even if the record set is null, definitely don't want to
             Set<Long> set = process((InputRecord) r);
             if (set.size()>0) {
-                overall.put(r.getId(), process((InputRecord) r));
             }
         }
-        LOG.info("* done *");
-        return overall;
+        return masMatchSetList;
     }
 
     public Set<Long> process(InputRecord r) {
-        Set<Long> matchedRecordIds = new HashSet<Long>();
+        TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
         try {
 
             LOG.debug("test:  process record+" + r.getId());
 
-       if (r.getId() == 18l) {
-          LOG.debug("STOP!");
-       }
             if (r.getStatus() != Record.DELETED) {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
@@ -252,6 +296,7 @@ public class MatcherTest extends MASBaseTest {
                         matchedRecordIds.addAll(set);
                     }
                 }
+                masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
 /*
                 for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
                     String matchRuleKey = me.getKey();
@@ -273,9 +318,64 @@ public class MatcherTest extends MASBaseTest {
             getUtil().throwIt(t);
         }
         for (Long result: matchedRecordIds) {
-            LOG.info("recordId " +r.getId()+" has matches==>" + result+"<==");
+            LOG.debug("recordId " +r.getId()+" has matches==>" + result+"<==");
         }
         return matchedRecordIds;
+    }
+
+    // this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
+    // started off from looking at existing merged stuff in the database.  Based on the current record
+    // that comes in, see what it matches, and go from there.
+    public List<TreeSet<Long>> getCurrentMatchSetList() {
+        return masMatchSetList;
+    }
+
+    // need to look to see if the given match set impacts existing sets.  i.e if this set  is {1,47,50}
+    // and we have existing sets {1,3} and {4,47} then we need a superset: {1,3,4,47,50} and need to
+    // remove the existing sets {1,3}, {4,47}
+    //
+    // disjoint-set data structure?
+    //
+    private List<TreeSet<Long>> addToMatchSetList(TreeSet<Long> matchset,  final List<TreeSet<Long>> origMasMatchSetList) {
+        if (matchset==null) {
+            return origMasMatchSetList;
+        }
+        if (matchset.size() < 1) {
+            return origMasMatchSetList;
+        }
+
+        LOG.debug("** addToMatchSetList, matchset length="+matchset.size()+" TOTAL matchset size ="+origMasMatchSetList.size());
+        List<TreeSet<Long>> newMasMatchSetList = new ArrayList<TreeSet<Long>>();
+        newMasMatchSetList.addAll(origMasMatchSetList);
+
+        boolean added = false;
+        for (TreeSet<Long> set: origMasMatchSetList) {
+            for (Long number: matchset) {
+                if (set.contains(number)) {
+                    if (!set.containsAll(matchset)) {
+                        newMasMatchSetList.remove(set);
+                        set.addAll(matchset);
+                        newMasMatchSetList.add(set);
+                        LOG.debug("addToMatchSetList, post-merge!  set.contains("+number+") merged newMasMatchSetList set="+set);
+                    }
+                    else {
+                        LOG.debug("addToMatchSetList, will not add in: "+matchset);
+                    }
+                    added = true;  // this flag means that we don't want this set added to the big list below
+                    break;   // get you out of THIS set, but still must check the others.
+                }
+            }
+        }
+        //
+        // the list of sets has to start somewhere, and if you don't find a set including some part
+        // of your set, you must add your set explicitly.
+        //
+        if (!added) {
+            LOG.debug("must add in: "+matchset);
+            newMasMatchSetList.add(matchset);
+        }
+        LOG.debug("** addToMatchSetList, NEW TOTAL matchset size ="+newMasMatchSetList.size());
+        return newMasMatchSetList;
     }
     /*
 
@@ -286,5 +386,7 @@ public abstract class MockHarvestTest extends StartToFinishTest {
     public void startToFinish() throws Exception {}
     // executes installService();  // is this enough?
 */
+
 }
+
 //
