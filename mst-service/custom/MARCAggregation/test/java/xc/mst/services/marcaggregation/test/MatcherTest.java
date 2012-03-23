@@ -34,6 +34,8 @@ public class MatcherTest extends MASBaseTest {
 
     protected MarcAggregationServiceDAO masDao = null;
 
+    protected int inputRecordCount = 0;
+
     public void setup() {
         LOG.debug("MAS:  setup()");
         setupMatcherExpectations();
@@ -146,9 +148,33 @@ public class MatcherTest extends MASBaseTest {
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
 
+            verifyCorrectNumberOutputRecords();
+
         } catch (Throwable t) {
             LOG.error("Exception occured when running MatcherTest!", t);
             getUtil().throwIt(t);
+        }
+    }
+
+    protected void verifyCorrectNumberOutputRecords() {
+        // output record count = input record count - extra matches, i.e if 1 match set of 4,
+        //                       then output record count = input record count - 3.
+        int actualOutRecordCnt =0;
+        int expectedOutRecordCnt = inputRecordCount; //start with this number, decrement from it based on matches
+        try {
+            actualOutRecordCnt=getServiceRepository().getNumRecords();
+        } catch (Exception e) {
+            LOG.error("Why!",e);
+        }
+        for (Set<Long> set: expectedResults) {
+            expectedOutRecordCnt-= (set.size()-1);
+        }
+
+        if (expectedOutRecordCnt != actualOutRecordCnt) {
+            reportFailure("wrong number of output records, expected: "+expectedOutRecordCnt+" got: "+actualOutRecordCnt);
+        }
+        else {
+            LOG.info("correct number of output records, expected: "+expectedOutRecordCnt+" got: "+actualOutRecordCnt);
         }
     }
 
@@ -232,6 +258,7 @@ public class MatcherTest extends MASBaseTest {
 
     protected List<TreeSet<Long>> getRecordsAndAddToMem(Repository repo) throws Throwable {
         List<Record> records = repo.getRecords(new Date(0), new Date(), 0l, getMarc21Format(), null);
+        inputRecordCount = records.size();
         for (Record r : records) {
             Set<Long> set = process((InputRecord) r);
             if (set.size()>0) {
