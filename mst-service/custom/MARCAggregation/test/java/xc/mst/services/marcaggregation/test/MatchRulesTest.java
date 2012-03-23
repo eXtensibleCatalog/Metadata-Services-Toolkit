@@ -175,6 +175,8 @@ public class MatchRulesTest extends MatcherTest {
             // at this point, artificially add a record with known matches, verify you get them, flush, should be no matches, then load, should have the matches back.
             // , ideally harvest from a 2nd repo (that contains some matching records)?
 
+            verifyCorrectNumberOutputRecords();
+
         } catch (Throwable t) {
             LOG.error("Exception occured when running MatchRulesTest!", t);
             getUtil().throwIt(t);

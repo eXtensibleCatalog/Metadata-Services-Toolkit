@@ -949,15 +949,15 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 // check if the record is a bibliographic record
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
-//                    TimingLogger.start("bibsteps");
+//                    TimingLogger.start("bib steps");
                     type = "b";
                     results = processBib(r, smr, inputRepo);
                 }
                 // check if the record is a holding record
-                if ("uvxy".contains("" + leader06)) {
-//                    TimingLogger.start("holdsteps");
+                else if ("uvxy".contains("" + leader06)) {
+//                    TimingLogger.start("hold steps");
                     type = "h";
-                    processHolding(r, smr, inputRepo);
+                    results = processHolding(r, smr, inputRepo);
 //                    ((Record) record).setType(type);
                 }
                 //TODO what about authority and any other type?  pass it through or not?
@@ -1010,7 +1010,7 @@ public class MarcAggregationService extends GenericMetadataService {
         return null;
     }
 
-    protected void processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+    protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
 
         Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
         HashSet<String> dyn904 = dynamic.get(904);
@@ -1021,7 +1021,10 @@ public class MarcAggregationService extends GenericMetadataService {
         //
         // String oaiXml = repo.getRecord(r.getId()).getOaiXml();
         // oaiXml = getHoldingBase(oaiXml);
-        //TODO going to need an output record id!
+        List<OutputRecord> list = null;
+        //TODO make sure 904 block is tacked onto the end!
+        list = createNewRecord(r, "h", r.getOaiXml());
+        return list;
     }
 
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
