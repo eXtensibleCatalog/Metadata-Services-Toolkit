@@ -41,6 +41,7 @@ import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.constants.Status;
@@ -289,32 +290,44 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    // in case we use the model of merging AFTER all records initially seen.
+    private void mergeAll(List<TreeSet<Long>> matches, Repository repo) {
+        // merge each match set, 1 winning record used to pull static content,
+        // all in the set used to pull dynamic content
+
+        for (Set<Long> set: matches) {
+            mergeBibSet(set, repo);
+        }
+    }
+
+
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
-    private void merge(List<TreeSet<Long>> matches, Repository repo) {
-        // merge each match set, 1 winning record used to pull static content,
-        // all in the set used to pull dynamic content
-        for (Set<Long> set: matches) {
-            Long recordOfSource = determineRecordOfSource(set);
-            LOG.info("**** Record of Source == "+recordOfSource);
+    private List<OutputRecord> mergeBibSet(/*InputRecord inRecord, */ Set<Long> set, Repository repo) {
+        Long recordOfSource = determineRecordOfSource(set);
+        LOG.info("**** Record of Source == "+recordOfSource);
 
-            String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
-            //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
+        //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
-            Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
+        Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
 
-            oaiXml = getStaticBase(oaiXml);
-            // this would be a lot of data in the log.
-            //
-            //LOG.debug("STATIC-"+recordOfSource);
-            //LOG.debug(oaiXml);
+        oaiXml = getStaticBase(oaiXml);
+        // this would be a lot of data in the log.
+        //
+        //LOG.debug("STATIC-"+recordOfSource);
+        //LOG.debug(oaiXml);
 
-            oaiXml = updateDynamicRecordWithStaticContent(oaiXml, dynamic);
-          //LOG.info("STATIC-"+recordOfSource);
-          //LOG.info(oaiXml);
-            //TODO going to need an output record id!
-        }
+        oaiXml = updateDynamicRecordWithStaticContent(oaiXml, dynamic);
+        //LOG.info("STATIC-"+recordOfSource);
+        //LOG.info(oaiXml);
+
+        // TODO q and a:
+        // do I need to reconstitute all the records of the match set to setup pred/succ correctly?
+        // do I need to provide a  list of these full records to the createNewRecord method?
+        List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
+        return list;
     }
 
     /**
@@ -340,6 +353,8 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
+     * Use a regular expression to search for a pattern.  Insert 'dynamic' right after the end
+     * of the found match. If match not found insert at end.
      */
     private String insertDynamic(String inputXml, String dynamic, String regex) {
         //
@@ -369,7 +384,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * we KNOW what data fields we will be getting,
+     * we KNOW what data fields we will be getting, 10,20,22,24,35.
      * so specifically look for those in the desired order, and build the block of dynamic data.
      *
      */
@@ -385,6 +400,13 @@ public class MarcAggregationService extends GenericMetadataService {
         return results.toString();
     }
 
+    /**
+     * iterate over the set of found fields.  For each field in the set, append the xml string
+     * constructed to represent it.
+     *
+     * @param dynamic the set of encapsulated data field objects
+     * @return
+     */
     private String getDynamicPiece(Set<MarcDatafieldHolder> dynamic) {
 
         Iterator<MarcDatafieldHolder> _i = dynamic.iterator();
@@ -398,7 +420,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * transform the given xml by stripping 001's,003's & 035's
+     * transform the given xml by stripping 001's,003's, 010,020's,022's,024's & 035's
      * using an xsl to do the transformation.
      * The 035 fields are stripped then added back in because we only want well-formed 035's with prefix.
      * Contrast this to other keep fields that we may leave in the record of source.
@@ -417,6 +439,10 @@ public class MarcAggregationService extends GenericMetadataService {
      *  This is in prep for adding in fields based on 004/014 later
      *  (so need to saved that info before now! )
      *
+     * Turns out we DO NOT strip 004/014's.  Leaving this as a placeholder
+     * in case it turns out later we do need to transform the holding record
+     * in some way.
+     *
      * @param oaiXml
      * @return
      */
@@ -424,6 +450,12 @@ public class MarcAggregationService extends GenericMetadataService {
         return getTransformedXml(oaiXml, holdingTransformer);
     }
 
+    /**
+     * run a sax transformation
+     * @param oaiXml
+     * @param transformer
+     * @return
+     */
     private String getTransformedXml(String oaiXml, Transformer transformer) {
         try {
             // Use the parser as a SAX source for input
@@ -474,15 +506,18 @@ public class MarcAggregationService extends GenericMetadataService {
         024 – just $a.
 
         Copy all of this to the output record even when not from the record of source.
+
+        By using TreeSet to hold the data, and with an appropriate 'Comparable' for each MarcDatafieldHolder 'subtype', can easily
+        and effectively dedup the data.
      */
     protected Map<Integer, Set<MarcDatafieldHolder>> getDynamicContent(Long recordOfSource, Repository repo, Set<Long> set) {
 
         Map<Integer, Set<MarcDatafieldHolder>> dynamic = new HashMap<Integer, Set<MarcDatafieldHolder>>();
-        HashSet<MarcDatafieldHolder> fields35 = new HashSet<MarcDatafieldHolder>();
-        HashSet<MarcDatafieldHolder> fields10 = new HashSet<MarcDatafieldHolder>();
+        TreeSet<MarcDatafieldHolder> fields35 = new TreeSet<MarcDatafieldHolder>();
+        TreeSet<MarcDatafieldHolder> fields10 = new TreeSet<MarcDatafieldHolder>();
         TreeSet<MarcDatafieldHolder> fields20 = new TreeSet<MarcDatafieldHolder>();
-        HashSet<MarcDatafieldHolder> fields22 = new HashSet<MarcDatafieldHolder>();
-        HashSet<MarcDatafieldHolder> fields24 = new HashSet<MarcDatafieldHolder>();
+        TreeSet<MarcDatafieldHolder> fields22 = new TreeSet<MarcDatafieldHolder>();
+        TreeSet<MarcDatafieldHolder> fields24 = new TreeSet<MarcDatafieldHolder>();
 
         ArrayList<Character> charListA  = new ArrayList<Character>();
         ArrayList<Character> charList22 = new ArrayList<Character>();
@@ -514,20 +549,20 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             // add 035 data already in the documents, but it must be well-formed.
             // The getDynamicField method makes sure it is.
-            fields35.addAll(getDynamicField(oai, 35, "035", charListA));  // add 035$a data
+            fields35.addAll(getDynamicDatafield(oai, 35, "035", charListA));  // add 035$a data
         }
         dynamic.put(35, fields35);
 
         // can have 1 and only 1 010, and prefer it to be from record of source.
         String _oai = repo.getRecord(recordOfSource).getOaiXml();
-        fields10.addAll(getDynamicField(_oai,10, "010",charListA));
+        fields10.addAll(getDynamicDatafield(_oai,10, "010",charListA));
         if (fields10.size() < 1) {
 
             for (Long num: set) {
                 // now get first 010$a you can find from all non-record of source in the match set
                 if (num != recordOfSource) {
                     String oai = repo.getRecord(num).getOaiXml();
-                    fields10.addAll(getDynamicField(oai,10, "010",charListA));
+                    fields10.addAll(getDynamicDatafield(oai,10, "010",charListA));
                     if (fields10.size() > 0) {
                         continue;
                     }
@@ -539,21 +574,21 @@ public class MarcAggregationService extends GenericMetadataService {
         for (Long num: set) {
             // now get 020$a from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields20.addAll(getDynamicField(oai,20, "020", charListA));
+            fields20.addAll(getDynamicDatafield(oai,20, "020", charListA));
         }
         dynamic.put(20, fields20);
 
         for (Long num: set) {
             // now get 024$a2 from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields24.addAll(getDynamicField(oai,24, "024", charList24));
+            fields24.addAll(getDynamicDatafield(oai,24, "024", charList24));
         }
         dynamic.put(24, fields24);
 
         for (Long num: set) {
             // now get 022$almz from all in the match set
             String oai = repo.getRecord(num).getOaiXml();
-            fields22.addAll(getDynamicField(oai,22, "022", charList22));
+            fields22.addAll(getDynamicDatafield(oai,22, "022", charList22));
         }
         dynamic.put(22, fields22);
 
@@ -591,7 +626,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param subfieldC - list of character subfields of interest
      * @return
      */
-    private List<MarcDatafieldHolder> getDynamicField(String oaiXml, int fieldNum, String fieldName, List<Character> subfieldC) {
+    private List<MarcDatafieldHolder> getDynamicDatafield(String oaiXml, int fieldNum, String fieldName, List<Character> subfieldC) {
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
         List<Field> fields = smr.getDataFields(fieldNum);
         List<MarcDatafieldHolder> marcFields = new ArrayList<MarcDatafieldHolder>();
@@ -606,7 +641,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     //
                     // ignore all 035's with no prefix.
                     //
-                    if (subfield != null) {
+                     if (subfield != null) {
                         if (fieldNum == 35) {
                             if (subfield.trim().contains("(")) {
                                 _flds.add(new MarcSubfieldHolder(new Character(c),subfield));
@@ -661,6 +696,25 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
+        No matching or merging is done on MARC Holdings records. Therefore, the content of an Output
+        holdings record will be identical to the content of the Input record, with the following exceptions:
+
+        For every holdings record, whether or not its parent bibliographic record matches on and is merged with
+        another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+        record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
+        to the record represented in the input Holdings record’s 004 field. In addition, the 904 field contains $1
+        NyRoXCO to identify it as a field created by an XC service.
+
+        The Service generates additional 904 fields to contain links to the successors to additional linked
+        bibliographic records linked through 014 fields in the input records (“bound withs”) if the following
+        conditions are met:
+
+        014 first indicator value=1
+        If an 014 $b is present, the code matches that in the 003 of the incoming holdings record
+
+        The Transformation Service will use these 904 fields as “uplinks” instead of using 004 or 014 fields
+        in the MARC record to create the “uplinks” between XC Holdings and XC Manifestation records. These
+        additional 904 fields will contain the same subfields ($a, $1) as 904 fields created from 004 fields.
      * @param oaiXml
      * @return can return null, so check for it!
      */
@@ -676,7 +730,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         StringBuilder sb = new StringBuilder("").append(_004);
         return sb.toString();
-        //TODO fix this.
+        //TODO fix this.  Really need to create or use an encapsulating class like MarcDatafieldHolder.
     }
 
     /**
@@ -768,7 +822,7 @@ public class MarcAggregationService extends GenericMetadataService {
             // and records that will
             // not being created because they are being merged?
             //
-            //merge(matches, repo);
+            //mergeAll(matches, repo);
         }
         //end real work of the service (getting matches and merging)
     }
@@ -793,24 +847,36 @@ public class MarcAggregationService extends GenericMetadataService {
 
     /**
      *
-     * @param record the record of source
+     * @param record -the record of source
      * @return
      */
-    private List<OutputRecord> createNewRecord(InputRecord record, String type) {
+    private List<OutputRecord> createNewRecord(InputRecord record, String type, String newXml) {
+
+        // should this check be here or before we even get here?  notice the method name I chose...
+        //
+        // If there was already a processed record for the record we just processed, update it
+        if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
+
+        }
+        else {
+            // new
+        }
+
         TimingLogger.start("new");
 //        if (LOG.isDebugEnabled())
 //            LOG.debug("  ");
 
-        // TODO normalization service shows creating/adding errors but this seems unused.
-
         // The list of records resulting from processing the incoming record
+        //    actually maybe we want to return list of InputRecord as we are collapsing,
+        //    not expanding.
         ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
 
-        // Create the normalized record
-        OutputRecord oRecord = getRecordService().createRecord();
-// TODO
-//        normalizedRecord.setOaiXmlEl(/* get the merged content */);
-        oRecord.setFormat(marc21);
+        // Create the aggregated record
+        OutputRecord aggRecord = getRecordService().createRecord();
+
+        aggRecord.setMode(Record.STRING_MODE);
+        aggRecord.setOaiXml(newXml); /* use the merged content */
+        aggRecord.setFormat(marc21);
 
         // Insert the new (possibly) aggregated record
 
@@ -818,9 +884,6 @@ public class MarcAggregationService extends GenericMetadataService {
         String setSpec = null;
         String setDescription = null;
         String setName = null;
-
-        // TODO  see normalization service
-        // Setup the setSpec and description based on the leader 06 (?)
 
         // Setup the setSpec and description based on the leader 06
         // TODO is this right?
@@ -847,7 +910,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     recordTypeSet = addSet(setSpec, setName, setDescription);
 
                 // Add the set to the record
-                oRecord.addSet(recordTypeSet);
+                aggRecord.addSet(recordTypeSet);
             } catch (DatabaseConfigException e) {
                 LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
                 e.printStackTrace();
@@ -858,18 +921,18 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // Add the record to the list of records resulting from processing the
         // incoming record
-        oRecord.setType(type);
-        results.add(oRecord);
+        aggRecord.setType(type);
+        results.add(aggRecord);
         if (LOG.isDebugEnabled())
             LOG.debug("Created aggregated record from record with ID " + record.getId());
 
         TimingLogger.stop("new");
-
         return results;
     }
 
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
+        List<OutputRecord> results = null;
         try {
             LOG.debug("MAS:  process record+"+r.getId());
 
@@ -888,7 +951,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 //                    TimingLogger.start("bibsteps");
                     type = "b";
-                    processBib(r, smr, inputRepo);
+                    results = processBib(r, smr, inputRepo);
                 }
                 // check if the record is a holding record
                 if ("uvxy".contains("" + leader06)) {
@@ -934,6 +997,13 @@ public class MarcAggregationService extends GenericMetadataService {
                 }
             }
 
+            if (results != null && results.size() != 1) {
+                // TODO incr records counts no output
+                addMessage(r, 103, RecordMessage.ERROR);
+            }
+            return results;
+
+
         } catch (Throwable t) {
             util.throwIt(t);
         }
@@ -954,7 +1024,7 @@ public class MarcAggregationService extends GenericMetadataService {
         //TODO going to need an output record id!
     }
 
-    protected void processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+    protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         MatchSet ms = new MatchSet(smr);
         for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
             String matchPointKey = me.getKey();
@@ -980,8 +1050,18 @@ public class MarcAggregationService extends GenericMetadataService {
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
         masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
-        merge(masMatchSetList, repo);
 
+        List<OutputRecord> list = null;
+        // may not have any matches!
+        final boolean hasMatches = matchedRecordIds.size() > 0;
+        if (hasMatches) {
+            list = mergeBibSet(/* r, */ matchedRecordIds, repo);
+            // was merge(masMatchSetList,repo);  // that went through whole list every time.
+        }
+        else {
+             list = createNewRecord(r, "b", r.getOaiXml());
+        }
+        return list;
     }
 
     @Override
