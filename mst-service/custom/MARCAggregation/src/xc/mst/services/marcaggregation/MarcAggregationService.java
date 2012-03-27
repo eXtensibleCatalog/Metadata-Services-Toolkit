@@ -16,7 +16,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -346,7 +345,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // now insert the dynamic block into the correct spot in oaiXml,
         // it goes after the 008!
         final String regex = "controlfield tag=\"008\".*/marc:controlfield>";
-        oaiXml=insertDynamic(oaiXml, dynData, regex);
+        oaiXml=insertDynamicAtEnd(oaiXml, dynData, regex);
         //LOG.info("DATA WITH DYNAMIC DATA:");
         //LOG.info(oaiXml);
         return oaiXml;
@@ -356,7 +355,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * Use a regular expression to search for a pattern.  Insert 'dynamic' right after the end
      * of the found match. If match not found insert at end.
      */
-    private String insertDynamic(String inputXml, String dynamic, String regex) {
+    private String insertDynamicAtEnd(String inputXml, String dynamic, String regex) {
         //
         // Create a Pattern instance
         //
@@ -375,6 +374,38 @@ public class MarcAggregationService extends GenericMetadataService {
         if (matcher.find()) {
             end = matcher.end();
             sb.insert(end, dynamic);
+        }
+        else {
+            LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
+            sb.append(dynamic);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Use a regular expression to search for a pattern.  Insert 'dynamic' right before the
+     *  found match. If match not found insert at end.
+     *  (at end would really would be an error, after end of </record>)
+     */
+    private String insertDynamicAtBegin(String inputXml, String dynamic, String regex) {
+        //
+        // Create a Pattern instance
+        //
+        Pattern pattern = Pattern.compile(regex);
+
+        //
+        // Create matcher object
+        //
+        Matcher matcher = pattern.matcher(inputXml);
+        StringBuffer sb = new StringBuffer(inputXml);
+
+        //
+        // Find where to place the text that match the pattern (at end of pattern matching text)
+        //
+        int begin = -1;
+        if (matcher.find()) {
+            begin = matcher.start();
+            sb.insert(begin, dynamic);
         }
         else {
             LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
@@ -595,25 +626,15 @@ public class MarcAggregationService extends GenericMetadataService {
         return dynamic;
     }
 
-    //getDynamicHoldingContent => create 904 from 004/014, save existing 035's, save existing 904?
+    //getDynamicHoldingContent => create 904 from 004/014, don't worry about exising 904,
+    // we are not trimming anything from existing record.
     //   returns content to dynamically insert into holding records
     //
-    // dynamic:  (create class?)
-    // record_id ->  {{904 list}, etc.}
-    //
-    protected Map<Integer, HashSet<String>> getDynamicHoldingContent(Repository repo, Long num) {
-        Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
-        HashSet<String> _904s = new HashSet<String>();
-        // need to pass to a method that gets static content and dynamic content and builds a list of it.
+    protected String getDynamicHoldingContent(Repository repo, Long num) {
         String oai = repo.getRecord(num).getOaiXml();
-        String _904 = create904(oai);
-        if (_904 != null) {
-            _904s.add(_904);
-        }
-            //TODO is it correct to look for preexisting 904's?
-//////////////////            _904s.addAll(getDynamicField(oai, 904, 'a'));  // add 035$a data
-        dynamic.put(904, _904s);
-        return dynamic;
+        String _904 = create904(oai);   // the block of xml
+
+        return _904;
     }
 
     /**
@@ -719,18 +740,59 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return can return null, so check for it!
      */
     private String create904(String oaiXml) {
+        Marc904Generator _904generator = null;
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String _003 = smr.getControlField(3);
+        if (_003 != null) {
+            _003 = _003.trim();
+        }
+        else {
+            LOG.error("no _003 code found in "+smr.recordId);
+            throw new RuntimeException("no _003 code found in "+smr.recordId);
+        }
         String _004 = smr.getControlField(4);
         if (_004 != null) {
             _004 = _004.trim();
         }
         else {
-            LOG.debug("no _004 code found in "+smr.recordId);
-            return null;
+            LOG.error("no _004 code found in "+smr.recordId);
         }
-        StringBuilder sb = new StringBuilder("").append(_004);
-        return sb.toString();
-        //TODO fix this.  Really need to create or use an encapsulating class like MarcDatafieldHolder.
+        List<Marc014Holder> marcFields = new ArrayList<Marc014Holder>();
+
+        // Get dataField with tag=014
+        List<Field> dataFields = smr.getDataFields(14);
+        // Loop through the 014 - note, there can be >1
+
+        for (Field field : dataFields) {
+            char ind1 = field.getInd1();
+            // 014$a and 014$b do not repeat.  if there is no 014$a, do not continue with parsing.
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            if (subfields.size()<1) {
+                continue;
+            }
+            else {
+                String subfield = subfields.get(0);   // only 1 subfield $a
+                MarcSubfieldHolder subfieldA = new MarcSubfieldHolder(new Character('a'),subfield);
+                MarcSubfieldHolder subfieldB = null;
+                List<String> subfieldsB = SaxMarcXmlRecord.getSubfieldOfField(field, 'b');
+                if (subfieldsB.size()>0) {
+                    subfieldB = new MarcSubfieldHolder(new Character('b'),subfield);
+                }
+                marcFields.add(new Marc014Holder(subfieldA, subfieldB, new Character(ind1).toString()));
+            }
+        }
+        if (_004 == null && marcFields.size() < 1) {
+            throw new RuntimeException("no 004's or 014's found in "+smr.recordId);
+        }
+        else {
+            _904generator = new Marc904Generator(_003, _004, marcFields);
+        }
+        // this will dedup and stringify
+        List<String> _904s = _904generator.get904s();
+
+        // create the xml
+        Marc904Holder holder = new Marc904Holder(_904s);
+        return holder.toString();
     }
 
     /**
@@ -1012,18 +1074,25 @@ public class MarcAggregationService extends GenericMetadataService {
 
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
 
-        Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
-        HashSet<String> dyn904 = dynamic.get(904);
-        for (String _904 : dyn904) {
-            LOG.debug("created 904: "+_904);
-        }
+        String dynamic = getDynamicHoldingContent(repo, r.getId());
+        StringBuilder sb ;
+
+        // now insert the dynamic block into the correct spot in oaiXml,
+        // it goes before the end tag, </marc:record>
+        // find:            </marc:record>
+        //
+        final String regex = "</marc:record>";
+        sb = new StringBuilder(insertDynamicAtBegin(r.getOaiXml(), dynamic, regex));
+
+//   LOG.info("** NEW HOLDING:");
+//   LOG.info(sb.toString());
+
         // originally I thought we were stripping 004/014 from holding.  We are not.
         //
         // String oaiXml = repo.getRecord(r.getId()).getOaiXml();
         // oaiXml = getHoldingBase(oaiXml);
         List<OutputRecord> list = null;
-        //TODO make sure 904 block is tacked onto the end!
-        list = createNewRecord(r, "h", r.getOaiXml());
+        list = createNewRecord(r, "h", sb.toString());
         return list;
     }
 
