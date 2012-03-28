@@ -8,6 +8,7 @@
  */
 package xc.mst.services.marcaggregation;
 
+import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongObjectHashMap;
 
 import java.io.FileInputStream;
@@ -73,7 +74,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected MarcAggregationServiceDAO              masDAO = null;
     protected List<TreeSet<Long>>                    masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
-
+    protected TLongLongHashMap                       masMergedRecords = null;
 //    protected final XmlHelper xmlHelper = new XmlHelper();
 
     private List<Character> leaderVals = null;
@@ -123,6 +124,11 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         setupMatchers();
         setupMatchRules();
+        masMergedRecords = loadMasMergedRecords();
+    }
+
+    private TLongLongHashMap loadMasMergedRecords() {
+        return masDAO.getMergedRecords();
     }
 
     protected Transformer setupTransformer(String xslFileName) throws TransformerFactoryConfigurationError {
@@ -289,6 +295,12 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    private void updateMasMergedRecords(Long outputRecordId, Set<Long> mergedInputRecordSet) {
+        for (Long num: mergedInputRecordSet) {
+            masMergedRecords.put(num,outputRecordId);
+        }
+    }
+
     // in case we use the model of merging AFTER all records initially seen.
     private void mergeAll(List<TreeSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
@@ -326,6 +338,12 @@ public class MarcAggregationService extends GenericMetadataService {
         // do I need to reconstitute all the records of the match set to setup pred/succ correctly?
         // do I need to provide a  list of these full records to the createNewRecord method?
         List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
+
+        // now that we have created a new record successfully, update the datastructure to track the merged records.
+        if (list.size() > 0) {
+            // will get 1 agg. record back.
+            updateMasMergedRecords(list.get(0).getId(), set);
+        }
         return list;
     }
 
@@ -626,7 +644,7 @@ public class MarcAggregationService extends GenericMetadataService {
         return dynamic;
     }
 
-    //getDynamicHoldingContent => create 904 from 004/014, don't worry about exising 904,
+    //getDynamicHoldingContent => create 904 from 004/014, don't worry about existing 904,
     // we are not trimming anything from existing record.
     //   returns content to dynamically insert into holding records
     //
@@ -985,6 +1003,9 @@ public class MarcAggregationService extends GenericMetadataService {
         // incoming record
         aggRecord.setType(type);
         results.add(aggRecord);
+
+        //TODO need to update memory tracking/dB table merged_records
+
         if (LOG.isDebugEnabled())
             LOG.debug("Created aggregated record from record with ID " + record.getId());
 
@@ -1072,7 +1093,36 @@ public class MarcAggregationService extends GenericMetadataService {
         return null;
     }
 
+    // actually on any re-merge you may have to do this, rewrite the holding.
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+
+        //
+        // new plan - do not put a 904 into the holding, just pass the holding on.
+        //
+        //StringBuilder sb = add904toHolding(r, smr, repo);
+
+//   LOG.info("** NEW HOLDING:");
+//   LOG.info(sb.toString());
+
+        // originally I thought we were stripping 004/014 from holding.  We are not.
+        //
+        String oaiXml = repo.getRecord(r.getId()).getOaiXml();
+        // oaiXml = getHoldingBase(oaiXml);
+        List<OutputRecord> list = null;
+        list = createNewRecord(r, "h", oaiXml);
+        // TODO build relationships to bibs.
+        return list;
+    }
+
+    // original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
+    //
+    // For every holdings record, whether or not its parent bibliographic record matches on and is merged with
+    // another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+    // record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
+    // to the record represented in the input Holdings record’s 004 field.
+    //
+    private StringBuilder add904toHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        String _004 = smr.getControlField(4);
 
         String dynamic = getDynamicHoldingContent(repo, r.getId());
         StringBuilder sb ;
@@ -1083,17 +1133,7 @@ public class MarcAggregationService extends GenericMetadataService {
         //
         final String regex = "</marc:record>";
         sb = new StringBuilder(insertDynamicAtBegin(r.getOaiXml(), dynamic, regex));
-
-//   LOG.info("** NEW HOLDING:");
-//   LOG.info(sb.toString());
-
-        // originally I thought we were stripping 004/014 from holding.  We are not.
-        //
-        // String oaiXml = repo.getRecord(r.getId()).getOaiXml();
-        // oaiXml = getHoldingBase(oaiXml);
-        List<OutputRecord> list = null;
-        list = createNewRecord(r, "h", sb.toString());
-        return list;
+        return sb;
     }
 
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
@@ -1150,6 +1190,8 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             // this should not need to done in must do, must do frequently section.
             masDAO.persistScores(scores);
+            masDAO.persistLongMatchpointMaps(masMergedRecords, MarcAggregationServiceDAO.merged_records_table, false);
+
             TimingLogger.stop("masDAO.commitIfNecessary");
         } catch (Throwable t) {
             getUtil().throwIt(t);

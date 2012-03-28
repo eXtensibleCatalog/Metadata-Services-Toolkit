@@ -43,11 +43,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     private final static Logger LOG = Logger.getLogger(MarcAggregationServiceDAO.class);
 
-    public final static String bibsProcessedLongId_table = "bibsProcessedLongId";
-    public final static String bibsProcessedStringId_table = "bibsProcessedStringId";
-    public final static String bibsYet2ArriveLongId_table = "bibsYet2ArriveLongId";
+    public final static String bibsProcessedLongId_table    = "bibsProcessedLongId";
+    public final static String bibsProcessedStringId_table  = "bibsProcessedStringId";
+    public final static String bibsYet2ArriveLongId_table   = "bibsYet2ArriveLongId";
     public final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
-    public final static String held_holdings_table = "held_holdings";
+    public final static String held_holdings_table          = "held_holdings";
 
     public final static String matchpoints_010a_table   = "matchpoints_010a";
     public final static String matchpoints_020a_table   = "matchpoints_020a";
@@ -59,7 +59,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String matchpoints_240a_table   = "matchpoints_240a";
     public final static String matchpoints_245a_table   = "matchpoints_245a";
     public final static String matchpoints_260abc_table = "matchpoints_260abc";
+
     public final static String merge_scores_table       = "merge_scores";
+    public final static String merged_records_table     = "merged_records";
 
     public final static String input_record_id_field    = "input_record_id";
     public final static String string_id_field          = "string_id";
@@ -182,8 +184,15 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
     }
 
-    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong only for each record id
-    public void persistLongMatchpointMaps(TLongLongHashMap inputId2numMap, String tableName) {
+    /**
+     * this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong only for each record id
+     * ,also using it to persist merged_records, input_record->output_record
+     *
+     * @param inputId2numMap
+     * @param tableName
+     * @param swap - if true, then write the key / value as value / key into the db
+     */
+    public void persistLongMatchpointMaps(TLongLongHashMap inputId2numMap, String tableName, final boolean swap) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistLongMaps");
         try {
@@ -209,9 +218,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                 } else {
                                     j.increment();
                                 }
-                                os.write(String.valueOf(num).getBytes());
-                                os.write(tabBytes);
-                                os.write(String.valueOf(id).getBytes());
+                                if (swap) {        // write value then key
+                                    os.write(String.valueOf(num).getBytes());
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(id).getBytes());
+                                }
+                                else {             // write key then value
+                                    os.write(String.valueOf(id).getBytes());
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(num).getBytes());
+                                }
                             } catch (Throwable t) {
                                 getUtil().throwIt(t);
                             }
@@ -223,10 +239,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             os.close();
             replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
-            TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
             getUtil().throwIt(t);
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
+        TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
@@ -415,6 +431,58 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 );
         TimingLogger.stop(tableName + ".insert.load_infile");
         TimingLogger.stop(tableName + ".insert");
+    }
+
+    /**
+each of these will also be persisted so that they be fully loaded again on successive runs.
+
+    pred2succ_map
+        purpose: to determine if there is an existing_output_record associated with the in_process_record
+        key: input_record_id
+        value: output_record_id
+    merged_records_map
+        purpose: to determine (combined with the pred2succ_map) what records have been merged with a particular record.
+        key: output_record_id
+        value: input_record_ids
+        implementation: this will be a wrapper of multiple maps
+
+         merge_tracking
+
+    merged_records
+        purpose: provides a mapping of input records to output records. This allows for 2 paths:
+
+           -------------------------------------------------------------------
+          | given               | can be determined                           |
+          |-------------------------------------------------------------------|
+          | an output_record_id | all the input_records that have been merged |
+          |                     | together to create this output_record       |
+          |-------------------------------------------------------------------|
+          | an input_record_id  | all the other input_records that have been  |
+          |                     | merged with this input_record and the       |
+          |                     | corresponding output_record                 |
+           -------------------------------------------------------------------
+
+        maps to: pred2succ_map and merged_records_map
+
+             * @return
+     */
+
+    public TLongLongHashMap getMergedRecords(/*int page*/) {
+        TimingLogger.start("getMergedRecords");
+
+//        int recordsAtOnce = 100000;
+        String sql = "select input_record_id, output_record_id from " + merged_records_table;// +
+//                " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        TLongLongHashMap results = new TLongLongHashMap();
+        for (Map<String, Object> row : rowList) {
+            Long in_id = (Long) row.get("input_record_id");
+            Long out_id = (Long) row.get("output_record_id");
+            results.put(in_id, out_id);
+        }
+        TimingLogger.stop("getMergedRecords");
+        return results;
     }
 
     public RecordOfSourceData getScoreData(Long num) {

@@ -253,7 +253,7 @@ public class LccnMatcher extends FieldMatcherService {
     // at commit time put stuff into db,
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table);
+        s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table, true);
         //inputId2lccnStr.clear();
         inputId2lccn.clear();    //TODO may want to keep these in memory!
         lccn2inputIds.clear();
