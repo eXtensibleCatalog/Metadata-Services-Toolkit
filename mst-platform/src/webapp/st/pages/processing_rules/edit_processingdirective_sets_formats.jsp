@@ -38,6 +38,8 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/edit_processingdirective_sets_formats.js"></SCRIPT>
 
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/jquery.min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/shortened_select.js"></SCRIPT>
     </head>
 
 
@@ -152,7 +154,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${empty formatList}">
-                                         <div class="listBox" style="width:300px;">
+                                         <div class="listBox" style="width:450px;">
                                             <B>Formats</B> <br><br>
                                                 <I>No Formats to display</I>
                                          </div>
@@ -160,7 +162,7 @@
                                     <c:otherwise>
                                         <div class="listBox">
                                             <B>Formats</B> <br>
-                                           <select multiple style="width:300px;" size="10" id="formatsSelected" name="formatsSelected" disabled>
+                                           <select multiple style="width:450px;" size="10" id="formatsSelected" name="formatsSelected" disabled>
                                                <c:forEach var="format" items="${formatList}" varStatus="formatCount">
                                                     <c:set var="flag" value="${false}"/>
                                                       <c:forEach var="triggerFormat" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="triggerFormatCount">
@@ -172,10 +174,10 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag == true}">
-                                                             <option selected value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
+                                                             <option selected value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/></option> <br>
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/> <br>
+                                                             <option value="<c:out value="${format.id}"/>" ><c:out value="${format.name}"/></option> <br>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -188,11 +190,11 @@
 
                             <td>
 
-                               <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
+                               <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:10px;">
                                     You have the option to create a named set of output records for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
                                     Output Set Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50" size="40" disabled>
                                 </div>
-                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
+                                 <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 11px;">
                                     Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40" disabled>
                                 </div>
 
@@ -204,7 +206,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${empty setList}">
-                                         <div class="listBox" style="width:300px;">
+                                         <div class="listBox" style="width:450px;">
                                             <B>Sets</B> <br><br>
                                             <I>No Sets to display</I><br><br>
                                          </div>
@@ -212,7 +214,7 @@
                                      <c:otherwise>
                                          <div  class="listBox" style="display:none;">
                                             <B>Sets</B> <br>
-                                            <select multiple size="10" id="setsSelected" name="setsSelected">
+                                            <select class="shortenedSelect" multiple size="10" id="setsSelected" name="setsSelected" style="width:450px;">
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
@@ -230,18 +232,18 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag==true}">
-                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})</option>
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})</option>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
                                             </select>
                                          </div>
-                                         <div  class="listBox" style="overflow:auto;width:300px;" align="left">
+                                         <div  class="listBox" style="overflow:auto;width:450px;" align="left">
                                             <B>Sets</B> <br>
-                                            <select multiple size="10" id="setsSelectedShown" name="setsSelectedShown" disabled>
+                                            <select class="shortenedSelect" style="width:450px;" multiple size="10" id="setsSelectedShown" name="setsSelectedShown" disabled>
                                                 <option value="0"
                                                     <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                          selected
@@ -259,10 +261,10 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag==true}">
-                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                             <option selected value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})</option>
                                                         </c:when>
                                                          <c:otherwise>
-                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})
+                                                             <option value="<c:out value="${set.id}"/>" >${set.displayName}(${set.setSpec})</option>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
