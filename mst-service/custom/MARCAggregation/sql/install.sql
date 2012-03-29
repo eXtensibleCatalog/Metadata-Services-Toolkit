@@ -16,7 +16,12 @@ DROP TABLE IF EXISTS merged_records;
 CREATE  TABLE `merged_records` (
   `input_record_id` BIGINT NOT NULL ,
   `output_record_id` BIGINT NOT NULL ,
+
+  INDEX idx_merged_output_id (output_record_id),
+  INDEX idx_merged_input_id (input_record_id),
+
   PRIMARY KEY (`input_record_id`, `output_record_id`) )
+
 ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
 

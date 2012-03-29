@@ -434,38 +434,39 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
-each of these will also be persisted so that they be fully loaded again on successive runs.
-
-    pred2succ_map
-        purpose: to determine if there is an existing_output_record associated with the in_process_record
-        key: input_record_id
-        value: output_record_id
-    merged_records_map
-        purpose: to determine (combined with the pred2succ_map) what records have been merged with a particular record.
-        key: output_record_id
-        value: input_record_ids
-        implementation: this will be a wrapper of multiple maps
-
-         merge_tracking
-
-    merged_records
-        purpose: provides a mapping of input records to output records. This allows for 2 paths:
-
-           -------------------------------------------------------------------
-          | given               | can be determined                           |
-          |-------------------------------------------------------------------|
-          | an output_record_id | all the input_records that have been merged |
-          |                     | together to create this output_record       |
-          |-------------------------------------------------------------------|
-          | an input_record_id  | all the other input_records that have been  |
-          |                     | merged with this input_record and the       |
-          |                     | corresponding output_record                 |
-           -------------------------------------------------------------------
-
-        maps to: pred2succ_map and merged_records_map
-
-             * @return
+     *   merged_records
+     *   purpose: provides a mapping of input records to output records. This allows for 2 paths:
+     *
+     *     -------------------------------------------------------------------
+     *     | given               | can be determined                           |
+     *     |-------------------------------------------------------------------|
+     *     | an output_record_id | all the input_records that have been merged |
+     *     |                     | together to create this output_record       |
+     *     |-------------------------------------------------------------------|
+     *     | an input_record_id  | all the other input_records that have been  |
+     *     |                     | merged with this input_record and the       |
+     *     |                     | corresponding output_record                 |
+     *      -------------------------------------------------------------------
+     *
+     * @param output_record_id
+     * @return all the input_records that have been merged together to create this output_record
      */
+    public List<Long> getInputRecordsMergedToOutputRecord(Long output_record_id) {
+        String sql = "select input_record_id from " + merged_records_table +
+                            " where output_record_id = ? ";
+        return this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
+    }
+
+    /**
+     * what output record corresponds to this input record?
+     * @param input_record_id
+     * @return there will only be 1 record number returned.
+     */
+    public List<Long> getOutputRecordForInputRecord(Long input_record_id) {
+        String sql = "select output_record_id from " + merged_records_table +
+                            " where input_record_id = ? ";
+        return this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
+    }
 
     public TLongLongHashMap getMergedRecords(/*int page*/) {
         TimingLogger.start("getMergedRecords");

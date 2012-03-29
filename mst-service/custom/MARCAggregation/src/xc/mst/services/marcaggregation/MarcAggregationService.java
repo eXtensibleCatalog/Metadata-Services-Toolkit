@@ -72,9 +72,14 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, FieldMatcher>              matcherMap = null;
     protected Map<String, MatchRuleIfc>              matchRuleMap = null;
     protected MarcAggregationServiceDAO              masDAO = null;
-    protected List<TreeSet<Long>>                    masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
-    protected TLongLongHashMap                       masMergedRecords = null;
+    protected List<TreeSet<Long>>                    masMatchSetList = null;
+
+    // map output records to corresponding input records map
+    protected Map<Long, TreeSet<Long>>               mergedRecordsO2Imap = null;
+
+    // map input records to corresponding output map
+    protected TLongLongHashMap                       mergedRecordsI2Omap = null;
 //    protected final XmlHelper xmlHelper = new XmlHelper();
 
     private List<Character> leaderVals = null;
@@ -124,7 +129,25 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         setupMatchers();
         setupMatchRules();
-        masMergedRecords = loadMasMergedRecords();
+        mergedRecordsI2Omap = loadMasMergedRecords();
+        mergedRecordsO2Imap = createMergedRecordsO2Imap(mergedRecordsI2Omap);
+    }
+
+    // map output records to corresponding input records map
+    //   there is probably a lot slicker way to do this.
+    private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
+        TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
+        for (Long out: i_to_o_map.getValues()) {
+            if (!results.containsKey(out)) {
+                List<Long> vals = masDAO.getInputRecordsMergedToOutputRecord(out);
+                TreeSet<Long> set = new TreeSet<Long>();
+                for (Long val: vals) {
+                    set.add(val);
+                }
+                results.put(out, set);
+            }
+        }
+        return results;
     }
 
     private TLongLongHashMap loadMasMergedRecords() {
@@ -297,7 +320,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
     private void updateMasMergedRecords(Long outputRecordId, Set<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
-            masMergedRecords.put(num,outputRecordId);
+            mergedRecordsI2Omap.put(num,outputRecordId);
         }
     }
 
@@ -1158,22 +1181,59 @@ public class MarcAggregationService extends GenericMetadataService {
                 matchedRecordIds.addAll(set);
             }
         }
+
+        List<OutputRecord> results = new ArrayList<OutputRecord>();
+
         // this is the merge as you go along spot,
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
         masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+        for (Long input: matchedRecordIds) {
+            //delete;
+            if (mergedRecordsI2Omap.containsKey(input)) {
+                Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
+                mergedRecordsI2Omap.remove(input);
+                mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
+                Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
+
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null) {
+                    outputRecordToBeDeleted.setStatus(Record.DELETED);
+                    ////ARGH.  this is never not null if the records did not get persisted!
+                    LOG.info("** just set status to D for reocrd: "+outputRecordToBeDeletedNum);
+                }
+
+                LOG.info("** remove output record: "+outputRecordToBeDeletedNum);
+
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
+                    for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
+                        or.setStatus(Record.DELETED);
+                        results.add(or);
+                        Record _r = getRepository().getRecord(or.getId());
+                        String type = getXCRecordService().getType(_r);
+                        or.setType(type);
+                    }
+                }
+
+            }
+        }
 
         List<OutputRecord> list = null;
         // may not have any matches!
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
             list = mergeBibSet(/* r, */ matchedRecordIds, repo);
+            LOG.info("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+
             // was merge(masMatchSetList,repo);  // that went through whole list every time.
         }
         else {
              list = createNewRecord(r, "b", r.getOaiXml());
+             LOG.info("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
-        return list;
+        results.addAll(list);
+        return results;
     }
 
     @Override
@@ -1190,7 +1250,7 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             // this should not need to done in must do, must do frequently section.
             masDAO.persistScores(scores);
-            masDAO.persistLongMatchpointMaps(masMergedRecords, MarcAggregationServiceDAO.merged_records_table, false);
+            masDAO.persistLongMatchpointMaps(mergedRecordsI2Omap, MarcAggregationServiceDAO.merged_records_table, false);
 
             TimingLogger.stop("masDAO.commitIfNecessary");
         } catch (Throwable t) {
