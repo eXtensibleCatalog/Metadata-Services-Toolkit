@@ -565,6 +565,20 @@ public class MarcXmlManager {
     }
 
     /**
+     * The value of the 999 field
+     */
+    private String field999 = null;
+
+    /**
+     * Gets the 999 field
+     *
+     * @return the MARC XML's 999 field
+     */
+    public String getField999() {
+        return field999;
+    }
+
+    /**
      * The 440 field's element
      */
     private ArrayList<Element> field440elements = new ArrayList<Element>();
@@ -1070,6 +1084,15 @@ public class MarcXmlManager {
                 // Set the 245 $a subfield
                 field245 = (subfields.size() > 0 ? subfields.get(0) : null);
             } // end if (245 found)
+
+            // If the current field is 999, get its subfields
+            else if (tag.equals("999")) {
+                // Get the $a subfields
+                List<String> subfields = getSubfieldValuesOfField(field, 'a');
+
+                // Set the 999 $a subfield
+                field999 = (subfields.size() > 0 ? subfields.get(0) : null);
+            } // end if (999 found)
 
             // If the current field is 502, get its subfields
             else if (tag.equals("502")) {
