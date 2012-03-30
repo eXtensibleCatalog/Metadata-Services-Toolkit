@@ -645,6 +645,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 } else {
                     processedRecordCount++;
                     if (out != null) {
+                        // start processing the received OutputRecord(s)
                         for (RecordIfc rout : out) {
                             messages2deleteByRecordId.add(rout.getId());
                             Record rout2 = (Record) rout;
@@ -657,7 +658,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
                                     + rout2.getStatus()
                                     + " rout2.getPreviousStatus(): "
                                     + rout2.getPreviousStatus());
+               ///
+               ///LOG.info("rout id="+rout.getId()+" rout2.getIndexedObjectType(): "
+               //       + rout2.getType() + " rout2.getStatus(): "
+               //       + rout2.getStatus()
+               //      + " rout2.getPreviousStatus(): "
+               //+ rout2.getPreviousStatus());
+               ///
                             if (!isTestRepository()) {
+                                // one last bit of record counting.
                                 if (rout2.getType() != null) {
                                     getMetadataServiceManager()
                                             .getOutgoingRecordCounts().incr(
@@ -676,6 +685,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                                                 rout2.getStatus(),
                                                 rout2.getPreviousStatus());
                             }
+                            // finally, actually process the received records.
                             rout2.addPredecessor(in);
                             rout2.setService(getService());
                             if (rout2.getId() == -1) {

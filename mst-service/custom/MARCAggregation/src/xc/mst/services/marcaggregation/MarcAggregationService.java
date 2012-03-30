@@ -318,10 +318,12 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-    private void updateMasMergedRecords(Long outputRecordId, Set<Long> mergedInputRecordSet) {
+    // will use these data structures as the basis to update DAO, should always be up to date.
+    private void updateMasMergedRecords(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             mergedRecordsI2Omap.put(num,outputRecordId);
         }
+        mergedRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
     }
 
     // in case we use the model of merging AFTER all records initially seen.
@@ -329,7 +331,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // merge each match set, 1 winning record used to pull static content,
         // all in the set used to pull dynamic content
 
-        for (Set<Long> set: matches) {
+        for (TreeSet<Long> set: matches) {
             mergeBibSet(set, repo);
         }
     }
@@ -338,7 +340,7 @@ public class MarcAggregationService extends GenericMetadataService {
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
-    private List<OutputRecord> mergeBibSet(/*InputRecord inRecord, */ Set<Long> set, Repository repo) {
+    private List<OutputRecord> mergeBibSet(/*InputRecord inRecord, */ TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
         LOG.info("**** Record of Source == "+recordOfSource);
 
@@ -1091,7 +1093,7 @@ public class MarcAggregationService extends GenericMetadataService {
                         }
                         */
                 }
-            } else {
+            } else {// Record.DELETED
                 if (r.getSuccessors().size() == 0) {
                     // NEW-DELETED
                     //
@@ -1184,6 +1186,10 @@ public class MarcAggregationService extends GenericMetadataService {
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
+        // make sure to get all the disjoint merge sets in the total set, i.e. if this given input record
+        // does not match something that another record it did match did, it needs to be in the total.
+        matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+
         // this is the merge as you go along spot,
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
@@ -1192,19 +1198,23 @@ public class MarcAggregationService extends GenericMetadataService {
             //delete;
             if (mergedRecordsI2Omap.containsKey(input)) {
                 Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
-                mergedRecordsI2Omap.remove(input);
+                mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
                 mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
 
                 // you may have already deleted it, because 1 output record can be mapped to multiple input records
                 if (outputRecordToBeDeleted != null) {
                     outputRecordToBeDeleted.setStatus(Record.DELETED);
-                    ////ARGH.  this is never not null if the records did not get persisted!
-                    LOG.info("** just set status to D for reocrd: "+outputRecordToBeDeletedNum);
+                    // if the records did not get persisted, will get null record back, or you may have already
+                    //  deleted it if it is part of a merge set.
+                    LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+                }
+                // dark side code
+                else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
+                    getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
                 }
 
                 LOG.info("** remove output record: "+outputRecordToBeDeletedNum);
-
                 // you may have already deleted it, because 1 output record can be mapped to multiple input records
                 if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
                     for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
@@ -1215,7 +1225,6 @@ public class MarcAggregationService extends GenericMetadataService {
                         or.setType(type);
                     }
                 }
-
             }
         }
 
@@ -1233,6 +1242,30 @@ public class MarcAggregationService extends GenericMetadataService {
              LOG.info("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
         results.addAll(list);
+        return results;
+    }
+
+    /**
+     * given sets {62,160} and {160,201} where 160 individually matches the other 2, but the other 2 don't directly match
+     * each other, indirectly they do, so the output record needs to combine {62,160,201}
+     *
+     * @param matchedRecordIds
+     * @return
+     */
+    private TreeSet<Long> expandMatchedRecords(TreeSet<Long> matchedRecordIds) {
+        TreeSet<Long> results = new TreeSet<Long>();
+        results.addAll(matchedRecordIds);
+
+        for (Long input: matchedRecordIds) {
+            Long output = mergedRecordsI2Omap.get(input);
+            if (output != null) {
+                TreeSet<Long> temp = mergedRecordsO2Imap.get(output);
+                if (temp != null) {
+                    results.addAll(mergedRecordsO2Imap.get(output));
+                }
+            }
+        }
+
         return results;
     }
 
