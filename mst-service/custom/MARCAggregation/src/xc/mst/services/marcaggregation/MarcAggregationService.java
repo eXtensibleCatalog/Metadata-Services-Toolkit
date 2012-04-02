@@ -343,7 +343,7 @@ public class MarcAggregationService extends GenericMetadataService {
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
-    private List<OutputRecord> mergeBibSet(/*InputRecord inRecord, */ TreeSet<Long> set, Repository repo) {
+    private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
         LOG.info("**** Record of Source == "+recordOfSource);
 
@@ -363,11 +363,11 @@ public class MarcAggregationService extends GenericMetadataService {
         //LOG.info(oaiXml);
 
         // TODO q and a:
-        // do I need to reconstitute all the records of the match set to setup pred/succ correctly?
+        // do I need to recreate all the records of the match set to setup pred/succ correctly?
         // do I need to provide a  list of these full records to the createNewRecord method?
         List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
 
-        // now that we have created a new record successfully, update the datastructure to track the merged records.
+        // now that we have created a new record successfully, update the data structure to track the merged records.
         if (list.size() > 0) {
             // will get 1 agg. record back.
             updateMasMergedRecords(list.get(0).getId(), set);
@@ -973,8 +973,10 @@ public class MarcAggregationService extends GenericMetadataService {
         TimingLogger.start("new");
 
         // The list of records resulting from processing the incoming record
-        //    actually maybe we want to return list of InputRecord as we are collapsing,
-        //    not expanding.
+        //    for this service, need to somewhere account for the fact that
+        //    we are collapsing, not expanding, so there <= output records for
+        //    an input record
+        //
         ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
 
         // Create the aggregated record
@@ -991,8 +993,6 @@ public class MarcAggregationService extends GenericMetadataService {
         String setDescription = null;
         String setName = null;
 
-        // Setup the setSpec and description based on the leader 06
-        // TODO is this right?
         if (type.equals("b")) {
             setSpec = "MARCXMLbibliographic";
             setName = "MARCXML Bibliographic Records";
@@ -1036,6 +1036,18 @@ public class MarcAggregationService extends GenericMetadataService {
         TimingLogger.stop("new");
         return results;
     }
+
+    // search to see if there are multiple in records for this given out record.
+    //
+    // TODO  may not need this method.
+    /*
+    protected void addPredecessor(Record in, Record out) {
+//        out.addPredecessor(in);
+        for (Long in_rec: mergedRecordsO2Imap.get(out)) {
+            out.addPredecessor(inputRepo.getRecord(in_rec));
+        }
+    }
+    */
 
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
@@ -1117,7 +1129,9 @@ public class MarcAggregationService extends GenericMetadataService {
         return null;
     }
 
-    // actually on any re-merge you may have to do this, rewrite the holding.
+    /*
+     * pretty much just passes the record on.
+     */
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
 
         //
@@ -1143,6 +1157,8 @@ public class MarcAggregationService extends GenericMetadataService {
     // another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
     // record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
     // to the record represented in the input Holdings record’s 004 field.
+    //
+    // New plan - no 904's just pass through holdings.
     //
     private StringBuilder add904toHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         String _004 = smr.getControlField(4);

@@ -686,7 +686,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                                                 rout2.getPreviousStatus());
                             }
                             // finally, actually process the received records.
-                            rout2.addPredecessor(in);
+                            addPredecessor(in, rout2);
                             rout2.setService(getService());
                             if (rout2.getId() == -1) {
                                 getRepositoryDAO().injectId(rout2);
@@ -767,6 +767,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
         }
         setStatus(Status.NOT_RUNNING);
+    }
+
+    // currently we have a service that has a 1:1 relationship, 1 that produces more outputs from inputs, and we'll have
+    // 1 that produces less outputs than inputs.  so this must be called as necessary for these cases.
+    //
+    protected void addPredecessor(Record in, Record out) {
+        out.addPredecessor(in);
     }
 
     protected void processStatusDisplay(Repository repo, Format inputFormat, Set inputSet, Set outputSet) {
