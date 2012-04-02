@@ -1039,15 +1039,20 @@ public class MarcAggregationService extends GenericMetadataService {
 
     // search to see if there are multiple in records for this given out record.
     //
-    // TODO  may not need this method.
-    /*
     protected void addPredecessor(Record in, Record out) {
-//        out.addPredecessor(in);
-        for (Long in_rec: mergedRecordsO2Imap.get(out)) {
-            out.addPredecessor(inputRepo.getRecord(in_rec));
+        TreeSet<Long> set = mergedRecordsO2Imap.get(out.getId());
+        if (set==null || set.isEmpty()) {
+          out.addPredecessor(in);
+        }
+        else {
+            for (Long in_rec: set) {
+                Record r = inputRepo.getRecord(in_rec);
+                if (r != null) {
+                    out.addPredecessor(r);
+                }
+            }
         }
     }
-    */
 
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
