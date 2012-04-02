@@ -76,10 +76,13 @@ public class MarcAggregationService extends GenericMetadataService {
     protected List<TreeSet<Long>>                    masMatchSetList = null;
 
     // map output records to corresponding input records map
+    //   not only tracked merged records, 1 to many, but track unmerged 1 to 1
     protected Map<Long, TreeSet<Long>>               mergedRecordsO2Imap = null;
 
-    // map input records to corresponding output map
+    // map input records to corresponding output map,
+    //   not only tracked merged records, many to 1, but track unmerged 1 to 1
     protected TLongLongHashMap                       mergedRecordsI2Omap = null;
+
 //    protected final XmlHelper xmlHelper = new XmlHelper();
 
     private List<Character> leaderVals = null;
@@ -198,7 +201,7 @@ public class MarcAggregationService extends GenericMetadataService {
         leaderVals = new ArrayList<Character>();
         List<String> _leaderVals = getConfigFileValues("leader.order");
         for (String val: _leaderVals) {
-            LOG.info("Leader val==>"+val+"<== val length="+val.length());
+            LOG.debug("Leader val==>"+val+"<== val length="+val.length());
             if (val.length() == 3) {
                 leaderVals.add(val.charAt(1));  // char between quotes
             }
@@ -968,8 +971,6 @@ public class MarcAggregationService extends GenericMetadataService {
         }
 
         TimingLogger.start("new");
-//        if (LOG.isDebugEnabled())
-//            LOG.debug("  ");
 
         // The list of records resulting from processing the incoming record
         //    actually maybe we want to return list of InputRecord as we are collapsing,
@@ -1028,8 +1029,6 @@ public class MarcAggregationService extends GenericMetadataService {
         // incoming record
         aggRecord.setType(type);
         results.add(aggRecord);
-
-        //TODO need to update memory tracking/dB table merged_records
 
         if (LOG.isDebugEnabled())
             LOG.debug("Created aggregated record from record with ID " + record.getId());
@@ -1126,8 +1125,8 @@ public class MarcAggregationService extends GenericMetadataService {
         //
         //StringBuilder sb = add904toHolding(r, smr, repo);
 
-//   LOG.info("** NEW HOLDING:");
-//   LOG.info(sb.toString());
+        //   LOG.info("** NEW HOLDING:");
+        //   LOG.info(sb.toString());
 
         // originally I thought we were stripping 004/014 from holding.  We are not.
         //
@@ -1135,7 +1134,6 @@ public class MarcAggregationService extends GenericMetadataService {
         // oaiXml = getHoldingBase(oaiXml);
         List<OutputRecord> list = null;
         list = createNewRecord(r, "h", oaiXml);
-        // TODO build relationships to bibs.
         return list;
     }
 
@@ -1214,7 +1212,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
                 }
 
-                LOG.info("** remove output record: "+outputRecordToBeDeletedNum);
+                LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
                 // you may have already deleted it, because 1 output record can be mapped to multiple input records
                 if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
                     for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
@@ -1233,13 +1231,20 @@ public class MarcAggregationService extends GenericMetadataService {
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
             list = mergeBibSet(/* r, */ matchedRecordIds, repo);
-            LOG.info("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+            LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
 
-            // was merge(masMatchSetList,repo);  // that went through whole list every time.
         }
         else {
              list = createNewRecord(r, "b", r.getOaiXml());
-             LOG.info("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+             // even though it is not merged, must still track the I<->O relationships!
+             if (list.size() > 0) {
+                 // will get 1 agg. record back.
+                 TreeSet<Long> littleSet = new TreeSet<Long>();
+                 littleSet.add(r.getId());
+                 updateMasMergedRecords(list.get(0).getId(), littleSet);
+             }
+
+             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
         results.addAll(list);
         return results;
