@@ -207,6 +207,11 @@ public class NormalizationServiceConstants {
     public static final String CONFIG_ENABLED_NRU_GENRE = "NRUGenre";
 
     /**
+     * Parameter for looking up the whether or not the NRUDatabaseGenre normalization step is enabled.
+     */
+    public static final String CONFIG_ENABLED_NRU_DATABASE_GENRE = "NRUDatabaseGenre";
+
+    /**
      * Parameter for looking up the whether or not the TopicSplit normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_TOPIC_SPLIT = "TopicSplit";

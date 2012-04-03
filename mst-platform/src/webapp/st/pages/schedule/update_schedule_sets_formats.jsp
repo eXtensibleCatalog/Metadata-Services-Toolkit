@@ -40,6 +40,9 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_schedule_set_format.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/jquery.min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/shortened_select.js"></SCRIPT>
     </head>
 
     <body class="yui-skin-sam">
@@ -138,7 +141,7 @@
       <tr>
         <td>
           <b>Formats</b><br>
-          <select multiple name="selectedFormatIdsShown" style="width:300px;" size="10" disabled>
+          <select multiple name="selectedFormatIdsShown" style="width:450px;" size="10" disabled>
             <c:forEach var="format" items="${repository.formats}">
               <option value="${format.id}"
 
@@ -182,7 +185,7 @@
         <td >
           <b>Sets </b>
           <br>
-          <select name="selectedSetIdsShown" multiple style="width:300px;" size="10" disabled>
+          <select class="shortenedSelect" name="selectedSetIdsShown" multiple style="width:450px;" size="10" disabled>
             <option value="0"
                                 <c:if test="${schedule.sets == '[]' || schedule.sets == '[null]'}">
                                      selected
@@ -197,8 +200,8 @@
                                     </c:if>
                                 </c:forEach>
                                 >${set.displayName}
+                                </option>
                             </c:forEach>
-                        </option>
                     </select>
           <select name="selectedSetIds" multiple style="display:none;">
             <option value="0"

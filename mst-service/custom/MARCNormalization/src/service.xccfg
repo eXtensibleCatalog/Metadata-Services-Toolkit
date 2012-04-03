@@ -174,6 +174,11 @@ GenreSplit = 1
 # for each 655 field with $2 = "local" and $5 = "NRU"
 NRUGenre = 0
 
+# 1 to create genre field 655 $a Database $2 [value of 999 $a]
+# if 999$a contains the word "database" (case-insensitive) 
+NRUDatabaseGenre = 0
+
+
 # 1 to remove duplicate DCMI type fields. 
 DedupDCMIType = 1
 

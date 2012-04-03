@@ -38,7 +38,8 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_processingdirective_sets_formats.js"></SCRIPT>
 
-
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/jquery.min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/shortened_select.js"></SCRIPT>
     </head>
 
 
@@ -147,7 +148,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${empty formatList}">
-                                         <div class="listBox" style="width:300px;">
+                                         <div class="listBox" style="width:450px;">
                                            <B> Formats </B><br><br>
                                                 <I>No Formats to display</I>
                                          </div>
@@ -155,7 +156,7 @@
                                     <c:otherwise>
                                         <div class="listBox">
                                             <B>Formats</B><br>
-                                            <select multiple size="10" style="width:300px;" id="formatsSelected" name="formatsSelected">
+                                            <select multiple size="10" style="width:450px;" id="formatsSelected" name="formatsSelected">
                                                <c:forEach var="format" items="${formatList}" varStatus="formatCount">
                                                     <c:set var="flag" value="${false}"/>
                                                       <c:forEach var="triggerFormat" items="${temporaryProcessingDirective.triggeringFormats}" varStatus="triggerFormatCount">
@@ -167,10 +168,10 @@
                                                     </c:forEach>
                                                     <c:choose>
                                                         <c:when test="${flag == true}">
-                                                             <option selected value="${format.id}">${format.name}
+                                                             <option selected value="${format.id}">${format.name}</option>
                                                         </c:when>
                                                          <c:otherwise>
-                                                              <option value="${format.id}">${format.name}
+                                                              <option value="${format.id}">${format.name}</option>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -186,11 +187,11 @@
                             </td>
                             <td>
 
-                                <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:5px;">
+                                <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 11px;margin-bottom:20px;margin-top:5px;">
                                     You have the option to create a named set of output records for this processing directive&nbsp;&nbsp;&nbsp;<br><br>
                                     Output Set Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text"  name="outputSetName" value="${temporaryProcessingDirective.outputSet.displayName}" maxlength="50" size="40">
                                 </div>
-                                 <div style="margin-left:100px;font-family: verdana,sans-serif;font-size: 11px;">
+                                 <div style="margin-left:10px;font-family: verdana,sans-serif;font-size: 11px;">
                                     Output Set Specification &nbsp;&nbsp;<input type="text"  name="outputSetSpec" value="${temporaryProcessingDirective.outputSet.setSpec}" maxlength="50" size="40">
                                 </div>
 
@@ -201,9 +202,9 @@
 
                         <tr>
                             <td>
-                                <div style="overflow:auto;width:300px;" align="left">
+                                <div style="overflow:auto;width:450px;" align="left">
                                    <B>Sets</B> <br>
-                                   <select multiple size="10" id="setsSelected" name="setsSelected">
+                                   <select class="shortenedSelect" multiple size="10" id="setsSelected" name="setsSelected" style="width:450px;">
                                        <option value="0"
                                            <c:if test="${temporaryProcessingDirective.triggeringSets == '[]' || temporaryProcessingDirective.triggeringSets == '[null]'}">
                                                 selected
@@ -218,10 +219,10 @@
                                            </c:forEach>
                                            <c:choose>
                                                <c:when test="${flag==true}">
-                                                    <option selected value="${set.id}">${set.displayName}(${set.setSpec})
+                                                    <option selected value="${set.id}">${set.displayName}(${set.setSpec})</option>
                                                </c:when>
                                                 <c:otherwise>
-                                                    <option value="${set.id}">${set.displayName}(${set.setSpec})
+                                                    <option value="${set.id}">${set.displayName}(${set.setSpec})</option>
                                                </c:otherwise>
                                            </c:choose>
                                        </c:forEach>
