@@ -321,12 +321,20 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    // will use these data structures as the basis to update DAO, should always be up to date.
+    private void updateMasMergedRecords(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
+        for (Long num: mergedInputRecordSet) {
+            mergedRecordsI2Omap.put(num,outputRecordId);
+        }
+        mergedRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
+    }
+
     // in case we use the model of merging AFTER all records initially seen.
     private void mergeAll(List<TreeSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
         // all in the set used to pull dynamic content
 
-        for (Set<Long> set: matches) {
+        for (TreeSet<Long> set: matches) {
             mergeBibSet(set, repo);
         }
     }
@@ -335,7 +343,7 @@ public class MarcAggregationService extends GenericMetadataService {
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
-    private List<OutputRecord> mergeBibSet(/*InputRecord inRecord, */ Set<Long> set, Repository repo) {
+    private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
         LOG.info("**** Record of Source == "+recordOfSource);
 
@@ -355,10 +363,15 @@ public class MarcAggregationService extends GenericMetadataService {
         //LOG.info(oaiXml);
 
         // TODO q and a:
-        // do I need to reconstitute all the records of the match set to setup pred/succ correctly?
+        // do I need to recreate all the records of the match set to setup pred/succ correctly?
         // do I need to provide a  list of these full records to the createNewRecord method?
         List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
-        return list;
+
+        // now that we have created a new record successfully, update the data structure to track the merged records.
+        if (list.size() > 0) {
+            // will get 1 agg. record back.
+            updateMasMergedRecords(list.get(0).getId(), set);
+        }
         return list;
     }
 
@@ -378,7 +391,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // now insert the dynamic block into the correct spot in oaiXml,
         // it goes after the 008!
         final String regex = "controlfield tag=\"008\".*/marc:controlfield>";
-        oaiXml=insertDynamic(oaiXml, dynData, regex);
+        oaiXml=insertDynamicAtEnd(oaiXml, dynData, regex);
         //LOG.info("DATA WITH DYNAMIC DATA:");
         //LOG.info(oaiXml);
         return oaiXml;
@@ -388,7 +401,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * Use a regular expression to search for a pattern.  Insert 'dynamic' right after the end
      * of the found match. If match not found insert at end.
      */
-    private String insertDynamic(String inputXml, String dynamic, String regex) {
+    private String insertDynamicAtEnd(String inputXml, String dynamic, String regex) {
         //
         // Create a Pattern instance
         //
@@ -407,6 +420,38 @@ public class MarcAggregationService extends GenericMetadataService {
         if (matcher.find()) {
             end = matcher.end();
             sb.insert(end, dynamic);
+        }
+        else {
+            LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
+            sb.append(dynamic);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Use a regular expression to search for a pattern.  Insert 'dynamic' right before the
+     *  found match. If match not found insert at end.
+     *  (at end would really would be an error, after end of </record>)
+     */
+    private String insertDynamicAtBegin(String inputXml, String dynamic, String regex) {
+        //
+        // Create a Pattern instance
+        //
+        Pattern pattern = Pattern.compile(regex);
+
+        //
+        // Create matcher object
+        //
+        Matcher matcher = pattern.matcher(inputXml);
+        StringBuffer sb = new StringBuffer(inputXml);
+
+        //
+        // Find where to place the text that match the pattern (at end of pattern matching text)
+        //
+        int begin = -1;
+        if (matcher.find()) {
+            begin = matcher.start();
+            sb.insert(begin, dynamic);
         }
         else {
             LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
@@ -758,9 +803,42 @@ public class MarcAggregationService extends GenericMetadataService {
         else {
             LOG.error("no _004 code found in "+smr.recordId);
         }
-        StringBuilder sb = new StringBuilder("").append(_004);
-        return sb.toString();
-        //TODO fix this.  Really need to create or use an encapsulating class like MarcDatafieldHolder.
+        List<Marc014Holder> marcFields = new ArrayList<Marc014Holder>();
+
+        // Get dataField with tag=014
+        List<Field> dataFields = smr.getDataFields(14);
+        // Loop through the 014 - note, there can be >1
+
+        for (Field field : dataFields) {
+            char ind1 = field.getInd1();
+            // 014$a and 014$b do not repeat.  if there is no 014$a, do not continue with parsing.
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            if (subfields.size()<1) {
+                continue;
+            }
+            else {
+                String subfield = subfields.get(0);   // only 1 subfield $a
+                MarcSubfieldHolder subfieldA = new MarcSubfieldHolder(new Character('a'),subfield);
+                MarcSubfieldHolder subfieldB = null;
+                List<String> subfieldsB = SaxMarcXmlRecord.getSubfieldOfField(field, 'b');
+                if (subfieldsB.size()>0) {
+                    subfieldB = new MarcSubfieldHolder(new Character('b'),subfield);
+                }
+                marcFields.add(new Marc014Holder(subfieldA, subfieldB, new Character(ind1).toString()));
+            }
+        }
+        if (_004 == null && marcFields.size() < 1) {
+            throw new RuntimeException("no 004's or 014's found in "+smr.recordId);
+        }
+        else {
+            _904generator = new Marc904Generator(_003, _004, marcFields);
+        }
+        // this will dedup and stringify
+        List<String> _904s = _904generator.get904s();
+
+        // create the xml
+        Marc904Holder holder = new Marc904Holder(_904s);
+        return holder.toString();
     }
 
     /**
@@ -895,8 +973,10 @@ public class MarcAggregationService extends GenericMetadataService {
         TimingLogger.start("new");
 
         // The list of records resulting from processing the incoming record
-        //    actually maybe we want to return list of InputRecord as we are collapsing,
-        //    not expanding.
+        //    for this service, need to somewhere account for the fact that
+        //    we are collapsing, not expanding, so there <= output records for
+        //    an input record
+        //
         ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
 
         // Create the aggregated record
@@ -913,8 +993,6 @@ public class MarcAggregationService extends GenericMetadataService {
         String setDescription = null;
         String setName = null;
 
-        // Setup the setSpec and description based on the leader 06
-        // TODO is this right?
         if (type.equals("b")) {
             setSpec = "MARCXMLbibliographic";
             setName = "MARCXML Bibliographic Records";
@@ -951,6 +1029,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // incoming record
         aggRecord.setType(type);
         results.add(aggRecord);
+
         if (LOG.isDebugEnabled())
             LOG.debug("Created aggregated record from record with ID " + record.getId());
 
@@ -1055,26 +1134,50 @@ public class MarcAggregationService extends GenericMetadataService {
         return null;
     }
 
+    /*
+     * pretty much just passes the record on.
+     */
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+
+        //
+        // new plan - do not put a 904 into the holding, just pass the holding on.
+        //
+        //StringBuilder sb = add904toHolding(r, smr, repo);
+
+        //   LOG.info("** NEW HOLDING:");
+        //   LOG.info(sb.toString());
+
+        // originally I thought we were stripping 004/014 from holding.  We are not.
+        //
+        String oaiXml = repo.getRecord(r.getId()).getOaiXml();
         // oaiXml = getHoldingBase(oaiXml);
         List<OutputRecord> list = null;
         list = createNewRecord(r, "h", oaiXml);
         return list;
     }
 
-        Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
-        HashSet<String> dyn904 = dynamic.get(904);
-        for (String _904 : dyn904) {
-            LOG.debug("created 904: "+_904);
-        }
-        // originally I thought we were stripping 004/014 from holding.  We are not.
+    // original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
+    //
+    // For every holdings record, whether or not its parent bibliographic record matches on and is merged with
+    // another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+    // record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
+    // to the record represented in the input Holdings record’s 004 field.
+    //
+    // New plan - no 904's just pass through holdings.
+    //
+    private StringBuilder add904toHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        String _004 = smr.getControlField(4);
+
+        String dynamic = getDynamicHoldingContent(repo, r.getId());
+        StringBuilder sb ;
+
+        // now insert the dynamic block into the correct spot in oaiXml,
+        // it goes before the end tag, </marc:record>
+        // find:            </marc:record>
         //
-        // String oaiXml = repo.getRecord(r.getId()).getOaiXml();
-        // oaiXml = getHoldingBase(oaiXml);
-        List<OutputRecord> list = null;
-        //TODO make sure 904 block is tacked onto the end!
-        list = createNewRecord(r, "h", r.getOaiXml());
-        return list;
+        final String regex = "</marc:record>";
+        sb = new StringBuilder(insertDynamicAtBegin(r.getOaiXml(), dynamic, regex));
+        return sb;
     }
 
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
@@ -1110,18 +1213,62 @@ public class MarcAggregationService extends GenericMetadataService {
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
         masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+        for (Long input: matchedRecordIds) {
+            //delete;
+            if (mergedRecordsI2Omap.containsKey(input)) {
+                Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
+                mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
+                mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
+                Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
+
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null) {
+                    outputRecordToBeDeleted.setStatus(Record.DELETED);
+                    // if the records did not get persisted, will get null record back, or you may have already
+                    //  deleted it if it is part of a merge set.
+                    LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+                }
+                // dark side code
+                else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
+                    getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+                }
+
+                LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
+                    for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
+                        or.setStatus(Record.DELETED);
+                        results.add(or);
+                        Record _r = getRepository().getRecord(or.getId());
+                        String type = getXCRecordService().getType(_r);
+                        or.setType(type);
+                    }
+                }
+            }
+        }
 
         List<OutputRecord> list = null;
         // may not have any matches!
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
             list = mergeBibSet(/* r, */ matchedRecordIds, repo);
-            // was merge(masMatchSetList,repo);  // that went through whole list every time.
+            LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+
         }
         else {
              list = createNewRecord(r, "b", r.getOaiXml());
+             // even though it is not merged, must still track the I<->O relationships!
+             if (list.size() > 0) {
+                 // will get 1 agg. record back.
+                 TreeSet<Long> littleSet = new TreeSet<Long>();
+                 littleSet.add(r.getId());
+                 updateMasMergedRecords(list.get(0).getId(), littleSet);
+             }
+
+             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
-        return list;
+        results.addAll(list);
+        return results;
     }
 
     /**
