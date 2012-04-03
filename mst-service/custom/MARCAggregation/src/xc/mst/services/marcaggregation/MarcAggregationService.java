@@ -8,6 +8,7 @@
  */
 package xc.mst.services.marcaggregation;
 
+import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongObjectHashMap;
 
 import java.io.FileInputStream;
@@ -16,7 +17,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +72,16 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, FieldMatcher>              matcherMap = null;
     protected Map<String, MatchRuleIfc>              matchRuleMap = null;
     protected MarcAggregationServiceDAO              masDAO = null;
-    protected List<TreeSet<Long>>                    masMatchSetList = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores = null;
+    protected List<TreeSet<Long>>                    masMatchSetList = null;
+
+    // map output records to corresponding input records map
+    //   not only tracked merged records, 1 to many, but track unmerged 1 to 1
+    protected Map<Long, TreeSet<Long>>               mergedRecordsO2Imap = null;
+
+    // map input records to corresponding output map,
+    //   not only tracked merged records, many to 1, but track unmerged 1 to 1
+    protected TLongLongHashMap                       mergedRecordsI2Omap = null;
 
 //    protected final XmlHelper xmlHelper = new XmlHelper();
 
@@ -124,6 +132,29 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         setupMatchers();
         setupMatchRules();
+        mergedRecordsI2Omap = loadMasMergedRecords();
+        mergedRecordsO2Imap = createMergedRecordsO2Imap(mergedRecordsI2Omap);
+    }
+
+    // map output records to corresponding input records map
+    //   there is probably a lot slicker way to do this.
+    private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
+        TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
+        for (Long out: i_to_o_map.getValues()) {
+            if (!results.containsKey(out)) {
+                List<Long> vals = masDAO.getInputRecordsMergedToOutputRecord(out);
+                TreeSet<Long> set = new TreeSet<Long>();
+                for (Long val: vals) {
+                    set.add(val);
+                }
+                results.put(out, set);
+            }
+        }
+        return results;
+    }
+
+    private TLongLongHashMap loadMasMergedRecords() {
+        return masDAO.getMergedRecords();
     }
 
     protected Transformer setupTransformer(String xslFileName) throws TransformerFactoryConfigurationError {
@@ -170,7 +201,7 @@ public class MarcAggregationService extends GenericMetadataService {
         leaderVals = new ArrayList<Character>();
         List<String> _leaderVals = getConfigFileValues("leader.order");
         for (String val: _leaderVals) {
-            LOG.info("Leader val==>"+val+"<== val length="+val.length());
+            LOG.debug("Leader val==>"+val+"<== val length="+val.length());
             if (val.length() == 3) {
                 leaderVals.add(val.charAt(1));  // char between quotes
             }
@@ -327,6 +358,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // do I need to reconstitute all the records of the match set to setup pred/succ correctly?
         // do I need to provide a  list of these full records to the createNewRecord method?
         List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
+        return list;
         return list;
     }
 
@@ -595,25 +627,15 @@ public class MarcAggregationService extends GenericMetadataService {
         return dynamic;
     }
 
-    //getDynamicHoldingContent => create 904 from 004/014, save existing 035's, save existing 904?
+    //getDynamicHoldingContent => create 904 from 004/014, don't worry about existing 904,
+    // we are not trimming anything from existing record.
     //   returns content to dynamically insert into holding records
     //
-    // dynamic:  (create class?)
-    // record_id ->  {{904 list}, etc.}
-    //
-    protected Map<Integer, HashSet<String>> getDynamicHoldingContent(Repository repo, Long num) {
-        Map<Integer, HashSet<String>> dynamic = new HashMap<Integer, HashSet<String>>();
-        HashSet<String> _904s = new HashSet<String>();
-        // need to pass to a method that gets static content and dynamic content and builds a list of it.
+    protected String getDynamicHoldingContent(Repository repo, Long num) {
         String oai = repo.getRecord(num).getOaiXml();
-        String _904 = create904(oai);
-        if (_904 != null) {
-            _904s.add(_904);
-        }
-            //TODO is it correct to look for preexisting 904's?
-//////////////////            _904s.addAll(getDynamicField(oai, 904, 'a'));  // add 035$a data
-        dynamic.put(904, _904s);
-        return dynamic;
+        String _904 = create904(oai);   // the block of xml
+
+        return _904;
     }
 
     /**
@@ -719,14 +741,22 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return can return null, so check for it!
      */
     private String create904(String oaiXml) {
+        Marc904Generator _904generator = null;
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
+        String _003 = smr.getControlField(3);
+        if (_003 != null) {
+            _003 = _003.trim();
+        }
+        else {
+            LOG.error("no _003 code found in "+smr.recordId);
+            throw new RuntimeException("no _003 code found in "+smr.recordId);
+        }
         String _004 = smr.getControlField(4);
         if (_004 != null) {
             _004 = _004.trim();
         }
         else {
-            LOG.debug("no _004 code found in "+smr.recordId);
-            return null;
+            LOG.error("no _004 code found in "+smr.recordId);
         }
         StringBuilder sb = new StringBuilder("").append(_004);
         return sb.toString();
@@ -863,8 +893,6 @@ public class MarcAggregationService extends GenericMetadataService {
         }
 
         TimingLogger.start("new");
-//        if (LOG.isDebugEnabled())
-//            LOG.debug("  ");
 
         // The list of records resulting from processing the incoming record
         //    actually maybe we want to return list of InputRecord as we are collapsing,
@@ -930,6 +958,23 @@ public class MarcAggregationService extends GenericMetadataService {
         return results;
     }
 
+    // search to see if there are multiple in records for this given out record.
+    //
+    protected void addPredecessor(Record in, Record out) {
+        TreeSet<Long> set = mergedRecordsO2Imap.get(out.getId());
+        if (set==null || set.isEmpty()) {
+          out.addPredecessor(in);
+        }
+        else {
+            for (Long in_rec: set) {
+                Record r = inputRepo.getRecord(in_rec);
+                if (r != null) {
+                    out.addPredecessor(r);
+                }
+            }
+        }
+    }
+
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
         List<OutputRecord> results = null;
@@ -985,7 +1030,7 @@ public class MarcAggregationService extends GenericMetadataService {
                         }
                         */
                 }
-            } else {
+            } else {// Record.DELETED
                 if (r.getSuccessors().size() == 0) {
                     // NEW-DELETED
                     //
@@ -1011,6 +1056,11 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        // oaiXml = getHoldingBase(oaiXml);
+        List<OutputRecord> list = null;
+        list = createNewRecord(r, "h", oaiXml);
+        return list;
+    }
 
         Map<Integer, HashSet<String>> dynamic = getDynamicHoldingContent(repo, r.getId());
         HashSet<String> dyn904 = dynamic.get(904);
@@ -1049,6 +1099,13 @@ public class MarcAggregationService extends GenericMetadataService {
                 matchedRecordIds.addAll(set);
             }
         }
+
+        List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+        // make sure to get all the disjoint merge sets in the total set, i.e. if this given input record
+        // does not match something that another record it did match did, it needs to be in the total.
+        matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+
         // this is the merge as you go along spot,
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
@@ -1067,6 +1124,30 @@ public class MarcAggregationService extends GenericMetadataService {
         return list;
     }
 
+    /**
+     * given sets {62,160} and {160,201} where 160 individually matches the other 2, but the other 2 don't directly match
+     * each other, indirectly they do, so the output record needs to combine {62,160,201}
+     *
+     * @param matchedRecordIds
+     * @return
+     */
+    private TreeSet<Long> expandMatchedRecords(TreeSet<Long> matchedRecordIds) {
+        TreeSet<Long> results = new TreeSet<Long>();
+        results.addAll(matchedRecordIds);
+
+        for (Long input: matchedRecordIds) {
+            Long output = mergedRecordsI2Omap.get(input);
+            if (output != null) {
+                TreeSet<Long> temp = mergedRecordsO2Imap.get(output);
+                if (temp != null) {
+                    results.addAll(mergedRecordsO2Imap.get(output));
+                }
+            }
+        }
+
+        return results;
+    }
+
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
@@ -1081,6 +1162,8 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             // this should not need to done in must do, must do frequently section.
             masDAO.persistScores(scores);
+            masDAO.persistLongMatchpointMaps(mergedRecordsI2Omap, MarcAggregationServiceDAO.merged_records_table, false);
+
             TimingLogger.stop("masDAO.commitIfNecessary");
         } catch (Throwable t) {
             getUtil().throwIt(t);

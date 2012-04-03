@@ -209,6 +209,27 @@ public class DefaultRepository extends BaseService implements Repository {
             r.setSets(getRepositoryDAO().getSets(name, id));
             getMessageService().injectMessages(r);
         }
+//
+// Have code that can check repoDAO cache now, but don't want to do so till I understand effects.
+//
+//        else {
+//            if (getRepositoryDAO().haveUnpersistedRecord(id)) {
+//                LOG.info("** FOUND the record is unpersisted, id="+id);
+//            }
+//        }
+        //debug dump predSucc map, lots of data.
+        /*
+        else {
+            LOG.info("** COULD NOT find: "+id+" check cache:");
+            for (Long outid: this.predSuccMap.keySet()) {
+                LOG.info("predSucc: id: "+ outid+" contains: ");
+                java.util.Set<Record> set = predSuccMap.get(outid);
+                for (Record record: set) {
+                    LOG.info("predSucc, key->"+outid+" val=>"+record.getId());
+                }
+            }
+        }
+        */
         return r;
     }
 

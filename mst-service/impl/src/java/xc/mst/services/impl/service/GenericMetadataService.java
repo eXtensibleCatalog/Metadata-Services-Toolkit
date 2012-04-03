@@ -24,6 +24,7 @@ public abstract class GenericMetadataService extends xc.mst.services.GenericMeta
             super.process(repo, inputFormat, inputSet, outputSet);
         } catch (Exception e) {
             LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" failed.", e);
+            throw new RuntimeException(e);
         }
     }
 
