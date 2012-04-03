@@ -124,6 +124,42 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
+    // probably a bad idea exposing some of this implementation stuff but am going for it.
+    public boolean haveUnpersistedRecord(Long id) {
+        for (Record record: recordsToAdd) {
+            if (record.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Record getUnpersistedRecord(Long id) {
+        for (Record record: recordsToAdd) {
+            if (record.getId() == id) {
+                return record;
+            }
+        }
+        return null;
+    }
+
+    public boolean deleteUnpersistedRecord(Long id) {
+        Record recordToDelete = null;
+        if (haveUnpersistedRecord(id)) {
+            for (Record record: recordsToAdd) {
+                if (record.getId() == id) {
+                    recordToDelete = record;
+                    break;
+                }
+            }
+        }
+        if (recordToDelete != null) {
+            recordsToAdd.remove(recordToDelete);
+            return true;
+        }
+        return false;
+    }
+
     public Repository createRepository(Provider provider) {
         Repository r = (Repository) config.getBean("Repository");
         r.setProvider(provider);
