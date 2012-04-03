@@ -6780,12 +6780,13 @@ public abstract class SolrTransformationService extends GenericMetadataService {
                         subfieldCodesSeen.add((Character) subfieldCode);
                     }
                     else {
+                    	String errMsg = "***** UNEXPECTED: " + field +" duplicate attribute. already have processed subfield: "+subfieldCode;
                         if (inRecord != null) {
-                            addMessage(inRecord, 101, RecordMessage.ERROR);
-                            LOG.debug("***** " + field +" duplicate attribute. already have processed subfield: "+subfieldCode);
+                            addMessage(inRecord, 101, RecordMessage.ERROR, errMsg);
+                            LOG.debug(errMsg);
                         }
                         else {
-                            LOG.error("***** UNEXPECTED: " + field +" duplicate attribute. already have processed subfield: "+subfieldCode);
+                            LOG.error(errMsg);
                         }
                     }
                 }
