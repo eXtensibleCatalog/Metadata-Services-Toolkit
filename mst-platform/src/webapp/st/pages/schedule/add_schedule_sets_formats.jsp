@@ -40,6 +40,9 @@
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/main_menu.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/add_schedule_set_format.js"></SCRIPT>
         <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/utilities.js"></SCRIPT>
+
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/jquery.min.js"></SCRIPT>
+        <SCRIPT LANGUAGE="JavaScript" SRC="page-resources/js/shortened_select.js"></SCRIPT>
     </head>
 
     <body class="yui-skin-sam">
@@ -138,7 +141,7 @@
       <tr>
         <td>
           <b>Formats</b><br>
-          <select multiple name="selectedFormatIds" style="width:300px;" size="10">
+          <select multiple name="selectedFormatIds" style="width:450px;" size="10">
             <c:forEach var="format" items="${repository.formats}">
               <option value="${format.id}"
 
@@ -170,7 +173,7 @@
         <td >
           <b>Sets </b>
           <br>
-          <select name="selectedSetIds" multiple style="width:300px;" size="10">
+          <select class="shortenedSelect" name="selectedSetIds" multiple style="width:450px;" size="10">
             <option value="0"
                                 <c:if test="${schedule.sets == '[]' || schedule.sets == '[null]'}">
                                      selected
@@ -185,8 +188,8 @@
                                     </c:if>
                                 </c:forEach>
                                 >${set.displayName}
+                                </option>
                             </c:forEach>
-                        </option>
                     </select>
           <br>
                         <c:if test="${!empty repository.sets}">

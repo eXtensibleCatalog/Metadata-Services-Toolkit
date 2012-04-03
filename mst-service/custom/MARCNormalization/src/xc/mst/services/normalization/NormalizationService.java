@@ -373,6 +373,9 @@ public class NormalizationService extends GenericMetadataService {
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_NRU_GENRE, "0").equals("1"))
                     normalizedXml = nruGenre(normalizedXml);
+                
+                if (enabledSteps.getProperty(CONFIG_ENABLED_NRU_DATABASE_GENRE, "0").equals("1"))
+                    normalizedXml = nruDatabaseGenre(normalizedXml);
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_TOPIC_SPLIT, "0").equals("1"))
                     normalizedXml = topicSplit(normalizedXml);
@@ -1468,6 +1471,59 @@ public class NormalizationService extends GenericMetadataService {
             marcXml.addMarcXmlField(FIELD_9XX_CLEAN_ISBN, cleanIsbn);
         }
 
+        return marcXml;
+    }
+    
+    /**
+     * Creates a 655 [$a $2] field for each 999 $a containing the word "database"
+     *
+     * @param marcXml
+     *            The original MARCXML record
+     * @return The MARCXML record after performing this normalization step.
+     */
+    private MarcXmlManager nruDatabaseGenre(MarcXmlManager marcXml) {
+        if (LOG.isDebugEnabled())
+            LOG.debug("Entering nruDatabaseGenre normalization step.");
+
+        // The 999 $a field
+        String field999 = marcXml.getField999();
+        
+        if (field999 == null) return marcXml;
+        
+        String[] tokens = field999.split("\\s");
+        boolean found = false;
+        for (int x=0; x<tokens.length; x++) {
+            if (tokens[x].equalsIgnoreCase("database")) {
+            	found = true;
+            	break;
+            }
+    	}
+        if (! found) return marcXml;
+        
+        Element newFieldElement = new Element("datafield", marcNamespace);
+        newFieldElement.setAttribute("tag", "655");
+        newFieldElement.setAttribute("ind1", " ");
+        newFieldElement.setAttribute("ind2", "0");
+
+        // Add the $a subfield
+        Element newFieldASubfield = new Element("subfield", marcNamespace);
+        newFieldASubfield.setAttribute("code", "a");
+        newFieldASubfield.setText("Database");
+
+        // Add the $a subfield to the new datafield
+        newFieldElement.addContent("\n\t").addContent(newFieldASubfield).addContent("\n");
+        
+        // Add the $2 subfield
+        Element newField2Subfield = new Element("subfield", marcNamespace);
+        newField2Subfield.setAttribute("code", "2");
+        newField2Subfield.setText(field999);
+
+        // Add the $2 subfield to the new datafield
+        newFieldElement.addContent("\n\t").addContent(newField2Subfield).addContent("\n");
+        
+        // Add the new field to the end of the MARC XML if we didn't insert it already
+        marcXml.getModifiedMarcXml().addContent(newFieldElement).addContent("\n\n");
+        
         return marcXml;
     }
     
