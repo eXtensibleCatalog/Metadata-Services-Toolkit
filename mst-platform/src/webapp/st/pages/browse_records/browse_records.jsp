@@ -127,6 +127,15 @@ text-decoration:underline;
 
                    </strong>
                      <c:forEach var="filter" items="${result.facetFilters}">
+                       <!-- remove the error code and semi-colon prefix -->
+                       <c:set var="filterValue" value="${filter.value}" />
+                       <c:set var="errCodePrefix" value="${fn:substringBefore(filter.value, ':')}:" />
+                       <c:if test="${facet.name == 'error'}">
+                           <c:if test="${errCodePrefix != ':'}">
+                              <c:set var="filterValue" value="${fn:substringAfter(filter.value, errCodePrefix)}" />
+                           </c:if>
+                       </c:if>
+
                        <c:if test="${facet.name == filter.name}">
                          <c:url var="removeFacet" value="browseRecords.action">
                           <c:param name="query" value="${query}"/>
@@ -137,7 +146,7 @@ text-decoration:underline;
                           <c:param name="identifier" value ="${identifier}"/>
 
                         </c:url>
-                        : ${filter.value} (<a href="${removeFacet}">Remove</a>)
+                        : ${filterValue} (<a href="${removeFacet}">Remove</a>)
                       </c:if>
                     </c:forEach>
                    </p>
@@ -146,6 +155,15 @@ text-decoration:underline;
                    <div class="facetContent">
                 <p>
                 <c:forEach var="fcount" items="${facet.values}">
+                  <!-- remove the error code and semi-colon prefix -->
+                  <c:set var="fcountName" value="${fcount.name}" />
+                  <c:set var="errCodePrefix" value="${fn:substringBefore(fcount.name, ':')}:" />
+                  <c:if test="${facet.name == 'error'}">
+                      <c:if test="${errCodePrefix != ':'}">
+                         <c:set var="fcountName" value="${fn:substringAfter(fcount.name, errCodePrefix)}" />
+                      </c:if>
+                  </c:if>
+
                   <c:set var="facetExist" value="false"/>
                   <c:forEach var="filter" items="${result.facetFilters}">
                     <c:if test="${fcount.name == filter.value && facet.name == filter.name}">
@@ -164,7 +182,7 @@ text-decoration:underline;
 
                        </c:url>
                       <div style="text-indent: -25px; padding-left: 25px;">
-                        <a href="${facetFilter}">${fcount.name} (${fcount.count})</a>
+                        <a href="${facetFilter}">${fcountName} (${fcount.count})</a>
                       </div>
                       <c:if test="${facet.name == 'error'}">
                         <c:url var="viewError" value="viewErrorDescription.action">
