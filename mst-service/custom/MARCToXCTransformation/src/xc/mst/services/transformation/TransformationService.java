@@ -671,29 +671,22 @@ public class TransformationService extends SolrTransformationService {
             final Logger LOG2 = getRulesLogger();
 
             try {
-                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1", 1);
-                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.2", 2);
-                RecordCounts rc1, rc2 = null;
+                RecordCounts rcIn, rcOut = null;
 
                 try {
-                    Service s1 = getServicesService().getServiceById(serviceNum1);
-                    if (s1 == null) {
+                    Service s = service;
+                    if (s == null) {
                         LOG2.error("*** can not calculate record counts, no service found");
                         return;
                     }
-                    Service s2 = getServicesService().getServiceById(serviceNum2);
-                    if (s2 == null) {
-                        LOG2.error("*** can not calculate record counts, no 2nd service found");
+                    rcIn = getRecordCountsDAO().getTotalIncomingRecordCounts(s.getName());
+                    if (rcIn == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
                         return;
                     }
-                    rc1 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s1.getName());
-                    if (rc1 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s1.getName());
-                        return;
-                    }
-                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s2.getName());
-                    if (rc2 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s2.getName());
+                    rcOut = getRecordCountsDAO().getTotalOutgoingRecordCounts(s.getName());
+                    if (rcOut == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
                         return;
                     }
                 } catch (Exception e) {
@@ -701,66 +694,67 @@ public class TransformationService extends SolrTransformationService {
                     return;
                 }
                 // TODO: bug fix? all UNEXPECTED_ERROR retrieved counts are null!
-                Map<String, AtomicInteger> counts4typeN_tot = rc1.getCounts().get(RecordCounts.TOTALS);
-                Map<String, AtomicInteger> counts4typeN_b = rc1.getCounts().get("b");
-                Map<String, AtomicInteger> counts4typeN_h = rc1.getCounts().get("h");
-                Map<String, AtomicInteger> counts4typeT_t = rc2.getCounts().get(RecordCounts.TOTALS);
-                Map<String, AtomicInteger> counts4typeT_e = rc2.getCounts().get("expression");
-                Map<String, AtomicInteger> counts4typeT_w = rc2.getCounts().get("work");
-                Map<String, AtomicInteger> counts4typeT_m = rc2.getCounts().get("manifestation");
-                Map<String, AtomicInteger> counts4typeT_h = rc2.getCounts().get("holdings");
+                Map<String, AtomicInteger> counts4typeIn_tot = rcIn.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeIn_b = rcIn.getCounts().get("bib");
+                Map<String, AtomicInteger> counts4typeIn_h = rcIn.getCounts().get("hold");
+                Map<String, AtomicInteger> counts4typeOut_t = rcOut.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeOut_e = rcOut.getCounts().get("expression");
+                Map<String, AtomicInteger> counts4typeOut_w = rcOut.getCounts().get("work");
+                Map<String, AtomicInteger> counts4typeOut_m = rcOut.getCounts().get("manifestation");
+                Map<String, AtomicInteger> counts4typeOut_h = rcOut.getCounts().get("holdings");
 
                 // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
                 LOG2.info("%%%");
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderTransformation"));
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBA_eq_TMA"));// = Normalization Bibs Active = Transformation Manifestations Active
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTBIA_eq_TMA"));// = Trans Bibs In Active = Transformation Manifestations Active
                 String result = "";
                 try {
-                    if (counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_m.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NBA=" + counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + ", TMA=" + counts4typeT_m.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("TBIA=" + counts4typeIn_b.get(RecordCounts.NEW_ACTIVE) + ", TMA=" + counts4typeOut_m.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
 
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNBD_eq_TMD"));// = Normalization Bibs Deleted = Transformation Manifestations Deleted
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTBID_eq_TMD"));// = Trans Bibs In Deleted = Transformation Manifestations Deleted
                 try {
-                    if (counts4typeN_b.get(RecordCounts.NEW_DELETE).get() == counts4typeT_m.get(RecordCounts.NEW_DELETE).get()) {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_DELETE).get() == counts4typeOut_m.get(RecordCounts.NEW_DELETE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NBD=" + counts4typeN_b.get(RecordCounts.NEW_DELETE) + ", TMD=" + counts4typeT_m.get(RecordCounts.NEW_DELETE) + result);
+                    LOG2.info("TBID=" + counts4typeIn_b.get(RecordCounts.NEW_DELETE) + ", TMD=" + counts4typeOut_m.get(RecordCounts.NEW_DELETE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
 
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationNHA_leq_THA_THH"));// = Normalization Holdings Active <= Transformation Holdings Active + Transformation Holdings Held
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTHIA_leq_THOA_THH"));
+                //=Trans HoldingsActive<=Trans Holdings Out Active + Transformation Holdings Held
                 try {
-                    final int n_h_a = counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get();
-                    final int t_h_a = counts4typeT_h.get(RecordCounts.NEW_ACTIVE).get();
-                    final int t_h_h = counts4typeT_h.get(RecordCounts.NEW_HELD).get();
+                    final int n_h_a = counts4typeIn_h.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_h_a = counts4typeOut_h.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_h_h = counts4typeOut_h.get(RecordCounts.NEW_HELD).get();
                     if (n_h_a <= (t_h_a + t_h_h)) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("NHA=" + n_h_a + ", THA=" + t_h_a + ", THH=" + t_h_h + result);
+                    LOG2.info("THIA=" + n_h_a + ", THOA=" + t_h_a + ", THH=" + t_h_h + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleTransformationTEA_eq_TWA"));// = Transformation Expressions Active = Transformation Works Active
                 try {
-                    if (counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeOut_e.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_w.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("TEA=" + counts4typeT_e.get(RecordCounts.NEW_ACTIVE) + ", TWA=" + counts4typeT_w.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("TEA=" + counts4typeOut_e.get(RecordCounts.NEW_ACTIVE) + ", TWA=" + counts4typeOut_w.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
@@ -769,9 +763,9 @@ public class TransformationService extends SolrTransformationService {
                 int t_m_a;
                 int t_e_a;
                 try {
-                    t_m_a = counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get();
-                    final int t_w_a = counts4typeT_w.get(RecordCounts.NEW_ACTIVE).get();
-                    t_e_a = counts4typeT_e.get(RecordCounts.NEW_ACTIVE).get();
+                    t_m_a = counts4typeOut_m.get(RecordCounts.NEW_ACTIVE).get();
+                    final int t_w_a = counts4typeOut_w.get(RecordCounts.NEW_ACTIVE).get();
+                    t_e_a = counts4typeOut_e.get(RecordCounts.NEW_ACTIVE).get();
                     if (t_w_a >= (t_m_a)) {
                         result = " ** PASS **";
                     } else {
@@ -798,5 +792,4 @@ public class TransformationService extends SolrTransformationService {
             }
         }
     }
-
 }

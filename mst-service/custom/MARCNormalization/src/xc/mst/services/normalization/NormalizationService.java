@@ -280,7 +280,7 @@ public class NormalizationService extends GenericMetadataService {
 
             // Get the Leader 06. This will allow us to determine the record's type, and we'll put it in the correct set for that type
             char leader06 = normalizedXml.getLeader().charAt(6);
-      
+
             // Run these steps only if the record is a bibliographic record
             String type = null;
             if ("abcdefghijkmnoprt".contains("" + leader06)) {
@@ -373,7 +373,7 @@ public class NormalizationService extends GenericMetadataService {
 
                 if (enabledSteps.getProperty(CONFIG_ENABLED_NRU_GENRE, "0").equals("1"))
                     normalizedXml = nruGenre(normalizedXml);
-                
+
                 if (enabledSteps.getProperty(CONFIG_ENABLED_NRU_DATABASE_GENRE, "0").equals("1"))
                     normalizedXml = nruDatabaseGenre(normalizedXml);
 
@@ -422,12 +422,12 @@ public class NormalizationService extends GenericMetadataService {
 
                 type = "h";
                 ((Record) record).setType(type);
-                
+
                 // Remove any invalid 014s
                 String valid014 = enabledSteps.getProperty(CONFIG_VALID_FIRST_CHAR_014, "");
                 String invalid014 = enabledSteps.getProperty(CONFIG_INVALID_FIRST_CHAR_014, "");
                 if (valid014.length() > 0 || invalid014.length() > 0)
-                    normalizedXml = removeInvalid014s(normalizedXml, valid014, invalid014);                                        
+                    normalizedXml = removeInvalid014s(normalizedXml, valid014, invalid014);
 
                 String fixMultiple004s = enabledSteps.getProperty(CONFIG_ENABLED_REPLACE_014, "off").toLowerCase();
                 if (!fixMultiple004s.equals("off"))
@@ -582,8 +582,8 @@ public class NormalizationService extends GenericMetadataService {
 
         return marcXml;
     }
-   
-    
+
+
     /**
      * Creates a DCMI Type field based on the record's Leader 06 value.
      *
@@ -594,12 +594,12 @@ public class NormalizationService extends GenericMetadataService {
      *             off - do nothing
      *             protect - generate error if multiple 004s found
      * @return The MARCXML record after performing this normalization step.
-     * @throws Exception 
+     * @throws Exception
      */
     private MarcXmlManager fixMultiple004s(MarcXmlManager marcXml, String fixMultiple004s) throws Exception {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering fixMultiple004s normalization step.");
-        
+
         if (! marcXml.fixMultiple004s(fixMultiple004s)) {
         	addMessage(marcXml.getInputRecord(), 109, RecordMessage.ERROR, "Multiple 004s not allowed.");
         	throw new Exception("fixMultiple004s error.");
@@ -607,10 +607,10 @@ public class NormalizationService extends GenericMetadataService {
 
         return marcXml;
     }
-    
+
     /**
      * If the 014 is invalid, remove it
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @param validFirstChars
@@ -622,9 +622,9 @@ public class NormalizationService extends GenericMetadataService {
     private MarcXmlManager removeInvalid014s(MarcXmlManager marcXml, String validFirstChars, String invalidFirstChars) {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering removeInvalid014s normalization step.");
-        
+
         marcXml.removeInvalid014s(validFirstChars, invalidFirstChars);
-        
+
         return marcXml;
     }
 
@@ -638,9 +638,9 @@ public class NormalizationService extends GenericMetadataService {
     private MarcXmlManager isbnMove024(MarcXmlManager marcXml) {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering isbnMove024 normalization step.");
-        
+
         marcXml.isbnMove024();
-        
+
         return marcXml;
     }
 
@@ -756,7 +756,7 @@ public class NormalizationService extends GenericMetadataService {
                     // Add a MARCXML field to store the SMD Vocab
                     marcXml.addMarcXmlField(FIELD_9XX_007_MARC_VOCAB, marcVocab006_0);
                 }
-            }        	
+            }
         }
 
         // Return the modified MARCXML record
@@ -1043,30 +1043,30 @@ public class NormalizationService extends GenericMetadataService {
 
         // The value of field 008
         String field008 = marcXml.getField008();
-        
+
         // The character at offset 33 of the 008 field
         char field008offset33 = ((field008 != null && field008.length() >= 34) ? field008.charAt(33) : ' ');
-        
+
         if (leader06 == 'a' || leader06 == 't') {
         	if (field008offset33 == '1') marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
-        	else marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction"); 
-        	
+        	else marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");
+
 	        if (LOG.isDebugEnabled())
 	            LOG.debug("Leader 06 = " + leader06 + " and 008 offset 33 is " + field008offset33 + ".");
-	        	
+
 	    }
 
-        ArrayList<String> field006s = marcXml.getField006();        
-        for (String field006: field006s) {  
+        ArrayList<String> field006s = marcXml.getField006();
+        for (String field006: field006s) {
         	if (field006 != null && field006.length() >= 34) {
         		if (field006.charAt(0) == 'a' || field006.charAt(0) == 't') {
         			if (field006.charAt(33) == '1' ) marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Fiction");
         			else marcXml.addMarcXmlField(FIELD_9XX_FICTION_OR_NONFICTION, "Non-Fiction");
-        		
+
         			if (LOG.isDebugEnabled())
         				LOG.debug("006 offset 0 is " + field006.charAt(0) + ".  006 offset 33 is " + field006.charAt(33) + ".");
         		}
-        	}            	
+        	}
         }
 
         // Return the modified MARCXML record
@@ -1242,7 +1242,7 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * If leader 06 contains certain values, create a field with the intended audience from the
      * 008 offset 22 value.
-     * 
+     *
      * If 006 offset 00 contains certain values, create a field with the intended audience from the
      * 006 offset 22 value
      *
@@ -1257,9 +1257,9 @@ public class NormalizationService extends GenericMetadataService {
     private MarcXmlManager audienceFrom006_008(MarcXmlManager marcXml, boolean field006, boolean field008) {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering 006/008Audience normalization step.");
-        
+
         ArrayList<String> flds = new ArrayList<String>();
-        
+
         if (field008) {
             // The character at offset 6 of the leader field
         	String leader = marcXml.getLeader();
@@ -1274,7 +1274,7 @@ public class NormalizationService extends GenericMetadataService {
             case 'o':
             case 'r':
             	flds.add(marcXml.getField008());
-            }	
+            }
         }
         if (field006) {
         	for (String fld : marcXml.getField006()) {
@@ -1292,14 +1292,14 @@ public class NormalizationService extends GenericMetadataService {
                 }
         	}
         }
-        
+
         for (String fld: flds) {
             // The character at offset 22 of the 008 field
             char offset22 = (fld != null && fld.length() >= 23 ? fld.charAt(22) : ' ');
 
             // Pull the audience mapping from the configuration file based on the 008 offset 22 value.
             String audience = audienceFrom006_008Properties.getProperty("" + offset22, null);
-            
+
             // If there was no mapping for the provided 008 offset 22, we can't create the field. In this case return the unmodified MARCXML
             if (audience == null) {
                 if (LOG.isDebugEnabled())
@@ -1316,7 +1316,7 @@ public class NormalizationService extends GenericMetadataService {
 
             // Add a MARCXML field to store the audience
             marcXml.addMarcXmlField(FIELD_9XX_AUDIENCE, audience);
-        	
+
         }
 
         return marcXml;
@@ -1335,7 +1335,7 @@ public class NormalizationService extends GenericMetadataService {
             LOG.debug("Entering formFrom006_008 normalization step.");
 
         ArrayList<String> flds = new ArrayList<String>();
-        
+
         if (field008) {
         	flds.add(marcXml.getField008());
         }
@@ -1344,7 +1344,7 @@ public class NormalizationService extends GenericMetadataService {
         		flds.add(fld);
         	}
         }
-        
+
         for (String field : flds) {
             // The character at offset 00 of the 006/008 field
             char offset00 = (field != null && field.length() >= 1 ? field.charAt(0) : ' ');
@@ -1361,7 +1361,7 @@ public class NormalizationService extends GenericMetadataService {
     	        case 'z':
     	        	continue;
             }
-            
+
             // The character at offset 23 of the 006/008 field
             char offset23 = (field != null && field.length() >= 24 ? field.charAt(23) : ' ');
 
@@ -1381,11 +1381,11 @@ public class NormalizationService extends GenericMetadataService {
 
             marcXml.addMarcXmlField(FIELD_9XX_FORM, form);
         }
-        
+
         return marcXml;
     }
 
-    
+
     /**
      * If there is no 502 field, create one with the value "Thesis" if 08 offset 24, 25, 26 or 27 is 'm'.
      *
@@ -1473,7 +1473,7 @@ public class NormalizationService extends GenericMetadataService {
 
         return marcXml;
     }
-    
+
     /**
      * Creates a 655 [$a $2] field for each 999 $a containing the word "database"
      *
@@ -1487,9 +1487,9 @@ public class NormalizationService extends GenericMetadataService {
 
         // The 999 $a field
         String field999 = marcXml.getField999();
-        
+
         if (field999 == null) return marcXml;
-        
+
         String[] tokens = field999.split("\\s");
         boolean found = false;
         for (int x=0; x<tokens.length; x++) {
@@ -1499,7 +1499,7 @@ public class NormalizationService extends GenericMetadataService {
             }
     	}
         if (! found) return marcXml;
-        
+
         Element newFieldElement = new Element("datafield", marcNamespace);
         newFieldElement.setAttribute("tag", "655");
         newFieldElement.setAttribute("ind1", " ");
@@ -1512,7 +1512,7 @@ public class NormalizationService extends GenericMetadataService {
 
         // Add the $a subfield to the new datafield
         newFieldElement.addContent("\n\t").addContent(newFieldASubfield).addContent("\n");
-        
+
         // Add the $2 subfield
         Element newField2Subfield = new Element("subfield", marcNamespace);
         newField2Subfield.setAttribute("code", "2");
@@ -1520,17 +1520,17 @@ public class NormalizationService extends GenericMetadataService {
 
         // Add the $2 subfield to the new datafield
         newFieldElement.addContent("\n\t").addContent(newField2Subfield).addContent("\n");
-        
+
         // Add the new field to the end of the MARC XML if we didn't insert it already
         marcXml.getModifiedMarcXml().addContent(newFieldElement).addContent("\n\n");
-        
+
         return marcXml;
     }
-    
-    
+
+
     /**
      * Remove everything after (and including) the first forward slash from LCCN
-     * 
+     *
      * @param marcXml
      *            The original MARCXML record
      * @return The MARCXML record after performing this normalization step.
@@ -1538,9 +1538,9 @@ public class NormalizationService extends GenericMetadataService {
     private MarcXmlManager lccnCleanup(MarcXmlManager marcXml) {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering isbnMove024 normalization step.");
-        
+
         marcXml.lccnCleanup();
-        
+
         return marcXml;
     }
 
@@ -2623,7 +2623,7 @@ public class NormalizationService extends GenericMetadataService {
                 } else if (line.equals("FIELD 006/008 OFFSET 23 TO FORM OF ITEM")) {
                     if (formFrom006_008Properties == null)
                     	formFrom006_008Properties = new Properties();
-                    current = formFrom006_008Properties;                    
+                    current = formFrom006_008Properties;
                 } else if (line.equals("ENABLED STEPS")) {
                     if (enabledSteps == null)
                         enabledSteps = new Properties();
@@ -2710,44 +2710,29 @@ public class NormalizationService extends GenericMetadataService {
 
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
         /*
+         * default.properties contains starting point for properties fetched here.
          * rule_checking_enabled=true
-         * # id's of providers and services to use in rule processing
-         * ruleset1.provider.1= 1
-         * ruleset1.service.1 = 1
-         * ruleset1.service.2 = 2
          */
-        // need to get repository record counts (incoming are all that exist) and normalization outgoing record counts, and run rules.
+        // need to get input record counts to Norm (incoming are all that exist) and normalization outgoing record counts, and run rules.
         if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {
             final Logger LOG2 = getRulesLogger();
 
             try {
-                int providerNum = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.provider.1", 1);
-                int serviceNum = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.1", 1);
-                RecordCounts rc1;
-                RecordCounts rc2;
+                RecordCounts rcIn;
+                RecordCounts rcOut;
                 try {
-                    Service s = getServicesService().getServiceById(serviceNum);
+                    Service s = service;
                     if (s == null) {
                         LOG2.error("*** can not calculate record counts, no service found");
                         return;
                     }
-                    Provider provider = getProviderService().getProviderById(providerNum);
-                    if (provider == null) {
-                        LOG2.error("*** can not calculate record counts, no provider found");
+                    rcIn = getRecordCountsDAO().getTotalIncomingRecordCounts(s.getName());
+                    if (rcIn == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
                         return;
                     }
-                    Repository r = getRepositoryService().getRepository(provider);
-                    if (r == null) {
-                        LOG2.error("*** can not calculate record counts, no repository found");
-                        return;
-                    }
-                    rc1 = getRecordCountsDAO().getTotalIncomingRecordCounts(r.getName());
-                    if (rc1 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for repository: " + r.getName());
-                        return;
-                    }
-                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s.getName());
-                    if (rc2 == null) {
+                    rcOut = getRecordCountsDAO().getTotalOutgoingRecordCounts(s.getName());
+                    if (rcOut == null) {
                         LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
                         return;
                     }
@@ -2757,49 +2742,49 @@ public class NormalizationService extends GenericMetadataService {
                 }
 
                 // TODO: Bug?: The UNEXPECTED_ERROR counts retrieved can be null!
-                Map<String, AtomicInteger> counts4typeR_t = rc1.getCounts().get(RecordCounts.TOTALS);
-                Map<String, AtomicInteger> counts4typeR_b = rc1.getCounts().get("b");
-                Map<String, AtomicInteger> counts4typeR_h = rc1.getCounts().get("h");
-                Map<String, AtomicInteger> counts4typeN_t = rc2.getCounts().get(RecordCounts.TOTALS);
-                Map<String, AtomicInteger> counts4typeN_b = rc2.getCounts().get("b");
-                Map<String, AtomicInteger> counts4typeN_h = rc2.getCounts().get("h");
+                Map<String, AtomicInteger> counts4typeIn_t = rcIn.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeIn_b = rcIn.getCounts().get("b");
+                Map<String, AtomicInteger> counts4typeIn_h = rcIn.getCounts().get("h");
+                Map<String, AtomicInteger> counts4typeOut_t = rcOut.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeOut_b = rcOut.getCounts().get("b");
+                Map<String, AtomicInteger> counts4typeOut_h = rcOut.getCounts().get("h");
 
                 // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
                 LOG2.info("%%%");
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderNormalization"));// = Rules for Normalization:
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHTA_eq_NTA"));// = Harvest Total Active = Normalization Total Active
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationNTIA_eq_NTOA"));// = Norm Total Active In = Normalization Total Active Out
                 String result = "";
                 try {
-                    if (counts4typeR_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("HTA=" + counts4typeR_t.get(RecordCounts.NEW_ACTIVE) + ", NTA=" + counts4typeN_t.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("NTIA=" + counts4typeIn_t.get(RecordCounts.NEW_ACTIVE) + ", NTOA=" + counts4typeOut_t.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e2) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
 
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHBA_eq_NBA"));// = Harvest Bibs Active = Normalization Bibs Active
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationNBIA_eq_NBOA"));// = Norm Bibs In Active = Normalization Bibs Out Active
                 try {
-                    if (counts4typeR_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("HBA=" + counts4typeR_b.get(RecordCounts.NEW_ACTIVE) + ", NBA=" + counts4typeN_b.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("NBIA=" + counts4typeIn_b.get(RecordCounts.NEW_ACTIVE) + ", NBOA=" + counts4typeOut_b.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e1) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
 
-                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationHHA_eq_NHA"));// = Harvest Holdings Active = Normalization Holdings Active
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleNormalizationNHIA_eq_NHOA"));// = Norm Holdings In Active = Normalization Holdings Out Active
                 try {
-                    if (counts4typeR_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeN_h.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_h.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
                     }
-                    LOG2.info("HHA=" + counts4typeR_h.get(RecordCounts.NEW_ACTIVE) + ", NHA=" + counts4typeN_h.get(RecordCounts.NEW_ACTIVE) + result);
+                    LOG2.info("NHIA=" + counts4typeIn_h.get(RecordCounts.NEW_ACTIVE) + ", NHOA=" + counts4typeOut_h.get(RecordCounts.NEW_ACTIVE) + result);
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
