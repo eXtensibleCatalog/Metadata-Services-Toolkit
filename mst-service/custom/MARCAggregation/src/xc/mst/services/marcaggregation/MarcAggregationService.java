@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,12 +39,15 @@ import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
+import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
+import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -422,7 +426,7 @@ public class MarcAggregationService extends GenericMetadataService {
             sb.insert(end, dynamic);
         }
         else {
-            LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
+            LOG.error("*** Could not find controlfield tag="+regex+".  Placed dynamic data at end of record!");
             sb.append(dynamic);
         }
         return sb.toString();
@@ -454,7 +458,7 @@ public class MarcAggregationService extends GenericMetadataService {
             sb.insert(begin, dynamic);
         }
         else {
-            LOG.error("*** Could not find controlfield tag=\"008\".  Placed dynamic data at end of record!");
+            LOG.error("*** Could not find controlfield tag="+regex+".  Placed dynamic data at end of record!");
             sb.append(dynamic);
         }
         return sb.toString();
@@ -997,12 +1001,18 @@ public class MarcAggregationService extends GenericMetadataService {
             setSpec = "MARCXMLbibliographic";
             setName = "MARCXML Bibliographic Records";
             setDescription = "A set of all MARCXML Bibliographic records in the repository.";
+            aggRecord.setType(type);
         } else if (type.equals("h")) {
             setSpec = "MARCXMLholding";
             setName = "MARCXML Holding Records";
             setDescription = "A set of all MARCXML Holding records in the repository.";
-
-        } // TODO what to do in the case of records not of about types?  Create a 1:1 output record?
+            aggRecord.setType(type);
+        } else if (type.equals("z")) {
+            setSpec = "MARCXMLauthority";
+            setName = "MARCXML Authority Records";
+            setDescription = "A set of all MARCXML Authority records in the repository.";
+            // don't setType for this 'type'
+        }// TODO what to do in the case of records not of about types?  Create a 1:1 output record?
 
         if (setSpec != null) {
             try {
@@ -1027,7 +1037,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // Add the record to the list of records resulting from processing the
         // incoming record
-        aggRecord.setType(type);
         results.add(aggRecord);
 
         if (LOG.isDebugEnabled())
@@ -1085,8 +1094,15 @@ public class MarcAggregationService extends GenericMetadataService {
 //                    ((Record) record).setType(type);
                 }
                 //TODO what about authority and any other type?  pass it through or not?
-                if (leader06 == 'z') {
+                else if (leader06 == 'z') {
                     // authority
+                    // just pass it on.
+                    String oaiXml = inputRepo.getRecord(r.getId()).getOaiXml();
+                    results = createNewRecord(r, "z", oaiXml);
+                }
+                else {
+                    //LOG error, do the same as normalization.
+                    logDebug("Record Id " + r.getId() + " with leader character " + leader06 + " not processed.");
                 }
 
                 // was here....
@@ -1334,5 +1350,131 @@ public class MarcAggregationService extends GenericMetadataService {
             getUtil().throwIt(t);
         }
         return true;
+    }
+
+
+    /*
+     * //for solr indexer
+     * public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
+     * //implement here is decide to go back to way where individual service provides identifiers.
+     * // Get the 001 and 003 control fields
+     *
+     * // The XML after normalizing the record
+     * Element marcXml = null;
+     *
+     * //TimingLogger.start("create dom");
+     * ri.setMode(Record.JDOM_MODE);
+      * marcXml = ri.getOaiXmlEl();
+     * //TimingLogger.stop("create dom");
+     *
+     * // Create a MarcXmlManagerForNormalizationService for the record
+     * MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
+     * normalizedXml.setInputRecord(ri);
+     *
+     * ArrayList<RegisteredData> identifiers = new ArrayList<RegisteredData> ();
+     * String control001 = normalizedXml.getField001();
+     * String control245 = normalizedXml.getField245();
+     *
+     * if (control001 != null) {
+     * identifiers.add(new RegisteredData("id_001_key", control001, "001"));
+     * }
+     * // call it 'title?'
+     * if (control245 != null) {
+     * identifiers.add(new RegisteredData("id_title_key", control245, "title"));
+     * }
+     * if (identifiers.size() <1) {
+     * LOG.error("*** NO NORM. IDENTIFIERS FOUND! for"+ri.getId());
+     * }
+     * return identifiers;
+     * }
+     */
+
+    protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
+        /*
+         * default.properties contains starting point for properties fetched here.
+         * rule_checking_enabled=true
+         */
+        // need to get repository record counts (incoming are all that exist) and normalization outgoing record counts, and run rules.
+        if (MSTConfiguration.getInstance().getPropertyAsBoolean("rule_checking_enabled", false)) {
+            final Logger LOG2 = getRulesLogger();
+
+            try {
+                RecordCounts rcIn;
+                RecordCounts rcOut;
+                try {
+                    Service s = service;
+                    if (s == null) {
+                        LOG2.error("*** can not calculate record counts, no service found");
+                        return;
+                    }
+                    rcIn = getRecordCountsDAO().getTotalIncomingRecordCounts(s.getName());
+                    if (rcIn == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
+                        return;
+                    }
+                    rcOut = getRecordCountsDAO().getTotalOutgoingRecordCounts(s.getName());
+                    if (rcOut == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s.getName());
+                        return;
+                    }
+                } catch (Exception e) {
+                    LOG2.error("*** can not calculate record counts: ", e);
+                    return;
+                }
+
+                // TODO need to fix so 'b' and 'h' are counted.
+                Map<String, AtomicInteger> counts4typeIn_t = rcIn.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeIn_b = rcIn.getCounts().get("b");
+                Map<String, AtomicInteger> counts4typeIn_h = rcIn.getCounts().get("h");
+                Map<String, AtomicInteger> counts4typeOut_t = rcOut.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeOut_b = rcOut.getCounts().get("b");
+                Map<String, AtomicInteger> counts4typeOut_h = rcOut.getCounts().get("h");
+
+                // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
+                LOG2.info("%%%");
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleCheckingHeaderAggregation"));// = Rules for Aggregation:
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMATIA_geq_MATOA"));// = MA Total In Active >= MA Total Out Active
+                String result = "";
+                try {
+                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("MATIA=" + counts4typeIn_t.get(RecordCounts.NEW_ACTIVE) + ", MATOA=" + counts4typeOut_t.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e2) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMABIA_geq_MABOA"));// = MA Bibs In Active >= MA Bibs Out Active
+                try {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("MABIA=" + counts4typeIn_b.get(RecordCounts.NEW_ACTIVE) + ", MABOA=" + counts4typeOut_b.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e1) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+
+                LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMAHIA_eq_MAHOA"));// = MA Holdings In Active = MA Holdings Out Active
+                try {
+                    if (counts4typeIn_h.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_h.get(RecordCounts.NEW_ACTIVE).get()) {
+                        result = " ** PASS **";
+                    } else {
+                        result = " ** FAIL **";
+                    }
+                    LOG2.info("MAHIA=" + counts4typeIn_h.get(RecordCounts.NEW_ACTIVE) + ", MAHOA=" + counts4typeOut_h.get(RecordCounts.NEW_ACTIVE) + result);
+                } catch (Exception e) {
+                    LOG2.info("Could not calculate previous rule, null data");
+                }
+                LOG2.info("%%%");
+            } catch (Exception e) {
+                LOG.error("", e);
+                LOG2.error("", e);
+            }
+        }
     }
 }
