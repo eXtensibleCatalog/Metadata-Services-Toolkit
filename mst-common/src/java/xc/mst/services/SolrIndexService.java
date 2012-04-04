@@ -523,7 +523,7 @@ public class SolrIndexService extends GenericMetadataService {
                     LOG.debug("m: "+m);
                     // TODO not necessarily type ERROR anymore
                     doc.addField(RecordService.FIELD_ERROR,
-                            m.getMessage());  // used to display id here prepended to msg text.
+                            m.getCode() + ":" + m.getMessage());
                 } catch (Throwable t) {
                     LOG.error("continuing, but logging", t);
                 }

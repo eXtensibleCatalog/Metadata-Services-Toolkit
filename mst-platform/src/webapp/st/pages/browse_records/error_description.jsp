@@ -8,6 +8,7 @@
   -->
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="mst" uri="mst-tags"%>
 
@@ -67,11 +68,18 @@
     <!--  end header -->
 
     <!-- body -->
+       <!-- remove the error code and semi-colon prefix -->
+       <c:set var="errorValue" value="${error}" />
+       <c:set var="errCodePrefix" value="${fn:substringBefore(error, ':')}:" />
+       <c:if test="${errCodePrefix != ':'}">
+          <c:set var="errorValue" value="${fn:substringAfter(error, errCodePrefix)}" />
+       </c:if>
+
     <div id="bd">
       <div class="record_box">
       <p>
         <br>
-          <strong>${error}</strong>
+          <strong>${errorValue}</strong>
         <br><br>
           ${errorDescription}
         <br>
