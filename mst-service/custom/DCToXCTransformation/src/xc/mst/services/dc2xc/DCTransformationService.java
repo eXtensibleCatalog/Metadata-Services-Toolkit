@@ -158,6 +158,15 @@ public class DCTransformationService extends GenericMetadataService {
                     return results;
                 }
 
+                // per JB: There is no such thing as a DC holdings record - so no records in, no records out for holdings.
+                String _type = "bib";
+                ((Record) processMe).setType(_type);
+                //
+                // setting this here increments this type in the record counts when
+                // incremented in GenericMetadataService.process() -- else it then
+                // increments RecordCounts.OTHER
+                //
+
                 AggregateXCRecord ar = new AggregateXCRecord();
                 processBibliographicRecord(ar, processMe);
                 if (processMe.getSuccessors() != null && processMe.getSuccessors().size() > 0) {
@@ -166,6 +175,7 @@ public class DCTransformationService extends GenericMetadataService {
                         String type = getXCRecordService().getType(succ);
                         or.setType(type);
 
+                        // per JB: There is no such thing as a DC holdings record - so no records in, no records out for holdings.
                         if (AggregateXCRecord.HOLDINGS.equals(type)) {
                             ar.getPreviousHoldingIds().add(or.getId());
                         } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -183,6 +193,18 @@ public class DCTransformationService extends GenericMetadataService {
                     //TODO
                 }
                 results = getXCRecordService().getSplitXCRecordXML(getRepository(), ar, null, 0);
+                // setType for record counts.
+                for (OutputRecord or : results) {
+                    if (!or.getDeleted()) {
+                        String type = getXCRecordService().getType((Record) or);
+                        or.setType(type);
+                    }
+                }
+                // maybe do this?:
+                //if (results.size() == 0) {
+                //    addMessage(processMe, 101, RecordMessage.ERROR);
+                //}
+
             }
             return results;
 
@@ -258,41 +280,34 @@ public class DCTransformationService extends GenericMetadataService {
             final Logger LOG2 = getRulesLogger();
 
             try {
-                int serviceNum1 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.3", 3);
-                int serviceNum2 = MSTConfiguration.getInstance().getPropertyAsInt("ruleset1.service.3", 3);
-                RecordCounts rc1, rc2 = null;
+                RecordCounts rcIn, rcOut = null;
 
                 try {
-                    Service s1 = getServicesService().getServiceById(serviceNum1);
+                    Service s1 = service;
                     if (s1 == null) {
                         LOG2.error("*** can not calculate record counts, no service found");
                         return;
                     }
-                    Service s2 = getServicesService().getServiceById(serviceNum2);
-                    if (s2 == null) {
-                        LOG2.error("*** can not calculate record counts, no 2nd service found");
-                        return;
-                    }
-                    rc1 = getRecordCountsDAO().getTotalIncomingRecordCounts(s1.getName());
-                    if (rc1 == null) {
+                    rcIn = getRecordCountsDAO().getTotalIncomingRecordCounts(s1.getName());
+                    if (rcIn == null) {
                         LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s1.getName());
                         return;
                     }
-                    rc2 = getRecordCountsDAO().getTotalOutgoingRecordCounts(s2.getName());
-                    if (rc2 == null) {
-                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s2.getName());
+                    rcOut = getRecordCountsDAO().getTotalOutgoingRecordCounts(s1.getName());
+                    if (rcOut == null) {
+                        LOG2.error("*** can not calculate record counts null recordCounts returned for service: " + s1.getName());
                         return;
                     }
                 } catch (Exception e) {
                     LOG2.error("*** can not calculate record counts: ", e);
                     return;
                 }
-                Map<String, AtomicInteger> counts4typeN_tot = rc1.getCounts().get(RecordCounts.TOTALS);
-                Map<String, AtomicInteger> counts4typeT_tot = rc2.getCounts().get(RecordCounts.TOTALS);
-//TODO need to counts of these types for this service.
-//                Map<String, AtomicInteger> counts4typeT_e = rc2.getCounts().get("expression");
-//                Map<String, AtomicInteger> counts4typeT_w = rc2.getCounts().get("work");
-//                Map<String, AtomicInteger> counts4typeT_m = rc2.getCounts().get("manifestation");
+                Map<String, AtomicInteger> counts4typeN_tot = rcIn.getCounts().get(RecordCounts.TOTALS);
+                Map<String, AtomicInteger> counts4typeT_tot = rcOut.getCounts().get(RecordCounts.TOTALS);
+
+                Map<String, AtomicInteger> counts4typeT_e = rcOut.getCounts().get("expression");
+                Map<String, AtomicInteger> counts4typeT_w = rcOut.getCounts().get("work");
+                Map<String, AtomicInteger> counts4typeT_m = rcOut.getCounts().get("manifestation");
 
                 // TODO this belongs in dynamic script so it can be modified easily - pass array of values to script.
                 LOG2.info("%%%");
@@ -310,7 +325,6 @@ public class DCTransformationService extends GenericMetadataService {
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
-/*
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleDCTransformationDCTIBA_eq_DCTOMA"));
                 try {
                     if (counts4typeN_tot.get(RecordCounts.NEW_ACTIVE).get() == counts4typeT_m.get(RecordCounts.NEW_ACTIVE).get()) {
@@ -344,7 +358,6 @@ public class DCTransformationService extends GenericMetadataService {
                 } catch (Exception e) {
                     LOG2.info("Could not calculate previous rule, null data");
                 }
-*/
                 LOG2.info("%%%");
 
             } catch (Exception e) {
