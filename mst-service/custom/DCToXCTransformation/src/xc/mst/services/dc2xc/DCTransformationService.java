@@ -158,6 +158,15 @@ public class DCTransformationService extends GenericMetadataService {
                     return results;
                 }
 
+                // per JB: There is no such thing as a DC holdings record - so no records in, no records out for holdings.
+                String _type = "bib";
+                ((Record) processMe).setType(_type);
+                //
+                // setting this here increments this type in the record counts when
+                // incremented in GenericMetadataService.process() -- else it then
+                // increments RecordCounts.OTHER
+                //
+
                 AggregateXCRecord ar = new AggregateXCRecord();
                 processBibliographicRecord(ar, processMe);
                 if (processMe.getSuccessors() != null && processMe.getSuccessors().size() > 0) {
@@ -166,6 +175,7 @@ public class DCTransformationService extends GenericMetadataService {
                         String type = getXCRecordService().getType(succ);
                         or.setType(type);
 
+                        // per JB: There is no such thing as a DC holdings record - so no records in, no records out for holdings.
                         if (AggregateXCRecord.HOLDINGS.equals(type)) {
                             ar.getPreviousHoldingIds().add(or.getId());
                         } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -183,6 +193,18 @@ public class DCTransformationService extends GenericMetadataService {
                     //TODO
                 }
                 results = getXCRecordService().getSplitXCRecordXML(getRepository(), ar, null, 0);
+                // setType for record counts.
+                for (OutputRecord or : results) {
+                    if (!or.getDeleted()) {
+                        String type = getXCRecordService().getType((Record) or);
+                        or.setType(type);
+                    }
+                }
+                // maybe do this?:
+                //if (results.size() == 0) {
+                //    addMessage(processMe, 101, RecordMessage.ERROR);
+                //}
+
             }
             return results;
 
