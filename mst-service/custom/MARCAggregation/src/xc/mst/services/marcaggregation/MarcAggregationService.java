@@ -39,7 +39,6 @@ import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.provider.Provider;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
@@ -1084,12 +1083,19 @@ public class MarcAggregationService extends GenericMetadataService {
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 //                    TimingLogger.start("bib steps");
                     type = "b";
+                    ((Record) r).setType(type);
+                    //
+                    // setting this here increments this type in the record counts when
+                    // incremented in GenericMetadataService.process() -- else it then
+                    // increments RecordCounts.OTHER
+                    //
                     results = processBib(r, smr, inputRepo);
                 }
                 // check if the record is a holding record
                 else if ("uvxy".contains("" + leader06)) {
 //                    TimingLogger.start("hold steps");
                     type = "h";
+                    ((Record) r).setType(type);
                     results = processHolding(r, smr, inputRepo);
 //                    ((Record) record).setType(type);
                 }
