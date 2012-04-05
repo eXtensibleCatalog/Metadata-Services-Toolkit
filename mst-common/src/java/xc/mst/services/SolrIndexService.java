@@ -49,6 +49,7 @@ public class SolrIndexService extends GenericMetadataService {
     private static final String id_identifier_key =  "id_identifier_key";
     private static final String  xc_record_id_w =  "xc_record_id_w";
     private static final String  record_id_l = "record_id_l";
+    private static final String  id_035bib_key = "id_035bib_key";  // can be alphanumeric
     private static final String  id_001bib_key = "id_001bib_key";  // can be alphanumeric
     private static final String  id_001hold_key = "id_001hold_key";  // can be alphanumeric
     private static final String  id_resIdent_key = "id_resIdent_key";
@@ -63,6 +64,7 @@ public class SolrIndexService extends GenericMetadataService {
     private static final String  xc_callnum_key = "xc_callnum_key";
     private static final String  id_852h_key = "id_852h_key";
     private static final String  id_852i_key = "id_852i_key";
+    private static final String  id_953h_key = "id_953h_key";
     private static final String  id_author_key =  "id_author_key";
     private static final String  xc_contributor_key = "xc_contributor_key";
     private static final String  xc_creator_key = "xc_creator_key";
@@ -100,6 +102,7 @@ public class SolrIndexService extends GenericMetadataService {
         registerId(" - OAI Header ID",         record_id_l);
         registerId(" - marc:controlfield 001 Bibliographic", id_001bib_key);  // can be alphanumeric
         registerId(" - marc:controlfield 001 Holdings", id_001hold_key);  // can be alphanumeric
+        registerId(" - marc:datafield 035 Bibliographic", id_035bib_key);  // can be alphanumeric
         registerId("Resource Identifier",        id_resIdent_key);
         registerId(" - dcterms:identifier Manifestation", id_manDCTermsIdent_key);
         registerId(" - dcterms:identifier Holdings", id_holdDCTermsIdent_key);
@@ -112,6 +115,7 @@ public class SolrIndexService extends GenericMetadataService {
         registerId(" - xc:callNumber", xc_callnum_key);
         registerId(" - marc:datafield 852$h", id_852h_key);
         registerId(" - marc:datafield 852$i", id_852i_key);
+        registerId(" - marc:datafield 953$h", id_953h_key);
         registerId("Creator/Contributor",   id_author_key);
         registerId(" - xc:contributor", xc_contributor_key);
         registerId(" - xc:creator",   xc_creator_key);
@@ -391,6 +395,9 @@ public class SolrIndexService extends GenericMetadataService {
                         addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
                                 Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001bib_key)),
                                 false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='035']/marc:subfield[@code='a']",
+                                Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_035bib_key)),
+                                true);
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
                                 Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
                                 false);
@@ -415,6 +422,9 @@ public class SolrIndexService extends GenericMetadataService {
                         addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
                                 Collections.unmodifiableList(Arrays.asList(id_author_key, id_711a_key)),
                                 false);
+                        addFieldToIndex(ri, doc, "//marc:datafield[@tag='953']/marc:subfield[@code='h']",
+                                Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_953h_key)),
+                                true);
                     }
                     // get identifiers that could be present only in a holdings marc21 record
                     else if (type.equals("h")) {
@@ -457,6 +467,9 @@ public class SolrIndexService extends GenericMetadataService {
                             addFieldToIndex(ri, doc, "//marc:controlfield[@tag='001']",
                                     Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_001bib_key)),
                                     false);
+                            addFieldToIndex(ri, doc, "//marc:datafield[@tag='035']/marc:subfield[@code='a']",
+                                    Collections.unmodifiableList(Arrays.asList(id_identifier_key, id_035bib_key)),
+                                    true);
                             addFieldToIndex(ri, doc, "//marc:datafield[@tag='245']/marc:subfield[@code='a']",
                                     Collections.unmodifiableList(Arrays.asList(id_title_key, id_245_key)),
                                     false);
@@ -481,6 +494,9 @@ public class SolrIndexService extends GenericMetadataService {
                             addFieldToIndex(ri, doc, "//marc:datafield[@tag='711']/marc:subfield[@code='a']",
                                     Collections.unmodifiableList(Arrays.asList(id_author_key, id_711a_key)),
                                     false);
+                            addFieldToIndex(ri, doc, "//marc:datafield[@tag='953']/marc:subfield[@code='h']",
+                                    Collections.unmodifiableList(Arrays.asList(id_callnum_key,id_953h_key)),
+                                    true);
                         }
                         // get identifiers that could be present only in a holdings marc21 record
                         else if (isHolding) {
