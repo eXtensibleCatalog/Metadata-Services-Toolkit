@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -86,7 +87,8 @@ public class Facade extends BaseManager {
         // Add the element with the timestamp of the response
         try {
             Element responseDate = new Element("responseDate");
-            String formattedDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(new Date());
+            DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+            String formattedDate = fmt.print(new DateTime());
             responseDate.addContent(formattedDate);
 
             if (log.isDebugEnabled())
