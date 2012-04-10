@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.core.io.ClassPathResource;
@@ -37,12 +38,25 @@ public class Util {
     public final static Logger LOG = Logger.getLogger(Util.class);
     protected static DateTimeFormatter UTC_SECOND_FORMATTER = null;
     protected static DateTimeFormatter UTC_DAY_FORMATTER = null;
+    protected static DateTimeFormatter UTC_ISO8601_FORMATTER = null;
     static {
         UTC_SECOND_FORMATTER = ISODateTimeFormat.dateTime();
         UTC_SECOND_FORMATTER = UTC_SECOND_FORMATTER.withZone(DateTimeZone.UTC);
 
         UTC_DAY_FORMATTER = ISODateTimeFormat.date();
         UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
+
+        UTC_ISO8601_FORMATTER = DateTimeFormat.forPattern("yyyyMMddHHmmss.S");
+        UTC_ISO8601_FORMATTER = UTC_ISO8601_FORMATTER.withZone(DateTimeZone.UTC);
+    }
+
+    public String printDateTimeISO8601(Date d) {
+        try {
+            String s = UTC_ISO8601_FORMATTER.print(d.getTime());
+            return s;
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     public String printDateTime(Date d) {
