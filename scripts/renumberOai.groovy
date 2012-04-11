@@ -13,6 +13,9 @@ def String regex = ".*/[0-9]</identifier>";
 def boolean checkForRegex(String s, int i, File f)
 {
         // this string can change depending upon the input file
+        //  note, run xmllint on your file ahead of time to make sure
+        //    <identifier> ... </identifier> 
+        //    is on its own line.
         def String start = "<identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/"
         
         def String end = "</identifier>" + System.getProperty("line.separator")
