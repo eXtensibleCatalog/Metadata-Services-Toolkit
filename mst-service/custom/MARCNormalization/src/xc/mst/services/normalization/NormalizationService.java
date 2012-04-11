@@ -45,6 +45,7 @@ import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 import xc.mst.utils.XmlHelper;
+import xc.mst.utils.Util;
 
 /**
  * A Metadata Service which for each unprocessed marcxml record creates a new
@@ -445,6 +446,9 @@ public class NormalizationService extends GenericMetadataService {
 
                 TimingLogger.stop("holdsteps");
             }
+            
+            // set 005 to current time
+            normalizedXml.set005();
 
             if (LOG.isDebugEnabled())
                 LOG.debug("Adding errors to the record.");

@@ -10,6 +10,7 @@
 package xc.mst.services.normalization;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.jdom.xpath.XPath;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.constants.Constants;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 
 /**
  * This class is used to manage a MARC XML record. When constructed,
@@ -1180,6 +1182,37 @@ public class MarcXmlManager {
         } // end loop over data fields
         TimingLogger.stop("initializeMarcDataFields");
     } // end method initializeMarcDataFields
+    
+    
+    /**
+     * Sets the control 005 to current timestamp
+     */
+    @SuppressWarnings("unchecked")
+    public void set005() {
+        TimingLogger.start("set005");
+        if (log.isDebugEnabled())
+            log.debug("Setting 005 to current timestamp.");
+
+        boolean found = false;
+        Util util = Util.getUtil();
+        String new005 = util.printDateTimeISO8601(new Date());
+        List<Element> controlFields = marcXml.getChildren("controlfield", marcNamespace);
+        for (Element controlField : controlFields) {
+            if (controlField.getAttribute("tag").getValue().equals("005")) {
+                if (log.isDebugEnabled())
+                    log.debug("Re-setting control field 005 to current timestamp.");
+                controlField.setText(new005);
+                found = true;
+                break;
+            }
+        }
+        
+        if (! found) {
+           if (log.isDebugEnabled())
+                log.debug("Setting new 005 control field to current timestamp.");
+           addMarcXmlControlField("005", new005);
+        }
+    }
 
     /**
      * Remove unwanted subfields
