@@ -72,11 +72,17 @@ public class MarcAggregationService extends GenericMetadataService {
      * The output format (marcxml) for records processed from this service
      */
     protected Format                                 marc21 = null;
+
     protected Map<String, FieldMatcher>              matcherMap = null;
     protected Map<String, MatchRuleIfc>              matchRuleMap = null;
     protected MarcAggregationServiceDAO              masDAO = null;
-    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
     protected List<TreeSet<Long>>                    masMatchSetList = null;
+
+    /**
+     * to sort/figure record of source, place items we are interested in, that are used to determine
+     * record of source, in this map, as we go.
+     */
+    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
 
     // map output records to corresponding input records map
     //   not only tracked merged records, 1 to many, but track unmerged 1 to 1
@@ -88,20 +94,34 @@ public class MarcAggregationService extends GenericMetadataService {
 
 //    protected final XmlHelper xmlHelper = new XmlHelper();
 
-    private List<Character> leaderVals = null;
-    private Repository      inputRepo  = null;
 
+    /**
+     * record of source-related class variables
+     */
+    private List<Character> leaderVals = null;
     private boolean leader_byte17_weighting_enabled;
     private boolean bigger_record_weighting_enabled;
 
+    /**
+     * the repository feeding this service.
+     */
+    private Repository      inputRepo  = null;
+
+    /**
+     * transformer stuff used to strip/modify given xml
+     */
     private Transformer staticTransformer;
     private Transformer holdingTransformer;
 
     private static final String STATIC_TRANSFORM  = "createStatic.xsl";
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
+
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
 
+    /**
+     * override the parent method, called in the right place.
+     */
     public void setup() {
         LOG.debug("MAS:  setup()");
 
@@ -124,6 +144,7 @@ public class MarcAggregationService extends GenericMetadataService {
             validateService();
         } catch (ServiceValidationException e) {
 
+            // error validating service:
             // Update database with status of service
             service.setStatus(Status.ERROR);
             LOG.error("Error validating service:", e);
@@ -156,10 +177,20 @@ public class MarcAggregationService extends GenericMetadataService {
         return results;
     }
 
+    /**
+     * load from the database
+     * @return known merged records that were persisted
+     */
     private TLongLongHashMap loadMasMergedRecords() {
         return masDAO.getMergedRecords();
     }
 
+    /**
+     * open the xsl file, create a Transformer from it.
+     * @param xslFileName a String that represents a File.
+     * @return the Transformer created from the xslFileName.
+     * @throws TransformerFactoryConfigurationError
+     */
     protected Transformer setupTransformer(String xslFileName) throws TransformerFactoryConfigurationError {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
@@ -223,8 +254,14 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    /**
     // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
     // TODO move this UP to common utilities.
+     *
+     * @param clazz
+     * @param c
+     * @return
+     */
     public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
         List<T> r = new ArrayList<T>(c.size());
         for (Object o : c)
@@ -232,19 +269,29 @@ public class MarcAggregationService extends GenericMetadataService {
         return r;
     }
 
+    /**
     // this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
     // started off from looking at existing merged stuff in the database.  Based on the current record
     // that comes in, see what it matches, and go from there.
+     *
+     * @return
+     */
     public List<TreeSet<Long>> getCurrentMatchSetList() {
         return masMatchSetList;
     }
 
+    /**
+     *
     // need to look to see if the given match set impacts existing sets.  i.e if this set  is {1,47,50}
     // and we have existing sets {1,3} and {4,47} then we need a superset: {1,3,4,47,50} and need to
     // remove the existing sets {1,3}, {4,47}
     //
     // disjoint-set data structure?
-    //
+     *
+     * @param matchset
+     * @param origMasMatchSetList
+     * @return
+     */
     private List<TreeSet<Long>> addToMatchSetList(TreeSet<Long> matchset,  final List<TreeSet<Long>> origMasMatchSetList) {
         if (matchset==null) {
             return origMasMatchSetList;
@@ -288,6 +335,11 @@ public class MarcAggregationService extends GenericMetadataService {
 
     }
 
+    /**
+     * load property from the service's config file.
+     * @param name
+     * @return
+     */
     private List<String> getConfigFileValues(String name) {
         try {
             // there is probably a more righteous way to grab the service name.
@@ -302,17 +354,26 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    /**
     // for spring to inject.
+     * @param masDAO
+     */
     public void setMarcAggregationServiceDAO(MarcAggregationServiceDAO masDAO) {
         this.masDAO = masDAO;
     }
 
+    /**
+     * for Spring
+     * @return
+     */
     public MarcAggregationServiceDAO getMarcAggregationServiceDAO() {
         return this.masDAO;
     }
 
+    /**
     // wrap it.
     //  (to increase accessibility - classes like Matcher/MatchRules that aren't subclasses may need it.)
+     */
     public void addMessage(InputRecord record, int code, char level) {
         try {
             // originally had to grab service as below but that was a workaround that didn't help ultimately.
@@ -324,7 +385,11 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    /**
     // will use these data structures as the basis to update DAO, should always be up to date.
+     * @param outputRecordId
+     * @param mergedInputRecordSet
+     */
     private void updateMasMergedRecords(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             mergedRecordsI2Omap.put(num,outputRecordId);
@@ -332,7 +397,12 @@ public class MarcAggregationService extends GenericMetadataService {
         mergedRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
     }
 
-    // in case we use the model of merging AFTER all records initially seen.
+    /**
+     // will use these data structures as the basis to update DAO, should always be up to date.
+     *
+     * @param matches
+     * @param repo
+     */
     private void mergeAll(List<TreeSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
         // all in the set used to pull dynamic content
@@ -343,9 +413,15 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
 
+    /**
     //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
     //   returns static xml + saved dynamic content (included or not?)
     //
+     *
+     * @param set
+     * @param repo
+     * @return
+     */
     private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
         LOG.info("**** Record of Source == "+recordOfSource);
@@ -564,7 +640,7 @@ public class MarcAggregationService extends GenericMetadataService {
         return HOLDING_TRANSFORM;
     }
 
-    /*
+    /**
     //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022,024
     //   returns dynamic content
     //
@@ -589,6 +665,11 @@ public class MarcAggregationService extends GenericMetadataService {
 
         By using TreeSet to hold the data, and with an appropriate 'Comparable' for each MarcDatafieldHolder 'subtype', can easily
         and effectively dedup the data.
+     *
+     * @param recordOfSource
+     * @param repo
+     * @param set
+     * @return
      */
     protected Map<Integer, Set<MarcDatafieldHolder>> getDynamicContent(Long recordOfSource, Repository repo, Set<Long> set) {
 
@@ -675,10 +756,16 @@ public class MarcAggregationService extends GenericMetadataService {
         return dynamic;
     }
 
+    /**
     //getDynamicHoldingContent => create 904 from 004/014, don't worry about existing 904,
     // we are not trimming anything from existing record.
     //   returns content to dynamically insert into holding records
     //
+     *
+     * @param repo
+     * @param num
+     * @return
+     */
     protected String getDynamicHoldingContent(Repository repo, Long num) {
         String oai = repo.getRecord(num).getOaiXml();
         String _904 = create904(oai);   // the block of xml
@@ -1045,8 +1132,11 @@ public class MarcAggregationService extends GenericMetadataService {
         return results;
     }
 
+    /**
     // search to see if there are multiple in records for this given out record.
     //
+     *
+     */
     protected void addPredecessor(Record in, Record out) {
         TreeSet<Long> set = mergedRecordsO2Imap.get(out.getId());
         if (set==null || set.isEmpty()) {
@@ -1062,6 +1152,9 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
+    /**
+     *
+     */
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
         List<OutputRecord> results = null;
@@ -1072,34 +1165,42 @@ public class MarcAggregationService extends GenericMetadataService {
                 SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
                 smr.setRecordId(r.getId());
 
-                final char leaderByte17 = smr.getLeader().charAt(17);
-                final int rSize = r.getOaiXml().getBytes().length;
-                scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-
                 // Get the Leader 06. This will allow us to determine the record's type
-                char leader06 = smr.getLeader().charAt(6);
+                final char leader06 = smr.getLeader().charAt(6);
 
                 // check if the record is a bibliographic record
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 //                    TimingLogger.start("bib steps");
+
+                    // get record of source data for this bib
+                    //  (only a bib would be a record of source)
+                    final char leaderByte17 = smr.getLeader().charAt(17);
+                    final int rSize = r.getOaiXml().getBytes().length;
+                    scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+
                     type = "b";
-                    ((Record) r).setType(type);
                     //
                     // setting this here increments this type in the record counts when
                     // incremented in GenericMetadataService.process() -- else it then
                     // increments RecordCounts.OTHER
                     //
+                    ((Record) r).setType(type);
+
                     results = processBib(r, smr, inputRepo);
                 }
                 // check if the record is a holding record
                 else if ("uvxy".contains("" + leader06)) {
 //                    TimingLogger.start("hold steps");
                     type = "h";
+                    //
+                    // setting this here increments this type in the record counts when
+                    // incremented in GenericMetadataService.process() -- else it then
+                    // increments RecordCounts.OTHER
+                    //
                     ((Record) r).setType(type);
+
                     results = processHolding(r, smr, inputRepo);
-//                    ((Record) record).setType(type);
                 }
-                //TODO what about authority and any other type?  pass it through or not?
                 else if (leader06 == 'z') {
                     // authority
                     // just pass it on.
@@ -1178,6 +1279,7 @@ public class MarcAggregationService extends GenericMetadataService {
         return list;
     }
 
+    /**
     // original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
     //
     // For every holdings record, whether or not its parent bibliographic record matches on and is merged with
@@ -1187,6 +1289,12 @@ public class MarcAggregationService extends GenericMetadataService {
     //
     // New plan - no 904's just pass through holdings.
     //
+     *
+     * @param r
+     * @param smr
+     * @param repo
+     * @return
+     */
     private StringBuilder add904toHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         String _004 = smr.getControlField(4);
 
@@ -1202,6 +1310,13 @@ public class MarcAggregationService extends GenericMetadataService {
         return sb;
     }
 
+    /**
+     *
+     * @param r  the input record, a bib
+     * @param smr, the SaxMarcXmlRecord representation of the bib
+     * @param repo the input repository
+     * @return
+     */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         MatchSet ms = new MatchSet(smr);
         for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
@@ -1231,6 +1346,8 @@ public class MarcAggregationService extends GenericMetadataService {
         // does not match something that another record it did match did, it needs to be in the total.
         matchedRecordIds = expandMatchedRecords(matchedRecordIds);
 
+        // TODO check now if is/will be part of merge?
+
         // this is the merge as you go along spot,
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
@@ -1250,7 +1367,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     //  deleted it if it is part of a merge set.
                     LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
                 }
-                // dark side code
+                // dark side code because you are peering into the implementation of the DAO
                 else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
                     getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
                 }
@@ -1298,7 +1415,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * each other, indirectly they do, so the output record needs to combine {62,160,201}
      *
      * @param matchedRecordIds
-     * @return
+     * @return merged sets (dedup'd)
      */
     private TreeSet<Long> expandMatchedRecords(TreeSet<Long> matchedRecordIds) {
         TreeSet<Long> results = new TreeSet<Long>();
@@ -1349,6 +1466,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             TimingLogger.stop("MarcAggregationServiceDAO.endBatch");
 
+            //transformation service does this, not sure why, so this is a placeholder.
 //            getRepository().setPersistentProperty("inputBibs", inputBibs);
 //            getRepository().setPersistentProperty("inputHoldings", inputHoldings);
             TimingLogger.reset();
@@ -1358,43 +1476,11 @@ public class MarcAggregationService extends GenericMetadataService {
         return true;
     }
 
-
-    /*
-     * //for solr indexer
-     * public List<RegisteredData> getRegisteredIdentifiers(InputRecord ri) {
-     * //implement here is decide to go back to way where individual service provides identifiers.
-     * // Get the 001 and 003 control fields
-     *
-     * // The XML after normalizing the record
-     * Element marcXml = null;
-     *
-     * //TimingLogger.start("create dom");
-     * ri.setMode(Record.JDOM_MODE);
-      * marcXml = ri.getOaiXmlEl();
-     * //TimingLogger.stop("create dom");
-     *
-     * // Create a MarcXmlManagerForNormalizationService for the record
-     * MarcXmlManager normalizedXml = new MarcXmlManager(marcXml, getOrganizationCode());
-     * normalizedXml.setInputRecord(ri);
-     *
-     * ArrayList<RegisteredData> identifiers = new ArrayList<RegisteredData> ();
-     * String control001 = normalizedXml.getField001();
-     * String control245 = normalizedXml.getField245();
-     *
-     * if (control001 != null) {
-     * identifiers.add(new RegisteredData("id_001_key", control001, "001"));
-     * }
-     * // call it 'title?'
-     * if (control245 != null) {
-     * identifiers.add(new RegisteredData("id_title_key", control245, "title"));
-     * }
-     * if (identifiers.size() <1) {
-     * LOG.error("*** NO NORM. IDENTIFIERS FOUND! for"+ri.getId());
-     * }
-     * return identifiers;
-     * }
+    /**
+     * called by parent at the right place, end of service, then run rules.
+     * I've not found a use for the passed in arg, instead, just go get the service's record counts,
+     * as need to compare input to service counts to output to service counts.
      */
-
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
         /*
          * default.properties contains starting point for properties fetched here.
