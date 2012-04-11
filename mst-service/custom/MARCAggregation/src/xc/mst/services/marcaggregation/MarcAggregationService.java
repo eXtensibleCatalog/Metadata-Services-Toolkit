@@ -16,6 +16,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -160,8 +161,13 @@ public class MarcAggregationService extends GenericMetadataService {
         mergedRecordsO2Imap = createMergedRecordsO2Imap(mergedRecordsI2Omap);
     }
 
-    // map output records to corresponding input records map
-    //   there is probably a lot slicker way to do this.
+    /**
+     *
+     * map output records to corresponding input records map
+     * there is probably a lot slicker way to do this.
+     * @param i_to_o_map
+     * @return
+     */
     private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
         TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
         for (Long out: i_to_o_map.getValues()) {
@@ -547,6 +553,8 @@ public class MarcAggregationService extends GenericMetadataService {
     private String getDynamicDataBlock(Map<Integer, Set<MarcDatafieldHolder>> dynamic) {
 
         StringBuilder results = new StringBuilder(System.getProperty("line.separator"));
+
+        results.append(getControlField005());
         results.append(getDynamicPiece(dynamic.get(10)));
         results.append(getDynamicPiece(dynamic.get(20)));
         results.append(getDynamicPiece(dynamic.get(22)));
@@ -554,6 +562,15 @@ public class MarcAggregationService extends GenericMetadataService {
         results.append(getDynamicPiece(dynamic.get(35)));
 
         return results.toString();
+    }
+
+    /**
+     *
+     * @return newly generated 005
+     */
+    private String getControlField005() {
+        String new005 = getUtil().printDateTimeISO8601(new Date());
+        return "<marc:controlfield tag=\"005\">" + new005 + "</marc:controlfield>"+ System.getProperty("line.separator");
     }
 
     /**
@@ -1395,16 +1412,21 @@ public class MarcAggregationService extends GenericMetadataService {
 
         }
         else {
-             list = createNewRecord(r, "b", r.getOaiXml());
-             // even though it is not merged, must still track the I<->O relationships!
-             if (list.size() > 0) {
-                 // will get 1 agg. record back.
-                 TreeSet<Long> littleSet = new TreeSet<Long>();
-                 littleSet.add(r.getId());
-                 updateMasMergedRecords(list.get(0).getId(), littleSet);
-             }
+            String xml = r.getOaiXml();
+            //TODO update 005!
+//            SaxMarcXmlRecord smr2 = new SaxMarcXmlRecord(xml);
+//            smr2.getControlField(5);
 
-             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+            list = createNewRecord(r, "b", xml);
+            // even though it is not merged, must still track the I<->O relationships!
+            if (list.size() > 0) {
+                // will get 1 agg. record back.
+                TreeSet<Long> littleSet = new TreeSet<Long>();
+                littleSet.add(r.getId());
+                updateMasMergedRecords(list.get(0).getId(), littleSet);
+            }
+
+            LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
         results.addAll(list);
         return results;
