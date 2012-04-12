@@ -5,7 +5,7 @@
   <ListRecords>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/336</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/1</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -177,7 +177,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/337</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/2</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -204,7 +204,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/338</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/3</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -422,7 +422,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/339</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/4</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -461,7 +461,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/340</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/5</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -619,7 +619,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/341</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -643,7 +643,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/342</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/7</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -667,7 +667,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/343</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/8</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -691,7 +691,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/344</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/9</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -715,7 +715,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/345</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/10</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -876,7 +876,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/346</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/11</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -899,7 +899,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/347</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/12</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -1040,7 +1040,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/348</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/13</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1066,7 +1066,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/349</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/14</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -1289,7 +1289,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/350</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/15</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1313,7 +1313,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/351</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/16</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1337,7 +1337,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/352</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/17</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1361,7 +1361,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/353</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/18</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1385,7 +1385,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/354</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/19</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1409,7 +1409,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/355</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/20</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1433,7 +1433,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/356</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/21</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1456,7 +1456,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/357</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/22</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -1581,7 +1581,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/358</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/23</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1607,7 +1607,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/359</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/24</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1633,7 +1633,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/360</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/25</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -1804,7 +1804,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/361</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/26</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -1831,7 +1831,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/362</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/27</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -2044,7 +2044,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/363</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/28</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2071,7 +2071,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/364</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/29</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -2222,7 +2222,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/365</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/30</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2245,7 +2245,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/366</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/31</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -2495,7 +2495,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/367</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/32</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2520,7 +2520,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/368</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/33</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -2706,7 +2706,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/369</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/34</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2729,7 +2729,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/370</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/35</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -2931,7 +2931,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/371</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/36</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2954,7 +2954,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/372</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/37</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -2977,7 +2977,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/373</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/38</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3000,7 +3000,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/374</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/39</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3023,7 +3023,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/375</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/40</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3046,7 +3046,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/376</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/41</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3069,7 +3069,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/377</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/42</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3092,7 +3092,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/378</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/43</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3115,7 +3115,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/379</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/44</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3138,7 +3138,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/380</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/45</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3161,7 +3161,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/381</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/46</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3184,7 +3184,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/382</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/47</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3207,7 +3207,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/383</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/48</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -3379,7 +3379,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/384</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/49</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3406,7 +3406,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/385</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/50</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -3612,7 +3612,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/386</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/51</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3639,7 +3639,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/387</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/52</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -3814,7 +3814,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/388</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/53</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -3838,7 +3838,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/389</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/54</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -4028,7 +4028,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/390</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/55</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -4052,7 +4052,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/391</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/56</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -4223,7 +4223,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/392</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/57</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -4250,7 +4250,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/393</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/58</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -4508,7 +4508,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/394</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/59</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -4532,7 +4532,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/395</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/60</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -4678,7 +4678,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/396</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/61</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -4702,7 +4702,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/397</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/62</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -4889,7 +4889,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/398</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/63</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -4921,7 +4921,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/399</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/64</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -5125,7 +5125,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/400</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/65</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -5152,7 +5152,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/401</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/66</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -5347,7 +5347,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/402</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/67</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -5370,7 +5370,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/403</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/68</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -5598,7 +5598,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/404</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/69</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -5626,7 +5626,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/405</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/70</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -5649,7 +5649,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/406</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/71</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -5828,7 +5828,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/407</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/72</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -5851,7 +5851,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/408</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/73</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -5992,7 +5992,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/409</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/74</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6019,7 +6019,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/410</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/75</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -6204,7 +6204,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/411</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/76</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6227,7 +6227,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/412</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/77</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6250,7 +6250,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/413</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/78</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6273,7 +6273,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/414</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/79</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6296,7 +6296,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/415</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/80</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6319,7 +6319,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/416</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/81</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6342,7 +6342,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/417</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/82</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -6620,7 +6620,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/418</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/83</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6647,7 +6647,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/419</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/84</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6677,7 +6677,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/420</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/85</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6706,7 +6706,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/421</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/86</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6733,7 +6733,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/422</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/87</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6759,7 +6759,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/423</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/88</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6785,7 +6785,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/424</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/89</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -6910,7 +6910,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/425</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/90</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6938,7 +6938,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/426</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/91</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6964,7 +6964,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/427</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/92</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -6990,7 +6990,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/428</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/93</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7016,7 +7016,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/429</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/94</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -7183,7 +7183,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/430</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/95</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7212,7 +7212,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/431</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/96</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -7425,7 +7425,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/432</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/97</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7454,7 +7454,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/433</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/98</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -7595,7 +7595,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/434</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/99</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7622,7 +7622,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/435</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/100</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -7785,7 +7785,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/436</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/101</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7810,7 +7810,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/437</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/102</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7835,7 +7835,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/438</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/103</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -7860,7 +7860,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/439</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/104</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -7985,7 +7985,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/440</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/105</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8012,7 +8012,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/441</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/106</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8032,7 +8032,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/442</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/107</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -8202,7 +8202,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/443</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/108</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8230,7 +8230,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/444</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/109</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -8442,7 +8442,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/445</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/110</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8470,7 +8470,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/446</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/111</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -8698,7 +8698,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/447</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/112</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8725,7 +8725,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/448</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/113</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -8961,7 +8961,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/449</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/114</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -8983,7 +8983,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/450</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/115</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -9124,7 +9124,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/451</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/116</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -9150,7 +9150,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/452</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/117</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -9378,7 +9378,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/453</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/118</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -9401,7 +9401,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/454</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/119</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -9425,7 +9425,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/455</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/120</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -9449,7 +9449,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/456</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/121</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -9724,7 +9724,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/457</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/122</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -9911,7 +9911,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/458</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/123</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10047,7 +10047,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/459</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/124</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10081,7 +10081,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/460</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/125</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -10206,7 +10206,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/461</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/126</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10232,7 +10232,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/462</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/127</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10258,7 +10258,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/463</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/128</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10284,7 +10284,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/464</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/129</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10310,7 +10310,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/465</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/130</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10336,7 +10336,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/466</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/131</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10362,7 +10362,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/467</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/132</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -10544,7 +10544,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/468</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/133</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10566,7 +10566,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/469</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/134</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -10794,7 +10794,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/470</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/135</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10821,7 +10821,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/471</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/136</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -10848,7 +10848,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/472</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/137</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -11030,7 +11030,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/473</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/138</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11052,7 +11052,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/474</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/139</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -11188,7 +11188,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/475</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/140</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11215,7 +11215,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/476</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/141</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -11539,7 +11539,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/477</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/142</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11644,7 +11644,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/478</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/143</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11679,7 +11679,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/479</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/144</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11820,7 +11820,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/480</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/145</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11920,7 +11920,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/481</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/146</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11971,7 +11971,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/482</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/147</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -11992,7 +11992,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/483</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/148</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12027,7 +12027,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/484</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/149</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12138,7 +12138,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/485</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/150</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12173,7 +12173,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/486</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/151</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12444,7 +12444,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/487</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/152</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12520,7 +12520,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/488</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/153</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12575,7 +12575,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/489</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/154</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -12700,7 +12700,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/490</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/155</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12726,7 +12726,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/491</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/156</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12752,7 +12752,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/492</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/157</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12778,7 +12778,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/493</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/158</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12804,7 +12804,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/494</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/159</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -12831,7 +12831,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/495</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/160</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -13010,7 +13010,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/496</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/161</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13035,7 +13035,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/497</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/162</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -13226,7 +13226,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/498</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/163</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13251,7 +13251,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/499</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/164</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -13393,7 +13393,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/500</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/165</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13419,7 +13419,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/501</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/166</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13457,7 +13457,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/502</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/167</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -13613,7 +13613,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/503</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/168</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13639,7 +13639,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/504</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/169</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -13829,7 +13829,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/505</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/170</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -13855,7 +13855,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/506</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/171</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -14005,7 +14005,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/507</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/172</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14027,7 +14027,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/508</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/173</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -14255,7 +14255,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/509</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/174</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14279,7 +14279,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/510</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/175</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -14436,7 +14436,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/511</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/176</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14459,7 +14459,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/512</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/177</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -14600,7 +14600,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/513</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/178</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14627,7 +14627,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/514</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/179</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -14824,7 +14824,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/515</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/180</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14846,7 +14846,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/516</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/181</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14868,7 +14868,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/517</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/182</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14891,7 +14891,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/518</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/183</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14913,7 +14913,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/519</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/184</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -14936,7 +14936,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/520</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/185</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -15211,7 +15211,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/521</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/186</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15251,7 +15251,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/522</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/187</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15312,7 +15312,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/523</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/188</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15457,7 +15457,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/524</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/189</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15490,7 +15490,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/525</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/190</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15550,7 +15550,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/526</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/191</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -15675,7 +15675,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/527</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/192</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15698,7 +15698,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/528</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/193</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15722,7 +15722,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/529</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/194</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15746,7 +15746,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/530</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/195</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15770,7 +15770,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/531</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/196</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15794,7 +15794,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/532</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/197</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -15946,7 +15946,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/533</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/198</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -15973,7 +15973,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/534</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/199</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -16149,7 +16149,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/535</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/200</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -16179,7 +16179,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/536</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/201</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -16361,7 +16361,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/537</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/202</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -16387,7 +16387,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/538</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/203</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -16570,7 +16570,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/539</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/204</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -16597,7 +16597,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/540</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/205</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -16806,7 +16806,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/541</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/206</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -16828,7 +16828,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/542</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/207</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -17026,7 +17026,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/543</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/208</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17048,7 +17048,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/544</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/209</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -17219,7 +17219,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/545</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/210</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17244,7 +17244,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/546</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/211</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -17479,7 +17479,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/547</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/212</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17515,7 +17515,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/548</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/213</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17547,7 +17547,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/549</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/214</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17596,7 +17596,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/550</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/215</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17626,7 +17626,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/551</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/216</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17660,7 +17660,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/552</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/217</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17689,7 +17689,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/553</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/218</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17718,7 +17718,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/554</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/219</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17747,7 +17747,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/555</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/220</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17768,7 +17768,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/556</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/221</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17789,7 +17789,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/557</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/222</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -17921,7 +17921,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/558</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/223</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17946,7 +17946,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/559</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/224</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17972,7 +17972,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/560</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/225</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -17999,7 +17999,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/561</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/226</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18025,7 +18025,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/562</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/227</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18051,7 +18051,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/563</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/228</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18077,7 +18077,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/564</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/229</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18103,7 +18103,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/565</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/230</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18129,7 +18129,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/566</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/231</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18155,7 +18155,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/567</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/232</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18182,7 +18182,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/568</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/233</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18210,7 +18210,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/569</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/234</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -18373,7 +18373,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/570</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/235</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18401,7 +18401,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/571</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/236</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -18610,7 +18610,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/572</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/237</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18638,7 +18638,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/573</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/238</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -18869,7 +18869,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/574</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/239</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -18894,7 +18894,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/575</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/240</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -19138,7 +19138,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/576</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/241</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19161,7 +19161,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/577</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/242</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19184,7 +19184,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/578</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/243</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -19460,7 +19460,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/579</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/244</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19621,7 +19621,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/580</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/245</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19757,7 +19757,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/581</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/246</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19856,7 +19856,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/582</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/247</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -19882,7 +19882,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/583</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/248</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -20007,7 +20007,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/584</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/249</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20033,7 +20033,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/585</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/250</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20060,7 +20060,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/586</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/251</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -20231,7 +20231,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/587</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/252</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20259,7 +20259,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/588</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/253</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -20463,7 +20463,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/589</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/254</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20493,7 +20493,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/590</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/255</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -20669,7 +20669,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/591</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/256</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20692,7 +20692,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/592</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/257</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -20923,7 +20923,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/593</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/258</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20948,7 +20948,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/594</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/259</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -20974,7 +20974,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/595</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/260</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21000,7 +21000,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/596</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/261</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21023,7 +21023,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/597</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/262</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -21239,7 +21239,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/598</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/263</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21262,7 +21262,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/599</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/264</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -21406,7 +21406,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/600</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/265</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21432,7 +21432,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/601</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/266</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21459,7 +21459,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/602</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/267</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -21704,7 +21704,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/603</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/268</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21727,7 +21727,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/604</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/269</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21750,7 +21750,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/605</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/270</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21773,7 +21773,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/606</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/271</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21796,7 +21796,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/607</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/272</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21816,7 +21816,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/608</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/273</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21839,7 +21839,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/609</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/274</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -21862,7 +21862,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/610</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/275</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -22141,7 +22141,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/611</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/276</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22178,7 +22178,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/612</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/277</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22220,7 +22220,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/613</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/278</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22261,7 +22261,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/614</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/279</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22302,7 +22302,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/615</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/280</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22348,7 +22348,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/616</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/281</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22399,7 +22399,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/617</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/282</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22438,7 +22438,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/618</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/283</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22473,7 +22473,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/619</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/284</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22512,7 +22512,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/620</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/285</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22666,7 +22666,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/621</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/286</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22698,7 +22698,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/622</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/287</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22731,7 +22731,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/623</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/288</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22774,7 +22774,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/624</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/289</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22811,7 +22811,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/625</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/290</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22845,7 +22845,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/626</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/291</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -22983,7 +22983,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/627</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/292</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23144,7 +23144,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/628</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/293</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23215,7 +23215,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/629</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/294</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23281,7 +23281,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/630</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/295</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23318,7 +23318,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/631</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/296</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23454,7 +23454,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/632</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/297</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23516,7 +23516,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/633</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/298</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23574,7 +23574,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/634</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/299</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23624,7 +23624,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/635</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/300</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23683,7 +23683,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/636</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/301</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23719,7 +23719,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/637</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/302</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23764,7 +23764,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/638</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/303</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23803,7 +23803,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/639</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/304</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -23856,7 +23856,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/640</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/305</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24017,7 +24017,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/641</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/306</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24039,7 +24039,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/642</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/307</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24073,7 +24073,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/643</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/308</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -24229,7 +24229,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/644</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/309</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24256,7 +24256,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/645</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/310</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24279,7 +24279,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/646</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/311</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24302,7 +24302,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/647</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/312</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -24430,7 +24430,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/648</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/313</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24456,7 +24456,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/649</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/314</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24482,7 +24482,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/650</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/315</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24508,7 +24508,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/651</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/316</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -24672,7 +24672,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/652</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/317</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24703,7 +24703,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/653</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/318</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -24913,7 +24913,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/654</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/319</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -24944,7 +24944,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/655</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/320</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -25173,7 +25173,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/656</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/321</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25198,7 +25198,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/657</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/322</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25223,7 +25223,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/658</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/323</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25247,7 +25247,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/659</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/324</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -25388,7 +25388,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/660</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/325</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25415,7 +25415,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/661</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/326</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -25618,7 +25618,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/662</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/327</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25641,7 +25641,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/663</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/328</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -25664,7 +25664,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/664</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/329</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -26025,7 +26025,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/665</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/330</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -26072,7 +26072,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/666</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/331</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -26105,7 +26105,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/667</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/332</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -26132,7 +26132,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/668</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/333</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLbibliographic</setSpec>
       </header>
@@ -26257,7 +26257,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/669</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/334</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>
@@ -26284,7 +26284,7 @@
     </record>
     <record>
       <header>
-        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/670</identifier>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/335</identifier>
         <datestamp>2012-01-09T19:09:09Z</datestamp>
         <setSpec>MARCXMLholding</setSpec>
       </header>

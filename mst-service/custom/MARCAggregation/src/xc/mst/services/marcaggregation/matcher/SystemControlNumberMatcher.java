@@ -16,7 +16,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -27,6 +26,11 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
  * <a href="http://www.loc.gov/marc/bibliographic/bd035.html">MARC 035 field</a>
  *
  * OCLC Number, i.e. 035a, when the prefix= (OCoLC) (The service must match on both the numeric identifier AND the prefix.
+ *
+ * Note, the original requirement was to only accept this as a matchpoint if (OCoLC) was the prefix.  I never implemented it
+ * that way, and now it turns out that the requirement has changed.  Now, just make sure you have a valid 035a with a well-formed
+ * prefix followed by an identifier, and save it as a matchpoint.
+ *
  * Note that the XC MARC Normalization Service has steps to ensure that these identifiers are in a consistent format).
  * The prefix is defined as the characters within the parentheses.
  * OCLC numbers may also contain other letters BETWEEN the prefix and the prefix and the number itself.
@@ -175,7 +179,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 }
                 String goods = getMapId(subfield);
                 List<String[]> goodsList = inputId2scn.get(id);
-                final String[] goodsArray = new String[] {goods, subfield};  // its a pair of strings
+                final String[] goodsArray = new String[] {goods, subfield};  // it is a pair of strings
                 if (goodsList == null || goodsList.size() == 0) {
                     goodsList = new ArrayList<String[]>();
                     goodsList.add(goodsArray);
@@ -235,6 +239,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     }
 
     //TODO check in dB too?
+    // - seems to be unused, and I already don't recall what I used if for or thought I wanted it for.
     public Collection<Long> getRecordIdsInMatcher() {
         return inputId2scn.keySet();
     }
