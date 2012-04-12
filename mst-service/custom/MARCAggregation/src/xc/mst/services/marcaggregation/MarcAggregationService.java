@@ -113,9 +113,11 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     private Transformer staticTransformer;
     private Transformer holdingTransformer;
+    private Transformer _005_Transformer;
 
     private static final String STATIC_TRANSFORM  = "createStatic.xsl";
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
+    private static final String _005_TRANSFORM = "strip005.xsl";
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -136,6 +138,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
         setupRecordOfSource();
         staticTransformer = setupTransformer(getTransformForStaticFilename());
+        _005_Transformer  = setupTransformer(getTransformFor005Filename());
 
         final boolean transformHolding = false;
         if (transformHolding) {
@@ -473,13 +476,25 @@ public class MarcAggregationService extends GenericMetadataService {
         //  LOG.info("DYNAMIC DATA:");
         //  LOG.info(dynData);
 
+        oaiXml = insertTextAfter008(oaiXml, dynData);
+        //LOG.info("DATA WITH DYNAMIC DATA:");
+        //LOG.info(oaiXml);
+        return oaiXml;
+    }
+
+    private String insertTextAfter008(String oaiXml, String dynData) {
         // now insert the dynamic block into the correct spot in oaiXml,
         // it goes after the 008!
         final String regex = "controlfield tag=\"008\".*/marc:controlfield>";
         oaiXml=insertDynamicAtEnd(oaiXml, dynData, regex);
-        //LOG.info("DATA WITH DYNAMIC DATA:");
-        //LOG.info(oaiXml);
         return oaiXml;
+    }
+
+    private String update005(String xml) {
+        xml = getXmlMinus005(xml);
+        String _005 = getControlField005();
+        xml = insertTextAfter008(xml, _005);
+        return xml;
     }
 
     /**
@@ -606,6 +621,19 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
+     * transform the given xml by stripping 005's using an xsl to do the transformation.
+
+     * The 005 field is then added back in with an updated date.  Use this method on records that are not
+     * merged, i.e. 1 predecessor.
+     *
+     * @param oaiXml
+     * @return
+     */
+    private String getXmlMinus005(String oaiXml) {
+        return getTransformedXml(oaiXml, _005_Transformer);
+    }
+
+    /**
      * transform the given xml by stripping 004's & 014's
      * using an xsl to do the transformation.
      *
@@ -652,6 +680,10 @@ public class MarcAggregationService extends GenericMetadataService {
         return STATIC_TRANSFORM;
     }
 
+
+    protected String getTransformFor005Filename() {
+        return _005_TRANSFORM;
+    }
 
     protected String getTransformForHoldingFilename() {
         return HOLDING_TRANSFORM;
@@ -1412,10 +1444,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
         }
         else {
-            String xml = r.getOaiXml();
-            //TODO update 005!
-//            SaxMarcXmlRecord smr2 = new SaxMarcXmlRecord(xml);
-//            smr2.getControlField(5);
+            String xml = update005(r.getOaiXml());
 
             list = createNewRecord(r, "b", xml);
             // even though it is not merged, must still track the I<->O relationships!
