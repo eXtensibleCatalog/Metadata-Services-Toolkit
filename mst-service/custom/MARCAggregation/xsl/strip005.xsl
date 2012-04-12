@@ -9,14 +9,7 @@
     <!--Empty template for the content we want to redact -->
     <!--example syntax: -->
     <!--xsl:template match="*[CCC[not(.='B')]]" /-->
-    <xsl:template match="marc:controlfield[@tag='001']" />
-    <xsl:template match="marc:controlfield[@tag='003']" />
     <xsl:template match="marc:controlfield[@tag='005']" />
-    <xsl:template match="marc:datafield[@tag='010']" />
-    <xsl:template match="marc:datafield[@tag='020']" />
-    <xsl:template match="marc:datafield[@tag='022']" />
-    <xsl:template match="marc:datafield[@tag='024']" />
-    <xsl:template match="marc:datafield[@tag='035']" />
 
     <!--For the rest, copy all content forward -->
     	<xsl:template match="*">
