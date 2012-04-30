@@ -25,6 +25,42 @@ import org.apache.log4j.Logger;
 
 import xc.mst.utils.Util;
 
+/**
+ * Requirements this tries to adhere to can be found here:
+ * http://code.google.com/p/xcmetadataservicestoolkit/wiki/LoggingRecordCounts
+ *
+ * I found it so vital to entangling what is going on here that I am going to include part of it here as well.
+ *
+ * Dave in email on 2011-03-31
+
+    I guess I have an initial comment to start:
+
+    We are counting active, updates, and deletes, but I believe there are at least four categories
+    - perhaps we should count the following kinds of arriving records
+    (I am assuming that active is defined as a record that is not marked-deleted):
+
+    1) new record (active)
+
+    2) new record (marked-deleted)
+
+    3) updated record (active)
+
+    4) updated record (marked-deleted)
+
+    We could also count some additional categories that would also look at what the updated records are replacing (two of the above cases) :
+
+    3a) updated (active replacing an existing active)
+
+    3b) updated (active replacing an existing marked-deleted)
+
+    4a) updated (marked-deleted replacing an existing active)
+
+    4b) updated (marked-deleted replacing an existing marked-deleted)
+
+ *
+ * @author Benjamin Anderson
+ *
+ */
 public class RecordCounts {
 
     private static final Logger LOG = Logger.getLogger(RecordCounts.class);
@@ -117,6 +153,12 @@ public class RecordCounts {
         return ai;
     }
 
+    /**
+     * generally do not externally want to call this one.
+     * currently it is only externally called in the case of an error.
+     * @param type
+     * @param col_1
+     */
     public void incr(String type, String col_1) {
         if (type == null) {
             type = TOTALS;
@@ -127,6 +169,49 @@ public class RecordCounts {
         getCount(getCountsByType(type), col_1).addAndGet(1);
     }
 
+    /**
+     * You probably want to call this one.
+     *
+     * A collection of things I have learned.
+     *
+     * This method generally ends up incrementing two counters.
+     *
+     * i.e. lets take the example:
+     * We received 144 generic updated active records.
+     * These break down further to all 144 being updated active records replacing active records.
+     * So 2 counters get updated, upd_act_cnt += 144 and upd_act_prev_act_cnt += 144.
+     *
+     * They are both incremented as a result of a updated active record being received that replaces one that was previously active.
+     * It could have been an updated active record being received that replaces one that was previously held,
+     * or an updated active record received that replaces one that was previously deleted.
+     *
+     * Another example:
+     * upd_act_cnt:        6,755
+     * upd_act_prev_act_cnt:        4,212
+     * upd_act_prev_held_cnt:        2,543
+     * upd_act_prev_del_cnt:            0
+     * For the above, we have 6,755 upd_act_cnt, and that breaks down to 4,212 of 1 type and 2,543 of another.
+     * The below code does that.
+     *
+     *
+     * RecordIfc tells through comments that get/setType are key for RecordCount reporting.
+     * So if you want to see something besides 'Totals' and 'RecordCounts.OTHER'
+     * then the service must set the Record's type.
+     *
+     * As explained in DCTransformationService:
+     *          //
+                // setting this here increments this type in the record counts when
+                // incremented in GenericMetadataService.process() -- else it then
+                // increments RecordCounts.OTHER
+                //
+     *
+     * @see RecordIfc
+     * @param type - set by the service, see comments above
+     * @param newStatus - need to know the prevStatus and the newStatus
+                          then with both of these make the decision on which counter(s) to increment
+     * @param prevStatus - need to know the prevStatus and the newStatus
+                          then with both of these make the decision on which counter(s) to increment
+     */
     public void incr(String type, char newStatus, char prevStatus) {
         // LOG.debug("incr - type:"+type+" newStatus:"+newStatus+" prevStatus:"+prevStatus);
         if (type == null) {
@@ -158,6 +243,7 @@ public class RecordCounts {
             LOG.error("prevStatus: " + prevStatus);
             throw re;
         }
+        // the other incr:?
         if (prevStatus != 0 && prevStatus != Record.NULL) {
             getCount(getCountsByType(type), newStatus + "" + prevStatus).addAndGet(1);
         }
