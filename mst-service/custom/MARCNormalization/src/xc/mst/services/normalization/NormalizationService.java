@@ -446,7 +446,7 @@ public class NormalizationService extends GenericMetadataService {
 
                 TimingLogger.stop("holdsteps");
             }
-            
+
             // set 005 to current time
             normalizedXml.set005();
 
@@ -2149,14 +2149,6 @@ public class NormalizationService extends GenericMetadataService {
         return marcXml;
     }
 
-    // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
-    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-        List<T> r = new ArrayList<T>(c.size());
-        for (Object o : c)
-            r.add(clazz.cast(o));
-        return r;
-    }
-
     private HashMap<String, String> get014keyValuePairs() {
         try {
             // there is probably a more righteous way to grab the service name.
@@ -2166,8 +2158,8 @@ public class NormalizationService extends GenericMetadataService {
             // substitutions.014.key=ocm, pitt, roc
             // substitutions.014.value=OCoLC, steel, flour
 
-            final List<String> keys = castList(String.class, props.getList("substitutions.014.key"));
-            final List<String> values = castList(String.class, props.getList("substitutions.014.value"));
+            final List<String> keys = Util.castList(String.class, props.getList("substitutions.014.key"));
+            final List<String> values = Util.castList(String.class, props.getList("substitutions.014.value"));
 
             HashMap<String, String> map = new HashMap<String, String>();
             for (int i = 0; i < keys.size(); i++) { // want a guaranteed order
