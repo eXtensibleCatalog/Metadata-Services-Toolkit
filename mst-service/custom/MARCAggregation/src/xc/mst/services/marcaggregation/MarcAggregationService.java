@@ -61,6 +61,7 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 
 /**
  * @author Benjamin D. Anderson
@@ -97,7 +98,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
 
     /**
-     * record of source-related class variables
+     * record-of-source-related class variables
      */
     private List<Character> leaderVals = null;
     private boolean leader_byte17_weighting_enabled;
@@ -117,7 +118,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
     private static final String STATIC_TRANSFORM  = "createStatic.xsl";
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
-    private static final String _005_TRANSFORM = "strip005.xsl";
+    private static final String _005_TRANSFORM    = "strip005.xsl";
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -125,6 +126,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * override the parent method, called in the right place.
      */
+    @Override
     public void setup() {
         LOG.debug("MAS:  setup()");
 
@@ -264,21 +266,6 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    // http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
-    // TODO move this UP to common utilities.
-     *
-     * @param clazz
-     * @param c
-     * @return
-     */
-    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-        List<T> r = new ArrayList<T>(c.size());
-        for (Object o : c)
-            r.add(clazz.cast(o));
-        return r;
-    }
-
-    /**
     // this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
     // started off from looking at existing merged stuff in the database.  Based on the current record
     // that comes in, see what it matches, and go from there.
@@ -355,7 +342,7 @@ public class MarcAggregationService extends GenericMetadataService {
             final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCAggregation") +
                     "/META-INF/classes/xc/mst/services/custom.properties");
 
-            final List<String> values = castList(String.class, props.getList(name));
+            final List<String> values = Util.castList(String.class, props.getList(name));
             return values;
         } catch (Exception e) {
             LOG.error("Error loading custom.properties for service: " + this.getServiceName(), e);
@@ -1182,10 +1169,11 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    // search to see if there are multiple in records for this given out record.
-    //
+     * search to see if there are multiple in records for this given out record.
+     * , in any event, add the predecessor to the output record.
      *
      */
+    @Override
     protected void addPredecessor(Record in, Record out) {
         TreeSet<Long> set = mergedRecordsO2Imap.get(out.getId());
         if (set==null || set.isEmpty()) {
@@ -1266,6 +1254,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 // will we want to do this on a 2nd loop around all the records?
                 //
+                // TODO do these checks for NEW-ACTIVE here or in processBib?  Seems like processBib.
                 if (r.getSuccessors().size() == 0) {
                     // NEW-ACTIVE
 
@@ -1367,33 +1356,14 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return
      */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-        MatchSet ms = new MatchSet(smr);
-        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
-            String matchPointKey = me.getKey();
-            FieldMatcher matcher = me.getValue();
-            matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
-            // possibly need/want to add all match points 1st, then look for matches.
-            ms.addMatcher(matchPointKey, matcher);
-        }
+        MatchSet ms = populateMatchSet(r, smr);
+
+        TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
 
         // maybe this will come into play with rules that have parts that are alike...
         Set<Long> previouslyMatchedRecordIds = null;
 
-        TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
-        for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
-            String matchRuleKey = me.getKey();
-            MatchRuleIfc matchRule = me.getValue();
-            Set<Long> set = matchRule.determineMatches(ms);
-            if (set !=null && !set.isEmpty()) {
-                matchedRecordIds.addAll(set);
-            }
-        }
-
         List<OutputRecord> results = new ArrayList<OutputRecord>();
-
-        // make sure to get all the disjoint merge sets in the total set, i.e. if this given input record
-        // does not match something that another record it did match did, it needs to be in the total.
-        matchedRecordIds = expandMatchedRecords(matchedRecordIds);
 
         // TODO check now if is/will be part of merge?
 
@@ -1401,39 +1371,10 @@ public class MarcAggregationService extends GenericMetadataService {
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
         // TODO change to merge at end, looping a 2nd time through the records, if need be.
         masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
-        for (Long input: matchedRecordIds) {
-            //delete;
-            if (mergedRecordsI2Omap.containsKey(input)) {
-                Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
-                mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
-                mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
-                Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
 
-                // you may have already deleted it, because 1 output record can be mapped to multiple input records
-                if (outputRecordToBeDeleted != null) {
-                    outputRecordToBeDeleted.setStatus(Record.DELETED);
-                    // if the records did not get persisted, will get null record back, or you may have already
-                    //  deleted it if it is part of a merge set.
-                    LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
-                }
-                // dark side code because you are peering into the implementation of the DAO
-                else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
-                    getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
-                }
-
-                LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
-                // you may have already deleted it, because 1 output record can be mapped to multiple input records
-                if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
-                    for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
-                        or.setStatus(Record.DELETED);
-                        results.add(or);
-                        Record _r = getRepository().getRecord(or.getId());
-                        String type = getXCRecordService().getType(_r);
-                        or.setType(type);
-                    }
-                }
-            }
-        }
+        // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
+        // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
+        results = cleanupOldMergeInfo(matchedRecordIds, results);
 
         List<OutputRecord> list = null;
         // may not have any matches!
@@ -1459,6 +1400,82 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         results.addAll(list);
         return results;
+    }
+
+    /**
+     *
+     * @param matchedRecordIds - a newly found set of matching records
+     * @param results - possibly already has OutputRecord data in it, to be added, or to be deleted when all is said and done.
+     * @return - the OutputRecord list, with any necessary OutputRecord deletions added to it.
+     */
+    private List<OutputRecord> cleanupOldMergeInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results) {
+        for (Long input: matchedRecordIds) {
+            //delete;
+            if (mergedRecordsI2Omap.containsKey(input)) {
+                Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
+                mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
+                mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
+                Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
+
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null) {
+                    outputRecordToBeDeleted.setStatus(Record.DELETED);
+                    // if the records did not get persisted, will get null record back, or you may have already
+                    //  deleted it if it is part of a merge set.
+                    LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+                }
+                // dark side code because you are peering into the implementation of the DAO
+                else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
+                    getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+                }
+                //TODO do I need to add outputRecordToBeDeleted to results?  tried going  with YES ...
+                // ... but, the below line caused a hang in unit test.
+//                results.add(outputRecordToBeDeleted);
+
+                LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
+                // you may have already deleted it, because 1 output record can be mapped to multiple input records
+                if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
+                    for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
+                        or.setStatus(Record.DELETED);
+                        results.add(or);
+                        Record _r = getRepository().getRecord(or.getId());
+                        String type = getXCRecordService().getType(_r);
+                        or.setType(type);
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    private TreeSet<Long> populateMatchedRecordIds(MatchSet ms) {
+        TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
+        for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
+            String matchRuleKey = me.getKey();
+            MatchRuleIfc matchRule = me.getValue();
+            Set<Long> set = matchRule.determineMatches(ms);
+            if (set !=null && !set.isEmpty()) {
+                matchedRecordIds.addAll(set);
+            }
+        }
+
+        // make sure to get all the disjoint merge sets in the total set, i.e. if this given input record
+        // does not match something that another record it did match did, it needs to be in the total.
+        matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+
+        return matchedRecordIds;
+    }
+
+    private MatchSet populateMatchSet(InputRecord r, SaxMarcXmlRecord smr) {
+        MatchSet ms = new MatchSet(smr);
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            String matchPointKey = me.getKey();
+            FieldMatcher matcher = me.getValue();
+            matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
+            // possibly need/want to add all match points 1st, then look for matches.
+            ms.addMatcher(matchPointKey, matcher);
+        }
+        return ms;
     }
 
     /**
@@ -1532,6 +1549,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * I've not found a use for the passed in arg, instead, just go get the service's record counts,
      * as need to compare input to service counts to output to service counts.
      */
+    @Override
     protected void applyRulesToRecordCounts(RecordCounts mostRecentIncomingRecordCounts) {
         /*
          * default.properties contains starting point for properties fetched here.

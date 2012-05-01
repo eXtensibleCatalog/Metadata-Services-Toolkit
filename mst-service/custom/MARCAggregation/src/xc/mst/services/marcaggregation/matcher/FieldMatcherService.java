@@ -19,8 +19,8 @@ import xc.mst.manager.BaseService;
 import xc.mst.services.marcaggregation.MASSolrIndexManager;
 import xc.mst.services.marcaggregation.MASSolrService;
 import xc.mst.services.marcaggregation.MarcAggregationService;
-import xc.mst.services.marcaggregation.matchrules.Step1aMatchRule;
 import xc.mst.utils.MSTConfiguration;
+import xc.mst.utils.Util;
 
 /**
  * This abstract class ties the interface into the MST by making use of the platform
@@ -73,7 +73,7 @@ public abstract class FieldMatcherService extends BaseService implements FieldMa
             final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCAggregation") +
                     "/META-INF/classes/xc/mst/services/custom.properties");
 
-            final List<String> values = MarcAggregationService.castList(String.class, props.getList(name));
+            final List<String> values = Util.castList(String.class, props.getList(name));
             return values;
         } catch (Exception e) {
             LOG.error("Error loading custom.properties for MAS service.", e);

@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -260,6 +262,20 @@ public class Util {
             numLongPrim = (Long) numObj;
         }
         return numLongPrim;
+    }
+
+    /**
+     * http://stackoverflow.com/questions/367626/how-do-i-fix-the-expression-of-type-list-needs-unchecked-conversion
+     *
+     * @param clazz
+     * @param c
+     * @return
+     */
+    public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+        List<T> r = new ArrayList<T>(c.size());
+        for (Object o : c)
+            r.add(clazz.cast(o));
+        return r;
     }
 
     boolean debug = true;
