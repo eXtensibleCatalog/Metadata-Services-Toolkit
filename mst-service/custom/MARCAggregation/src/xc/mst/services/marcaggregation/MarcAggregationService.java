@@ -415,14 +415,16 @@ public class MarcAggregationService extends GenericMetadataService {
     //
      *
      * @param set
-     * @param repo
+     * @param repo  seems as though we have frowned on this in the past, but with this
+     *              service can we avoid looking up and using records from the source?
      * @return
      */
     private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
         LOG.info("**** Record of Source == "+recordOfSource);
 
-        String oaiXml = repo.getRecord(recordOfSource).getOaiXml();
+        final Record theSrcRecord = repo.getRecord(recordOfSource);
+        String oaiXml = theSrcRecord.getOaiXml();
         //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
         Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
@@ -440,7 +442,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // TODO q and a:
         // do I need to recreate all the records of the match set to setup pred/succ correctly?
         // do I need to provide a  list of these full records to the createNewRecord method?
-        List<OutputRecord> list = createNewRecord(repo.getRecord(recordOfSource), "b", oaiXml);
+        List<OutputRecord> list = createNewRecord(theSrcRecord, "b", oaiXml);
 
         // now that we have created a new record successfully, update the data structure to track the merged records.
         if (list.size() > 0) {
@@ -1190,7 +1192,11 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
+     * each record run by the service
+     * gets process called at a particular time in the method
+     * process(Repository repo, Format inputFormat, Set inputSet, Set outputSet)
      *
+     * the existing paradigm is to do things record by record without considering the whole of the records
      */
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
@@ -1207,7 +1213,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 // check if the record is a bibliographic record
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
-//                    TimingLogger.start("bib steps");
+                    TimingLogger.start("bib steps");
 
                     // get record of source data for this bib
                     //  (only a bib would be a record of source)
@@ -1224,10 +1230,11 @@ public class MarcAggregationService extends GenericMetadataService {
                     ((Record) r).setType(type);
 
                     results = processBib(r, smr, inputRepo);
+                    TimingLogger.stop("bib steps");
                 }
                 // check if the record is a holding record
                 else if ("uvxy".contains("" + leader06)) {
-//                    TimingLogger.start("hold steps");
+                    TimingLogger.start("hold steps");
                     type = "h";
                     //
                     // setting this here increments this type in the record counts when
@@ -1237,6 +1244,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     ((Record) r).setType(type);
 
                     results = processHolding(r, smr, inputRepo);
+                    TimingLogger.stop("hold steps");
                 }
                 else if (leader06 == 'z') {
                     // authority
@@ -1248,37 +1256,53 @@ public class MarcAggregationService extends GenericMetadataService {
                     //LOG error, do the same as normalization.
                     logDebug("Record Id " + r.getId() + " with leader character " + leader06 + " not processed.");
                 }
-
-                // was here....
-//                processBib(r, smr);
-
-                // will we want to do this on a 2nd loop around all the records?
-                //
-                // TODO do these checks for NEW-ACTIVE here or in processBib?  Seems like processBib.
-                if (r.getSuccessors().size() == 0) {
-                    // NEW-ACTIVE
-
-                } else {
-                    // UPDATE-ACTIVE
-                        // unmerge
-                        /*
-                        for (inputBibId : inputBibIds) {
-                            customProcessQueue.push(inputBibId)
-                        }
-                        for (inputHoldingId : inputHoldingIds) {
-                            customProcessQueue.push(inputHoldingId)
-                        }
-                        */
-                }
             } else {// Record.DELETED
                 if (r.getSuccessors().size() == 0) {
                     // NEW-DELETED
                     //
-                    // nothing to do?
+                    // nothing to do?  should we still double-check datastructures and db?
                 } else {
                     // UPDATE-DELETED
                     //
-                    // TODO - unmerge ramifications, figure out merge set you may be in, remerge?
+                    // ( mostly ) directly lifted from norm...
+                    //
+                    boolean isAbibWithSuccessors = false;
+                    results = new ArrayList<OutputRecord>();
+                    TimingLogger.start("processRecord.getDeleted");
+                    List<OutputRecord> successors = r.getSuccessors();
+
+                    // If there are successors then the record exist and needs to be deleted. Since we are
+                    // deleting the record, we need to decrement the count.
+                    if (successors != null && successors.size() > 0) {
+                        inputRecordCount--;
+
+                        // and if the record exists, check if it is a bib
+                        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+                        smr.setRecordId(r.getId());
+
+                        // Get the Leader 06. This will allow us to determine the record's type
+                        final char leader06 = smr.getLeader().charAt(6);
+
+                        // check if the record is a bibliographic record
+                        if ("abcdefghijkmnoprt".contains("" + leader06)) {
+                            // is bib!  need a flag or something for later...
+                            isAbibWithSuccessors = true;
+                        }
+
+                        // Handle reprocessing of successors
+                        for (OutputRecord successor : successors) {
+                            successor.setStatus(Record.DELETED);
+                            successor.setFormat(marc21);
+                            results.add(successor);
+                        }
+
+                    }
+                    TimingLogger.stop("processRecord.getDeleted");
+                    // TODO - unmerge ramifications if bib, figure out merge set you may be in, remerge?
+                    //. TODO -also, if you have seen this record, must delete all traces of if from this service's db and memory
+                    //        (i.e. matchpoint info).
+                    if (isAbibWithSuccessors) {
+                    }
                 }
             }
 
@@ -1304,17 +1328,50 @@ public class MarcAggregationService extends GenericMetadataService {
         // new plan - do not put a 904 into the holding, just pass the holding on.
         //
         //StringBuilder sb = add904toHolding(r, smr, repo);
-
+        //
         //   LOG.info("** NEW HOLDING:");
         //   LOG.info(sb.toString());
 
-        // originally I thought we were stripping 004/014 from holding.  We are not.
-        //
-        String oaiXml = repo.getRecord(r.getId()).getOaiXml();
-        // oaiXml = getHoldingBase(oaiXml);
+
         List<OutputRecord> list = null;
-        list = createNewRecord(r, "h", oaiXml);
-        return list;
+        final String oaiXml = repo.getRecord(r.getId()).getOaiXml();
+
+        // If there was already a processed record for the record we just processed, update it
+        if (r.getSuccessors() != null && r.getSuccessors().size() > 0) {
+            TimingLogger.start("update hold");
+
+            if (LOG.isDebugEnabled())
+                LOG.debug("Updating the record which was processed from an older version of the record we just processed.");
+
+            // Get the record which was processed from the record we just processed
+            // (there should only be one)
+            OutputRecord oldHold = r.getSuccessors().get(0);
+
+            oldHold.setMode(Record.STRING_MODE);
+            oldHold.setFormat(marc21);
+            oldHold.setStatus(Record.ACTIVE);
+
+            // Set the XML to the new normalized XML
+            oldHold.setOaiXml(oaiXml);
+
+            // Add the updated record
+            oldHold.setType("h");
+            list = new ArrayList<OutputRecord>();
+            list.add(oldHold);
+
+            TimingLogger.stop("update hold");
+            return list;
+        }
+
+        else {
+            // originally I thought we were stripping 004/014 from holding.  We are not.
+            //
+            // oaiXml = getHoldingBase(oaiXml);
+            TimingLogger.start("new hold");
+            list = createNewRecord(r, "h", oaiXml);
+            TimingLogger.stop("new hold");
+            return list;
+        }
     }
 
     /**
@@ -1356,6 +1413,24 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return
      */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+
+        // TODO down below we basically are doing the 'new' case, but there will be some commonality with 'update' case.
+        if (r.getSuccessors().size() == 0) {
+            // NEW-ACTIVE
+
+        } else {
+            // UPDATE-ACTIVE
+                // unmerge
+                /*
+                for (inputBibId : inputBibIds) {
+                    customProcessQueue.push(inputBibId)
+                }
+                for (inputHoldingId : inputHoldingIds) {
+                    customProcessQueue.push(inputHoldingId)
+                }
+                */
+        }
+
         MatchSet ms = populateMatchSet(r, smr);
 
         TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
@@ -1380,7 +1455,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // may not have any matches!
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
-            list = mergeBibSet(/* r, */ matchedRecordIds, repo);
+            list = mergeBibSet(matchedRecordIds, repo);
             LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
 
         }
