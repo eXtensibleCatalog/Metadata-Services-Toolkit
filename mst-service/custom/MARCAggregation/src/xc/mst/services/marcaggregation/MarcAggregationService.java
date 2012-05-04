@@ -1130,8 +1130,11 @@ public class MarcAggregationService extends GenericMetadataService {
             setName = "MARCXML Authority Records";
             setDescription = "A set of all MARCXML Authority records in the repository.";
             // don't setType for this 'type'
-        }// TODO what to do in the case of records not of about types?  Create a 1:1 output record?
-
+        } else { // If leader 6th character is invalid, then log error and do not process that record.
+                 // this code is identical to normalization service.
+            logDebug("Record Id " + record.getId() + " with leader character " + type + " not processed.");
+            return new ArrayList<OutputRecord>();
+        }
         if (setSpec != null) {
             try {
                 // Get the set for the provider
@@ -1262,7 +1265,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     //
                     boolean isAbibWithSuccessors = false;
                     results = new ArrayList<OutputRecord>();
-                    TimingLogger.start("processRecord.getDeleted");
+                    TimingLogger.start("processRecord.updateDeleted");
                     List<OutputRecord> successors = r.getSuccessors();
 
                     // If there are successors then the record exist and needs to be deleted. Since we are
@@ -1285,12 +1288,7 @@ public class MarcAggregationService extends GenericMetadataService {
                             successor.setFormat(marc21);
                             results.add(successor);
                         }
-
                     }
-                    TimingLogger.stop("processRecord.getDeleted");
-                    // TODO - unmerge ramifications if bib, figure out merge set you may be in, remerge?
-                    //. TODO -also, if you have seen this record, must delete all traces of if from this service's db and memory
-                    //        (i.e. matchpoint info).
                     if (isAbibWithSuccessors) {
 
                         TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
@@ -1301,11 +1299,13 @@ public class MarcAggregationService extends GenericMetadataService {
                             remerge(formerMatchSet);
                         }
                     }
+                    TimingLogger.stop("processRecord.updateDeleted");
                 }
             }
 
             if (results != null && results.size() != 1) {
-                // TODO incr records counts no output
+                // TODO increment records counts no output
+                // (if database column added to record counts to help with reconciliation of counts)
                 addMessage(r, 103, RecordMessage.ERROR);
             }
             return results;
@@ -1340,11 +1340,22 @@ public class MarcAggregationService extends GenericMetadataService {
         for (Long member: formerMatchSet) {
             mergedRecordsI2Omap.remove(member);
         }
+
+        //TODO what about deleting the output record, like this method does:
+        // cleanupOldMergedOutputInfo
         return formerMatchSet;
     }
 
     // TODO create this method.
+    // basically, retrieve the records, create saxmarcxml records, find what matches what.
+    // then merge / expand the sets, and create the output record(s).
     private void remerge(TreeSet<Long> formerMatchSet) {
+        for (Long id: formerMatchSet) {
+        }
+        /*
+        MatchSet ms = populateMatchSet(r, smr);
+        TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
+        */
     }
 
     /*
@@ -1441,10 +1452,11 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return
      */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-
+        List<OutputRecord> results;
         // TODO down below we basically are doing the 'new' case, but there will be some commonality with 'update' case.
         if (r.getSuccessors().size() == 0) {
             // NEW-ACTIVE
+            results = processBibNewActive(r, smr, repo);
 
         } else {
             // UPDATE-ACTIVE
@@ -1457,8 +1469,71 @@ public class MarcAggregationService extends GenericMetadataService {
                     customProcessQueue.push(inputHoldingId)
                 }
                 */
+            results = processBibUpdateActive(r, smr, repo);
         }
 
+        return results;
+    }
+
+    private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        //TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
+
+        /* -> belongs at bottom of this method?
+        // lastly must remerge the affected records, if this was part of a merge set.
+        if (formerMatchSet.size() > 1) {
+            formerMatchSet.remove(r.getId());       // remove the input that is gone.
+            remerge(formerMatchSet);
+        }
+        */
+
+        // before deleting anything, perhaps check if match set is the same?  if so, just update?
+
+        // what follows is active new code, needs to be adapted to active-update.
+
+        MatchSet ms = populateMatchSet(r, smr);
+
+        TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
+
+        List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+        // TODO check now if is/will be part of merge?
+
+        // this is the merge as you go along spot,
+        // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
+        // TODO change to merge at end, looping a 2nd time through the records, if need be.
+        masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+
+        // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
+        // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
+        results = cleanupOldMergedOutputInfo(matchedRecordIds, results);
+
+        List<OutputRecord> list = null;
+        // may not have any matches!
+        final boolean hasMatches = matchedRecordIds.size() > 0;
+        if (hasMatches) {
+            list = mergeBibSet(matchedRecordIds, repo);
+            LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+
+        }
+        else {
+            String xml = update005(r.getOaiXml());
+
+            list = createNewRecord(r, "b", xml);
+            // even though it is not merged, must still track the I<->O relationships!
+            if (list.size() > 0) {
+                // will get 1 agg. record back.
+                TreeSet<Long> littleSet = new TreeSet<Long>();
+                littleSet.add(r.getId());
+                updateMasMergedRecords(list.get(0).getId(), littleSet);
+            }
+
+            LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+        }
+        results.addAll(list);
+        return results;
+    }
+
+    private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         MatchSet ms = populateMatchSet(r, smr);
 
         TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
@@ -1518,38 +1593,47 @@ public class MarcAggregationService extends GenericMetadataService {
                 Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
                 mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
                 mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
-                Record outputRecordToBeDeleted = getRepository().getRecord(outputRecordToBeDeletedNum);
-
-                // you may have already deleted it, because 1 output record can be mapped to multiple input records
-                if (outputRecordToBeDeleted != null) {
-                    outputRecordToBeDeleted.setStatus(Record.DELETED);
-                    // if the records did not get persisted, will get null record back, or you may have already
-                    //  deleted it if it is part of a merge set.
-                    LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
-                }
-                // dark side code because you are peering into the implementation of the DAO
-                else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
-                    getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
-                }
-                //TODO do I need to add outputRecordToBeDeleted to results?  tried going  with YES ...
-                // ... but, the below line caused a hang in unit test. Probably at very least need to test that it exists
-                //     in the system 1st.
-//                results.add(outputRecordToBeDeleted);
-
-                LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
-                // you may have already deleted it, because 1 output record can be mapped to multiple input records
-                if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
-                    for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
-                        or.setStatus(Record.DELETED);
-                        results.add(or);
-                        Record _r = getRepository().getRecord(or.getId());
-                        String type = getXCRecordService().getType(_r);
-                        or.setType(type);
-                    }
-                }
+                results = deleteOutputRecord(results, outputRecordToBeDeletedNum);
             }
         }
         return results;
+    }
+
+    private List<OutputRecord> deleteOutputRecord(List<OutputRecord> results, Long outputRecordToBeDeletedNum) {
+        Record outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
+
+        // you may have already deleted it, because 1 output record can be mapped to multiple input records
+        if (outputRecordToBeDeleted != null) {
+            outputRecordToBeDeleted.setStatus(Record.DELETED);
+            // if the records did not get persisted, will get null record back, or you may have already
+            //  deleted it if it is part of a merge set.
+            LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+        }
+        // dark side code because you are peering into the implementation of the DAO
+        else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
+            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+        }
+        //TODO do I need to add outputRecordToBeDeleted to results?  tried going  with YES ...
+        // ... but, the below line caused a hang in unit test. Probably at very least need to test that it exists
+        //     in the system 1st.
+        //results.add(outputRecordToBeDeleted);
+
+        LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
+        // you may have already deleted it, because 1 output record can be mapped to multiple input records
+        if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
+            for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
+                or.setStatus(Record.DELETED);
+                results.add(or);
+                Record _r = getRepository().getRecord(or.getId());
+                String type = getXCRecordService().getType(_r);
+                or.setType(type);
+            }
+        }
+        return results;
+    }
+
+    private Record getOutputRecord(Long outputRecordToBeDeletedNum) {
+        return getRepository().getRecord(outputRecordToBeDeletedNum);
     }
 
     private TreeSet<Long> populateMatchedRecordIds(MatchSet ms) {
@@ -1686,8 +1770,6 @@ public class MarcAggregationService extends GenericMetadataService {
                     LOG2.error("*** can not calculate record counts: ", e);
                     return;
                 }
-
-                // TODO need to fix so 'b' and 'h' are counted.
                 Map<String, AtomicInteger> counts4typeIn_t = rcIn.getCounts().get(RecordCounts.TOTALS);
                 Map<String, AtomicInteger> counts4typeIn_b = rcIn.getCounts().get("b");
                 Map<String, AtomicInteger> counts4typeIn_h = rcIn.getCounts().get("h");
