@@ -1271,14 +1271,10 @@ public class MarcAggregationService extends GenericMetadataService {
                         inputRecordCount--;
 
                         // and if the record exists, check if it is a bib
-                        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-                        smr.setRecordId(r.getId());
-
-                        // Get the Leader 06. This will allow us to determine the record's type
-                        final char leader06 = smr.getLeader().charAt(6);
-
-                        // check if the record is a bibliographic record
-                        if ("abcdefghijkmnoprt".contains("" + leader06)) {
+                        // if it is in mergedRecordsI2Omap, it is a bib, fastest way.  don't try to parse record, deleted could be incomplete
+                        // and unparseable,
+                        //
+                        if (mergedRecordsI2Omap.containsKey(r.getId())) {
                             // is bib!  need a flag or something for later...
                             isAbibWithSuccessors = true;
                         }
