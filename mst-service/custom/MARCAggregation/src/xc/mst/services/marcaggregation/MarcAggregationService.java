@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -394,7 +393,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     // will use these data structures as the basis to update DAO, should always be up to date.
+     * if need to merge at end, after all records seen,
      *
      * @param matches
      * @param repo
@@ -410,14 +409,12 @@ public class MarcAggregationService extends GenericMetadataService {
 
 
     /**
-    //createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
-    //   returns static xml + saved dynamic content (included or not?)
-    //
+     * Note - createStatic => strip 001/003/035,  create 035, save 035 (as dynamic)
      *
-     * @param set
+     * @param set of record ids to merge
      * @param repo  seems as though we have frowned on this in the past, but with this
-     *              service can we avoid looking up and using records from the source?
-     * @return
+     *              service can we avoid looking up and using record content from the source?
+     * @return returns static xml + saved dynamic content (included or not?)
      */
     private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
         Long recordOfSource = determineRecordOfSource(set);
@@ -439,9 +436,6 @@ public class MarcAggregationService extends GenericMetadataService {
         //LOG.info("STATIC-"+recordOfSource);
         //LOG.info(oaiXml);
 
-        // TODO q and a:
-        // do I need to recreate all the records of the match set to setup pred/succ correctly?
-        // do I need to provide a  list of these full records to the createNewRecord method?
         List<OutputRecord> list = createNewRecord(theSrcRecord, "b", oaiXml);
 
         // now that we have created a new record successfully, update the data structure to track the merged records.
@@ -1049,7 +1043,7 @@ public class MarcAggregationService extends GenericMetadataService {
             // TODO
             // important - this is not going to totally nail it for the long term
             // need to consider records received during THIS run of the service, and
-            // there status, i.e. if if goes to deleted state and is part of a merge
+            // their status, i.e. if if goes to deleted state and is part of a merge
             // set.  Future solution still in the works  - could be customProcessQueue
             // and if that is not enough save more to the current match set list?
             //
@@ -1302,6 +1296,14 @@ public class MarcAggregationService extends GenericMetadataService {
                     //. TODO -also, if you have seen this record, must delete all traces of if from this service's db and memory
                     //        (i.e. matchpoint info).
                     if (isAbibWithSuccessors) {
+
+                        TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
+
+                        // lastly must remerge the affected records, if this was part of a merge set.
+                        if (formerMatchSet.size() > 1) {
+                            formerMatchSet.remove(r.getId());       // remove the input that is gone.
+                            remerge(formerMatchSet);
+                        }
                     }
                 }
             }
@@ -1319,8 +1321,38 @@ public class MarcAggregationService extends GenericMetadataService {
         return null;
     }
 
+    /**
+     * Could call this if a record is updated (safest just to remerge all affected) or deleted (must remerge all affected).
+     * for now , delete in a 1-off fashion.  And for both mem and db here and now.
+     *
+     * @param r - for this given input record, find its output record, and any
+     *            input records that share the output record
+     * @return - the complete set of input records that share an output record with the given input record
+     */
+    private TreeSet<Long> deleteAllMergeDetails(InputRecord r) {
+        //
+        //
+        // 1st, deleted from the database
+        masDAO.deleteAllMergeDetails(r.getId());
+
+        // 2nd, get the related merged records:
+        Long outputId = mergedRecordsI2Omap.get(r.getId());
+        TreeSet<Long> formerMatchSet = mergedRecordsO2Imap.get(outputId);
+
+        // 3rd, remove them from memory structures.
+        mergedRecordsO2Imap.remove(r.getId());
+        for (Long member: formerMatchSet) {
+            mergedRecordsI2Omap.remove(member);
+        }
+        return formerMatchSet;
+    }
+
+    // TODO create this method.
+    private void remerge(TreeSet<Long> formerMatchSet) {
+    }
+
     /*
-     * pretty much just passes the record on.
+     * if it is a record we have seen, update it, else create the new holding.  do nothing else.
      */
     protected List<OutputRecord> processHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
 
@@ -1449,7 +1481,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
-        results = cleanupOldMergeInfo(matchedRecordIds, results);
+        results = cleanupOldMergedOutputInfo(matchedRecordIds, results);
 
         List<OutputRecord> list = null;
         // may not have any matches!
@@ -1483,7 +1515,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param results - possibly already has OutputRecord data in it, to be added, or to be deleted when all is said and done.
      * @return - the OutputRecord list, with any necessary OutputRecord deletions added to it.
      */
-    private List<OutputRecord> cleanupOldMergeInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results) {
+    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results) {
         for (Long input: matchedRecordIds) {
             //delete;
             if (mergedRecordsI2Omap.containsKey(input)) {
@@ -1504,7 +1536,8 @@ public class MarcAggregationService extends GenericMetadataService {
                     getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
                 }
                 //TODO do I need to add outputRecordToBeDeleted to results?  tried going  with YES ...
-                // ... but, the below line caused a hang in unit test.
+                // ... but, the below line caused a hang in unit test. Probably at very least need to test that it exists
+                //     in the system 1st.
 //                results.add(outputRecordToBeDeleted);
 
                 LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);

@@ -27,7 +27,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
-
 import org.springframework.jdbc.core.RowMapper;
 
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
@@ -43,22 +42,19 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     private final static Logger LOG = Logger.getLogger(MarcAggregationServiceDAO.class);
 
-    public final static String bibsProcessedLongId_table    = "bibsProcessedLongId";
-    public final static String bibsProcessedStringId_table  = "bibsProcessedStringId";
-    public final static String bibsYet2ArriveLongId_table   = "bibsYet2ArriveLongId";
-    public final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
-    public final static String held_holdings_table          = "held_holdings";
+    // not yet used starts
+    public final static String matchpoints_028a_table   = "matchpoints_028a";
+    public final static String matchpoints_130a_table   = "matchpoints_130a";
+    public final static String matchpoints_240a_table   = "matchpoints_240a";
+    public final static String matchpoints_245a_table   = "matchpoints_245a";
+    public final static String matchpoints_260abc_table = "matchpoints_260abc";
+    // not yet used stops
 
     public final static String matchpoints_010a_table   = "matchpoints_010a";
     public final static String matchpoints_020a_table   = "matchpoints_020a";
     public final static String matchpoints_022a_table   = "matchpoints_022a";
     public final static String matchpoints_024a_table   = "matchpoints_024a";
-    public final static String matchpoints_028a_table   = "matchpoints_028a";
     public final static String matchpoints_035a_table   = "matchpoints_035a";
-    public final static String matchpoints_130a_table   = "matchpoints_130a";
-    public final static String matchpoints_240a_table   = "matchpoints_240a";
-    public final static String matchpoints_245a_table   = "matchpoints_245a";
-    public final static String matchpoints_260abc_table = "matchpoints_260abc";
 
     public final static String merge_scores_table       = "merge_scores";
     public final static String merged_records_table     = "merged_records";
@@ -69,13 +65,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String leaderByte17_field       = "leaderByte17";
     public final static String size_field               = "size";
 
-
-    //perhaps will move this up to the generic layer - since 2 services will end up with identical code.
-    public void persistBibMaps(
-        ) {
-        TimingLogger.start("MarcAggregationServiceDAO.persistBibMaps");
-        TimingLogger.stop("MarcAggregationServiceDAO.persistBibMaps");
-    }
 
     @SuppressWarnings("unchecked")
     public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
@@ -585,6 +574,27 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     public int getNumUniqueRecordIds(String tableName) {
         return this.jdbcTemplate.queryForInt("select count(distinct input_record_id) from " + tableName);
+    }
+
+    /***
+     * Generically, given a input_record_id, delete that row from given table.
+     * All the tables we will delete from with this method have 'input_record_id' column.
+     * @param name
+     */
+    public void deleteMergeRow(String table, Long input_record_id) {
+        this.jdbcTemplate.update(
+                "delete from " + table + " where "+input_record_id_field+" = ? ", input_record_id);
+    }
+
+    public void deleteAllMergeDetails(Long input_record_id) {
+
+        deleteMergeRow(matchpoints_010a_table, input_record_id);
+        deleteMergeRow(matchpoints_020a_table, input_record_id);
+        deleteMergeRow(matchpoints_022a_table, input_record_id);
+        deleteMergeRow(matchpoints_024a_table, input_record_id);
+        deleteMergeRow(matchpoints_035a_table, input_record_id);
+        deleteMergeRow(merge_scores_table,     input_record_id);
+        deleteMergeRow(merged_records_table,   input_record_id);
     }
 
     public void loadMaps(
