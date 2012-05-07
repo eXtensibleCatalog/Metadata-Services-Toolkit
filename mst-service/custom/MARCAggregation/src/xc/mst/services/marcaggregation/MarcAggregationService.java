@@ -93,9 +93,6 @@ public class MarcAggregationService extends GenericMetadataService {
     //   not only tracked merged records, many to 1, but track unmerged 1 to 1
     protected TLongLongHashMap                       mergedRecordsI2Omap = null;
 
-//    protected final XmlHelper xmlHelper = new XmlHelper();
-
-
     /**
      * record-of-source-related class variables
      */
@@ -123,7 +120,8 @@ public class MarcAggregationService extends GenericMetadataService {
 
 
     /**
-     * override the parent method, called in the right place.
+     * Setup record of source rules, setup transformers for modifying xml, validate the service, setup matchers and rules,
+     * load known merged record details.
      */
     @Override
     public void setup() {
@@ -277,11 +275,11 @@ public class MarcAggregationService extends GenericMetadataService {
 
     /**
      *
-    // need to look to see if the given match set impacts existing sets.  i.e if this set  is {1,47,50}
-    // and we have existing sets {1,3} and {4,47} then we need a superset: {1,3,4,47,50} and need to
-    // remove the existing sets {1,3}, {4,47}
-    //
-    // disjoint-set data structure?
+     * need to look to see if the given match set impacts existing sets.  i.e if this set  is {1,47,50}
+     * and we have existing sets {1,3} and {4,47} then we need a superset: {1,3,4,47,50} and need to
+     * remove the existing sets {1,3}, {4,47}
+     *
+     * disjoint-set data structure?
      *
      * @param matchset
      * @param origMasMatchSetList
@@ -366,8 +364,8 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    // wrap it.
-    //  (to increase accessibility - classes like Matcher/MatchRules that aren't subclasses may need it.)
+     * wrap it.
+     *  (to increase accessibility - classes like Matcher/MatchRules that aren't subclasses may need it.)
      */
     public void addMessage(InputRecord record, int code, char level) {
         try {
@@ -381,7 +379,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    // will use these data structures as the basis to update DAO, should always be up to date.
+     * will use these data structures as the basis to update DAO, should always be up to date.
      * @param outputRecordId
      * @param mergedInputRecordSet
      */
@@ -393,7 +391,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * if need to merge at end, after all records seen,
+     * if need to merge at end, after all records seen, (for better performance)
      *
      * @param matches
      * @param repo
@@ -673,14 +671,14 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    //getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022,024
-    //   returns dynamic content
-    //
-    // dynamic:
-    // record_id ->  {{035$a list}, {010 list}, etc.}
-    //
-    // need to pass to a method that gets static content and dynamic content and builds a list of it.
-      Grab the 5 fields below for all of the records that match,
+     * getDynamic => create 035 from 001/003, save existing 035's, save existing 010,020,022,024
+     *   returns dynamic content
+     *
+     *  dynamic:
+     *  record_id ->  {{035$a list}, {010 list}, etc.}
+     *
+     *  need to pass to a method that gets static content and dynamic content and builds a list of it.
+        Grab the 5 fields below for all of the records that match,
         then dedup  fields with identical content.
 
         035- just $a, and only when the field is properly formatted with a prefix in parens followed by the number
@@ -789,10 +787,9 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    //getDynamicHoldingContent => create 904 from 004/014, don't worry about existing 904,
-    // we are not trimming anything from existing record.
-    //   returns content to dynamically insert into holding records
-    //
+     * getDynamicHoldingContent => create 904 from 004/014, don't worry about existing 904,
+     * we are not trimming anything from existing record.
+     *   returns content to dynamically insert into holding records
      *
      * @param repo
      * @param num
@@ -885,6 +882,8 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
+     *  Unused.  Leaving it in place for now in case we change our minds.
+     *
         No matching or merging is done on MARC Holdings records. Therefore, the content of an Output
         holdings record will be identical to the content of the Input record, with the following exceptions:
 
@@ -1453,7 +1452,6 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         List<OutputRecord> results;
-        // TODO down below we basically are doing the 'new' case, but there will be some commonality with 'update' case.
         if (r.getSuccessors().size() == 0) {
             // NEW-ACTIVE
             results = processBibNewActive(r, smr, repo);
@@ -1495,7 +1493,7 @@ public class MarcAggregationService extends GenericMetadataService {
         TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
-
+/*
         // TODO check now if is/will be part of merge?
 
         // this is the merge as you go along spot,
@@ -1530,6 +1528,7 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
         results.addAll(list);
+  */
         return results;
     }
 
