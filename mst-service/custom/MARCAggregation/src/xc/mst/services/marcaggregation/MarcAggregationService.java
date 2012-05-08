@@ -1109,7 +1109,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // Insert the new (possibly) aggregated record
 
-        // The setSpec and set Description of the "type" set we should add the normalized record to
+        // The setSpec and set Description of the "type" set we should add the record to
         String setSpec = null;
         String setDescription = null;
         String setName = null;
@@ -1142,8 +1142,9 @@ public class MarcAggregationService extends GenericMetadataService {
                 TimingLogger.stop("getSetBySetSpec");
 
                 // Add the set if it doesn't already exist
-                if (recordTypeSet == null)
+                if (recordTypeSet == null) {
                     recordTypeSet = addSet(setSpec, setName, setDescription);
+                }
 
                 // Add the set to the record
                 aggRecord.addSet(recordTypeSet);
@@ -1389,7 +1390,7 @@ public class MarcAggregationService extends GenericMetadataService {
             oldHold.setFormat(marc21);
             oldHold.setStatus(Record.ACTIVE);
 
-            // Set the XML to the new normalized XML
+            // Set the XML to the updated XML
             oldHold.setOaiXml(oaiXml);
 
             // Add the updated record
@@ -1413,15 +1414,14 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-    // original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
-    //
-    // For every holdings record, whether or not its parent bibliographic record matches on and is merged with
-    // another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
-    // record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
-    // to the record represented in the input Holdings record’s 004 field.
-    //
-    // New plan - no 904's just pass through holdings.
-    //
+     * original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
+     *
+     * For every holdings record, whether or not its parent bibliographic record matches on and is merged with
+     * another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+     * record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
+     * to the record represented in the input Holdings record’s 004 field.
+     *
+     * New plan - no 904's just pass through holdings.
      *
      * @param r
      * @param smr
