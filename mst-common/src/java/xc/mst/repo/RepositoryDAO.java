@@ -803,6 +803,17 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
+    public Long getRecordId(String repoName, String oaiId) {
+        String sql = "select record_id from " + getTableName(repoName, RECORD_OAI_IDS) + " where oai_id = ?";
+        Long recordId = null;
+        try {
+        	recordId = this.jdbcTemplate.queryForObject(sql, Long.class, oaiId);
+        } catch (EmptyResultDataAccessException t) {
+            return null;
+        }
+        return recordId;
+    }
+
     protected List<Map<String, Object>> getHarvestCache(String name, int page) {
         TimingLogger.start("getHarvestCache");
         int recordsAtOnce = 100000;
@@ -828,6 +839,24 @@ public class RepositoryDAO extends BaseDAO {
             rowList = getHarvestCache(name, ++page);
         }
         TimingLogger.stop("populateHarvestCache");
+    }
+		
+    public char getPreviousStatus(String repoName, Long recordId, boolean service) {
+        String tableName = null;
+        if (service) {
+            tableName = PREV_INCOMING_RECORD_STATUSES;
+        } else {
+            tableName = RECORDS_TABLE;
+        }
+
+    	String sql = "select status from " + getTableName(repoName, tableName) + " where record_id = ?";
+        String status;
+        try {
+        	status = this.jdbcTemplate.queryForObject(sql, String.class, recordId);
+        } catch (EmptyResultDataAccessException t) {
+            return (char) 0;
+        }
+        return status.length() == 1 ? status.charAt(0) : (char) 0;
     }
 
     protected List<Map<String, Object>> getPreviousStatuses(String name, int page, boolean service) {
