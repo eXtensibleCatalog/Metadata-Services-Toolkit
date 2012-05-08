@@ -617,21 +617,30 @@ public class Facade extends BaseManager {
 
                 LogWriter.addInfo(service.getHarvestOutLogFileName(), "Found the record with the OAI Identifier " + oaiRequest.getIdentifier() + ".");
 
-                record.setMode(Record.JDOM_MODE);
-                Element recordContentEl = record.getOaiXmlEl();
-                if (transformer != null) {
-                    recordContentEl = transformRecord(recordContentEl);
+                try {
+
+	                record.setMode(Record.JDOM_MODE);
+	                Element recordContentEl = record.getOaiXmlEl();
+	                if (transformer != null) {
+	                    recordContentEl = transformRecord(recordContentEl);
+	                }
+	                StringBuilder stringBuilder = new StringBuilder();
+	                stringBuilder.append("<record>")
+	                            .append(getHeader(record))
+	                            .append("<metadata>")
+	                            .append(xmlHelper.getStringRaw(recordContentEl))
+	                            .append("</metadata>")
+	                            .append("</record>");
+	
+	                return XMLUtil.xmlTag("GetRecord", stringBuilder.toString());
+
+                }catch (Exception ex) {
+                    if (log.isDebugEnabled())
+                        log.debug("Unable to retrieve and process record: " + ex);
+                    
+                    return XMLUtil.xmlTag("error", Constants.ERROR_ID_DOES_NOT_EXIST, new String[] { "code", "idDoesNotExist" });
+
                 }
-
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("<record>")
-                            .append(getHeader(record))
-                            .append("<metadata>")
-                            .append(xmlHelper.getStringRaw(recordContentEl))
-                            .append("</metadata>")
-                            .append("</record>");
-
-                return XMLUtil.xmlTag("GetRecord", stringBuilder.toString());
             }
         }
     }
