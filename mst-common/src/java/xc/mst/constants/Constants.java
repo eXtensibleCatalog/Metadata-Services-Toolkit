@@ -142,6 +142,11 @@ public class Constants {
     public static final String CONFIG_MAX_RUNNING_HARVEST_JOBS = "MaxRunningHarvestJobs";
 
     /**
+     * Parameter for looking up the threshold of records, when hit, is considered a "large" harvest
+     */
+    public static final String CONFIG_LARGE_HARVEST_THRESHOLD = "LargeHarvestThreshold";
+
+    /**
      * Parameter for looking up the maximum number of concurrently running services from the configuration file
      */
     public static final String CONFIG_MAX_RUNNING_SERVICE_JOBS = "MaxRunningServiceJobs";

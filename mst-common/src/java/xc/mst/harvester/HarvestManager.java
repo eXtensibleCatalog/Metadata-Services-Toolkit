@@ -44,6 +44,7 @@ import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
 import xc.mst.cache.DynKeyLongMap;
+import xc.mst.constants.Constants;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
 import xc.mst.dao.DatabaseConfigException;
@@ -72,8 +73,12 @@ public class HarvestManager extends WorkerThread {
         UTC_DAY_FORMATTER = UTC_DAY_FORMATTER.withZone(DateTimeZone.UTC);
     }
     // Map<MostSigToken, ListOfAllOaoIdsThatHaveToken<EntireOaiId, recordId>>
+    protected boolean cacheSetup = false;
     protected DynKeyLongMap oaiIdCache = new DynKeyLongMap();
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
+    
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
+    protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // The is public and static simply for the MockHarvestTest
     public static String lastOaiRequest = null;
@@ -129,8 +134,6 @@ public class HarvestManager extends WorkerThread {
         try {
             hssFirstTime = true;
             this.resumptionToken = null;
-            oaiIdCache.clear();
-            previousStatuses.clear();
             startTime = new Date().getTime();
             // BDA - I added this check for 0 becuase the initialization of HarvestSchedule.steps creates a new
             // list of size zero. The DAO which creates the harvestSchedule doesn't inject steps into it. So
@@ -142,11 +145,18 @@ public class HarvestManager extends WorkerThread {
             }
             harvestScheduleStepIndex = 0;
             repo = getRepositoryService().getRepository(harvestSchedule.getProvider());
-            TimingLogger.outputMemory();
-            getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
-            TimingLogger.reset();
-            getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses, false);
-            TimingLogger.reset();
+
+            String strLHT = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LARGE_HARVEST_THRESHOLD);
+            largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
+            if (strLHT != null) {
+                try {
+                	largeHarvestThreshold = Integer.parseInt(strLHT);
+                } catch (NumberFormatException e) {
+                	largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
+                }
+            }
+            // no longer set up cache for all harvests; only do so for "large" ones
+            //setupCache();
 
             this.currentHarvest = getScheduleService().getHarvest(harvestSchedule);
             this.incomingRecordCounts = new RecordCounts(this.currentHarvest.getEndTime(), RecordCounts.INCOMING);
@@ -155,6 +165,48 @@ public class HarvestManager extends WorkerThread {
         }
     }
 
+    private void setupCache() {
+    	if (cacheSetup) return; // one-time event only
+        oaiIdCache.clear();
+        previousStatuses.clear();
+        TimingLogger.outputMemory();
+        getRepositoryDAO().populateHarvestCache(repo.getName(), oaiIdCache);
+        TimingLogger.reset();
+        getRepositoryDAO().populatePreviousStatuses(repo.getName(), previousStatuses, false);
+        TimingLogger.reset();
+        cacheSetup = true;
+    }
+
+    private Long getRecordId(String oaiId) {
+        String nonRedundantId = getUtil().getNonRedundantOaiId(oaiId);
+		Long recId = oaiIdCache.getLong(nonRedundantId);
+    	if (cacheSetup) {
+    		return recId;
+    	} else {
+    		if (recId != null && recId != 0) return recId;
+    		return getRepositoryDAO().getRecordId(repo.getName(), oaiId);
+    	}
+    }
+
+    private void cacheRecordId(String oaiId, Long recordId) {
+        String nonRedundantId = getUtil().getNonRedundantOaiId(oaiId);
+		oaiIdCache.put(nonRedundantId, recordId);
+    }
+    
+    private char getPreviousStatus(Long recordId) {
+    	char prevStatus = (char) previousStatuses.get(recordId); 
+        if (cacheSetup) {
+        	return prevStatus;
+        } else {
+        	if (prevStatus != (char) 0) return prevStatus;
+        	return getRepositoryDAO().getPreviousStatus(repo.getName(), recordId, false);
+        }
+    }
+    
+    private void cachePreviousStatus(Long recordId, byte status) {
+    	previousStatuses.put(recordId, status);    	
+    }
+    
     @Override
     public void finishInner(boolean success) {
         super.finishInner(success);
@@ -424,6 +476,17 @@ public class HarvestManager extends WorkerThread {
                     provider.setLastOaiRequest(request);
                 }
 
+                // Is this a "large" update?
+                // If so, we will cache OAI IDs and previous statuses; otherwise, we hit the DB each time
+                if (resumptionToken == null) {
+                	if (getRecords2ProcessThisRun() >= largeHarvestThreshold) {
+                		log.info("This is a large update; we will cache OAI IDs and previous statuses");
+                		setupCache();
+                	} else {
+                		log.info("This is not a large update; we will not need to cache OAI IDs and previous statuses");
+                	}
+                }
+                
                 TimingLogger.start("parseRecords");
                 resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
                 log.debug("resumptionToken: " + resumptionToken);
@@ -619,20 +682,19 @@ public class HarvestManager extends WorkerThread {
                 record.setHarvest(currentHarvest);
                 record.setProvider(currentHarvest.getProvider());
 
-                String nonRedundantId = getUtil().getNonRedundantOaiId(record.getHarvestedOaiIdentifier());
-                Long recordId = oaiIdCache.getLong(nonRedundantId);
-
+                String oaiId = record.getHarvestedOaiIdentifier();
+                Long recordId = getRecordId(oaiId);
                 char prevStatus = 0;
                 if (recordId == null || recordId == 0) {
                     getRepositoryDAO().injectId(record);
                 } else {
                     record.setId(recordId);
-                    prevStatus = (char) previousStatuses.get(recordId);
+                    prevStatus = getPreviousStatus(recordId);
                     log.debug("found prevStatus: " + prevStatus);
                     record.setPreviousStatus(prevStatus);
                 }
-                previousStatuses.put(record.getId(), (byte) record.getStatus());
-                oaiIdCache.put(nonRedundantId, record.getId());
+                cachePreviousStatus(record.getId(), (byte) record.getStatus());
+                cacheRecordId(oaiId, record.getId());
 
                 repo.addRecord(record);
                 if (record.getSets() != null && record.getSets().size() > 1) {
