@@ -76,4 +76,9 @@ public class x028abMatcher extends FieldMatcherService {
         return 0;
     }
 
+    @Override
+    public void removeRecordFromMatcher(InputRecord ir) {
+        // TODO Auto-generated method stub
+    }
+
 }

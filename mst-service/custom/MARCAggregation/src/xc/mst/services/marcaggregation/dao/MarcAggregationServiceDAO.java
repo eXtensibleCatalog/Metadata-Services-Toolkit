@@ -66,6 +66,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String size_field               = "size";
 
 
+    //TODO the table needs to be able to grow, does it?  i.e. with each call is prior data preserved?
+    //     on the flip side, if so, how does old data get removed that needs to be?
     @SuppressWarnings("unchecked")
     public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
 

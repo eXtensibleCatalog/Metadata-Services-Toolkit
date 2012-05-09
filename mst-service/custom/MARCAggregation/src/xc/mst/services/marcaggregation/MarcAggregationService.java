@@ -401,7 +401,9 @@ public class MarcAggregationService extends GenericMetadataService {
         // all in the set used to pull dynamic content
 
         for (TreeSet<Long> set: matches) {
-            mergeBibSet(set, repo);
+            InputRecord record = getRecordOfSourceRecord(set, repo);
+            String xml = mergeBibSet(record, set, repo);
+            createNewBibRecord(record, xml, set);
         }
     }
 
@@ -414,15 +416,11 @@ public class MarcAggregationService extends GenericMetadataService {
      *              service can we avoid looking up and using record content from the source?
      * @return returns static xml + saved dynamic content (included or not?)
      */
-    private List<OutputRecord> mergeBibSet(TreeSet<Long> set, Repository repo) {
-        Long recordOfSource = determineRecordOfSource(set);
-        LOG.info("**** Record of Source == "+recordOfSource);
-
-        final Record theSrcRecord = repo.getRecord(recordOfSource);
+    private String mergeBibSet(InputRecord theSrcRecord, TreeSet<Long> set, Repository repo) {
         String oaiXml = theSrcRecord.getOaiXml();
         //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
-        Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(recordOfSource, repo, set);
+        Map<Integer, Set<MarcDatafieldHolder>> dynamic = getDynamicContent(theSrcRecord.getId(), repo, set);
 
         oaiXml = getStaticBase(oaiXml);
         // this would be a lot of data in the log.
@@ -433,6 +431,20 @@ public class MarcAggregationService extends GenericMetadataService {
         oaiXml = updateDynamicRecordWithStaticContent(oaiXml, dynamic);
         //LOG.info("STATIC-"+recordOfSource);
         //LOG.info(oaiXml);
+
+        return oaiXml;
+    }
+
+    private InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo) {
+        final Long recordOfSource = determineRecordOfSource(set);
+        LOG.info("**** Record of Source == "+recordOfSource);
+        //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
+
+        final Record theSrcRecord = repo.getRecord(recordOfSource);
+        return theSrcRecord;
+    }
+
+    private List<OutputRecord> createNewBibRecord(InputRecord theSrcRecord, String oaiXml, TreeSet<Long> set) {
 
         List<OutputRecord> list = createNewRecord(theSrcRecord, "b", oaiXml);
 
@@ -1084,12 +1096,14 @@ public class MarcAggregationService extends GenericMetadataService {
         // should this check be here or before we even get here?  notice the method name I chose...
         //
         // If there was already a processed record for the record we just processed, update it
+        /*
         if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
 
         }
         else {
             // new
         }
+        */
 
         TimingLogger.start("new");
 
@@ -1291,6 +1305,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     }
                     if (isAbibWithSuccessors) {
 
+                        removeRecordsFromMatchers(r);
                         TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
 
                         // lastly must remerge the affected records, if this was part of a merge set.
@@ -1328,12 +1343,11 @@ public class MarcAggregationService extends GenericMetadataService {
     private TreeSet<Long> deleteAllMergeDetails(InputRecord r) {
         //
         //
-        // 1st, deleted from the database
+        // 1st, delete from the database
         masDAO.deleteAllMergeDetails(r.getId());
 
         // 2nd, get the related merged records:
-        Long outputId = mergedRecordsI2Omap.get(r.getId());
-        TreeSet<Long> formerMatchSet = mergedRecordsO2Imap.get(outputId);
+        TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
 
         // 3rd, remove them from memory structures.
         mergedRecordsO2Imap.remove(r.getId());
@@ -1346,9 +1360,19 @@ public class MarcAggregationService extends GenericMetadataService {
         return formerMatchSet;
     }
 
+    private TreeSet<Long> getCurrentMatchSetForRecord(InputRecord r) {
+        Long outputId = mergedRecordsI2Omap.get(r.getId());
+        TreeSet<Long> formerMatchSet = mergedRecordsO2Imap.get(outputId);
+        if (formerMatchSet == null) {
+            formerMatchSet = new TreeSet<Long>();
+        }
+        return formerMatchSet;
+    }
+
     // TODO create this method.
     // basically, retrieve the records, create saxmarcxml records, find what matches what.
     // then merge / expand the sets, and create the output record(s).
+    // Yes, the number of output records may increase.
     private void remerge(TreeSet<Long> formerMatchSet) {
         for (Long id: formerMatchSet) {
         }
@@ -1484,52 +1508,117 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         */
 
-        // before deleting anything, perhaps check if match set is the same?  if so, just update?
-
-        // what follows is active new code, needs to be adapted to active-update.
-
-        MatchSet ms = populateMatchSet(r, smr);
-
-        TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
+        // before deleting anything, perhaps check if match set is the same?  if so, just update? (would need to check record of source, and
+        // add code to track what WAS the record of source.
+        // for now it seems easiest and most likely to produce correct results just to delete all and remerge if update.
+        // BUT (TODO) make sure that if there all the records that used to match are dealt with!
+        //
+        // Example to illustrate: For instance {1,2,3} may have used to match,
+        // now with update this is the match situation: {1,2},{3} so now need TWO output records!
+        //    could be the customProcessQueue
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
-/*
-        // TODO check now if is/will be part of merge?
 
-        // this is the merge as you go along spot,
-        // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
-        // TODO change to merge at end, looping a 2nd time through the records, if need be.
-        masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
+        TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
 
-        // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
-        // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
-        results = cleanupOldMergedOutputInfo(matchedRecordIds, results);
+        removeRecordsFromMatchers(r);
 
-        List<OutputRecord> list = null;
-        // may not have any matches!
-        final boolean hasMatches = matchedRecordIds.size() > 0;
-        if (hasMatches) {
-            list = mergeBibSet(matchedRecordIds, repo);
-            LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+        MatchSet ms = populateMatchSet(r, smr);
+        TreeSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
 
+
+        Long oldOutputId;
+        OutputRecord oldOutput;
+
+        boolean sameSet = areMatchSetsEquivalent(formerMatchSet, newMatchedRecordIds);
+        if (!sameSet) {
+            //TODO must check whether smaller or greater, etc.
+
+            // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
+            oldOutput = r.getSuccessors().get(0);
+            results = cleanupOldMergedOutputInfo(newMatchedRecordIds, results, true);
         }
         else {
-            String xml = update005(r.getOaiXml());
+            // this is the merge as you go along spot, and will be impacted if you change that paradigm.
+            // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
+            // TODO change to merge at end, looping a 2nd time through the records, if need be.
 
-            list = createNewRecord(r, "b", xml);
-            // even though it is not merged, must still track the I<->O relationships!
-            if (list.size() > 0) {
-                // will get 1 agg. record back.
-                TreeSet<Long> littleSet = new TreeSet<Long>();
-                littleSet.add(r.getId());
-                updateMasMergedRecords(list.get(0).getId(), littleSet);
+            // do not think you need to bother with this - you already verified the match set is the same, and it will have been added already.
+            // if you are paranoid though you COULD run this - it is an idempotent method.
+            //masMatchSetList = addToMatchSetList(newMatchedRecordIds, masMatchSetList);
+
+            // note both sides of the if below should produce the same record.
+            if (mergedRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
+                oldOutputId = mergedRecordsI2Omap.get(newMatchedRecordIds.first());
+                oldOutput = getRepository().getRecord(oldOutputId);
+            }
+            else {
+                // Get the record which was processed from the record we just processed
+                // (any of the matchset input records should map to the same output record, right?)
+                oldOutput = r.getSuccessors().get(0);
+            }
+            // since same set, don't clean up any memory details, it all points to the right stuff still.
+
+            List<OutputRecord> list = null;
+            // may not have any matches!
+            final boolean hasMatches = newMatchedRecordIds.size() > 0;
+            String xml;
+            if (hasMatches) {
+
+                InputRecord record = getRecordOfSourceRecord(newMatchedRecordIds, repo);
+                xml = mergeBibSet(record, newMatchedRecordIds, repo);
+
+                LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+
+                // now that we remerged, update the existing output record below!
+            }
+            else {
+                // no matches, just update the output with the latest, include an update to the 005.
+                xml = update005(r.getOaiXml());
             }
 
+            oldOutput.setMode(Record.STRING_MODE);
+            oldOutput.setFormat(marc21);
+            oldOutput.setStatus(Record.ACTIVE);
+
+            // Set the XML to the updated XML - remerged and reconstituted the xml
+
+            // Do NOT create a new record, update, the OLD record!
+            // Set the XML to the updated XML - reconstituted the xml
+            oldOutput.setOaiXml(xml);
+
+            // Add the updated record
+            oldOutput.setType("b");
+            results.add(oldOutput);
+
+            list = new ArrayList<OutputRecord>();
+            list.add(oldOutput);
+
             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
+
+            results.addAll(list);
         }
-        results.addAll(list);
-  */
         return results;
+    }
+
+
+    /**
+     * assumptions:
+     * 1) sets are not null
+     * @param oldMatchSet
+     * @param newMatchSet
+     * @return true if they are equivalent (same record ids in each)
+     */
+    private boolean areMatchSetsEquivalent(TreeSet<Long> oldMatchSet, TreeSet<Long> newMatchSet) {
+        if (oldMatchSet.size() != newMatchSet.size()) {
+            return false;
+        }
+        for (Long id: oldMatchSet) {
+            if (!newMatchSet.contains(id)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
@@ -1551,13 +1640,16 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
-        results = cleanupOldMergedOutputInfo(matchedRecordIds, results);
+        results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true);
 
         List<OutputRecord> list = null;
         // may not have any matches!
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
-            list = mergeBibSet(matchedRecordIds, repo);
+            InputRecord record = getRecordOfSourceRecord(matchedRecordIds, repo);
+            String xml = mergeBibSet(record, matchedRecordIds, repo);
+            list = createNewBibRecord(record, xml, matchedRecordIds);
+
             LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
 
         }
@@ -1585,14 +1677,16 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param results - possibly already has OutputRecord data in it, to be added, or to be deleted when all is said and done.
      * @return - the OutputRecord list, with any necessary OutputRecord deletions added to it.
      */
-    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results) {
+    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord) {
         for (Long input: matchedRecordIds) {
             //delete;
             if (mergedRecordsI2Omap.containsKey(input)) {
                 Long outputRecordToBeDeletedNum = mergedRecordsI2Omap.get(input);
                 mergedRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
                 mergedRecordsO2Imap.remove(outputRecordToBeDeletedNum);
-                results = deleteOutputRecord(results, outputRecordToBeDeletedNum);
+                if (deleteOutputRecord) {
+                    results = deleteOutputRecord(results, outputRecordToBeDeletedNum);
+                }
             }
         }
         return results;
@@ -1651,6 +1745,14 @@ public class MarcAggregationService extends GenericMetadataService {
         matchedRecordIds = expandMatchedRecords(matchedRecordIds);
 
         return matchedRecordIds;
+    }
+
+    //for updates and deletes.
+    private void removeRecordsFromMatchers(InputRecord r) {
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            FieldMatcher matcher = me.getValue();
+            matcher.removeRecordFromMatcher(r);
+        }
     }
 
     private MatchSet populateMatchSet(InputRecord r, SaxMarcXmlRecord smr) {

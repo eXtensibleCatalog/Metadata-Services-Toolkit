@@ -73,6 +73,34 @@ public class ISBNMatcher extends FieldMatcherService {
     }
 
     @Override
+    /**
+     * when a record is updated/deleted, need to use this to
+     */
+    public void removeRecordFromMatcher(InputRecord ir) {
+        Long id   = new Long(ir.getId());
+        List<String> isbns = inputId2isbn.get(id);
+        if (isbns != null) {
+            for (String isbn: isbns) {
+                List<Long> inputIds = isbn2inputIds.get(isbn);
+                if (inputIds != null) {
+                    inputIds.remove(id);
+                    if (inputIds.size() > 0) {
+                        isbn2inputIds.put(isbn, inputIds);
+                    }
+                    else {
+                        isbn2inputIds.remove(isbn);
+                    }
+                }
+            }
+        }
+        inputId2isbn.remove(id);
+
+        // keep database in sync.  Don't worry about the one-off performance hit...yet.
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_020a_table, id);
+    }
+
+    @Override
     // return all matching records!!! a match means the same int part of isbn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord r) {
 

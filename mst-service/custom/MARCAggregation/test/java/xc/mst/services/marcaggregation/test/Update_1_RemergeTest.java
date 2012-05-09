@@ -26,7 +26,6 @@ public class Update_1_RemergeTest extends SmallTest {
     protected String getTestName() {
         return "Update_1_RemergeTest";
     }
-    /*
     protected void setupMatcherExpectations() {
         //load expected number of records for each matcher.
         expectedMatchRecordIds.put("x028abMatcher", 0);
@@ -61,9 +60,7 @@ public class Update_1_RemergeTest extends SmallTest {
 
 
         expectedResults.add(getExpectedMatchSet(new long[]{3,5}));
-        expectedResults.add(getExpectedMatchSet(new long[]{2,6}));
     }
-    */
-    //TODO no longer should get matchset 2,6 when all is done and working.
+    //no longer should get matchset 2,6 when all is done and working.
 
 }
