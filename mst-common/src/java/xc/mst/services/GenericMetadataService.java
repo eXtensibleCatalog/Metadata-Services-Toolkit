@@ -72,6 +72,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected boolean preserveStatuses = true;
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     protected TLongByteHashMap tempPreviousStatuses = new TLongByteHashMap();
+        
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
+    protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
+
+    // should we cache all the previous statuses for the entire repo?  default: no
+    protected boolean cacheSetup = false;
 
     /**
      * A list of services to run after this service's processing completes The
@@ -508,18 +514,18 @@ public abstract class GenericMetadataService extends SolrMetadataService
         processedRecordCount = 0;
         processStatusDisplay(repo, inputFormat, inputSet, outputSet);
         running.acquireUninterruptibly();
-
-        if (!isSolrIndexer() && preserveStatuses) {
-            previousStatuses.clear();
-            previousStatuses.ensureCapacity(repo.getSize());
-            LOG.debug("previousStatuses.ensureCapacity(" + repo.getSize()
-                    + ");");
-            tempPreviousStatuses.ensureCapacity(MSTConfiguration.getInstance()
-                    .getPropertyAsInt("db.insertsAtOnce", 10000));
-            getRepositoryDAO().populatePreviousStatuses(
-                    getRepository().getName(), previousStatuses, true);
-        }
-
+        
+        // what do we consider a "large" update?  If it's large enough, we will then cache statuses ahead of time
+        String strLHT = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LARGE_HARVEST_THRESHOLD);
+        largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
+        if (strLHT != null) {
+            try {
+            	largeHarvestThreshold = Integer.parseInt(strLHT);
+            } catch (NumberFormatException e) {
+            	largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
+            }
+        }        
+       
         LOG.debug("gettingServiceHarvest");
         ServiceHarvest sh = getServiceHarvest(inputFormat, inputSet,
                 repo.getName(), getService());
@@ -527,7 +533,30 @@ public abstract class GenericMetadataService extends SolrMetadataService
         // sh.getUntil(), inputFormat, inputSet);
         LOG.debug("sh: " + sh);
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
-                sh.getUntil(), inputFormat, inputSet);
+                sh.getUntil(), inputFormat, inputSet);     
+               
+        // do we cache statuses?
+        if (this.totalRecordCount >= largeHarvestThreshold) cacheSetup = true;
+        
+        if (!isSolrIndexer() && preserveStatuses) {
+            
+        	previousStatuses.clear();
+            if (cacheSetup) {
+                previousStatuses.ensureCapacity(repo.getSize());
+                LOG.debug("previousStatuses.ensureCapacity(" + repo.getSize()
+                        + ");");
+                getRepositoryDAO().populatePreviousStatuses(
+                        getRepository().getName(), previousStatuses, true);
+            } else {
+            	previousStatuses.ensureCapacity(MSTConfiguration.getInstance()
+                    .getPropertyAsInt("db.insertsAtOnce", 10000));
+            }
+            
+            tempPreviousStatuses.clear();
+            tempPreviousStatuses.ensureCapacity(MSTConfiguration.getInstance()
+                    .getPropertyAsInt("db.insertsAtOnce", 10000));
+        }
+               
         List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
         if (getMetadataServiceManager() != null) {
@@ -848,16 +877,32 @@ public abstract class GenericMetadataService extends SolrMetadataService
     }
 
     protected void injectKnownData(Record in) {
-        if (preserveStatuses && previousStatuses.contains(in.getId())) {
-            TimingLogger.start("injectKnownData");
-            if (!isSolrIndexer()) {
-                TimingLogger.start("injectSuccessorIds");
-                getRepository().injectSuccessorIds(in);
-                TimingLogger.stop("injectSuccessorIds");
+        if (preserveStatuses) {
+            char prevStatus = getPreviousStatus(in.getId());
+            
+            // if null previous status, then that means the record doesn't exist
+            if (prevStatus != (char)0) {
+	            TimingLogger.start("injectKnownData");
+	            if (!isSolrIndexer()) {
+	                TimingLogger.start("injectSuccessorIds");
+	                getRepository().injectSuccessorIds(in);
+	                TimingLogger.stop("injectSuccessorIds");
+	            }
+	            in.setPreviousStatus(prevStatus);
+	            TimingLogger.stop("injectKnownData");
             }
-            in.setPreviousStatus((char) previousStatuses.get(in.getId()));
-            TimingLogger.stop("injectKnownData");
         }
+    }
+    
+    protected char getPreviousStatus(Long recordId) {
+    	char prevStatus = (char) previousStatuses.get(recordId); 
+    	if (cacheSetup) {
+    		return prevStatus;
+    	} else {
+    		if (prevStatus != (char) 0) return prevStatus;
+    		return getRepositoryDAO().getPreviousStatus(getRepository().getName(), recordId, true);
+    	}
+
     }
 
     public MSTConfiguration getConfig() {
