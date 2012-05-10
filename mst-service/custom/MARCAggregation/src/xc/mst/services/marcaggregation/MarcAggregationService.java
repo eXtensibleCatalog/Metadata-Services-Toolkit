@@ -68,6 +68,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected Map<String, MatchRuleIfc>              matchRuleMap = null;
     protected MarcAggregationServiceDAO              masDAO = null;
     protected MASMarcBuilder                         masBld = null;
+    protected RecordOfSourceManager                  masRsm = null;
     protected List<TreeSet<Long>>                    masMatchSetList = null;
 
     /**
@@ -83,13 +84,6 @@ public class MarcAggregationService extends GenericMetadataService {
     // map input records to corresponding output map,
     //   not only tracked merged records, many to 1, but track unmerged 1 to 1
     protected TLongLongHashMap                       mergedRecordsI2Omap = null;
-
-    /**
-     * record-of-source-related class variables
-     */
-    private List<Character> leaderVals = null;
-    private boolean leader_byte17_weighting_enabled;
-    private boolean bigger_record_weighting_enabled;
 
     /**
      * the repository feeding this service.
@@ -126,7 +120,8 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("Problem with init.", e2);
         }
 
-        setupRecordOfSource();
+        masRsm = (RecordOfSourceManager) config.getBean("RecordOfSourceManager");
+        masRsm.setupRecordOfSource();
         masBld = (MASMarcBuilder) config.getBean("MASMarcBuilder");
         staticTransformer = setupTransformer(getTransformForStaticFilename());
         _005_Transformer  = setupTransformer(getTransformFor005Filename());
@@ -230,34 +225,17 @@ public class MarcAggregationService extends GenericMetadataService {
         }
     }
 
-    protected void setupRecordOfSource() {
-        // determine record of source leader character priority, byte 17
-        leaderVals = new ArrayList<Character>();
-        List<String> _leaderVals = getConfigFileValues("leader.order");
-        for (String val: _leaderVals) {
-            LOG.debug("Leader val==>"+val+"<== val length="+val.length());
-            if (val.length() == 3) {
-                leaderVals.add(val.charAt(1));  // char between quotes
-            }
-            else {
-                leaderVals.add(val.charAt(0));
-            }
-        }
-        leader_byte17_weighting_enabled= config.getPropertyAsBoolean("leader_byte17_weighting_enabled", false);
-        bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
-    }
-
     @Override
     protected void validateService() throws ServiceValidationException {
-        if (!leader_byte17_weighting_enabled && !bigger_record_weighting_enabled) {
+        if (masRsm.isRecordOfSourceOptionsConfiguredIncorrectly()) {
             throw new ServiceValidationException("Service configuration file invalid: leader_byte17_weighting_enabled & bigger_record_weighting_enabled cannot both be disabled!");
         }
     }
 
     /**
-    // this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
-    // started off from looking at existing merged stuff in the database.  Based on the current record
-    // that comes in, see what it matches, and go from there.
+     * this is just for what we have so far, not meant to always be up to date, i.e. it doesn't get
+     * started off from looking at existing merged stuff in the database.  Based on the current record
+     * that comes in, see what it matches, and go from there.
      *
      * @return
      */
@@ -325,7 +303,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param name
      * @return
      */
-    private List<String> getConfigFileValues(String name) {
+    protected List<String> getConfigFileValues(String name) {
         try {
             // there is probably a more righteous way to grab the service name.
             final PropertiesConfiguration props = new PropertiesConfiguration(MSTConfiguration.getUrlPath() + "/services/" + getUtil().normalizeName("MARCAggregation") +
@@ -393,7 +371,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // all in the set used to pull dynamic content
 
         for (TreeSet<Long> set: matches) {
-            InputRecord record = getRecordOfSourceRecord(set, repo);
+            InputRecord record = masRsm.getRecordOfSourceRecord(set, repo, scores);
             String xml = mergeBibSet(record, set, repo);
             createNewBibRecord(record, xml, set);
         }
@@ -427,15 +405,6 @@ public class MarcAggregationService extends GenericMetadataService {
         return oaiXml;
     }
 
-    private InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo) {
-        final Long recordOfSource = determineRecordOfSource(set);
-        LOG.info("**** Record of Source == "+recordOfSource);
-        //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
-
-        final Record theSrcRecord = repo.getRecord(recordOfSource);
-        return theSrcRecord;
-    }
-
     private List<OutputRecord> createNewBibRecord(InputRecord theSrcRecord, String oaiXml, TreeSet<Long> set) {
 
         List<OutputRecord> list = createNewRecord(theSrcRecord, "b", oaiXml);
@@ -459,57 +428,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
     protected String getTransformForHoldingFilename() {
         return HOLDING_TRANSFORM;
-    }
-
-    /**
-     # Record of source criteria:
-     #
-     # 1) leader_byte17_weighting_enabled = true/false
-     # 2) bigger_record_weighting_enabled = true/false
-     #
-     # And four cases:
-     #
-     # 1-true, 2-false
-     # In this case we first compare Leader/byte17, pick the earliest (in String leader.order above),
-     #   if they are the same, pick the record that is being processed.
-     #
-     # 1-true, 2-true
-     # In this case we first compare Leader/byte17, pick the earliest (in String leader.order above),
-     #   if they are the same, pick the record that is largest in bytes.
-     #
-     # 1-false, 2-true
-     # Pick the record that is largest in bytes.
-     #
-     # 1-false, 2-false
-     # This is a not-allowed state and the service will throw an error message.
-     #
-     * @param set
-     * @return
-     */
-    private Long determineRecordOfSource(Set<Long> set) {
-
-        TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap = new TreeMap<SortableRecordOfSourceData, RecordOfSourceData>();
-        Repository repo = getInputRepo();  //for date tie-breaker
-        for (Long num: set) {
-
-            // grab leader byte 17 value and size
-            RecordOfSourceData source;
-            if (!scores.containsKey(num)) {
-                source = masDAO.getScoreData(num);
-            }
-            else {
-                //use the data already in memory.
-                source = scores.get(num);
-            }
-            LOG.debug("Source data for id: "+num+" char:"+source.leaderByte17+": "+" size="+source.size);
-
-            // use leaderVals:
-            // List<Character> leaderVals
-            // leader_byte17_weighting_enabled;
-            // bigger_record_weighting_enabled;
-            sortedMap.put(new SortableRecordOfSourceData(repo,leaderVals,num,source, leader_byte17_weighting_enabled ,bigger_record_weighting_enabled ), source);
-        }
-        return sortedMap.firstKey().recordId;
     }
 
     public void processComplete(Repository repo) {
@@ -1023,7 +941,7 @@ public class MarcAggregationService extends GenericMetadataService {
             String xml;
             if (hasMatches) {
 
-                InputRecord record = getRecordOfSourceRecord(newMatchedRecordIds, repo);
+                InputRecord record = masRsm.getRecordOfSourceRecord(newMatchedRecordIds, repo, scores);
                 xml = mergeBibSet(record, newMatchedRecordIds, repo);
 
                 LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
@@ -1084,7 +1002,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // may not have any matches!
         final boolean hasMatches = matchedRecordIds.size() > 0;
         if (hasMatches) {
-            InputRecord record = getRecordOfSourceRecord(matchedRecordIds, repo);
+            InputRecord record = masRsm.getRecordOfSourceRecord(matchedRecordIds, repo, scores);
             String xml = mergeBibSet(record, matchedRecordIds, repo);
             list = createNewBibRecord(record, xml, matchedRecordIds);
 
