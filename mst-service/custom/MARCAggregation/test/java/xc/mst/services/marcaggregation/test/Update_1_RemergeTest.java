@@ -8,6 +8,7 @@ import java.util.List;
  * 'update' method gets called, and matchpoint data for this record gets
  * modified, record 2 used to match record 6, but after the 2nd record is modified,
  * the necessary matchpoint to match 6 is removed, so they no longer match.
+ * (removed an 020$a from record 2)
  *
  * Result:  one match set, {3,5}, all others should map directly to an output.
  * Starting simple!
