@@ -77,7 +77,7 @@ public class HarvestManager extends WorkerThread {
     protected DynKeyLongMap oaiIdCache = new DynKeyLongMap();
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     
-    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 100; // keep it small; otherwise, it'll be S-L-O-W
     protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // The is public and static simply for the MockHarvestTest

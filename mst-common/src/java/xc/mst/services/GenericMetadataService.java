@@ -73,7 +73,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     protected TLongByteHashMap tempPreviousStatuses = new TLongByteHashMap();
         
-    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 100; // keep it small; otherwise, it'll be S-L-O-W
     protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // should we cache all the previous statuses for the entire repo?  default: no
