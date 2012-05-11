@@ -69,8 +69,7 @@ public class RecordOfSourceManager extends BaseService {
 
 
     protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
-        MarcAggregationService mas = (MarcAggregationService) config.getBean("MarcAggregationService");
-        final Long recordOfSource = determineRecordOfSource(set, mas.getInputRepo(), scores);
+        final Long recordOfSource = determineRecordOfSource(set, repo, scores);
         LOG.info("**** Record of Source == "+recordOfSource);
         //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
 
