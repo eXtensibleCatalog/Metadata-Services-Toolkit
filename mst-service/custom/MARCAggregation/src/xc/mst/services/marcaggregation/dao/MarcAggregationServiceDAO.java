@@ -58,6 +58,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     public final static String merge_scores_table       = "merge_scores";
     public final static String merged_records_table     = "merged_records";
+    public final static String bib_records_table        = "bib_records";
 
     public final static String input_record_id_field    = "input_record_id";
     public final static String string_id_field          = "string_id";
@@ -89,8 +90,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
-                TimingLogger.start(tableName + ".insert");
-                TimingLogger.start(tableName + ".insert.create_infile");
+                //TimingLogger.start(tableName + ".insert");
+                //TimingLogger.start(tableName + ".insert.create_infile");
 
                 List<String[]> strList = (List<String[]>) list;
                 LOG.debug("insert: " + tableName + ".size(): " + strList.size());
@@ -141,8 +142,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 final byte[] newLineBytes = getNewLineBytes();
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
-                TimingLogger.start(tableName + ".insert");
-                TimingLogger.start(tableName + ".insert.create_infile");
+                //TimingLogger.start(tableName + ".insert");
+                //TimingLogger.start(tableName + ".insert.create_infile");
 
                 List<String> strList = (List<String>) list;
                 LOG.debug("insert: " + tableName + ".size(): " + strList.size());
@@ -175,9 +176,43 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
     }
 
+    public void persistLongOnly(List<Long> values, String tableName)  {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistLongOnly");
+        try {
+
+            String dbLoadFileStr = getDbLoadFileStr();
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            final MutableInt j = new MutableInt(0);
+            //TimingLogger.start(tableName + ".insert");
+            //TimingLogger.start(tableName + ".insert.create_infile");
+
+            final byte[] newLineBytes = getNewLineBytes();
+            for (Long value: values) {
+                try {
+                    if (j.intValue() > 0) {
+                        LOG.debug("line break!!! j:" + j.intValue());
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+                    os.write(String.valueOf(value).getBytes());
+                } catch (Throwable t) {
+                    getUtil().throwIt(t);
+                }
+            }
+            os.close();
+            replaceIntoTable(tableName, dbLoadFileStr);
+        } catch (Throwable t) {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
+            getUtil().throwIt(t);
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
+    }
+
     /**
      * this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong only for each record id
-     * ,also using it to persist merged_records, input_record->output_record
+     * ,also using it to persist bib_records, input_record->output_record
      *
      * @param inputId2numMap
      * @param tableName
@@ -191,8 +226,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             String dbLoadFileStr = getDbLoadFileStr();
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
-            TimingLogger.start(tableName + ".insert");
-            TimingLogger.start(tableName + ".insert.create_infile");
+            //TimingLogger.start(tableName + ".insert");
+            //TimingLogger.start(tableName + ".insert.create_infile");
 
             final byte[] tabBytes = getTabBytes();
             final byte[] newLineBytes = getNewLineBytes();
@@ -269,8 +304,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
-                TimingLogger.start(tableName + ".insert");
-                TimingLogger.start(tableName + ".insert.create_infile");
+                //TimingLogger.start(tableName + ".insert");
+                ///TimingLogger.start(tableName + ".insert.create_infile");
                 try {   // need to loop through all strings associated with id!
                     if (j.intValue() > 0) {
                         os.write(newLineBytes);
@@ -317,8 +352,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 final byte[] newLineBytes = getNewLineBytes();
                 final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
                 final MutableInt j = new MutableInt(0);
-                TimingLogger.start(tableName + ".insert");
-                TimingLogger.start(tableName + ".insert.create_infile");
+                //TimingLogger.start(tableName + ".insert");
+                //TimingLogger.start(tableName + ".insert.create_infile");
                 try {   // need to loop through all strings associated with id!
                     if (j.intValue() > 0) {
                         os.write(newLineBytes);
@@ -354,8 +389,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
-            TimingLogger.start(tableName + ".insert");
-            TimingLogger.start(tableName + ".insert.create_infile");
+            //TimingLogger.start(tableName + ".insert");
+            //TimingLogger.start(tableName + ".insert.create_infile");
 
             if (scores instanceof TLongObjectHashMap) {
                 LOG.debug("insert: " + tableName + ".size(): " + scores.size());
@@ -413,7 +448,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     protected void replaceIntoTable(String tableName, String dbLoadFileStr) {
-        TimingLogger.stop(tableName + ".insert.create_infile");
+        TimingLogger.start(tableName + ".insert.create_infile");
         TimingLogger.start(tableName + ".insert.load_infile");
         this.jdbcTemplate.execute(
                 "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
@@ -425,7 +460,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
-     *   merged_records
+     *   bib_records
      *   purpose: provides a mapping of input records to output records. This allows for 2 paths:
      *
      *     -------------------------------------------------------------------
@@ -440,10 +475,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      *      -------------------------------------------------------------------
      *
      * @param output_record_id
-     * @return all the input_records that have been merged together to create this output_record
+     * @return all the input_records that have been merged together to create this output_record, possibly on 1 record.
      */
-    public List<Long> getInputRecordsMergedToOutputRecord(Long output_record_id) {
-        String sql = "select input_record_id from " + merged_records_table +
+    public List<Long> getInputRecordsMappedToOutputRecord(Long output_record_id) {
+        String sql = "select input_record_id from " + bib_records_table +
                             " where output_record_id = ? ";
         return this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
     }
@@ -454,16 +489,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return there will only be 1 record number returned.
      */
     public List<Long> getOutputRecordForInputRecord(Long input_record_id) {
-        String sql = "select output_record_id from " + merged_records_table +
+        String sql = "select output_record_id from " + bib_records_table +
                             " where input_record_id = ? ";
         return this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
     }
 
-    public TLongLongHashMap getMergedRecords(/*int page*/) {
-        TimingLogger.start("getMergedRecords");
+    public TLongLongHashMap getBibRecords(/*int page*/) {
+        TimingLogger.start("getBibRecords");
 
 //        int recordsAtOnce = 100000;
-        String sql = "select input_record_id, output_record_id from " + merged_records_table;// +
+        String sql = "select input_record_id, output_record_id from " + bib_records_table;// +
 //                " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
 
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
@@ -473,8 +508,29 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long out_id = (Long) row.get("output_record_id");
             results.put(in_id, out_id);
         }
-        TimingLogger.stop("getMergedRecords");
+        TimingLogger.stop("getBibRecords");
         return results;
+    }
+
+    /**
+     * input records that are part of a merge set (>1 corresponds to an output record)
+     * @return
+     */
+    public List<Long> getMergedInputRecords(/*int page*/) {
+        TimingLogger.start("getMergedInputRecords");
+
+//      int recordsAtOnce = 100000;
+      String sql = "select input_record_id from " + merged_records_table;// +
+//              " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+      List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
+      List<Long> results = new ArrayList<Long>();
+      if (rows != null) {
+          for (Map<String, Object> row : rows) {
+              results.add((Long) row.values().iterator().next());
+          }
+      }
+      TimingLogger.stop("getMergedInputRecords");
+      return results;
     }
 
     public RecordOfSourceData getScoreData(Long num) {
@@ -579,7 +635,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /***
-     * Generically, given a input_record_id, delete that row from given table.
+     * Generically, given a input_record_id, delete that row (or rows) from given table.
      * All the tables we will delete from with this method have 'input_record_id' column.
      * @param name
      */
@@ -597,9 +653,19 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         deleteMergeRow(matchpoints_035a_table, input_record_id);
         deleteMergeRow(merge_scores_table,     input_record_id);
         deleteMergeRow(merged_records_table,   input_record_id);
+        deleteMergeRow(bib_records_table,   input_record_id);
     }
+    /*
+     *a convoluted way to find merged records (>1 input_record_id for a given output_record_id)
+     *(there is probably a VERY simple way to do this!)
+     *
+    mysql -u root --password=root -D xc_marcaggregation -e
+    'select a.* from merged_records as a left join merged_records as b using(output_record_id) where  a.input_record_id != b.input_record_id'
 
-    public void loadMaps(
+    // also, not 100% clear how fast this will be, so for now I am adding another table instead, that just contains the merged_input_id's (or should
+    // it be merged output_id's?
+    */
+            public void loadMaps(
         ) {
     }
 }

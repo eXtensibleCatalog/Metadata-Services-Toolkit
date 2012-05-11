@@ -10,10 +10,10 @@
 -- -------------------------------------------------------------
 
 -- -----------------------------------------------------
--- Table `merged_records`
+-- Table `bib_records`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS merged_records;
-CREATE  TABLE `merged_records` (
+DROP TABLE IF EXISTS bib_records;
+CREATE  TABLE `bib_records` (
   `input_record_id` BIGINT NOT NULL ,
   `output_record_id` BIGINT NOT NULL ,
 
@@ -24,6 +24,16 @@ CREATE  TABLE `merged_records` (
 
 ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------
+-- Table `merged_records`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS merged_records;
+CREATE  TABLE `merged_records` (
+  `input_record_id` BIGINT NOT NULL ,
+
+  PRIMARY KEY (`input_record_id`) )
+
+ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
 -- Table `merge_scores`
@@ -118,16 +128,4 @@ CREATE  TABLE `matchpoints_035a` (
   INDEX idx_mp_035a_string_id (string_id)
 
 ) ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `merged_035`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS merged_035;
-CREATE  TABLE `merged_035` (
-  `output_record_id` BIGINT NOT NULL ,
-  `035a_string` VARCHAR(255) NULL ,
-  `035a_numeric` INT NULL ,
-  `prefix` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`035a_string`, `035a_numeric`, `prefix`) )
-ENGINE = InnoDB;
 
