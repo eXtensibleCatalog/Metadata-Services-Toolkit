@@ -77,7 +77,7 @@ public class HarvestManager extends WorkerThread {
     protected DynKeyLongMap oaiIdCache = new DynKeyLongMap();
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     
-    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 100; // keep it small; otherwise, it'll be S-L-O-W
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
     protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // The is public and static simply for the MockHarvestTest
@@ -475,17 +475,7 @@ public class HarvestManager extends WorkerThread {
 
                     provider.setLastOaiRequest(request);
                 }
-
-                // Is this a "large" update?
-                // If so, we will cache OAI IDs and previous statuses; otherwise, we hit the DB each time
-                if (resumptionToken == null) {
-                	if (getRecords2ProcessThisRun() >= largeHarvestThreshold) {
-                		log.info("This is a large update; we will cache OAI IDs and previous statuses");
-                		setupCache();
-                	} else {
-                		log.info("This is not a large update; we will not need to cache OAI IDs and previous statuses");
-                	}
-                }
+                
                 
                 TimingLogger.start("parseRecords");
                 resumptionToken = parseRecords(metadataPrefix, doc, baseURL);
@@ -634,6 +624,39 @@ public class HarvestManager extends WorkerThread {
         } catch (Throwable e) {
             listRecordsEl = root;
         }
+        
+        // If the record contained a resumption token, store that resumption token
+        Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
+
+        if (resumptionEl != null) {
+            resumption = resumptionEl.getText();
+        }
+        log.debug("resumption: " + resumption);
+        if (!StringUtils.isEmpty(resumption)) {
+            try {
+                this.records2ProcessThisRun = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
+            } catch (Throwable t) {
+                this.records2ProcessThisRun = -1;
+            }
+            log.debug("The resumption string is " + resumption);
+        } else {
+            resumption = null;
+        }
+      
+        // Is this a "large" update?
+        // If so, we will cache OAI IDs and previous statuses; otherwise, we hit the DB each time
+        if (resumption != null) {
+        	if (this.records2ProcessThisRun >= largeHarvestThreshold) {
+        		log.info("This is a large update; we will cache OAI IDs (" + this.records2ProcessThisRun + " >= " + largeHarvestThreshold + ").");
+                oaiIdCache.ensureCapacity((int) this.records2ProcessThisRun);
+                setupCache();
+        	} else {
+        		log.info("This is not a large update; we will not need to cache OAI IDs (" + this.records2ProcessThisRun + " < " + largeHarvestThreshold + ").");
+        	}
+        } else {
+    		log.info("This is not a large update; we will not need to cache OAI IDs (no resumptionToken; assuming it's a \"small\" update\").");        	
+        }
+        
 
         // Try to get the element containing the first record. It should be a child of the
         // verb element.
@@ -713,24 +736,6 @@ public class HarvestManager extends WorkerThread {
             this.recordsProcessedThisRun++;
         }
 
-        // If the record contained a resumption token, store that resumption token
-        Element resumptionEl = listRecordsEl.getChild("resumptionToken", root.getNamespace());
-
-        if (resumptionEl != null) {
-            resumption = resumptionEl.getText();
-        }
-        log.debug("resumption: " + resumption);
-        if (!StringUtils.isEmpty(resumption)) {
-            try {
-                this.records2ProcessThisRun = Integer.parseInt(resumptionEl.getAttributeValue("completeListSize"));
-                oaiIdCache.ensureCapacity((int) this.records2ProcessThisRun);
-            } catch (Throwable t) {
-                this.records2ProcessThisRun = -1;
-            }
-            log.debug("The resumption string is " + resumption);
-        } else {
-            resumption = null;
-        }
 
         return resumption;
     }

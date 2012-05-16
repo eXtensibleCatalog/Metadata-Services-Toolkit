@@ -73,7 +73,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     protected TLongByteHashMap tempPreviousStatuses = new TLongByteHashMap();
         
-    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 100; // keep it small; otherwise, it'll be S-L-O-W
+    protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
     protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // should we cache all the previous statuses for the entire repo?  default: no
@@ -535,11 +535,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
                 sh.getUntil(), inputFormat, inputSet);     
                
-        // do we cache statuses?
-        if (this.totalRecordCount >= largeHarvestThreshold) cacheSetup = true;
-        
         if (!isSolrIndexer() && preserveStatuses) {
-            
+            // do we cache statuses?
+            if (this.totalRecordCount >= largeHarvestThreshold) {
+        		LOG.info("This is a large update; we will cache previous statuses (" + this.totalRecordCount + " >= " + largeHarvestThreshold + ").");
+            	cacheSetup = true;
+            } else {
+            	LOG.info("This is not a large update; we will not need to cache previous statuses (" + this.totalRecordCount + " < " + largeHarvestThreshold + ").");
+            }            
+        	
         	previousStatuses.clear();
             if (cacheSetup) {
                 previousStatuses.ensureCapacity(repo.getSize());
