@@ -672,7 +672,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public void deleteAllMASRecordDetails(Long input_record_id) {
 
         deleteAllMatchpointDetails(input_record_id);
-        deleteAllMergeDetails(input_record_id);
+        deleteAllMergeDetails(     input_record_id);
     }
 
     /**
@@ -684,7 +684,22 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         deleteMergeRow(merge_scores_table,     input_record_id);
         deleteMergeRow(merged_records_table,   input_record_id);
-        deleteMergeRow(bib_records_table,   input_record_id);
+        deleteMergeRow(bib_records_table,      input_record_id);
+    }
+
+    /**
+     * call this one if a merge set has to be reformed because
+     * a different member record was deleted or perhaps updated
+     * don't want to delete the merge_scores because the record_id
+     * still exists in the system, just want to break its bonds
+     * to the old merge.
+     *
+     * @param input_record_id
+     */
+    public void deleteMergeMemberDetails(Long input_record_id) {
+
+        deleteMergeRow(merged_records_table,   input_record_id);
+        deleteMergeRow(bib_records_table,      input_record_id);
     }
 
     /**

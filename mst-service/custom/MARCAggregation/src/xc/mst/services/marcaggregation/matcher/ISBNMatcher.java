@@ -149,7 +149,7 @@ public class ISBNMatcher extends FieldMatcherService {
         List<Field> fields = r.getDataFields(20);
         final int size3 = fields.size();
         if (size3 > 1) {
-            LOG.info("** INFO: Multiple 020 fields in record! " + r.recordId);
+            LOG.info("** INFO: Multiple 020 fields in record! " + ir.getId());
             //TODO, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
         }
         for (Field field : fields) {

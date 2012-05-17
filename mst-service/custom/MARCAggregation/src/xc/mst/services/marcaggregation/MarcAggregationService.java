@@ -495,6 +495,7 @@ public class MarcAggregationService extends GenericMetadataService {
                         // lastly must remerge the affected records, if this was part of a merge set.
                         if (formerMatchSet.size() > 1) {
                             formerMatchSet.remove(r.getId());       // remove the input that is gone.
+
                             results = remerge(formerMatchSet);
                         }
                         // TODO
@@ -731,8 +732,11 @@ public class MarcAggregationService extends GenericMetadataService {
         // 3rd, remove related records from memory structures in preparation for remerge.
         allBibRecordsO2Imap.remove(getBibOutputId(r));
         for (Long member: formerMatchSet) {
+            LOG.debug("&&& in deleteAllMergeDetails for "+r.getId()+" now delete from memory associate member="+member);
             allBibRecordsI2Omap.remove(member);
             mergedInRecordsList.remove(member);
+            //sync with the database too
+            masDAO.deleteMergeMemberDetails(member);
         }
 
         //TODO what about deleting the output record, like this method does:
@@ -767,6 +771,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             Record r = getInputRepo().getRecord(id);
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+            smr.setRecordId(r.getId());
 
             MatchSet ms = populateMatchSet(r, smr);
             TreeSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
