@@ -557,6 +557,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return rowList.get(0);
     }
 
+    /**
+     * about RowMapper:
+     * An interface used by JdbcTemplate for mapping rows of a ResultSet on a per-row basis.
+     * @see RowMapper
+     * @author John Brand
+     *
+     */
     private static final class RecordOfSourceDataMapper implements RowMapper<RecordOfSourceData> {
 
         public RecordOfSourceData mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -576,11 +583,18 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         }
     }
 
-    // given a string_id in String form to match on.
-    //
-    // for instance:
-    //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
-    //
+    /**
+     * given a string_id in String form to match on.
+     *
+     *  for instance:
+     * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+     *
+     * @param tableName
+     * @param record_id_field
+     * @param string_id_field
+     * @param itemToMatch
+     * @return
+     */
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
         TimingLogger.start("getMatchingRecords");
 
@@ -597,12 +611,19 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
-    // given a numeric_id in Long form to match on.
-    //
-    // for instance:
-    //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
-    //
-    public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, Long itemToMatch) {
+    /**
+     * given a numeric_id in Long form to match on.
+     *
+     * for instance:
+     * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+     *
+     * @param tableName
+     * @param record_id_field for query
+     * @param numeric_id_field for query
+     * @param itemToMatch
+     * @return
+     */
+    public List<Long> getMatchingRecords(String tableName, String record_id_field, String numeric_id_field, Long itemToMatch) {
         TimingLogger.start("getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ numeric_id_field +" = ?";
@@ -644,28 +665,57 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 "delete from " + table + " where "+input_record_id_field+" = ? ", input_record_id);
     }
 
+    /**
+     * call this one if a record is deleted or perhaps updated
+     * @param input_record_id
+     */
+    public void deleteAllMASRecordDetails(Long input_record_id) {
+
+        deleteAllMatchpointDetails(input_record_id);
+        deleteAllMergeDetails(input_record_id);
+    }
+
+    /**
+     * call this one if a merge set has to be reformed because
+     * a different member record was deleted or perhaps updated
+     * @param input_record_id
+     */
     public void deleteAllMergeDetails(Long input_record_id) {
 
+        deleteMergeRow(merge_scores_table,     input_record_id);
+        deleteMergeRow(merged_records_table,   input_record_id);
+        deleteMergeRow(bib_records_table,   input_record_id);
+    }
+
+    /**
+     * leave it private till we see if we need it on the outside.
+     * @param input_record_id
+     */
+    private void deleteAllMatchpointDetails(Long input_record_id) {
         deleteMergeRow(matchpoints_010a_table, input_record_id);
         deleteMergeRow(matchpoints_020a_table, input_record_id);
         deleteMergeRow(matchpoints_022a_table, input_record_id);
         deleteMergeRow(matchpoints_024a_table, input_record_id);
         deleteMergeRow(matchpoints_035a_table, input_record_id);
-        deleteMergeRow(merge_scores_table,     input_record_id);
-        deleteMergeRow(merged_records_table,   input_record_id);
-        deleteMergeRow(bib_records_table,   input_record_id);
     }
+
+
+
     /*
-     *a convoluted way to find merged records (>1 input_record_id for a given output_record_id)
-     *(there is probably a VERY simple way to do this!)
+     * a convoluted query to find merged records (>1 input_record_id for a given output_record_id)
+     * (there is probably a VERY simple query to do this!)
      *
     mysql -u root --password=root -D xc_marcaggregation -e
     'select a.* from merged_records as a left join merged_records as b using(output_record_id) where  a.input_record_id != b.input_record_id'
 
-    // also, not 100% clear how fast this will be, so for now I am adding another table instead, that just contains the merged_input_id's (or should
-    // it be merged output_id's?
-    */
-            public void loadMaps(
+     * also, not 100% clear how fast this will be, so for now I am adding another table instead, that just contains the merged_input_id's (or should
+     * it be merged output_id's?
+     */
+
+    /**
+     * reserved, in case there is ability and need to do it
+     */
+    public void loadMaps(
         ) {
     }
 }
