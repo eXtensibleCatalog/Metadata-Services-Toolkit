@@ -63,6 +63,7 @@ import xc.mst.dao.BaseDAO;
 import xc.mst.dao.record.MessageDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 
 public class RepositoryDAO extends BaseDAO {
 
@@ -1362,20 +1363,21 @@ public class RepositoryDAO extends BaseDAO {
 
             List<String> sqls = new ArrayList<String>();
 
-            sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where status = '" + Record.HELD + "'");
+           	sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where status = '" + Record.HELD + "'");
+            
             if (inputFormat != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where format_id <> " + inputFormat.getId());
             }
             if (inputSet != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_SETS_TABLE) + " where set_id <> " + inputSet.getId());
             }
-            if (from != null || until != null) {
+            if (!Util.dateIsNull(from) || until != null) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("select count(*) " +
                         "from " + getTableName(name, RECORD_UPDATES_TABLE) + " ");
                 boolean whereInserted = false;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                if (from != null) {
+                if (!Util.dateIsNull(from)) {
                     whereInserted = true;
                     sb.append("where date_updated <= '");
                     sb.append(sdf.format(from));
@@ -1414,21 +1416,26 @@ public class RepositoryDAO extends BaseDAO {
 
             List<String> sqls = new ArrayList<String>();
 
-            sqls.add("select count(*) from " +
+            if (Util.dateIsNull(from)) {
+            	sqls.add("select count(*) from " +
+                        getTableName(name, RECORDS_TABLE) + " where status = '" + Record.ACTIVE + "'");            	
+            } else {
+            	sqls.add("select count(*) from " +
                     getTableName(name, RECORDS_TABLE) + " where status in ('" + Record.ACTIVE + "', '" + Record.DELETED + "')");
+            }
             if (inputFormat != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where format_id = " + inputFormat.getId());
             }
             if (inputSet != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_SETS_TABLE) + " where set_id = " + inputSet.getId());
             }
-            if (from != null || until != null) {
+            if (!Util.dateIsNull(from) || until != null) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("select count(*) " +
                         "from " + getTableName(name, RECORD_UPDATES_TABLE) + " ");
                 boolean whereInserted = false;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                if (from != null) {
+                if (!Util.dateIsNull(from)) {
                     whereInserted = true;
                     sb.append("where date_updated >= '");
                     sb.append(sdf.format(from));
@@ -1469,16 +1476,27 @@ public class RepositoryDAO extends BaseDAO {
             if (inputSet != null) {
                 sb.append(", " + getTableName(name, RECORDS_SETS_TABLE) + " rs ignore index (idx_record_sets_set_id) ");
             }
-            sb.append(
+            
+            if (Util.dateIsNull(from)) {
+            	sb.append(
+                        " where r.status = '" + Record.ACTIVE + "'" +
+                                " and r.record_id = u.record_id " +
+                                " and (u.date_updated <= ? or ? is null) "
+                            );
+                params.add(until);
+                params.add(until);
+            } else {
+            	sb.append(
                     " where r.status in ('" + Record.ACTIVE + "','" + Record.DELETED + "')" +
                             " and r.record_id = u.record_id " +
                             " and (u.date_updated >= ? or ? is null) " +
                             " and (u.date_updated <= ? or ? is null) "
                         );
-            params.add(from);
-            params.add(from);
-            params.add(until);
-            params.add(until);
+                params.add(from);
+                params.add(from);
+                params.add(until);
+                params.add(until);
+            }
             if (inputFormat != null) {
                 sb.append(
                         " and r.format_id = ? ");
