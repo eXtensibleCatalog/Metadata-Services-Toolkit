@@ -498,20 +498,16 @@ public class MarcAggregationService extends GenericMetadataService {
 
                             results = remerge(formerMatchSet);
                         }
-                        // TODO
-                        // especially a remerge will impact need to adjust predecessors and successors
                     }
                     TimingLogger.stop("processRecord.updateDeleted");
                 }
             }
-
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
                 // (if database column added to record counts to help with reconciliation of counts)
                 addMessage(r, 103, RecordMessage.ERROR);
             }
             return results;
-
 
         } catch (Throwable t) {
             util.throwIt(t);
@@ -545,7 +541,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param outputRecordId
      * @param mergedInputRecordSet
      */
-    private void addToMasMergedRecords(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
+    private void addToMasMergedRecordsMemory(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             allBibRecordsI2Omap.put(num,outputRecordId);
         }
@@ -593,7 +589,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // now that we have created a new record successfully, update the data structure to track the merged records.
         if (list.size() > 0) {
             // will get 1 agg. record back.
-            addToMasMergedRecords(list.get(0).getId(), set);
+            addToMasMergedRecordsMemory(list.get(0).getId(), set);
         }
         return list;
     }
@@ -725,11 +721,17 @@ public class MarcAggregationService extends GenericMetadataService {
         // and delete this records matchpoint data
         removeRecordsFromMatchers(r);
 
-        //TODO does the remerge-related stuff belong here?
         // 2nd, get the related merged records:
         TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
 
         // 3rd, remove related records from memory structures in preparation for remerge.
+
+        // since we are not attempting to delete an output record, don't pass in or expect back results.
+        cleanupOldMergedOutputInfo(formerMatchSet, null, false); //TODO should we be trying to delete an output record???
+/*
+ // refactored the below code out, but since it represents a slightly different way to delete stuff than cleanupOldMergedOutputInfo,
+ //  I am leaving it here for a bit.
+ //
         allBibRecordsO2Imap.remove(getBibOutputId(r));
         for (Long member: formerMatchSet) {
             LOG.debug("&&& in deleteAllMergeDetails for "+r.getId()+" now delete from memory associate member="+member);
@@ -738,9 +740,8 @@ public class MarcAggregationService extends GenericMetadataService {
             //sync with the database too
             masDAO.deleteMergeMemberDetails(member);
         }
+*/
 
-        //TODO what about deleting the output record, like this method does:
-        // cleanupOldMergedOutputInfo
         return formerMatchSet;
     }
 
@@ -761,10 +762,15 @@ public class MarcAggregationService extends GenericMetadataService {
         return matchSet;
     }
 
-    // TODO create this method.
-    // basically, retrieve the records, create saxmarcxml records, find what matches what.
-    // then merge / expand the sets, and create the output record(s).
-    // Yes, the number of output records may increase.
+
+    /**
+     * basically, retrieve the records, create saxmarcxml records, find what matches what.
+     * then merge / expand the sets, and create the output record(s).
+     * Yes, the number of output records may increase.
+     *
+     * @param formerMatchSet
+     * @return
+     */
     private List<OutputRecord> remerge(TreeSet<Long> formerMatchSet) {
         List<TreeSet<Long>> listOfMatchSets = new ArrayList<TreeSet<Long>>();
         for (Long id: formerMatchSet) {
@@ -776,12 +782,12 @@ public class MarcAggregationService extends GenericMetadataService {
             MatchSet ms = populateMatchSet(r, smr);
             TreeSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
             //
-            // populateMatchedRecordIds does not return the record itself as part of the matchset,
+            // populateMatchedRecordIds does not return the record itself as part of the match set,
             // in this case I want it in the set.
             //
             newMatchedRecordIds.add(id);
             if (!listOfMatchSets.contains(newMatchedRecordIds)) {
-                // come up with a barebones set of new matchsets, I am guessing most of the time it will be 1 set
+                // come up with a bare bones set of new match sets, I am guessing most of the time it will be 1 set
                 listOfMatchSets = addToMatchSetList(newMatchedRecordIds,  listOfMatchSets);
             }
         }
@@ -789,8 +795,7 @@ public class MarcAggregationService extends GenericMetadataService {
         for (TreeSet<Long> matchset: listOfMatchSets) {
             results = mergeOverlord(results, matchset, getInputRepo());
         }
-
-        // will pred-succ relationships automatically be correct?
+        // will pred-succ relationships automatically be correct? --> it seems so.
 
         return results;
     }
@@ -884,20 +889,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-        //TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
-
-        /* -> belongs at bottom of this method?
-        // lastly must remerge the affected records, if this was part of a merge set.
-        if (formerMatchSet.size() > 1) {
-            formerMatchSet.remove(r.getId());       // remove the input that is gone.
-            remerge(formerMatchSet);
-        }
-        */
-
-        // before deleting anything, perhaps check if match set is the same?  if so, just update? (would need to check record of source, and
-        // add code to track what WAS the record of source.
-        // for now it seems easiest and most likely to produce correct results just to delete all and remerge if update.
-        // BUT (TODO) make sure that if there all the records that used to match are dealt with!
+        // before deleting anything, check if match set is the same?  if so, just update? (need to re-get record of source)
         //
         // Example to illustrate: For instance {1,2,3} may have used to match,
         // now with update this is the match situation: {1,2},{3} so now need TWO output records!
@@ -918,12 +910,10 @@ public class MarcAggregationService extends GenericMetadataService {
 
         boolean sameSet = areMatchSetsEquivalent(formerMatchSet, newMatchedRecordIds);
         if (!sameSet) {
-            //TODO must check whether smaller or greater, etc.
-    LOG.info("*** TODO: more work to remerge!");
-
             // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
             oldOutput = r.getSuccessors().get(0);
-            results = cleanupOldMergedOutputInfo(newMatchedRecordIds, results, true);
+            results = cleanupOldMergedOutputInfo(formerMatchSet, results, true);
+            results.addAll(remerge(formerMatchSet));
         }
         else {   // same size merge set, must update.
             // this is the merge as you go along spot, and will be impacted if you change that paradigm.
@@ -1057,7 +1047,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 // will get 1 agg. record back.
                 TreeSet<Long> littleSet = new TreeSet<Long>();
                 littleSet.add(r.getId());
-                addToMasMergedRecords(list.get(0).getId(), littleSet);
+                addToMasMergedRecordsMemory(list.get(0).getId(), littleSet);
             }
 
             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
@@ -1075,15 +1065,23 @@ public class MarcAggregationService extends GenericMetadataService {
     private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord) {
         LOG.debug("*** IN cleanupOldMergedOutputInfo!");
         for (Long input: matchedRecordIds) {
-            //delete;
+            //delete from memory;
             if (allBibRecordsI2Omap.containsKey(input)) {
-                Long outputRecordToBeDeletedNum = getBibOutputId(input);
+                Long outputRecordToBeDeletedNum = getBibOutputId(input);  // grabs it out of I2O
                 allBibRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
+                mergedInRecordsList.remove(input);
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
+                    LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
                     results = deleteOutputRecord(results, outputRecordToBeDeletedNum);
                 }
             }
+            // this is for processing NEW records, but, what if they hit the database, during a commit, then an update to the merge set expanding it
+            //  happened?  is there a way to check the db without crushing performance?  (here is where merging at the END of getting all records
+            //             would really help)
+            //  initially, did not have this line in, and passed my unit tests, but I'm pretty sure the above situation will happen and the db must be
+            //      checked.
+            masDAO.deleteMergeMemberDetails(input);
         }
         return results;
     }
@@ -1093,19 +1091,18 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // you may have already deleted it, because 1 output record can be mapped to multiple input records
         if (outputRecordToBeDeleted != null) {
+            LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
             outputRecordToBeDeleted.setStatus(Record.DELETED);
             // if the records did not get persisted, will get null record back, or you may have already
             //  deleted it if it is part of a merge set.
             LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+            results.add(outputRecordToBeDeleted);
         }
         // dark side code because you are peering into the implementation of the DAO
         else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
+            LOG.debug("DID NOT found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" dark side time!");
             getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
         }
-        //TODO do I need to add outputRecordToBeDeleted to results?  tried going  with YES ...
-        // ... but, the below line caused a hang in unit test. Probably at very least need to test that it exists
-        //     in the system 1st.
-        //results.add(outputRecordToBeDeleted);
 
         LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
         // you may have already deleted it, because 1 output record can be mapped to multiple input records

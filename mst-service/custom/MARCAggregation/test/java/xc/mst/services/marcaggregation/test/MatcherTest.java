@@ -163,6 +163,8 @@ public class MatcherTest extends MASBaseTest {
         int expectedOutRecordCnt = inputRecordCount; //start with this number, decrement from it based on matches
         try {
             actualOutRecordCnt=getServiceRepository().getNumRecords();
+            // TODO
+            // this test is flawed, it gets all records including deleted records, need count of ACTIVE records.
         } catch (Exception e) {
             LOG.error("Why!",e);
         }
