@@ -162,7 +162,7 @@ public class MatcherTest extends MASBaseTest {
         int actualOutRecordCnt =0;
         int expectedOutRecordCnt = inputRecordCount; //start with this number, decrement from it based on matches
         try {
-            actualOutRecordCnt=getServiceRepository().getNumRecords();
+            actualOutRecordCnt=getServiceRepository().getNumActiveRecords();
         } catch (Exception e) {
             LOG.error("Why!",e);
         }

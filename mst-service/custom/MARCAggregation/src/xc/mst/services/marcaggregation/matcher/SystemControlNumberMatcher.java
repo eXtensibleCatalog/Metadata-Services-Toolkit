@@ -31,7 +31,7 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
  * that way, and now it turns out that the requirement has changed.  Now, just make sure you have a valid 035a with a well-formed
  * prefix followed by an identifier, and save it as a matchpoint.
  *
- * Note that the XC MARC Normalization Service has steps to ensure that these identifiers are in a consistent format).
+ * Note that the XC MARC Normalization Service has steps to ensure that these identifiers are in a consistent format.
  * The prefix is defined as the characters within the parentheses.
  * OCLC numbers may also contain other letters BETWEEN the prefix and the prefix and the number itself.
  * These should be ignored in matching, as all OCLC numeric values are unique without the numbers.
@@ -143,6 +143,35 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         }
         LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
         return results;
+    }
+
+    /**
+     * when a record is updated/deleted, need to use this to
+     */
+    @Override
+    public void removeRecordFromMatcher(InputRecord r) {
+        Long id = new Long(r.getId());
+        List<String[]> goodsList = inputId2scn.get(id);
+        if (goodsList != null) {
+            for (String[] goodsFields: goodsList) {
+                String scn = goodsFields[0];
+                List<Long> idsList = scn2inputIds.get(scn);
+                if (idsList != null) {
+                    idsList.remove(id);
+                    if (idsList.size() > 0) {
+                        scn2inputIds.put(scn, idsList);
+                    }
+                    else {
+                        scn2inputIds.remove(scn);
+                    }
+                }
+            }
+        }
+        inputId2scn.remove(id);
+
+        // keep database in sync.  Don't worry about the one-off performance hit...yet.
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_035a_table, id);
     }
 
     // should be a max of 1 field returned.

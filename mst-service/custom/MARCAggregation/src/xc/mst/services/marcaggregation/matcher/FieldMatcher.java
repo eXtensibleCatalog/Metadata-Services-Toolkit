@@ -51,6 +51,11 @@ public interface FieldMatcher {
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir);
 
     /**
+     * @param r The record to remove
+     */
+    public void removeRecordFromMatcher(InputRecord ir);
+
+    /**
      * A matcher should do as much as it can in memory without the need to do a lookup on disk.  For this
      * reason, this load method should do what it can to load as much as it can to get the data from disk
      * into memory.  This method should be called once per service processing.

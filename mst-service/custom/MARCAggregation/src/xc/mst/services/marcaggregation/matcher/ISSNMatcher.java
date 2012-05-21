@@ -124,6 +124,34 @@ public class ISSNMatcher extends FieldMatcherService {
     }
 
     @Override
+    /**
+     * when a record is updated/deleted, need to use this to
+     */
+    public void removeRecordFromMatcher(InputRecord ir) {
+        Long id   = new Long(ir.getId());
+        List<String> issns = inputId2issn.get(id);
+        if (issns != null) {
+            for (String issn: issns) {
+                List<Long> inputIds = issn2inputIds.get(issn);
+                if (inputIds != null) {
+                    inputIds.remove(id);
+                    if (inputIds.size() > 0) {
+                        issn2inputIds.put(issn, inputIds);
+                    }
+                    else {
+                        issn2inputIds.remove(issn);
+                    }
+                }
+            }
+        }
+        inputId2issn.remove(id);
+
+        // keep database in sync.  Don't worry about the one-off performance hit...yet.
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_022a_table, id);
+    }
+
+    @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(22);
         final int size3 = fields.size();
