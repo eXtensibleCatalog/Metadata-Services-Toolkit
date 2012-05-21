@@ -150,7 +150,7 @@ public class HarvestableAlgorithm extends BaseTest {
                 records.add((Record) r);
             }
             getRepositoryDAO().addRecords(REPO_NAME, records, true);
-            getRepositoryDAO().createIndiciesIfNecessary(REPO_NAME);
+            getRepositoryDAO().createIndicesIfNecessary(REPO_NAME);
         }
     }
 

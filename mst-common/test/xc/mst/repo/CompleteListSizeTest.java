@@ -25,7 +25,7 @@ public class CompleteListSizeTest extends BaseTest {
         }
         getRepositoryDAO().createRepo(repo);
         getRepositoryDAO().createTables(repo);
-        getRepositoryDAO().createIndiciesIfNecessary(repo.getName());
+        getRepositoryDAO().createIndicesIfNecessary(repo.getName());
     }
 
     @Test
