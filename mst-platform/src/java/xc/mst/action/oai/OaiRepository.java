@@ -67,16 +67,16 @@ public class OaiRepository extends BaseActionSupport implements ServletRequestAw
             String servletPath = request.getServletPath();
 
             // Extract the service name from servlet path
-            int firstOccuranceOfSlash = servletPath.indexOf("/");
+            int firstOccurrenceOfSlash = servletPath.indexOf("/");
             String serviceName = null;
 
             // Check if / exist in servlet path.
-            if (firstOccuranceOfSlash != -1) {
-                int secondOccuranceOfSlash = servletPath.indexOf("/", firstOccuranceOfSlash + 1);
-                int thirdOccuranceOfSlash = servletPath.indexOf("/", secondOccuranceOfSlash + 1);
+            if (firstOccurrenceOfSlash != -1) {
+                int secondOccurrenceOfSlash = servletPath.indexOf("/", firstOccurrenceOfSlash + 1);
+                int thirdOccurrenceOfSlash = servletPath.indexOf("/", secondOccurrenceOfSlash + 1);
 
-                if ((firstOccuranceOfSlash != -1 && secondOccuranceOfSlash != -1 && thirdOccuranceOfSlash != -1) && (thirdOccuranceOfSlash > secondOccuranceOfSlash))
-                    serviceName = servletPath.substring(secondOccuranceOfSlash + 1, thirdOccuranceOfSlash);
+                if ((firstOccurrenceOfSlash != -1 && secondOccurrenceOfSlash != -1 && thirdOccurrenceOfSlash != -1) && (thirdOccurrenceOfSlash > secondOccurrenceOfSlash))
+                    serviceName = servletPath.substring(secondOccurrenceOfSlash + 1, thirdOccurrenceOfSlash);
                 else
                     // Invalid URL
                     response.getWriter().write("Invalid URL");

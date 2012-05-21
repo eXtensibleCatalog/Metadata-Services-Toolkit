@@ -52,6 +52,11 @@ public class Util {
         UTC_ISO8601_FORMATTER = UTC_ISO8601_FORMATTER.withZone(DateTimeZone.UTC);
     }
 
+    // In MST, apparently Date(0) (January 1, 1970 GMT+00) is synonymous with a null (unset) value for Date
+    public static boolean dateIsNull(Date d) {
+    	return (d == null ? true : d.equals(new Date(0)));
+    }
+    
     public String printDateTimeISO8601(Date d) {
         try {
             String s = UTC_ISO8601_FORMATTER.print(d.getTime());

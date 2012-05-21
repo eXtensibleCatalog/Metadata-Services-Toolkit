@@ -34,6 +34,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 import xc.mst.manager.BaseService;
+import xc.mst.utils.Util;
 
 public class DefaultRepository extends BaseService implements Repository {
 
@@ -234,6 +235,9 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
+    	if (Util.dateIsNull(from)) {
+            return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE });    		
+    	}
         return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE, Record.DELETED });
     }
 
@@ -358,7 +362,7 @@ public class DefaultRepository extends BaseService implements Repository {
     }
 
     public void processComplete() {
-        getRepositoryDAO().createIndiciesIfNecessary(name);
+        getRepositoryDAO().createIndicesIfNecessary(name);
         getRepositoryDAO().updateOutgoingRecordCounts(name);
     }
 

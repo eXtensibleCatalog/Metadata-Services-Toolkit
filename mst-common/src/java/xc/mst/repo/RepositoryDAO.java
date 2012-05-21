@@ -63,6 +63,7 @@ import xc.mst.dao.BaseDAO;
 import xc.mst.dao.record.MessageDAO;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.Util;
 
 public class RepositoryDAO extends BaseDAO {
 
@@ -565,7 +566,7 @@ public class RepositoryDAO extends BaseDAO {
                 LOG.debug("processedRecordsCount: " + processedRecordsCount);
                 LOG.debug("db.numInserts2dropIndexes: " + MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0));
                 if (processedRecordsCount > MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0)) {
-                    dropIndicies(name);
+                    dropIndices(name);
                 }
             } else {
                 try {
@@ -1362,20 +1363,21 @@ public class RepositoryDAO extends BaseDAO {
 
             List<String> sqls = new ArrayList<String>();
 
-            sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where status = '" + Record.HELD + "'");
+           	sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where status = '" + Record.HELD + "'");
+            
             if (inputFormat != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where format_id <> " + inputFormat.getId());
             }
             if (inputSet != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_SETS_TABLE) + " where set_id <> " + inputSet.getId());
             }
-            if (from != null || until != null) {
+            if (!Util.dateIsNull(from) || until != null) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("select count(*) " +
                         "from " + getTableName(name, RECORD_UPDATES_TABLE) + " ");
                 boolean whereInserted = false;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                if (from != null) {
+                if (!Util.dateIsNull(from)) {
                     whereInserted = true;
                     sb.append("where date_updated <= '");
                     sb.append(sdf.format(from));
@@ -1414,21 +1416,26 @@ public class RepositoryDAO extends BaseDAO {
 
             List<String> sqls = new ArrayList<String>();
 
-            sqls.add("select count(*) from " +
+            if (Util.dateIsNull(from)) {
+            	sqls.add("select count(*) from " +
+                        getTableName(name, RECORDS_TABLE) + " where status = '" + Record.ACTIVE + "'");            	
+            } else {
+            	sqls.add("select count(*) from " +
                     getTableName(name, RECORDS_TABLE) + " where status in ('" + Record.ACTIVE + "', '" + Record.DELETED + "')");
+            }
             if (inputFormat != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where format_id = " + inputFormat.getId());
             }
             if (inputSet != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_SETS_TABLE) + " where set_id = " + inputSet.getId());
             }
-            if (from != null || until != null) {
+            if (!Util.dateIsNull(from) || until != null) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("select count(*) " +
                         "from " + getTableName(name, RECORD_UPDATES_TABLE) + " ");
                 boolean whereInserted = false;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                if (from != null) {
+                if (!Util.dateIsNull(from)) {
                     whereInserted = true;
                     sb.append("where date_updated >= '");
                     sb.append(sdf.format(from));
@@ -1469,16 +1476,27 @@ public class RepositoryDAO extends BaseDAO {
             if (inputSet != null) {
                 sb.append(", " + getTableName(name, RECORDS_SETS_TABLE) + " rs ignore index (idx_record_sets_set_id) ");
             }
-            sb.append(
+            
+            if (Util.dateIsNull(from)) {
+            	sb.append(
+                        " where r.status = '" + Record.ACTIVE + "'" +
+                                " and r.record_id = u.record_id " +
+                                " and (u.date_updated <= ? or ? is null) "
+                            );
+                params.add(until);
+                params.add(until);
+            } else {
+            	sb.append(
                     " where r.status in ('" + Record.ACTIVE + "','" + Record.DELETED + "')" +
                             " and r.record_id = u.record_id " +
                             " and (u.date_updated >= ? or ? is null) " +
                             " and (u.date_updated <= ? or ? is null) "
                         );
-            params.add(from);
-            params.add(from);
-            params.add(until);
-            params.add(until);
+                params.add(from);
+                params.add(from);
+                params.add(until);
+                params.add(until);
+            }
             if (inputFormat != null) {
                 sb.append(
                         " and r.format_id = ? ");
@@ -1973,10 +1991,10 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
-    public void dropIndicies(String name) {
+    public void dropIndices(String name) {
         name = getUtil().getDBSchema(name);
-        TimingLogger.start("dropIndicies." + name);
-        String[] indicies2drop = new String[] {
+        TimingLogger.start("dropIndices." + name);
+        String[] indices2drop = new String[] {
                 "idx_" + RECORDS_TABLE + "_date_created", RECORDS_TABLE,
                 "idx_" + RECORDS_TABLE + "_status", RECORDS_TABLE,
                 "idx_" + RECORDS_TABLE + "_format_id", RECORDS_TABLE,
@@ -1988,9 +2006,9 @@ public class RepositoryDAO extends BaseDAO {
                 // "idx_"+RECORD_PREDECESSORS_TABLE+"_record_id", RECORD_PREDECESSORS_TABLE,
                 // "idx_"+RECORD_PREDECESSORS_TABLE+"_pred_record_id", RECORD_PREDECESSORS_TABLE
                 };
-        for (int i = 0; i < indicies2drop.length; i += 2) {
+        for (int i = 0; i < indices2drop.length; i += 2) {
             try {
-                this.jdbcTemplate.execute("drop index " + indicies2drop[i] + " on " + getTableName(name, indicies2drop[i + 1]));
+                this.jdbcTemplate.execute("drop index " + indices2drop[i] + " on " + getTableName(name, indices2drop[i + 1]));
             } catch (Throwable t) {
                 LOG.error("", t);
             }
@@ -2002,36 +2020,36 @@ public class RepositoryDAO extends BaseDAO {
                 tables.add((String) row.values().iterator().next());
             }
         }
-        boolean dropIndiciesOnRecordLinks = false;
+        boolean dropIndicesOnRecordLinks = false;
         if (tables.contains(RECORD_LINKS_TABLE)) {
-            dropIndiciesOnRecordLinks = true;
+            dropIndicesOnRecordLinks = true;
             rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_LINKS_TABLE));
             if (rows != null) {
                 for (Map<String, Object> row : rows) {
                     String indexName = (String) row.get("Key_name");
                     LOG.debug("indexName: " + indexName);
                     if (("idx_to_record_id").equals(indexName)) {
-                        dropIndiciesOnRecordLinks = false;
+                        dropIndicesOnRecordLinks = false;
                         break;
                     }
                 }
             }
         }
-        if (dropIndiciesOnRecordLinks) {
-            indicies2drop = new String[] {
+        if (dropIndicesOnRecordLinks) {
+            indices2drop = new String[] {
                     "drop index idx_from_record_id on " + getTableName(name, RECORD_LINKS_TABLE),
                     "drop index idx_to_record_id on " + getTableName(name, RECORD_LINKS_TABLE)
             };
-            for (String index2drop : indicies2drop) {
+            for (String index2drop : indices2drop) {
                 execute(index2drop);
             }
         }
-        TimingLogger.stop("dropIndicies." + name);
+        TimingLogger.stop("dropIndices." + name);
     }
 
-    public void createIndiciesIfNecessary(String name) {
+    public void createIndicesIfNecessary(String name) {
         name = getUtil().getDBSchema(name);
-        TimingLogger.start("createIndiciesIfNecessary." + name);
+        TimingLogger.start("createIndicesIfNecessary." + name);
         List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORDS_TABLE));
         boolean genericRepoIndexExists = false;
         if (rows != null) {
@@ -2051,29 +2069,31 @@ public class RepositoryDAO extends BaseDAO {
                 tables.add((String) row.values().iterator().next());
             }
         }
-        boolean createIndiciesOnRecordOaiIds = false;
+        boolean createIndicesOnRecordOaiIds = false;
         if (tables.contains(RECORD_OAI_IDS)) {
-            createIndiciesOnRecordOaiIds = true;
+            createIndicesOnRecordOaiIds = true;
             rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_OAI_IDS));
             if (rows != null) {
                 for (Map<String, Object> row : rows) {
                     String indexName = (String) row.get("Key_name");
                     LOG.debug("indexName: " + indexName);
-                    createIndiciesOnRecordOaiIds = false;
-                    break;
+                    if ("idx_oai_id".equals(indexName)) {
+                    	createIndicesOnRecordOaiIds = false;
+                    }
+                    
                 }
             }
         }
-        boolean createIndiciesOnRecordLinks = false;
+        boolean createIndicesOnRecordLinks = false;
         if (tables.contains(RECORD_LINKS_TABLE)) {
-            createIndiciesOnRecordLinks = true;
+            createIndicesOnRecordLinks = true;
             rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_LINKS_TABLE));
             if (rows != null) {
                 for (Map<String, Object> row : rows) {
                     String indexName = (String) row.get("Key_name");
                     LOG.debug("indexName: " + indexName);
                     if (("idx_to_record_id").equals(indexName)) {
-                        createIndiciesOnRecordLinks = false;
+                        createIndicesOnRecordLinks = false;
                         break;
                     }
                 }
@@ -2081,7 +2101,7 @@ public class RepositoryDAO extends BaseDAO {
         }
 
         if (!genericRepoIndexExists) {
-            String[] indicies2create = new String[] {
+            String[] indices2create = new String[] {
                     // "alter table"+getTableName(name, RECORDS_TABLE)+" add primary key (record_id)",
                     "create index idx_records_date_created on " + getTableName(name, RECORDS_TABLE) + " (oai_datestamp)",
                     "create index idx_records_status on " + getTableName(name, RECORDS_TABLE) + " (status)",
@@ -2103,7 +2123,7 @@ public class RepositoryDAO extends BaseDAO {
                     "create index idx_" + RECORD_PREDECESSORS_TABLE + "_pred_record_id on " + getTableName(name, RECORD_PREDECESSORS_TABLE) + " (pred_record_id)",
 
             };
-            for (String i2c : indicies2create) {
+            for (String i2c : indices2create) {
                 TimingLogger.start(i2c.split(" ")[2]);
                 try {
                     this.jdbcTemplate.execute(i2c);
@@ -2113,33 +2133,33 @@ public class RepositoryDAO extends BaseDAO {
                 TimingLogger.stop(i2c.split(" ")[2]);
             }
         }
-        if (createIndiciesOnRecordOaiIds) {
-            // you might have to remove duplicates...
-            // or for now, just put the primary key back
-            /*
-            String[] indicies2create = new String[] {
-                    "alter table"+getTableName(name, RECORD_OAI_IDS)+" add primary key (record_id)"
+        if (createIndicesOnRecordOaiIds) {
+            // idx_oai_id is a new index created in version 1.4
+        	// make sure it exists when/if someone upgraded MST version from < 1.4
+            String[] indices2create = new String[] {
+                    "create index idx_oai_id on "+getTableName(name, RECORD_OAI_IDS)+" (oai_id)"
             };
-            for (String i2c : indicies2create) {
+            for (String i2c : indices2create) {
                 TimingLogger.start(i2c.split(" ")[2]);
                 this.jdbcTemplate.execute(i2c);
                 TimingLogger.stop(i2c.split(" ")[2]);
             }
-            */
+        	
+        	
         }
-        if (createIndiciesOnRecordLinks) {
+        if (createIndicesOnRecordLinks) {
             // TODO: you might have to remove duplicates
-            String[] indicies2create = new String[] {
+            String[] indices2create = new String[] {
                     "create index idx_from_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id)",
                     "create index idx_to_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (to_record_id)"
             };
-            for (String i2c : indicies2create) {
+            for (String i2c : indices2create) {
                 TimingLogger.start(i2c.split(" ")[2]);
                 this.jdbcTemplate.execute(i2c);
                 TimingLogger.stop(i2c.split(" ")[2]);
             }
         }
-        TimingLogger.stop("createIndiciesIfNecessary." + name);
+        TimingLogger.stop("createIndicesIfNecessary." + name);
         TimingLogger.reset();
     }
 

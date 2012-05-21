@@ -535,11 +535,15 @@ public abstract class GenericMetadataService extends SolrMetadataService
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
                 sh.getUntil(), inputFormat, inputSet);     
                
-        // do we cache statuses?
-        if (this.totalRecordCount >= largeHarvestThreshold) cacheSetup = true;
-        
         if (!isSolrIndexer() && preserveStatuses) {
-            
+            // do we cache statuses?
+            if (this.totalRecordCount >= largeHarvestThreshold) {
+        		LOG.info("This is a large update; we will cache previous statuses (" + this.totalRecordCount + " >= " + largeHarvestThreshold + ").");
+            	cacheSetup = true;
+            } else {
+            	LOG.info("This is not a large update; we will not need to cache previous statuses (" + this.totalRecordCount + " < " + largeHarvestThreshold + ").");
+            }            
+        	
         	previousStatuses.clear();
             if (cacheSetup) {
                 previousStatuses.ensureCapacity(repo.getSize());
