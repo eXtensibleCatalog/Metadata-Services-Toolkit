@@ -34,6 +34,8 @@ public interface Repository {
 
     public int getNumRecords();
 
+    public int getNumActiveRecords();
+
     public String getRecordStatsByType();
 
     public void installOrUpdateIfNecessary(String previousVersion, String currentVersion);
@@ -49,7 +51,7 @@ public interface Repository {
 
     /**
      * Get number of records that satisfy the given criteria
-     * 
+     *
      * @param from
      *            From date to harvest the records
      * @param until
@@ -66,7 +68,7 @@ public interface Repository {
 
     /**
      * Get record header information
-     * 
+     *
      * @param from
      *            From date to harvest the records
      * @param until

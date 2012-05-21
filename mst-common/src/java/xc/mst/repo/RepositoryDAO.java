@@ -203,6 +203,12 @@ public class RepositoryDAO extends BaseDAO {
         return this.jdbcTemplate.queryForInt("select count(*) from " + getTableName(name, RECORDS_TABLE));
     }
 
+    public int getNumActiveRecords(String name) {
+        return this.jdbcTemplate.queryForInt("select count(*) from " +
+                getTableName(name, RECORDS_TABLE) + " where status = '" + Record.ACTIVE + "'");
+    }
+
+
     public Date getLastModified(String name) {
         // the below change was recommended by Kyushu developers, GC issue 316
         return (Date) this.jdbcTemplate.queryForObject("select addtime(max(date_updated), '0 0:0:1') from " + getTableName(name,
@@ -841,7 +847,7 @@ public class RepositoryDAO extends BaseDAO {
         }
         TimingLogger.stop("populateHarvestCache");
     }
-		
+
     public char getPreviousStatus(String repoName, Long recordId, boolean service) {
         String tableName = null;
         if (service) {
@@ -1364,7 +1370,7 @@ public class RepositoryDAO extends BaseDAO {
             List<String> sqls = new ArrayList<String>();
 
            	sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where status = '" + Record.HELD + "'");
-            
+
             if (inputFormat != null) {
                 sqls.add("select count(*) from " + getTableName(name, RECORDS_TABLE) + " where format_id <> " + inputFormat.getId());
             }
@@ -1418,7 +1424,7 @@ public class RepositoryDAO extends BaseDAO {
 
             if (Util.dateIsNull(from)) {
             	sqls.add("select count(*) from " +
-                        getTableName(name, RECORDS_TABLE) + " where status = '" + Record.ACTIVE + "'");            	
+                        getTableName(name, RECORDS_TABLE) + " where status = '" + Record.ACTIVE + "'");
             } else {
             	sqls.add("select count(*) from " +
                     getTableName(name, RECORDS_TABLE) + " where status in ('" + Record.ACTIVE + "', '" + Record.DELETED + "')");
@@ -1476,7 +1482,7 @@ public class RepositoryDAO extends BaseDAO {
             if (inputSet != null) {
                 sb.append(", " + getTableName(name, RECORDS_SETS_TABLE) + " rs ignore index (idx_record_sets_set_id) ");
             }
-            
+
             if (Util.dateIsNull(from)) {
             	sb.append(
                         " where r.status = '" + Record.ACTIVE + "'" +
@@ -2080,7 +2086,7 @@ public class RepositoryDAO extends BaseDAO {
                     if ("idx_oai_id".equals(indexName)) {
                     	createIndicesOnRecordOaiIds = false;
                     }
-                    
+
                 }
             }
         }
@@ -2144,8 +2150,8 @@ public class RepositoryDAO extends BaseDAO {
                 this.jdbcTemplate.execute(i2c);
                 TimingLogger.stop(i2c.split(" ")[2]);
             }
-        	
-        	
+
+
         }
         if (createIndicesOnRecordLinks) {
             // TODO: you might have to remove duplicates

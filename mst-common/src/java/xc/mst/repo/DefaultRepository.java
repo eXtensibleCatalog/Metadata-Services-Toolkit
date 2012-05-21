@@ -84,6 +84,10 @@ public class DefaultRepository extends BaseService implements Repository {
         return getRepositoryDAO().getNumRecords(name);
     }
 
+    public int getNumActiveRecords() {
+        return getRepositoryDAO().getNumActiveRecords(name);
+    }
+
     public String getRecordStatsByType() {
         return getRepositoryDAO().getRecordStatsByType(name);
     }
@@ -236,7 +240,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
     public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
     	if (Util.dateIsNull(from)) {
-            return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE });    		
+            return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE });
     	}
         return getRecords(from, until, startingId, inputFormat, inputSet, new char[] { Record.ACTIVE, Record.DELETED });
     }
