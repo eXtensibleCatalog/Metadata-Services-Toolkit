@@ -224,7 +224,7 @@
       </header>
       <metadata>
         <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
-          <marc:leader>01541cas a2200373   4500</marc:leader>
+          <marc:leader>01541cas a2200373L  4500</marc:leader>
           <marc:controlfield tag="001">1130480</marc:controlfield>
           <marc:controlfield tag="005">20100902133629.0</marc:controlfield>
           <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
@@ -439,7 +439,7 @@
       </header>
       <metadata>
         <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
-          <marc:leader>01541cas a2200373   4500</marc:leader>
+          <marc:leader>01541cas a2200373I  4500</marc:leader>
           <marc:controlfield tag="001">1130480</marc:controlfield>
           <marc:controlfield tag="005">20100902133629.0</marc:controlfield>
           <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
@@ -654,33 +654,6 @@
             <marc:subfield code="s">ML3502.5.B458 S74 1991</marc:subfield>
             <marc:subfield code="c"> 1</marc:subfield>
             <marc:subfield code="b">39087012021533</marc:subfield>
-          </marc:datafield>
-        </marc:record>
-      </metadata>
-    </record>
-        <record>
-      <header>
-        <identifier>oai:library.rochester.edu:URVoyager1/344</identifier>
-        <datestamp>2011-03-23T15:43:35Z</datestamp>
-        <setSpec>MARCXMLholding</setSpec>
-      </header>
-      <metadata>
-        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
-          <marc:leader>00351nx  a22001091  4500</marc:leader>
-          <marc:controlfield tag="001">224463</marc:controlfield>
-          <marc:controlfield tag="003">BENdb</marc:controlfield>
-          <marc:controlfield tag="004">217731</marc:controlfield>
-          <marc:controlfield tag="005">20100330210201.0</marc:controlfield>
-          <marc:controlfield tag="008">1003300u||||8|||4001uu|||0000000</marc:controlfield>
-          <marc:datafield ind1="8" ind2="0" tag="852">
-            <marc:subfield code="b">eitem</marc:subfield>
-            <marc:subfield code="h">Springer</marc:subfield>
-            <marc:subfield code="t">1</marc:subfield>
-          </marc:datafield>
-          <marc:datafield ind1="4" ind2="0" tag="856">
-            <marc:subfield code="3">SpringerLink</marc:subfield>
-            <marc:subfield code="u">http://libweb.ben.edu/login?source=opac&amp;url=http://dx.doi.org/10.1007/978-0-387-68436-9</marc:subfield>
-            <marc:subfield code="z">Link to Introduction to boolean algebras</marc:subfield>
           </marc:datafield>
         </marc:record>
       </metadata>

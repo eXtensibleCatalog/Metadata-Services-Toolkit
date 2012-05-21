@@ -178,6 +178,34 @@ public class LccnMatcher extends FieldMatcherService {
         return results;
     }
 
+    /**
+     * when a record is updated/deleted, need to use this to
+     */
+    @Override
+    public void removeRecordFromMatcher(InputRecord ir) {
+        Long id   = new Long(ir.getId());
+        Long lccn = inputId2lccn.get(id);
+        List<Long> inputIds = null;
+
+        if (lccn != null) {
+            inputIds = lccn2inputIds.get(lccn);
+        }
+        if (inputIds != null) {
+            inputIds.remove(id);
+            if (inputIds.size() > 0) {
+                lccn2inputIds.put(lccn, inputIds);
+            }
+            else {
+                lccn2inputIds.remove(lccn);
+            }
+        }
+        inputId2lccn.remove(id);
+
+        // keep database in sync.  Don't worry about the one-off performance hit...yet.
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_010a_table, id);
+    }
+
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         // String s = r.getMARC().getDataFields().get(10).get('a');

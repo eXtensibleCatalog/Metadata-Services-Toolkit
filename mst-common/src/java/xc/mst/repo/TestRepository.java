@@ -76,6 +76,10 @@ public class TestRepository extends BaseService implements Repository {
         return -1;
     }
 
+    public int getNumActiveRecords() {
+        return -1;
+    }
+
     protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
     public String getName() {
@@ -357,7 +361,7 @@ public class TestRepository extends BaseService implements Repository {
 
     /**
      * Get number of records that satisfy the given criteria
-     * 
+     *
      * @param from
      * @param until
      * @param startingId

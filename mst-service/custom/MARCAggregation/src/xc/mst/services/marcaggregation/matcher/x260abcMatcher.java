@@ -52,4 +52,10 @@ public class x260abcMatcher extends FieldMatcherService {
     public int getNumMatchPointsInMatcher() {
         return 0;
     }
+
+    @Override
+    public void removeRecordFromMatcher(InputRecord ir) {
+        // TODO Auto-generated method stub
+
+    }
 }

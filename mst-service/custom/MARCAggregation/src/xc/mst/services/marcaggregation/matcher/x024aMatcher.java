@@ -85,6 +85,35 @@ public class x024aMatcher extends FieldMatcherService {
     }
 
     @Override
+    /**
+     * when a record is updated/deleted, need to use this to
+     */
+    public void removeRecordFromMatcher(InputRecord ir) {
+
+        Long id   = new Long(ir.getId());
+        List<String> x024s = inputId2x024a.get(id);
+        if (x024s != null) {
+            for (String x024: x024s) {
+                List<Long> inputIds = x024a2inputIds.get(x024);
+                if (inputIds != null) {
+                    inputIds.remove(id);
+                    if (inputIds.size() > 0) {
+                        x024a2inputIds.put(x024, inputIds);
+                    }
+                    else {
+                        x024a2inputIds.remove(x024);
+                    }
+                }
+            }
+        }
+        inputId2x024a.remove(id);
+
+        // keep database in sync.  Don't worry about the one-off performance hit...yet.
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_024a_table, id);
+    }
+
+    @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(24);
         final int size3 = fields.size();
