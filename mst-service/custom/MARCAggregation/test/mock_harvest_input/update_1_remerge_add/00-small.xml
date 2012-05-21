@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2011-03-30T15:15:54Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://128.151.244.137:8080/OAIToolkit_demo_175/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/338</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01228ccm a2200349   4500</marc:leader>
+          <marc:controlfield tag="001">1012755</marc:controlfield>
+          <marc:controlfield tag="005">20020212200426.0</marc:controlfield>
+          <marc:controlfield tag="008">901220s1957    maucca         n    lat  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">m  57001938 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">22879014 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">00958227</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">RER</marc:subfield>
+            <marc:subfield code="d">RER</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RERA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2=" ">
+            <marc:subfield code="a">M2148.2</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">M2011.C7375</marc:subfield>
+            <marc:subfield code="b">P9 1957</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">M2011.C7375 P9 1957</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="4">
+            <marc:subfield code="a">The complete Proper of the Mass,</marc:subfield>
+            <marc:subfield code="b">set to Gregorian themes and Psalm tones for Sundays and feasts of the liturgical year,</marc:subfield>
+            <marc:subfield code="c">by Andrew Green and Herman J. Koch.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="250" ind1=" " ind2=" ">
+            <marc:subfield code="a">Rev. and enl. ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Boston,</marc:subfield>
+            <marc:subfield code="b">McLaughlin &amp; Reilly</marc:subfield>
+            <marc:subfield code="c">[c1957]</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">xvii p., vocal score (225 p.)</marc:subfield>
+            <marc:subfield code="c">32 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">First ed. published in 1946 under title: The Proper of the Mass.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Modern notation, principally with organ acc.; Latin words.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"Liturgical calendar": vi p. inserted.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Gregorian chants</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Propers (Music)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Green, Andrew,</marc:subfield>
+            <marc:subfield code="d">b. 1865.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Koch, Herman J.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">Catholic Church.</marc:subfield>
+            <marc:subfield code="t">Missal.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="740" ind1="0" ind2=" ">
+            <marc:subfield code="a">Proper of the Mass.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">  950805         </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="911" ind1=" " ind2=" ">
+            <marc:subfield code="a">u</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="966" ind1=" " ind2=" ">
+            <marc:subfield code="l">/Stack</marc:subfield>
+            <marc:subfield code="m">SMONO </marc:subfield>
+            <marc:subfield code="s">M2011.C7375 P9 1957</marc:subfield>
+            <marc:subfield code="c"> 1</marc:subfield>
+            <marc:subfield code="b">39087011307412</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/339</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01277pam a2200361 a 4500</marc:leader>
+          <marc:controlfield tag="001">1045129</marc:controlfield>
+          <marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   90020316 /MN</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0226042537 (acid-free paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0226042545 (pbk. : acid-free paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">22629928 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">00991477</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">RES</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="041" ind1="1" ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="h">ger</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="043" ind1=" " ind2=" ">
+            <marc:subfield code="a">f------</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RESM [copy 1]</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">ML3502.5</marc:subfield>
+            <marc:subfield code="b">.B4613 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">ML3502.5.B458</marc:subfield>
+            <marc:subfield code="b">S74 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">ML3502.5.B458 S74 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Bender, Wolfgang.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="240" ind1="1" ind2="0">
+            <marc:subfield code="a">Sweet mother.</marc:subfield>
+            <marc:subfield code="l">English</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Sweet mother :</marc:subfield>
+            <marc:subfield code="b">modern African music /</marc:subfield>
+            <marc:subfield code="c">Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Chicago :</marc:subfield>
+            <marc:subfield code="b">University of Chicago Press,</marc:subfield>
+            <marc:subfield code="c">c1991.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">xx, 235 p. :</marc:subfield>
+            <marc:subfield code="b">ill. ;</marc:subfield>
+            <marc:subfield code="c">23 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Translation of: Sweet mother.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references (p. 205-213).</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Discography: p. 215-235.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Popular music</marc:subfield>
+            <marc:subfield code="z">Africa</marc:subfield>
+            <marc:subfield code="x">History and criticism.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="830" ind1=" " ind2="0">
+            <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">  950906        </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="911" ind1=" " ind2=" ">
+            <marc:subfield code="a">p</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="966" ind1=" " ind2=" ">
+            <marc:subfield code="l">/Stack</marc:subfield>
+            <marc:subfield code="m">SMONO </marc:subfield>
+            <marc:subfield code="s">ML3502.5.B458 S74 1991</marc:subfield>
+            <marc:subfield code="c"> 1</marc:subfield>
+            <marc:subfield code="b">39087012021533</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/340</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01541cas a2200373L  4500</marc:leader>
+          <marc:controlfield tag="001">1130480</marc:controlfield>
+          <marc:controlfield tag="005">20100902133629.0</marc:controlfield>
+          <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   38005696 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">1644900</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="022" ind1=" " ind2=" ">
+            <marc:subfield code="a">0081-8356</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">01240637</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="c">UDI</marc:subfield>
+            <marc:subfield code="d">UCU</marc:subfield>
+            <marc:subfield code="d">NYG</marc:subfield>
+            <marc:subfield code="d">m.c.</marc:subfield>
+            <marc:subfield code="d">MUL</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">RRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RRSR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">HF5549</marc:subfield>
+            <marc:subfield code="b">.N27s</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">HF5549 .N27s</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="0">
+            <marc:subfield code="a">Studies in personnel policy.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="1" ind2="8">
+            <marc:subfield code="a">SPP</marc:subfield>
+            <marc:subfield code="f">no. 181-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="1" ind2="3">
+            <marc:subfield code="a">Personnel policy study</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York,</marc:subfield>
+            <marc:subfield code="b">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="c">1937-1970.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">v.</marc:subfield>
+            <marc:subfield code="b">ill., tables</marc:subfield>
+            <marc:subfield code="c">29 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="362" ind1="0" ind2=" ">
+            <marc:subfield code="a">no. 1-221.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board. Conference Board Reports</marc:subfield>
+            <marc:subfield code="v">no. 29-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board. Research report from the Conference report.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="580" ind1=" " ind2=" ">
+            <marc:subfield code="a">No. 15-28 supplement to Conference Board management record.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Personnel management.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="760" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Conference Board reports,</marc:subfield>
+            <marc:subfield code="g">no. [1]-73; [1944]-55.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="760" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Research report from the Conference Board,</marc:subfield>
+            <marc:subfield code="g">no. 77-   1956 -</marc:subfield>
+            <marc:subfield code="x">0547-7352</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="772" ind1="1" ind2=" ">
+            <marc:subfield code="t">Conference Board management record</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="787" ind1="1" ind2=" ">
+            <marc:subfield code="t">Digest of Studies in personnel policy</marc:subfield>
+            <marc:subfield code="x">0547-7239</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="810" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Conference Board reports ;</marc:subfield>
+            <marc:subfield code="v">no. 29-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="810" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Research report from the Conference Board.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">950906</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/341</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01228ccm a2200349   4500</marc:leader>
+          <marc:controlfield tag="001">1012755</marc:controlfield>
+          <marc:controlfield tag="005">20020212200426.0</marc:controlfield>
+          <marc:controlfield tag="008">901220s1957    maucca         n    lat  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">m  57001938 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">(BoZo)22879014 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">RER</marc:subfield>
+            <marc:subfield code="d">RER</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RERA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2=" ">
+            <marc:subfield code="a">M2148.2</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">M2011.C7375</marc:subfield>
+            <marc:subfield code="b">P9 1957</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">M2011.C7375 P9 1957</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="4">
+            <marc:subfield code="a">The complete Proper of the Mass,</marc:subfield>
+            <marc:subfield code="b">set to Gregorian themes and Psalm tones for Sundays and feasts of the liturgical year,</marc:subfield>
+            <marc:subfield code="c">by Andrew Green and Herman J. Koch.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="250" ind1=" " ind2=" ">
+            <marc:subfield code="a">Rev. and enl. ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Boston,</marc:subfield>
+            <marc:subfield code="b">McLaughlin &amp; Reilly</marc:subfield>
+            <marc:subfield code="c">[c1957]</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">xvii p., vocal score (225 p.)</marc:subfield>
+            <marc:subfield code="c">32 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">First ed. published in 1946 under title: The Proper of the Mass.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Modern notation, principally with organ acc.; Latin words.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"Liturgical calendar": vi p. inserted.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Gregorian chants</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Propers (Music)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Green, Andrew,</marc:subfield>
+            <marc:subfield code="d">b. 1865.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Koch, Herman J.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">Catholic Church.</marc:subfield>
+            <marc:subfield code="t">Missal.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="740" ind1="0" ind2=" ">
+            <marc:subfield code="a">Proper of the Mass.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">  950805         </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="911" ind1=" " ind2=" ">
+            <marc:subfield code="a">u</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="966" ind1=" " ind2=" ">
+            <marc:subfield code="l">/Stack</marc:subfield>
+            <marc:subfield code="m">SMONO </marc:subfield>
+            <marc:subfield code="s">M2011.C7375 P9 1957</marc:subfield>
+            <marc:subfield code="c"> 1</marc:subfield>
+            <marc:subfield code="b">39087011307412</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/342</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01541cas a2200373I  4500</marc:leader>
+          <marc:controlfield tag="001">1130480</marc:controlfield>
+          <marc:controlfield tag="005">20100902133629.0</marc:controlfield>
+          <marc:controlfield tag="008">750327d19371970nyuzx m       0   a0eng u</marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   38005696 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">1644900</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="022" ind1=" " ind2=" ">
+            <marc:subfield code="a">00818356</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">(WoW)01240630</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="c">UDI</marc:subfield>
+            <marc:subfield code="d">UCU</marc:subfield>
+            <marc:subfield code="d">NYG</marc:subfield>
+            <marc:subfield code="d">m.c.</marc:subfield>
+            <marc:subfield code="d">MUL</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">RRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RRSR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">HF5549</marc:subfield>
+            <marc:subfield code="b">.N27s</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">HF5549 .N27s</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="0">
+            <marc:subfield code="a">Studies in personnel policy.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="1" ind2="8">
+            <marc:subfield code="a">SPP</marc:subfield>
+            <marc:subfield code="f">no. 181-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="1" ind2="3">
+            <marc:subfield code="a">Personnel policy study</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York,</marc:subfield>
+            <marc:subfield code="b">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="c">1937-1970.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">v.</marc:subfield>
+            <marc:subfield code="b">ill., tables</marc:subfield>
+            <marc:subfield code="c">29 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="362" ind1="0" ind2=" ">
+            <marc:subfield code="a">no. 1-221.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board. Conference Board Reports</marc:subfield>
+            <marc:subfield code="v">no. 29-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board. Research report from the Conference report.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="580" ind1=" " ind2=" ">
+            <marc:subfield code="a">No. 15-28 supplement to Conference Board management record.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Personnel management.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="760" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Conference Board reports,</marc:subfield>
+            <marc:subfield code="g">no. [1]-73; [1944]-55.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="760" ind1="1" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Research report from the Conference Board,</marc:subfield>
+            <marc:subfield code="g">no. 77-   1956 -</marc:subfield>
+            <marc:subfield code="x">0547-7352</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="772" ind1="1" ind2=" ">
+            <marc:subfield code="t">Conference Board management record</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="787" ind1="1" ind2=" ">
+            <marc:subfield code="t">Digest of Studies in personnel policy</marc:subfield>
+            <marc:subfield code="x">0547-7239</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="810" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Conference Board reports ;</marc:subfield>
+            <marc:subfield code="v">no. 29-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="810" ind1="2" ind2=" ">
+            <marc:subfield code="a">National Industrial Conference Board.</marc:subfield>
+            <marc:subfield code="t">Research report from the Conference Board.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">950906</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/343</identifier>
+        <datestamp>2011-03-23T15:43:35Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://128.151.244.137:8080/OAIToolkit_demo_175/schema/MARC21slim_custom.xsd">
+          <marc:leader>01277pam a2200361 a 4500</marc:leader>
+          <marc:controlfield tag="001">1045129</marc:controlfield>
+          <marc:controlfield tag="008">901001s1991    ilua     bk   000 0 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   90020316 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0226042537 (acid-free paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0227042545 (pbk. : no match!)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="b">ocm</marc:subfield>
+            <marc:subfield code="a">(Fake)22629998 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">00991477</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">RES</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="041" ind1="1" ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="h">ger</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="043" ind1=" " ind2=" ">
+            <marc:subfield code="a">f------</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">RESM [copy 1]</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">ML3502.5</marc:subfield>
+            <marc:subfield code="b">.B4613 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">ML3502.5.B458</marc:subfield>
+            <marc:subfield code="b">S74 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="099" ind1=" " ind2=" ">
+            <marc:subfield code="a">ML3502.5.B458 S74 1991</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Bender, Wolfgang.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="240" ind1="1" ind2="0">
+            <marc:subfield code="a">Sweet mother.</marc:subfield>
+            <marc:subfield code="l">English</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Sweet mother :</marc:subfield>
+            <marc:subfield code="b">modern African music /</marc:subfield>
+            <marc:subfield code="c">Wolfgang Bender ; with a foreword by John M. Chernoff ; translated by Wolfgang Freis.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Chicago :</marc:subfield>
+            <marc:subfield code="b">University of Chicago Press,</marc:subfield>
+            <marc:subfield code="c">c1991.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">xx, 235 p. :</marc:subfield>
+            <marc:subfield code="b">ill. ;</marc:subfield>
+            <marc:subfield code="c">23 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Translation of: Sweet mother.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references (p. 205-213).</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Discography: p. 215-235.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Popular music</marc:subfield>
+            <marc:subfield code="z">Africa</marc:subfield>
+            <marc:subfield code="x">History and criticism.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="830" ind1=" " ind2="0">
+            <marc:subfield code="a">Chicago studies in ethnomusicology</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="910" ind1=" " ind2=" ">
+            <marc:subfield code="a">  950906        </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="911" ind1=" " ind2=" ">
+            <marc:subfield code="a">p</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="966" ind1=" " ind2=" ">
+            <marc:subfield code="l">/Stack</marc:subfield>
+            <marc:subfield code="m">SMONO </marc:subfield>
+            <marc:subfield code="s">ML3502.5.B458 S74 1991</marc:subfield>
+            <marc:subfield code="c"> 1</marc:subfield>
+            <marc:subfield code="b">39087012021533</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
