@@ -2281,7 +2281,7 @@ public class RepositoryDAO extends BaseDAO {
                 Map<String, Object> m = new HashMap<String, Object>();
                 m.put("status", row.get("status"));
                 m.put("c", row.get("c"));
-                m.put("type", "other");
+                m.put("type", "unknown");
                 otherRows.add(m);
             }
             List<Map<String, Object>> rows2remove = new ArrayList<Map<String, Object>>();
