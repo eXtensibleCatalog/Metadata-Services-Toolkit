@@ -67,7 +67,7 @@ public class RecordCounts {
 
     public static final Date TOTALS_DATE = new Date(0);
     public static final String TOTALS = "TOTALS";
-    public static final String OTHER = "other";
+    public static final String OTHER = "unknown";
 
     public static String INCOMING = "incoming";
     public static String OUTGOING = "outgoing";
