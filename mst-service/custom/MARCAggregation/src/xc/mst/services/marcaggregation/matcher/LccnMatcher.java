@@ -92,7 +92,14 @@ public class LccnMatcher extends FieldMatcherService {
         String stripped=null;
         long strippedL=0l;
         StringTokenizer st = new StringTokenizer(s);
-        String candidate = st.nextToken();
+        String candidate;
+        if (st.hasMoreTokens()) {
+            candidate = st.nextToken();
+        }
+        else {
+            LOG.error("** Problem with 010$a, empty, original="+s);
+            return 0l;
+        }
         if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {
             return Long.parseLong(candidate);
         }
