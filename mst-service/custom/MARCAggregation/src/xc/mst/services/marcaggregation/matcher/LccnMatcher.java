@@ -97,6 +97,7 @@ public class LccnMatcher extends FieldMatcherService {
             candidate = st.nextToken();
         }
         else {
+            LOG.error("** Problem with 010$a, empty, original="+s);
             return 0l;
         }
         if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {

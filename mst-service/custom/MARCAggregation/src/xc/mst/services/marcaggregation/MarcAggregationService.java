@@ -504,13 +504,16 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
-                // (if database column added to record counts to help with reconciliation of counts)
-                addMessage(r, 103, RecordMessage.ERROR);
+                // (_IF_ database column added to record counts to help with reconciliation of counts)
+                addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
 
         } catch (Throwable t) {
-            util.throwIt(t);
+            LOG.error("error processing record with id:" + ((Record) r).getId(), t);
+            // TODO increment records counts no output
+            // (_IF_ database column added to record counts to help with reconciliation of counts)
+            addMessage(r, 103, RecordMessage.ERROR);  // no output
         }
         return null;
     }
@@ -889,12 +892,13 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        LOG.debug("*AM in processBibUpdateActive!");
+
         // before deleting anything, check if match set is the same?  if so, just update? (need to re-get record of source)
         //
         // Example to illustrate: For instance {1,2,3} may have used to match,
         // now with update this is the match situation: {1,2},{3} so now need TWO output records!
         //    could be the customProcessQueue
-
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
@@ -910,9 +914,13 @@ public class MarcAggregationService extends GenericMetadataService {
 
         boolean sameSet = areMatchSetsEquivalent(formerMatchSet, newMatchedRecordIds);
         if (!sameSet) {
+            // must clear out ALL pertinent old record stuff, not just formerMatchSet, but stuff pertaining to newly matching records too!
+            TreeSet<Long> union = new TreeSet<Long>();
+            union.addAll(newMatchedRecordIds);
+            union.addAll(formerMatchSet);
             // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
             oldOutput = r.getSuccessors().get(0);
-            results = cleanupOldMergedOutputInfo(formerMatchSet, results, true);
+            results = cleanupOldMergedOutputInfo(union, results, true);
             results.addAll(remerge(formerMatchSet));
         }
         else {   // same size merge set, must update.
@@ -981,6 +989,8 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+        LOG.debug("*AM in processBibNewActive!");
+
         MatchSet ms = populateMatchSet(r, smr);
 
         TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
