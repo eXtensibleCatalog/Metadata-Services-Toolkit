@@ -173,10 +173,14 @@ public class SolrIndexService extends GenericMetadataService {
                 getSolrIndexManager().commitIndex();
                 TimingLogger.stop("commitIndex");
                 recordsProcessedSinceCommit=0;
+                /***
+                 * We no longer optimize the SOLR index automatically.  It's a rather expensive operation
+                 * which should instead be performed as a stand-alone (cron?) administrative process
                 if (force) {
                     ((SolrIndexManager) MSTConfiguration.getInstance().getBean("SolrIndexManager")).optimizeIndex();
                     LOG.debug("process, Solr Index Service, completed optimizeIndex.");
                 }
+                ***/
                 return true;
             } catch (Throwable t) {
                 getUtil().throwIt(t);
