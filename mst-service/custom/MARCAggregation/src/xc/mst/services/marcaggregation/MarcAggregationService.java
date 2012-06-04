@@ -350,8 +350,9 @@ public class MarcAggregationService extends GenericMetadataService {
                     sb.append(num+", ");
                 }
                 sb.append("}");
-                //TODO change this to 'debug' vs. 'info' at some point.
-                LOG.info(sb.toString());
+                //TODO decide whether this is useful to keep around!
+                //LOG.info(sb.toString());
+                logToServiceLog(sb.toString());
             }
 
             // TODO
@@ -369,6 +370,19 @@ public class MarcAggregationService extends GenericMetadataService {
             //mergeAll(matches, repo);
         }
         //end real work of the service (getting matches and merging)
+    }
+
+    private void logToServiceLog(String status) {
+
+        Service service = null;
+        try {
+            service = getServiceDAO().getById(this.service.getId());
+            if (service != null) {
+                LogWriter.addInfo(service.getServicesLogFileName(), status);
+            }
+        } catch (DatabaseConfigException e1) {
+            LOG.error("Cannot connect to the database with the parameters supplied in the configuration file.", e1);
+        }
     }
 
     /**
