@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2012-06-05T18:30:23Z</responseDate>
+  <request verb="ListRecords" from="2012-06-05T18:28:35Z" metadataPrefix="marc21">http://localhost:8080/OAIToolkit/oai-request.do</request>
+  <ListRecords>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/4</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/5</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/6</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/7</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/8</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/235</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/236</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/319</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/320</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/321</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:library.rochester.edu:URVoyager1/322</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/335</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01241cam a22003498a 4500</marc:leader>
+          <marc:controlfield tag="001">62833</marc:controlfield>
+          <marc:controlfield tag="003">AUGdb</marc:controlfield>
+          <marc:controlfield tag="005">20090407102812.0</marc:controlfield>
+          <marc:controlfield tag="008">990727s2000    nyu    c      000 1 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   99042699</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0060277300</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0060277319 (lib. bdg.)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">OCJ</marc:subfield>
+            <marc:subfield code="d">IOS</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="042" ind1=" " ind2=" ">
+            <marc:subfield code="a">lcac</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">IOSA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">PZ7.C8615</marc:subfield>
+            <marc:subfield code="b">Wan 2000</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="0">
+            <marc:subfield code="a">[Fic]</marc:subfield>
+            <marc:subfield code="2">21</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="090" ind1=" " ind2=" ">
+            <marc:subfield code="a">PZ7.C861</marc:subfield>
+            <marc:subfield code="b">W36 2000</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Creech, Sharon.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="4">
+            <marc:subfield code="a">The Wanderer /</marc:subfield>
+            <marc:subfield code="c">by Sharon Creech ; drawings by David Diaz.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York :</marc:subfield>
+            <marc:subfield code="b">HarperCollinsPublishers,</marc:subfield>
+            <marc:subfield code="c">2000.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">305 p. ;</marc:subfield>
+            <marc:subfield code="c">22 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"Joanna Cotler books."</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="520" ind1=" " ind2=" ">
+            <marc:subfield code="a">Thirteen-year-old Sophie and her cousin Cody record their transatlantic crossing aboard the Wanderer, a forty-five foot sailboat, which, along with uncles and another cousin, is en route to visit their grandfather in England.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="586" ind1=" " ind2=" ">
+            <marc:subfield code="a">Newbery Honor Book, 2001</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="586" ind1=" " ind2=" ">
+            <marc:subfield code="a">American Library Association Notable Children's Books, Older Readers, 2001</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sailboats</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sailing</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Ocean voyages</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Family life</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Grandfathers</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sea stories.</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/336</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00212cx  a22000973  4500</marc:leader>
+          <marc:controlfield tag="001">190435</marc:controlfield>
+          <marc:controlfield tag="003">AUGdb</marc:controlfield>
+          <marc:controlfield tag="004">62833</marc:controlfield>
+          <marc:controlfield tag="005">20090220171839.0</marc:controlfield>
+          <marc:controlfield tag="008">0306080p    8   4001aueng0000000</marc:controlfield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">childrens</marc:subfield>
+            <marc:subfield code="h">PZ7.C861</marc:subfield>
+            <marc:subfield code="i">W36 2000</marc:subfield>
+            <marc:subfield code="x">PO 80-118</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/337</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>11430cam a2200613 a 4500</marc:leader>
+          <marc:controlfield tag="001">303877</marc:controlfield>
+          <marc:controlfield tag="003">IWUdb</marc:controlfield>
+          <marc:controlfield tag="005">20120126132143.0</marc:controlfield>
+          <marc:controlfield tag="008">091118s2009    nyua     bf   001 0 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">  2008047484</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">458279750</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9781603290241 (pbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">1603290249 (pbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9781603290258 (large print : pbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">1603290257 (large print : pbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="b">eng</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">BTCTA</marc:subfield>
+            <marc:subfield code="d">YDXCP</marc:subfield>
+            <marc:subfield code="d">C#P</marc:subfield>
+            <marc:subfield code="d">CDX</marc:subfield>
+            <marc:subfield code="d">PBR</marc:subfield>
+            <marc:subfield code="d">IG#</marc:subfield>
+            <marc:subfield code="d">NNG</marc:subfield>
+            <marc:subfield code="d">LMR</marc:subfield>
+            <marc:subfield code="d">GK5</marc:subfield>
+            <marc:subfield code="d">CRH</marc:subfield>
+            <marc:subfield code="d">NLGGC</marc:subfield>
+            <marc:subfield code="d">OKJ</marc:subfield>
+            <marc:subfield code="d">TEX</marc:subfield>
+            <marc:subfield code="d">EDK</marc:subfield>
+            <marc:subfield code="d">VP@</marc:subfield>
+            <marc:subfield code="d">XY4</marc:subfield>
+            <marc:subfield code="d">KAAUA</marc:subfield>
+            <marc:subfield code="d">HEBIS</marc:subfield>
+            <marc:subfield code="d">DEBBG</marc:subfield>
+            <marc:subfield code="d">KZG</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">MOL</marc:subfield>
+            <marc:subfield code="d">KEC</marc:subfield>
+            <marc:subfield code="d">MIX</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">ICOA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">LB2369</marc:subfield>
+            <marc:subfield code="b">.G53 2009</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="0">
+            <marc:subfield code="a">808/.027</marc:subfield>
+            <marc:subfield code="2">22</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="084" ind1=" " ind2=" ">
+            <marc:subfield code="a">02.13</marc:subfield>
+            <marc:subfield code="2">bcl</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="084" ind1=" " ind2=" ">
+            <marc:subfield code="a">AK 39580</marc:subfield>
+            <marc:subfield code="2">rvk</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="084" ind1=" " ind2=" ">
+            <marc:subfield code="a">HD 168</marc:subfield>
+            <marc:subfield code="2">rvk</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="084" ind1=" " ind2=" ">
+            <marc:subfield code="a">HD 270</marc:subfield>
+            <marc:subfield code="2">rvk</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="0">
+            <marc:subfield code="a">MLA handbook for writers of research papers.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="246" ind1="3" ind2="0">
+            <marc:subfield code="a">Handbook for writers of research papers</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="250" ind1=" " ind2=" ">
+            <marc:subfield code="a">7th ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York :</marc:subfield>
+            <marc:subfield code="b">Modern Language Association of America,</marc:subfield>
+            <marc:subfield code="c">2009.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">xxi, 292 p. :</marc:subfield>
+            <marc:subfield code="b">ill. ;</marc:subfield>
+            <marc:subfield code="c">23 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">Prev. ed. entered under: Gibaldi, Joseph, 1942-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references (p. 258-260) and index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">pt. 1: Research and writing -- 1-1: Research paper as a form of exploration -- 1-2: Research paper as a form of communication -- 1-3: Selecting a topic -- 1-3-1: Freedom of choice -- 1-3-2: Finding an appropriate focus -- 1-3-3: Summing up -- 1-4: Conducting research -- 1-4-1: Modern academic library -- 1-4-2: Library research sources -- 1-4-3: Central information system -- 1-4-4: Reference works -- 1-4-5: Online catalog of library holdings -- 1-4-6: Full-text databases -- 1-4-7: Other library resources and services -- 1-4-8: Web sources -- 1-4-9: Summing up -- 1-5: Compiling a working bibliography -- 1-5-1: Keeping track of sources -- 1-5-2: Creating a computer file for the working bibliography -- 1-5-3: Recording essential publication information -- 1-5-4: Noting other useful information -- 1-5-5: Verifying publication information -- 1-5-6: Converting the working bibliography to the works-cited list -- 1-5-7: Summing up -- 1-6: Evaluating sources -- 1-6-1: Authority -- 1-6-2: Accuracy and verifiability -- 1-6-3: Currency -- 1-6-4: Summing up -- 1-7: Taking notes -- 1-7-1: Methods of note-taking -- 1-7-2: Types of note-taking -- 1-7-3: Recording page or reference numbers -- 1-7-4: Using a computer for note-taking -- 1-7-5: Amount and accuracy of note-taking -- 1-7-6: Summing up -- 1-8: Outlining -- 1-8-1: Working outline -- 1-8-2: Thesis statement -- 1-8-3: Final outline -- 1-8-4: Summing up -- 1-9: Writing drafts -- 1-9-1: First draft -- 1-9-2: Subsequent drafts -- 1-9-3: Writing with a word processor -- 1-9-4: Final draft and the research project portfolio -- 1-9-5: Summing up -- 1-10: Language and style.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">pt. 2: Plagiarism and academic integrity -- 2-1: Definition of plagiarism -- 2-2: Consequences of plagiarism -- 2-3: Information sharing today -- 2-4: Unintentional plagiarism -- 2-5: Forms of plagiarism -- 2-6: When documentation is not needed -- 2-7: Related issues -- 2-7-1: Reusing a research paper -- 2-7-2: Collaborative work -- 2-7-3: Research on human subjects -- 2-7-4: Copyright infringement -- 2-8: Summing up -- pt. 3: Mechanics of writing -- 3-1: Spelling -- 3-1-1: Consistency -- 3-1-2: Word division -- 3-1-3: Plurals -- 3-1-4: Foreign words -- 3-2: Punctuation -- 3-2-1: Purpose of punctuation -- 3-2-2: Commas -- 3-2-3: Semicolons -- 3-2-4: Colons -- 3-2-5: Dashes and parentheses -- 3-2-6: Hyphens -- 3-2-7: Apostrophes -- 3-2-8: Quotation marks -- 3-2-9: Square brackets -- 3-2-10: Slashes -- 3-2-11: Periods, question marks, and exclamation points -- 3-2-12: Spacing after concluding punctuation marks -- 3-3: Italics -- 3-3-1: Words and letters referred to as words and letters -- 3-3-2: Foreign words in an English text -- 3-3-3: Emphasis -- 3-4: Names of persons -- 3-4-1: First and subsequent uses of names -- 3-4-2: Titles of persons -- 3-4-3: Names of authors and fictional characters -- 3-5: Numbers -- 3-5-1: Arabic numerals -- 3-5-2: Use of words or numerals -- 3-5-3: Commas in numbers -- 3-5-4: Percentages and amounts of money -- 3-5-5: Dates and times of the day -- 3-5-6: Inclusive numbers -- 3-5-7: Roman numerals -- 3-6: Titles of works in the research paper -- 3-6-1: Capitalization and punctuation -- 3-6-2: Italicized titles -- 3-6-3: Titles in quotation marks -- 3-6-4: Titles and quotations within titles -- 3-6-5: Exceptions -- 3-6-6: Shortened titles -- 3-7: Quotations -- 3-7-1: Use and accuracy of quotations -- 3-7-2: Prose -- 3-7-3: Poetry -- 3-7-4: Drama -- 3-7-5: Ellipsis -- 3-7-6: Other alterations of sources -- 3-7-7: Punctuation with quotations -- 3-7-8: Translations of quotations -- 3-8: Capitalization and personal names in languages other than English -- 3-8-1: French -- 3-8-2: German -- 3-8-3: Italian -- 3-8-4: Spanish -- 3-8-5: Latin.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">pt. 4: Format of the research paper -- 4-1: Margins -- 4-2: Text formatting -- 4-3: Heading and title -- 4-4: Page numbers -- 4-5: Tables and illustrations -- 4-6: Paper and printing -- 4-7: Corrections and insertions -- 4-8: Binding -- 4-9: Electronic submission -- pt. 5: Documentation: preparing the list of works cited -- 5-1: Documenting sources -- 5-2: MLA style -- 5-3: List of works cited -- 5-3-1: Introduction -- 5-3-2: Placement of the list of works cited -- 5-3-3: Arrangement of entries -- 5-3-4: Two or more works by the same author -- 5-3-5: Two or more works by the same authors -- 5-3-6: Cross-references -- 5-4: Citing periodical print publications -- 5-4-1: Introduction -- 5-4-2: Article in a scholarly journal -- 5-4-3: Article in a scholarly journal that uses only issue numbers -- 5-4-4: Article in a scholarly journal with more than one series -- 5-4-5: Article in a newspaper -- 5-4-6: Article in a magazine -- 5-4-7: Review -- 5-4-8: Abstract in an abstracts journal -- 5-4-9: Anonymous article -- 5-4-10: Editorial -- 5-4-11: Letter to the editor -- 5-4-12: Serialized article -- 5-4-13: Special issue -- 5-5: Citing nonperiodical print publications -- 5-5-1: Introduction -- 5-5-2: Book by a single author -- 5-5-3: Anthology or a compilation -- 5-5-4: Book by two or more authors -- 5-5-5: Book by a corporate author -- 5-5-6: Work in an anthology -- 5-5-7: Article in a reference book -- 5-5-8: Introduction, a preface, a foreword, or an afterword -- 5-5-9: Anonymous book -- 5-5-10: Scholarly edition -- 5-5-11: Translation -- 5-5-12: Illustrated book or a graphic narrative -- 5-5-13: Book published in a second or subsequent edition -- 5-5-14: Multivolume work -- 5-5-15: Book in a series -- 5-5-16: Republished book or journal issue -- 5-5-17: Publisher's imprint -- 5-5-18: Book with multiple publishers -- 5-5-19: Brochure, pamphlet, or press release -- 5-5-20: Government publication -- 5-5-21: Published proceedings of a conference -- 5-5-22: Book in a language other than English -- 5-5-23: Book published before 1900 -- 5-5-24: Book without stated publication information or pagination -- 5-5-25: Unpublished dissertation -- 5-5-26: Published dissertation -- 5-6: Citing Web publications -- 5-6-1: Introduction -- 5-6-2: Nonperiodical publication -- 5-6-3: Scholarly journal -- 5-6-4: Periodical publication in an online database -- 5-7: Citing additional common sources -- 5-7-1: Television or radio broadcast -- 5-7-2: Sound recording -- 5-7-3: Film or a video recording -- 5-7-4: Performance -- 5-7-5: Musical score or libretto -- 5-7-6: Work of visual art -- 5-7-7: Interview -- 5-7-8: Map or chart -- 5-7-9: Cartoon or comic strip -- 5-7-10: Advertisement -- 5-7-11: Lecture, a speech, an address, or a reading -- 5-7-12: Manuscript or typescript -- 5-7-13: Letter, a memo, or an e-mail message -- 5-7-14: Legal source -- 5-7-15: Article in a microform collection of articles -- 5-7-16: Article reprinted in a loose-leaf collection of articles -- 5-7-17: Publication on CD-ROM or DVD-ROM -- 5-7-18: Digital file -- 5-8: Work in more than one publication medium.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">pt. 6: Documentation: citing sources in the text -- 6-1: Parenthetical documentation and the list of works cited -- 6-2: Information required in parenthetical documentation -- 6-3: Readability -- 6-4: Sample references -- 6-4-1: Citing an entire work, including a work with no page numbers -- 6-4-2: Citing part of a work -- 6-4-3: Citing volume and page numbers of a multivolume work -- 6-4-4: Citing a work listed by title -- 6-4-5: Citing a work by a corporate author -- 6-4-6: Citing two or more works by the same author or authors -- 6-4-7: Citing indirect sources -- 6-4-8: Citing common literature -- 6-4-9: Citing more than one work in a single parenthetical reference -- 6-5: Using notes with parenthetical documentation -- 6-5-1: Content notes -- 6-5-2: Bibliographic notes -- pt. 7: Abbreviations -- 7-1: Introduction -- 7-2: Time designations -- 7-3: Geographic names -- 7-4: Common scholarly abbreviations and reference words -- 7-5: Publishers' names -- 7-6: Symbols and abbreviations used in proofreading and correction -- 7-6-1: Selected proofreading symbols -- 7-6-2: Common correction symbols and abbreviations -- 7-7: Titles of works -- 7-7-1: Bible -- 7-7-2: Works by Shakespeare -- 7-7-3: Works by Chaucer -- 7-7-4: Other works -- Appendix A: Guides to writing -- A-1: Introduction -- A-2: Dictionaries of usage -- A-3: Guides to nondiscriminatory language -- A-4: Books on style -- Appendix B: Specialized style manuals.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="520" ind1=" " ind2=" ">
+            <marc:subfield code="a">The MLA Handbook is published by the Modern Language Association, the authority on MLA documentation style. Widely adopted in high schools, colleges, and publishing houses, the MLA Handbook treats every aspect of research writing, from selecting a topic to submitting the completed paper. The seventh edition is a comprehensive, up-to-date guide to research and writing in the online environment. It provides an authoritative account of MLA documentation style for use in student writing, including simplified guidelines for citing works published on the Web and new recommendations for citing several kinds of works, such as digital files and graphic narratives.--From the publisher.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Report writing</marc:subfield>
+            <marc:subfield code="v">Handbooks, manuals, etc.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Research</marc:subfield>
+            <marc:subfield code="v">Handbooks, manuals, etc.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="1" ind2="7">
+            <marc:subfield code="a">Wetenschappelijke teksten.</marc:subfield>
+            <marc:subfield code="2">gtt</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="1" ind2="7">
+            <marc:subfield code="a">Schrijven.</marc:subfield>
+            <marc:subfield code="2">gtt</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="1" ind2="7">
+            <marc:subfield code="a">Stijlen.</marc:subfield>
+            <marc:subfield code="2">gtt</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="1" ind2="7">
+            <marc:subfield code="a">Schrijfvaardigheid.</marc:subfield>
+            <marc:subfield code="2">gtt</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="7">
+            <marc:subfield code="a">Wissenschaftliches Manuskript.</marc:subfield>
+            <marc:subfield code="2">swd</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="7">
+            <marc:subfield code="a">Wissenschaftliches Arbeiten.</marc:subfield>
+            <marc:subfield code="2">swd</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="7">
+            <marc:subfield code="a">Neuphilologie.</marc:subfield>
+            <marc:subfield code="2">swd</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="4">
+            <marc:subfield code="a">Schrijfvaardigheid.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="4">
+            <marc:subfield code="a">Schrijven.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="4">
+            <marc:subfield code="a">Stijlen.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="0" ind2="4">
+            <marc:subfield code="a">Wetenschappelijke teksten.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Gibaldi, Joseph,</marc:subfield>
+            <marc:subfield code="d">1942-</marc:subfield>
+            <marc:subfield code="t">MLA handbook for writers of research papers.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="710" ind1="2" ind2=" ">
+            <marc:subfield code="a">Modern Language Association of America.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="776" ind1="0" ind2="8">
+            <marc:subfield code="i">Online version:</marc:subfield>
+            <marc:subfield code="t">MLA handbook for writers of research papers.</marc:subfield>
+            <marc:subfield code="b">7th ed.</marc:subfield>
+            <marc:subfield code="d">New York : Modern Language Association of America, 2009</marc:subfield>
+            <marc:subfield code="w">(OCoLC)682364897</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="856" ind1=" " ind2=" ">
+            <marc:subfield code="u">http://bvbr.bib-bvb.de:8991/F?func=service&amp;doc_library=BVB01&amp;doc_number=017163088&amp;line_number=0001&amp;func_code=DB_RECORDS&amp;service_type=MEDIA</marc:subfield>
+            <marc:subfield code="z">Inhaltsverzeichnis</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="856" ind1=" " ind2=" ">
+            <marc:subfield code="u">http://bvbr.bib-bvb.de:8991/F?func=service&amp;doc_library=BVB01&amp;doc_number=017163088&amp;line_number=0002&amp;func_code=DB_RECORDS&amp;service_type=MEDIA</marc:subfield>
+            <marc:subfield code="z">Klappentext</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">C0</marc:subfield>
+            <marc:subfield code="b">ICO</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/338</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00213cx  a22001091  4500</marc:leader>
+          <marc:controlfield tag="001">280618</marc:controlfield>
+          <marc:controlfield tag="003">IWUdb</marc:controlfield>
+          <marc:controlfield tag="004">303877</marc:controlfield>
+          <marc:controlfield tag="005">20120126132057.0</marc:controlfield>
+          <marc:controlfield tag="007">ta</marc:controlfield>
+          <marc:controlfield tag="008">0912012p||||8|||4001aueng0000000</marc:controlfield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">stx</marc:subfield>
+            <marc:subfield code="h">LB2369</marc:subfield>
+            <marc:subfield code="i">.G53 2009</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/339</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00213cx  a22001091  4500</marc:leader>
+          <marc:controlfield tag="001">280558</marc:controlfield>
+          <marc:controlfield tag="003">IWUdb</marc:controlfield>
+          <marc:controlfield tag="004">303877</marc:controlfield>
+          <marc:controlfield tag="005">20120126113434.0</marc:controlfield>
+          <marc:controlfield tag="007">ta</marc:controlfield>
+          <marc:controlfield tag="008">0911202p||||8|||4001bueng0000000</marc:controlfield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">ref</marc:subfield>
+            <marc:subfield code="h">LB2369</marc:subfield>
+            <marc:subfield code="i">.G53 2009</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/340</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00808cam a2200289 i 4500</marc:leader>
+          <marc:controlfield tag="001">166524</marc:controlfield>
+          <marc:controlfield tag="003">IWUdb</marc:controlfield>
+          <marc:controlfield tag="005">20020503133236.0</marc:controlfield>
+          <marc:controlfield tag="008">760420s1976    nyu           000 0ceng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">  72076164</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">2689776</marc:subfield>
+            <marc:subfield code="a">16650499</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0385037872 :</marc:subfield>
+            <marc:subfield code="c">$12.50</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">AXE-6179</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">UIU</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="043" ind1=" " ind2=" ">
+            <marc:subfield code="a">n-us---</marc:subfield>
+            <marc:subfield code="a">f-gm---</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2=" ">
+            <marc:subfield code="a">E185.97.H24</marc:subfield>
+            <marc:subfield code="b">A33</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1=" " ind2=" ">
+            <marc:subfield code="a">929/.2/0973</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Haley, Alex.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Roots /</marc:subfield>
+            <marc:subfield code="c">Alex Haley.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="250" ind1=" " ind2=" ">
+            <marc:subfield code="a">1st ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Garden City, N.Y. :</marc:subfield>
+            <marc:subfield code="b">Doubleday,</marc:subfield>
+            <marc:subfield code="c">1976.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">viii, 688 p. ;</marc:subfield>
+            <marc:subfield code="c">24 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"A condensed version of a portion of this work first appeared in Reader's digest."</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="1" ind2="0">
+            <marc:subfield code="a">Haley, Alex.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="3" ind2="0">
+            <marc:subfield code="a">Haley family</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="3" ind2="0">
+            <marc:subfield code="a">Kinte family</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">African Americans</marc:subfield>
+            <marc:subfield code="v">Biography.</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/341</identifier>
+        <datestamp>2012-06-05T18:30:02Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00233nx  a22001215  4500</marc:leader>
+          <marc:controlfield tag="001">187571</marc:controlfield>
+          <marc:controlfield tag="003">IWUdb</marc:controlfield>
+          <marc:controlfield tag="004">166524</marc:controlfield>
+          <marc:controlfield tag="007">ta</marc:controlfield>
+          <marc:controlfield tag="008">9807302u    0   4001uueng0980730</marc:controlfield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+            <marc:subfield code="a">AXE-6179</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="014" ind1="0" ind2=" ">
+            <marc:subfield code="9">BPO-8640</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">stx</marc:subfield>
+            <marc:subfield code="h">E185.97.H24</marc:subfield>
+            <marc:subfield code="i">A33</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/342</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01833cam a2200481Ia 4500</marc:leader>
+          <marc:controlfield tag="001">252483</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="005">20120418112618.0</marc:controlfield>
+          <marc:controlfield tag="006">m        d        </marc:controlfield>
+          <marc:controlfield tag="007">cr cn|</marc:controlfield>
+          <marc:controlfield tag="008">090311s2009    nyua    ob    001 0 eng d</marc:controlfield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">495284321</marc:subfield>
+            <marc:subfield code="a">500978687</marc:subfield>
+            <marc:subfield code="a">646788531</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780387684369</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0387684360</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0387402934 (cloth)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780387402932 (cloth)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="024" ind1="8" ind2=" ">
+            <marc:subfield code="a">9786611926861</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(OCoLC)ocn314182885</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="037" ind1=" " ind2=" ">
+            <marc:subfield code="a">978-0-387-40293-2</marc:subfield>
+            <marc:subfield code="b">Springer</marc:subfield>
+            <marc:subfield code="n">http://www.springerlink.com</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">GW5XE</marc:subfield>
+            <marc:subfield code="b">eng</marc:subfield>
+            <marc:subfield code="c">GW5XE</marc:subfield>
+            <marc:subfield code="d">OCLCQ</marc:subfield>
+            <marc:subfield code="d">MND</marc:subfield>
+            <marc:subfield code="d">UWW</marc:subfield>
+            <marc:subfield code="d">CEF</marc:subfield>
+            <marc:subfield code="d">NUI</marc:subfield>
+            <marc:subfield code="d">UAB</marc:subfield>
+            <marc:subfield code="d">E7B</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">ILLA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1=" " ind2="4">
+            <marc:subfield code="a">QA10.3</marc:subfield>
+            <marc:subfield code="b">.G58 2009eb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="4">
+            <marc:subfield code="a">511.324</marc:subfield>
+            <marc:subfield code="2">22</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Givant, Steven R.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Introduction to boolean algebras</marc:subfield>
+            <marc:subfield code="h">[electronic resource] /</marc:subfield>
+            <marc:subfield code="c">Steven Givant, Paul Halmos.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York :</marc:subfield>
+            <marc:subfield code="b">Springer,</marc:subfield>
+            <marc:subfield code="c">c2009.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">1 online resource (xiv, 574 p.) :</marc:subfield>
+            <marc:subfield code="b">ill.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="490" ind1="1" ind2=" ">
+            <marc:subfield code="a">Undergraduate texts in mathematics,</marc:subfield>
+            <marc:subfield code="x">0172-6056</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references (p. [536]-541) and index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="538" ind1=" " ind2=" ">
+            <marc:subfield code="a">Mode of access: World Wide Web.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="588" ind1=" " ind2=" ">
+            <marc:subfield code="a">Description based on print version record.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Algebra, Boolean.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="1" ind2="4">
+            <marc:subfield code="a">Mathematics.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="2" ind2="4">
+            <marc:subfield code="a">Order, Lattices, Ordered Algebraic Structures.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1="2" ind2="4">
+            <marc:subfield code="a">Mathematical Logic and Foundations.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="655" ind1=" " ind2="0">
+            <marc:subfield code="a">Electronic books.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Halmos, Paul R.</marc:subfield>
+            <marc:subfield code="q">(Paul Richard),</marc:subfield>
+            <marc:subfield code="d">1916-2006.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="776" ind1="0" ind2="8">
+            <marc:subfield code="i">Print version:</marc:subfield>
+            <marc:subfield code="a">Givant, Steven R.</marc:subfield>
+            <marc:subfield code="t">Introduction to boolean algebras.</marc:subfield>
+            <marc:subfield code="d">New York : Springer, c2009</marc:subfield>
+            <marc:subfield code="z">9780387402932</marc:subfield>
+            <marc:subfield code="z">0387402934</marc:subfield>
+            <marc:subfield code="w">(OCoLC)258078751</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="830" ind1=" " ind2="0">
+            <marc:subfield code="a">Undergraduate texts in mathematics.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1=" " ind2=" ">
+            <marc:subfield code="b">springerbk</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="856" ind1="4" ind2="0">
+            <marc:subfield code="u">http://ezproxy.prin.edu:2048/login?url=http://dx.doi.org/10.1007/978-0-387-68436-9</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="938" ind1=" " ind2=" ">
+            <marc:subfield code="a">ebrary</marc:subfield>
+            <marc:subfield code="b">EBRY</marc:subfield>
+            <marc:subfield code="n">ebr10269541</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">92</marc:subfield>
+            <marc:subfield code="b">ILL</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/343</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00285cx  a22001091  4500</marc:leader>
+          <marc:controlfield tag="001">258184</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="004">252483</marc:controlfield>
+          <marc:controlfield tag="005">20120418154416.0</marc:controlfield>
+          <marc:controlfield tag="008">1108090u||||8|||4001uu|||0000000</marc:controlfield>
+          <marc:datafield tag="852" ind1=" " ind2=" ">
+            <marc:subfield code="b">springerbk</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="856" ind1="4" ind2="0">
+            <marc:subfield code="u">http://ezproxy.prin.edu:2048/login?url=http://dx.doi.org/10.1007/978-0-387-68436-9</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/344</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01557cam a22004334a 4500</marc:leader>
+          <marc:controlfield tag="001">224649</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="005">20100330164429.0</marc:controlfield>
+          <marc:controlfield tag="008">090205s2009    nju      b    001 0 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">  2009003499</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="015" ind1=" " ind2=" ">
+            <marc:subfield code="a">GBA951763</marc:subfield>
+            <marc:subfield code="2">bnb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="016" ind1="7" ind2=" ">
+            <marc:subfield code="a">015265761</marc:subfield>
+            <marc:subfield code="2">Uk</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780691138183 (hbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0691138184 (hbk. : alk. paper)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">NLGGC</marc:subfield>
+            <marc:subfield code="b">320188868</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">CDX</marc:subfield>
+            <marc:subfield code="b">9586298</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">BWX</marc:subfield>
+            <marc:subfield code="b">R2801315</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">NZ1</marc:subfield>
+            <marc:subfield code="b">13085877</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">AU@</marc:subfield>
+            <marc:subfield code="b">000043810481</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">UNITY</marc:subfield>
+            <marc:subfield code="b">119953501</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="029" ind1="1" ind2=" ">
+            <marc:subfield code="a">OXFCL</marc:subfield>
+            <marc:subfield code="b">0691138184</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">BTCTA</marc:subfield>
+            <marc:subfield code="d">UKM</marc:subfield>
+            <marc:subfield code="d">C#P</marc:subfield>
+            <marc:subfield code="d">CDX</marc:subfield>
+            <marc:subfield code="d">BWX</marc:subfield>
+            <marc:subfield code="d">YDXCP</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">HQ1170</marc:subfield>
+            <marc:subfield code="b">.L39 2009</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2="0">
+            <marc:subfield code="a">297.5/76</marc:subfield>
+            <marc:subfield code="2">22</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1=" " ind2="4">
+            <marc:subfield code="a">305.4</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Lazreg, Marnia.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Questioning the veil :</marc:subfield>
+            <marc:subfield code="b">open letters to Muslim women /</marc:subfield>
+            <marc:subfield code="c">Marnia Lazreg.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Princeton :</marc:subfield>
+            <marc:subfield code="b">Princeton University Press,</marc:subfield>
+            <marc:subfield code="c">c2009.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">x, 156 p. ;</marc:subfield>
+            <marc:subfield code="c">23 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="504" ind1=" " ind2=" ">
+            <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="505" ind1="0" ind2=" ">
+            <marc:subfield code="a">Letter one: modesty -- Letter two: sexual harassment -- Letter three: cultural identity -- Letter four: conviction and piety -- Letter five: why women should not wear the veil.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Muslim women.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Hijab (Islamic clothing)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Veils</marc:subfield>
+            <marc:subfield code="x">Religious aspects</marc:subfield>
+            <marc:subfield code="x">Islam.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="938" ind1=" " ind2=" ">
+            <marc:subfield code="a">Baker and Taylor</marc:subfield>
+            <marc:subfield code="b">BTCP</marc:subfield>
+            <marc:subfield code="n">BK0008361722</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="938" ind1=" " ind2=" ">
+            <marc:subfield code="a">Coutts Information Services</marc:subfield>
+            <marc:subfield code="b">COUT</marc:subfield>
+            <marc:subfield code="n">9586298</marc:subfield>
+            <marc:subfield code="c">16.95 GBP</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="938" ind1=" " ind2=" ">
+            <marc:subfield code="a">Blackwell Book Service</marc:subfield>
+            <marc:subfield code="b">BBUS</marc:subfield>
+            <marc:subfield code="n">R2801315</marc:subfield>
+            <marc:subfield code="c">$22.95</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="938" ind1=" " ind2=" ">
+            <marc:subfield code="a">YBP Library Services</marc:subfield>
+            <marc:subfield code="b">YANK</marc:subfield>
+            <marc:subfield code="n">3078952</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">C0</marc:subfield>
+            <marc:subfield code="b">IBP</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/345</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00201cx  a22000974  4500</marc:leader>
+          <marc:controlfield tag="001">231934</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="004">224649</marc:controlfield>
+          <marc:controlfield tag="005">20100330164447.0</marc:controlfield>
+          <marc:controlfield tag="008">1003040p    8   1001uu   0000000</marc:controlfield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">stacks</marc:subfield>
+            <marc:subfield code="h">HQ1170</marc:subfield>
+            <marc:subfield code="i">.L39 2009</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/346</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00863nam a2200301 i 4500</marc:leader>
+          <marc:controlfield tag="001">112282</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="005">20080520131221.0</marc:controlfield>
+          <marc:controlfield tag="008">760420s1976    nyu           000 0ceng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   72076164 //r79</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">2689776</marc:subfield>
+            <marc:subfield code="a">16650499</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780385037877 :</marc:subfield>
+            <marc:subfield code="c">$12.50</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0385037872 :</marc:subfield>
+            <marc:subfield code="c">$12.50</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">133171</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">IBP</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="043" ind1=" " ind2=" ">
+            <marc:subfield code="a">n-us---</marc:subfield>
+            <marc:subfield code="a">f-gm---</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">IBPA</marc:subfield>
+            <marc:subfield code="b">MBL</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2=" ">
+            <marc:subfield code="a">E185.97.H24</marc:subfield>
+            <marc:subfield code="b">A33 1976</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Haley, Alex.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="0">
+            <marc:subfield code="a">Roots /</marc:subfield>
+            <marc:subfield code="c">Alex Haley.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="250" ind1=" " ind2=" ">
+            <marc:subfield code="a">1st ed.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Garden City, N.Y. :</marc:subfield>
+            <marc:subfield code="b">Doubleday,</marc:subfield>
+            <marc:subfield code="c">1976.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">viii, 688 p. ;</marc:subfield>
+            <marc:subfield code="c">24 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"A condensed version of a portion of this work first appeared in Reader's digest."</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="1" ind2="0">
+            <marc:subfield code="a">Haley, Alex.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="3" ind2="0">
+            <marc:subfield code="a">Haley family.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="600" ind1="3" ind2="0">
+            <marc:subfield code="a">Kinte family.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">African Americans</marc:subfield>
+            <marc:subfield code="v">Biography.</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/347</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00228cx  a22001093  4500</marc:leader>
+          <marc:controlfield tag="001">121850</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="004">112282</marc:controlfield>
+          <marc:controlfield tag="005">20080603200527.0</marc:controlfield>
+          <marc:controlfield tag="008">0806030p    8   4001aueng0000000</marc:controlfield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+            <marc:subfield code="a">133171</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">stacks</marc:subfield>
+            <marc:subfield code="h">E185.97 .H24 A33 1976</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/348</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>bib</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01254cam a2200373 a 4500</marc:leader>
+          <marc:controlfield tag="001">123354</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="005">20080520131223.0</marc:controlfield>
+          <marc:controlfield tag="008">990727s2000    nyu    c      000 1 eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   99042699</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780060277307</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0060277300</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">9780060277314 (lib. bdg.)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="020" ind1=" " ind2=" ">
+            <marc:subfield code="a">0060277319 (lib. bdg.)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="9">173207</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">IBP</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="042" ind1=" " ind2=" ">
+            <marc:subfield code="a">lcac</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">IBPA</marc:subfield>
+            <marc:subfield code="b">MBL</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">PZ7.C8615</marc:subfield>
+            <marc:subfield code="b">Wan 2000</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="100" ind1="1" ind2=" ">
+            <marc:subfield code="a">Creech, Sharon.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="1" ind2="4">
+            <marc:subfield code="a">The Wanderer /</marc:subfield>
+            <marc:subfield code="c">by Sharon Creech ; drawings by David Diaz.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">New York :</marc:subfield>
+            <marc:subfield code="b">HarperCollinsPublishers,</marc:subfield>
+            <marc:subfield code="c">2000.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">305 p. ;</marc:subfield>
+            <marc:subfield code="c">22 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="500" ind1=" " ind2=" ">
+            <marc:subfield code="a">"Joanna Cotler books."</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="520" ind1=" " ind2=" ">
+            <marc:subfield code="a">Thirteen-year-old Sophie and her cousin Cody record their transatlantic crossing aboard the Wanderer, a forty-five foot sailboat, which, along with uncles and another cousin, is en route to visit their grandfather in England.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="586" ind1=" " ind2=" ">
+            <marc:subfield code="a">Newbery Honor Medal Winner, 2000</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sailboats</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sailing.</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Ocean voyages</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Family life.</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Grandfathers</marc:subfield>
+            <marc:subfield code="v">Fiction.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="1">
+            <marc:subfield code="a">Sea stories.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="700" ind1="1" ind2=" ">
+            <marc:subfield code="a">Diaz, David.</marc:subfield>
+            <marc:subfield code="e">ill.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">E0</marc:subfield>
+            <marc:subfield code="b">IBP</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:library.rochester.edu:URVoyager1/349</identifier>
+        <datestamp>2012-06-05T18:30:03Z</datestamp>
+        <setSpec>hold</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00228cx  a22001093  4500</marc:leader>
+          <marc:controlfield tag="001">133711</marc:controlfield>
+          <marc:controlfield tag="003">PRCdb</marc:controlfield>
+          <marc:controlfield tag="004">123354</marc:controlfield>
+          <marc:controlfield tag="005">20080603200536.0</marc:controlfield>
+          <marc:controlfield tag="008">0806030p    8   4001aueng0000000</marc:controlfield>
+          <marc:datafield tag="014" ind1="1" ind2=" ">
+            <marc:subfield code="a">173207</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="852" ind1="0" ind2=" ">
+            <marc:subfield code="b">childrens</marc:subfield>
+            <marc:subfield code="h">PZ7.C8615 Wan 2000</marc:subfield>
+            <marc:subfield code="t">1</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
