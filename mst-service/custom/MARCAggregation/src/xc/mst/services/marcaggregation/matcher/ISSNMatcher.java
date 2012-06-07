@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
@@ -171,6 +172,10 @@ public class ISSNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String issn = getAllButDash(subfield);
+                if (StringUtils.isEmpty(issn)) {
+                    LOG.error("** problem with 022$a ISSN in: " + r.recordId);
+                    break;   // bad data will cause trouble up the road.
+                }
                 List<String> issnList = inputId2issn.get(id);
 
                 if (issnList == null) {

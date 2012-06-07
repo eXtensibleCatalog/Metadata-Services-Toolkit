@@ -171,9 +171,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 replaceIntoTable(tableName, dbLoadFileStr);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
+            } finally {
+                TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
             }
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
     }
 
     public void persistLongOnly(List<Long> values, String tableName)  {
@@ -204,10 +205,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             os.close();
             replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
-            TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
             getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
     }
 
     /**
@@ -265,10 +266,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             os.close();
             replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
-            TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
             getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
@@ -328,9 +329,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 getUtil().throwIt(t2);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
+            } finally {
+                TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
             }
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
@@ -372,9 +374,10 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 replaceIntoTable(tableName, dbLoadFileStr);
             } catch (Throwable t) {
                 getUtil().throwIt(t);
+            } finally {
+                TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
             }
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
     public void persistScores(TLongObjectHashMap<xc.mst.services.marcaggregation.RecordOfSourceData> scores) {
@@ -478,9 +481,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return all the input_records that have been merged together to create this output_record, possibly on 1 record.
      */
     public List<Long> getInputRecordsMappedToOutputRecord(Long output_record_id) {
+        TimingLogger.start("MarcAggregationServiceDAO.getInputRecordsMappedToOutputRecord");
         String sql = "select input_record_id from " + bib_records_table +
                             " where output_record_id = ? ";
-        return this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
+        final List<Long> results =this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
+        TimingLogger.stop("MarcAggregationServiceDAO.getInputRecordsMappedToOutputRecord");
+        return results;
     }
 
     /**
@@ -489,13 +495,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return there will only be 1 record number returned.
      */
     public List<Long> getOutputRecordForInputRecord(Long input_record_id) {
+        TimingLogger.start("MarcAggregationServiceDAO.getOutputRecordForInputRecord");
         String sql = "select output_record_id from " + bib_records_table +
                             " where input_record_id = ? ";
-        return this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
+        final List<Long> results =this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
+        TimingLogger.stop("MarcAggregationServiceDAO.getOutputRecordForInputRecord");
+        return results;
     }
 
     public TLongLongHashMap getBibRecords(/*int page*/) {
-        TimingLogger.start("getBibRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getBibRecords");
 
 //        int recordsAtOnce = 100000;
         String sql = "select input_record_id, output_record_id from " + bib_records_table;// +
@@ -508,7 +517,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long out_id = (Long) row.get("output_record_id");
             results.put(in_id, out_id);
         }
-        TimingLogger.stop("getBibRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getBibRecords");
         return results;
     }
 
@@ -517,7 +526,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMergedInputRecords(/*int page*/) {
-        TimingLogger.start("getMergedInputRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMergedInputRecords");
 
 //      int recordsAtOnce = 100000;
       String sql = "select input_record_id from " + merged_records_table;// +
@@ -529,12 +538,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
               results.add((Long) row.values().iterator().next());
           }
       }
-      TimingLogger.stop("getMergedInputRecords");
+      TimingLogger.stop("MarcAggregationServiceDAO.getMergedInputRecords");
       return results;
     }
 
     public RecordOfSourceData getScoreData(Long num) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         final String tableName = merge_scores_table;
 
@@ -543,7 +552,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         List<RecordOfSourceData> rowList = this.jdbcTemplate.query(sql, new Object[] {num}, new RecordOfSourceDataMapper());
 
-        TimingLogger.stop("getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
 
         final int size = rowList.size();
         if (size == 0) {
@@ -596,7 +605,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field +" = ?";
 
@@ -607,7 +616,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long id = (Long) row.get("input_record_id");
             results.add(id);
         }
-        TimingLogger.stop("getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
         return results;
     }
 
@@ -624,7 +633,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String numeric_id_field, Long itemToMatch) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ numeric_id_field +" = ?";
 
@@ -635,7 +644,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long id = (Long) row.get("input_record_id");
             results.add(id);
         }
-        TimingLogger.stop("getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
         return results;
     }
 
@@ -671,8 +680,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteAllMASRecordDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteAllMASRecordDetails");
+
         deleteAllMatchpointDetails(input_record_id);
         deleteAllMergeDetails(     input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteAllMASRecordDetails");
     }
 
     /**
@@ -682,9 +695,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteAllMergeDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteAllMergeDetails");
+
         deleteMergeRow(merge_scores_table,     input_record_id);
         deleteMergeRow(merged_records_table,   input_record_id);
         deleteMergeRow(bib_records_table,      input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteAllMergeDetails");
     }
 
     /**
@@ -698,8 +715,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteMergeMemberDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteMergeMemberDetails");
+
         deleteMergeRow(merged_records_table,   input_record_id);
         deleteMergeRow(bib_records_table,      input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteMergeMemberDetails");
     }
 
     /**

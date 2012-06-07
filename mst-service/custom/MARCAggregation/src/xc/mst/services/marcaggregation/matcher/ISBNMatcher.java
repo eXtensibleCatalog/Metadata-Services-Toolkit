@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
@@ -165,6 +166,10 @@ public class ISBNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
+                if (StringUtils.isEmpty(isbn)) {
+                    LOG.error("** problem with 020$a ISBN in: " + r.recordId);
+                    break;   // bad data will cause trouble up the road.
+                }
 
                 //note, originally saved orig string too, but I don't see the need
                 //final String[] isbnArray = new String[] {isbn, subfield};  // its a pair of strings
@@ -211,6 +216,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     }
 
+    // TODO this can fail.  so to sanitize the table?
     @Override
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");

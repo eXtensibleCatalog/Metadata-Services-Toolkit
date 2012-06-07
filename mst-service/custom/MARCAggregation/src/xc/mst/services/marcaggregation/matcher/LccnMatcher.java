@@ -85,6 +85,8 @@ public class LccnMatcher extends FieldMatcherService {
     //  then tokenize around spaces, return the numeric portion that
     //  remains (or could test 1st. to verify it is numeric)
     //
+    //  on error use the somewhat old-fashioned mechanism of -1 returned, which is not valid unique id
+    //
     //TODO
     //change the matching algorithm for Aggregation to ignore a forward slash and any characters that follow it in matching 010 fields
     //
@@ -98,7 +100,7 @@ public class LccnMatcher extends FieldMatcherService {
         }
         else {
             LOG.error("** Problem with 010$a, empty, original="+s);
-            return 0l;
+            return -1l;
         }
         if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {
             return Long.parseLong(candidate);
@@ -118,7 +120,7 @@ public class LccnMatcher extends FieldMatcherService {
                     stripped=null;
                 }
                 if (stripped == null) {
-                    return 0l;
+                    return -1l;
                 }
                 return strippedL;
             }
@@ -133,7 +135,7 @@ public class LccnMatcher extends FieldMatcherService {
                 stripped=null;
             }
             if (stripped == null) {
-                return 0l;
+                return -1l;
             }
             return strippedL;
         }
@@ -160,10 +162,12 @@ public class LccnMatcher extends FieldMatcherService {
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
-                if (lccn2inputIds.get(goods) != null) {
-                    results.addAll(lccn2inputIds.get(goods));
-                    if (results.contains(id)) {
-                        results.remove(id);
+                if (goods != -1) {
+                    if (lccn2inputIds.get(goods) != null) {
+                        results.addAll(lccn2inputIds.get(goods));
+                        if (results.contains(id)) {
+                            results.remove(id);
+                        }
                     }
                 }
 
@@ -239,6 +243,9 @@ public class LccnMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 Long goods = new Long(getUniqueId(subfield));
+                if (goods == -1l) {   // then were not successful in parsing, i.e. bad data.
+                    break;
+                }
                 if (debug) {
                     LOG.info("LccnMatcher, numeric Lccn="+goods+" for record "+r.recordId);
                     if (r.recordId==2) {   // currently, record 2 gets hit 2x, once for 2a matcher, once for 2c matcher.  really a bug?
