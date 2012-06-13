@@ -75,57 +75,69 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         TimingLogger.start("MarcAggregationServiceDAO.persist2StrMaps");
 
         TimingLogger.start("prepare to write");
+        String dbLoadFileStr = getDbLoadFileStr();
 
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            Object list = inputId2matcherMap.get(id);
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
 
-            try {
-                if (list == null) {
-                    continue;
-                }
-                String dbLoadFileStr = getDbLoadFileStr();
+        try {
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
 
+            final MutableInt j = new MutableInt(0);
+            for (Object keyObj : inputId2matcherMap.keySet()) {
+                Long id = (Long) keyObj;
                 final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
+                Object list = inputId2matcherMap.get(id);
 
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
+                try {
+                    if (list == null) {
+                        continue;
+                    }
+                    final MutableInt j2 = new MutableInt(0);
 
-                List<String[]> strList = (List<String[]>) list;
-                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
-                if (strList != null && strList.size() > 0) {
-                    for (String[] _s: strList) {
-                        try {   // need to loop through all strings associated with id!
-                                if (j.intValue() > 0) {
-                                    os.write(newLineBytes);
-                                } else {
-                                    j.increment();
-                                }
-                                os.write(_s[1].getBytes());
-                                os.write(tabBytes);
-                                os.write(_s[0].getBytes());
-                                os.write(tabBytes);
-                                os.write(idBytes);
-                        } catch (Exception e) {
-                            LOG.error("problem with data - id="+id,e);
-                            getUtil().throwIt(e);
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+                    List<String[]> strList = (List<String[]>) list;
+                    LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                    if (strList != null && strList.size() > 0) {
+                        for (String[] _s: strList) {
+                            try {   // need to loop through all strings associated with id!
+                                    if (j2.intValue() > 0) {
+                                        os.write(newLineBytes);
+                                    } else {
+                                        j2.increment();
+                                    }
+                                    os.write(_s[1].getBytes());
+                                    os.write(tabBytes);
+                                    os.write(_s[0].getBytes());
+                                    os.write(tabBytes);
+                                    os.write(idBytes);
+                            } catch (Exception e) {
+                                LOG.error("problem with data - id="+id,e);
+                                getUtil().throwIt(e);
+                            }
                         }
                     }
+                } catch (Throwable t) {
+                    LOG.error("*** problem with data readying id="+id,t);
+                    getUtil().throwIt(t);
                 }
-                os.close();
-
-                TimingLogger.stop("prepare to write");
-                TimingLogger.start("will replace");
-
-                replaceIntoTable(tableName, dbLoadFileStr);
-                TimingLogger.stop("will replace");
-            } catch (Throwable t) {
-                LOG.error("problem with replaceIntoTable data - id="+id,t);
-                getUtil().throwIt(t);
             }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
         }
+        catch (Exception e4) {
+            LOG.error("*** problem with replaceIntoTable data",e4);
+            getUtil().throwIt(e4);
+        }
+
         TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
     }
 
