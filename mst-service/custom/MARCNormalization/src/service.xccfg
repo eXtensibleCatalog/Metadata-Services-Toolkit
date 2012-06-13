@@ -15,12 +15,68 @@ ENABLED STEPS
 # Steps are listed roughly in the numeric order of the MARC
 # fields that the step acts upon.
 
-# Organization code.  Supply your institution’s code from the 
-# MARC Code List for Organizations 
-#(http://www.loc.gov/marc/organizations/orgshome.html).  If your
+#-----------------------------------------
+# SOURCE OF MARC Organization Code
+#-----------------------------------------
+
+# Specify where the Service should look in the Configuration File to find your
+# Institution's MARC Organization code(s). 
+
+# If value is set as "0", fill in the MARC "Organization Code=CHANGE_Me" variable
+# with a single MARC Org code. 
+# (This option will eventually be deprecated)
+
+# If value is set as "1", complete the 001 and 003 Config sections with
+# your institution's MARC Organization code(s), Repository URL(s), etc.
+
+SourceOfMARCOrganizationCode=0  
+
+#-----------------------------------------
+# MARC Organization Code
+#-----------------------------------------
+
+# Supply your institution's code from the MARC Code List for Organizations 
+# (http://www.loc.gov/marc/organizations/orgshome.html).  If your
 # organization does not yet have a code, you can apply for one 
-# online through this site.   
+# online through this site. 
+
 OrganizationCode = CHANGE_ME
+
+#-----------------------------------------
+# 001 Config Table
+#-----------------------------------------
+
+# Each row of table (repository) needs a separate line with its own 001Config number.
+# See documentation for additional information.
+# Separate column values with commas in this format:
+# 001Config.<row>=<Source_repository_URL>,<Supply_001_for_Bib>,<Check_for_Holdings_001>
+# Each row should have two commas
+# Example:
+# 001Config.1=http://128.151.244.135:8080/OAIToolkit/oai-request.do,N,Y
+# 001Config.2=http://128.151.244.136:8080/OAIToolkit/oai-request.do,Y,Y
+# 001Config.NumberOfRows=2
+
+001Config.1=
+001Config.NumberOfRows=
+
+#-----------------------------------------
+# 003 Config Table
+#-----------------------------------------
+
+# Each row of table (repository) needs a separate line with its own 003Config number.
+# See documentation for additional information.
+# Separate column values with commas in this format:
+
+# 003Config.<row>=<Source repository_URL>,<MARC_Org_Code>,<Check_Bib_003>,<Overwrite_Bib_003>,
+# <Check_Holdings_003>,<Overwrite_Holdings_003>
+# Each row should have five commas.
+# Example:  
+# 003Config.1=http://128.151.244.135:8080/OAIToolkit/oai-request.do,NRU,Y,Y,Y,Y
+# 003Config.2=http://128.151.244.136:8080/OAIToolkit/oai-request.do,NRU,N,Y,N,Y
+# 003Config.NumberOfRows=2
+
+003Config.1=
+003Config.NumberOfRows=
 
 #-----------------------------------------
 # Bibliographic Record steps 

@@ -78,7 +78,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     // should we cache all the previous statuses for the entire repo?  default: no
     protected boolean cacheSetup = false;
-
+    
     /**
      * A list of services to run after this service's processing completes The
      * keys are the service IDs and the values are the IDs of the sets that
@@ -158,7 +158,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     public void setInputRecordCount(int inputRecordCount) {
     }
-
+    
     public void setup() {
     }
 
@@ -993,9 +993,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
     public boolean isMessageEnabled(int code, char type) {
         // don't use type as part of message retrieval...yet.
         if (type == RecordMessage.ERROR) { // default to enabled for error messages.
-            return config.getPropertyAsBoolean("error." + code + "enabled", true);
+            return config.getPropertyAsBoolean("error." + code + ".enabled", true);
         }
-        return config.getPropertyAsBoolean("error." + code + "enabled", false);
+        return config.getPropertyAsBoolean("error." + code + ".enabled", false);
     }
 
     // stuff you want to end up displaying in browse records, to make searching for known interesting data easier.

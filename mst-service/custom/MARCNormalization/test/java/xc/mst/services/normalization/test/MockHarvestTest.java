@@ -8,9 +8,13 @@
  */
 package xc.mst.services.normalization.test;
 
+import java.io.File;
+
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.services.MetadataService;
+import xc.mst.services.normalization.NormalizationService;
 
 public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
 
@@ -33,4 +37,15 @@ public class MockHarvestTest extends xc.mst.service.impl.test.MockHarvestTest {
     public void testHarvestOut() {
     }
 
+    public void startToFinish() throws Exception {
+    	// Allow tests to have their own overridden configuration settings
+    	MetadataService mst = this.getMetadataService();
+    	if (mst instanceof NormalizationService) {
+    		String configFilename = INPUT_FOLDER + "/" + System.getenv("test.folder") + "/service.xccfg";
+    		if ( (new File(configFilename)).exists()) {
+    			((NormalizationService) mst).loadConfiguration(getUtil().slurp(configFilename));
+    		}
+    	}
+    	super.startToFinish();
+    }
 }

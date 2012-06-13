@@ -1738,6 +1738,27 @@ public class MarcXmlManager {
     
     
     /**
+     * Sets a controlfield to the MARC XML record and returns the result.
+     *
+     * @param tag
+     *            The tag we're setting (i.e. 931)
+     * @param value
+     *            The value of the tag we're setting
+     */
+    public void setMarcXmlControlField(String tag, String value) {
+
+        if (log.isDebugEnabled())
+            log.debug("Setting a  controlfield to the MARC XML record with tag " + tag + " and value " + value + ".");
+     
+        for (Object o : marcXml.getChildren("controlfield", marcXml.getNamespace())) {
+            Element e = (Element) o;
+            if (tag.equals(e.getAttributeValue("tag"))) {
+                e.setText(value);
+            }
+        }
+    }
+
+    /**
      * Adds a new controlfield to the MARC XML record and returns the result.
      *
      * @param tag

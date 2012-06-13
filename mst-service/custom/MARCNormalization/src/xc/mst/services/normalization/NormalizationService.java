@@ -11,6 +11,8 @@ package xc.mst.services.normalization;
 
 import static xc.mst.services.normalization.NormalizationServiceConstants.*;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +24,8 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVStrategy;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
@@ -127,23 +131,18 @@ public class NormalizationService extends GenericMetadataService {
      */
     protected Format marc21 = null;
 
-    /**
-     * A list of errors to add to the record currently being processed
-     */
-    protected List<RecordMessage> errors = new ArrayList<RecordMessage>();
-
-    /**
-     * A list of errors to add to the output record
-     */
-    protected List<RecordMessage> outputRecordErrors = new ArrayList<RecordMessage>();
-
     protected XmlHelper xmlHelper = new XmlHelper();
 
     private HashMap<String, String> m_map_014keyValuePairs;
     //private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
 
     // private List<RegisteredData> m_recordRegisteredData = new ArrayList<RegisteredData>();
-
+    
+    private HashMap<String, HashMap<String, String>> orgCodeProperties001;
+    private HashMap<String, HashMap<String, String>> orgCodeProperties003;
+    
+    private String sourceRepositoryURL;
+    
     /**
      * Construct a NormalizationService Object
      * - note this is called by spring
@@ -168,6 +167,15 @@ public class NormalizationService extends GenericMetadataService {
         }
     }
 
+    /**
+     * Gets the URL of the service's Source Repository URL (OAI Server)
+     *
+     * @return This service's Source Repository URL
+     */
+    public String getSourceRepositoryURL() {
+    	return sourceRepositoryURL;
+    }
+    
     /**
      * Gets the status of the service
      *
@@ -200,7 +208,23 @@ public class NormalizationService extends GenericMetadataService {
             // throw new RuntimeException(e);
         }
     }
-
+    
+    @Override
+    public void process(Repository repo, Format inputFormat, Set inputSet,
+            Set outputSet) {
+    	
+    	// First, save this Repo's URL; different source URLs may be treated differently
+    	sourceRepositoryURL = repo.getProvider().getOaiProviderUrl();
+    	LOG.debug("Source Repository URL: " + sourceRepositoryURL);
+    	
+        try {
+            super.process(repo, inputFormat, inputSet, outputSet);
+        } catch (Exception e) {
+            LOG.error("NormalizationService, processing repo "+ repo.getName()+" failed.", e);
+            throw new RuntimeException(e);
+        }
+    }    
+    
     @Override
     public List<OutputRecord> process(InputRecord recordIn) {
 
@@ -253,10 +277,20 @@ public class NormalizationService extends GenericMetadataService {
 
     private List<OutputRecord> convertRecord(InputRecord record) {
 
-        // Empty the lists of errors because we're beginning to process a new record
-        errors = new ArrayList<RecordMessage>(); // are these largely or entirely unused?
-        outputRecordErrors = new ArrayList<RecordMessage>();
-
+    	// We need to know, early on, the record ID of the record we are currently processing.
+    	// If it's an "update" we can figure it out via its successor record; if not, we need to pre-create the new
+    	// record so we know what the record ID will eventually become.
+    	boolean newRecord = false;
+    	OutputRecord thisOutputRecord = null;
+    	if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
+            // Get the record which was processed from the record we just processed
+            // (there should only be one)
+            thisOutputRecord = record.getSuccessors().get(0);
+        } else {
+        	newRecord = true;
+        	thisOutputRecord = getRecordService().createRecord();
+        }
+    	
         // The list of records resulting from processing the incoming record
         ArrayList<OutputRecord> results = new ArrayList<OutputRecord>();
 
@@ -285,11 +319,24 @@ public class NormalizationService extends GenericMetadataService {
             // Run these steps only if the record is a bibliographic record
             String type = null;
             if ("abcdefghijkmnoprt".contains("" + leader06)) {
-
-                TimingLogger.start("bibsteps");
-
                 type = "b";
-                ((Record) record).setType(type);
+            } else if ("uvxy".contains("" + leader06)) {
+                type = "h";
+            }
+            ((Record) record).setType(type);
+            
+            if (getSourceOfOrganizationCode().equals("1")) {
+            	try {
+            		normalizedXml = processSourceOfRecord(normalizedXml, record);
+            	} catch (Exception e) {
+            		// Fatal error: do not process this record further
+            		return results; // results is empty
+            	}
+            }
+
+            if (type != null && type.equals("b")) {
+                TimingLogger.start("bibsteps");
+                
                 if (enabledSteps.getProperty(CONFIG_ENABLED_REMOVE_OCOLC_003, "0").equals("1"))
                     normalizedXml = removeOcolc003(normalizedXml);
 
@@ -418,11 +465,8 @@ public class NormalizationService extends GenericMetadataService {
             }
 
             // Run these steps only if the record is a holding record
-            if ("uvxy".contains("" + leader06)) {
+            if (type != null && type.equals("h")) {
                 TimingLogger.start("holdsteps");
-
-                type = "h";
-                ((Record) record).setType(type);
 
                 // Remove any invalid 014s
                 String valid014 = enabledSteps.getProperty(CONFIG_VALID_FIRST_CHAR_014, "");
@@ -451,12 +495,6 @@ public class NormalizationService extends GenericMetadataService {
             normalizedXml.set005();
 
             if (LOG.isDebugEnabled())
-                LOG.debug("Adding errors to the record.");
-
-            // TODO who / where does errors get added to?
-            record.setMessages(errors);
-
-            if (LOG.isDebugEnabled())
                 LOG.debug("Creating the normalized record.");
 
             // Get any records which were processed from the record we're processing
@@ -464,7 +502,7 @@ public class NormalizationService extends GenericMetadataService {
             // instead of inserting a new Record
 
             // If there was already a processed record for the record we just processed, update it
-            if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
+            if (! newRecord) {
                 TimingLogger.start("update");
 
                 if (LOG.isDebugEnabled())
@@ -472,16 +510,16 @@ public class NormalizationService extends GenericMetadataService {
 
                 // Get the record which was processed from the record we just processed
                 // (there should only be one)
-                OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
+                //OutputRecord oldNormalizedRecord = record.getSuccessors().get(0);
+                // Commenting-out above. We needed to discover this record earlier in this method.
+                OutputRecord oldNormalizedRecord = thisOutputRecord;
+                
                 oldNormalizedRecord.setMode(Record.JDOM_MODE);
                 oldNormalizedRecord.setFormat(marc21);
                 oldNormalizedRecord.setStatus(Record.ACTIVE);
 
                 // Set the XML to the new normalized XML
                 oldNormalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
-
-                // Add errors
-                oldNormalizedRecord.setMessages(outputRecordErrors);
 
                 // Add the normalized record after modifications were made to it to
                 // the list of modified records.
@@ -499,12 +537,13 @@ public class NormalizationService extends GenericMetadataService {
                     LOG.debug("Inserting the record since it was not processed from an older version of the record we just processed.");
 
                 // Create the normalized record
-                OutputRecord normalizedRecord = getRecordService().createRecord();
+                
+                //OutputRecord normalizedRecord = getRecordService().createRecord();
+                // Commenting-out above. We need to create this new OutputRecord sooner because some normalization steps may need to know the record ID ahead of time.
+                OutputRecord normalizedRecord = thisOutputRecord;
+                
                 normalizedRecord.setOaiXmlEl(normalizedXml.getModifiedMarcXml());
                 normalizedRecord.setFormat(marc21);
-
-                // Add errors
-                normalizedRecord.setMessages(outputRecordErrors);
 
                 // Insert the normalized record
 
@@ -559,15 +598,146 @@ public class NormalizationService extends GenericMetadataService {
             }
         } catch (Exception e) {
             LOG.error("An error occurred while normalizing the record with ID " + record.getId(), e);
-
-            if (LOG.isDebugEnabled())
-                LOG.debug("Adding errors to the record.");
-
-            record.setMessages(errors);
             return results;
         }
     }
+    
+    private MarcXmlManager processSourceOfRecord(MarcXmlManager marcXml, InputRecord record) throws Exception {
+    	String repoURL = getSourceRepositoryURL();
+    	LOG.info("In NormalizationService:processSourceOfRecord: Source Repo URL: " + repoURL);
+    	HashMap <String, String> the001Props = null;
+    	HashMap <String, String> the003Props = null;
+    	
+    	if (orgCodeProperties001.containsKey(repoURL)) {
+    		the001Props = orgCodeProperties001.get(repoURL);
+    	}
+    	if (orgCodeProperties003.containsKey(repoURL)) {
+    		the003Props = orgCodeProperties003.get(repoURL);
+    	}
+    	
+    	boolean isBib = record.getType().equals("b");
+    	boolean isHolding = record.getType().equals("h");
+    	
+    	// Process 001
+    	if (the001Props == null) {
+    		
+    	} else {
+    		String the001 = marcXml.getField001();
+    		boolean empty001 = (the001 == null || the001.length() < 1);
+    		if (isBib) {
+	    		String supply001 = the001Props.get("Supply_001_for_Bib");
+	    		if (supply001.equalsIgnoreCase("Y")) {
+	    			if (! empty001) {
+	    				addMessage(record, 110, RecordMessage.ERROR, MSG_UNEXPECTED_VALUE_001_FIELD);			    					
+	    				throw new Exception(MSG_UNEXPECTED_VALUE_001_FIELD);
+	    			}
+	    			marcXml.addMarcXmlControlField("001", String.valueOf(record.getId()));
+	    		} else if (supply001.equalsIgnoreCase("N")) {
+	    			
+	    			if (empty001) {
+	    				// do nothing
+	    			} else {
+	    				addMessage(record, 110, RecordMessage.ERROR, MSG_MISSING_001_FIELD);			    					
+	    				throw new Exception(MSG_MISSING_001_FIELD);
+	    			}
+	    		}    		
+    		} else if (isHolding) {
+    			String check001 = the001Props.get("Check_for_Holdings_001");
+    			if (check001.equalsIgnoreCase("Y")) {
+    				if (! empty001) {
+    					// do nothing
+    				} else {
+	    				addMessage(record, 110, RecordMessage.ERROR, MSG_MISSING_001_FIELD);			    					
+    					throw new Exception(MSG_MISSING_001_FIELD);
+    				}
+    			} else if (check001.equalsIgnoreCase("N")) {
+    				// do nothing
+    			}
+    		}
+    		
+    	}
+    	
+    		
+		// Process 003
+    	if (the003Props == null) {
+    		
+    	} else {
+    		String the003 = marcXml.getField003();
+    		boolean empty003 = (the003 == null || the003.length() < 1);
+    		String orgCode = the003Props.get("MARC_Org_Code");
+    		if (isBib) {
+	    		String check003 = the003Props.get("Check_Bib_003");
+    			if (check003.equalsIgnoreCase("0")) {
+    				// do nothing
+    			} else if (check003.equalsIgnoreCase("M")) {
+    				if (empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_003_FIELD);			    					
+    				} else {
+    					if (! the003.equalsIgnoreCase(orgCode)) {
+    	    				addMessage(record, 110, RecordMessage.WARN, MSG_INCORRECT_003_FIELD);			    						
+    					}
+    				}
+    				
+    			} else if (check003.equalsIgnoreCase("Y")) {
+	    			if (empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_003_FIELD);			
+	    			}
+	    		} else if (check003.equalsIgnoreCase("N")) {
+	    			if (! empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_UNEXPECTED_003_FIELD);				    				
+	    			}
+	    		}   
+    			
+    			String overwrite003 = the003Props.get("Overwrite_Bib_003");
+    			if (overwrite003.equalsIgnoreCase("Y")) {
+    				if (empty003) {
+    	    			marcXml.addMarcXmlControlField("003", orgCode);
+    				} else {
+    					marcXml.setMarcXmlControlField("003", orgCode);
+    				}
+    			} else if (overwrite003.equalsIgnoreCase("N")) {
+    				// do nothing
+    			}
+    		} else if (isHolding) {
+    			String check003 = the003Props.get("Check_Holdings_003");
+    			if (check003.equalsIgnoreCase("0")) {
+    				// do nothing
+    			} else if (check003.equalsIgnoreCase("N")) {
+    				if (! empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_UNEXPECTED_003_FIELD);				    				
+    				}
+    			} else if (check003.equalsIgnoreCase("Y")) {
+    				if (empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_003_FIELD);				    				
+    				}
+    			} else if (check003.equalsIgnoreCase("M")) {
+       				if (empty003) {
+	    				addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_003_FIELD);			    					
+    				} else {
+    					if (! the003.equalsIgnoreCase(orgCode)) {
+    	    				addMessage(record, 110, RecordMessage.WARN, MSG_INCORRECT_003_FIELD);			    						
+    					}
+    				}
+    				
+    			}
+    			
+    			String overwrite003 = the003Props.get("Overwrite_Holdings_003");
+    			if (overwrite003.equalsIgnoreCase("Y")) {
+    				if (empty003) {
+    	    			marcXml.addMarcXmlControlField("003", orgCode);
+    				} else {
+    					marcXml.setMarcXmlControlField("003", orgCode);
+    				}
+    			} else if (overwrite003.equalsIgnoreCase("N")) {
+    				// do nothing
+    			}
 
+    		}
+    	}
+    		    	
+    	return marcXml;
+    }
+    
     /**
      * If the 003's value is "OCoLC", remove it.
      *
@@ -2657,12 +2827,145 @@ public class NormalizationService extends GenericMetadataService {
             throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
         else if (getOrganizationCode() == null)
             throw new ServiceValidationException("Service configuration file Organization Code error:  Please set an OrganizationCode.");
-        else if (getOrganizationCode().equals("CHANGE_ME"))
-            throw new ServiceValidationException("Service configuration file Organization Code error:  Please change CHANGE_ME to a valid OrganizationCode.");
+        else if (getSourceOfOrganizationCode().equals("1"))
+        {
+        	setupOrganizationCodeProperties();
+        } 
+        else if (getSourceOfOrganizationCode().equals("0"))
+        {
+        	if (getOrganizationCode().equals("CHANGE_ME"))
+            	throw new ServiceValidationException("Service configuration file Organization Code error:  Please change CHANGE_ME to a valid OrganizationCode.");
+        }
         else if (locationLimitNameProperties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
 
     }
+
+    protected String getSourceOfOrganizationCode() {
+        return enabledSteps.getProperty("SourceOfMARCOrganizationCode");
+    }
+    
+    protected void setupOrganizationCodeProperties() throws ServiceValidationException {
+    	int num001Properties = 0;
+    	boolean valid = true;
+    	try {
+    		num001Properties = Integer.parseInt(enabledSteps.getProperty("001Config.NumberOfRows"));
+    	} catch (NumberFormatException nfe) {
+    		valid = false;
+    	}
+    	if (num001Properties < 1) valid = false;
+    	if (! valid) {
+    		throw new ServiceValidationException("Service configuration file Organization Code error: 001Config.NumberOfRows must be an integer value greater than zero.");
+    	}
+    	orgCodeProperties001 = new HashMap<String, HashMap<String, String>>(num001Properties);
+    	// # 001Config.<row>=<Source_repository_URL>,<Supply_001_for_Bib>,<Check_for_Holdings_001>
+    	HashMap <String, String> uniqueURLs = new HashMap <String, String> (num001Properties);
+    	for (int i=1; i<= num001Properties; i++) {
+    		String row = enabledSteps.getProperty("001Config." + i);
+    		CSVParser csv = new CSVParser(new StringReader(row), CSVStrategy.EXCEL_STRATEGY);
+    		try {
+				String values[] = csv.getLine();
+				if (values.length != 3) {
+					throw new ServiceValidationException("Service configuration file Organization Code error: Couldn't parse 001Config row: expecting 3 values separated by commas.");					
+				}
+				
+				if (uniqueURLs.containsKey(values[0])) {
+					throw new ServiceValidationException("Service configuration file Organization Code error: <Source_repository_URLs> must all be unique.");										
+				}
+				uniqueURLs.put(values[0], values[0]);
+				
+				HashMap<String, String> hm = new HashMap<String, String> (2);
+				
+				String [] yn = { "Y", "N" };
+				ValidateSOCConfig(true, "Supply_001_for_Bib", values[1], yn);
+				hm.put("Supply_001_for_Bib", values[1]);
+				
+				ValidateSOCConfig(true, "Check_for_Holdings_001", values[2], yn);
+				hm.put("Check_for_Holdings_001", values[2]);
+				
+				orgCodeProperties001.put(values[0], hm);
+			} catch (IOException e) {
+				throw new ServiceValidationException("Service configuration file Organization Code error: Couldn't parse 001Config row: " + e.getMessage());
+			}    		
+    	}
+    	
+    	int num003Properties = 0;
+    	try {
+    		num003Properties = Integer.parseInt(enabledSteps.getProperty("003Config.NumberOfRows"));
+    	} catch (NumberFormatException nfe) {
+    		valid = false;
+    	}
+    	if (num003Properties < 1) valid = false;
+    	if (! valid) {
+    		throw new ServiceValidationException("Service configuration file Organization Code error: 003Config.NumberOfRows must be an integer value greater than zero.");    		
+    	}
+    	orgCodeProperties003 = new HashMap<String, HashMap<String, String>>(num003Properties);
+    	// # 003Config.<row>=<Source repository_URL>,<MARC_Org_Code>,<Check_Bib_003>,<Overwrite_Bib_003>,<Check_Holdings_003>,<Overwrite_Holdings_003>
+    	uniqueURLs = new HashMap <String, String> (num003Properties);
+    	for (int i=1; i<= num003Properties; i++) {
+    		String row = enabledSteps.getProperty("003Config." + i);
+    		CSVParser csv = new CSVParser(new StringReader(row), CSVStrategy.EXCEL_STRATEGY);
+    		try {
+				String values[] = csv.getLine();
+				if (values.length != 6) {
+					throw new ServiceValidationException("Service configuration file Organization Code error: Couldn't parse 003Config row: expecting 6 values separated by commas.");					
+				}
+				
+				if (uniqueURLs.containsKey(values[0])) {
+					throw new ServiceValidationException("Service configuration file Organization Code error: <Source_repository_URLs> must all be unique.");										
+				}
+				uniqueURLs.put(values[0], values[0]);
+				
+				HashMap <String, String> hm = new HashMap<String, String> (5);
+				
+				if (values[1].length() < 1) ValidateSOCConfig(false, "MARC_Org_Code", null, null);
+				hm.put("MARC_Org_Code", values[1]);
+				
+				String [] ynm0 = { "Y", "N", "M", "0" };
+				ValidateSOCConfig(false, "Check_Bib_003", values[2], ynm0);
+				hm.put("Check_Bib_003", values[2]);
+				
+				String [] yn = { "Y", "N" };
+				ValidateSOCConfig(false, "Overwrite_Bib_003", values[3], yn);
+				hm.put("Overwrite_Bib_003", values[3]);
+				
+				ValidateSOCConfig(false, "Check_Holdings_003", values[4], ynm0);
+				hm.put("Check_Holdings_003", values[4]);
+				
+				ValidateSOCConfig(false, "Overwrite_Holdings_003", values[5], yn);
+				hm.put("Overwrite_Holdings_003", values[5]);				
+				
+				orgCodeProperties003.put(values[0], hm);
+			} catch (IOException e) {
+				throw new ServiceValidationException("Service configuration file Organization Code error: Couldn't parse 003Config row: " + e.getMessage());
+			}    		
+    	}
+    	
+    	
+    	
+    }
+    
+    private void ValidateSOCConfig(boolean is001, String param, String val, String[] valids) throws ServiceValidationException {
+    	String fatalError = is001 ? "001" : "003";
+    	fatalError += "Config is set up incorrectly for parameter " + param;
+    	
+		if (val == null || valids == null) {
+			throw new ServiceValidationException (fatalError);
+		}
+		
+		boolean isValid = false;
+		for (String valid : valids) {
+			if (valid.equalsIgnoreCase(val)) {
+				isValid = true;
+				break;
+			}
+		}
+		
+		if (! isValid) {
+			throw new ServiceValidationException (fatalError);			
+		}
+    }
+
 
     protected String getOrganizationCode() {
         return enabledSteps.getProperty("OrganizationCode");
