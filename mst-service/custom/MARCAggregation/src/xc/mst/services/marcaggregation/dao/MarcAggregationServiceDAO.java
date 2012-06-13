@@ -67,8 +67,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String size_field               = "size";
 
 
-    //TODO the table needs to be able to grow, does it?  i.e. with each call is prior data preserved?
-    //     on the flip side, if so, how does old data get removed that needs to be?
     @SuppressWarnings("unchecked")
     public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
 
@@ -93,13 +91,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     if (list == null) {
                         continue;
                     }
-                    final MutableInt j2 = new MutableInt(0);
-
                     if (j.intValue() > 0) {
                         os.write(newLineBytes);
                     } else {
                         j.increment();
                     }
+
+                    final MutableInt j2 = new MutableInt(0);
                     List<String[]> strList = (List<String[]>) list;
                     LOG.debug("insert: " + tableName + ".size(): " + strList.size());
                     if (strList != null && strList.size() > 0) {
@@ -110,6 +108,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                     } else {
                                         j2.increment();
                                     }
+                                    _s[1] = "'"+_s[1] + "'" ;
+                                    _s[0] = "'"+_s[0] + "'" ;
+
                                     os.write(_s[1].getBytes());
                                     os.write(tabBytes);
                                     os.write(_s[0].getBytes());
@@ -132,71 +133,87 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             TimingLogger.start("will replace");
             replaceIntoTable(tableName, dbLoadFileStr);
             TimingLogger.stop("will replace");
-        }
-        catch (Exception e4) {
+
+        } catch (Exception e4) {
             LOG.error("*** problem with replaceIntoTable data",e4);
             getUtil().throwIt(e4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
         }
-
-        TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
     }
 
     @SuppressWarnings("unchecked")
     public void persist1StrMatchpointMaps(Map<Long, List<String>> inputId2matcherMap, String tableName) {
         TimingLogger.start("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+        TimingLogger.start("prepare to write");
 
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            String dbLoadFileStr = "";
-            Long id = (Long) keyObj;
-            Object list = inputId2matcherMap.get(id);
+        String dbLoadFileStr = getDbLoadFileStr();
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
 
-            try {
-                if (list == null) {
-                    continue;
-                }
-                dbLoadFileStr = getDbLoadFileStr();
+        try {
+            final MutableInt j = new MutableInt(0);
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            for (Object keyObj : inputId2matcherMap.keySet()) {
+                Long id = (Long) keyObj;
+                Object list = inputId2matcherMap.get(id);
 
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt _j = new MutableInt(0);
+                try {
+                    if (list == null) {
+                        continue;
+                    }
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
 
-                List<String> strList = (List<String>) list;
-                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
-                if (strList != null && strList.size() > 0) {
-                    for (String _s: strList) {
-                        if (StringUtils.isEmpty(_s)) {
-                            continue;
-                        }
-                        try {
-                            // need to loop through all strings associated with id!
-                            //
-                            // write the newline after we have written a line, but not at the end of the last line
-                            if (_j.intValue() > 0) {
-                                os.write(newLineBytes);
-                            } else {
-                                _j.increment();
+                    final byte[] idBytes = String.valueOf(id).getBytes();
+                    final MutableInt _j = new MutableInt(0);
+
+                    List<String> strList = (List<String>) list;
+                    LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                    if (strList != null && strList.size() > 0) {
+                        for (String _s: strList) {
+                            if (StringUtils.isEmpty(_s)) {
+                                continue;
                             }
-                            os.write(_s.getBytes());
-                            os.write(tabBytes);
-                            os.write(idBytes);
-                        } catch (Exception e) {
-                            LOG.error("problem with data - id="+id,e);
-                            getUtil().throwIt(e);
+                            try {
+                                // need to loop through all strings associated with id!
+                                //
+                                // write the newline after we have written a line, but not at the end of the last line
+                                if (_j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    _j.increment();
+                                }
+                                _s = "'"+_s + "'" ;
+                                os.write(_s.getBytes());
+                                os.write(tabBytes);
+                                os.write(idBytes);
+                            } catch (Exception e) {
+                                LOG.error("problem with data - id="+id,e);
+                                getUtil().throwIt(e);
+                            }
                         }
                     }
+                } catch (Throwable t) {
+                    LOG.error("problem with replaceIntoTable data - id="+id,t);
+                    getUtil().throwIt(t);
                 }
-                os.close();
-                TimingLogger.start("will replace");
-                replaceIntoTable(tableName, dbLoadFileStr);
-                TimingLogger.stop("will replace");
-            } catch (Throwable t) {
-                LOG.error("problem with replaceIntoTable data - id="+id,t);
-                getUtil().throwIt(t);
-            } finally {
-                TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
             }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
+
+        } catch (Throwable t4) {
+            LOG.error("*** problem with replaceIntoTable data",t4);
+            getUtil().throwIt(t4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
         }
     }
 
@@ -295,6 +312,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
+    //  TODO this does not appear to be in use, if you do use it, fix it such that you write all values in inputId2matcherMap in one file write.
+    //
     public void persistLongStrMatchpointMaps(TLongLongHashMap inputId2numMap, Map<Long, String> inputId2matcherMap, String tableName) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistLongStrMaps");
@@ -357,6 +376,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
+    //  TODO this does not appear to be in use, if you do use it, fix it such that you write all values in inputId2matcherMap in one file write.
+    //
     public void persistOneStrMatchpointMaps(Map<Long, String> inputId2matcherMap, String tableName) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persistOneStrMaps");
