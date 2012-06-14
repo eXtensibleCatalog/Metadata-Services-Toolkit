@@ -11,10 +11,10 @@
     <marc:controlfield tag="001">3932220</marc:controlfield>
     <marc:controlfield tag="003">NRU</marc:controlfield>
     <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
-    <marc:controlfield tag="006">p        d            a</marc:controlfield>
-    <marc:controlfield tag="006">p        d            b</marc:controlfield>
+    <marc:controlfield tag="006">p    a   d             </marc:controlfield>
+    <marc:controlfield tag="006">p    b   d             </marc:controlfield>
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
-    <marc:controlfield tag="008">080722s2007    enka   cs     001 0 eng d</marc:controlfield>
+    <marc:controlfield tag="008">08072cs2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
       <marc:subfield code="a">should have a 945 value of Pre-adolescent (based on c)</marc:subfield>
       <marc:subfield code="b">The 006s are invalid because offset 00 is not a</marc:subfield>
@@ -26,10 +26,10 @@
     <marc:controlfield tag="001">3932221</marc:controlfield>
     <marc:controlfield tag="003">NRU</marc:controlfield>
     <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
-    <marc:controlfield tag="006">a        d            a</marc:controlfield>
-    <marc:controlfield tag="006">p        d            b</marc:controlfield>
+    <marc:controlfield tag="006">a    a   d             </marc:controlfield>
+    <marc:controlfield tag="006">p    b   d             </marc:controlfield>
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
-    <marc:controlfield tag="008">080722s2007    enka   cs     001 0 eng d</marc:controlfield>
+    <marc:controlfield tag="008">08072cs2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
       <marc:subfield code="a">should have a 945 value of Pre-adolescent (based on c)</marc:subfield>
       <marc:subfield code="b">The first 006 is valid - should have a 945 value of Preschool (a)</marc:subfield>
@@ -41,10 +41,10 @@
     <marc:controlfield tag="001">3932222</marc:controlfield>
     <marc:controlfield tag="003">NRU</marc:controlfield>
     <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
-    <marc:controlfield tag="006">p        d            a</marc:controlfield>
-    <marc:controlfield tag="006">p        d            b</marc:controlfield>
+    <marc:controlfield tag="006">p    a   d             </marc:controlfield>
+    <marc:controlfield tag="006">p    b   d             </marc:controlfield>
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
-    <marc:controlfield tag="008">080722s2007    enka   cs     001 0 eng d</marc:controlfield>
+    <marc:controlfield tag="008">08072cs2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
       <marc:subfield code="a">should have no 945s set whatsoever</marc:subfield>
       <marc:subfield code="b">006s all invalid</marc:subfield>
@@ -56,11 +56,11 @@
     <marc:controlfield tag="001">3932223</marc:controlfield>
     <marc:controlfield tag="003">NRU</marc:controlfield>
     <marc:controlfield tag="005">20080910124013.0</marc:controlfield>
-    <marc:controlfield tag="006">p        d            a</marc:controlfield>
-    <marc:controlfield tag="006">p        d            b</marc:controlfield>
-    <marc:controlfield tag="006">a        d            e</marc:controlfield>
+    <marc:controlfield tag="006">p    a   d             </marc:controlfield>
+    <marc:controlfield tag="006">p    b   d             </marc:controlfield>
+    <marc:controlfield tag="006">a    e   d             </marc:controlfield>
     <marc:controlfield tag="007">cr zn|</marc:controlfield>
-    <marc:controlfield tag="008">080722s2007    enka   cs     001 0 eng d</marc:controlfield>
+    <marc:controlfield tag="008">08072cs2007    enka    s     001 0 eng d</marc:controlfield>
     <marc:datafield tag="040" ind1=" " ind2=" ">
       <marc:subfield code="a">third 006 is valid - should have a 945 set to Adult (e)</marc:subfield>
     </marc:datafield>

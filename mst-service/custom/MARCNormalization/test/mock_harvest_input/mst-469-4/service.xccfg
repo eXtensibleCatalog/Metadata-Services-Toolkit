@@ -1,0 +1,12 @@
+
+#-----------------------------------------
+ENABLED STEPS
+#-----------------------------------------
+
+SourceOfMARCOrganizationCode=1  
+
+001Config.1=file://../test/mock_harvest_input/mst-469-4,N,Y
+001Config.NumberOfRows=1
+
+003Config.1=file://../test/mock_harvest_input/mst-469-4,UIUdb,N,Y,N,Y
+003Config.NumberOfRows=1

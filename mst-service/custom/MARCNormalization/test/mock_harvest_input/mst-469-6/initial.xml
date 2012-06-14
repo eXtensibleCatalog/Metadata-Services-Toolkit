@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2012-06-07T16:43:14Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21" set="hathitrust">http://quod.lib.umich.edu/cgi/o/oai/oai</request>
+  <ListRecords>
+<record><header><identifier>oai:quod.lib.umich.edu:MIU01-000053070</identifier><datestamp>2008-12-19T18:45:47Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00203cx  a22000973  4500</marc:leader>
+    <marc:controlfield tag="004">115575</marc:controlfield>
+    <marc:controlfield tag="005">19961209124035.0</marc:controlfield>
+    <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+    <marc:datafield tag="852" ind1="0" ind2=" ">
+      <marc:subfield code="b">RheesStack</marc:subfield>
+      <marc:subfield code="h">DC36.9 .C37</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record>
+<record><header><identifier>oai:quod.lib.umich.edu:MIU01-000053071</identifier><datestamp>2008-12-19T18:45:47Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00203cx  a22000973  4500</marc:leader>
+    <marc:controlfield tag="001">140116</marc:controlfield>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="004">115575</marc:controlfield>
+    <marc:controlfield tag="005">19961209124035.0</marc:controlfield>
+    <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+    <marc:datafield tag="852" ind1="0" ind2=" ">
+      <marc:subfield code="b">RheesStack</marc:subfield>
+      <marc:subfield code="h">DC36.9 .C37</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record>
+<record><header><identifier>oai:quod.lib.umich.edu:MIU01-000053072</identifier><datestamp>2008-12-19T18:45:47Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00203cx  a22000973  4500</marc:leader>
+    <marc:controlfield tag="001">140117</marc:controlfield>
+    <marc:controlfield tag="004">115575</marc:controlfield>
+    <marc:controlfield tag="005">19961209124035.0</marc:controlfield>
+    <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+    <marc:datafield tag="852" ind1="0" ind2=" ">
+      <marc:subfield code="b">RheesStack</marc:subfield>
+      <marc:subfield code="h">DC36.9 .C37</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record>
+<record><header><identifier>oai:quod.lib.umich.edu:MIU01-000053073</identifier><datestamp>2008-12-19T18:45:47Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+  <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+    <marc:leader>00203cx  a22000973  4500</marc:leader>
+    <marc:controlfield tag="003">NRU</marc:controlfield>
+    <marc:controlfield tag="004">115575</marc:controlfield>
+    <marc:controlfield tag="005">19961209124035.0</marc:controlfield>
+    <marc:controlfield tag="008">9612090u    0   4001uu   0000000</marc:controlfield>
+    <marc:datafield tag="852" ind1="0" ind2=" ">
+      <marc:subfield code="b">RheesStack</marc:subfield>
+      <marc:subfield code="h">DC36.9 .C37</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+</metadata></record>
+<record><header><identifier>oai:quod.lib.umich.edu:MIU01-000053074</identifier><datestamp>2008-12-19T18:45:48Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>     nas a22003611  4500</marc:leader>
+<marc:controlfield tag="005">19930702000000.0</marc:controlfield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm49948470</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="110" ind1="2" ind2=" ">
+<marc:subfield code="a">National Collegiate Athletic Association.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="1" ind2="0">
+<marc:subfield code="a">Proceedings of the ... annual convention of the National Collegiate Athletic Association.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">[New York?],</marc:subfield>
+<marc:subfield code="b">The Association,</marc:subfield>
+<marc:subfield code="c">1906-</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">v.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="610" ind1="2" ind2="0">
+<marc:subfield code="a">National Collegiate Athletic Association</marc:subfield>
+<marc:subfield code="x">Congresses.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="650" ind1=" " ind2="0">
+<marc:subfield code="a">College sports</marc:subfield>
+<marc:subfield code="z">United States x Congresses.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="z">1913-1920</marc:subfield>
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015039707115</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="z">no.28 1907,1909,1912</marc:subfield>
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015039707107</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000282519</identifier><datestamp>2008-12-19T18:45:56Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>     nam a22002531  4500</marc:leader>
+<marc:controlfield tag="005">19880718000000.0</marc:controlfield>
+<marc:datafield tag="010" ind1=" " ind2=" ">
+<marc:subfield code="a">02019719</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm02125161</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="050" ind1="0" ind2=" ">
+<marc:subfield code="a">JK691</marc:subfield>
+<marc:subfield code="b">.B52</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="1" ind2=" ">
+<marc:subfield code="a">Bernard, George S.,</marc:subfield>
+<marc:subfield code="d">1837-1912.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="1" ind2="0">
+<marc:subfield code="a">Civil service reform versus the spoils system.</marc:subfield>
+<marc:subfield code="b">The merit plan for the filling of public offices advocated in a series of articles originally published in a Virginia journal.</marc:subfield>
+<marc:subfield code="c">By Geo. S. Bernard.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">New York,</marc:subfield>
+<marc:subfield code="b">J. B. Alden,</marc:subfield>
+<marc:subfield code="c">1885.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">x, [11]-128 p.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="650" ind1=" " ind2="0">
+<marc:subfield code="a">Civil service reform</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015028710617</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000289049</identifier><datestamp>2008-12-19T18:45:56Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>00000nam a2200241 a 4500</marc:leader>
+<marc:controlfield tag="005">20081210085206.0</marc:controlfield>
+<marc:datafield tag="010" ind1=" " ind2=" ">
+<marc:subfield code="a">a 20000448//r452</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm63008302</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="050" ind1="0" ind2=" ">
+<marc:subfield code="a">E158</marc:subfield>
+<marc:subfield code="b">.W203</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="1" ind2=" ">
+<marc:subfield code="a">Williams, W.</marc:subfield>
+<marc:subfield code="q">(Wellington)</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="1" ind2="0">
+<marc:subfield code="a">Appleton's railroad and steamboat companion :</marc:subfield>
+<marc:subfield code="b">being a traveller's guide through the United States of America, Canada, New Brunswick, and Nova Scotia /</marc:subfield>
+<marc:subfield code="c">by W. Williams.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">New York, N.Y. :</marc:subfield>
+<marc:subfield code="b">D. Appleton &amp; Co.,</marc:subfield>
+<marc:subfield code="c">1848.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">313 p. :</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="651" ind1=" " ind2="0">
+<marc:subfield code="a">United States</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="651" ind1=" " ind2="0">
+<marc:subfield code="a">New England</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="651" ind1=" " ind2="0">
+<marc:subfield code="a">Canada</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="650" ind1=" " ind2="0">
+<marc:subfield code="a">Railroad travel</marc:subfield>
+<marc:subfield code="z">United States.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015016751375</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000331524</identifier><datestamp>2008-12-19T18:45:58Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>     nam a22002411  4500</marc:leader>
+<marc:controlfield tag="001">999888777</marc:controlfield>
+<marc:controlfield tag="005">19930513000000.0</marc:controlfield>
+<marc:datafield tag="010" ind1=" " ind2=" ">
+<marc:subfield code="a">12039399</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm04090062</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="050" ind1="0" ind2=" ">
+<marc:subfield code="a">E176.1</marc:subfield>
+<marc:subfield code="b">.T46</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="1" ind2=" ">
+<marc:subfield code="a">Thompson, Richard W.</marc:subfield>
+<marc:subfield code="q">(Richard Wigginton),</marc:subfield>
+<marc:subfield code="d">1809-1900.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="1" ind2="0">
+<marc:subfield code="a">Recollections of sixteen presidents from Washington to Lincoln,</marc:subfield>
+<marc:subfield code="c">by Richard W. Thompson.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">Indianapolis,</marc:subfield>
+<marc:subfield code="b">The Bowen-Merrill company,</marc:subfield>
+<marc:subfield code="c">1894.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">2 v.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="650" ind1=" " ind2="0">
+<marc:subfield code="a">Presidents</marc:subfield>
+<marc:subfield code="z">United States</marc:subfield>
+<marc:subfield code="x">Biography</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="651" ind1=" " ind2="0">
+<marc:subfield code="a">United States</marc:subfield>
+<marc:subfield code="x">Politics and government</marc:subfield>
+<marc:subfield code="y">1783-1865</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="z">v.1</marc:subfield>
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015033869507</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="z">v.2</marc:subfield>
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015013244440</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000429516</identifier><datestamp>2008-12-19T18:46:02Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>00000nam a22002411  4500</marc:leader>
+<marc:controlfield tag="003">XYZ</marc:controlfield>
+<marc:controlfield tag="005">20081211155913.0</marc:controlfield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm23621227</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="041" ind1="1" ind2=" ">
+<marc:subfield code="a">dut</marc:subfield>
+<marc:subfield code="h">grc</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="0" ind2=" ">
+<marc:subfield code="a">Euclid.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="240" ind1="1" ind2="0">
+<marc:subfield code="a">Elements</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="0" ind2="3">
+<marc:subfield code="a">De zes eerste, elfde en twaalfde boeken Euclidis ...</marc:subfield>
+<marc:subfield code="b">Mitsgaders een aanhang, vervattende de transformatien, additien, substractien, multiplicatien en divisien in figuren.</marc:subfield>
+<marc:subfield code="c">Alles op een korte en wiskonstige manier gedemonstreert, door Pieter Warius.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="250" ind1=" " ind2=" ">
+<marc:subfield code="a">Den vierden druk.</marc:subfield>
+<marc:subfield code="b">Verbetert en van voorgaande drukfouten gezuyvert.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">Amsterdam,</marc:subfield>
+<marc:subfield code="b">By J. van Keulen,</marc:subfield>
+<marc:subfield code="c">1763.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">7 p. L., 292 p.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="650" ind1=" " ind2="0">
+<marc:subfield code="a">Geometry</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015063875366</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000430652</identifier><datestamp>2008-12-19T18:46:02Z</datestamp><setSpec>hathitrust:pd</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>     nam a22002771  4500</marc:leader>
+<marc:controlfield tag="001">999888778</marc:controlfield>
+<marc:controlfield tag="003">XYZ</marc:controlfield>
+<marc:controlfield tag="005">19880718000000.0</marc:controlfield>
+<marc:datafield tag="010" ind1=" " ind2=" ">
+<marc:subfield code="a">70124926//r862</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="020" ind1=" " ind2=" ">
+<marc:subfield code="a">0306710382</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm00200935</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="050" ind1="0" ind2=" ">
+<marc:subfield code="a">F67</marc:subfield>
+<marc:subfield code="b">.H9806 1972</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="082" ind1=" " ind2=" ">
+<marc:subfield code="a">974.4/02/0924</marc:subfield>
+<marc:subfield code="a">B</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="1" ind2=" ">
+<marc:subfield code="a">Hosmer, James Kendall,</marc:subfield>
+<marc:subfield code="d">1834-1927.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="0" ind2="4">
+<marc:subfield code="a">The life of Thomas Hutchinson, royal governor of the province of Massachusetts Bay.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">New York,</marc:subfield>
+<marc:subfield code="b">Da Capo Press,</marc:subfield>
+<marc:subfield code="c">1972 [c1896]</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">xxviii, 453 p.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="600" ind1="1" ind2="0">
+<marc:subfield code="a">Hutchinson, Thomas,</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015022216322</marc:subfield>
+<marc:subfield code="r">pd</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+<record>
+<header><identifier>oai:quod.lib.umich.edu:MIU01-000451306</identifier><datestamp>2008-12-19T18:46:03Z</datestamp><setSpec>hathitrust:pdus</setSpec></header><metadata>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+<marc:leader>     nam a22002051  4500</marc:leader>
+<marc:controlfield tag="003">NRU</marc:controlfield>
+<marc:controlfield tag="005">19921026000000.0</marc:controlfield>
+<marc:datafield tag="035" ind1=" " ind2=" ">
+<marc:subfield code="a">(OCoLC)ocm03967141</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="100" ind1="1" ind2=" ">
+<marc:subfield code="a">Stonebraker, J. Clarence.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="245" ind1="1" ind2="4">
+<marc:subfield code="a">The unwritten South.</marc:subfield>
+<marc:subfield code="b">Cause, progress and result of the civil war. Relics of hidden truth after forty years.</marc:subfield>
+<marc:subfield code="c">By J. Clarence Stonebraker.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="250" ind1=" " ind2=" ">
+<marc:subfield code="a">7th ed.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="260" ind1=" " ind2=" ">
+<marc:subfield code="a">[n.p.,</marc:subfield>
+<marc:subfield code="c">c1908]</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="300" ind1=" " ind2=" ">
+<marc:subfield code="a">250 p., 1 L.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="651" ind1=" " ind2="0">
+<marc:subfield code="a">Confederate States of America</marc:subfield>
+<marc:subfield code="x">History.</marc:subfield>
+</marc:datafield>
+<marc:datafield tag="856" ind1="4" ind2=" ">
+<marc:subfield code="u">http://hdl.handle.net/2027/mdp.39015005647626</marc:subfield>
+<marc:subfield code="r">pdus</marc:subfield>
+<marc:subfield code="x">eContent</marc:subfield>
+</marc:datafield>
+</marc:record>
+</metadata>
+</record>
+</ListRecords>
+</OAI-PMH>

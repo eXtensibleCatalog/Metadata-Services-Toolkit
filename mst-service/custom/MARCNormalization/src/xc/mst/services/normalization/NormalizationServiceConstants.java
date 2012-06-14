@@ -21,6 +21,17 @@ public class NormalizationServiceConstants {
     // *******************************************************************
 
     /**
+     * Parameter for looking up the whether or not the SourceOfMARCOrganizationCode normalization step is enabled.
+     */
+    public static final String CONFIG_SOURCE_OF_MARC_ORG = "SourceOfMARCOrganizationCode";
+    public static final String MSG_MISSING_001_FIELD = "Missing 001 field";
+    public static final String MSG_UNEXPECTED_VALUE_001_FIELD = "Unexpected value in 001";
+    public static final String MSG_MISSING_003_FIELD = "Missing 003 field";
+    public static final String MSG_UNEXPECTED_003_FIELD = "Unexpected 003 field";
+    public static final String MSG_INCORRECT_003_FIELD = "Incorrect value in 003 field";
+    
+    
+    /**
      * Parameter for looking up the whether or not the RemoveOCoLC003 normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_REMOVE_OCOLC_003 = "RemoveOCoLC003";
