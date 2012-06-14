@@ -1415,10 +1415,10 @@ public class NormalizationService extends GenericMetadataService {
 
     /**
      * If leader 06 contains certain values, create a field with the intended audience from the
-     * 008 offset 22 value.
+     * 008 offset 05 value.
      *
      * If 006 offset 00 contains certain values, create a field with the intended audience from the
-     * 006 offset 22 value
+     * 006 offset 05 value
      *
      * @param marcXml
      *            The original MARCXML record
@@ -1437,16 +1437,19 @@ public class NormalizationService extends GenericMetadataService {
         if (field008) {
             // The character at offset 6 of the leader field
         	String leader = marcXml.getLeader();
-            char leader06 = (leader != null && leader.length() >= 6 ? leader.charAt(6) : ' ');
+            char leader06 = (leader != null && leader.length() >= 7 ? leader.charAt(6) : ' ');
             switch (leader06) {
             case 'a':
             case 'c':
             case 'd':
             case 'g':
+            case 'i':
+            case 'j':
             case 'k':
             case 'm':
             case 'o':
             case 'r':
+            case 't':
             	flds.add(marcXml.getField008());
             }
         }
@@ -1458,35 +1461,34 @@ public class NormalizationService extends GenericMetadataService {
                 case 'c':
                 case 'd':
                 case 'g':
+                case 'i':
+                case 'j':
                 case 'k':
                 case 'm':
                 case 'o':
                 case 'r':
+                case 't':
                 	flds.add(fld);
                 }
         	}
         }
 
         for (String fld: flds) {
-            // The character at offset 22 of the 008 field
-            char offset22 = (fld != null && fld.length() >= 23 ? fld.charAt(22) : ' ');
+            // The character at offset 05 of the 006/008 field
+            char offset05 = (fld != null && fld.length() >= 6 ? fld.charAt(5) : ' ');
 
-            // Pull the audience mapping from the configuration file based on the 008 offset 22 value.
-            String audience = audienceFrom006_008Properties.getProperty("" + offset22, null);
+            // Pull the audience mapping from the configuration file based on the 006/008 offset 05 value.
+            String audience = audienceFrom006_008Properties.getProperty("" + offset05, null);
 
-            // If there was no mapping for the provided 008 offset 22, we can't create the field. In this case return the unmodified MARCXML
+            // If there was no mapping for the provided 006/008 offset 05, we can't create the field. In this case return the unmodified MARCXML
             if (audience == null) {
                 if (LOG.isDebugEnabled())
-                    LOG.debug("Cannot find an audience mapping for the 006/008 offset 22 value of " + offset22 + ", returning the unmodified MARCXML.");
+                    LOG.debug("Cannot find an audience mapping for the 006/008 offset 05 value of " + offset05 + ", returning the unmodified MARCXML.");
 
                 continue;
-            } else if (offset22 != ' ' && (offset22 != 'a' && offset22 != 'b' && offset22 != 'c' && offset22 != 'd' && offset22 != 'e' && offset22 != 'f' && offset22 != 'g' && offset22 != 'j' && offset22 != '|' && offset22 != '#')) {
-                addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO);
-                // addMessage(marcXml.getInputRecord(), 105, RecordMessage.INFO, "Invalid value in Control Field 008 offset 22: " + field008offset22);
-            }
-
+            } 
             if (LOG.isDebugEnabled())
-                LOG.debug("Found the audience " + audience + " for the 006/008 offset 22 value of " + offset22 + ".");
+                LOG.debug("Found the audience " + audience + " for the 006/008 offset 05 value of " + offset05 + ".");
 
             // Add a MARCXML field to store the audience
             marcXml.addMarcXmlField(FIELD_9XX_AUDIENCE, audience);
@@ -1497,8 +1499,8 @@ public class NormalizationService extends GenericMetadataService {
     }
 
     /**
-     * If leader 06 contains certain values, create a field with the intended audience from the
-     * 008 offset 22 value.
+     * If Leader/06 (in the case of 008) or 006/00 contains certain values, create a field with the "Form of Item" from the
+     * appropriate 006 and 008 offsets.
      *
      * @param marcXml
      *            The original MARCXML record
@@ -1508,54 +1510,118 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering formFrom006_008 normalization step.");
 
-        ArrayList<String> flds = new ArrayList<String>();
+        ArrayList<String> flds006 = new ArrayList<String>();
+        ArrayList<String> flds008 = new ArrayList<String>();
 
+        // There will only ever by a single 008
         if (field008) {
-        	flds.add(marcXml.getField008());
+        	flds008.add(marcXml.getField008());
         }
+        // Multiple 006s are possible
         if (field006) {
         	for (String fld : marcXml.getField006()) {
-        		flds.add(fld);
+        		flds006.add(fld);
         	}
         }
 
-        for (String field : flds) {
-            // The character at offset 00 of the 006/008 field
+        for (String field : flds006) {
+            // The character at offset 00
             char offset00 = (field != null && field.length() >= 1 ? field.charAt(0) : ' ');
 
-            // Do nothing if the 00 offset is one of the following:
+            // The character at offset 06 or 12 determines "Form of Item"
+            // Process only if offset 00 is one of the following:
+            int offset = -1;
             switch (offset00) {
+    	        case 'a':
+    	        case 'c':
+    	        case 'd':
+    	        case 'i':
+    	        case 'j':
+    	        case 'm':
+    	        case 'p':
+    	        case 's':
+    	        case 't':
+    	        	offset = 6;
+    	        	break;
     	        case 'e':
-    	        case 'q':
-    	        case 'u':
-    	        case 'v':
-    	        case 'w':
-    	        case 'x':
-    	        case 'y':
-    	        case 'z':
-    	        	continue;
+    	        case 'f':
+    	        case 'g':
+    	        case 'k':
+    	        case 'o':
+    	        case 'r':
+    	        	offset = 12;
+    	        	break;
             }
+            if (offset == -1) continue;
 
-            // The character at offset 23 of the 006/008 field
-            char offset23 = (field != null && field.length() >= 24 ? field.charAt(23) : ' ');
+            char offsetXX = (field != null && field.length() >= (offset+1) ? field.charAt(offset) : ' ');
 
-            // Pull the audience mapping from the configuration file based on the 008 offset 22 value.
-            String form = formFrom006_008Properties.getProperty("" + offset23, null);
+            // Pull the audience mapping from the configuration file based on the 006/06 or 006/12 value.
+            String form = formFrom006_008Properties.getProperty("" + offsetXX, null);
 
-            // If there was no mapping for the provided 008 offset 23, we can't create the field. In this case return the unmodified MARCXML
+            // If there was no mapping for the provided 006/06 or 006/12, we can't create the field. In this case return the unmodified MARCXML
             if (form == null) {
                 if (LOG.isDebugEnabled())
-                    LOG.debug("Cannot find an form mapping for the 006/008 offset 23 value of " + offset23 + ", returning the unmodified MARCXML.");
+                    LOG.debug("Cannot find an form mapping for the 006 offset " + offset + " value of " + offsetXX + ", returning the unmodified MARCXML.");
 
                 continue;
             }
 
             if (LOG.isDebugEnabled())
-                LOG.debug("Found the form " + form + " for the 006/008 offset 23 value of " + offset23 + ".");
+                LOG.debug("Found the form " + form + " for the 006 offset " + offset + " value of " + offsetXX + ".");
 
             marcXml.addMarcXmlField(FIELD_9XX_FORM, form);
         }
 
+        for (String field : flds008) {
+            // Get the leader 06
+            char leader06 = marcXml.getLeader().charAt(6);
+
+            // The character at offset 23 or 29 determines "Form of Item"
+            // Process only if Leader/06 is one of the following:
+            int offset = -1;
+            switch (leader06) {
+    	        case 'a':
+    	        case 'c':
+    	        case 'd':
+    	        case 'i':
+    	        case 'j':
+    	        case 'm':
+    	        case 'p':
+    	        case 's':
+    	        case 't':
+    	        	offset = 23;
+    	        	break;
+    	        case 'e':
+    	        case 'f':
+    	        case 'g':
+    	        case 'k':
+    	        case 'o':
+    	        case 'r':
+    	        	offset = 29;
+    	        	break;
+            }
+            if (offset == -1) continue;
+
+            char offsetXX = (field != null && field.length() >= (offset+1) ? field.charAt(offset) : ' ');
+
+            // Pull the audience mapping from the configuration file based on the 008/23 or 008/29 value.
+            String form = formFrom006_008Properties.getProperty("" + offsetXX, null);
+
+            // If there was no mapping for the provided 008/23 or 008/29, we can't create the field. In this case return the unmodified MARCXML
+            if (form == null) {
+                if (LOG.isDebugEnabled())
+                    LOG.debug("Cannot find an form mapping for the 008 offset " + offset + " value of " + offsetXX + ", returning the unmodified MARCXML.");
+
+                continue;
+            }
+
+            if (LOG.isDebugEnabled())
+                LOG.debug("Found the form " + form + " for the 008 offset " + offset + " value of " + offsetXX + ".");
+
+            marcXml.addMarcXmlField(FIELD_9XX_FORM, form);
+        }
+        
         return marcXml;
     }
 
@@ -2782,7 +2848,7 @@ public class NormalizationService extends GenericMetadataService {
                     if (languageTermProperties == null)
                         languageTermProperties = new Properties();
                     current = languageTermProperties;
-                } else if (line.equals("FIELD 006/008 OFFSET 22 TO AUDIENCE")) {
+                } else if (line.equals("FIELD 006/008 OFFSET TO AUDIENCE")) {
                     if (audienceFrom006_008Properties == null)
                         audienceFrom006_008Properties = new Properties();
                     current = audienceFrom006_008Properties;

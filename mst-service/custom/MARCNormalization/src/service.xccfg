@@ -98,12 +98,12 @@ ModeOfIssuance = 1
 RemoveOCoLC003 = 0
 
 # 1 to create an audience field for
-# audience suggested by the 006 offset 22
+# audience suggested by the 006 offset 05
 # (of which there may be more than one).
 006Audience = 1
 
 # 1 to create a "Form of Item" field for the
-# form suggested by the 006 offset 23 
+# form suggested by the 006 offset 06 or 12
 # value. 
 006FormOfItem = 1
 
@@ -137,12 +137,12 @@ FictionOrNonfiction = 1
 008Thesis = 1
 
 # 1 to create an audience field for the
-# audience suggested by the 008 offset 22 
+# audience suggested by the 008 offset 05
 # value. 
 008Audience = 1
 
 # 1 to create an "Form of Item" field for the
-# form suggested by the 008 offset 23 
+# form suggested by the 008 offset 23 or 29
 # value. 
 008FormOfItem = 1
 
@@ -470,18 +470,18 @@ vr = Videoreel
 zm = Multiple
 
 #-----------------------------------------
-FIELD 006/008 OFFSET 22 TO AUDIENCE
+FIELD 006/008 OFFSET TO AUDIENCE
 #-----------------------------------------
 
 #*****************************************
-# This section maps 006 / 008 offset 22 values to the audience
+# This section maps 006 / 008 offset 05 values to the audience
 # they should be associated with.
 #
 # For example, The line "a = Preschool" says that the
-# audience is "Preschool" if the 006 (or 008) offset 22 is "a"
+# audience is "Preschool" if the 006 (or 008) offset 05 is "a"
 #
 # Any of the mappings may be changed based on your organization's
-# cataloging policies.  New properties may be added for 008 offset 022
+# cataloging policies.  New properties may be added for 008 offset 05
 # values not represented below, and unwanted mappings may be deleted
 #***************************************** 
 
