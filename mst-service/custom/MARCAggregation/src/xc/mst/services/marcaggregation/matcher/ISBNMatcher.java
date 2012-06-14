@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.RecordMessage;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.bo.record.marc.Field;
 import xc.mst.services.marcaggregation.MarcAggregationService;
@@ -125,6 +127,9 @@ public class ISBNMatcher extends FieldMatcherService {
                     }
                 }
 
+                //TODO can the below be made faster?  How to limit WHAT is queried?  My idea was to try to cache and prematch some of this but
+                // would then have to take that result set and come up with a query that is faster than this one!
+
                 // now look in the database too!
                 //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_020a where string_id = "24094664" '
                 List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_020a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,isbn);
@@ -141,6 +146,33 @@ public class ISBNMatcher extends FieldMatcherService {
         }
         LOG.debug("getMatchinginputIds, irId=" + r.recordId + " results.size=" + results.size());
         return results;
+    }
+
+    /**
+     * quick and dirty test, if 1st char is a digit, let it slide.
+     * @param isbn, allegedly
+     * @return the trueness of it all
+     */
+    private boolean isIsbnValid(String isbn) {
+        if (StringUtils.isEmpty(isbn)) {
+            return false;
+        }
+        try {
+            return Character.isDigit(isbn.charAt(0));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * log invalid ISBN error
+     * @param ir - attach error to this input record, viewable via browse records.
+     */
+    private void attachError104(InputRecord ir) {
+        final MarcAggregationService service = getMarcAggregationService();
+        if (service != null) {
+            service.addMessage(ir, 104, RecordMessage.ERROR);
+        }
     }
 
     @Override
@@ -165,6 +197,12 @@ public class ISBNMatcher extends FieldMatcherService {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
+                // TODO validate HERE!
+                if (!isIsbnValid(isbn)) {
+                    LOG.error("** problem with 020$a ISBN in: " + r.recordId);
+                    attachError104(ir);
+                    break;   // bad data will cause trouble up the road.
+                }
 
                 //note, originally saved orig string too, but I don't see the need
                 //final String[] isbnArray = new String[] {isbn, subfield};  // its a pair of strings
@@ -211,6 +249,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     }
 
+    // TODO this can fail.  so to sanitize the table?
     @Override
     public void flush(boolean freeUpMemory) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");

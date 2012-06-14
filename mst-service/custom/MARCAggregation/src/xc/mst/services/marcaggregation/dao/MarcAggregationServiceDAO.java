@@ -67,113 +67,150 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String size_field               = "size";
 
 
-    //TODO the table needs to be able to grow, does it?  i.e. with each call is prior data preserved?
-    //     on the flip side, if so, how does old data get removed that needs to be?
     @SuppressWarnings("unchecked")
     public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
 
         TimingLogger.start("MarcAggregationServiceDAO.persist2StrMaps");
 
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            Object list = inputId2matcherMap.get(id);
+        TimingLogger.start("prepare to write");
+        String dbLoadFileStr = getDbLoadFileStr();
 
-            try {
-                if (list == null) {
-                    continue;
-                }
-                String dbLoadFileStr = getDbLoadFileStr();
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
 
+        try {
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+
+            final MutableInt j = new MutableInt(0);
+            for (Object keyObj : inputId2matcherMap.keySet()) {
+                Long id = (Long) keyObj;
                 final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
+                Object list = inputId2matcherMap.get(id);
 
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-                //TimingLogger.start(tableName + ".insert");
-                //TimingLogger.start(tableName + ".insert.create_infile");
+                try {
+                    if (list == null) {
+                        continue;
+                    }
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
 
-                List<String[]> strList = (List<String[]>) list;
-                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
-                if (strList != null && strList.size() > 0) {
-                    for (String[] _s: strList) {
-                        try {   // need to loop through all strings associated with id!
-                                if (j.intValue() > 0) {
-                                    os.write(newLineBytes);
-                                } else {
-                                    j.increment();
-                                }
-                                os.write(_s[1].getBytes());
-                                os.write(tabBytes);
-                                os.write(_s[0].getBytes());
-                                os.write(tabBytes);
-                                os.write(idBytes);
-                        } catch (Exception e) {
-                            LOG.error("problem with data - ",e);
-                            getUtil().throwIt(e);
+                    final MutableInt j2 = new MutableInt(0);
+                    List<String[]> strList = (List<String[]>) list;
+                    LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                    if (strList != null && strList.size() > 0) {
+                        for (String[] _s: strList) {
+                            try {   // need to loop through all strings associated with id!
+                                    if (j2.intValue() > 0) {
+                                        os.write(newLineBytes);
+                                    } else {
+                                        j2.increment();
+                                    }
+                                    os.write(getBytes(_s[1]));
+                                    os.write(tabBytes);
+                                    os.write(getBytes(_s[0]));
+                                    os.write(tabBytes);
+                                    os.write(idBytes);
+                            } catch (Exception e) {
+                                LOG.error("problem with data - id="+id,e);
+                                getUtil().throwIt(e);
+                            }
                         }
                     }
+                } catch (Throwable t) {
+                    LOG.error("*** problem with data readying id="+id,t);
+                    getUtil().throwIt(t);
                 }
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (Throwable t) {
-                getUtil().throwIt(t);
             }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
+
+        } catch (Exception e4) {
+            LOG.error("*** problem with replaceIntoTable data",e4);
+            getUtil().throwIt(e4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persist2StrMaps");
     }
 
     @SuppressWarnings("unchecked")
     public void persist1StrMatchpointMaps(Map<Long, List<String>> inputId2matcherMap, String tableName) {
         TimingLogger.start("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+        TimingLogger.start("prepare to write");
 
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            Object list = inputId2matcherMap.get(id);
+        String dbLoadFileStr = getDbLoadFileStr();
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
 
-            try {
-                if (list == null) {
-                    continue;
-                }
-                String dbLoadFileStr = getDbLoadFileStr();
+        try {
+            final MutableInt j = new MutableInt(0);
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            for (Object keyObj : inputId2matcherMap.keySet()) {
+                Long id = (Long) keyObj;
+                Object list = inputId2matcherMap.get(id);
 
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-                //TimingLogger.start(tableName + ".insert");
-                //TimingLogger.start(tableName + ".insert.create_infile");
+                try {
+                    if (list == null) {
+                        continue;
+                    }
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
 
-                List<String> strList = (List<String>) list;
-                LOG.debug("insert: " + tableName + ".size(): " + strList.size());
-                if (strList != null && strList.size() > 0) {
-                    for (String _s: strList) {
-                        if (StringUtils.isEmpty(_s)) {
-                            continue;
-                        }
-                        try {   // need to loop through all strings associated with id!
-                                if (j.intValue() > 0) {
+                    final byte[] idBytes = String.valueOf(id).getBytes();
+                    final MutableInt _j = new MutableInt(0);
+
+                    List<String> strList = (List<String>) list;
+                    LOG.debug("insert: " + tableName + ".size(): " + strList.size());
+                    if (strList != null && strList.size() > 0) {
+                        for (String _s: strList) {
+                            if (StringUtils.isEmpty(_s)) {
+                                continue;
+                            }
+                            try {
+                                // need to loop through all strings associated with id!
+                                //
+                                // write the newline after we have written a line, but not at the end of the last line
+                                if (_j.intValue() > 0) {
                                     os.write(newLineBytes);
                                 } else {
-                                    j.increment();
+                                    _j.increment();
                                 }
-                                os.write(_s.getBytes());
+                                os.write(getBytes(_s));
                                 os.write(tabBytes);
                                 os.write(idBytes);
-                        } catch (Exception e) {
-                            LOG.error("problem with data - ",e);
-                            getUtil().throwIt(e);
+                            } catch (Exception e) {
+                                LOG.error("problem with data - id="+id,e);
+                                getUtil().throwIt(e);
+                            }
                         }
                     }
+                } catch (Throwable t) {
+                    LOG.error("problem with replaceIntoTable data - id="+id,t);
+                    getUtil().throwIt(t);
                 }
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (Throwable t) {
-                getUtil().throwIt(t);
             }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
+
+        } catch (Throwable t4) {
+            LOG.error("*** problem with replaceIntoTable data",t4);
+            getUtil().throwIt(t4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
     }
 
     public void persistLongOnly(List<Long> values, String tableName)  {
@@ -184,8 +221,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             String dbLoadFileStr = getDbLoadFileStr();
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
-            //TimingLogger.start(tableName + ".insert");
-            //TimingLogger.start(tableName + ".insert.create_infile");
 
             final byte[] newLineBytes = getNewLineBytes();
             for (Long value: values) {
@@ -204,10 +239,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             os.close();
             replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
-            TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
+            LOG.error("problem with replaceIntoTable data ",t);
             getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongOnly");
     }
 
     /**
@@ -226,8 +262,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             String dbLoadFileStr = getDbLoadFileStr();
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
-            //TimingLogger.start(tableName + ".insert");
-            //TimingLogger.start(tableName + ".insert.create_infile");
 
             final byte[] tabBytes = getTabBytes();
             final byte[] newLineBytes = getNewLineBytes();
@@ -255,6 +289,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                     os.write(String.valueOf(num).getBytes());
                                 }
                             } catch (Throwable t) {
+                                LOG.error("problem with data - id="+id,t);
                                 getUtil().throwIt(t);
                             }
                             return true;
@@ -265,116 +300,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             os.close();
             replaceIntoTable(tableName, dbLoadFileStr);
         } catch (Throwable t) {
-            TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
+            LOG.error("problem with replaceIntoTable data - ",t);
             getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongMaps");
-    }
-
-    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
-    public void persistLongStrMatchpointMaps(TLongLongHashMap inputId2numMap, Map<Long, String> inputId2matcherMap, String tableName) {
-
-        TimingLogger.start("MarcAggregationServiceDAO.persistLongStrMaps");
-
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            if (id == null) {
-                // should not be.
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, id,- id="+id);
-                continue;
-            }
-            String str = inputId2matcherMap.get(id);
-            Long num = inputId2numMap.get(id);
-            if (StringUtils.isEmpty(str)) {
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, str,- id="+id);
-                continue;
-            }
-            if (num == null) {
-                // should not be.
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, num,- id="+id);
-                continue;
-            }
-            try {
-                String dbLoadFileStr = getDbLoadFileStr();
-
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] numBytes = String.valueOf(num).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-                //TimingLogger.start(tableName + ".insert");
-                ///TimingLogger.start(tableName + ".insert.create_infile");
-                try {   // need to loop through all strings associated with id!
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-                    os.write(numBytes);
-                    os.write(tabBytes);
-                    os.write(str.getBytes());
-                    os.write(tabBytes);
-                    os.write(idBytes);
-                } catch (Exception e) {
-                    LOG.error("*** problem with data - recordid="+id,e);
-                    getUtil().throwIt(e);
-                }
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (org.springframework.dao.DataIntegrityViolationException t2) {
-                LOG.error("****   problem with data - num="+num+" str="+str+" id="+id,t2);
-                getUtil().throwIt(t2);
-            } catch (Throwable t) {
-                getUtil().throwIt(t);
-            }
-        }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
-    }
-
-    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
-    public void persistOneStrMatchpointMaps(Map<Long, String> inputId2matcherMap, String tableName) {
-
-        TimingLogger.start("MarcAggregationServiceDAO.persistOneStrMaps");
-
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            String str = inputId2matcherMap.get(id);
-            if (StringUtils.isEmpty(str)) {
-                continue;
-            }
-            try {
-                String dbLoadFileStr = getDbLoadFileStr();
-
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-                //TimingLogger.start(tableName + ".insert");
-                //TimingLogger.start(tableName + ".insert.create_infile");
-                try {   // need to loop through all strings associated with id!
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-                    os.write(str.getBytes());
-                    os.write(tabBytes);
-                    os.write(idBytes);
-                } catch (Exception e) {
-                    LOG.error("problem with data - ",e);
-                    getUtil().throwIt(e);
-                }
-
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (Throwable t) {
-                getUtil().throwIt(t);
-            }
-        }
-        TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
     }
 
     public void persistScores(TLongObjectHashMap<xc.mst.services.marcaggregation.RecordOfSourceData> scores) {
@@ -389,8 +319,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
             final MutableInt j = new MutableInt(0);
-            //TimingLogger.start(tableName + ".insert");
-            //TimingLogger.start(tableName + ".insert.create_infile");
 
             if (scores instanceof TLongObjectHashMap) {
                 LOG.debug("insert: " + tableName + ".size(): " + scores.size());
@@ -426,6 +354,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         }
     }
 
+    /**
+     * quote the string as otherwise mysql insert fails when inserting '123344\'
+     * @param s
+     * @return
+     */
+    protected static byte[] getBytes(String s) {
+        final String s3 = "'"+ s + "'" ;
+        return s3.getBytes();
+    }
+
     protected static byte[] getTabBytes() {
         return "\t".getBytes();
     }
@@ -456,7 +394,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                         " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
                 );
         TimingLogger.stop(tableName + ".insert.load_infile");
-        TimingLogger.stop(tableName + ".insert");
+        TimingLogger.stop(tableName + ".insert.create_infile");
     }
 
     /**
@@ -478,9 +416,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return all the input_records that have been merged together to create this output_record, possibly on 1 record.
      */
     public List<Long> getInputRecordsMappedToOutputRecord(Long output_record_id) {
+        TimingLogger.start("MarcAggregationServiceDAO.getInputRecordsMappedToOutputRecord");
         String sql = "select input_record_id from " + bib_records_table +
                             " where output_record_id = ? ";
-        return this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
+        final List<Long> results =this.jdbcTemplate.queryForList(sql, Long.class, output_record_id);
+        TimingLogger.stop("MarcAggregationServiceDAO.getInputRecordsMappedToOutputRecord");
+        return results;
     }
 
     /**
@@ -489,13 +430,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return there will only be 1 record number returned.
      */
     public List<Long> getOutputRecordForInputRecord(Long input_record_id) {
+        TimingLogger.start("MarcAggregationServiceDAO.getOutputRecordForInputRecord");
         String sql = "select output_record_id from " + bib_records_table +
                             " where input_record_id = ? ";
-        return this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
+        final List<Long> results =this.jdbcTemplate.queryForList(sql, Long.class, input_record_id);
+        TimingLogger.stop("MarcAggregationServiceDAO.getOutputRecordForInputRecord");
+        return results;
     }
 
     public TLongLongHashMap getBibRecords(/*int page*/) {
-        TimingLogger.start("getBibRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getBibRecords");
 
 //        int recordsAtOnce = 100000;
         String sql = "select input_record_id, output_record_id from " + bib_records_table;// +
@@ -508,7 +452,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long out_id = (Long) row.get("output_record_id");
             results.put(in_id, out_id);
         }
-        TimingLogger.stop("getBibRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getBibRecords");
         return results;
     }
 
@@ -517,7 +461,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMergedInputRecords(/*int page*/) {
-        TimingLogger.start("getMergedInputRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMergedInputRecords");
 
 //      int recordsAtOnce = 100000;
       String sql = "select input_record_id from " + merged_records_table;// +
@@ -529,12 +473,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
               results.add((Long) row.values().iterator().next());
           }
       }
-      TimingLogger.stop("getMergedInputRecords");
+      TimingLogger.stop("MarcAggregationServiceDAO.getMergedInputRecords");
       return results;
     }
 
     public RecordOfSourceData getScoreData(Long num) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         final String tableName = merge_scores_table;
 
@@ -542,8 +486,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                 " from " + tableName+ " where "+ input_record_id_field +" = ?";
 
         List<RecordOfSourceData> rowList = this.jdbcTemplate.query(sql, new Object[] {num}, new RecordOfSourceDataMapper());
-
-        TimingLogger.stop("getMatchingRecords");
 
         final int size = rowList.size();
         if (size == 0) {
@@ -554,6 +496,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             // enforce through schema?
             LOG.error("multiple rows returned for merge_scores for "+num);
         }
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
+
         return rowList.get(0);
     }
 
@@ -596,7 +540,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field +" = ?";
 
@@ -607,7 +551,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long id = (Long) row.get("input_record_id");
             results.add(id);
         }
-        TimingLogger.stop("getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
         return results;
     }
 
@@ -624,7 +568,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String numeric_id_field, Long itemToMatch) {
-        TimingLogger.start("getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
         String sql = "select "+ record_id_field + " from " + tableName+ " where "+ numeric_id_field +" = ?";
 
@@ -635,7 +579,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             Long id = (Long) row.get("input_record_id");
             results.add(id);
         }
-        TimingLogger.stop("getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
         return results;
     }
 
@@ -671,8 +615,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteAllMASRecordDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteAllMASRecordDetails");
+
         deleteAllMatchpointDetails(input_record_id);
         deleteAllMergeDetails(     input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteAllMASRecordDetails");
     }
 
     /**
@@ -682,9 +630,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteAllMergeDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteAllMergeDetails");
+
         deleteMergeRow(merge_scores_table,     input_record_id);
         deleteMergeRow(merged_records_table,   input_record_id);
         deleteMergeRow(bib_records_table,      input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteAllMergeDetails");
     }
 
     /**
@@ -698,8 +650,12 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      */
     public void deleteMergeMemberDetails(Long input_record_id) {
 
+        TimingLogger.start("MarcAggregationServiceDAO.deleteMergeMemberDetails");
+
         deleteMergeRow(merged_records_table,   input_record_id);
         deleteMergeRow(bib_records_table,      input_record_id);
+
+        TimingLogger.stop("MarcAggregationServiceDAO.deleteMergeMemberDetails");
     }
 
     /**

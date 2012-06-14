@@ -50,6 +50,7 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
+import xc.mst.utils.TimingStats;
 import xc.mst.utils.Util;
 
 /**
@@ -423,6 +424,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 // check if the record is a bibliographic record
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
+
                     TimingLogger.start("bib steps");
 
                     // get record of source data for this bib
@@ -1011,10 +1013,10 @@ public class MarcAggregationService extends GenericMetadataService {
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
-        // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
+        // un-merge type step, we will undo what has been done then re-do from scratch, easiest to assure proper results.
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
-        // TODO for remerge, this was already done right?  do it again? (idempotent/not run then?  / Test)
-        // no need for record itself to be part of matchset, yet, it is new, so won't be any old merge info.
+        // TODO for re-merge, this was already done right?  do it again? (idempotent/not run then?  / Test)
+        // no need for record itself to be part of match set, yet, it is new, so won't be any old merge info.
         results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true);
 
         // maybe this will come into play with rules that have parts that are alike...
@@ -1289,8 +1291,8 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
-            LOG.debug("***FORCE: masDAO.commitIfNecessary");
-            TimingLogger.start("masDAO.commitIfNecessary");
+            LOG.debug("***FORCE: mas.commitIfNecessary");
+            TimingLogger.start("mas.commitIfNecessary");
 
             // break down timing logger more later if necessary.
             for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
@@ -1303,8 +1305,8 @@ public class MarcAggregationService extends GenericMetadataService {
             masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap, MarcAggregationServiceDAO.bib_records_table, false);
             masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
 
-            TimingLogger.stop("masDAO.commitIfNecessary");
         } catch (Throwable t) {
+            TimingLogger.stop("mas.commitIfNecessary");
             getUtil().throwIt(t);
         }
         if (!force) {
@@ -1312,19 +1314,20 @@ public class MarcAggregationService extends GenericMetadataService {
             return super.commitIfNecessary(force, 0);
         }
         try {
-            TimingLogger.start("MarcAggregationServiceDAO.non-generic");
+            TimingLogger.start("MarcAggregationService.non-generic");
             super.commitIfNecessary(true, 0);
-            TimingLogger.stop("MarcAggregationServiceDAO.non-generic");
+            TimingLogger.stop("MarcAggregationService.non-generic");
             // as part of the flush call matcher must clear its memory data structures
 
-            TimingLogger.stop("MarcAggregationServiceDAO.endBatch");
 
             //transformation service does this, not sure why, so this is a placeholder.
 //            getRepository().setPersistentProperty("inputBibs", inputBibs);
 //            getRepository().setPersistentProperty("inputHoldings", inputHoldings);
-            TimingLogger.reset();
         } catch (Throwable t) {
             getUtil().throwIt(t);
+        } finally {
+            TimingLogger.stop("mas.commitIfNecessary");
+            TimingLogger.reset();
         }
         return true;
     }
