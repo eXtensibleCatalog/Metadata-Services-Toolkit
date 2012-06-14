@@ -443,9 +443,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
                     results = processBib(r, smr, inputRepo);
                     TimingLogger.stop("bib steps");
-
-                    //TODO remove the below
-                    TimingLogger.reset("temporary");
                 }
                 // check if the record is a holding record
                 else if ("uvxy".contains("" + leader06)) {
@@ -1016,10 +1013,10 @@ public class MarcAggregationService extends GenericMetadataService {
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
-        // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
+        // un-merge type step, we will undo what has been done then re-do from scratch, easiest to assure proper results.
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
-        // TODO for remerge, this was already done right?  do it again? (idempotent/not run then?  / Test)
-        // no need for record itself to be part of matchset, yet, it is new, so won't be any old merge info.
+        // TODO for re-merge, this was already done right?  do it again? (idempotent/not run then?  / Test)
+        // no need for record itself to be part of match set, yet, it is new, so won't be any old merge info.
         results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true);
 
         // maybe this will come into play with rules that have parts that are alike...

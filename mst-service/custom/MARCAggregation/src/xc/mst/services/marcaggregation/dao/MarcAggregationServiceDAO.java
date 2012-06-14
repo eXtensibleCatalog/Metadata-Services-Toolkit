@@ -108,12 +108,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                     } else {
                                         j2.increment();
                                     }
-                                    _s[1] = "'"+_s[1] + "'" ;
-                                    _s[0] = "'"+_s[0] + "'" ;
-
-                                    os.write(_s[1].getBytes());
+                                    os.write(getBytes(_s[1]));
                                     os.write(tabBytes);
-                                    os.write(_s[0].getBytes());
+                                    os.write(getBytes(_s[0]));
                                     os.write(tabBytes);
                                     os.write(idBytes);
                             } catch (Exception e) {
@@ -187,8 +184,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                 } else {
                                     _j.increment();
                                 }
-                                _s = "'"+_s + "'" ;
-                                os.write(_s.getBytes());
+                                os.write(getBytes(_s));
                                 os.write(tabBytes);
                                 os.write(idBytes);
                             } catch (Exception e) {
@@ -311,117 +307,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         }
     }
 
-    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a TLongLong and a String for each record id
-    //  TODO this does not appear to be in use, if you do use it, fix it such that you write all values in inputId2matcherMap in one file write.
-    //
-    public void persistLongStrMatchpointMaps(TLongLongHashMap inputId2numMap, Map<Long, String> inputId2matcherMap, String tableName) {
-
-        TimingLogger.start("MarcAggregationServiceDAO.persistLongStrMaps");
-
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            if (id == null) {
-                // should not be.
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, id,- id="+id);
-                continue;
-            }
-            String str = inputId2matcherMap.get(id);
-            Long num = inputId2numMap.get(id);
-            if (StringUtils.isEmpty(str)) {
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, str,- id="+id);
-                continue;
-            }
-            if (num == null) {
-                // should not be.
-                LOG.error("****   persistLongStrMatchpointMaps, problem with data, num,- id="+id);
-                continue;
-            }
-            try {
-                String dbLoadFileStr = getDbLoadFileStr();
-
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] numBytes = String.valueOf(num).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-                try {   // need to loop through all strings associated with id!
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-                    os.write(numBytes);
-                    os.write(tabBytes);
-                    os.write(str.getBytes());
-                    os.write(tabBytes);
-                    os.write(idBytes);
-                } catch (Exception e) {
-                    LOG.error("*** problem with data - recordid="+id,e);
-                    getUtil().throwIt(e);
-                }
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (org.springframework.dao.DataIntegrityViolationException t2) {
-                LOG.error("****   problem with data - num="+num+" str="+str+" id="+id,t2);
-                getUtil().throwIt(t2);
-            } catch (Throwable t) {
-                LOG.error("problem with replaceIntoTable data - id="+id,t);
-                getUtil().throwIt(t);
-            } finally {
-                TimingLogger.stop("MarcAggregationServiceDAO.persistLongStrMaps");
-            }
-        }
-    }
-
-    // this one if for persisting those that do not repeat (1 set of entries per record id) and has a String for each record id
-    //  TODO this does not appear to be in use, if you do use it, fix it such that you write all values in inputId2matcherMap in one file write.
-    //
-    public void persistOneStrMatchpointMaps(Map<Long, String> inputId2matcherMap, String tableName) {
-
-        TimingLogger.start("MarcAggregationServiceDAO.persistOneStrMaps");
-
-        for (Object keyObj : inputId2matcherMap.keySet()) {
-            Long id = (Long) keyObj;
-            String str = inputId2matcherMap.get(id);
-            if (StringUtils.isEmpty(str)) {
-                continue;
-            }
-            try {
-                String dbLoadFileStr = getDbLoadFileStr();
-
-                final byte[] idBytes = String.valueOf(id).getBytes();
-                final byte[] tabBytes = getTabBytes();
-                final byte[] newLineBytes = getNewLineBytes();
-                final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-                final MutableInt j = new MutableInt(0);
-
-                try {   // need to loop through all strings associated with id!
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-                    os.write(str.getBytes());
-                    os.write(tabBytes);
-                    os.write(idBytes);
-                } catch (Exception e) {
-                    LOG.error("problem with data - id="+id,e);
-                    getUtil().throwIt(e);
-                }
-
-                os.close();
-                replaceIntoTable(tableName, dbLoadFileStr);
-            } catch (Throwable t) {
-                LOG.error("problem with replaceIntoTable data - id="+id,t);
-                getUtil().throwIt(t);
-            } finally {
-                TimingLogger.stop("MarcAggregationServiceDAO.persistOneStrMaps");
-            }
-        }
-    }
-
     public void persistScores(TLongObjectHashMap<xc.mst.services.marcaggregation.RecordOfSourceData> scores) {
 
         final String tableName = merge_scores_table;
@@ -467,6 +352,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         } finally {
             TimingLogger.stop("MarcAggregationServiceDAO.persistScores");
         }
+    }
+
+    /**
+     * quote the string as otherwise mysql insert fails when inserting '123344\'
+     * @param s
+     * @return
+     */
+    protected static byte[] getBytes(String s) {
+        final String s3 = "'"+ s + "'" ;
+        return s3.getBytes();
     }
 
     protected static byte[] getTabBytes() {
