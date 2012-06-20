@@ -295,7 +295,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     /**
      * for injection.
-     * @see MSTBeanPostProcessor
+     * @see xc.mst.spring.MSTBeanPostProcessor
      * @param masDAO
      */
     public void setMarcAggregationServiceDAO(MarcAggregationServiceDAO masDAO) {
@@ -303,7 +303,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * @see MSTBeanPostProcessor
+     * @see xc.mst.spring.MSTBeanPostProcessor
      * @return
      */
     public MarcAggregationServiceDAO getMarcAggregationServiceDAO() {
@@ -405,7 +405,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * each record run by the service,
      * gets process called at a particular time in the method
-     * @see process(Repository repo, Format inputFormat, Set inputSet, Set outputSet)
+     * see parent method process(Repository repo, Format inputFormat, Set inputSet, Set outputSet)
      *
      * the existing paradigm is to do things record by record without considering the whole of the records
      */
@@ -1291,7 +1291,7 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
-            LOG.debug("***FORCE: mas.commitIfNecessary");
+            LOG.debug("***mas.commitIfNecessary force="+force);
             TimingLogger.start("mas.commitIfNecessary");
 
             // break down timing logger more later if necessary.
@@ -1300,21 +1300,24 @@ public class MarcAggregationService extends GenericMetadataService {
                 matcher.flush(force);
                 LOG.debug("flush matcher: "+matcher.getName());
             }
-            // this should not need to done in must do, must do frequently section.
-            masDAO.persistScores(scores);
-            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap, MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
 
         } catch (Throwable t) {
             TimingLogger.stop("mas.commitIfNecessary");
             getUtil().throwIt(t);
         }
         if (!force) {
-            TimingLogger.reset();
             return super.commitIfNecessary(force, 0);
         }
+        // force == true:
         try {
             TimingLogger.start("MarcAggregationService.non-generic");
+
+            //TODO really don't need to persist WHOLE maps again if part of them already persisted!  So create
+            //TODO   new maps of ones that need to be persisted, flush map after persist is done.
+            masDAO.persistScores(scores);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap, MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
+
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationService.non-generic");
             // as part of the flush call matcher must clear its memory data structures
