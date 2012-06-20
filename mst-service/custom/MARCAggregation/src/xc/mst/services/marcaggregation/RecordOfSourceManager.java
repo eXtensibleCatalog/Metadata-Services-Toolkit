@@ -70,7 +70,7 @@ public class RecordOfSourceManager extends BaseService {
 
     protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
         final Long recordOfSource = determineRecordOfSource(set, repo, scores);
-        LOG.info("**** Record of Source == "+recordOfSource);
+        LOG.debug("**** Record of Source == "+recordOfSource);  // obviously produces much writing to log
         //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
 
         final Record theSrcRecord = repo.getRecord(recordOfSource);
