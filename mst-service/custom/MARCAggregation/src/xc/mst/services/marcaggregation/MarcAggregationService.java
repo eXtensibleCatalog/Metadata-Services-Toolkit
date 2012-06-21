@@ -10,32 +10,10 @@ package xc.mst.services.marcaggregation;
 
 import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongObjectHashMap;
-
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.stream.StreamSource;
-
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
-
 import xc.mst.bo.provider.Format;
-import xc.mst.bo.record.InputRecord;
-import xc.mst.bo.record.OutputRecord;
-import xc.mst.bo.record.Record;
-import xc.mst.bo.record.RecordCounts;
-import xc.mst.bo.record.RecordMessage;
-import xc.mst.bo.record.SaxMarcXmlRecord;
+import xc.mst.bo.record.*;
 import xc.mst.bo.service.Service;
 import xc.mst.constants.Status;
 import xc.mst.dao.DataException;
@@ -50,8 +28,15 @@ import xc.mst.services.marcaggregation.matchrules.MatchRuleIfc;
 import xc.mst.utils.LogWriter;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
-import xc.mst.utils.TimingStats;
 import xc.mst.utils.Util;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.stream.StreamSource;
+import java.io.FileInputStream;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Benjamin D. Anderson
@@ -76,7 +61,8 @@ public class MarcAggregationService extends GenericMetadataService {
      * to sort/figure record of source, place items we are interested in, that are used to determine
      * record of source, in this map, as we go.
      */
-    protected TLongObjectHashMap<RecordOfSourceData> scores = null;
+    protected TLongObjectHashMap<RecordOfSourceData> scores             = null;
+    protected TLongObjectHashMap<RecordOfSourceData> scores_unpersisted = null;
 
     /**
      * map output records to corresponding input records map
@@ -88,10 +74,12 @@ public class MarcAggregationService extends GenericMetadataService {
      *  not only tracked merged records, many to 1, but track unmerged 1 to 1
      */
     protected TLongLongHashMap                       allBibRecordsI2Omap = null;
+    protected TLongLongHashMap                       allBibRecordsI2Omap_unpersisted = null;
 
     /** track input records that have been merged (>1 input to an output),
      */
     protected List<Long>                             mergedInRecordsList = null;
+    protected List<Long>                             mergedInRecordsList_unpersisted = null;
 
     /**
      * the repository feeding this service.  we need to hang on to this because of remerging, etc.
@@ -157,6 +145,9 @@ public class MarcAggregationService extends GenericMetadataService {
         allBibRecordsI2Omap = loadMasBibIORecords();
         allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
         mergedInRecordsList = loadMasMergedInputRecords();
+
+        allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
+        mergedInRecordsList_unpersisted = new ArrayList<Long>();
     }
 
     /**
@@ -211,6 +202,7 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         masMatchSetList = new ArrayList<TreeSet<Long>>();
         scores = new TLongObjectHashMap<RecordOfSourceData>();
+        scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
     }
 
     protected void setupMatchers() {
@@ -295,7 +287,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     /**
      * for injection.
-     * @see MSTBeanPostProcessor
+     * @see xc.mst.spring.MSTBeanPostProcessor
      * @param masDAO
      */
     public void setMarcAggregationServiceDAO(MarcAggregationServiceDAO masDAO) {
@@ -303,7 +295,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     /**
-     * @see MSTBeanPostProcessor
+     * @see xc.mst.spring.MSTBeanPostProcessor
      * @return
      */
     public MarcAggregationServiceDAO getMarcAggregationServiceDAO() {
@@ -405,7 +397,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * each record run by the service,
      * gets process called at a particular time in the method
-     * @see process(Repository repo, Format inputFormat, Set inputSet, Set outputSet)
+     * see parent method process(Repository repo, Format inputFormat, Set inputSet, Set outputSet)
      *
      * the existing paradigm is to do things record by record without considering the whole of the records
      */
@@ -432,6 +424,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     final char leaderByte17 = smr.getLeader().charAt(17);
                     final int rSize = r.getOaiXml().getBytes().length;
                     scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+                    scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
 
                     type = "b";
                     //
@@ -563,12 +556,14 @@ public class MarcAggregationService extends GenericMetadataService {
     private void addToMasMergedRecordsMemory(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             allBibRecordsI2Omap.put(num,outputRecordId);
+            allBibRecordsI2Omap_unpersisted.put(num,outputRecordId);
         }
         allBibRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
 
         if (mergedInputRecordSet.size() > 1) {
             for (Long num: mergedInputRecordSet) {
                 mergedInRecordsList.add(num);
+                mergedInRecordsList_unpersisted.add(num);
             }
         }
     }
@@ -1095,7 +1090,9 @@ public class MarcAggregationService extends GenericMetadataService {
             if (allBibRecordsI2Omap.containsKey(input)) {
                 Long outputRecordToBeDeletedNum = getBibOutputId(input);  // grabs it out of I2O
                 allBibRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
+                allBibRecordsI2Omap_unpersisted.remove(input);
                 mergedInRecordsList.remove(input);
+                mergedInRecordsList_unpersisted.remove(input);
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
                     LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
@@ -1291,7 +1288,7 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
-            LOG.debug("***FORCE: mas.commitIfNecessary");
+            LOG.debug("***mas.commitIfNecessary force="+force);
             TimingLogger.start("mas.commitIfNecessary");
 
             // break down timing logger more later if necessary.
@@ -1300,25 +1297,31 @@ public class MarcAggregationService extends GenericMetadataService {
                 matcher.flush(force);
                 LOG.debug("flush matcher: "+matcher.getName());
             }
-            // this should not need to done in must do, must do frequently section.
-            masDAO.persistScores(scores);
-            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap, MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
 
         } catch (Throwable t) {
             TimingLogger.stop("mas.commitIfNecessary");
             getUtil().throwIt(t);
         }
         if (!force) {
-            TimingLogger.reset();
             return super.commitIfNecessary(force, 0);
         }
+        // force == true:
         try {
             TimingLogger.start("MarcAggregationService.non-generic");
+
+            masDAO.persistScores(scores_unpersisted);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
+                    MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
+
+            //flush from memory now that these have been persisted to database
+            scores_unpersisted.clear();
+            mergedInRecordsList_unpersisted.clear();
+            allBibRecordsI2Omap_unpersisted.clear();
+
+
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationService.non-generic");
-            // as part of the flush call matcher must clear its memory data structures
-
 
             //transformation service does this, not sure why, so this is a placeholder.
 //            getRepository().setPersistentProperty("inputBibs", inputBibs);

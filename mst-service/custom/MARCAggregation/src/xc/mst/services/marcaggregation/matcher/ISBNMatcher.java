@@ -34,7 +34,7 @@ import xc.mst.utils.Util;
  *
  * Step 2A:
  * LCCN: 010a (current LCCN) AND
- * ISBN: 020a (current ISBN) – Note: number of digits must match for ISBN-10 vs ISBN-13.
+ * ISBN: 020a (current ISBN) ï¿½ Note: number of digits must match for ISBN-10 vs ISBN-13.
  * Match only up to the first blank space, ignoring any characters after the blank.
  *
  * 020$a:
@@ -128,7 +128,7 @@ public class ISBNMatcher extends FieldMatcherService {
                 }
 
                 //TODO can the below be made faster?  How to limit WHAT is queried?  My idea was to try to cache and prematch some of this but
-                // would then have to take that result set and come up with a query that is faster than this one!
+                //TODO    would then have to take that result set and come up with a query that is faster than this one!
 
                 // now look in the database too!
                 //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_020a where string_id = "24094664" '
@@ -181,8 +181,10 @@ public class ISBNMatcher extends FieldMatcherService {
         List<Field> fields = r.getDataFields(20);
         final int size3 = fields.size();
         if (size3 > 1) {
-            LOG.info("** INFO: Multiple 020 fields in record! " + ir.getId());
-            //TODO, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
+            //NOTE, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
+            //      (both for UR and CARLI records)
+            //
+            LOG.debug("** INFO: Multiple 020 fields in record! " + ir.getId());
         }
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
@@ -191,13 +193,12 @@ public class ISBNMatcher extends FieldMatcherService {
                 LOG.error("** ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
             }
             for (String subfield : subfields) {
-                Long id = new Long(r.recordId);
+                Long id = r.recordId;   // autoboxing for better or worse...
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
                 if (debug) {
                     Util.getUtil().printStackTrace("who got me here?");
                 }
                 String isbn = getIsbn(subfield);
-                // TODO validate HERE!
                 if (!isIsbnValid(isbn)) {
                     LOG.error("** problem with 020$a ISBN in: " + r.recordId);
                     attachError104(ir);
@@ -260,7 +261,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     /**
      * For testing.
-     * @return
+     * @return the number of unique record ids the matcher holds
      */
     public int getNumRecordIdsInMatcher() {
         //return inputId2isbn.size();
@@ -275,7 +276,7 @@ public class ISBNMatcher extends FieldMatcherService {
 
     /**
      * For testing.
-     * @return
+     * @return  the number of strings the matcher holds (matchpoints)
      */
     public int getNumMatchPointsInMatcher() {
         //return isbn2inputIds.size();
