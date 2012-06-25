@@ -65,6 +65,11 @@ public class NormalizationService extends GenericMetadataService {
      * The Properties file with information on which Normalization steps to run
      */
     protected Properties enabledSteps = null;
+    
+    /**
+     * The 003 Org Code
+     */
+    protected String organizationCode = null;
 
     /**
      * The Properties file with the location name mappings
@@ -692,8 +697,12 @@ public class NormalizationService extends GenericMetadataService {
     			if (overwrite003.equalsIgnoreCase("Y")) {
     				if (empty003) {
     	    			marcXml.addMarcXmlControlField("003", orgCode);
+    	    			marcXml.setOrganizationCode(orgCode);
+    	    			setOrganizationCode(orgCode);
     				} else {
     					marcXml.setMarcXmlControlField("003", orgCode);
+    	    			marcXml.setOrganizationCode(orgCode);
+    	    			setOrganizationCode(orgCode);
     				}
     			} else if (overwrite003.equalsIgnoreCase("N")) {
     				// do nothing
@@ -725,8 +734,12 @@ public class NormalizationService extends GenericMetadataService {
     			if (overwrite003.equalsIgnoreCase("Y")) {
     				if (empty003) {
     	    			marcXml.addMarcXmlControlField("003", orgCode);
+    	    			marcXml.setOrganizationCode(orgCode);
+    	    			setOrganizationCode(orgCode);
     				} else {
     					marcXml.setMarcXmlControlField("003", orgCode);
+    	    			marcXml.setOrganizationCode(orgCode);
+    	    			setOrganizationCode(orgCode);
     				}
     			} else if (overwrite003.equalsIgnoreCase("N")) {
     				// do nothing
@@ -2891,14 +2904,15 @@ public class NormalizationService extends GenericMetadataService {
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 006/008 OFFSET 23 TO FORM OF ITEM");
         else if (enabledSteps == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
-        else if (getOrganizationCode() == null)
-            throw new ServiceValidationException("Service configuration file Organization Code error:  Please set an OrganizationCode.");
         else if (getSourceOfOrganizationCode().equals("1"))
         {
         	setupOrganizationCodeProperties();
         } 
         else if (getSourceOfOrganizationCode().equals("0"))
         {
+            if (getOrganizationCode() == null)
+                throw new ServiceValidationException("Service configuration file Organization Code error:  Please set an OrganizationCode.");
+
         	if (getOrganizationCode().equals("CHANGE_ME"))
             	throw new ServiceValidationException("Service configuration file Organization Code error:  Please change CHANGE_ME to a valid OrganizationCode.");
         }
@@ -3034,7 +3048,11 @@ public class NormalizationService extends GenericMetadataService {
 
 
     protected String getOrganizationCode() {
-        return enabledSteps.getProperty("OrganizationCode");
+    	return organizationCode == null ? enabledSteps.getProperty("OrganizationCode") : organizationCode;
+    }
+    
+    private void setOrganizationCode(String org) {
+    	this.organizationCode = org;
     }
 
     /*
