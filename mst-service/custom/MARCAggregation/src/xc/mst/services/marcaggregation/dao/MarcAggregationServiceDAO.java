@@ -360,7 +360,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * @return
      */
     protected static byte[] getBytes(String s) {
-        final String s3 = "'"+ s + "'" ;
+        final String s3 = getQuoted(s);
         return s3.getBytes();
     }
 
@@ -370,6 +370,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     protected static byte[] getNewLineBytes() {
         return "\n".getBytes();
+    }
+
+    protected static String getQuoted(String s) {
+        final String s3 = "'"+ s + "'" ;
+        return s3;
     }
 
     // not only does it create the string but it has a side effect - it creates a file from the string,
@@ -528,7 +533,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
-     * given a string_id in String form to match on.
+     * given a string_id in String form to match on. (currently used by ISSN, ISBN, SCCN, x024 matchers)
      *
      *  for instance:
      * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
@@ -542,7 +547,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
         TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
-        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field +" = ?";
+        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ getQuoted(string_id_field)+ " = ?";
 
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemToMatch});
 
@@ -556,7 +561,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
-     * given a numeric_id in Long form to match on.
+     * given a numeric_id in Long form to match on. (currently used by LCCN matcher)
      *
      * for instance:
      * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
