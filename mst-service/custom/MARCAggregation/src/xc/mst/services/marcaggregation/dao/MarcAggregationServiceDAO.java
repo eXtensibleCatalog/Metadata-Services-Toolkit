@@ -108,6 +108,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                     } else {
                                         j2.increment();
                                     }
+                                    // ends up 'quoting' the string, was needed for ISBN 020$a but this method called by other matchers.
                                     os.write(getBytes(_s[1]));
                                     os.write(tabBytes);
                                     os.write(getBytes(_s[0]));
@@ -534,6 +535,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     /**
      * given a string_id in String form to match on. (currently used by ISSN, ISBN, SCCN, x024 matchers)
+     * note - this method adds the quoting, which was added for ISBN 020$a others don't necessarily need it (depending on how they were inserted)
      *
      *  for instance:
      * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
