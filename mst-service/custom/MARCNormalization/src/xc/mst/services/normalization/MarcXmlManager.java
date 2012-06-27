@@ -258,6 +258,13 @@ public class MarcXmlManager {
         this.inputRecord = inputRecord;
     }
 
+    /*
+     * It is possible for the organization code to change post-initialization time.
+     */
+    public void setOrganizationCode(String org) {
+        this.organizationCode = org;
+    }
+
     /**
      * The value of the 001 field
      */
