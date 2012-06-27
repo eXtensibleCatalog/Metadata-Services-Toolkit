@@ -966,8 +966,6 @@ public class MarcAggregationService extends GenericMetadataService {
                 InputRecord record = masRsm.getRecordOfSourceRecord(newMatchedRecordIds, repo, scores);
                 xml = mergeBibSet(record, newMatchedRecordIds, repo);
 
-                LOG.debug("** create merged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
-
                 // now that we remerged, update the existing output record below!
             }
             else {
