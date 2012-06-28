@@ -357,10 +357,17 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     /**
      * quote the string as otherwise mysql insert fails when inserting '123344\'
+     *
+     *   But STILL, a problem with the trailing backslash.  So replace backslashes by double backslashes at the time of the quoting.  Ideally, you
+     *   only replace single backslashes with doubles but that is a complicated regular expression lets see if we need it first.
+     *
+     *   also requires special syntax on insert @see this.replaceIntoTable method.
+     *
      * @param s
      * @return
      */
     protected static byte[] getBytes(String s) {
+        s = s.replaceAll("\\\\", "\\\\\\\\");
         final String s3 = getQuoted(s);
         return s3.getBytes();
     }
@@ -391,13 +398,30 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return dbLoadFileStr;
     }
 
+    /**
+     * had an issue inserting a file that looked like this:
+     *   0120546507\     30232779
+     *   Adding quotes around it worked for the insert, but don't want the string altered in the db, and don't want to store all
+     *   those unnecessary chars either.  So before it gets here, string could have '\' around it.  Use:
+     *   optionally enclosed by '\''
+     *   as an additional field parameter to cover that possibility.  Then db on insert won't place the quotes into the db.
+
+     *   '0120546507\'     30232779
+     *
+     *   But STILL, a problem with the trailing backslash.  So replace backslashes by double backslashes at the time of the quoting.  Ideally, you
+     *   only replace single backslashes with doubles but that is a complicated regular expression lets see if we need it first.
+     *
+     * @param tableName
+     * @param dbLoadFileStr
+     */
     protected void replaceIntoTable(String tableName, String dbLoadFileStr) {
+
         TimingLogger.start(tableName + ".insert.create_infile");
         TimingLogger.start(tableName + ".insert.load_infile");
         this.jdbcTemplate.execute(
                 "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
                         tableName +
-                        " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                        " character set utf8 fields terminated by '\\t' optionally enclosed by '\\'' lines terminated by '\\n'"
                 );
         TimingLogger.stop(tableName + ".insert.load_infile");
         TimingLogger.stop(tableName + ".insert.create_infile");
@@ -484,7 +508,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     public RecordOfSourceData getScoreData(Long num) {
-        TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
+        TimingLogger.start("MarcAggregationServiceDAO.getScoreData");
 
         final String tableName = merge_scores_table;
 
@@ -502,7 +526,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             // enforce through schema?
             LOG.error("multiple rows returned for merge_scores for "+num);
         }
-        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
+        TimingLogger.stop("MarcAggregationServiceDAO.getScoreData");
 
         return rowList.get(0);
     }
@@ -549,7 +573,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public List<Long> getMatchingRecords(String tableName, String record_id_field, String string_id_field, String itemToMatch) {
         TimingLogger.start("MarcAggregationServiceDAO.getMatchingRecords");
 
-        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ getQuoted(string_id_field)+ " = ?";
+        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ string_id_field+ " = ?";
 
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemToMatch});
 
