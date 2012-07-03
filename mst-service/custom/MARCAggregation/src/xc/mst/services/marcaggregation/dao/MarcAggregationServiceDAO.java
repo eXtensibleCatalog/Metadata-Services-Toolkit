@@ -487,6 +487,28 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
+     * use to load into memory at service start time.
+     * @return
+     */
+    public TLongLongHashMap getLccnRecords(/*int page*/) {
+        TimingLogger.start("MarcAggregationServiceDAO.getLccnRecords");
+
+//        int recordsAtOnce = 100000;
+        String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table;// +
+//                " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        TLongLongHashMap results = new TLongLongHashMap();
+        for (Map<String, Object> row : rowList) {
+            Long in_id = (Long) row.get("input_record_id");
+            Long num_id = (Long) row.get("numeric_id");
+            results.put(in_id, num_id);
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.getLccnRecords");
+        return results;
+    }
+
+    /**
      * input records that are part of a merge set (>1 corresponds to an output record)
      * @return
      */

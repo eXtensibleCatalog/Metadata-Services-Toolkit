@@ -62,8 +62,8 @@ public class LccnMatcher extends FieldMatcherService {
     protected Map<Long, List<Long>> lccn2inputIds = new HashMap<Long, List<Long>>();
 
     // you can have exactly 1 010$a fields within a record  (1 010, w/1 $a)
-    // will this field data structure be needed? (or do we need record id to 010$a string, or both?)
     protected TLongLongHashMap inputId2lccn = new TLongLongHashMap();
+    protected TLongLongHashMap inputId2lccn_unpersisted = new TLongLongHashMap();
 
     //don't need to save this
     //protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
@@ -171,6 +171,8 @@ public class LccnMatcher extends FieldMatcherService {
                     }
                 }
 
+                //don't need this now because we are keeping them all in memory...
+/*
                 // now look in the database too!
                 //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
                 List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
@@ -183,6 +185,7 @@ public class LccnMatcher extends FieldMatcherService {
                         }
                     }
                 }
+*/
             }
         }
         LOG.debug("getMatchinginputIds, irId="+ ir.recordId+" results.size="+results.size());
@@ -257,11 +260,13 @@ public class LccnMatcher extends FieldMatcherService {
                 //TODO somewhere in the below code is a logic error that causes an exception with, not enough data, or something, when putting into row.
                 if (oldGoods == null || oldGoods == 0l) {
                     inputId2lccn.put(id, goods);
+                    inputId2lccn_unpersisted.put(id, goods);
                     //inputId2lccnStr.put(id, subfield);
                 }
                 else {
                     if (!goods.equals(oldGoods)) {
                         inputId2lccn.put(id, goods);
+                        inputId2lccn_unpersisted.put(id, goods);
                         //inputId2lccnStr.put(id, subfield);
                         LOG.debug("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId+ " this 010: "+goods);
                         //LOG.info("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
@@ -291,19 +296,44 @@ public class LccnMatcher extends FieldMatcherService {
 
     @Override
     public void load() {
-        // TODO for this one, because the data is Long, may want to load all from dB to memory.
 
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        inputId2lccn = masDao.getLccnRecords();
+        LOG.debug("inputId2lccn loaded, size="+inputId2lccn.size());
+
+        // now go from inputId2lccn to populate lccn2inputIds
+        for (Long id: inputId2lccn.keys()) {
+            Long goods = inputId2lccn.get(id);
+            //LOG.debug("** id: "+id+" lccn = "+goods);
+            List<Long> idsList = lccn2inputIds.get(goods);
+            if (idsList == null || idsList.size() == 0) {
+                idsList = new ArrayList<Long>();
+                idsList.add(id);
+                lccn2inputIds.put(goods, idsList);
+            }
+            else if (!idsList.contains(id)){
+                idsList.add(id);
+                lccn2inputIds.put(goods, idsList);
+            }
+        }
     }
 
     @Override
-    // at commit time put stuff into db,
-    public void flush(boolean freeUpMemory) {
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table, true);
-        //inputId2lccnStr.clear();
-        inputId2lccn.clear();    //TODO may want to keep these in memory!
-        lccn2inputIds.clear();
+    // at commit time put stuff into db, but for this one, don't need to do it as often, because we are able to keep the data in memory.
+    public void flush(boolean force) {
+        if (force) {
+            MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+            s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn_unpersisted, MarcAggregationServiceDAO.matchpoints_010a_table, true);
+            inputId2lccn_unpersisted.clear();
+        }
+
+        //inputId2lccn.clear();    //now keep these in memory!
+        //lccn2inputIds.clear();
     }
+
+    /**
+     * unused, if you do end up needing it - must make sure to get all values.  Are all in memory?
+     */
     public Collection<Long> getRecordIdsInMatcher() {
         List<Long> results = new ArrayList<Long>();
         for (Long record: inputId2lccn.keys()) {

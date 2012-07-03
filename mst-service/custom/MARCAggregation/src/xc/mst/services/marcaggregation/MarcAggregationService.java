@@ -201,7 +201,7 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
         masMatchSetList = new ArrayList<TreeSet<Long>>();
-        scores = new TLongObjectHashMap<RecordOfSourceData>();
+        scores = new TLongObjectHashMap<RecordOfSourceData>();   /// TODO load what you have in the db!
         scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
     }
 
