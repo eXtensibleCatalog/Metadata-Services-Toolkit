@@ -41,6 +41,7 @@ import xc.mst.utils.TimingLogger;
 public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     private final static Logger LOG = Logger.getLogger(MarcAggregationServiceDAO.class);
+    private final int RECORDS_AT_ONCE = 100000;
 
     // not yet used starts
     public final static String matchpoints_028a_table   = "matchpoints_028a";
@@ -468,13 +469,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
-    public TLongLongHashMap getBibRecords(/*int page*/) {
+    public TLongLongHashMap getBibRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getBibRecords");
 
-//        int recordsAtOnce = 100000;
-        String sql = "select input_record_id, output_record_id from " + bib_records_table;// +
-//                " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+        String sql = "select input_record_id, output_record_id from " + bib_records_table +
+                " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
 
+        LOG.info(sql);
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
         TLongLongHashMap results = new TLongLongHashMap();
         for (Map<String, Object> row : rowList) {
@@ -486,16 +487,34 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
+    public TLongLongHashMap getBibRecordsCache() {
+        TimingLogger.start("getBibRecordsCache");
+        int page = 0;
+        TLongLongHashMap  records = getBibRecords(page);
+        boolean gotResults = records != null && records.size() > 0;
+        while (gotResults) {
+            TLongLongHashMap _records = getBibRecords(++page);
+            if (_records != null && _records.size() > 0) {
+                records.putAll(_records);
+            }
+            else {
+                gotResults = false;
+            }
+        }
+        TimingLogger.stop("getBibRecordsCache");
+        return records;
+    }
+
     /**
      * use to load into memory at service start time.
      * @return
      */
-    public TLongLongHashMap getLccnRecords(/*int page*/) {
+    public TLongLongHashMap getLccnRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getLccnRecords");
 
-//        int recordsAtOnce = 100000;
-        String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table;// +
-//                " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+        String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table +
+                " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+        LOG.info(sql);
 
         List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
         TLongLongHashMap results = new TLongLongHashMap();
@@ -508,16 +527,52 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
+    public TLongLongHashMap getLccnRecordsCache() {
+        TimingLogger.start("getLccnRecordsCache");
+        int page = 0;
+        TLongLongHashMap  records = getLccnRecords(page);
+        boolean gotResults = records != null && records.size() > 0;
+        while (gotResults) {
+            TLongLongHashMap _records = getLccnRecords(++page);
+            if (_records != null && _records.size() > 0) {
+                records.putAll(_records);
+            }
+            else {
+                gotResults = false;
+            }
+        }
+        TimingLogger.stop("getLccnRecordsCache");
+        return records;
+    }
+
+    public List<Long> getMergedInputRecordsCache() {
+        TimingLogger.start("getMergedInputRecordsCache");
+        int page = 0;
+        List<Long> records = getMergedInputRecords(page);
+        boolean gotResults = records != null && records.size() > 0;
+        while (gotResults) {
+            List<Long> _records = getMergedInputRecords(++page);
+            if (_records != null && _records.size() > 0) {
+                records.addAll(_records);
+            }
+            else {
+                gotResults = false;
+            }
+        }
+        TimingLogger.stop("getMergedInputRecordsCache");
+        return records;
+    }
+
     /**
      * input records that are part of a merge set (>1 corresponds to an output record)
      * @return
      */
-    public List<Long> getMergedInputRecords(/*int page*/) {
+    public List<Long> getMergedInputRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getMergedInputRecords");
 
-//      int recordsAtOnce = 100000;
-      String sql = "select input_record_id from " + merged_records_table;// +
-//              " limit " + (page * recordsAtOnce) + "," + recordsAtOnce;
+      String sql = "select input_record_id from " + merged_records_table +
+              " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+      LOG.info(sql);
       List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
       List<Long> results = new ArrayList<Long>();
       if (rows != null) {
@@ -528,6 +583,13 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
       TimingLogger.stop("MarcAggregationServiceDAO.getMergedInputRecords");
       return results;
     }
+
+    //TODO
+    /*
+    public TLongObjectHashMap<RecordOfSourceData> getScores() {
+
+    }
+    */
 
     public RecordOfSourceData getScoreData(Long num) {
         TimingLogger.start("MarcAggregationServiceDAO.getScoreData");

@@ -143,8 +143,12 @@ public class MarcAggregationService extends GenericMetadataService {
         setupMatchers();
         setupMatchRules();
         allBibRecordsI2Omap = loadMasBibIORecords();
+        LOG.info("allBibRecordsI2Omap size: "+allBibRecordsI2Omap.size());
+
         allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
+
         mergedInRecordsList = loadMasMergedInputRecords();
+        LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());
 
         allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
         mergedInRecordsList_unpersisted = new ArrayList<Long>();
@@ -154,10 +158,14 @@ public class MarcAggregationService extends GenericMetadataService {
      *
      * map output records to corresponding input records map
      * there is probably a lot slicker way to do this.
+     *
+     * Note - this takes a long time!
+     *
      * @param i_to_o_map
      * @return
      */
     private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
+        LOG.info("start createMergedRecordsO2Imap");
         TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
         for (Long out: i_to_o_map.getValues()) {
             if (!results.containsKey(out)) {
@@ -169,6 +177,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 results.put(out, set);
             }
         }
+        LOG.info("done createMergedRecordsO2Imap");
         return results;
     }
 
@@ -177,7 +186,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return known merged records that were persisted, it returns all bibs i to o
      */
     private TLongLongHashMap loadMasBibIORecords() {
-        return masDAO.getBibRecords();
+        return masDAO.getBibRecordsCache();
     }
 
 
@@ -186,7 +195,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return known merged records that were persisted-input records that are part of a merge set (>1 corresponds to an output record)
      */
     private List<Long> loadMasMergedInputRecords() {
-        return masDAO.getMergedInputRecords();
+        return masDAO.getMergedInputRecordsCache();
     }
 
 

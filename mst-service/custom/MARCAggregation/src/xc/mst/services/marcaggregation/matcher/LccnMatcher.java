@@ -298,8 +298,8 @@ public class LccnMatcher extends FieldMatcherService {
     public void load() {
 
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
-        inputId2lccn = masDao.getLccnRecords();
-        LOG.debug("inputId2lccn loaded, size="+inputId2lccn.size());
+        inputId2lccn = masDao.getLccnRecordsCache();
+        LOG.info("inputId2lccn loaded, size="+inputId2lccn.size());
 
         // now go from inputId2lccn to populate lccn2inputIds
         for (Long id: inputId2lccn.keys()) {
