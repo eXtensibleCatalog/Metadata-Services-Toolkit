@@ -157,9 +157,6 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      *
      * map output records to corresponding input records map
-     * there is probably a lot slicker way to do this.
-     *
-     * Note - this takes a long time!
      *
      * @param i_to_o_map
      * @return
@@ -167,14 +164,19 @@ public class MarcAggregationService extends GenericMetadataService {
     private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
         LOG.info("start createMergedRecordsO2Imap");
         TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
-        for (Long out: i_to_o_map.getValues()) {
+        // obviously there can be multiple input records corresponding to one output record.
+        for (Long in: i_to_o_map.keys()) {
+            Long out = i_to_o_map.get(in);
             if (!results.containsKey(out)) {
-                List<Long> vals = masDAO.getInputRecordsMappedToOutputRecord(out);
                 TreeSet<Long> set = new TreeSet<Long>();
-                for (Long val: vals) {
-                    set.add(val);
-                }
+                set.add(in);
                 results.put(out, set);
+            }
+            else {
+                // this output record already had at least one input record associated with it.
+                TreeSet<Long> _set = results.get(out);
+                _set.add(in);
+                results.put(out, _set);
             }
         }
         LOG.info("done createMergedRecordsO2Imap");
