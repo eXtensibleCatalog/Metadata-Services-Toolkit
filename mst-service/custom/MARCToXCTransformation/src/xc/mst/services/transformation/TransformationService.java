@@ -501,7 +501,7 @@ public class TransformationService extends SolrTransformationService {
         }
         return null;
     }
-
+    
     /*
      * Process bibliographic record
      */
@@ -636,6 +636,14 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process710(originalRecord, transformedRecord);
         transformedRecord = process711(originalRecord, transformedRecord);
         transformedRecord = process730(originalRecord, transformedRecord);
+
+        if (config.getPropertyAsInt("SourceOfBibRecordIDs", 0) == 1)
+    		transformedRecord = process001And003(originalRecord, transformedRecord);
+
+        // this should be the final step in line!
+    	if (config.getPropertyAsInt("DedupRecordIDs", 0) == 1)
+    		transformedRecord = dedupRecordIDs(originalRecord, transformedRecord);
+
     }
 
     /*
