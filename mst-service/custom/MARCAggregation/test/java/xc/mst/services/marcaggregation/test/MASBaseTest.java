@@ -109,6 +109,7 @@ public class MASBaseTest extends MockHarvestTest {
             }
         } catch (Throwable t) {
             LOG.error("** Problem encountered trying to setup applicationContext! ! **", t);
+            getUtil().throwIt(t);
         }
         return ac;
     }

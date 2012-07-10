@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableInt;
@@ -31,6 +32,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import xc.mst.services.impl.dao.GenericMetadataServiceDAO;
 import xc.mst.services.marcaggregation.RecordOfSourceData;
+import xc.mst.services.marcaggregation.matcher.SCNData;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.TimingLogger;
 /**
@@ -56,6 +58,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String matchpoints_022a_table   = "matchpoints_022a";
     public final static String matchpoints_024a_table   = "matchpoints_024a";
     public final static String matchpoints_035a_table   = "matchpoints_035a";
+    public final static String prefixes_035a_table      = "prefixes_035a";
 
     public final static String merge_scores_table       = "merge_scores";
     public final static String merged_records_table     = "merged_records";
@@ -64,9 +67,90 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String input_record_id_field    = "input_record_id";
     public final static String string_id_field          = "string_id";
     public final static String numeric_id_field         = "numeric_id";
+    public final static String prefix_id_field          = "prefix_id";
+    public final static String prefix_field             = "prefix";
     public final static String leaderByte17_field       = "leaderByte17";
     public final static String size_field               = "size";
 
+    /**
+     * there is a constraint on prefix_id, so have to place that into the db 1st, before trying to write 035 data.
+     * @param inputId2matcherMap
+     * @param tableName
+     */
+    @SuppressWarnings("unchecked")
+    public void persistSCNMatchpointMaps(Map<Long, List<SCNData>> inputId2matcherMap, String tableName) {
+
+        TimingLogger.start("MarcAggregationServiceDAO.persistSCNMaps");
+
+        TimingLogger.start("prepare to write");
+        String dbLoadFileStr = getDbLoadFileStr();
+
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
+
+        try {
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+
+            final MutableInt j = new MutableInt(0);
+            for (Object keyObj : inputId2matcherMap.keySet()) {
+                Long id = (Long) keyObj;
+                final byte[] idBytes = String.valueOf(id).getBytes();
+                Object list = inputId2matcherMap.get(id);
+
+                try {
+                    if (list == null) {
+                        continue;
+                    }
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+
+                    final MutableInt j2 = new MutableInt(0);
+                    List<SCNData> scnList = (List<SCNData>) list;
+                    LOG.debug("insert: " + tableName + ".size(): " + scnList.size());
+                    if (scnList != null && scnList.size() > 0) {
+                        for (SCNData _scn: scnList) {
+                            try {   // need to loop through all strings associated with id!
+                                    if (j2.intValue() > 0) {
+                                        os.write(newLineBytes);
+                                    } else {
+                                        j2.increment();
+                                    }
+                                    // ends up 'quoting' the string, was needed for ISBN 020$a but this method called by other matchers.
+                                    os.write(getBytes(_scn.full));
+                                    os.write(tabBytes);
+                                    os.write((String.valueOf(_scn.prefixNum).getBytes()));
+                                    os.write(tabBytes);
+                                    os.write((String.valueOf(_scn.scn).getBytes()));
+                                    os.write(tabBytes);
+                                    os.write(idBytes);
+                            } catch (Exception e) {
+                                LOG.error("problem with data - id="+id,e);
+                                getUtil().throwIt(e);
+                            }
+                        }
+                    }
+                } catch (Throwable t) {
+                    LOG.error("*** problem with data readying id="+id,t);
+                    getUtil().throwIt(t);
+                }
+            }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
+
+        } catch (Exception e4) {
+            LOG.error("*** problem with replaceIntoTable data",e4);
+            getUtil().throwIt(e4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistSCNMaps");
+        }
+    }
 
     @SuppressWarnings("unchecked")
     public void persist2StrMatchpointMaps(Map<Long, List<String[]>> inputId2matcherMap, String tableName) {
@@ -212,6 +296,72 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             getUtil().throwIt(t4);
         } finally {
             TimingLogger.stop("MarcAggregationServiceDAO.persist1StrMatchpointMaps");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void persistPrefixList(List<String> prefixList, String tableName) {
+        TimingLogger.start("MarcAggregationServiceDAO.persistPrefixMap");
+        TimingLogger.start("prepare to write");
+
+        String dbLoadFileStr = getDbLoadFileStr();
+        final byte[] tabBytes = getTabBytes();
+        final byte[] newLineBytes = getNewLineBytes();
+
+        try {
+            final MutableInt j = new MutableInt(0);
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            for (int id=0; id<prefixList.size(); id++) {
+                Object prefixO = prefixList.get(id);
+
+                try {
+                    if (prefixO == null) {
+                        continue;
+                    }
+                    if (j.intValue() > 0) {
+                        os.write(newLineBytes);
+                    } else {
+                        j.increment();
+                    }
+
+                    final byte[] idBytes = String.valueOf(id).getBytes();
+                    final MutableInt _j = new MutableInt(0);
+
+                    String prefix = (String) prefixO;
+                    if (StringUtils.isEmpty(prefix)) {
+                        continue;
+                    }
+                    try {
+                        // write the newline after we have written a line, but not at the end of the last line
+                        if (_j.intValue() > 0) {
+                            os.write(newLineBytes);
+                        } else {
+                            _j.increment();
+                        }
+                        os.write(getBytes(prefix));
+                        os.write(tabBytes);
+                        os.write(idBytes);
+                    } catch (Exception e) {
+                        LOG.error("problem with data - id="+id,e);
+                        getUtil().throwIt(e);
+                    }
+                } catch (Throwable t) {
+                    LOG.error("problem with replaceIntoTable data - id="+id,t);
+                    getUtil().throwIt(t);
+                }
+            }
+            os.close();
+            TimingLogger.stop("prepare to write");
+
+            TimingLogger.start("will replace");
+            replaceIntoTable(tableName, dbLoadFileStr);
+            TimingLogger.stop("will replace");
+
+        } catch (Throwable t4) {
+            LOG.error("*** problem with replaceIntoTable data",t4);
+            getUtil().throwIt(t4);
+        } finally {
+            TimingLogger.stop("MarcAggregationServiceDAO.persistPrefixMap");
         }
     }
 
@@ -584,6 +734,25 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
       return results;
     }
 
+    public Map<Integer, String> getPrefixes() {
+        TimingLogger.start("MarcAggregationServiceDAO.getPrefixes");
+
+        String sql = "select prefix_id, prefix from " + prefixes_035a_table; // +
+        //        " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+        //LOG.info(sql);
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        Map<Integer, String> results = new TreeMap<Integer, String>();
+        for (Map<String, Object> row : rowList) {
+            Long id = (Long) row.get("prefix_id");
+            String prefix = (String) row.get("prefix");
+            Integer id_i = id.intValue();
+            results.put(id_i,prefix);
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.getPrefixes");
+        return results;
+    }
+
     //TODO
     /*
     public TLongObjectHashMap<RecordOfSourceData> getScores() {
@@ -667,6 +836,35 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             results.add(id);
         }
         TimingLogger.stop("MarcAggregationServiceDAO.getMatchingRecords");
+        return results;
+    }
+
+    /**
+     * given a string_id in String form to match on. (currently used by ISSN, ISBN, SCCN, x024 matchers)
+     * note - this method adds the quoting, which was added for ISBN 020$a others don't necessarily need it (depending on how they were inserted)
+     *
+     *  for instance:
+     * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+     *
+     * @param tableName
+     * @param record_id_field
+     * @param string_id_field
+     * @param itemToMatch
+     * @return
+     */
+    public List<Long> getMatchingSCCNRecords(String tableName, String record_id_field, String _numeric_id_field, String _prefix_id_field,SCNData itemsToMatch) {
+        TimingLogger.start("MarcAggregationServiceDAO.getMatchingSCCNRecords");
+
+        String sql = "select "+ record_id_field + " from " + tableName+ " where "+ _prefix_id_field+ " = ?" + " and "+ _numeric_id_field+ " = ?";
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql, new Object[] {itemsToMatch.prefixNum, itemsToMatch.scn});
+
+        List<Long> results = new ArrayList<Long>();
+        for (Map<String, Object> row : rowList) {
+            Long id = (Long) row.get("input_record_id");
+            results.add(id);
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.getMatchingSCCNRecords");
         return results;
     }
 

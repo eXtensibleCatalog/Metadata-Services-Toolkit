@@ -10,6 +10,7 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,18 +52,18 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
 public class SystemControlNumberMatcher extends FieldMatcherService {
 
     // you can have multiple 035$a fields within a record (mult 035, each w/1 $a)
-    // thus use a list of string pairs, the pair values are the original string
-    //    and the normalized string
-    protected Map<Long, List<String[]>> inputId2scn = new HashMap<Long, List<String[]>>();
-
-    // I wonder if the prefixes will be unique?  TODO  And how do you assoc. ind prefixes, with ints?  don't bother for now
-    //protected Map<Long, List<String>> inputId2prefix = new HashMap<Long, List<String>>();
+    // thus use a list of SCNData, the data values are the original string
+    //    and the normalized string parts - the numeric id and the prefix
+    protected Map<Long, List<SCNData>> inputId2scn = new HashMap<Long, List<SCNData>>();
 
     // multiple records might have the same normalized 035$a, this would be an indication of a match
-    protected Map<String, List<Long>> scn2inputIds = new HashMap<String, List<Long>>();
+    protected Map<SCNData, List<Long>> scn2inputIds = new HashMap<SCNData, List<Long>>();
+
+    protected List<String> prefixList = new ArrayList<String>();
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
 
+    // as a side effect populates prefix list, for now, only if it finds a non-blank prefix.
     protected String getPrefixId(String s) {
         int start, end;
         if (s.contains("(")) {
@@ -70,8 +71,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             if (s.contains(")")) {
                 end = s.indexOf(")");
                 LOG.debug(s);
-                LOG.debug("found a prefix of " + s.substring(start + 1, end));
-                return s.substring(start + 1, end);
+                final String prefix = s.substring(start + 1, end);
+                LOG.debug("found a prefix of " + prefix);
+                if (!prefixList.contains(prefix)) {
+                    prefixList.add(prefix);
+                }
+                return prefix;
             }
         }
         return "";
@@ -96,10 +101,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         return strippedL;
     }
 
-    protected String getMapId(String s) {
+    protected SCNData getMapId(String s) {
         // return (getNumericId(s)*1000)+getPrefixId(s);
-        LOG.debug("mapID:" + getPrefixId(s) + getNumericId(s));
-        return getPrefixId(s) + getNumericId(s);
+        final String prefix = getPrefixId(s);
+        LOG.debug("mapID:" + prefix + getNumericId(s));
+        return new SCNData(prefix ,prefixList.indexOf(prefix) ,getNumericId(s), s);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 LOG.error("ERROR: Multiple $a subfields in 035 in record! " + ir.recordId);
             }
             for (String subfield : subfields) {
-                String goods = getMapId(subfield);
+                SCNData goods = getMapId(subfield);
                 // look in memory
                 if (scn2inputIds.get(goods) != null) {
                     results.addAll(scn2inputIds.get(goods));
@@ -129,7 +135,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
                 // now look in the database too!
                 //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
-                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_035a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.string_id_field,goods);
+                List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
+                        MarcAggregationServiceDAO.input_record_id_field,
+                        MarcAggregationServiceDAO.numeric_id_field,
+                        MarcAggregationServiceDAO.prefix_id_field, goods);
+
                 LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
                 for (Long record: records) {
                     if (!record.equals(id)) {
@@ -151,18 +161,17 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     @Override
     public void removeRecordFromMatcher(InputRecord r) {
         Long id = new Long(r.getId());
-        List<String[]> goodsList = inputId2scn.get(id);
+        List<SCNData> goodsList = inputId2scn.get(id);
         if (goodsList != null) {
-            for (String[] goodsFields: goodsList) {
-                String scn = goodsFields[0];
-                List<Long> idsList = scn2inputIds.get(scn);
+            for (SCNData goodsFields: goodsList) {
+                List<Long> idsList = scn2inputIds.get(goodsFields);
                 if (idsList != null) {
                     idsList.remove(id);
                     if (idsList.size() > 0) {
-                        scn2inputIds.put(scn, idsList);
+                        scn2inputIds.put(goodsFields, idsList);
                     }
                     else {
-                        scn2inputIds.remove(scn);
+                        scn2inputIds.remove(goodsFields);
                     }
                 }
             }
@@ -192,6 +201,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 String prefix = getPrefixId(subfield);
                 if (prefix.equals("")) {
                     // must have a prefix to use as a match point.
+                    // TODO MST-503
                     break;
                 }
                 else if (prefix.equals(oclc)) {
@@ -206,16 +216,15 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     }
                     haveSeenOCoLC = true;
                 }
-                String goods = getMapId(subfield);
-                List<String[]> goodsList = inputId2scn.get(id);
-                final String[] goodsArray = new String[] {goods, subfield};  // it is a pair of strings
+                SCNData goods = getMapId(subfield);
+                List<SCNData> goodsList = inputId2scn.get(id);
                 if (goodsList == null || goodsList.size() == 0) {
-                    goodsList = new ArrayList<String[]>();
-                    goodsList.add(goodsArray);
+                    goodsList = new ArrayList<SCNData>();
+                    goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
                 }
-                else if (!goodsList.contains(goodsArray)) {
-                    goodsList.add(goodsArray);
+                else if (!goodsList.contains(goods)) {
+                    goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
                 }
                 else {
@@ -242,15 +251,28 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // from db
     @Override
     public void load() {
-        // TODO we have string data so will we load some subset?
+        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        Map<Integer,String> map = s.getMarcAggregationServiceDAO().getPrefixes();
+        Collection<String> c = map.values();
 
+        //obtain an Iterator for Collection
+        Iterator<String> itr = c.iterator();
+
+        //iterate through TreeMap values iterator
+        while(itr.hasNext()) {
+            prefixList.add((String) itr.next());
+        }
+        // TODO
+        // May also want to retrieve all matchpoint int data into memory,
     }
 
     // into db
     @Override
-    public void flush(boolean freeUpMemory) {
+    public void flush(boolean force) {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist2StrMatchpointMaps(inputId2scn, MarcAggregationServiceDAO.matchpoints_035a_table);
+        s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
+        s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn, MarcAggregationServiceDAO.matchpoints_035a_table);
+        // allow prefix list to grow - should not get too big?
         inputId2scn.clear();
         scn2inputIds.clear();
     }
@@ -280,7 +302,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         //return scn2inputIds.size();
 
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique strings in dB & "+inputId2scn.size() +" strs in mem.");
-        return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_035a_table);
+        LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique strings in dB & "+inputId2scn.size() +" strs in mem.");
+        return s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_035a_table);
     }
 }
