@@ -32,14 +32,18 @@ import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
  * that way, and now it turns out that the requirement has changed.  Now, just make sure you have a valid 035a with a well-formed
  * prefix followed by an identifier, and save it as a matchpoint.
  *
+ * A later requirement may be to modify to accept the matchpoint with NO prefix.  Not yet implemented!
+ * This requirement bounces back and forth, since:
+ * 3/9/12 This just in, ignore the field if there is no prefix.
+ *
  * Note that the XC MARC Normalization Service has steps to ensure that these identifiers are in a consistent format.
  * The prefix is defined as the characters within the parentheses.
  * OCLC numbers may also contain other letters BETWEEN the prefix and the prefix and the number itself.
  * These should be ignored in matching, as all OCLC numeric values are unique without the numbers.
  * E.g. (OCoLC)ocm12345 should match with (OCoLC)12345 but NOT with (NRU)12345.
- * TODO do we need to save original format, i.e. (OCoLC)ocm12345 or can we just save (OCoLC)12345 ?
  *
- * 3/9/12 This just in, ignore the field if there is no prefix.
+ * We save the entire string in the db, i.e. (OCoLC)ocm12345.
+ *
  *
  * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
  *
@@ -64,7 +68,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
 
     // as a side effect populates prefix list, for now, only if it finds a non-blank prefix.
-    protected String getPrefixId(String s) {
+    protected String getPrefix(String s) {
         int start, end;
         if (s.contains("(")) {
             start = s.indexOf("(");
@@ -103,7 +107,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     protected SCNData getMapId(String s) {
         // return (getNumericId(s)*1000)+getPrefixId(s);
-        final String prefix = getPrefixId(s);
+        final String prefix = getPrefix(s);
         LOG.debug("mapID:" + prefix + getNumericId(s));
         return new SCNData(prefix ,prefixList.indexOf(prefix) ,getNumericId(s), s);
     }
@@ -125,27 +129,30 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 SCNData goods = getMapId(subfield);
-                // look in memory
-                if (scn2inputIds.get(goods) != null) {
-                    results.addAll(scn2inputIds.get(goods));
-                    if (results.contains(id)) {
-                        results.remove(id);
+
+                // for now don't consider 035$a if no prefix.
+                if (!goods.prefix.equals("")) {
+                    // look in memory
+                    if (scn2inputIds.get(goods) != null) {
+                        results.addAll(scn2inputIds.get(goods));
+                        if (results.contains(id)) {
+                            results.remove(id);
+                        }
                     }
-                }
 
-                // now look in the database too!
-                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
-                List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
-                        MarcAggregationServiceDAO.input_record_id_field,
-                        MarcAggregationServiceDAO.numeric_id_field,
-                        MarcAggregationServiceDAO.prefix_id_field, goods);
+                    // now look in the database too!
+                    List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
+                            MarcAggregationServiceDAO.input_record_id_field,
+                            MarcAggregationServiceDAO.numeric_id_field,
+                            MarcAggregationServiceDAO.prefix_id_field, goods);
 
-                LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
-                for (Long record: records) {
-                    if (!record.equals(id)) {
-                        if (!results.contains(record)) {
-                            results.add(record);
-                            LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
+                    LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+                    for (Long record: records) {
+                        if (!record.equals(id)) {
+                            if (!results.contains(record)) {
+                                results.add(record);
+                                LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
+                            }
                         }
                     }
                 }
@@ -198,7 +205,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
-                String prefix = getPrefixId(subfield);
+                String prefix = getPrefix(subfield);
                 if (prefix.equals("")) {
                     // must have a prefix to use as a match point.
                     // TODO MST-503
