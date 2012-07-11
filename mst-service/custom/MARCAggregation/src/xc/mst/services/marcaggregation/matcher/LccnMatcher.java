@@ -294,6 +294,10 @@ public class LccnMatcher extends FieldMatcherService {
         }
     }
 
+    /**
+     * note, this will only get hit if this matcher is in use, via custom.properties, so no worries about
+     * unnecessarily loading stuff into memory.
+     */
     @Override
     public void load() {
 
