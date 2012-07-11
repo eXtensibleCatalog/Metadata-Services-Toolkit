@@ -7,6 +7,11 @@ public class SCNData {
         this.scn = scn;
         this.full = full;
     }
+    public SCNData(Integer prefixNum, Long scn, String full) {
+        this.prefixNum = prefixNum;
+        this.scn = scn;
+        this.full = full;
+    }
     public boolean equals(Object that) {
         if (that == null) return false;
         if ( this == that ) return true;

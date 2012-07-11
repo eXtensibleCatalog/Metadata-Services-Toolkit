@@ -10,7 +10,6 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +58,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // thus use a list of SCNData, the data values are the original string
     //    and the normalized string parts - the numeric id and the prefix
     protected Map<Long, List<SCNData>> inputId2scn = new HashMap<Long, List<SCNData>>();
+    protected Map<Long, List<SCNData>> inputId2scn_unpersisted = new HashMap<Long, List<SCNData>>();
 
     // multiple records might have the same normalized 035$a, this would be an indication of a match
     protected Map<SCNData, List<Long>> scn2inputIds = new HashMap<SCNData, List<Long>>();
@@ -139,7 +139,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                             results.remove(id);
                         }
                     }
-
+/*
                     // now look in the database too!
                     List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
                             MarcAggregationServiceDAO.input_record_id_field,
@@ -155,6 +155,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                             }
                         }
                     }
+ */
                 }
             }
         }
@@ -229,10 +230,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     goodsList = new ArrayList<SCNData>();
                     goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
+                    inputId2scn_unpersisted.put(id, goodsList);
                 }
                 else if (!goodsList.contains(goods)) {
                     goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
+                    inputId2scn_unpersisted.put(id, goodsList);
                 }
                 else {
                     LOG.debug("we have already seen " + goods + " for recordId: " + r.recordId);
@@ -260,28 +263,50 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     public void load() {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
         Map<Integer,String> map = s.getMarcAggregationServiceDAO().getPrefixes();
-        Collection<String> c = map.values();
 
-        //obtain an Iterator for Collection
-        Iterator<String> itr = c.iterator();
-
-        //iterate through TreeMap values iterator
-        while(itr.hasNext()) {
-            prefixList.add((String) itr.next());
+        // want these ordered, guaranteed to have a 0-based incrementing set of numbers in the map.
+        for (int i=0; i<map.size(); i++) {
+            prefixList.add(map.get(i));
         }
-        // TODO
-        // May also want to retrieve all matchpoint int data into memory,
+
+        // Retrieve all match point integer data into memory,
+        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        inputId2scn = masDao.getSCCNRecordsCache();
+        LOG.info("inputId2scn loaded, size="+inputId2scn.size());
+
+        // now go from inputId2scn to populate scn2inputIds
+        for (Long id: inputId2scn.keySet()) {
+            List<SCNData> ids = inputId2scn.get(id);
+
+            for (SCNData goods: ids) {
+                List<Long> idsList = scn2inputIds.get(goods);
+                if (idsList == null || idsList.size() == 0) {
+                    idsList = new ArrayList<Long>();
+                    idsList.add(id);
+                    scn2inputIds.put(goods, idsList);
+                }
+                else if (!idsList.contains(id)){
+                    idsList.add(id);
+                    scn2inputIds.put(goods, idsList);
+                }
+            }
+        }
     }
 
     // into db
     @Override
     public void flush(boolean force) {
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
-        s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn, MarcAggregationServiceDAO.matchpoints_035a_table);
-        // allow prefix list to grow - should not get too big?
-        inputId2scn.clear();
-        scn2inputIds.clear();
+        if (force) {
+            MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+            s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
+            s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn_unpersisted, MarcAggregationServiceDAO.matchpoints_035a_table);
+            // allow prefix list to grow - should not get too big?
+            inputId2scn_unpersisted.clear();
+
+            // no longer clear these we are keeping it in mem.
+            //inputId2scn.clear();
+            //scn2inputIds.clear();
+        }
     }
 
 

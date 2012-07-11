@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -619,7 +620,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return results;
     }
 
-    public TLongLongHashMap getBibRecords(int page) {
+    private TLongLongHashMap getBibRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getBibRecords");
 
         String sql = "select input_record_id, output_record_id from " + bib_records_table +
@@ -659,7 +660,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * use to load into memory at service start time.
      * @return
      */
-    public TLongLongHashMap getLccnRecords(int page) {
+    private TLongLongHashMap getLccnRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getLccnRecords");
 
         String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table +
@@ -695,6 +696,74 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         return records;
     }
 
+    /**
+     * use to load into memory at service start time.
+     * @return
+     */
+    private Map<Long, List<SCNData>> getSCCNRecords(int page) {
+        TimingLogger.start("MarcAggregationServiceDAO.getSCCNRecords");
+
+        String sql = "select full_string, prefix_id, numeric_id, input_record_id from " +
+                matchpoints_035a_table +
+                " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+        LOG.info(sql);
+
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        Map<Long, List<SCNData>> results = new TreeMap<Long, List<SCNData>>();
+        for (Map<String, Object> row : rowList) {
+            String full = (String) row.get("full_string");
+            Integer prefix_id = ((Long) row.get("prefix_id")).intValue();
+            Long num_id = (Long) row.get("numeric_id");
+            Long in_id = (Long) row.get("input_record_id");
+            SCNData goods = new SCNData(prefix_id, num_id, full);
+
+            List<SCNData> goodsList = results.get(in_id);
+            if (goodsList == null || goodsList.size() == 0) {
+                goodsList = new ArrayList<SCNData>();
+                goodsList.add(goods);
+                results.put(in_id, goodsList);
+            }
+            else if (!goodsList.contains(goods)) {
+                goodsList.add(goods);
+                results.put(in_id, goodsList);
+            }
+            else {
+                LOG.debug("we have already seen " + goods + " for recordId: " + in_id);
+            }
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.getSCCNRecords");
+        return results;
+    }
+
+    public Map<Long, List<SCNData>> getSCCNRecordsCache() {
+        TimingLogger.start("getSCCNRecordsCache");
+        int page = 0;
+        Map<Long, List<SCNData>>  records = getSCCNRecords(page);
+        boolean gotResults = records != null && records.size() > 0;
+        while (gotResults) {
+            //got to go through and look for common id's
+            Map<Long, List<SCNData>> _records = getSCCNRecords(++page);
+            if (_records != null && _records.size() > 0) {
+                for (Long key: _records.keySet()) {
+                    // maybe its as simple as this:
+                    //records.putAll(_records);
+                    // but I think I have to check carefully as 1 input_id can have
+                    // mult. 035's and could be unlucky enough to have db return them in sep. pages.
+                    List<SCNData> goodsList = _records.get(key);
+                    if (records.containsKey(key)) {
+                        goodsList.addAll(records.get(key));
+                    }
+                    records.put(key, goodsList);
+                }
+            }
+            else {
+                gotResults = false;
+            }
+        }
+        TimingLogger.stop("getSCCNRecordsCache");
+        return records;
+    }
+
     public List<Long> getMergedInputRecordsCache() {
         TimingLogger.start("getMergedInputRecordsCache");
         int page = 0;
@@ -717,7 +786,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * input records that are part of a merge set (>1 corresponds to an output record)
      * @return
      */
-    public List<Long> getMergedInputRecords(int page) {
+    private List<Long> getMergedInputRecords(int page) {
         TimingLogger.start("MarcAggregationServiceDAO.getMergedInputRecords");
 
       String sql = "select input_record_id from " + merged_records_table +
