@@ -81,6 +81,9 @@ public class TransformationService extends SolrTransformationService {
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
 
+    // XC's org code
+    public static final String XC_SOURCE_OF_MARC_ORG = "NyRoXCO";
+
     protected TLongLongHashMap getLongKeyedMap(String key, Map<String, TLongLongHashMap> m1) {
         TLongLongHashMap m2 = m1.get(key);
         if (m2 == null) {
@@ -341,7 +344,11 @@ public class TransformationService extends SolrTransformationService {
             } else {
                 record.setMode(Record.STRING_MODE);
 
-                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml());
+                String sourceOfRecords = null;
+                if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
+                	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
+                
+                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
 
                 // Get the ORG code from the 035 field
                 orgCode = originalRecord.getOrgCode();

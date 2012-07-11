@@ -47,7 +47,11 @@ public class SaxMarcXmlRecord implements ContentHandler {
     protected StringBuilder sb = new StringBuilder();
 
     protected MarcRecord marcRecord = new MarcRecord();
-
+    
+    // should we only process 9XX fields that come from this source (9XX$1 value)?
+    // if null, we only process 9XX fields with a $5 matching the marc record's orgCode (003)
+    protected String sourceOfRecords = null;
+    
     public long getRecordId() {
         return recordId;
     }
@@ -60,7 +64,8 @@ public class SaxMarcXmlRecord implements ContentHandler {
         return marcRecord.getLeader();
     }
 
-    public SaxMarcXmlRecord(String marcXml) {
+    public SaxMarcXmlRecord(String marcXml, String sourceOfRecords) {
+    	this.sourceOfRecords = sourceOfRecords;
         try {
             TimingLogger.start("sax");
             xmlReader.setContentHandler(this);
@@ -72,6 +77,10 @@ public class SaxMarcXmlRecord implements ContentHandler {
         }
     }
 
+    public SaxMarcXmlRecord(String marcXml) {
+    	this(marcXml, null);
+    }
+    
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         sb.append(ch, start, length);
@@ -108,14 +117,21 @@ public class SaxMarcXmlRecord implements ContentHandler {
                     }
                 }
             }
+            
             boolean orgCodeFail = false;
             if (currentField.getTag() >= 900 && currentField.getTag() <= 999) {
                 orgCodeFail = true;
                 if (currentField.getSubfields() != null) {
                     for (Subfield sf : currentField.getSubfields()) {
-                        if (sf.getCode() == '5' && sf.getContents().equals(marcRecord.getOrgCode())) {
-                            orgCodeFail = false;
-                        }
+                    	if (sourceOfRecords == null) {
+	                        if (sf.getCode() == '5' && sf.getContents().equals(marcRecord.getOrgCode())) {
+	                            orgCodeFail = false;
+	                        }
+                    	} else {
+	                        if (sf.getCode() == '1' && sf.getContents().equals(sourceOfRecords)) {
+	                            orgCodeFail = false;
+	                        }                    		
+                    	}
                     }
                 }
             }
