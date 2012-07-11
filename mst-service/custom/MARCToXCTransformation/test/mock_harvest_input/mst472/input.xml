@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2012-01-20T14:04:09Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/MetadataServicesToolkit/pub/marcnormalization/oaiRepository</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/4</identifier>
+        <datestamp>2012-01-20T19:38:09Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00900uas a22002890  4500</marc:leader>
+          <marc:controlfield tag="001">4937</marc:controlfield>
+          <marc:controlfield tag="003">UIUdb</marc:controlfield>
+          <marc:controlfield tag="005">20020108134258.0</marc:controlfield>
+          <marc:controlfield tag="007">cr cn </marc:controlfield>
+          <marc:controlfield tag="008">820212c19829999vauar    rh   0uuua0eng d</marc:controlfield>
+          <marc:datafield ind1=" " ind2=" " tag="035">
+            <marc:subfield code="a">(OCoLC)8152681</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="040">
+            <marc:subfield code="a">NSF</marc:subfield>
+            <marc:subfield code="c">NSF</marc:subfield>
+            <marc:subfield code="d">IUL</marc:subfield>
+            <marc:subfield code="d">MBU</marc:subfield>
+            <marc:subfield code="d">IUL</marc:subfield>
+            <marc:subfield code="d">RRR</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="043">
+            <marc:subfield code="a">n-us---</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="049">
+            <marc:subfield code="a">RRS3</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="090">
+            <marc:subfield code="a">JK671</marc:subfield>
+            <marc:subfield code="b">.F42</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="099">
+            <marc:subfield code="a">JK671 .F42</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2="0" tag="245">
+            <marc:subfield code="a">Federal staff directory.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="260">
+            <marc:subfield code="a">Mount Vernon, Va. :</marc:subfield>
+            <marc:subfield code="b">Congressional Staff Directory ltd.,</marc:subfield>
+            <marc:subfield code="c">c1982-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="300">
+            <marc:subfield code="a">v. ;</marc:subfield>
+            <marc:subfield code="c">24 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="310">
+            <marc:subfield code="a">Annual</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="0" ind2=" " tag="362">
+            <marc:subfield code="a">1982-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="530">
+            <marc:subfield code="a">Also available via the Internet (updated weekly).</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="650">
+            <marc:subfield code="a">Executive departments</marc:subfield>
+            <marc:subfield code="z">United States</marc:subfield>
+            <marc:subfield code="x">Directories.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="651">
+            <marc:subfield code="a">United States</marc:subfield>
+            <marc:subfield code="x">Officials and employees</marc:subfield>
+            <marc:subfield code="x">Directories.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2="0" tag="651">
+            <marc:subfield code="a">United States</marc:subfield>
+            <marc:subfield code="x">Officials and employees</marc:subfield>
+            <marc:subfield code="x">Biography.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="4" ind2="1" tag="856">
+            <marc:subfield code="u">http://fsd.cq.com/original_index.html</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="910">
+            <marc:subfield code="a">820421</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1=" " ind2=" " tag="999">
+            <marc:subfield code="a">Text data RCL Internet</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="931" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="932" ind1=" " ind2=" ">
+            <marc:subfield code="a">Language material</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Text</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="935" ind1=" " ind2=" ">
+            <marc:subfield code="a">Serial</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="933" ind1=" " ind2=" ">
+            <marc:subfield code="a">Electronic resource</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="934" ind1=" " ind2=" ">
+            <marc:subfield code="a">Remote</marc:subfield>
+            <marc:subfield code="1">NyRoXCO</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="937" ind1=" " ind2=" ">
+            <marc:subfield code="a">Non-Fiction</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="939" ind1=" " ind2=" ">
+            <marc:subfield code="a">1982-    </marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="941" ind1=" " ind2=" ">
+            <marc:subfield code="a">eng</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="943" ind1=" " ind2=" ">
+            <marc:subfield code="a">English</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="130" ind1="0" ind2=" ">
+            <marc:subfield code="a">Federal staff directory.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="a">Executive departments</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="x">Directories.</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="x">Officials and employees</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="965" ind1=" " ind2="0">
+            <marc:subfield code="x">Biography.</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="967" ind1=" " ind2="0">
+            <marc:subfield code="a">United States</marc:subfield>
+            <marc:subfield code="5">UIUdb</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

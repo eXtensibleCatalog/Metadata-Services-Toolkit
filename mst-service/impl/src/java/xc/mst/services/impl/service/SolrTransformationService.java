@@ -350,6 +350,100 @@ public abstract class SolrTransformationService extends GenericMetadataService {
     }
 
     /**
+     * Processes the 001/003 fields from the SaxMarcXmlRecord we're transforming.
+     * These become the recordID fields
+     *
+     * @param transformMe
+     *            The MARC XML record we're transforming
+     * @param transformInto
+     *            The XC record which will store the transformed version of the
+     *            record
+     * @return A reference to transformInto after this transformation step has
+     *         been completed.
+     */
+    protected AggregateXCRecord process001And003(SaxMarcXmlRecord transformMe,
+            AggregateXCRecord transformInto) {
+    	    	
+        String field001 = transformMe.getControlField(1);
+        String field003 = transformMe.getControlField(3);
+        if (field003 == null)
+            field003 = getOrganizationCode();
+
+        ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+        attributes.add(new Attribute("type", field003));
+        getXCRecordService().addElement(transformInto, "recordID",
+                field001.trim(), AggregateXCRecord.XC_NAMESPACE, attributes,
+                FrbrLevel.MANIFESTATION);
+        
+    	return transformInto;
+    }
+
+    /**
+     * Dedup recordID fields
+     *
+     * @param transformMe
+     *            The MARC XML record we're transforming
+     * @param transformInto
+     *            The XC record which will store the transformed version of the
+     *            record
+     * @return A reference to transformInto after this transformation step has
+     *         been completed.
+     */
+    @SuppressWarnings("unchecked")
+	protected AggregateXCRecord dedupRecordIDs(SaxMarcXmlRecord transformMe,
+            AggregateXCRecord transformInto) {
+    	
+    	Element manifest = transformInto.xcManifestationElement;
+    			
+		List<Element> fields = manifest.getChildren("recordID", AggregateXCRecord.XC_NAMESPACE);
+		ArrayList<Element> removeFlds = new ArrayList<Element>();
+		
+		HashMap<String, HashMap<String, String>> map = new HashMap<String, HashMap<String, String>>();
+		
+		for (Element field : fields) {
+		    String type = field.getAttributeValue("type");
+		    String recordID = field.getText();
+		    
+		    // keep a list of unique recordIDs (with same recordID *and* type)
+		    HashMap<String, String> orgEntries;
+		    if (map.containsKey(type)) {
+		    	orgEntries = map.get(type); 
+			    if (!orgEntries.containsKey(recordID)) {
+			    	orgEntries.put(type, recordID);
+			    }
+		    } else {
+		    	orgEntries = new HashMap<String, String>();
+		    	orgEntries.put(type, recordID);
+		    	map.put(type, orgEntries);
+		    }
+		    // save all recordID fields for later deletion
+		    removeFlds.add(field);
+		}
+		// delete all recordID fields
+		for (Element removeFld : removeFlds) {
+			manifest.removeContent(removeFld);
+		}   
+		
+		// put back only unique recordID fields (no dups)
+		for (String type : map.keySet()) {
+			HashMap<String, String> orgEntries = map.get(type);
+			for (String recordID : orgEntries.values()) {
+				// Setup the attribute list for the xc:recordID
+		        ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+		        attributes.add(new Attribute("type", type));
+
+				Element newElement = new Element("recordID", AggregateXCRecord.XC_NAMESPACE);
+				newElement.setText(recordID);
+				newElement.setAttributes(attributes);
+
+				manifest.addContent(newElement);
+			}
+		}
+
+		return transformInto;
+    }
+    
+    /**
      * Processes the 035 fields from the SaxMarcXmlRecord we're transforming.
      * These become the recordID fields with a type equal to the organization
      * code for the 035 field at the manifestation FRBR level.

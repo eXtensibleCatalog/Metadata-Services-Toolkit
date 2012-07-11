@@ -81,6 +81,9 @@ public class TransformationService extends SolrTransformationService {
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
 
+    // XC's org code
+    public static final String XC_SOURCE_OF_MARC_ORG = "NyRoXCO";
+
     protected TLongLongHashMap getLongKeyedMap(String key, Map<String, TLongLongHashMap> m1) {
         TLongLongHashMap m2 = m1.get(key);
         if (m2 == null) {
@@ -341,7 +344,11 @@ public class TransformationService extends SolrTransformationService {
             } else {
                 record.setMode(Record.STRING_MODE);
 
-                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml());
+                String sourceOfRecords = null;
+                if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
+                	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
+                
+                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
 
                 // Get the ORG code from the 035 field
                 orgCode = originalRecord.getOrgCode();
@@ -501,7 +508,7 @@ public class TransformationService extends SolrTransformationService {
         }
         return null;
     }
-
+    
     /*
      * Process bibliographic record
      */
@@ -636,6 +643,14 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process710(originalRecord, transformedRecord);
         transformedRecord = process711(originalRecord, transformedRecord);
         transformedRecord = process730(originalRecord, transformedRecord);
+
+        if (config.getPropertyAsInt("SourceOfBibRecordIDs", 0) == 1)
+    		transformedRecord = process001And003(originalRecord, transformedRecord);
+
+        // this should be the final step in line!
+    	if (config.getPropertyAsInt("DedupRecordIDs", 0) == 1)
+    		transformedRecord = dedupRecordIDs(originalRecord, transformedRecord);
+
     }
 
     /*

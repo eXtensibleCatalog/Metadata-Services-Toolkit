@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/                                       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd                        http://www.extensiblecatalog.org/xsd/mst/1.0                                       http://www.extensiblecatalog.org/doc/MST/xsd/mst.xsd">
+  <responseDate>2012-01-20T14:04:09Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="marc21">http://localhost:8080/MetadataServicesToolkit/pub/marcnormalization/oaiRepository</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/4</identifier>
+        <datestamp>2012-01-20T19:38:09Z</datestamp>
+        <setSpec>MARCXMLbibliographic</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>01948cas a2200481   4500</marc:leader>
+          <marc:controlfield tag="001">136039</marc:controlfield>
+          <marc:controlfield tag="003">ISUdb</marc:controlfield>
+          <marc:controlfield tag="005">20090403235809.0</marc:controlfield>
+          <marc:controlfield tag="007">cr mn ---uuuuu</marc:controlfield>
+          <marc:controlfield tag="008">741112c19699999be mr1p       0   a0eng  </marc:controlfield>
+          <marc:datafield tag="010" ind1=" " ind2=" ">
+            <marc:subfield code="a">   78006864 </marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="019" ind1=" " ind2=" ">
+            <marc:subfield code="a">1372194</marc:subfield>
+            <marc:subfield code="a">1754700</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="022" ind1="0" ind2=" ">
+            <marc:subfield code="a">0022-314X</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="030" ind1=" " ind2=" ">
+            <marc:subfield code="a">JNUTA9</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="032" ind1=" " ind2=" ">
+            <marc:subfield code="a">853880</marc:subfield>
+            <marc:subfield code="b">USPS</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="035" ind1=" " ind2=" ">
+            <marc:subfield code="a">(ISUdb)136039</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="037" ind1=" " ind2=" ">
+            <marc:subfield code="b">Academic Press, Inc., 6277 Sea Harbor Dr., Orlando, FL 32887-4900</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="040" ind1=" " ind2=" ">
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="c">DLC</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">DLC</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">AIP</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">AIP</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">HUL</marc:subfield>
+            <marc:subfield code="d">NST</marc:subfield>
+            <marc:subfield code="d">GUA</marc:subfield>
+            <marc:subfield code="d">NSD</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">HUL</marc:subfield>
+            <marc:subfield code="d">OCL</marc:subfield>
+            <marc:subfield code="d">MYG</marc:subfield>
+            <marc:subfield code="d">SYS</marc:subfield>
+            <marc:subfield code="d">OCLCQ</marc:subfield>
+            <marc:subfield code="d">MYG</marc:subfield>
+            <marc:subfield code="d">OCLCQ</marc:subfield>
+            <marc:subfield code="d">TJC</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="042" ind1=" " ind2=" ">
+            <marc:subfield code="a">lc</marc:subfield>
+            <marc:subfield code="a">nsdp</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="049" ind1=" " ind2=" ">
+            <marc:subfield code="a">IAIA</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="050" ind1="0" ind2="0">
+            <marc:subfield code="a">QA241</marc:subfield>
+            <marc:subfield code="b">.J67</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="082" ind1="0" ind2=" ">
+            <marc:subfield code="a">512/.81/05</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="210" ind1="0" ind2=" ">
+            <marc:subfield code="a">J. number theory</marc:subfield>
+            <marc:subfield code="b">(Print)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="222" ind1=" " ind2="0">
+            <marc:subfield code="a">Journal of number theory</marc:subfield>
+            <marc:subfield code="b">(Print)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="245" ind1="0" ind2="0">
+            <marc:subfield code="a">Journal of number theory.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="260" ind1=" " ind2=" ">
+            <marc:subfield code="a">Brugge, Belgium [etc.]</marc:subfield>
+            <marc:subfield code="b">Academic Press.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="300" ind1=" " ind2=" ">
+            <marc:subfield code="a">v.</marc:subfield>
+            <marc:subfield code="c">23 cm.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="310" ind1=" " ind2=" ">
+            <marc:subfield code="a">Monthly,</marc:subfield>
+            <marc:subfield code="b">&lt;Oct. 1994- &gt;</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="321" ind1=" " ind2=" ">
+            <marc:subfield code="a">Quarterly</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="321" ind1=" " ind2=" ">
+            <marc:subfield code="a">Bimonthly</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="321" ind1=" " ind2=" ">
+            <marc:subfield code="a">Monthly (except Apr., Aug., and Dec.),</marc:subfield>
+            <marc:subfield code="b">&lt;1986- &gt;</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="362" ind1="0" ind2=" ">
+            <marc:subfield code="a">v. 1- Jan. 1969-</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="530" ind1=" " ind2=" ">
+            <marc:subfield code="a">Also available to subscribers via the World Wide Web.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="596" ind1="7" ind2="1">
+            <marc:subfield code="z">Also available online:</marc:subfield>
+            <marc:subfield code="3">Table of contents and abstracts</marc:subfield>
+            <marc:subfield code="u">http://www.apnet.com/www/journal/nt.htm</marc:subfield>
+            <marc:subfield code="2">http</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="596" ind1="7" ind2=" ">
+            <marc:subfield code="u">http://firstsearch.oclc.org/journal=0022-314x;screen=info;ECOIP</marc:subfield>
+            <marc:subfield code="z">Address for accessing the journal from an authorized IP address through OCLC FirstSearch Electronic Collections Online. Subscription to online journal required for access to abstracts and full text</marc:subfield>
+            <marc:subfield code="2">http</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="596" ind1="4" ind2="1">
+            <marc:subfield code="u">http://www.sciencedirect.com/science/journal/0022314X</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="650" ind1=" " ind2="0">
+            <marc:subfield code="a">Number theory</marc:subfield>
+            <marc:subfield code="v">Periodicals.</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="776" ind1="1" ind2=" ">
+            <marc:subfield code="t">Journal of number theory (Online)</marc:subfield>
+            <marc:subfield code="x">1096-1658</marc:subfield>
+            <marc:subfield code="w">(DLC)sn 97000935</marc:subfield>
+            <marc:subfield code="w">(OCoLC)36945904</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="850" ind1=" " ind2=" ">
+            <marc:subfield code="a">CaOWA</marc:subfield>
+            <marc:subfield code="a">DLC</marc:subfield>
+            <marc:subfield code="a">GU</marc:subfield>
+            <marc:subfield code="a">NCH</marc:subfield>
+            <marc:subfield code="a">NN</marc:subfield>
+            <marc:subfield code="a">NvU</marc:subfield>
+            <marc:subfield code="a">ViBlbV</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="891" ind1="3" ind2="0">
+            <marc:subfield code="9">853</marc:subfield>
+            <marc:subfield code="8">1</marc:subfield>
+            <marc:subfield code="a">v.</marc:subfield>
+            <marc:subfield code="b">no.</marc:subfield>
+            <marc:subfield code="i">(year)</marc:subfield>
+            <marc:subfield code="j">(month)</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="891" ind1="4" ind2="0">
+            <marc:subfield code="9">863</marc:subfield>
+            <marc:subfield code="8">1</marc:subfield>
+            <marc:subfield code="a">&lt;1&gt;-</marc:subfield>
+            <marc:subfield code="i">&lt;1969&gt;-</marc:subfield>
+            <marc:subfield code="x">provisional</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="936" ind1=" " ind2=" ">
+            <marc:subfield code="a">Dec. 1994</marc:subfield>
+          </marc:datafield>
+          <marc:datafield tag="994" ind1=" " ind2=" ">
+            <marc:subfield code="a">E0</marc:subfield>
+            <marc:subfield code="b">IAI</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:mst.rochester.edu:MetadataServicesToolkit/marcnormalization/6</identifier>
+        <datestamp>2012-01-20T19:38:09Z</datestamp>
+        <setSpec>MARCXMLholding</setSpec>
+      </header>
+      <metadata>
+        <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd">
+          <marc:leader>00421cv  a2200097   4500</marc:leader>
+          <marc:controlfield tag="001">136040</marc:controlfield>
+          <marc:controlfield tag="003">ISUdb</marc:controlfield>
+          <marc:controlfield tag="004">136039</marc:controlfield>
+          <marc:controlfield tag="005">20060406115955.0</marc:controlfield>
+          <marc:controlfield tag="008">0104022u    8   1001ba   0      </marc:controlfield>
+          <marc:datafield ind1="8" ind2=" " tag="852">
+            <marc:subfield code="a">University of Rochester,</marc:subfield>
+            <marc:subfield code="e">Rush Rhees Library, Department of Rare Books, Manuscripts and Archives, Rochester, New York 14627</marc:subfield>
+            <marc:subfield code="b">RBManuscrp</marc:subfield>
+            <marc:subfield code="k">Manuscript Collection</marc:subfield>
+            <marc:subfield code="h">A.A62</marc:subfield>
+          </marc:datafield>
+          <marc:datafield ind1="4" ind2="2" tag="856">
+            <marc:subfield code="u">http://www.library.rochester.edu/index.cfm?page=1127</marc:subfield>
+            <marc:subfield code="3">Register</marc:subfield>
+            <marc:subfield code="z">(List of contents)</marc:subfield>
+          </marc:datafield>
+        </marc:record>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
