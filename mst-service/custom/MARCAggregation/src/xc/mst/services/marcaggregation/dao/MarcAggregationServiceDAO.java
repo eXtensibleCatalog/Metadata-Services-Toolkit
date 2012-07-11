@@ -840,11 +840,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     /**
-     * given a string_id in String form to match on. (currently used by ISSN, ISBN, SCCN, x024 matchers)
+     * given a numeric_id in String form to match on.
      * note - this method adds the quoting, which was added for ISBN 020$a others don't necessarily need it (depending on how they were inserted)
      *
      *  for instance:
-     * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where string_id = "24094664" '
+     * mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_035a where prefix_id = "0" and numeric_id = "24094664" '
      *
      * @param tableName
      * @param record_id_field
