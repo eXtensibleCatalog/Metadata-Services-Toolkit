@@ -344,29 +344,39 @@ public class MarcAggregationService extends GenericMetadataService {
         // up higher than processCompleted method!!
         //
         List<TreeSet<Long>> matches = getCurrentMatchSetList();
-        if (matches != null) {
-            //TODO maybe change this to 'debug' vs. 'info' at some point.
+        if (matches != null && matches.size() > 0) {
+            final String SEP = System.getProperty("line.separator");
             LOG.info("** processComplete, matchset length="+matches.size());
 
+            StringBuilder sb = new StringBuilder(SEP);
+            sb.append("********** MATCHPOINT DUMP START **************************************************************");
+            sb.append(SEP).append("*").append(SEP);
             for (Set<Long> set: matches) {
-                StringBuilder sb = new StringBuilder("*** Matchset: {");
+                sb.append("*** Matchset In: {");
+                Long _num = null;
                 for (Long num: set) {
                     sb.append(num+", ");
+                    _num=num;
                 }
                 sb.append("}");
-                //TODO decide whether this is useful to keep around!
-                //LOG.info(sb.toString());
-                logToServiceLog(sb.toString());
+
+                sb.append(", Out: ");
+                sb.append(allBibRecordsI2Omap.get(_num));
+                sb.append(SEP);
             }
+            sb.append("*").append(SEP);
+            sb.append("********** MATCHPOINT DUMP END ****************************************************************");
+            logToServiceLog(sb.toString());
 
             // TODO
+            // If you try to go down this alternative path of holding off on merging till the end of processing:
+            //
             // important - this is not going to totally nail it for the long term
             // need to consider records received during THIS run of the service, and
             // their status, i.e. if if goes to deleted state and is part of a merge
             // set.  Future solution still in the works  - could be customProcessQueue
             // and if that is not enough save more to the current match set list?
             //
-            // TODO
             // Do you need to build lists of records to create (part of merge set & not)
             // and records that will
             // not being created because they are being merged?
@@ -524,7 +534,7 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
-                // (_IF_ database column added to record counts to help with reconciliation of counts)
+                //     (_IF_ database column added to record counts to help with reconciliation of counts)
                 addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
@@ -532,7 +542,7 @@ public class MarcAggregationService extends GenericMetadataService {
         } catch (Throwable t) {
             LOG.error("error processing record with id:" + ((Record) r).getId(), t);
             // TODO increment records counts no output
-            // (_IF_ database column added to record counts to help with reconciliation of counts)
+            //        (_IF_ database column added to record counts to help with reconciliation of counts)
             addMessage(r, 103, RecordMessage.ERROR);  // no output
         }
         return null;
@@ -948,7 +958,7 @@ public class MarcAggregationService extends GenericMetadataService {
         else {   // same size merge set, must update.
             // this is the merge as you go along spot, and will be impacted if you change that paradigm.
             // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
-            // TODO change to merge at end, looping a 2nd time through the records, if need be. (though I don't know
+            // TODO possibly could change to merge at end, looping a 2nd time through the records, if need be. (though I don't know
             //      how well that would work for updates/deletes/remerges!)
 
             // do not think you need to bother with this - you already verified the match set is the same, and it will have been added already.
@@ -1396,7 +1406,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMATIA_geq_MATOA"));// = MA Total In Active >= MA Total Out Active
                 String result = "";
                 try {
-                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() >= counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
@@ -1408,7 +1418,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMABIA_geq_MABOA"));// = MA Bibs In Active >= MA Bibs Out Active
                 try {
-                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() >= counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
