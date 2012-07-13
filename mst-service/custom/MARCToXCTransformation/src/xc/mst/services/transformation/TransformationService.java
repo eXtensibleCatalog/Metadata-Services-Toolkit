@@ -411,12 +411,27 @@ public class TransformationService extends SolrTransformationService {
                 }
                 long nextNewId = getRepositoryDAO().getNextId();
                 if (isBib) {
-                    String bib001 = originalRecord.getControlField(1);
+                	// if this record is missing a 001, we need to use its 035$a instead (issue mst-473)
+                	// because holdings records may need to reference 035$a in addition to 001
+                    List<String> bib001s = originalRecord.getBib001_or_035s();
+                    String bib001 = "";
+                    
                     final String orgCode = originalRecord.getOrgCode();
                     Long manifestationId = null;
+                    
                     if (!StringUtils.isEmpty(orgCode)) {
-                        manifestationId = getManifestationId4BibYet2Arrive(
-                                originalRecord.getOrgCode(), bib001);
+                    	// try to find a manifestationId based on either the 001 or 035s (issue mst-473)...
+                    	for (String thisBib001 : bib001s) {
+                        	bib001 = thisBib001;
+                    	
+	                        manifestationId = getManifestationId4BibYet2Arrive(
+	                                originalRecord.getOrgCode(), bib001);
+	                        
+	                        if (manifestationId != null) {
+	                        	break;
+	                        }
+                    	}
+	                        
                         //TODO test more!
 //          LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
                         if (manifestationId != null) {
@@ -432,8 +447,13 @@ public class TransformationService extends SolrTransformationService {
                                 manifestationId = getRepositoryDAO().getNextIdAndIncr();
                             }
                         }
-                        addManifestationId4BibProcessed(
-                                originalRecord.getOrgCode(), bib001, manifestationId);
+                        
+                        // store the 001 or all 035s for this bib (issue mst-473)
+                        for (String thisBib001 : bib001s) {
+	                        addManifestationId4BibProcessed(
+	                                originalRecord.getOrgCode(), thisBib001, manifestationId);
+                        }
+                        
                     }
                     List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
                             getRepository(), ar, manifestationId, nextNewId);    // note, we are now adding poss. of a null manifestationId
