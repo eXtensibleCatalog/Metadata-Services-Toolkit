@@ -72,13 +72,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected boolean preserveStatuses = true;
     protected TLongByteHashMap previousStatuses = new TLongByteHashMap();
     protected TLongByteHashMap tempPreviousStatuses = new TLongByteHashMap();
-        
+
     protected static int LARGE_HARVEST_THRESHOLD_DEFAULT = 10000;
     protected int largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
 
     // should we cache all the previous statuses for the entire repo?  default: no
     protected boolean cacheSetup = false;
-    
+
     /**
      * A list of services to run after this service's processing completes The
      * keys are the service IDs and the values are the IDs of the sets that
@@ -158,7 +158,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
     public void setInputRecordCount(int inputRecordCount) {
     }
-    
+
     public void setup() {
     }
 
@@ -514,7 +514,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         processedRecordCount = 0;
         processStatusDisplay(repo, inputFormat, inputSet, outputSet);
         running.acquireUninterruptibly();
-        
+
         // what do we consider a "large" update?  If it's large enough, we will then cache statuses ahead of time
         String strLHT = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LARGE_HARVEST_THRESHOLD);
         largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
@@ -524,8 +524,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
             } catch (NumberFormatException e) {
             	largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
             }
-        }        
-       
+        }
+
         LOG.debug("gettingServiceHarvest");
         ServiceHarvest sh = getServiceHarvest(inputFormat, inputSet,
                 repo.getName(), getService());
@@ -533,8 +533,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
         // sh.getUntil(), inputFormat, inputSet);
         LOG.debug("sh: " + sh);
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
-                sh.getUntil(), inputFormat, inputSet);     
-               
+                sh.getUntil(), inputFormat, inputSet);
+
         if (!isSolrIndexer() && preserveStatuses) {
             // do we cache statuses?
             if (this.totalRecordCount >= largeHarvestThreshold) {
@@ -542,8 +542,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
             	cacheSetup = true;
             } else {
             	LOG.info("This is not a large update; we will not need to cache previous statuses (" + this.totalRecordCount + " < " + largeHarvestThreshold + ").");
-            }            
-        	
+            }
+
         	previousStatuses.clear();
             if (cacheSetup) {
                 previousStatuses.ensureCapacity(repo.getSize());
@@ -555,12 +555,12 @@ public abstract class GenericMetadataService extends SolrMetadataService
             	previousStatuses.ensureCapacity(MSTConfiguration.getInstance()
                     .getPropertyAsInt("db.insertsAtOnce", 10000));
             }
-            
+
             tempPreviousStatuses.clear();
             tempPreviousStatuses.ensureCapacity(MSTConfiguration.getInstance()
                     .getPropertyAsInt("db.insertsAtOnce", 10000));
         }
-               
+
         List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
         if (getMetadataServiceManager() != null) {
@@ -700,23 +700,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                ///
                             if (!isTestRepository()) {
                                 // one last bit of record counting.
-                                if (rout2.getType() != null) {
-                                    getMetadataServiceManager()
-                                            .getOutgoingRecordCounts().incr(
-                                                    rout2.getType(),
-                                                    rout2.getStatus(),
-                                                    rout2.getPreviousStatus());
-                                } else {
-                                    getMetadataServiceManager()
-                                            .getOutgoingRecordCounts().incr(
-                                                    RecordCounts.OTHER,
-                                                    rout2.getStatus(),
-                                                    rout2.getPreviousStatus());
-                                }
-                                getMetadataServiceManager()
-                                        .getOutgoingRecordCounts().incr(null,
-                                                rout2.getStatus(),
-                                                rout2.getPreviousStatus());
+                                incrementOutputRecordCounts(rout2);
                             }
                             // finally, actually process the received records.
                             addPredecessor(in, rout2);
@@ -802,6 +786,28 @@ public abstract class GenericMetadataService extends SolrMetadataService
         setStatus(Status.NOT_RUNNING);
     }
 
+    protected void incrementOutputRecordCounts(Record rout2) {
+        //increment type's counts, i.e. 'bib' or 'unknown' if type is null.
+        if (rout2.getType() != null) {
+            getMetadataServiceManager()
+                    .getOutgoingRecordCounts().incr(
+                            rout2.getType(),
+                            rout2.getStatus(),
+                            rout2.getPreviousStatus());
+        } else {
+            getMetadataServiceManager()
+                    .getOutgoingRecordCounts().incr(
+                            RecordCounts.OTHER,
+                            rout2.getStatus(),
+                            rout2.getPreviousStatus());
+        }
+        // increment TOTALS
+        getMetadataServiceManager()
+                .getOutgoingRecordCounts().incr(null,
+                        rout2.getStatus(),
+                        rout2.getPreviousStatus());
+    }
+
     // currently we have a service that has a 1:1 relationship, 1 that produces more outputs from inputs, and we'll have
     // 1 that produces less outputs than inputs.  so this must be called as necessary for these cases.
     //
@@ -883,7 +889,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected void injectKnownData(Record in) {
         if (preserveStatuses) {
             char prevStatus = getPreviousStatus(in.getId());
-            
+
             // if null previous status, then that means the record doesn't exist
             if (prevStatus != (char)0) {
 	            TimingLogger.start("injectKnownData");
@@ -897,9 +903,9 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
         }
     }
-    
+
     protected char getPreviousStatus(Long recordId) {
-    	char prevStatus = (char) previousStatuses.get(recordId); 
+    	char prevStatus = (char) previousStatuses.get(recordId);
     	if (cacheSetup) {
     		return prevStatus;
     	} else {

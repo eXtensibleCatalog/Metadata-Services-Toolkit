@@ -76,11 +76,17 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 end = s.indexOf(")");
                 LOG.debug(s);
                 final String prefix = s.substring(start + 1, end);
-                LOG.debug("found a prefix of " + prefix);
-                if (!prefixList.contains(prefix)) {
-                    prefixList.add(prefix);
+                Character first = prefix.charAt(0);
+                // probably really need to be a 3 alpha prefix but for now make sure it starts with alpha.
+                if (prefix != null && prefix.length() >0) {
+                    if (Character.isLetter(first)) {
+                        LOG.debug("found a prefix of " + prefix);
+                        if (!prefixList.contains(prefix)) {
+                            prefixList.add(prefix);
+                        }
+                        return prefix;
+                    }
                 }
-                return prefix;
             }
         }
         return "";
