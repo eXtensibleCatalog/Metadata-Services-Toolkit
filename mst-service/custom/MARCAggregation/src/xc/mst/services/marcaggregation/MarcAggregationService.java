@@ -97,6 +97,11 @@ public class MarcAggregationService extends GenericMetadataService {
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
     private static final String _005_TRANSFORM    = "strip005.xsl";
 
+    /**
+     * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
+     */
+    private static boolean hasIntermediatePersistence = false;
+
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
 
@@ -143,32 +148,45 @@ public class MarcAggregationService extends GenericMetadataService {
         setupMatchers();
         setupMatchRules();
         allBibRecordsI2Omap = loadMasBibIORecords();
-        allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
-        mergedInRecordsList = loadMasMergedInputRecords();
+        LOG.info("allBibRecordsI2Omap size: "+allBibRecordsI2Omap.size());
 
-        allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
-        mergedInRecordsList_unpersisted = new ArrayList<Long>();
+        allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
+
+        mergedInRecordsList = loadMasMergedInputRecords();
+        LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());
+
+        if (hasIntermediatePersistence) {
+            allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
+            mergedInRecordsList_unpersisted = new ArrayList<Long>();
+        }
     }
 
     /**
      *
      * map output records to corresponding input records map
-     * there is probably a lot slicker way to do this.
+     *
      * @param i_to_o_map
      * @return
      */
     private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
+        LOG.info("start createMergedRecordsO2Imap");
         TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
-        for (Long out: i_to_o_map.getValues()) {
+        // obviously there can be multiple input records corresponding to one output record.
+        for (Long in: i_to_o_map.keys()) {
+            Long out = i_to_o_map.get(in);
             if (!results.containsKey(out)) {
-                List<Long> vals = masDAO.getInputRecordsMappedToOutputRecord(out);
                 TreeSet<Long> set = new TreeSet<Long>();
-                for (Long val: vals) {
-                    set.add(val);
-                }
+                set.add(in);
                 results.put(out, set);
             }
+            else {
+                // this output record already had at least one input record associated with it.
+                TreeSet<Long> _set = results.get(out);
+                _set.add(in);
+                results.put(out, _set);
+            }
         }
+        LOG.info("done createMergedRecordsO2Imap");
         return results;
     }
 
@@ -177,7 +195,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return known merged records that were persisted, it returns all bibs i to o
      */
     private TLongLongHashMap loadMasBibIORecords() {
-        return masDAO.getBibRecords();
+        return masDAO.getBibRecordsCache();
     }
 
 
@@ -186,7 +204,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @return known merged records that were persisted-input records that are part of a merge set (>1 corresponds to an output record)
      */
     private List<Long> loadMasMergedInputRecords() {
-        return masDAO.getMergedInputRecords();
+        return masDAO.getMergedInputRecordsCache();
     }
 
 
@@ -201,8 +219,11 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
         masMatchSetList = new ArrayList<TreeSet<Long>>();
-        scores = new TLongObjectHashMap<RecordOfSourceData>();
-        scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
+        scores = new TLongObjectHashMap<RecordOfSourceData>();   /// TODO load what you have in the db!
+
+        if (hasIntermediatePersistence) {
+            scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
+        }
     }
 
     protected void setupMatchers() {
@@ -333,29 +354,39 @@ public class MarcAggregationService extends GenericMetadataService {
         // up higher than processCompleted method!!
         //
         List<TreeSet<Long>> matches = getCurrentMatchSetList();
-        if (matches != null) {
-            //TODO maybe change this to 'debug' vs. 'info' at some point.
+        if (matches != null && matches.size() > 0) {
+            final String SEP = System.getProperty("line.separator");
             LOG.info("** processComplete, matchset length="+matches.size());
 
+            StringBuilder sb = new StringBuilder(SEP);
+            sb.append("********** MATCHPOINT DUMP START **************************************************************");
+            sb.append(SEP).append("*").append(SEP);
             for (Set<Long> set: matches) {
-                StringBuilder sb = new StringBuilder("*** Matchset: {");
+                sb.append("*** Matchset In: {");
+                Long _num = null;
                 for (Long num: set) {
                     sb.append(num+", ");
+                    _num=num;
                 }
                 sb.append("}");
-                //TODO decide whether this is useful to keep around!
-                //LOG.info(sb.toString());
-                logToServiceLog(sb.toString());
+
+                sb.append(", Out: ");
+                sb.append(allBibRecordsI2Omap.get(_num));
+                sb.append(SEP);
             }
+            sb.append("*").append(SEP);
+            sb.append("********** MATCHPOINT DUMP END ****************************************************************");
+            logToServiceLog(sb.toString());
 
             // TODO
+            // If you try to go down this alternative path of holding off on merging till the end of processing:
+            //
             // important - this is not going to totally nail it for the long term
             // need to consider records received during THIS run of the service, and
             // their status, i.e. if if goes to deleted state and is part of a merge
             // set.  Future solution still in the works  - could be customProcessQueue
             // and if that is not enough save more to the current match set list?
             //
-            // TODO
             // Do you need to build lists of records to create (part of merge set & not)
             // and records that will
             // not being created because they are being merged?
@@ -424,7 +455,9 @@ public class MarcAggregationService extends GenericMetadataService {
                     final char leaderByte17 = smr.getLeader().charAt(17);
                     final int rSize = r.getOaiXml().getBytes().length;
                     scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                    scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+                    if (hasIntermediatePersistence) {
+                        scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+                    }
 
                     type = "b";
                     //
@@ -513,7 +546,7 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
-                // (_IF_ database column added to record counts to help with reconciliation of counts)
+                //     (_IF_ database column added to record counts to help with reconciliation of counts)
                 addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
@@ -521,7 +554,7 @@ public class MarcAggregationService extends GenericMetadataService {
         } catch (Throwable t) {
             LOG.error("error processing record with id:" + ((Record) r).getId(), t);
             // TODO increment records counts no output
-            // (_IF_ database column added to record counts to help with reconciliation of counts)
+            //        (_IF_ database column added to record counts to help with reconciliation of counts)
             addMessage(r, 103, RecordMessage.ERROR);  // no output
         }
         return null;
@@ -556,14 +589,18 @@ public class MarcAggregationService extends GenericMetadataService {
     private void addToMasMergedRecordsMemory(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             allBibRecordsI2Omap.put(num,outputRecordId);
-            allBibRecordsI2Omap_unpersisted.put(num,outputRecordId);
+            if (hasIntermediatePersistence) {
+                allBibRecordsI2Omap_unpersisted.put(num,outputRecordId);
+            }
         }
         allBibRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
 
         if (mergedInputRecordSet.size() > 1) {
             for (Long num: mergedInputRecordSet) {
                 mergedInRecordsList.add(num);
-                mergedInRecordsList_unpersisted.add(num);
+                if (hasIntermediatePersistence) {
+                    mergedInRecordsList_unpersisted.add(num);
+                }
             }
         }
     }
@@ -937,7 +974,7 @@ public class MarcAggregationService extends GenericMetadataService {
         else {   // same size merge set, must update.
             // this is the merge as you go along spot, and will be impacted if you change that paradigm.
             // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
-            // TODO change to merge at end, looping a 2nd time through the records, if need be. (though I don't know
+            // TODO possibly could change to merge at end, looping a 2nd time through the records, if need be. (though I don't know
             //      how well that would work for updates/deletes/remerges!)
 
             // do not think you need to bother with this - you already verified the match set is the same, and it will have been added already.
@@ -1088,9 +1125,13 @@ public class MarcAggregationService extends GenericMetadataService {
             if (allBibRecordsI2Omap.containsKey(input)) {
                 Long outputRecordToBeDeletedNum = getBibOutputId(input);  // grabs it out of I2O
                 allBibRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
-                allBibRecordsI2Omap_unpersisted.remove(input);
+                if (hasIntermediatePersistence) {
+                    allBibRecordsI2Omap_unpersisted.remove(input);
+                }
                 mergedInRecordsList.remove(input);
-                mergedInRecordsList_unpersisted.remove(input);
+                if (hasIntermediatePersistence) {
+                    mergedInRecordsList_unpersisted.remove(input);
+                }
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
                     LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
@@ -1286,7 +1327,7 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
-            LOG.debug("***mas.commitIfNecessary force="+force);
+            LOG.debug("***mas.commitIfNecessary force="+force+ " recordCount="+processedRecordsCount);
             TimingLogger.start("mas.commitIfNecessary");
 
             // break down timing logger more later if necessary.
@@ -1303,20 +1344,11 @@ public class MarcAggregationService extends GenericMetadataService {
         if (!force) {
             return super.commitIfNecessary(force, 0);
         }
-        // force == true:
+        // force == true, only happens at the end of processing!
         try {
             TimingLogger.start("MarcAggregationService.non-generic");
 
-            masDAO.persistScores(scores_unpersisted);
-            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
-                    MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
-
-            //flush from memory now that these have been persisted to database
-            scores_unpersisted.clear();
-            mergedInRecordsList_unpersisted.clear();
-            allBibRecordsI2Omap_unpersisted.clear();
-
+            persistFromMASmemory();
 
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationService.non-generic");
@@ -1331,6 +1363,26 @@ public class MarcAggregationService extends GenericMetadataService {
             TimingLogger.reset();
         }
         return true;
+    }
+
+    protected void persistFromMASmemory() {
+        if (hasIntermediatePersistence) {
+            masDAO.persistScores(scores_unpersisted);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
+                    MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
+
+            //flush from memory now that these have been persisted to database
+            scores_unpersisted.clear();
+            mergedInRecordsList_unpersisted.clear();
+            allBibRecordsI2Omap_unpersisted.clear();
+        }
+        else {
+            masDAO.persistScores(scores);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap,
+                    MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
+        }
     }
 
     /**
@@ -1385,7 +1437,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMATIA_geq_MATOA"));// = MA Total In Active >= MA Total Out Active
                 String result = "";
                 try {
-                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_t.get(RecordCounts.NEW_ACTIVE).get() >= counts4typeOut_t.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";
@@ -1397,7 +1449,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
                 LOG2.info(MSTConfiguration.getInstance().getProperty("message.ruleAggregationMABIA_geq_MABOA"));// = MA Bibs In Active >= MA Bibs Out Active
                 try {
-                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() == counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
+                    if (counts4typeIn_b.get(RecordCounts.NEW_ACTIVE).get() >= counts4typeOut_b.get(RecordCounts.NEW_ACTIVE).get()) {
                         result = " ** PASS **";
                     } else {
                         result = " ** FAIL **";

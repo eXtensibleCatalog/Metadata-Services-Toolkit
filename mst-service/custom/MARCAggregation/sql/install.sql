@@ -112,20 +112,32 @@ CREATE  TABLE `matchpoints_024a` (
 
 
 -- -----------------------------------------------------
+-- (Reference) Table `prefixes_035a` system control number prefix
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS prefixes_035a;
+CREATE  TABLE `prefixes_035a` (
+  `prefix` VARCHAR(255)  NOT NULL ,
+  `prefix_id` INT UNSIGNED NOT NULL ,
+
+  PRIMARY KEY  (`prefix_id`),
+  INDEX idx_mp_035a_prefix (prefix)
+
+) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `matchpoints_035a` system control number
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS matchpoints_035a;
 CREATE  TABLE `matchpoints_035a` (
   `full_string` VARCHAR(255) NOT NULL ,
---  `prefix` VARCHAR(255) NOT NULL ,
---  `numeric_id` INT UNSIGNED NOT NULL ,
-  `string_id` VARCHAR(255) NOT NULL ,
+  `prefix_id` INT UNSIGNED NOT NULL ,
+  `numeric_id` BIGINT NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY  (`input_record_id`, `string_id`),
+  PRIMARY KEY  (`input_record_id`, `numeric_id`),
 
   -- may want to not do this and create it after 1st load create, ala repo
-  INDEX idx_mp_035a_string_id (string_id)
+  INDEX idx_mp_035a_numeric_id (numeric_id),
+  INDEX idx_mp_035a_prefix_id (prefix_id)
 
 ) ENGINE = InnoDB;
-
