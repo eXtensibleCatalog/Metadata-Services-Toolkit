@@ -97,6 +97,11 @@ public class MarcAggregationService extends GenericMetadataService {
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
     private static final String _005_TRANSFORM    = "strip005.xsl";
 
+    /**
+     * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
+     */
+    private static boolean hasIntermediatePersistence = false;
+
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
 
@@ -150,8 +155,10 @@ public class MarcAggregationService extends GenericMetadataService {
         mergedInRecordsList = loadMasMergedInputRecords();
         LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());
 
-        allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
-        mergedInRecordsList_unpersisted = new ArrayList<Long>();
+        if (hasIntermediatePersistence) {
+            allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
+            mergedInRecordsList_unpersisted = new ArrayList<Long>();
+        }
     }
 
     /**
@@ -213,7 +220,10 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         masMatchSetList = new ArrayList<TreeSet<Long>>();
         scores = new TLongObjectHashMap<RecordOfSourceData>();   /// TODO load what you have in the db!
-        scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
+
+        if (hasIntermediatePersistence) {
+            scores_unpersisted = new TLongObjectHashMap<RecordOfSourceData>();
+        }
     }
 
     protected void setupMatchers() {
@@ -445,7 +455,9 @@ public class MarcAggregationService extends GenericMetadataService {
                     final char leaderByte17 = smr.getLeader().charAt(17);
                     final int rSize = r.getOaiXml().getBytes().length;
                     scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                    scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+                    if (hasIntermediatePersistence) {
+                        scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+                    }
 
                     type = "b";
                     //
@@ -577,14 +589,18 @@ public class MarcAggregationService extends GenericMetadataService {
     private void addToMasMergedRecordsMemory(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
         for (Long num: mergedInputRecordSet) {
             allBibRecordsI2Omap.put(num,outputRecordId);
-            allBibRecordsI2Omap_unpersisted.put(num,outputRecordId);
+            if (hasIntermediatePersistence) {
+                allBibRecordsI2Omap_unpersisted.put(num,outputRecordId);
+            }
         }
         allBibRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
 
         if (mergedInputRecordSet.size() > 1) {
             for (Long num: mergedInputRecordSet) {
                 mergedInRecordsList.add(num);
-                mergedInRecordsList_unpersisted.add(num);
+                if (hasIntermediatePersistence) {
+                    mergedInRecordsList_unpersisted.add(num);
+                }
             }
         }
     }
@@ -1109,9 +1125,13 @@ public class MarcAggregationService extends GenericMetadataService {
             if (allBibRecordsI2Omap.containsKey(input)) {
                 Long outputRecordToBeDeletedNum = getBibOutputId(input);  // grabs it out of I2O
                 allBibRecordsI2Omap.remove(input);   // at end of this will re-add with proper new relationship
-                allBibRecordsI2Omap_unpersisted.remove(input);
+                if (hasIntermediatePersistence) {
+                    allBibRecordsI2Omap_unpersisted.remove(input);
+                }
                 mergedInRecordsList.remove(input);
-                mergedInRecordsList_unpersisted.remove(input);
+                if (hasIntermediatePersistence) {
+                    mergedInRecordsList_unpersisted.remove(input);
+                }
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
                     LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
@@ -1307,7 +1327,7 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         try {
-            LOG.debug("***mas.commitIfNecessary force="+force);
+            LOG.debug("***mas.commitIfNecessary force="+force+ " recordCount="+processedRecordsCount);
             TimingLogger.start("mas.commitIfNecessary");
 
             // break down timing logger more later if necessary.
@@ -1324,20 +1344,11 @@ public class MarcAggregationService extends GenericMetadataService {
         if (!force) {
             return super.commitIfNecessary(force, 0);
         }
-        // force == true:
+        // force == true, only happens at the end of processing!
         try {
             TimingLogger.start("MarcAggregationService.non-generic");
 
-            masDAO.persistScores(scores_unpersisted);
-            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
-                    MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
-
-            //flush from memory now that these have been persisted to database
-            scores_unpersisted.clear();
-            mergedInRecordsList_unpersisted.clear();
-            allBibRecordsI2Omap_unpersisted.clear();
-
+            persistFromMASmemory();
 
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationService.non-generic");
@@ -1352,6 +1363,26 @@ public class MarcAggregationService extends GenericMetadataService {
             TimingLogger.reset();
         }
         return true;
+    }
+
+    protected void persistFromMASmemory() {
+        if (hasIntermediatePersistence) {
+            masDAO.persistScores(scores_unpersisted);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
+                    MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
+
+            //flush from memory now that these have been persisted to database
+            scores_unpersisted.clear();
+            mergedInRecordsList_unpersisted.clear();
+            allBibRecordsI2Omap_unpersisted.clear();
+        }
+        else {
+            masDAO.persistScores(scores);
+            masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap,
+                    MarcAggregationServiceDAO.bib_records_table, false);
+            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
+        }
     }
 
     /**

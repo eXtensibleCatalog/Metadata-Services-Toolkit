@@ -58,7 +58,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // thus use a list of SCNData, the data values are the original string
     //    and the normalized string parts - the numeric id and the prefix
     protected Map<Long, List<SCNData>> inputId2scn = new HashMap<Long, List<SCNData>>();
-    protected Map<Long, List<SCNData>> inputId2scn_unpersisted = new HashMap<Long, List<SCNData>>();
+    //protected Map<Long, List<SCNData>> inputId2scn_unpersisted = new HashMap<Long, List<SCNData>>();
 
     // multiple records might have the same normalized 035$a, this would be an indication of a match
     protected Map<SCNData, List<Long>> scn2inputIds = new HashMap<SCNData, List<Long>>();
@@ -236,12 +236,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     goodsList = new ArrayList<SCNData>();
                     goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
-                    inputId2scn_unpersisted.put(id, goodsList);
+                    //inputId2scn_unpersisted.put(id, goodsList);
                 }
                 else if (!goodsList.contains(goods)) {
                     goodsList.add(goods);
                     inputId2scn.put(id, goodsList);
-                    inputId2scn_unpersisted.put(id, goodsList);
+                    //inputId2scn_unpersisted.put(id, goodsList);
                 }
                 else {
                     LOG.debug("we have already seen " + goods + " for recordId: " + r.recordId);
@@ -305,9 +305,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         if (force) {
             MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
             s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
-            s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn_unpersisted, MarcAggregationServiceDAO.matchpoints_035a_table);
+
+            s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn/* _unpersisted */, MarcAggregationServiceDAO.matchpoints_035a_table);
+
             // allow prefix list to grow - should not get too big?
-            inputId2scn_unpersisted.clear();
+            //inputId2scn_unpersisted.clear();
 
             // no longer clear these we are keeping it in mem.
             //inputId2scn.clear();
