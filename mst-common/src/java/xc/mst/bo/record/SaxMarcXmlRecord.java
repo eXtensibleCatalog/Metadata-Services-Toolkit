@@ -242,6 +242,36 @@ public class SaxMarcXmlRecord implements ContentHandler {
         }
     }
 
+    public List<String> getBib001_or_035s() {
+		List<String> ret = new ArrayList<String>();
+    	String bib001 = getControlField(1);
+    	if (bib001 != null) {
+    		ret.add(bib001);
+    		return ret;
+    	}
+    	String orgCode = getOrgCode();
+    	List<String> sfs = getSubfield(35, 'a');
+    	for (String sf : sfs) {
+    		// parse out (orgCode)bibID
+    		int inx = sf.indexOf("(");
+    		if (inx >= 0) {
+    			int inx2 = sf.indexOf(")", inx);
+    			if (inx2 > inx) {
+    				try {
+	    				String thisOrgCode = sf.substring(inx+1, inx2);
+	    				String thisBibID = sf.substring(inx2+1);
+	    				if (orgCode.equals(thisOrgCode)) {
+	    					ret.add(thisBibID);
+	    				}
+    				} catch (IndexOutOfBoundsException ioob) {
+    					// keep calm and carry on
+    				}
+    			}
+    		}
+    	}
+    	return ret;
+    }
+    
     @SuppressWarnings("unchecked")
     public List<Field> getDataFields(int targetField) {
         List<Field> fields = (List<Field>) marcRecord.getDataFields().get(targetField);
