@@ -547,7 +547,10 @@ public class MarcAggregationService extends GenericMetadataService {
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
                 //     (_IF_ database column added to record counts to help with reconciliation of counts)
-                addMessage(r, 103, RecordMessage.ERROR);  // no output
+//////////////////
+                // BUG!, the above if statement is WRONG, really want to check if there is an output record within the results?
+//////////////////
+//                addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
 
@@ -1163,7 +1166,17 @@ public class MarcAggregationService extends GenericMetadataService {
         // dark side code because you are peering into the implementation of the DAO
         else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
             LOG.debug("DID NOT found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" dark side time!");
-            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+            super.commitIfNecessary(true, 0);
+//            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+            outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
+            if (outputRecordToBeDeleted != null) {
+                LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
+                outputRecordToBeDeleted.setStatus(Record.DELETED);
+                // if the records did not get persisted, will get null record back, or you may have already
+                //  deleted it if it is part of a merge set.
+                LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+                results.add(outputRecordToBeDeleted);
+            }
         }
 
         LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
