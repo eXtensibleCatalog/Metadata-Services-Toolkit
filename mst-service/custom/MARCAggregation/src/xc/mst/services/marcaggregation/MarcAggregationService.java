@@ -100,7 +100,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
      */
-    private static boolean hasIntermediatePersistence = false;
+    public static boolean hasIntermediatePersistence = true;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -548,9 +548,8 @@ public class MarcAggregationService extends GenericMetadataService {
                 // TODO increment records counts no output
                 //     (_IF_ database column added to record counts to help with reconciliation of counts)
 //////////////////
-                // BUG!, the above if statement is WRONG, really want to check if there is an output record within the results?
-//////////////////
-//                addMessage(r, 103, RecordMessage.ERROR);  // no output
+                // BUG!, the above if statement is WRONG, TODO need to figure out what constitutes a no output error?
+                // addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
 
@@ -1166,6 +1165,10 @@ public class MarcAggregationService extends GenericMetadataService {
         // dark side code because you are peering into the implementation of the DAO
         else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
             LOG.debug("DID NOT found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" dark side time!");
+            //TODO verify this as an alternative to 'dark side' code.  Seems to work better as it does not try to bypass existing
+            //     service mechanisms.  In conjunction with committing more often than at the end of service only, I
+            //     added the 'unpersisted' data structures back into the code. (search for unpersisted)
+            //
             super.commitIfNecessary(true, 0);
 //            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
             outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
