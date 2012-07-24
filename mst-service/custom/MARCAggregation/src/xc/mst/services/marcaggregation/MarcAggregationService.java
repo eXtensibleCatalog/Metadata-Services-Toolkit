@@ -100,7 +100,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
      */
-    private static boolean hasIntermediatePersistence = false;
+    public static boolean hasIntermediatePersistence = true;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -547,7 +547,9 @@ public class MarcAggregationService extends GenericMetadataService {
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
                 //     (_IF_ database column added to record counts to help with reconciliation of counts)
-                addMessage(r, 103, RecordMessage.ERROR);  // no output
+//////////////////
+                // BUG!, the above if statement is WRONG, TODO need to figure out what constitutes a no output error?
+                // addMessage(r, 103, RecordMessage.ERROR);  // no output
             }
             return results;
 
@@ -1163,7 +1165,21 @@ public class MarcAggregationService extends GenericMetadataService {
         // dark side code because you are peering into the implementation of the DAO
         else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
             LOG.debug("DID NOT found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" dark side time!");
-            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+            //TODO verify this as an alternative to 'dark side' code.  Seems to work better as it does not try to bypass existing
+            //     service mechanisms.  In conjunction with committing more often than at the end of service only, I
+            //     added the 'unpersisted' data structures back into the code. (search for unpersisted)
+            //
+            super.commitIfNecessary(true, 0);
+//            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
+            outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
+            if (outputRecordToBeDeleted != null) {
+                LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
+                outputRecordToBeDeleted.setStatus(Record.DELETED);
+                // if the records did not get persisted, will get null record back, or you may have already
+                //  deleted it if it is part of a merge set.
+                LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
+                results.add(outputRecordToBeDeleted);
+            }
         }
 
         LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);

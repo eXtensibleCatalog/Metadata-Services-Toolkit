@@ -214,6 +214,9 @@ public class LccnMatcher extends FieldMatcherService {
             }
         }
         inputId2lccn.remove(id);
+        if (MarcAggregationService.hasIntermediatePersistence) {
+            inputId2lccn_unpersisted.remove(id);
+        }
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
@@ -260,13 +263,17 @@ public class LccnMatcher extends FieldMatcherService {
                 //TODO somewhere in the below code is a logic error that causes an exception with, not enough data, or something, when putting into row.
                 if (oldGoods == null || oldGoods == 0l) {
                     inputId2lccn.put(id, goods);
-                    inputId2lccn_unpersisted.put(id, goods);
+                    if (MarcAggregationService.hasIntermediatePersistence) {
+                        inputId2lccn_unpersisted.put(id, goods);
+                    }
                     //inputId2lccnStr.put(id, subfield);
                 }
                 else {
                     if (!goods.equals(oldGoods)) {
                         inputId2lccn.put(id, goods);
-                        inputId2lccn_unpersisted.put(id, goods);
+                        if (MarcAggregationService.hasIntermediatePersistence) {
+                            inputId2lccn_unpersisted.put(id, goods);
+                        }
                         //inputId2lccnStr.put(id, subfield);
                         LOG.debug("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId+ " this 010: "+goods);
                         //LOG.info("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
@@ -327,8 +334,13 @@ public class LccnMatcher extends FieldMatcherService {
     public void flush(boolean force) {
         if (force) {
             MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-            s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn_unpersisted, MarcAggregationServiceDAO.matchpoints_010a_table, true);
-            inputId2lccn_unpersisted.clear();
+            if (MarcAggregationService.hasIntermediatePersistence) {
+                s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn_unpersisted, MarcAggregationServiceDAO.matchpoints_010a_table, true);
+                inputId2lccn_unpersisted.clear();
+            }
+            else {
+                s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table, true);
+            }
         }
 
         //inputId2lccn.clear();    //now keep these in memory!
