@@ -3048,7 +3048,7 @@ public class NormalizationService extends GenericMetadataService {
 
 
     protected String getOrganizationCode() {
-    	return organizationCode == null ? enabledSteps.getProperty("CONFIG_ORG_CODE") : organizationCode;
+    	return organizationCode == null ? enabledSteps.getProperty(CONFIG_ORG_CODE) : organizationCode;
     }
     
     private void setOrganizationCode(String org) {
