@@ -338,6 +338,9 @@ public class NormalizationService extends GenericMetadataService {
             		return results; // results is empty
             	}
             }
+            if (sourceOf9XXFieldsEnabled()) {
+            	normalizedXml.setSourceOfOrganizationCode(XC_SOURCE_OF_MARC_ORG);
+            }
 
             if (type != null && type.equals("b")) {
                 TimingLogger.start("bibsteps");
@@ -3053,6 +3056,10 @@ public class NormalizationService extends GenericMetadataService {
     
     private void setOrganizationCode(String org) {
     	this.organizationCode = org;
+    }
+    
+    protected boolean sourceOf9XXFieldsEnabled () {
+    	return enabledSteps.getProperty(CONFIG_SOURCE_OF_9XX_FIELDS).equals("1");
     }
 
     /*

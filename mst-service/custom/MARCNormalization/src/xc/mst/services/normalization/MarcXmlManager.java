@@ -229,6 +229,8 @@ public class MarcXmlManager {
      * The organization code from the configuration file
      */
     private String organizationCode = null;
+    
+    private String sourceOfOrganizationCode = null;
 
     // The following variables are cached values for the commonly accessed MARC XML fields.
     // They are initialized in the constructor. Each variable will be named either fieldNNN
@@ -263,6 +265,10 @@ public class MarcXmlManager {
      */
     public void setOrganizationCode(String org) {
         this.organizationCode = org;
+    }
+    
+    public void setSourceOfOrganizationCode(String soc) {
+    	this.sourceOfOrganizationCode = soc;
     }
 
     /**
@@ -1576,6 +1582,24 @@ public class MarcXmlManager {
     public void addMarcXmlField(String tag, String subfieldAValue) {
         addMarcXmlField(tag, subfieldAValue, null, null, null, null);
     }
+    
+    /**
+     * Helper function to create 9XX organization code subfield - this can be based on
+     * either the organization code of the record
+     * or the organization code of the XC organization code
+     */
+    public Element createOrgCodeSubfield() {
+	    // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
+	    Element newField5Subfield = new Element("subfield", marcNamespace);
+	    if (sourceOfOrganizationCode != null) {
+		    newField5Subfield.setAttribute("code", "1");
+		    newField5Subfield.setText(sourceOfOrganizationCode);	    	
+	    } else {
+		    newField5Subfield.setAttribute("code", "5");
+		    newField5Subfield.setText(organizationCode);
+	    }
+	    return newField5Subfield;
+    }
         
     /**
      * Adds a new datafield to the MARC XML record and returns the result. The tag will have
@@ -1628,9 +1652,7 @@ public class MarcXmlManager {
         // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
         if (tag.startsWith("9")) {
             // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
-            Element newField5Subfield = new Element("subfield", marcNamespace);
-            newField5Subfield.setAttribute("code", "5");
-            newField5Subfield.setText(organizationCode);
+            Element newField5Subfield = createOrgCodeSubfield();
 
             // Add the $5 subfield to the new datafield
             newFieldElement.addContent("\t").addContent(newField5Subfield).addContent("\n");
@@ -1725,9 +1747,7 @@ public class MarcXmlManager {
         // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
         if (tag.startsWith("9")) {
             // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
-            Element newField5Subfield = new Element("subfield", marcNamespace);
-            newField5Subfield.setAttribute("code", "5");
-            newField5Subfield.setText(organizationCode);
+            Element newField5Subfield = createOrgCodeSubfield();
 
             // Add the $5 subfield to the new datafield
             newFieldElement.addContent("\t").addContent(newField5Subfield).addContent("\n");
@@ -1940,9 +1960,7 @@ public class MarcXmlManager {
                             // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
                             if (copyIntoField.startsWith("9")) {
                                 // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
-                                Element newField5Subfield = new Element("subfield", marcNamespace);
-                                newField5Subfield.setAttribute("code", "5");
-                                newField5Subfield.setText(organizationCode);
+                                Element newField5Subfield = createOrgCodeSubfield();
 
                                 // Add the $5 subfield to the new datafield
                                 newField.addContent("\t").addContent(newField5Subfield).addContent("\n");
@@ -2046,9 +2064,7 @@ public class MarcXmlManager {
                     // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
                     if (copyIntoField.startsWith("9")) {
                         // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
-                        Element newField5Subfield = new Element("subfield", marcNamespace);
-                        newField5Subfield.setAttribute("code", "5");
-                        newField5Subfield.setText(organizationCode);
+                        Element newField5Subfield = createOrgCodeSubfield();
 
                         // Add the $5 subfield to the new datafield
                         newField.addContent("\t").addContent(newField5Subfield).addContent("\n");
@@ -2130,9 +2146,7 @@ public class MarcXmlManager {
                             // Add a $5 subfield with the user's organization code only if we're adding a 9XX datafield
                             if (copyIntoField.startsWith("9")) {
                                 // Add the $5 subfield to the new MARC XML field with the value of the user's organization code
-                                Element newField5Subfield = new Element("subfield", marcNamespace);
-                                newField5Subfield.setAttribute("code", "5");
-                                newField5Subfield.setText(organizationCode);
+                                Element newField5Subfield = createOrgCodeSubfield();
 
                                 // Add the $5 subfield to the new datafield
                                 newField.addContent("\t").addContent(newField5Subfield).addContent("\n");

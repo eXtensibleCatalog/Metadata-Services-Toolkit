@@ -22,7 +22,7 @@ ENABLED STEPS
 # Specify where the Service should look in the Configuration File to find your
 # Institution's MARC Organization code(s). 
 
-# If value is set as "0", fill in the MARC "Organization Code=CHANGE_Me" variable
+# If value is set as "0", fill in the MARC "OrganizationCode = CHANGE_ME" variable
 # with a single MARC Org code. 
 # (This option will eventually be deprecated)
 
@@ -77,6 +77,32 @@ OrganizationCode = CHANGE_ME
 
 003Config.1=
 003Config.NumberOfRows=
+
+#-----------------------------------------
+# Source of 9XX Fields
+#-----------------------------------------
+
+# When the configuration option is '0', the Service will add the
+# institution's MARC organization code (as specified in this config
+# file above) for the repository in a $5 for each 9XX field
+# created by each of the service steps listed below.  This is current
+# functionality.    When the option is '1', the Service will add $1
+# NyRoXCO (instead of $5 with the institution's MARC organization
+# code) in the 9XX field created by each of the service steps listed
+# below.  Affected bibliographic normalization steps:  all steps that
+# result in the creation of a 9XX field:
+# 
+# DCMIType06
+# Leader06Vocab
+# ModeOfIssuance
+# 006Audience
+# 006FormOfItem
+# DCMIType007
+# 007Vocab
+# 007SMDVocab
+# 007Vocab06
+
+SourceOf9XXFields=0  
 
 #-----------------------------------------
 # Bibliographic Record steps 
@@ -1143,14 +1169,14 @@ LOCATION CODE TO LOCATION
 #*****************************************
 # This section maps ILS location codes with the location
 # associated with them.  The location gives the institution the option to 
-# provide a more complete description of an item’s location in the User Interface. 
+# provide a more complete description of an item's location in the User Interface. 
 #
 # For example, the line "MainRef = Reference Desk, Main Library" 
 # says that the location is "Reference Desk, Main Library" 
 # if the location code is "MainRef".
 #
 # A few sample codes and locations are included below.  These should be deleted 
-# and replaced with the Institution’s actual location code mappings if this step is used.
+# and replaced with the Institution's actual location code mappings if this step is used.
 #
 # This step's default value is "off" because the XC Drupal Toolkit will also 
 # provide this functionality.
@@ -1174,7 +1200,7 @@ LOCATION CODE TO LOCATION LIMIT NAME
 # says that the location is "Main Library" if the location code is "MainRef"
 #
 # A few sample codes and locations are included below.  These should be deleted 
-# and replaced with the Institution’s actual location code mappings if this step is used.
+# and replaced with the Institution's actual location code mappings if this step is used.
 #
 # This step's default value is "off" because the XC Drupal Toolkit will also 
 # provide this functionality.
