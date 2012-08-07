@@ -2922,7 +2922,7 @@ public class NormalizationService extends GenericMetadataService {
     }
 
     protected String getSourceOfOrganizationCode() {
-        return enabledSteps.getProperty("SourceOfMARCOrganizationCode");
+        return enabledSteps.getProperty(CONFIG_SOURCE_OF_MARC_ORG);
     }
     
     protected void setupOrganizationCodeProperties() throws ServiceValidationException {
