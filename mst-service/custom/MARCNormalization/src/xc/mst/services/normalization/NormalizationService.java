@@ -643,8 +643,6 @@ public class NormalizationService extends GenericMetadataService {
 	    		} else if (supply001.equalsIgnoreCase("N")) {
 	    			
 	    			if (empty001) {
-	    				// do nothing
-	    			} else {
 	    				addMessage(record, 110, RecordMessage.ERROR, MSG_MISSING_001_FIELD);			    					
 	    				throw new Exception(MSG_MISSING_001_FIELD);
 	    			}
