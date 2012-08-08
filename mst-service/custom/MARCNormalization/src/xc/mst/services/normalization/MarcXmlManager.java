@@ -67,7 +67,7 @@ public class MarcXmlManager {
         TimingLogger.start("MarcXmlManager()");
         this.marcXml = marcXml;
 
-        this.organizationCode = organizationCode;
+        setOrganizationCode(organizationCode);
 
         // Get the MARC XML's leader
         leader = this.marcXml.getChildText("leader", marcNamespace);
@@ -284,6 +284,10 @@ public class MarcXmlManager {
     public String getField001() {
         return field001;
     }
+    
+    public void setField001(String _001) {
+    	field001 = _001;
+    }
 
     /**
      * The value of the 003 field
@@ -297,6 +301,10 @@ public class MarcXmlManager {
      */
     public String getField003() {
         return field003;
+    }
+    
+    public void setField003(String _003) {
+    	field003 = _003;
     }
 
     /**
@@ -908,7 +916,7 @@ public class MarcXmlManager {
         TimingLogger.start("initializeMarcControlFields");
         if (log.isDebugEnabled())
             log.debug("Initializing MARC XML control fields.");
-
+        
         // Get the control fields
         List<Element> controlFields = marcXml.getChildren("controlfield", marcNamespace);
         // Iterate over the fields and find the 001, 003, 007, and 008 control fields.
@@ -967,8 +975,8 @@ public class MarcXmlManager {
     private void initializeMarcDataFields() {
         TimingLogger.start("initializeMarcDataFields");
         if (log.isDebugEnabled())
-            log.debug("Initializing MARC XML data fields.");
-
+            log.debug("Initializing MARC XML data fields.");        
+        
         // Get the data fields
         List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
 
@@ -1686,7 +1694,7 @@ public class MarcXmlManager {
         // If we just added a 243 element, cache the new element
         else if (tag.equals("243"))
             field243element.add(newFieldElement);
-
+        
         TimingLogger.stop("addMarcXmlField");
     } // end method addMarcXmlField
 
@@ -1759,7 +1767,7 @@ public class MarcXmlManager {
         
         // Add the new field to the end of the MARC XML if we didn't insert it already
         marcXml.addContent(newFieldElement).addContent("\n\n");
-
+        
         TimingLogger.stop("addMarcXmlField");
     } // end method addMarcXmlField
     
@@ -1806,7 +1814,7 @@ public class MarcXmlManager {
 
         // Add the new field to the end of the MARC XML if we didn't insert it already
         marcXml.addContent(4, newFieldElement);
-
+        
     }
 
     /**

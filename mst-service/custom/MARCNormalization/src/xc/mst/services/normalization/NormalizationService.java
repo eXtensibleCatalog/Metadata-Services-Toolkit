@@ -640,6 +640,7 @@ public class NormalizationService extends GenericMetadataService {
 	    				throw new Exception(MSG_UNEXPECTED_VALUE_001_FIELD);
 	    			}
 	    			marcXml.addMarcXmlControlField("001", String.valueOf(record.getId()));
+	    			marcXml.setField001(String.valueOf(record.getId()));
 	    		} else if (supply001.equalsIgnoreCase("N")) {
 	    			
 	    			if (empty001) {
@@ -698,13 +699,12 @@ public class NormalizationService extends GenericMetadataService {
     			if (overwrite003.equalsIgnoreCase("Y")) {
     				if (empty003) {
     	    			marcXml.addMarcXmlControlField("003", orgCode);
-    	    			marcXml.setOrganizationCode(orgCode);
-    	    			setOrganizationCode(orgCode);
     				} else {
     					marcXml.setMarcXmlControlField("003", orgCode);
-    	    			marcXml.setOrganizationCode(orgCode);
-    	    			setOrganizationCode(orgCode);
     				}
+	    			marcXml.setField003(orgCode);
+	    			marcXml.setOrganizationCode(orgCode);
+	    			setOrganizationCode(orgCode);
     			} else if (overwrite003.equalsIgnoreCase("N")) {
     				// do nothing
     			}
@@ -735,13 +735,12 @@ public class NormalizationService extends GenericMetadataService {
     			if (overwrite003.equalsIgnoreCase("Y")) {
     				if (empty003) {
     	    			marcXml.addMarcXmlControlField("003", orgCode);
-    	    			marcXml.setOrganizationCode(orgCode);
-    	    			setOrganizationCode(orgCode);
     				} else {
     					marcXml.setMarcXmlControlField("003", orgCode);
-    	    			marcXml.setOrganizationCode(orgCode);
-    	    			setOrganizationCode(orgCode);
     				}
+	    			marcXml.setField003(orgCode);
+	    			marcXml.setOrganizationCode(orgCode);
+	    			setOrganizationCode(orgCode);
     			} else if (overwrite003.equalsIgnoreCase("N")) {
     				// do nothing
     			}
@@ -1847,6 +1846,7 @@ public class NormalizationService extends GenericMetadataService {
 
         // Add the new 003 field
         marcXml.addMarcXmlControlField("003", new003);
+        marcXml.setField003(new003);
 
         // Create the new 035 field
         String new035 = "(" + getOrganizationCode() + ")" + control001;
