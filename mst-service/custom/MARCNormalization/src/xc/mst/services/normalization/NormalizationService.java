@@ -628,7 +628,7 @@ public class NormalizationService extends GenericMetadataService {
     	
     	// Process 001
     	if (the001Props == null) {
-    		
+    		addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_001_CONFIG);	
     	} else {
     		String the001 = marcXml.getField001();
     		boolean empty001 = (the001 == null || the001.length() < 1);
@@ -667,7 +667,7 @@ public class NormalizationService extends GenericMetadataService {
     		
 		// Process 003
     	if (the003Props == null) {
-    		
+    		addMessage(record, 110, RecordMessage.WARN, MSG_MISSING_003_CONFIG);	
     	} else {
     		String the003 = marcXml.getField003();
     		boolean empty003 = (the003 == null || the003.length() < 1);

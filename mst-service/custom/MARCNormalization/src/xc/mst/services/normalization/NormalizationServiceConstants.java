@@ -30,8 +30,10 @@ public class NormalizationServiceConstants {
     // XC's org code
     public static final String XC_SOURCE_OF_MARC_ORG = "NyRoXCO";
 
+    public static final String MSG_MISSING_001_CONFIG = "Repository URL Not Defined in 001Config";
     public static final String MSG_MISSING_001_FIELD = "Missing 001 field";
     public static final String MSG_UNEXPECTED_VALUE_001_FIELD = "Unexpected value in 001";
+    public static final String MSG_MISSING_003_CONFIG = "Repository URL Not Defined in 003Config";
     public static final String MSG_MISSING_003_FIELD = "Missing 003 field";
     public static final String MSG_UNEXPECTED_003_FIELD = "Unexpected 003 field";
     public static final String MSG_INCORRECT_003_FIELD = "Incorrect value in 003 field";
