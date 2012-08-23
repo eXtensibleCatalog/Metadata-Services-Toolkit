@@ -12,7 +12,9 @@ package xc.mst.services.normalization;
 import static xc.mst.services.normalization.NormalizationServiceConstants.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -334,8 +336,15 @@ public class NormalizationService extends GenericMetadataService {
             	try {
             		normalizedXml = processSourceOfRecord(normalizedXml, record);
             	} catch (Exception e) {
-            		// Fatal error: do not process this record further
-            		return results; // results is empty
+					// Fatal error: do not process this record further
+					LOG.error("Got an exception in getSourceOfOrganizationCode(): " + e);
+            		
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String stacktrace = sw.toString();
+					LOG.error(stacktrace);
+            		
+					return results; // results is empty
             	}
             }
             if (sourceOf9XXFieldsEnabled()) {
@@ -612,7 +621,7 @@ public class NormalizationService extends GenericMetadataService {
     
     private MarcXmlManager processSourceOfRecord(MarcXmlManager marcXml, InputRecord record) throws Exception {
     	String repoURL = getSourceRepositoryURL();
-    	LOG.info("In NormalizationService:processSourceOfRecord: Source Repo URL: " + repoURL);
+    	//LOG.info("In NormalizationService:processSourceOfRecord: Source Repo URL: " + repoURL);
     	HashMap <String, String> the001Props = null;
     	HashMap <String, String> the003Props = null;
     	
@@ -623,8 +632,17 @@ public class NormalizationService extends GenericMetadataService {
     		the003Props = orgCodeProperties003.get(repoURL);
     	}
     	
-    	boolean isBib = record.getType().equals("b");
-    	boolean isHolding = record.getType().equals("h");
+    	boolean isBib = false;
+    	boolean isHolding =  false;
+    	
+    	try {
+    		isBib = record.getType().equals("b");
+    		isHolding = record.getType().equals("h");
+    	} catch (Exception e) {
+    		// getType() can be null...
+    	}
+    	
+    	if (!isBib && !isHolding) return marcXml; // nothing to do
     	
     	// Process 001
     	if (the001Props == null) {
