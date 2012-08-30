@@ -182,6 +182,11 @@ public class SaxMarcXmlRecord implements ContentHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         try {
+        	// make sure our buffer is clean (no errant newlines, etc.)
+        	if (! inTextValueField) {
+        		sb.delete(0, sb.length());
+        	}
+        	
             if (LEADER.equals(localName)) {
                 inTextValueField = true;
             } else if (CONTROL_FIELD.equals(localName)) {
