@@ -80,6 +80,10 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     protected List<Long>                             mergedInRecordsList = null;
     protected List<Long>                             mergedInRecordsList_unpersisted = null;
+    
+    /** in debug mode, it's useful to track a matchset's record of source
+     */
+    protected TLongLongHashMap						recordOfSourceMap = null;
 
     /**
      * the repository feeding this service.  we need to hang on to this because of remerging, etc.
@@ -96,6 +100,11 @@ public class MarcAggregationService extends GenericMetadataService {
     private static final String STATIC_TRANSFORM  = "createStatic.xsl";
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
     private static final String _005_TRANSFORM    = "strip005.xsl";
+    
+    /**
+     * are we in DEBUG mode?
+     */
+    private boolean debugMode = false;
 
     /**
      * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
@@ -119,6 +128,11 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("Could not connect to the database with the parameters in the configuration file.", e);
         } catch (Exception e2) {
             LOG.error("Problem with init.", e2);
+        }
+        
+        debugMode = config.getPropertyAsBoolean("debug_mode", false);
+        if (debugMode) {
+        	recordOfSourceMap = new TLongLongHashMap();
         }
 
         masRsm = (RecordOfSourceManager) config.getBean("RecordOfSourceManager");
@@ -356,16 +370,24 @@ public class MarcAggregationService extends GenericMetadataService {
         List<TreeSet<Long>> matches = getCurrentMatchSetList();
         if (matches != null && matches.size() > 0) {
             final String SEP = System.getProperty("line.separator");
+            final String TAB = "\t";
             LOG.info("** processComplete, matchset length="+matches.size());
 
             StringBuilder sb = new StringBuilder(SEP);
             sb.append("********** MATCHPOINT DUMP START **************************************************************");
             sb.append(SEP).append("*").append(SEP);
             for (Set<Long> set: matches) {
-                sb.append("*** Matchset In: {");
+                sb.append("*** Matchset In: {").append(SEP);
                 Long _num = null;
                 for (Long num: set) {
-                    sb.append(num+", ");
+                    sb.append(TAB).append(num+", ");
+                    if (debugMode) {
+                    	sb.append(scores.get(num));
+                    	if (recordOfSourceMap.get(num) == num) {
+                    		sb.append(" [**Record of Source**]");
+                    	}
+                    }
+                    sb.append(SEP);
                     _num=num;
                 }
                 sb.append("}");
@@ -577,7 +599,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // all in the set used to pull dynamic content
 
         for (TreeSet<Long> set: matches) {
-            InputRecord record = masRsm.getRecordOfSourceRecord(set, repo, scores);
+            InputRecord record = masRsm.getRecordOfSourceRecord(set, repo, scores, recordOfSourceMap);
             String xml = mergeBibSet(record, set, repo);
             createNewBibRecord(record, xml, set);
         }
@@ -1002,7 +1024,7 @@ public class MarcAggregationService extends GenericMetadataService {
             String xml;
             if (hasMatches) {
 
-                InputRecord record = masRsm.getRecordOfSourceRecord(newMatchedRecordIds, repo, scores);
+                InputRecord record = masRsm.getRecordOfSourceRecord(newMatchedRecordIds, repo, scores, recordOfSourceMap);
                 xml = mergeBibSet(record, newMatchedRecordIds, repo);
 
                 // now that we remerged, update the existing output record below!
@@ -1088,7 +1110,7 @@ public class MarcAggregationService extends GenericMetadataService {
         if (hasMatches) {
             masMatchSetList = addToMatchSetList(matchedRecordIds, masMatchSetList);
 
-            InputRecord record = masRsm.getRecordOfSourceRecord(matchedRecordIds, repo, scores);
+            InputRecord record = masRsm.getRecordOfSourceRecord(matchedRecordIds, repo, scores, recordOfSourceMap);
             String xml = mergeBibSet(record, matchedRecordIds, repo);
             list = createNewBibRecord(record, xml, matchedRecordIds);
 

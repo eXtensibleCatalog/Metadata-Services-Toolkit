@@ -1,5 +1,6 @@
 package xc.mst.services.marcaggregation;
 
+import gnu.trove.TLongLongHashMap;
 import gnu.trove.TLongObjectHashMap;
 
 import java.util.ArrayList;
@@ -67,9 +68,12 @@ public class RecordOfSourceManager extends BaseService {
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
     }
 
-
     protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
-        final Long recordOfSource = determineRecordOfSource(set, repo, scores);
+    	return getRecordOfSourceRecord(set, repo, scores, null);
+    }
+    
+    protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores, TLongLongHashMap rosMap) {
+        final Long recordOfSource = determineRecordOfSource(set, repo, scores, rosMap);
         LOG.debug("**** Record of Source == "+recordOfSource);  // obviously produces much writing to log
         //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
 
@@ -103,7 +107,7 @@ public class RecordOfSourceManager extends BaseService {
      * @param repo //for date tie-breaker
      * @return
      */
-    protected Long determineRecordOfSource(Set<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> _scores) {
+    protected Long determineRecordOfSource(Set<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> _scores, TLongLongHashMap rosMap) {
 
         TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap = new TreeMap<SortableRecordOfSourceData, RecordOfSourceData>();
         for (Long num: set) {
@@ -127,7 +131,16 @@ public class RecordOfSourceManager extends BaseService {
             // bigger_record_weighting_enabled;
             sortedMap.put(new SortableRecordOfSourceData(repo,leaderVals,num,source, leader_byte17_weighting_enabled ,bigger_record_weighting_enabled ), source);
         }
-        return sortedMap.firstKey().recordId;
+        final Long RoS = sortedMap.firstKey().recordId;
+        
+        // In case caller wants to keep track of the Record of Source for the matchset (each member of the set will be mapped to the RoS)
+        if (rosMap != null) {
+            for (Long num: set) {
+            	rosMap.put(num, RoS);
+            }
+        }
+        
+        return RoS;
     }
 
 }

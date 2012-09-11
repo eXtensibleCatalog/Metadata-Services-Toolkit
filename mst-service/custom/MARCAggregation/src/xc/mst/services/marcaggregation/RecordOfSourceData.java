@@ -8,4 +8,14 @@ public class RecordOfSourceData {
     }
     public final char leaderByte17;
     public final int size;
+    
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("[LDR/17: ");
+    	sb.append(leaderByte17);
+    	sb.append("; Size: ");
+    	sb.append(size);
+    	sb.append("]");
+    	return sb.toString();
+    }
 }
