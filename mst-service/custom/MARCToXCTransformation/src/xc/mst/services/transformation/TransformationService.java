@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.Marc001_003Holder;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
 import xc.mst.bo.record.RecordCounts;
@@ -413,50 +414,44 @@ public class TransformationService extends SolrTransformationService {
                 if (isBib) {
                 	// if this record is missing a 001, we need to use its 035$a instead (issue mst-473)
                 	// because holdings records may need to reference 035$a in addition to 001
-                    List<String> bib001s = originalRecord.getBib001_or_035s();
-                    String bib001 = "";
-                    
-                    final String orgCode = originalRecord.getOrgCode();
+                    List<Marc001_003Holder> _001_003s = originalRecord.getBib001_or_035s();
                     Long manifestationId = null;
+                    boolean foundOne = false;
                     
-                    if (!StringUtils.isEmpty(orgCode)) {
-                    	// try to find a manifestationId based on either the 001 or 035s (issue mst-473)...
-                    	for (String thisBib001 : bib001s) {
-                        	bib001 = thisBib001;
-                    	
-	                        manifestationId = getManifestationId4BibYet2Arrive(
-	                                originalRecord.getOrgCode(), bib001);
-	                        
-	                        if (manifestationId != null) {
-	                        	break;
-	                        }
-                    	}
-	                        
+                	// try to find a manifestationId based on either the 001 or 035s (issue mst-473)...
+                	for (Marc001_003Holder this_001_003 : _001_003s) {
+                	
+                        manifestationId = getManifestationId4BibYet2Arrive(
+                        		this_001_003.get003(), this_001_003.get001());
+
                         //TODO test more!
-//          LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
+//                      LOG.info("bib arrived, 001="+bib001+" orgcode="+originalRecord.getOrgCode()+" manifestId found in bibsyet2arrive: "+manifestationId);
                         if (manifestationId != null) {
-                            TimingLogger.add("found BibYet2Arrive", 1);
+                            //TimingLogger.add("found BibYet2Arrive", 1);
+                        	foundOne = true;
+                        	
                             removeManifestationId4BibYet2Arrive(
-                                    originalRecord.getOrgCode(), bib001, manifestationId);
-                            previouslyHeldManifestationIds.add(manifestationId);
-//             LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
+                                    this_001_003.get003(), this_001_003.get001(), manifestationId);
+
+                            // store the 001 or all 035s for this bib (issue mst-473)
+                            addManifestationId4BibProcessed(
+                            		this_001_003.get003(), this_001_003.get001(), manifestationId);
+
+                            previouslyHeldManifestationIds.add(manifestationId);                                
+                        }
+                	}
+                        
+//                  LOG.info("think we added bibYet2Arrive to previouslyHeldManifestationIds ! "+manifestationId);
+                    if (! foundOne) {
+                        if (ar.getPreviousManifestationId() != null) {
+                            manifestationId = ar.getPreviousManifestationId();
                         } else {
-                            if (ar.getPreviousManifestationId() != null) {
-                                manifestationId = ar.getPreviousManifestationId();
-                            } else {
-                                manifestationId = getRepositoryDAO().getNextIdAndIncr();
-                            }
+                            manifestationId = getRepositoryDAO().getNextIdAndIncr();
                         }
-                        
-                        // store the 001 or all 035s for this bib (issue mst-473)
-                        for (String thisBib001 : bib001s) {
-	                        addManifestationId4BibProcessed(
-	                                originalRecord.getOrgCode(), thisBib001, manifestationId);
-                        }
-                        
                     }
+                                            
                     List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
-                            getRepository(), ar, manifestationId, nextNewId);    // note, we are now adding poss. of a null manifestationId
+                            getRepository(), ar, manifestationId, nextNewId /* ignored */);    // note, we are now adding poss. of a null manifestationId
                     if (bibRecords != null) {
                         results.addAll(bibRecords);
                     }
@@ -489,7 +484,7 @@ public class TransformationService extends SolrTransformationService {
                             }
                         }
                         List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-                                getRepository(), ar, manifestationIds, nextNewId);
+                                getRepository(), ar, manifestationIds, nextNewId /* ignored */);
 
                         if (holdingsRecords != null) {
                             for (OutputRecord r : holdingsRecords) {
