@@ -448,6 +448,12 @@ public class TransformationService extends SolrTransformationService {
                         } else {
                             manifestationId = getRepositoryDAO().getNextIdAndIncr();
                         }
+                        
+                    	for (Marc001_003Holder this_001_003 : _001_003s) {
+                            // store the 001 or all 035s for this bib (issue mst-473)
+                            addManifestationId4BibProcessed(
+                            		this_001_003.get003(), this_001_003.get001(), manifestationId);
+                    	}
                     }
                                             
                     List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
