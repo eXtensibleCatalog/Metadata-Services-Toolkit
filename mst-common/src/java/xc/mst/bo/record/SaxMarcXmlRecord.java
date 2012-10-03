@@ -247,14 +247,14 @@ public class SaxMarcXmlRecord implements ContentHandler {
         }
     }
 
-    public List<String> getBib001_or_035s() {
-		List<String> ret = new ArrayList<String>();
+    public List<Marc001_003Holder> getBib001_or_035s() {
+		List<Marc001_003Holder> ret = new ArrayList<Marc001_003Holder>();
     	String bib001 = getControlField(1);
+    	String orgCode = getOrgCode();
     	if (bib001 != null) {
-    		ret.add(bib001);
+    		ret.add(new Marc001_003Holder(bib001, orgCode));
     		return ret;
     	}
-    	String orgCode = getOrgCode();
     	List<String> sfs = getSubfield(35, 'a');
     	for (String sf : sfs) {
     		// parse out (orgCode)bibID
@@ -265,9 +265,7 @@ public class SaxMarcXmlRecord implements ContentHandler {
     				try {
 	    				String thisOrgCode = sf.substring(inx+1, inx2);
 	    				String thisBibID = sf.substring(inx2+1);
-	    				if (orgCode.equals(thisOrgCode)) {
-	    					ret.add(thisBibID);
-	    				}
+    					ret.add(new Marc001_003Holder(thisBibID, thisOrgCode));
     				} catch (IndexOutOfBoundsException ioob) {
     					// keep calm and carry on
     				}

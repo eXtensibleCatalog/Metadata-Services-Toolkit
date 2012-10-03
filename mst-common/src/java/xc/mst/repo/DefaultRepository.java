@@ -237,6 +237,12 @@ public class DefaultRepository extends BaseService implements Repository {
         */
         return r;
     }
+    
+    // I need these records, and I also do not understand the effects, so I will add a new method for this.
+    // The effects of todo tasks that get forgotten... sigh. 
+    public Record getUnpersistedRecord(long id) {
+    	return getRepositoryDAO().getUnpersistedRecord(id);
+    }
 
     public List<Record> getRecords(Date from, Date until, Long startingId, Format inputFormat, Set inputSet) {
     	if (Util.dateIsNull(from)) {

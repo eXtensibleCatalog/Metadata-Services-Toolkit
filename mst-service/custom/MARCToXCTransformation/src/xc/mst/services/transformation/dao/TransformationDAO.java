@@ -11,6 +11,7 @@ package xc.mst.services.transformation.dao;
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongIterator;
 import gnu.trove.TLongLongHashMap;
+import gnu.trove.TLongLongIterator;
 import gnu.trove.TLongLongProcedure;
 import gnu.trove.TLongProcedure;
 
@@ -317,16 +318,17 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         return holdings2activate;
     }
 
-    public void persistHeldHoldings(final List<long[]> links) {
+    public void persistHeldHoldings(final TLongLongHashMap links) {
         String sql = "insert ignore into " + held_holdings_table + " (held_holding_id, manifestation_id) values (?,?)";
         TimingLogger.start(held_holdings_table + ".insert");
+        final TLongLongIterator it = links.iterator();
         int[] updateCounts = jdbcTemplate.batchUpdate(
                 sql,
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int j) throws SQLException {
-                        long[] link = links.get(j);
-                        ps.setLong(1, link[0]);
-                        ps.setLong(2, link[1]);
+                    	it.advance();
+                        ps.setLong(1, it.key());
+                        ps.setLong(2, it.value());
                     }
 
                     public int getBatchSize() {
@@ -353,4 +355,5 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                 });
         TimingLogger.stop("deleteHeldHoldings");
     }
+    
 }
