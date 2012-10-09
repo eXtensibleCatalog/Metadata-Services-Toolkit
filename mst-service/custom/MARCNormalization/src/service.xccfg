@@ -55,6 +55,48 @@ OrganizationCode = CHANGE_ME
 # 001Config.1=http://128.151.244.135:8080/OAIToolkit/oai-request.do,N,Y
 # 001Config.2=http://128.151.244.136:8080/OAIToolkit/oai-request.do,Y,Y
 # 001Config.NumberOfRows=2
+#
+# For Bibliographic Records:
+#
+#
+# If <Supply_001_for_Bib> is set to "N" and the record has an 001
+# field, the service step takes no action.
+#
+# If <Supply_001_for_Bib> is set to "N" and the record lacks an 001
+# field, the service step reports the error "Missing 001"  (This
+# enables the institution to identify individual records that lack
+# 001 fields from a repository that normally supplies them) and the
+# service does not produce an output record for this input.
+#
+# If <Supply_001_for_Bib> is set to "Y" and the record has an 001
+# field, the service step reports the error, "Unexpected value in
+# 001".  (This enables the institution to identify an incorrect 001
+# in records from a repository that does not supply 001 fields) and
+# the service does not produce an output record for this input.
+#
+# If <Supply_001_for_Bib> is set to "Y" and the record lacks an 001
+# field, the service step adds an 001 field to the output record that
+# contains a Normalization-service-generated numeric identifier (this
+# identifier will be the same as the numeric portion of the OAI ID
+# that is assigned to the new output record by the Normalization
+# service).
+#
+#
+# For Holdings Records:
+#
+#
+# If <Check_for_Holdings_001> is set to "N", the Service takes no
+# action.
+#
+# If <Check_for_Holdings_001> is set to "Y" and the record has an 001
+# field, the service step takes no action.
+#
+# If <Check_for_Holdings_001> is set to "Y" and the record lacks an
+# 001 field, the service step throws an error and attaches the error
+# message "Missing 001" to the input record, and does not produce an
+# output record.  (This enables the institution to identify individual
+# records that lack 001 fields from a repository that normally supplies
+# them).
 
 001Config.1=
 001Config.NumberOfRows=
@@ -74,6 +116,74 @@ OrganizationCode = CHANGE_ME
 # 003Config.1=http://128.151.244.135:8080/OAIToolkit/oai-request.do,NRU,Y,Y,Y,Y
 # 003Config.2=http://128.151.244.136:8080/OAIToolkit/oai-request.do,NRU,N,Y,N,Y
 # 003Config.NumberOfRows=2
+#
+# For Bibliographic Records:
+#
+# If <Check_Bib_003>=0, the service step takes no further action.
+#
+# If <Check_Bib_003>=N, the service step verifies that no 003 field
+# is present in the incoming record (or if it is present, that there
+# is no data in it).  If it finds that there is no 003, it takes no
+# further action.  If it finds an 003 with data in it (when one is
+# not expected), it attaches a Warning to the input record:
+# "Unexpected 003 field".
+# 
+# If <Check_Bib_003>=Y, the service step verifies that an 003 field
+# with data in it is present in the incoming record (it does not check
+# what the value is).  If it finds an 003, it takes no further action.
+# If it does NOT find an 003 with data in it (when one is expected),
+# it attaches a Warning to the input record:  "Missing 003 field".
+#
+# If <Check_Bib_003>=M, the service step looks for an 003 field in
+# the incoming record and verifies that the content of the 003 matches
+# the value of the MARC Org Code in <MARC_Org_Code>.  If no 003 is
+# found, it attaches the Warning:  "Missing 003 field".  If the 003
+# is found but it does not match <MARC_Org_Code>, it attaches the
+# Warning:  "Incorrect value in 003 field" to the input record.
+#
+# If <Overwrite_Bib_003>=N, the service step takes no further action.
+#
+# If <Overwrite_Bib_003>=Y, the service step looks for an 003 field
+# in the incoming record.  If it finds one, it replaces the data in
+# the 003 field in the output record with the value in <Check_Bib_003>
+# (MARC Org Code).  If no 003 is present in the incoming record, the
+# step creates an 003 field in the output record with the value in
+# <MARC_Org_Code> (MARC Org Code).
+#
+# For Holdings Records: 
+#
+# If <Check_Holdings_003>=0, the service step takes no further action.
+#
+# If <Check_Holdings_003>=N, the service step verifies that no 003
+# field is present in the incoming record (or if it is present, that
+# there is no data in it).  If it finds that there is no 003, it takes
+# no further action.  If it finds an 003 with data in it (when one
+# is not expected), it attaches a Warning to the input record:
+# "Unexpected 003 field".
+#
+# If <Check_Holdings_003>=Y, the service step verifies that an 003
+# field with data in it is present in the incoming record (it does
+# not check what the value is).  If it finds an 003, it takes no
+# further action.  If it does NOT find an 003 with data in it (when
+# one is expected), it attaches a Warning to the input record:i
+# "Missing 003 field".
+#
+# If <Check_Holdings_003>=M, the service step looks for an 003 field
+# in the incoming record and verifies that the content of the 003
+# matches the value of the MARC Org Code in <MARC_Org_Code>.  If no
+# 003 is found, it attaches the Warning:  "Missing 003 field" to the
+# input record.  If the 003 is found but it does not match <MARC_Org_Code>,
+# it attaches the Warning:  "Incorrect value in 003 field" to the
+# input record.
+#
+# If <Overwrite_Holdings_003>=N, the service step takes no further action.
+#
+# If <Overwrite_Holdings_003>=Y, the service step looks for an 003
+# field in the incoming record.  If it finds one, it replaces the
+# data in the 003 field in the output record with the value in
+# <MARC_Org_Code> (MARC Org Code).  If no 003 is present in the
+# incoming record, the step creates an 003 field in the output record
+# with the value in <MARC_Org_Code> (MARC Org Code).
 
 003Config.1=
 003Config.NumberOfRows=
