@@ -802,7 +802,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // 3rd, remove related records from memory structures in preparation for remerge.
 
         // since we are not attempting to delete an output record, don't pass in or expect back results.
-        cleanupOldMergedOutputInfo(formerMatchSet, null, false); //TODO should we be trying to delete an output record???
+        cleanupOldMergedOutputInfo(formerMatchSet, null, false, ((Record)r).getUpdatedAt()); //TODO should we be trying to delete an output record???
 /*
  // refactored the below code out, but since it represents a slightly different way to delete stuff than cleanupOldMergedOutputInfo,
  //  I am leaving it here for a bit.
@@ -992,7 +992,7 @@ public class MarcAggregationService extends GenericMetadataService {
             union.addAll(formerMatchSet);
             // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
             oldOutput = r.getSuccessors().get(0);
-            results = cleanupOldMergedOutputInfo(union, results, true);
+            results = cleanupOldMergedOutputInfo(union, results, true, ((Record)r).getUpdatedAt());
             results.addAll(remerge(formerMatchSet));
         }
         else {   // same size merge set, must update.
@@ -1075,7 +1075,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
         // TODO for re-merge, this was already done right?  do it again? (idempotent/not run then?  / Test)
         // no need for record itself to be part of match set, yet, it is new, so won't be any old merge info.
-        results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true);
+        results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true, ((Record)r).getUpdatedAt());
 
         // maybe this will come into play with rules that have parts that are alike...
         Set<Long> previouslyMatchedRecordIds = null;
@@ -1146,7 +1146,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param results - possibly already has OutputRecord data in it, to be added, or to be deleted when all is said and done.
      * @return - the OutputRecord list, with any necessary OutputRecord deletions added to it.
      */
-    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord) {
+    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord, Date deleteDate) {
         LOG.debug("*** IN cleanupOldMergedOutputInfo!");
         for (Long input: matchedRecordIds) {
             //delete from memory;
@@ -1163,7 +1163,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
                     LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
-                    results = deleteOutputRecord(results, outputRecordToBeDeletedNum);
+                    results = deleteOutputRecord(results, outputRecordToBeDeletedNum, deleteDate);
                 }
             }
             // this is for processing NEW records, but, what if they hit the database, during a commit, then an update to the merge set expanding it
@@ -1176,13 +1176,18 @@ public class MarcAggregationService extends GenericMetadataService {
         return results;
     }
 
-    private List<OutputRecord> deleteOutputRecord(List<OutputRecord> results, Long outputRecordToBeDeletedNum) {
+    private List<OutputRecord> deleteOutputRecord(List<OutputRecord> results, Long outputRecordToBeDeletedNum, Date deletedDate) {
         Record outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
 
         // you may have already deleted it, because 1 output record can be mapped to multiple input records
         if (outputRecordToBeDeleted != null) {
             LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
             outputRecordToBeDeleted.setStatus(Record.DELETED);
+            
+            // MST-550: Solr facets incorrect for deleted records.
+            // This is because we weren't updating the timestamp. Let's do this here:
+            outputRecordToBeDeleted.setUpdatedAt(deletedDate);
+            
             // if the records did not get persisted, will get null record back, or you may have already
             //  deleted it if it is part of a merge set.
             LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
