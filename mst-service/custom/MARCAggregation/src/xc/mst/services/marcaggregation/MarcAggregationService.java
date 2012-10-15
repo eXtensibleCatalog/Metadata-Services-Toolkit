@@ -560,7 +560,7 @@ public class MarcAggregationService extends GenericMetadataService {
                         if (formerMatchSet.size() > 1) {
                             formerMatchSet.remove(r.getId());       // remove the input that is gone.
 
-                            results = remerge(formerMatchSet);
+                            results.addAll(remerge(formerMatchSet));
                         }
                     }
                     TimingLogger.stop("processRecord.updateDeleted");
