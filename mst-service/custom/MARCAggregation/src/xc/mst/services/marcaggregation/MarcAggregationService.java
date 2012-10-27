@@ -1043,10 +1043,6 @@ public class MarcAggregationService extends GenericMetadataService {
             // Do NOT create a new record, update, the OLD record!
             // Set the XML to the updated XML - reconstituted the xml
             oldOutput.setOaiXml(xml);
-            
-            // we need the updatedAt value set to incoming record's value
-            // issue: mst-549
-            ((Record) oldOutput).setUpdatedAt( ((Record) r).getUpdatedAt()  );
 
             // Add the updated record
             oldOutput.setType("b");
