@@ -1043,7 +1043,12 @@ public class MarcAggregationService extends GenericMetadataService {
             // Do NOT create a new record, update, the OLD record!
             // Set the XML to the updated XML - reconstituted the xml
             oldOutput.setOaiXml(xml);
-
+         
+            // we need the clear out the old updatedAt value
+            // so that the MST will correctly set it later (when repo is persisted)
+            // issue: mst-549
+            ((Record) oldOutput).setUpdatedAt( null );
+            
             // Add the updated record
             oldOutput.setType("b");
             results.add(oldOutput);
@@ -1179,6 +1184,12 @@ public class MarcAggregationService extends GenericMetadataService {
         if (outputRecordToBeDeleted != null) {
             LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
             outputRecordToBeDeleted.setStatus(Record.DELETED);
+            
+            // MST-550: Solr facets incorrect for deleted records.
+            // This is because we weren't updating the timestamp.
+            // We do this by clearing out the old (incorrect) value:
+            outputRecordToBeDeleted.setUpdatedAt( null );
+            
             // if the records did not get persisted, will get null record back, or you may have already
             //  deleted it if it is part of a merge set.
             LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
