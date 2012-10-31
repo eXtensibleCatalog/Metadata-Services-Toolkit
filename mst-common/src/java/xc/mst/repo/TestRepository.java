@@ -310,6 +310,10 @@ public class TestRepository extends BaseService implements Repository {
     public Record getRecord(long id) {
         return (Record) repo.get(id);
     }
+    
+    public Record getUnpersistedRecord(long id) {
+    	return null;
+    }
 
     public List<Record> getPredecessors(Record r) {
         throw new RuntimeException("not implemented");
@@ -417,6 +421,10 @@ public class TestRepository extends BaseService implements Repository {
         fromIds.add(fromRecordId);
     }
 
+    @Override
+    public void removeLink(long fromRecordId, long toRecordId) {
+    }
+    
     @Override
     public List<Long> getLinkedRecordIds(Long toRecordId) {
         List<Long> fromRecordIds = new ArrayList<Long>();

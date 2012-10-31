@@ -106,6 +106,7 @@ public class RepositoryDAO extends BaseDAO {
 
     protected boolean inBatch = false;
     protected List<Record> recordsToAdd = null;
+    protected Map<Long, Record> recordsToAddInx = null;
 
     public void init() {
         LOG.debug("RepositoryDAO.init()");
@@ -127,35 +128,21 @@ public class RepositoryDAO extends BaseDAO {
 
     // probably a bad idea exposing some of this implementation stuff but am going for it.
     public boolean haveUnpersistedRecord(Long id) {
-        for (Record record: recordsToAdd) {
-            if (record.getId() == id) {
-                return true;
-            }
-        }
-        return false;
+    	return recordsToAddInx == null ? false : recordsToAddInx.containsKey(id);
     }
 
-    public Record getUnpersistedRecord(Long id) {
-        for (Record record: recordsToAdd) {
-            if (record.getId() == id) {
-                return record;
-            }
+    public Record getUnpersistedRecord(long id) {
+    	if (haveUnpersistedRecord(id)) {
+    		return recordsToAddInx.get(id);
         }
         return null;
     }
 
     public boolean deleteUnpersistedRecord(Long id) {
-        Record recordToDelete = null;
-        if (haveUnpersistedRecord(id)) {
-            for (Record record: recordsToAdd) {
-                if (record.getId() == id) {
-                    recordToDelete = record;
-                    break;
-                }
-            }
-        }
+        Record recordToDelete = getUnpersistedRecord(id);
         if (recordToDelete != null) {
             recordsToAdd.remove(recordToDelete);
+            recordsToAddInx.remove(id);
             return true;
         }
         return false;
@@ -284,21 +271,21 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     public void addRecord(String name, Record r) {
-        if (recordsToAdd == null) {
-            recordsToAdd = new ArrayList<Record>();
-        }
+    	if (recordsToAdd == null) {
+    		recordsToAdd = new ArrayList<Record>();
+    	}
+    	if (recordsToAddInx == null) {
+    		recordsToAddInx = new HashMap<Long, Record>();
+    	}
         recordsToAdd.add(r);
+        recordsToAddInx.put(r.getId(), r);
     }
 
     public void addRecords(String name, List<Record> records, boolean force) {
-        if (recordsToAdd == null) {
-            LOG.debug("** recordsToAdd == null");
-            recordsToAdd = new ArrayList<Record>();
-        }
-        if (records != null) {
-            LOG.debug("** records != null");
-            recordsToAdd.addAll(records);
-        }
+    	for (Record r : records) {
+            recordsToAdd.add(r);
+            recordsToAddInx.put(r.getId(), r);
+    	}
     }
 
     private double getMemUsage() {
@@ -1773,6 +1760,25 @@ public class RepositoryDAO extends BaseDAO {
                     }
                 });
         TimingLogger.stop(RECORD_LINKS_TABLE + ".insert");
+    }
+
+    public void persistLinkedRecordIdsRemoved(String name, final List<long[]> links) {
+        String sql = "delete from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id=? and to_record_id=?";
+        TimingLogger.start(RECORD_LINKS_TABLE + ".delete");
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+                sql,
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+                        long[] link = links.get(j);
+                        ps.setLong(1, link[0]);
+                        ps.setLong(2, link[1]);
+                    }
+
+                    public int getBatchSize() {
+                        return links.size();
+                    }
+                });
+        TimingLogger.stop(RECORD_LINKS_TABLE + ".delete");
     }
 
     public void persistPreviousStatuses(String repoName, TLongByteHashMap previousStatuses) {

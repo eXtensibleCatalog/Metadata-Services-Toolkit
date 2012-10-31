@@ -11,6 +11,7 @@ package xc.mst.repo;
 
 import gnu.trove.TLongByteHashMap;
 import gnu.trove.TLongHashSet;
+import gnu.trove.TLongLongHashMap;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +45,13 @@ public class DefaultRepository extends BaseService implements Repository {
     // keep all pred-succs in memory.
     protected Map<Long, java.util.Set<Record>> predSuccMap = new HashMap<Long, java.util.Set<Record>>();
 
-    protected List<long[]> uplinks = new ArrayList<long[]>();
+    // I need bidirectional random access to uplinks...
+    protected Map<Long, List<Long>> fromToUplinks = new HashMap<Long, List<Long>>();
+    protected Map<Long, List<Long>> toFromUplinks = new HashMap<Long, List<Long>>();
+    // used to persist links to db...
+    protected Map<Long, List<Long>> fromToUplinksAdded = new HashMap<Long, List<Long>>();
+    protected Map<Long, List<Long>> fromToUplinksRemoved = new HashMap<Long, List<Long>>();
+    protected Map<Long, List<Long>> toFromUplinksRemoved = new HashMap<Long, List<Long>>();
 
     // really parentIDsOfRecordsToActivate
     protected TLongHashSet recordsToActivate = new TLongHashSet();
@@ -164,8 +171,17 @@ public class DefaultRepository extends BaseService implements Repository {
             RecordCounts incomingRecordCounts, RecordCounts outgoingRecordCounts) {
         if (getRepositoryDAO().commitIfNecessary(name, force, processedRecordsCount)) {
             predSuccMap.clear();
-            getRepositoryDAO().persistLinkedRecordIds(name, uplinks);
-            uplinks.clear();
+            
+            List<long[]> uplinksAdded = getArrayListFromKeyedMap(fromToUplinksAdded);
+            getRepositoryDAO().persistLinkedRecordIds(name, uplinksAdded);            
+            fromToUplinksAdded.clear();
+            uplinksAdded.clear();
+            
+            List<long[]> uplinksRemoved = getArrayListFromKeyedMap(fromToUplinksRemoved);
+            getRepositoryDAO().persistLinkedRecordIdsRemoved(name, uplinksRemoved);
+            fromToUplinksRemoved.clear(); toFromUplinksRemoved.clear();
+            uplinksRemoved.clear();
+                        
             getRepositoryDAO().activateRecords(name, recordsToActivate);
             for (Map.Entry<String, AtomicInteger> me : recordCountsToActivateByType.entrySet()) {
                 int num = me.getValue().get();
@@ -207,39 +223,15 @@ public class DefaultRepository extends BaseService implements Repository {
 
     }
 
-    // TODO: you need to check the cache as well
     public Record getRecord(long id) {
-        Record r = getRepositoryDAO().getRecord(name, id);
+    	Record	r = getRepositoryDAO().getRecord(name, id);
         if (r != null) {
             r.setSets(getRepositoryDAO().getSets(name, id));
             getMessageService().injectMessages(r);
         }
-//
-// Have code that can check repoDAO cache now, but don't want to do so till I understand effects.
-//
-//        else {
-//            if (getRepositoryDAO().haveUnpersistedRecord(id)) {
-//                LOG.info("** FOUND the record is unpersisted, id="+id);
-//            }
-//        }
-        //debug dump predSucc map, lots of data.
-        /*
-        else {
-            LOG.info("** COULD NOT find: "+id+" check cache:");
-            for (Long outid: this.predSuccMap.keySet()) {
-                LOG.info("predSucc: id: "+ outid+" contains: ");
-                java.util.Set<Record> set = predSuccMap.get(outid);
-                for (Record record: set) {
-                    LOG.info("predSucc, key->"+outid+" val=>"+record.getId());
-                }
-            }
-        }
-        */
         return r;
     }
     
-    // I need these records, and I also do not understand the effects, so I will add a new method for this.
-    // The effects of todo tasks that get forgotten... sigh. 
     public Record getUnpersistedRecord(long id) {
     	return getRepositoryDAO().getUnpersistedRecord(id);
     }
@@ -352,13 +344,58 @@ public class DefaultRepository extends BaseService implements Repository {
     public void deleteAllData() {
         getRepositoryDAO().deleteAllData(this.name);
     }
+    
+    protected List<Long> getLongKeyedMap(Long key, Map<Long, List<Long>> m1) {
+        List<Long> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new ArrayList<Long>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
+    
+    protected List<long[]> getArrayListFromKeyedMap (Map<Long, List<Long>> fromToMap) {
+        List<long[]> arrList = new ArrayList<long[]>();
+        for (Long fromRecordId : fromToMap.keySet()) {
+        	List<Long> toRecordIds = fromToMap.get(fromRecordId);
+        	for (Long toRecordId : toRecordIds) {
+        		arrList.add(new long[] { fromRecordId, toRecordId });
+        	}
+        }
+        return arrList;
+    }
 
     public void addLink(long fromRecordId, long toRecordId) {
-        uplinks.add(new long[] { fromRecordId, toRecordId });
+    	List<Long> m = getLongKeyedMap(fromRecordId, fromToUplinks);
+    	m.add(toRecordId);
+    	m = getLongKeyedMap(toRecordId, toFromUplinks);
+    	m.add(fromRecordId);
+    	
+    	m = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
+    	m.add(toRecordId);    	
+    }
+
+    public void removeLink(long fromRecordId, long toRecordId) {
+    	List<Long> m = getLongKeyedMap(fromRecordId, fromToUplinks);
+    	m.remove(toRecordId);
+    	m = getLongKeyedMap(toRecordId, toFromUplinks);
+    	m.remove(fromRecordId);    	
+    	
+    	m = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
+    	m.add(toRecordId);
+    	m = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
+    	m.add(fromRecordId);    	
     }
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {
-        return getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
+        List<Long> l = getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
+        for (Long id : toFromUplinks.keySet()) {
+        	l.add(id);
+        }
+        for (Long id : toFromUplinksRemoved.keySet()) {
+        	l.remove(id);
+        }
+        return l;
     }
 
     public void activateRecord(String type, long recordId) {

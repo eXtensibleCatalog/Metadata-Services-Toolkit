@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.transform.TransformerConfigurationException;
@@ -30,6 +31,7 @@ import org.jdom.Element;
 import xc.mst.bo.provider.Format;
 import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
+import xc.mst.bo.record.Manifestation;
 import xc.mst.bo.record.Marc001_003Holder;
 import xc.mst.bo.record.OutputRecord;
 import xc.mst.bo.record.Record;
@@ -58,7 +60,6 @@ import xc.mst.utils.XmlHelper;
 public class TransformationService extends SolrTransformationService {
 
     private final static Logger LOG = Logger.getLogger(TransformationService.class);
-
     protected XmlHelper xmlHelper = new XmlHelper();
 
     // TODO - these datastructures need to be read in and they need to be persisted.
@@ -85,6 +86,17 @@ public class TransformationService extends SolrTransformationService {
     protected Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
     protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
     protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+
+/***
+    // save holdings to bibs references  (and for adding and removing)
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsMap = new HashMap<String, Map<String, List<String>>>();
+    protected Map<String, Map<String, List<String>>> holdingsToBibsMap = new HashMap<String, Map<String, List<String>>>();    
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsAddedMap = new HashMap<String, Map<String, List<String>>>();
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsRemovedMap = new HashMap<String, Map<String, List<String>>>();
+***/
+    
+    // Keep track of records we wish to edit payload only (and not their predecessor linkeage)
+    protected Map<Long, Boolean> unchangedPredecessors = new HashMap<Long, Boolean>();
     
     // XC's org code
     public static final String XC_SOURCE_OF_MARC_ORG = "NyRoXCO";
@@ -97,6 +109,8 @@ public class TransformationService extends SolrTransformationService {
         }
         return m2;
     }
+    
+    
 
     protected Map<String, Long> getStringKeyedMap(String key, Map<String, Map<String, Long>> m1) {
         Map<String, Long> m2 = m1.get(key);
@@ -107,6 +121,7 @@ public class TransformationService extends SolrTransformationService {
         return m2;
     }
 
+    
     protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 
     protected TLongLongHashMap heldHoldings = new TLongLongHashMap(); // recordId -> manifestationId
@@ -152,6 +167,13 @@ public class TransformationService extends SolrTransformationService {
                 bibsYet2ArriveLongIdMap,
                 bibsYet2ArriveStringIdMap);
         TimingLogger.stop("getTransformationDAO().loadBibMaps");
+        
+/***
+        TimingLogger.start("getTransformationDAO().loadBibRefs");
+        getTransformationDAO().loadBibRefs(bibsToHoldingsMap, holdingsToBibsMap);
+        TimingLogger.stop("getTransformationDAO().loadBibRefs");
+***/
+        
         TimingLogger.reset();
         inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs", 0);
         inputHoldings = getRepository().getPersistentPropertyAsInt("inputHoldings", 0);
@@ -203,7 +225,7 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsProcessedStringIdMap),
                 s);
     }
-
+    
     protected void addManifestationId4BibProcessed(String orgCode, String s, Long l) {
         add2Map(
                 getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
@@ -246,6 +268,49 @@ public class TransformationService extends SolrTransformationService {
                 getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
                 s, l);
     }
+    
+/***    
+    protected List<String> getHoldingsForBib(String orgCode, String bib_id) {
+    	return getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsMap);
+    }
+
+    protected void addBibsforHolding(String orgCode, String holding_id, List<String> bib_ids) {
+    	for (String bib_id : bib_ids) {
+        	List<String> list = getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsMap);
+        	list.add(holding_id);
+        	list = getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsAddedMap);
+        	list.add(holding_id);
+    	}
+    	List<String> list = getKeyedMapListStringList(orgCode, holding_id, holdingsToBibsMap);
+    	list.addAll(bib_ids);    	
+    }
+
+    protected void removeBibsforHolding(String orgCode, String holding_id) {
+    	List<String> bibs = getKeyedMapListStringList(orgCode, holding_id, holdingsToBibsMap);
+    	if (bibs.size() > 0) {
+    		for (String bib : bibs) {
+        		List<String> list2 = getKeyedMapListStringList(orgCode, bib, bibsToHoldingsRemovedMap);
+        		list2.add(holding_id);    			
+    		}
+    	}
+    	bibs.clear();
+    }
+    
+    protected List<String> getKeyedMapListStringList(String org_code, String key, Map<String, Map<String, List<String>>> m1) {
+        Map<String, List<String>> m2 = m1.get(org_code);
+        if (m2 == null) {
+            m2 = new HashMap<String, List<String>>();
+            m1.put(org_code, m2);
+        }
+        List<String> list = m2.get(key);
+        if (list == null) {
+        	list = new ArrayList<String>();
+        	m2.put(key, list);
+        }        
+        return list;
+    }
+***/
+    
 
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
@@ -262,7 +327,6 @@ public class TransformationService extends SolrTransformationService {
                     bibsProcessedLongIdRemovedMap, bibsProcessedStringIdRemovedMap,
                     bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveStringIdAddedMap,
                     bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveStringIdRemovedMap);
-
             bibsProcessedLongIdAddedMap.clear();
             bibsProcessedStringIdAddedMap.clear();
             bibsProcessedLongIdRemovedMap.clear();
@@ -271,7 +335,15 @@ public class TransformationService extends SolrTransformationService {
             bibsYet2ArriveStringIdAddedMap.clear();
             bibsYet2ArriveLongIdRemovedMap.clear();
             bibsYet2ArriveStringIdRemovedMap.clear();
-
+            
+            unchangedPredecessors.clear();
+            
+/***            
+            getTransformationDAO().persistBibRefs(bibsToHoldingsAddedMap, bibsToHoldingsRemovedMap);
+            bibsToHoldingsAddedMap.clear();
+            bibsToHoldingsRemovedMap.clear();
+***/
+            
             previouslyHeldManifestationIds.forEach(new TLongProcedure() {
                 public boolean execute(long recordId) {
                     LOG.debug("previouslyHeldManifestationId: " + recordId + "");
@@ -295,21 +367,7 @@ public class TransformationService extends SolrTransformationService {
             heldHoldings.clear();
             getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
             previouslyHeldManifestationIds.clear();
-
             
-            /*
-            // TODO: use polymorphism instead
-            if (!(getRepository() instanceof TestRepository)) {
-                super.endBatch();
-            }
-            getTransformationDAO().persistHeldHoldings(heldHoldings);
-            heldHoldings.clear();
-            getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
-            if (getRepository() instanceof TestRepository) {
-                super.endBatch();
-            }
-            */
-
             TimingLogger.stop("TransformationDAO.non-generic");
             TimingLogger.stop("TransformationDAO.endBatch");
 
@@ -321,6 +379,7 @@ public class TransformationService extends SolrTransformationService {
         }
         return true;
     }
+    
 
     @Override
     public List<OutputRecord> process(InputRecord record) {
@@ -331,6 +390,35 @@ public class TransformationService extends SolrTransformationService {
         LOG.debug("getId(): " + ((Record) record).getId());
         try {
             List<OutputRecord> results = new ArrayList<OutputRecord>();
+            
+            record.setMode(Record.STRING_MODE);
+
+            String sourceOfRecords = null;
+            if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
+            	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
+            
+            SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
+
+            // Get the ORG code from the 035 field
+            orgCode = originalRecord.getOrgCode();
+            if (StringUtils.isEmpty(orgCode)) {
+                // Add error
+                // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+            }
+
+            boolean isBib = false;
+            boolean isHolding = false;
+
+            char leader06 = originalRecord.getLeader().charAt(6);
+            if ("abcdefghijkmnoprt".contains("" + leader06)) {
+                isBib = true;
+            } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+                isHolding = true;
+            } else { // If leader 6th character is invalid, then log error and do not process that record.
+                logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+                return results;
+            }
+
 
             if (Record.DELETED == record.getStatus()) {
                 if (record.getSuccessors() != null) {
@@ -342,34 +430,18 @@ public class TransformationService extends SolrTransformationService {
                         or.setType(type);
                     }
                 }
-            } else {
-                record.setMode(Record.STRING_MODE);
-
-                String sourceOfRecords = null;
-                if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
-                	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
                 
-                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
+                if (isBib) {
+                	// Are there any holdings records which reference this bib?
+                	/***List<String> ref_holdings = getHoldingsForBib(orgCode, originalRecord.getControlField(1));***/
 
-                // Get the ORG code from the 035 field
-                orgCode = originalRecord.getOrgCode();
-                if (StringUtils.isEmpty(orgCode)) {
-                    // Add error
-                    // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+                } else if (isHolding) {
+                	// remove bib references in map
+                	/***removeBibsforHolding(orgCode, originalRecord.getControlField(1));***/
+
                 }
-
-                boolean isBib = false;
-                boolean isHolding = false;
-
-                char leader06 = originalRecord.getLeader().charAt(6);
-                if ("abcdefghijkmnoprt".contains("" + leader06)) {
-                    isBib = true;
-                } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
-                    isHolding = true;
-                } else { // If leader 6th character is invalid, then log error and do not process that record.
-                    logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
-                    return results;
-                }
+                
+            } else {
 
                 AggregateXCRecord ar = new AggregateXCRecord();
                 if (isBib) {
@@ -410,7 +482,6 @@ public class TransformationService extends SolrTransformationService {
                         inputHoldings++;
                     }
                 }
-                long nextNewId = getRepositoryDAO().getNextId();
                 if (isBib) {
                     Long manifestationId = null;
                     
@@ -465,7 +536,8 @@ public class TransformationService extends SolrTransformationService {
                             		heldHoldings.put(_stale, manifestationId);
 
                             		// We need to edit this holdings output record by changing its stale manifestationHeld Id to the chosen "source" manifestationId.
-                            	    fixManifestationId(_stale, this_manifestationId, manifestationId);
+                            	    OutputRecord fixed = fixManifestationId(_stale, this_manifestationId, manifestationId);
+                            	    if (fixed != null) results.add(fixed);
                             	}                            	
                             }
                         }
@@ -490,7 +562,7 @@ public class TransformationService extends SolrTransformationService {
                 	}
                                             
                     List<OutputRecord> bibRecords = getXCRecordService().getSplitXCRecordXML(
-                            getRepository(), ar, manifestationId, nextNewId /* ignored */);    // note, we are now adding poss. of a null manifestationId
+                            getRepository(), ar, manifestationId, 0L /* ignored */);    // note, we are now adding poss. of a null manifestationId
                     if (bibRecords != null) {
                         results.addAll(bibRecords);
                     }
@@ -501,8 +573,11 @@ public class TransformationService extends SolrTransformationService {
                     if (ar.getReferencedBibs() == null) {
                         LOG.error("ar.getReferencedBibs() == null");
                     } else {
+
+                    	final String orgCode = originalRecord.getOrgCode();
+                    	/***addBibsforHolding(orgCode, originalRecord.getControlField(1), new ArrayList<String>(ar.getReferencedBibs()));***/
+                    	
                         for (String ref001 : ar.getReferencedBibs()) {
-                            final String orgCode = originalRecord.getOrgCode();
                             if (!StringUtils.isEmpty(orgCode)) {
                                 Long manifestationId = getManifestationId4BibProcessed(
                                         orgCode, ref001);
@@ -540,7 +615,7 @@ public class TransformationService extends SolrTransformationService {
                             }
                         }
                         List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-                                getRepository(), ar, manifestationIds, nextNewId /* ignored */);
+                                getRepository(), ar, manifestationIds, 0L /* ignored */);
 
                         if (holdingsRecords != null) {
                             for (OutputRecord r : holdingsRecords) {
@@ -581,20 +656,15 @@ public class TransformationService extends SolrTransformationService {
     }
     
     @SuppressWarnings("unchecked")
-	protected void fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId ) {
-		Repository repo = getRepository();
-		Record r = repo.getRecord(recordId);
-		if (r == null) {
-			// Hack: getRecord() should be able to search its cache for unpersisted records.
-			// However, the developer never implemented the to-do task for this, and presumably the next
-			// developer in line didn't feel confident about its effects. I'm going to leave it alone, too,
-			// for now...
-			if (repo instanceof  DefaultRepository) {
-				DefaultRepository defRepo = (DefaultRepository) repo;
-				r = defRepo.getUnpersistedRecord(recordId.longValue());
-			}
-		}
+	protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId) {
+    	// we may need to access in-memory (not yet persisted) records.
+    	// mst doesn't provide a safe framework for manipulating these; therefore, we will perist the records first!
+    	if (getRepositoryDAO().haveUnpersistedRecord(recordId)) {
+            super.commitIfNecessary(true, 0);
+    	}
+    	Record r = getRepository().getRecord(recordId);
 		if (r != null) {
+			r.setMode(Record.JDOM_MODE);
 			Element root = r.getOaiXmlEl();
 			final String staleUplink = "/" + staleManifestationId;
 	        List<Element> elements = root.getChildren();
@@ -608,16 +678,38 @@ public class TransformationService extends SolrTransformationService {
 	            			int inx = uplink.lastIndexOf('/');
 	            			final String newUplink = new String(uplink.substring(0,inx+1) + newManifestationId);    
 	            			heldEl.setText(newUplink);
-        					LOG.info("Record id:" + r.getId() + " stale uplink:" + uplink + " new uplink" + newUplink + "\n");
+        					LOG.info("Record id:" + r.getId() + " stale uplink: " + uplink + " new uplink: " + newUplink + "\n");
+        					// need to keep repo's links up-to-date too
+        					getRepository().removeLink(recordId, staleManifestationId);
+        					getRepository().addLink(recordId, newManifestationId);
 	            			break;
 	            		}
 	            	}
 	            	break;
 	            }
 	        }
+	        r.setUpdatedAt(null); // we need this to be set when repo is persisted.
+	        unchangedPredecessors.put(recordId, true);
+	        return r;
 		}
-    }
+		return null;
+	}
     
+    
+    /**
+     * At times, we will be editing records which already exist.
+     * In these cases, we will not need to mess with predecessor linkage (i.e., 
+     * we will keep the same values).
+     * We will mark these records in the unchangedPredecessors collection, so that later
+     * on, the addPredecessor() method will know which records to ignore.
+     */
+    @Override
+    protected void addPredecessor(Record in, Record out) {
+    	if (! unchangedPredecessors.containsKey(out.getId())) {
+        	super.addPredecessor(in, out);    	    		
+    	}
+    }
+
     
     /*
      * Process bibliographic record
