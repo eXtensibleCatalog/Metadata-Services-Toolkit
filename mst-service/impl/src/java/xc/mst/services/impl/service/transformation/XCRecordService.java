@@ -909,8 +909,6 @@ public class XCRecordService extends GenericMetadataServiceService {
         xcRecord.setOaiXmlEl(oaiXmlEl);
         xcRecord.setFormat(ar.xcFormat);
 
-        // TODO BDA - I don't think these uplinks are actually being used. I'll
-        // leave them for now.
         if (upLinks != null) {
             for (String upLink : upLinks) {
                 xcRecord.addUpLink(upLink);

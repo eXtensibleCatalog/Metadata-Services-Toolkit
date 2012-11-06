@@ -389,10 +389,10 @@ public class DefaultRepository extends BaseService implements Repository {
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {
         List<Long> l = getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
-        for (Long id : toFromUplinks.keySet()) {
+        for (Long id : getLongKeyedMap(toRecordId, fromToUplinks)) {
         	l.add(id);
         }
-        for (Long id : toFromUplinksRemoved.keySet()) {
+        for (Long id : getLongKeyedMap(toRecordId, fromToUplinksRemoved)) {
         	l.remove(id);
         }
         return l;

@@ -391,35 +391,6 @@ public class TransformationService extends SolrTransformationService {
         try {
             List<OutputRecord> results = new ArrayList<OutputRecord>();
             
-            record.setMode(Record.STRING_MODE);
-
-            String sourceOfRecords = null;
-            if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
-            	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
-            
-            SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
-
-            // Get the ORG code from the 035 field
-            orgCode = originalRecord.getOrgCode();
-            if (StringUtils.isEmpty(orgCode)) {
-                // Add error
-                // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
-            }
-
-            boolean isBib = false;
-            boolean isHolding = false;
-
-            char leader06 = originalRecord.getLeader().charAt(6);
-            if ("abcdefghijkmnoprt".contains("" + leader06)) {
-                isBib = true;
-            } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
-                isHolding = true;
-            } else { // If leader 6th character is invalid, then log error and do not process that record.
-                logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
-                return results;
-            }
-
-
             if (Record.DELETED == record.getStatus()) {
                 if (record.getSuccessors() != null) {
                     for (OutputRecord or : record.getSuccessors()) {
@@ -427,21 +398,50 @@ public class TransformationService extends SolrTransformationService {
                         results.add(or);
                         Record r = getRepository().getRecord(or.getId());
                         String type = getXCRecordService().getType(r);
-                        or.setType(type);
-                    }
+                        or.setType(type);     
+                        LOG.info("Deleted record's successor type: " + type);
+                        if (or.getType().equals("manifestation")) {
+                        	// Are there any holdings records which reference this manifestation?
+                        	/***List<String> ref_holdings = getHoldingsForBib(orgCode, originalRecord.getControlField(1));***/
+                        	String msg = "Deleting a bib (record_id: " + record.getId() + "); The following holdings records will be affected:\n";
+                        	List<Long> holdings_ids = getRepository().getLinkedRecordIds(or.getId());
+                        	for (long id : holdings_ids) {
+                        		msg += "\tholding record_id: " + id + "\n";
+                        	}
+                        	LOG.info(msg);
+                        }
+                    }                    
                 }
-                
-                if (isBib) {
-                	// Are there any holdings records which reference this bib?
-                	/***List<String> ref_holdings = getHoldingsForBib(orgCode, originalRecord.getControlField(1));***/
-
-                } else if (isHolding) {
-                	// remove bib references in map
-                	/***removeBibsforHolding(orgCode, originalRecord.getControlField(1));***/
-
-                }
-                
+                                
             } else {
+            	
+                record.setMode(Record.STRING_MODE);
+
+                String sourceOfRecords = null;
+                if (config.getPropertyAsInt("SourceOf9XXFields", 0) == 1)
+                	sourceOfRecords = XC_SOURCE_OF_MARC_ORG;
+                
+                SaxMarcXmlRecord originalRecord = new SaxMarcXmlRecord(record.getOaiXml(), sourceOfRecords);
+
+                // Get the ORG code from the 035 field
+                orgCode = originalRecord.getOrgCode();
+                if (StringUtils.isEmpty(orgCode)) {
+                    // Add error
+                    // record.addError(service.getId() + "-100: An organization code could not be found on either the 003 or 035 field of input MARC record.");
+                }
+
+                boolean isBib = false;
+                boolean isHolding = false;
+
+                char leader06 = originalRecord.getLeader().charAt(6);
+                if ("abcdefghijkmnoprt".contains("" + leader06)) {
+                    isBib = true;
+                } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
+                    isHolding = true;
+                } else { // If leader 6th character is invalid, then log error and do not process that record.
+                    logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
+                    return results;
+                }
 
                 AggregateXCRecord ar = new AggregateXCRecord();
                 if (isBib) {
@@ -656,9 +656,11 @@ public class TransformationService extends SolrTransformationService {
     }
     
     @SuppressWarnings("unchecked")
+    // This isn't very OO, but, then again, nor is AggregateXCRecord and XCRecordService.
+    // TODO: Refactor these objects, then incorporate this into AggregateXCRecord.
 	protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId) {
-    	// we may need to access in-memory (not yet persisted) records.
-    	// mst doesn't provide a safe framework for manipulating these; therefore, we will perist the records first!
+    	// We may need to access in-memory (not yet persisted) records.
+    	// MST doesn't provide a safe framework for manipulating in-memory objects; therefore, we will persist the records first!
     	if (getRepositoryDAO().haveUnpersistedRecord(recordId)) {
             super.commitIfNecessary(true, 0);
     	}

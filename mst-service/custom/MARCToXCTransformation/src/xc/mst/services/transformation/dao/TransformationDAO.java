@@ -335,6 +335,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         return rowList;
     }
 
+/***    
     protected List<Map<String, Object>> getBibRefs(String tableName, int page) {
         TimingLogger.start("getBibRefs");
         int recordsAtOnce = 250000;
@@ -344,6 +345,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("getBibRefs");
         return rowList;
     }
+***/
     
     @SuppressWarnings("unchecked")
     public void loadBibMaps(
@@ -387,7 +389,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         }
     }
 
-    
+/***    
     @SuppressWarnings("unchecked")
     public void loadBibRefs(
         Map<String, Map<String, List<String>>> bibsToHoldings, 
@@ -431,7 +433,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
             rowList = getBibRefs(tableName, ++page);
         }
     }
-
+***/
     
     public TLongHashSet getHoldingIdsToActivate(final TLongHashSet manifestationIds) {
         final TLongHashSet holdings2activate = new TLongHashSet();
