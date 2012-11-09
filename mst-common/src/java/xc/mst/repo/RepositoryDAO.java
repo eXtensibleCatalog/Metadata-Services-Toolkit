@@ -1744,7 +1744,7 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     public void persistLinkedRecordIds(String name, final List<long[]> links) {
-        String sql = "insert into " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id, to_record_id) values (?,?)";
+        String sql = "replace into " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id, to_record_id) values (?,?)";
         TimingLogger.start(RECORD_LINKS_TABLE + ".insert");
         int[] updateCounts = jdbcTemplate.batchUpdate(
                 sql,

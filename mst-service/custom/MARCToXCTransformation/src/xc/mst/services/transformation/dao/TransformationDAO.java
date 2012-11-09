@@ -49,6 +49,8 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 
     protected final static String bibsProcessedLongId_table = "bibsProcessedLongId";
     protected final static String bibsProcessedStringId_table = "bibsProcessedStringId";
+    protected final static String holdingsProcessedLongId_table = "holdingsProcessedLongId";
+    protected final static String holdingsProcessedStringId_table = "holdingsProcessedStringId";
     protected final static String bibsYet2ArriveLongId_table = "bibsYet2ArriveLongId";
     protected final static String bibsYet2ArriveStringId_table = "bibsYet2ArriveStringId";
     protected final static String bibRefs_table = "bibs_to_holdings";
@@ -60,6 +62,10 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
             Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap,
             Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap,
             Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap,
+            Map<String, TLongLongHashMap> holdingsProcessedLongIdAddedMap,
+            Map<String, Map<String, Long>> holdingsProcessedStringIdAddedMap,
+            Map<String, TLongLongHashMap> holdingsProcessedLongIdRemovedMap,
+            Map<String, Map<String, Long>> holdingsProcessedStringIdRemovedMap,
             Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap,
             Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap,
             Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap,
@@ -70,6 +76,8 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         Object[] objArr = new Object[] {
                 bibsProcessedLongIdAddedMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdAddedMap, bibsProcessedStringId_table,
+                holdingsProcessedLongIdAddedMap, holdingsProcessedLongId_table,
+                holdingsProcessedStringIdAddedMap, holdingsProcessedStringId_table,
                 bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveLongId_table,
                 bibsYet2ArriveStringIdAddedMap, bibsYet2ArriveStringId_table };
         for (int i = 0; i < objArr.length; i += 2) {
@@ -166,6 +174,8 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         objArr = new Object[] {
                 bibsProcessedLongIdRemovedMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdRemovedMap, bibsProcessedStringId_table,
+                holdingsProcessedLongIdRemovedMap, holdingsProcessedLongId_table,
+                holdingsProcessedStringIdRemovedMap, holdingsProcessedStringId_table,
                 bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveLongId_table,
                 bibsYet2ArriveStringIdRemovedMap, bibsYet2ArriveStringId_table };
         for (int i = 0; i < objArr.length; i += 2) {
@@ -213,7 +223,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
 
     }
 
-/***
+
     @SuppressWarnings("unchecked")
     public void persistBibRefs(
             Map<String, Map<String, List<String>>> bibsToHoldingsAddedMap,
@@ -322,7 +332,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("TransformationDAO.persistBibRefs");
 
     }
-***/    
+    
     
     
     protected List<Map<String, Object>> getBibMaps(String tableName, int page) {
@@ -335,7 +345,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         return rowList;
     }
 
-/***    
+    
     protected List<Map<String, Object>> getBibRefs(String tableName, int page) {
         TimingLogger.start("getBibRefs");
         int recordsAtOnce = 250000;
@@ -345,18 +355,22 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         TimingLogger.stop("getBibRefs");
         return rowList;
     }
-***/
+
     
     @SuppressWarnings("unchecked")
     public void loadBibMaps(
             Map<String, TLongLongHashMap> bibsProcessedLongIdMap,
             Map<String, Map<String, Long>> bibsProcessedStringIdMap,
+            Map<String, TLongLongHashMap> holdingsProcessedLongIdMap,
+            Map<String, Map<String, Long>> holdingsProcessedStringIdMap,
             Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap,
             Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap) {
 
         Object[] objArr = new Object[] {
                 bibsProcessedLongIdMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdMap, bibsProcessedStringId_table,
+                holdingsProcessedLongIdMap, holdingsProcessedLongId_table,
+                holdingsProcessedStringIdMap, holdingsProcessedStringId_table,
                 bibsYet2ArriveLongIdMap, bibsYet2ArriveLongId_table,
                 bibsYet2ArriveStringIdMap, bibsYet2ArriveStringId_table };
         for (int i = 0; i < objArr.length; i += 2) {
@@ -389,7 +403,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
         }
     }
 
-/***    
+    
     @SuppressWarnings("unchecked")
     public void loadBibRefs(
         Map<String, Map<String, List<String>>> bibsToHoldings, 
@@ -433,7 +447,6 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
             rowList = getBibRefs(tableName, ++page);
         }
     }
-***/
     
     public TLongHashSet getHoldingIdsToActivate(final TLongHashSet manifestationIds) {
         final TLongHashSet holdings2activate = new TLongHashSet();

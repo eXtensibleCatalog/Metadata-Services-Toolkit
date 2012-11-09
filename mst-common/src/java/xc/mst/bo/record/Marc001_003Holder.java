@@ -34,5 +34,7 @@ public class Marc001_003Holder {
         return this.get001().concat(this.get003()).hashCode();
     }
 
-
+    public String toString() {
+    	return "[003]" + s_003 + ": [001]" + s_001;
+    }
 }
