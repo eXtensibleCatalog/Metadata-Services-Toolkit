@@ -27,6 +27,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.constants.Constants;
 import xc.mst.constants.TransformationServiceConstants.FrbrLevel;
 import xc.mst.dao.DatabaseConfigException;
+import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.services.impl.service.GenericMetadataServiceService;
 import xc.mst.utils.XmlHelper;
@@ -36,7 +37,7 @@ import xc.mst.utils.XmlHelper;
  * @author Benjamin D. Anderson
  *
  */
-public class XCRecordService extends GenericMetadataServiceService {
+public class XCRecordService extends BaseService {
 
     private static final Logger LOG = Logger.getLogger(XCRecordService.class);
     protected XmlHelper xmlHelper = new XmlHelper();
@@ -844,7 +845,6 @@ public class XCRecordService extends GenericMetadataServiceService {
             long holdingId = getId(ar.getPreviousHoldingIds());
             String holdingOaiId = getRecordService().getOaiIdentifier(
                     holdingId, getMetadataService().getService());
-
             holdingsElement.setAttribute("id", holdingOaiId);
 
             for (Long manifestationId : manifestationIds) {

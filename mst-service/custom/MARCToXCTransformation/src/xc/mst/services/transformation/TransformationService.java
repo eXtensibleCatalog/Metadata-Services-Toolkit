@@ -568,6 +568,10 @@ public class TransformationService extends SolrTransformationService {
                         		        
                     			if (new_manifestation_ids.size() > 0) {
                     				// we found a match. add these new references
+                    				OutputRecord fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
+                            	    if (fixed != null) {
+                            	    	results.add(fixed);                        		
+                            	    }
                     				                        			
                     			} else {
                     				// no matches. we need to set this holding record as "held" (waiting for manifestation)
@@ -863,41 +867,67 @@ public class TransformationService extends SolrTransformationService {
     	return r;
     }
     
-    @SuppressWarnings("unchecked")
+    
     // This isn't very OO, but, then again, nor is AggregateXCRecord and XCRecordService, nor much of TransformationService for that matter.
 	protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId) {
+    	List<Long> l = new ArrayList<Long>();
+    	l.add(newManifestationId);
+    	return fixManifestationId(recordId, staleManifestationId, l);
+    }
+    
+    protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, List<Long> newManifestationIds) {
+       
+    	final String staleUplink = getRecordService().getOaiIdentifier(
+    			staleManifestationId, getMetadataService().getService());
+    	
     	Record r = getRecord(recordId);
 		if (r != null) {
 			r.setMode(Record.JDOM_MODE);
 			Element root = r.getOaiXmlEl();
-			final String staleUplink = "/" + staleManifestationId;
+			Element holdingsElement = null;
 	        List<Element> elements = root.getChildren();
 	        for (Element element : elements) {
 	            String frbrLevel = element.getAttributeValue("type");
 	            if (frbrLevel.equals("holdings")) {
+	            	if (holdingsElement == null) {
+	            		holdingsElement = element;
+	            	}
 	            	List<Element> heldEls = element.getChildren("manifestationHeld", element.getNamespace());
+	            	List<Element> deleteThese = new ArrayList<Element>();
 	            	for (Element heldEl : heldEls) {
 	            		final String uplink = heldEl.getText();
-	            		if(uplink.endsWith(staleUplink)) {
-	            			if (newManifestationId == null) {
-	            				// delete
-	            				LOG.info("Deleting dangling manifestation link: " + heldEl);
-	            				heldEls.remove(heldEl);
-	            			} else {
-		            			int inx = uplink.lastIndexOf('/');
-		            			final String newUplink = new String(uplink.substring(0,inx+1) + newManifestationId);    
-		            			heldEl.setText(newUplink);
-	        					LOG.info("Record id:" + r.getId() + " stale uplink: " + uplink + " new uplink: " + newUplink + "\n");
-	        					// need to keep repo's links up-to-date too
-	        					getRepository().removeLink(recordId, staleManifestationId);
-	        					getRepository().addLink(recordId, newManifestationId);
-		            			break;
-	            			}
+	            		if(uplink.equals(staleUplink)) {
+	            				deleteThese.add(heldEl);
 	            		}
 	            	}
-	            	break;
+	            	for (Element deleteThis : deleteThese) {
+        				// delete
+        				LOG.info("Deleting stale manifestation link: " + deleteThis);
+        				heldEls.remove(deleteThis);	            		
+	            	}
 	            }
 	        }
+            if (holdingsElement == null) {
+            	LOG.error("Couldn't find holdings element in fixManifestationId()");
+            	return null;
+            }
+
+	        // need to keep repo's links up-to-date too
+			getRepository().removeLink(recordId, staleManifestationId);
+	        
+			for (Long newManifestationId : newManifestationIds) {
+		    	String newUplink = getRecordService().getOaiIdentifier(
+		    			newManifestationId, getMetadataService().getService());
+		        Element linkManifestation = new Element("manifestationHeld",
+	                    AggregateXCRecord.XC_NAMESPACE);
+	            linkManifestation.setText(newUplink);
+	            
+	            holdingsElement.addContent(linkManifestation.detach());
+				LOG.info("Record id:" + r.getId() + " new uplink via fixManifestationId(): " + newUplink);
+
+				getRepository().addLink(recordId, newManifestationId);
+	        }
+	        
 	        r.setUpdatedAt(null); // we need this to be set when repo is persisted.
 	        unchangedPredecessors.put(recordId, true);
 	        return r;

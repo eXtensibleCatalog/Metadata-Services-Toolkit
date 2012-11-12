@@ -70,6 +70,7 @@ import xc.mst.manager.user.UserService;
 import xc.mst.repo.RepositoryDAO;
 import xc.mst.repo.RepositoryService;
 import xc.mst.scheduling.Scheduler;
+import xc.mst.services.MetadataService;
 import xc.mst.utils.MSTConfiguration;
 import xc.mst.utils.Util;
 
@@ -499,6 +500,11 @@ public class BaseService {
     public RepositoryService getRepositoryService() {
         return (RepositoryService) config.getBean("RepositoryService");
     }
+    
+    public MetadataService getMetadataService() {
+        return (MetadataService) config.getBean("MetadataService");
+    }
+
 
     public MessageService getMessageService() {
         return (MessageService) config.getBean("MessageService");
