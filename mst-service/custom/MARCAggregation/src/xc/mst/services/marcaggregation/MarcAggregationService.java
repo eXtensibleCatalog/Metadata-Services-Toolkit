@@ -1007,7 +1007,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             // note both sides of the if below should produce the same record.
             //   (as long as we continue to put ALL bibs into I2O map and O2I map, and not just merged records)
-            if (allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
+            if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
                 oldOutputId = getBibOutputId(newMatchedRecordIds.first());
                 oldOutput = getRepository().getRecord(oldOutputId);
             }
