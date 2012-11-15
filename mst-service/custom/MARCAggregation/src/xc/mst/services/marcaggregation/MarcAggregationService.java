@@ -992,7 +992,17 @@ public class MarcAggregationService extends GenericMetadataService {
             // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
             oldOutput = r.getSuccessors().get(0);
             results = cleanupOldMergedOutputInfo(union, results, true);
+            
+            /***
+             * I'm guessing we should really remerge the everything (union), not just the formerMatchSet.
+             * Because, how else would the newMatchedRecordIds ever get processed? Maybe an accidental
+             * typo from the past that's haunting us today (e.g., I attempted to re-activate a deleted
+             * record belonging to a match set, but it only resulted in a deleted output records and no
+             * new active output records).
             results.addAll(remerge(formerMatchSet));
+            ***/
+            results.addAll(remerge(union));
+            
         }
         else {   // same size merge set, must update.
             // this is the merge as you go along spot, and will be impacted if you change that paradigm.
@@ -1006,7 +1016,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             // note both sides of the if below should produce the same record.
             //   (as long as we continue to put ALL bibs into I2O map and O2I map, and not just merged records)
-            if (allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
+            if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
                 oldOutputId = getBibOutputId(newMatchedRecordIds.first());
                 oldOutput = getRepository().getRecord(oldOutputId);
             }
@@ -1017,7 +1027,7 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             // since same set, don't clean up any memory details, it all points to the right stuff still.
 
-            List<OutputRecord> list = null;
+//            List<OutputRecord> list = null;
             // may not have any matches!
             final boolean hasMatches = newMatchedRecordIds.size() > 0;
             String xml;
@@ -1051,13 +1061,17 @@ public class MarcAggregationService extends GenericMetadataService {
             // Add the updated record
             oldOutput.setType("b");
             results.add(oldOutput);
-
+/*
+ * * What's the purpose of the following??? Seems like just adding the same record, oldOutput, to the results a second time.
+ * I'm going to comment it out for now...
             list = new ArrayList<OutputRecord>();
             list.add(oldOutput);
 
             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
 
             results.addAll(list);
+*/   
+            
         }
         return results;
     }
