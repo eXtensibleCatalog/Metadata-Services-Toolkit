@@ -35,6 +35,6 @@ public class Marc001_003Holder {
     }
 
     public String toString() {
-    	return "[003]" + s_003 + ": [001]" + s_001;
+    	return "[" + s_003 + "] " + s_001;
     }
 }

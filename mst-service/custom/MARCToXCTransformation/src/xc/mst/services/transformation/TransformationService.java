@@ -68,12 +68,12 @@ public class TransformationService extends SolrTransformationService {
     // records with some id higher than something.
 
     // keep track of missing/not-yet-received bibs (those which have a holding record referring to it)
-    protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap = new HashMap<String, TLongLongHashMap>();
-    protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, Long>>();
-    protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
-    protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, Long>>();
-    protected Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
-    protected Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, List<Long>>>();
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdAddedMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, List<Long>>>();
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, List<Long>>>();
 
     // keep track of bib -> its record id
     protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
@@ -112,8 +112,15 @@ public class TransformationService extends SolrTransformationService {
         return m2;
     }
     
+    protected Map<Long, List<Long>> getLongListMap(String key, Map<String, Map<Long, List<Long>>> m1) {
+        Map<Long, List<Long>> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new HashMap<Long, List<Long>>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
     
-
     protected Map<String, Long> getStringKeyedMap(String key, Map<String, Map<String, Long>> m1) {
         Map<String, Long> m2 = m1.get(key);
         if (m2 == null) {
@@ -123,6 +130,14 @@ public class TransformationService extends SolrTransformationService {
         return m2;
     }
 
+    protected Map<String, List<Long>> getStringListMap(String key, Map<String, Map<String, List<Long>>> m1) {
+        Map<String, List<Long>> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new HashMap<String, List<Long>>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
     
     protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
 
@@ -162,6 +177,7 @@ public class TransformationService extends SolrTransformationService {
     public void setup() {
         LOG.info("TransformationService.setup");
         TimingLogger.outputMemory();
+        
         TimingLogger.start("getTransformationDAO().loadBibMaps");
         bibsProcessedLongIdMap.clear();
         bibsProcessedStringIdMap.clear();
@@ -173,9 +189,8 @@ public class TransformationService extends SolrTransformationService {
                 bibsProcessedLongIdMap,
                 bibsProcessedStringIdMap,
                 holdingsProcessedLongIdMap,
-                holdingsProcessedStringIdMap,
-                bibsYet2ArriveLongIdMap,
-                bibsYet2ArriveStringIdMap);
+                holdingsProcessedStringIdMap);
+        getTransformationDAO().loadBibsYet2Arrive(bibsYet2ArriveLongIdMap, bibsYet2ArriveStringIdMap);
         TimingLogger.stop("getTransformationDAO().loadBibMaps");
 
         TimingLogger.start("getTransformationDAO().loadBibRefs");
@@ -216,16 +231,57 @@ public class TransformationService extends SolrTransformationService {
             stringLongMapAdded.put(s, lv);
         }
     }
+    private List<Long> getLongListFromLongMap(Long l, Map<Long, List<Long>> m) {
+        List <Long> list;
+        if (m.containsKey(l)) {
+        	list = m.get(l);
+        } else {
+        	list = new ArrayList<Long>();
+        	m.put(l, list);
+        }
+        return list;
+    }
+    
+    private List<Long> getLongListFromStringMap(String l, Map<String, List<Long>> m) {
+        List <Long> list;
+        if (m.containsKey(l)) {
+        	list = m.get(l);
+        } else {
+        	list = new ArrayList<Long>();
+        	m.put(l, list);
+        }
+        return list;
+    }
 
-    private void removeFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
-            TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, String s, long lv) {
+    private void add2ListMap(Map<Long, List<Long>> longLongMap, Map<String, List<Long>> stringLongMap,
+            Map<Long, List<Long>> longLongMapAdded, Map<String, List<Long>> stringLongMapAdded, String s, long lv) {
         try {
             Long bibMarcId = Long.parseLong(s.trim());
-            longLongMap.remove(bibMarcId);
-            longLongMapRemoved.put(bibMarcId, lv);
+            List <Long> list = getLongListFromLongMap(bibMarcId, longLongMap);
+            list.add(lv);
+            list = getLongListFromLongMap(bibMarcId, longLongMapAdded);
+            list.add(lv);
         } catch (NumberFormatException nfe) {
-            stringLongMap.remove(s);
-            stringLongMapRemoved.put(s, lv);
+            List <Long> list = getLongListFromStringMap(s.trim(), stringLongMap);
+            list.add(lv);
+            list = getLongListFromStringMap(s.trim(), stringLongMapAdded);
+            list.add(lv);
+        }
+    }
+
+    private void removeFromListMap(Map<Long, List<Long>> longLongMap, Map<String, List<Long>> stringLongMap,
+            Map<Long, List<Long>> longLongMapRemoved, Map<String, List<Long>> stringLongMapRemoved, String s, long lv) {
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            List <Long> list = getLongListFromLongMap(bibMarcId, longLongMap);
+            list.remove(lv);
+            list = getLongListFromLongMap(bibMarcId, longLongMapRemoved);
+            list.add(lv);
+        } catch (NumberFormatException nfe) {
+            List <Long> list = getLongListFromStringMap(s.trim(), stringLongMap);
+            list.remove(lv);
+            list = getLongListFromStringMap(s.trim(), stringLongMapRemoved);
+            list.add(lv);
         }
     }
 
@@ -354,28 +410,34 @@ public class TransformationService extends SolrTransformationService {
     	}
     }
 
-    protected Long getManifestationId4BibYet2Arrive(String orgCode, String s) {
-        return getLongFromMap(
-                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
-                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
-                s);
+    protected List<Long> getManifestationId4BibYet2Arrive(String orgCode, String s) {
+    	List <Long> listReturned = new ArrayList<Long>();
+    	List <Long> list;
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            list = getLongListFromLongMap(bibMarcId, getLongListMap(orgCode, bibsYet2ArriveLongIdMap));
+        } catch (NumberFormatException nfe) {
+            list = getLongListFromStringMap(s.trim(), getStringListMap(orgCode, bibsYet2ArriveStringIdMap));
+        }
+        listReturned.addAll(list);
+        return listReturned;
     }
 
     protected void addManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
-        add2Map(
-                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
-                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
-                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdAddedMap),
-                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdAddedMap),
+        add2ListMap(
+                getLongListMap(orgCode, bibsYet2ArriveLongIdMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdMap),
+                getLongListMap(orgCode, bibsYet2ArriveLongIdAddedMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdAddedMap),
                 s, l);
     }
 
     protected void removeManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
-        removeFromMap(
-                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdMap),
-                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdMap),
-                getLongKeyedMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
-                getStringKeyedMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
+        removeFromListMap(
+        		getLongListMap(orgCode, bibsYet2ArriveLongIdMap),
+        		getStringListMap(orgCode, bibsYet2ArriveStringIdMap),
+                getLongListMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
                 s, l);
     }
  
@@ -447,12 +509,13 @@ public class TransformationService extends SolrTransformationService {
             TimingLogger.start("TransformationDAO.endBatch");
 
             TimingLogger.start("TransformationDAO.non-generic");
-            // persist 4 001->recordId maps
+            
             getTransformationDAO().persistBibMaps(
                     bibsProcessedLongIdAddedMap, bibsProcessedStringIdAddedMap,
                     bibsProcessedLongIdRemovedMap, bibsProcessedStringIdRemovedMap,
                     holdingsProcessedLongIdAddedMap, holdingsProcessedStringIdAddedMap,
-                    holdingsProcessedLongIdRemovedMap, holdingsProcessedStringIdRemovedMap,
+                    holdingsProcessedLongIdRemovedMap, holdingsProcessedStringIdRemovedMap);
+            getTransformationDAO().persistBibsYet2Arrive(
                     bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveStringIdAddedMap,
                     bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveStringIdRemovedMap);
             
@@ -688,54 +751,55 @@ public class TransformationService extends SolrTransformationService {
                 	for (Marc001_003Holder this_001_003 : _001_003s) {
                 	
                 		// Does a "held" holding record exist for this bib (i.e., is it waiting for us)? If so, we need to activate it.
-                        Long this_manifestationId = getManifestationId4BibYet2Arrive(
+                        List<Long> this_manifestationIds = getManifestationId4BibYet2Arrive(
                         		this_001_003.get003(), this_001_003.get001());
-
-                        if (this_manifestationId != null) {
-                        	// Reminder: if a holding record arrived before its referenced bib (this is called a "held" holding record),
-                        	// a manifestationId for this bib was generated ahead of time (when the holdings record arrived).
-
-                        	// However: it's possible that two or more "held" holding records have linked to this bib.
-                        	// This means that two or more manifestationIds have been created and designated for this bib.
-                        	// But since this bib may only have one manifestationId, we need to choose one to represent them all.
-                        	// Let's use the first match as the chosen "source" manifestationId.
-                        	if (manifestationId == null) {
-                        		manifestationId = this_manifestationId;
-                        		
-                                // Later on, during commit, these held holdings records will get activated based on the matched this_manifestationId
-                                previouslyHeldManifestationIds.add(manifestationId);
-                        	}
-                       		
-                        	// Remove the manifestationId that we just matched on, which may or may not be the "source"
-                            removeManifestationId4BibYet2Arrive(
-                                    this_001_003.get003(), this_001_003.get001(), this_manifestationId);
-                        	
-                            // This manifestationId needs to be represented by the above-chosen "source"
-                            if (manifestationId != this_manifestationId) {
-                            	
-                            	// fix the "stale" manifestationId in the held holdings collection so that it will
-                            	// get activated correctly later (during commit)
-                            	List<Long> stale = new ArrayList<Long>();
-                            	TLongLongIterator it = heldHoldings.iterator();
-                            	while (it.hasNext()) {
-                            		it.advance();
-                            		if (it.value() == this_manifestationId) {
-                            			stale.add(it.key());
-                            		}
-                            	}
-                            	for (Long _stale : stale) {
-                            		//heldHoldings.remove(_stale);
-                            		heldHoldings.put(_stale, manifestationId);
-
-                            		// We need to edit this holdings output record by changing its stale manifestationHeld Id to the chosen "source" manifestationId.
-                            	    OutputRecord fixed = fixManifestationId(_stale, this_manifestationId, manifestationId);
-                            	    if (fixed != null) results.add(fixed);
-                            	}  
-                            	
-                            	// remove "stale" manifestationId here, too
-                            	removeRecordId4BibProcessed(this_manifestationId);
-                            }
-                        }
+                        
+                        if (this_manifestationIds.size() > 0) {
+	                        for (Long this_manifestationId : this_manifestationIds) {
+	                        	// Reminder: if a holding record arrived before its referenced bib (this is called a "held" holding record),
+	                        	// a manifestationId for this bib was generated ahead of time (when the holdings record arrived).
+	
+	                        	// However: it's possible that two or more "held" holding records have linked to this bib.
+	                        	// This means that two or more manifestationIds have been created and designated for this bib.
+	                        	// But since this bib may only have one manifestationId, we need to choose one to represent them all.
+	                        	// Let's use the first match as the chosen "source" manifestationId.
+	                        	if (manifestationId == null) {
+	                        		manifestationId = this_manifestationId;
+	                        		
+	                                // Later on, during commit, these held holdings records will get activated based on the matched this_manifestationId
+	                                previouslyHeldManifestationIds.add(manifestationId);
+	                        	}
+	                       		
+	                        	// Remove the manifestationId that we just matched on, which may or may not be the "source"
+	                            removeManifestationId4BibYet2Arrive(
+	                                    this_001_003.get003(), this_001_003.get001(), this_manifestationId);
+	                        	
+	                            // This manifestationId needs to be represented by the above-chosen "source"
+	                            if (manifestationId != this_manifestationId) {
+	                            	
+	                            	// fix the "stale" manifestationId in the held holdings collection so that it will
+	                            	// get activated correctly later (during commit)
+	                            	List<Long> stale = new ArrayList<Long>();
+	                            	TLongLongIterator it = heldHoldings.iterator();
+	                            	while (it.hasNext()) {
+	                            		it.advance();
+	                            		if (it.value() == this_manifestationId) {
+	                            			stale.add(it.key());
+	                            		}
+	                            	}
+	                            	for (Long _stale : stale) {
+	                            		heldHoldings.put(_stale, manifestationId);
+	
+	                            		// We need to edit this holdings output record by changing its stale manifestationHeld Id to the chosen "source" manifestationId.
+	                            	    OutputRecord fixed = fixManifestationId(_stale, this_manifestationId, manifestationId);
+	                            	    if (fixed != null) results.add(fixed);
+	                            	}  
+	                            	
+	                            	// remove "stale" manifestationId here, too
+	                            	removeRecordId4BibProcessed(this_manifestationId);
+	                            }
+	                		}
+	                	}
                 	}
                         
                 	// No holding records are waiting for us...
@@ -766,77 +830,87 @@ public class TransformationService extends SolrTransformationService {
                     List<Long> manifestationIds = new ArrayList<Long>();
                     List<Long> manifestationsIdsInWaiting = new ArrayList<Long>();
                     if (ar.getReferencedBibs() == null) {
-                        LOG.error("ar.getReferencedBibs() == null");
+                        LOG.error("ar.getReferencedBibs() == null!!!");
                     } else {
 
                     	final String orgCode = originalRecord.getOrgCode();
-                    	
-                    	addBibsforHolding(orgCode, originalRecord.getControlField(1), new ArrayList<String>(ar.getReferencedBibs()));
-                    	
-                        for (String ref001 : ar.getReferencedBibs()) {
-                            if (!StringUtils.isEmpty(orgCode)) {
-                                Long manifestationId = getRecordId4BibProcessed(
-                                        orgCode, ref001);
-
-                                LOG.debug("input " + record.getId() + "manifestationId: " + manifestationId);
-                                if (manifestationId == null) {
-                                	
-                                	// At this point, we haven't encountered the referenced (linked-to) bib yet.
-                                	// Let's see if any holdings records before us have already run into this same situation,
-                                	// and, if so, we should link to the same manifestationId.
-                                    manifestationId = getManifestationId4BibYet2Arrive(
-                                            orgCode, ref001);
-                                    
-                                    // This bib doesn't exist yet, therefore we will set this holdings record's state to "held."
-                                    status = Record.HELD;
-                                    
-                                    if (manifestationId == null) {
-                                    	// So, we are the first record waiting to be linked to this bib. Therefore we will
-                                    	// choose the manifestationId for this bib now (so that we may link to it now,
-                                    	// and create the "held" holdings record now).
-                                    	
-                                    	// NOTE: In the case of a merged MAS bib,
-                                    	// it's quite possible that we will end up with multiple manifestationIds for the same
-                                    	// bib. We won't know this until the merged bib actually arrives.
-                                    	// When it does arrive, we will need to handle it then.
-                                        manifestationId = getRepositoryDAO().getNextIdAndIncr();
-                                        
-                                        // Store this manifestationId so that future holdings records may also link to this manifestationId.
-                                        addManifestationId4BibYet2Arrive(
-                                                orgCode, ref001, manifestationId);
-                                    }
-                                    manifestationsIdsInWaiting.add(manifestationId);
-                                }
-                                manifestationIds.add(manifestationId);
-                            }
-                        }
-                        List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
-                                getRepository(), ar, manifestationIds, 0L /* ignored */);
-
-                        if (holdingsRecords != null) {
-                            for (OutputRecord r : holdingsRecords) {
-                                // addErrorToOutput(r, 16, RecordMessage.INFO);
-                                // addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
-                                if (status == Record.HELD) {
-                                    for (Long mid : manifestationsIdsInWaiting) {
-                                        heldHoldings.put(r.getId(), mid);
-                                    }
-                                }
-                                r.setStatus(status);
-                                results.add(r);
-                                if (isNew) {
-                                    LOG.info("Adding " + (isNew ? "new" : "existing") + " HOLDING record (ID: " + r.getId() + ")");
-                                    addRecordId4HoldingProcessed(
-                                    		orgCode, originalRecord.getControlField(1), r.getId());
-                                }
-                            }
+                        if (StringUtils.isEmpty(orgCode)) {
+                            LOG.error("There is no org code set!!!");
                         } else {
-                            LOG.debug("holdingsRecords == null");
-                        }
-                    }
-                }
-                // update service accordingly w/ new record counts
+	                        
+	                    	addBibsforHolding(orgCode, originalRecord.getControlField(1), new ArrayList<String>(ar.getReferencedBibs()));
+	                    	
+	                        for (String ref001 : ar.getReferencedBibs()) {
+	                            Long manifestationId = getRecordId4BibProcessed(
+	                                    orgCode, ref001);
+	
+	                            LOG.debug("input " + record.getId() + "manifestationId: " + manifestationId);
+	
+	                            if (manifestationId == null) {
+	                                // This bib doesn't exist yet, therefore we will set this holdings record's state to "held."
+	                                status = Record.HELD;
+	                            	
+	                            	// At this point, we haven't encountered the referenced (linked-to) bib yet.
+	                            	// Let's see if any holdings records before us have already run into this same situation,
+	                            	// and, if so, we should link to the same manifestationId.
+	                                List<Long> waitingManifestationIds = getManifestationId4BibYet2Arrive(
+	                                        orgCode, ref001);
+	                                
+	                                if (waitingManifestationIds.size() < 1) {
+	                                    // So, we are the first record waiting to be linked to this bib. Therefore we will
+	                                	// choose the manifestationId for this bib now (so that we may link to it now,
+	                                	// and create the "held" holdings record now).
+	                                	
+	                                	// NOTE: In the case of a merged MAS bib,
+	                                	// it's quite possible that we will end up with multiple manifestationIds for the same
+	                                	// bib. We won't know this until the merged bib actually arrives.
+	                                	// When it does arrive, we will need to handle it then.
+	                                    manifestationId = getRepositoryDAO().getNextIdAndIncr();
+	                                    
+	                                    // Store this manifestationId so that future holdings records may also link to this manifestationId.
+	                                    addManifestationId4BibYet2Arrive(
+	                                            orgCode, ref001, manifestationId);
+	                                    
+	                                    waitingManifestationIds.add(manifestationId);
+	                                }
+                                	for (Long this_manifestationId : waitingManifestationIds) {	                                    
+	                                	manifestationsIdsInWaiting.add(this_manifestationId);
+	                                	manifestationIds.add(this_manifestationId);
+	                                }
+                        
+	                            } else {
+	                            	manifestationIds.add(manifestationId);
+	                            }
+	                        }
+	                        List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
+	                                getRepository(), ar, manifestationIds, 0L /* ignored */);
+	
+	                        if (holdingsRecords != null) {
+	                            for (OutputRecord r : holdingsRecords) {
+	                                // addErrorToOutput(r, 16, RecordMessage.INFO);
+	                                // addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
+	                                if (status == Record.HELD) {
+	                                    for (Long mid : manifestationsIdsInWaiting) {
+	                                        heldHoldings.put(r.getId(), mid);
+	                                    }
+	                                }
+	                                r.setStatus(status);
+	                                results.add(r);
+	                                if (isNew) {
+	                                    LOG.info("Adding " + (isNew ? "new" : "existing") + " HOLDING record (ID: " + r.getId() + ")");
+	                                    addRecordId4HoldingProcessed(
+	                                    		orgCode, originalRecord.getControlField(1), r.getId());
+	                                }
+	                            }
+	                        } else {
+	                            LOG.debug("holdingsRecords == null");
+	                        }
+	                    }
+	                }
+	                // update service accordingly w/ new record counts
+	            }
             }
+            
             TimingLogger.add("output records", results.size());
             for (OutputRecord or : results) {
                 if (!or.getDeleted()) {

@@ -65,11 +65,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
             Map<String, TLongLongHashMap> holdingsProcessedLongIdAddedMap,
             Map<String, Map<String, Long>> holdingsProcessedStringIdAddedMap,
             Map<String, TLongLongHashMap> holdingsProcessedLongIdRemovedMap,
-            Map<String, Map<String, Long>> holdingsProcessedStringIdRemovedMap,
-            Map<String, TLongLongHashMap> bibsYet2ArriveLongIdAddedMap,
-            Map<String, Map<String, Long>> bibsYet2ArriveStringIdAddedMap,
-            Map<String, TLongLongHashMap> bibsYet2ArriveLongIdRemovedMap,
-            Map<String, Map<String, Long>> bibsYet2ArriveStringIdRemovedMap) {
+            Map<String, Map<String, Long>> holdingsProcessedStringIdRemovedMap) {
 
         TimingLogger.start("TransformationDAO.persistBibMaps");
 
@@ -77,9 +73,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                 bibsProcessedLongIdAddedMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdAddedMap, bibsProcessedStringId_table,
                 holdingsProcessedLongIdAddedMap, holdingsProcessedLongId_table,
-                holdingsProcessedStringIdAddedMap, holdingsProcessedStringId_table,
-                bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveLongId_table,
-                bibsYet2ArriveStringIdAddedMap, bibsYet2ArriveStringId_table };
+                holdingsProcessedStringIdAddedMap, holdingsProcessedStringId_table};
         for (int i = 0; i < objArr.length; i += 2) {
 
             for (Object keyObj : ((Map) objArr[i]).keySet()) {
@@ -104,7 +98,6 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                     final String tableName = (String) objArr[i + 1];
                     TimingLogger.start(tableName + ".insert");
                     TimingLogger.start(tableName + ".insert.create_infile");
-                    final List<Object[]> params = new ArrayList<Object[]>();
                     if (map instanceof TLongLongHashMap) {
                         TLongLongHashMap longKeyedMap = (TLongLongHashMap) map;
                         LOG.debug("insert: " + tableName + ".size(): " + longKeyedMap.size());
@@ -175,9 +168,7 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                 bibsProcessedLongIdRemovedMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdRemovedMap, bibsProcessedStringId_table,
                 holdingsProcessedLongIdRemovedMap, holdingsProcessedLongId_table,
-                holdingsProcessedStringIdRemovedMap, holdingsProcessedStringId_table,
-                bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveLongId_table,
-                bibsYet2ArriveStringIdRemovedMap, bibsYet2ArriveStringId_table };
+                holdingsProcessedStringIdRemovedMap, holdingsProcessedStringId_table};
         for (int i = 0; i < objArr.length; i += 2) {
             for (Object keyObj : ((Map) objArr[i]).keySet()) {
                 final String orgCode = (String) keyObj;
@@ -205,6 +196,152 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                     if (stringKeyedMap != null && stringKeyedMap.size() > 0) {
                         for (Map.Entry<String, Long> me : stringKeyedMap.entrySet()) {
                             params.add(new Object[] { me.getKey(), me.getValue(), orgCode });
+                        }
+                    }
+                }
+                if (params.size() > 0) {
+                    TimingLogger.start(tableName + ".delete");
+                    String sql =
+                            "delete from " + tableName +
+                                    " where bib_001=? and record_id=? and org_code=?";
+                    int[] updateCounts = this.simpleJdbcTemplate.batchUpdate(sql, params);
+                    TimingLogger.stop(tableName + ".delete");
+                }
+            }
+        }
+
+        TimingLogger.stop("TransformationDAO.persistBibMaps");
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public void persistBibsYet2Arrive(
+            Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdAddedMap,
+            Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdAddedMap,
+            Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdRemovedMap,
+            Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdRemovedMap) {
+
+        TimingLogger.start("TransformationDAO.persistBibMaps");
+
+        Object[] objArr = new Object[] {
+                bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveLongId_table,
+                bibsYet2ArriveStringIdAddedMap, bibsYet2ArriveStringId_table };
+        for (int i = 0; i < objArr.length; i += 2) {
+
+            for (Object keyObj : ((Map) objArr[i]).keySet()) {
+                String orgCode = (String) keyObj;
+                
+                Object map = ((Map) objArr[i]).get(orgCode);
+
+                try {
+                    if (map == null) {
+                        continue;
+                    }
+                    final byte[] orgCodeBytes = orgCode.getBytes("UTF-8");
+                    String dbLoadFileStr = (MSTConfiguration.getUrlPath() + "/db_load.in").replace('\\', '/');
+                    final byte[] tabBytes = "\t".getBytes();
+                    final byte[] newLineBytes = "\n".getBytes();
+
+                    File dbLoadFile = new File(dbLoadFileStr);
+                    if (dbLoadFile.exists()) {
+                        dbLoadFile.delete();
+                    }
+                    final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+                    final MutableInt j = new MutableInt(0);
+                    final String tableName = (String) objArr[i + 1];
+                    TimingLogger.start(tableName + ".insert");
+                    TimingLogger.start(tableName + ".insert.create_infile");
+                    if (i % 2 == 0) {
+                    	Map<Long, List<Long>> longKeyedMap = (Map<Long, List<Long>>) map;
+                        LOG.debug("insert: " + tableName + ".size(): " + longKeyedMap.size());
+                        for (Long bib_id : longKeyedMap.keySet()) {
+                        	for (Long record_id : longKeyedMap.get(bib_id)) {
+                                if (j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                try {   // till we fix up our code me data can be null
+                                    os.write(orgCodeBytes);
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(bib_id).getBytes());
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(record_id).getBytes());
+                                } catch (Exception e) {
+                                    // TODO test whether catching this too early or whether we need to NOT REPLACE into table if
+                                    //       we get the exception here.
+                                    LOG.error("problem with data - ",e);
+                                }
+                        	}
+                        }
+                    } else {
+                        Map<String, List<Long>> stringKeyedMap = (Map<String, List<Long>>) map;
+                        LOG.debug("insert: " + tableName + ".size(): " + stringKeyedMap.size());
+                        for (String bib_id : stringKeyedMap.keySet()) {
+                        	for (Long record_id : stringKeyedMap.get(bib_id)) {
+                                if (j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+                                try {   // till we fix up our code me data can be null
+                                    os.write(orgCodeBytes);
+                                    os.write(tabBytes);
+                                    os.write(bib_id.getBytes());
+                                    os.write(tabBytes);
+                                    os.write(String.valueOf(record_id).getBytes());
+                                } catch (Exception e) {
+                                    // TODO test whether catching this too early or whether we need to NOT REPLACE into table if
+                                    //       we get the exception here.
+                                    LOG.error("problem with data - ",e);
+                                }
+                        	}
+                        }
+                    }
+
+                    os.close();
+                    TimingLogger.stop(tableName + ".insert.create_infile");
+                    TimingLogger.start(tableName + ".insert.load_infile");
+                    this.jdbcTemplate.execute(
+                            "load data infile '" + dbLoadFileStr + "' REPLACE into table " +
+                                    tableName +
+                                    " character set utf8 fields terminated by '\\t' lines terminated by '\\n'"
+                            );
+                    TimingLogger.stop(tableName + ".insert.load_infile");
+                    TimingLogger.stop(tableName + ".insert");
+                } catch (Throwable t) {
+                    getUtil().throwIt(t);
+                }
+            }
+        }
+
+        objArr = new Object[] {
+                bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveLongId_table,
+                bibsYet2ArriveStringIdRemovedMap, bibsYet2ArriveStringId_table };
+        for (int i = 0; i < objArr.length; i += 2) {
+            for (Object keyObj : ((Map) objArr[i]).keySet()) {
+                final String orgCode = (String) keyObj;
+                Object map = ((Map) objArr[i]).get(orgCode);
+
+                if (map == null) {
+                    continue;
+                }
+                String tableName = (String) objArr[i + 1];
+                final List<Object[]> params = new ArrayList<Object[]>();
+                if (i % 2 == 0) {
+                    Map<Long, List<Long>> longKeyedMap = (Map<Long, List<Long>>) map;
+                    LOG.debug("insert: " + tableName + ".size(): " + longKeyedMap.size());
+                    for (Long bib_id : longKeyedMap.keySet()) {
+                    	for (Long record_id : longKeyedMap.get(bib_id)) {
+                            params.add(new Object[] { bib_id, record_id, orgCode });
+                        }
+                    }
+                } else {
+                    Map<String, List<Long>> stringKeyedMap = (Map<String, List<Long>>) map;
+                    LOG.debug("insert: " + tableName + ".size(): " + stringKeyedMap.size());
+                    for (String bib_id : stringKeyedMap.keySet()) {
+                    	for (Long record_id : stringKeyedMap.get(bib_id)) {
+                            params.add(new Object[] { bib_id, record_id, orgCode });
                         }
                     }
                 }
@@ -362,15 +499,52 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
             Map<String, TLongLongHashMap> bibsProcessedLongIdMap,
             Map<String, Map<String, Long>> bibsProcessedStringIdMap,
             Map<String, TLongLongHashMap> holdingsProcessedLongIdMap,
-            Map<String, Map<String, Long>> holdingsProcessedStringIdMap,
-            Map<String, TLongLongHashMap> bibsYet2ArriveLongIdMap,
-            Map<String, Map<String, Long>> bibsYet2ArriveStringIdMap) {
+            Map<String, Map<String, Long>> holdingsProcessedStringIdMap) {
 
         Object[] objArr = new Object[] {
                 bibsProcessedLongIdMap, bibsProcessedLongId_table,
                 bibsProcessedStringIdMap, bibsProcessedStringId_table,
                 holdingsProcessedLongIdMap, holdingsProcessedLongId_table,
-                holdingsProcessedStringIdMap, holdingsProcessedStringId_table,
+                holdingsProcessedStringIdMap, holdingsProcessedStringId_table};
+        for (int i = 0; i < objArr.length; i += 2) {
+            String tableName = (String) objArr[i + 1];
+            Map m1 = ((Map) objArr[i]);
+            int page = 0;
+            List<Map<String, Object>> rowList = getBibMaps(tableName, page);
+            while (rowList != null && rowList.size() > 0) {
+                for (Map<String, Object> row : rowList) {
+                    String orgCode = (String) row.get("org_code");
+                    TimingLogger.add(tableName, 0);
+                    if (i % 4 == 0) {
+                    	Long bib_001 = (Long) row.get("bib_001");
+                    	Long record_id = (Long) row.get("record_id");
+                        TLongLongHashMap m2 = (TLongLongHashMap) m1.get(orgCode);
+                        if (m2 == null) {
+                            m2 = new TLongLongHashMap();
+                            m1.put(orgCode, m2);
+                        }
+                        m2.put(bib_001, record_id);
+                    } else {
+                    	String bib_001 = (String) row.get("bib_001");
+                    	Long record_id = (Long) row.get("record_id");
+                        Map<String, Long> m2 = (Map) m1.get(orgCode);
+                        if (m2 == null) {
+                            m2 = new HashMap<String, Long>();
+                            m1.put(orgCode, m2);
+                        }
+                        m2.put(bib_001, record_id);                    		
+                    }
+                }
+                rowList = getBibMaps(tableName, ++page);
+            }
+        }
+    }
+
+    public void loadBibsYet2Arrive(
+            Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdMap,
+            Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdMap) {
+
+        Object[] objArr = new Object[] {
                 bibsYet2ArriveLongIdMap, bibsYet2ArriveLongId_table,
                 bibsYet2ArriveStringIdMap, bibsYet2ArriveStringId_table };
         for (int i = 0; i < objArr.length; i += 2) {
@@ -382,27 +556,41 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                 for (Map<String, Object> row : rowList) {
                     String orgCode = (String) row.get("org_code");
                     TimingLogger.add(tableName, 0);
-                    if (i % 4 == 0) {
-                        TLongLongHashMap m2 = (TLongLongHashMap) m1.get(orgCode);
-                        if (m2 == null) {
-                            m2 = new TLongLongHashMap();
-                            m1.put(orgCode, m2);
-                        }
-                        m2.put((Long) row.get("bib_001"), (Long) row.get("record_id"));
+                    if (i % 2 == 0) {
+                    	Long bib_001 = (Long) row.get("bib_001");
+                    	Long record_id = (Long) row.get("record_id");
+                		Map<Long, List<Long>> m2 = (Map) m1.get(orgCode);
+                		if (m2 == null) {
+                			m2 = new HashMap<Long, List<Long>>();
+                			m1.put(orgCode, m2);
+                		}
+                		List<Long> l = m2.get(bib_001);
+                		if (l == null) {
+                			l = new ArrayList<Long>();
+                			m2.put(bib_001, l);
+                		}
+                		l.add(record_id);
                     } else {
-                        Map<String, Long> m2 = (Map) m1.get(orgCode);
-                        if (m2 == null) {
-                            m2 = new HashMap<String, Long>();
-                            m1.put(orgCode, m2);
-                        }
-                        m2.put((String) row.get("bib_001"), (Long) row.get("record_id"));
+                    	String bib_001 = (String) row.get("bib_001");
+                    	Long record_id = (Long) row.get("record_id");
+                		Map<String, List<Long>> m2 = (Map) m1.get(orgCode);
+                		if (m2 == null) {
+                			m2 = new HashMap<String, List<Long>>();
+                			m1.put(orgCode, m2);
+                		}
+                		List<Long> l = m2.get(bib_001);
+                		if (l == null) {
+                			l = new ArrayList<Long>();
+                			m2.put(bib_001, l);
+                		}
+                		l.add(record_id);
                     }
                 }
                 rowList = getBibMaps(tableName, ++page);
             }
         }
     }
-
+    
     
     @SuppressWarnings("unchecked")
     public void loadBibRefs(
