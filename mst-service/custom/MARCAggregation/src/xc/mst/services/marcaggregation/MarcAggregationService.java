@@ -382,7 +382,18 @@ public class MarcAggregationService extends GenericMetadataService {
                 for (Long num: set) {
                     sb.append(TAB).append(num+", ");
                     if (debugMode) {
-                    	sb.append(scores.get(num));
+                    	
+                    	// the RoS data may not be in-memory (if not, get it from the db)
+                    	RecordOfSourceData source;
+                        if (!scores.containsKey(num)) {
+                            MarcAggregationServiceDAO masDAO = (MarcAggregationServiceDAO) config.getBean("MarcAggregationServiceDAO");
+                            source = masDAO.getScoreData(num);
+                        }
+                        else {
+                            source = scores.get(num);
+                        }                    	
+                    	sb.append(source);
+                    	
                     	if (recordOfSourceMap.get(num) == num) {
                     		sb.append(" [**Record of Source**]");
                     	}
@@ -848,9 +859,30 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     private List<OutputRecord> remerge(TreeSet<Long> formerMatchSet) {
         List<TreeSet<Long>> listOfMatchSets = new ArrayList<TreeSet<Long>>();
+        
+        // First go through the matchset and look for any deleted records we haven't yet
+        // encountered, then delete the merge data so that we do not include them in the remerge.
+        //
+        // FYI: It's possible that a record in this set was deleted in a prior service (e.g., Normalization),
+        // but we haven't encountered it yet here in Aggregation (we will eventually),
+        // however it is still present in our matchset data. We must account for this (because certain
+        // assumptions will not be true, such as r.getOaiXmml(), because the record is deleted!).
+        // It should be safe to delete the matchset data (formally) now. Later, when the deleted record
+        // is encountered, it should be safe, right?
+        List<Long> removeThese = new ArrayList<Long>();
         for (Long id: formerMatchSet) {
+            Record r = getInputRepo().getRecord(id);
+            if (r.getDeleted()) {
+            	deleteAllMergeDetails(r);
+            	removeThese.add(id);
+            }
+        }
+        if (removeThese.size() > 0) formerMatchSet.removeAll(removeThese);
+        
+    	for (Long id: formerMatchSet) {
 
             Record r = getInputRepo().getRecord(id);
+            
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
             smr.setRecordId(r.getId());
 
@@ -962,6 +994,18 @@ public class MarcAggregationService extends GenericMetadataService {
 
         return results;
     }
+    
+    // A safe way to retrieve a record, whether it has already been persisted or not.
+    protected Record getRecord(Long recordId) {
+        // We may need to access in-memory (not yet persisted) records.
+        // MST doesn't provide a safe framework for manipulating in-memory objects; therefore, we will persist all records first!
+        if (getRepositoryDAO().haveUnpersistedRecord(recordId)) {
+            super.commitIfNecessary(true, 0);
+        }
+        Record r = getRepository().getRecord(recordId);
+        return r;
+    }
+
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         LOG.debug("*AM in processBibUpdateActive!");
@@ -1019,7 +1063,7 @@ public class MarcAggregationService extends GenericMetadataService {
             //   (as long as we continue to put ALL bibs into I2O map and O2I map, and not just merged records)
             if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
                 oldOutputId = getBibOutputId(newMatchedRecordIds.first());
-                oldOutput = getRepository().getRecord(oldOutputId);
+                oldOutput = getRecord(oldOutputId);
             }
             else {
                 // Get the record which was processed from the record we just processed
@@ -1192,7 +1236,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> deleteOutputRecord(List<OutputRecord> results, Long outputRecordToBeDeletedNum) {
-        Record outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
+        Record outputRecordToBeDeleted = getRecord(outputRecordToBeDeletedNum);
 
         // you may have already deleted it, because 1 output record can be mapped to multiple input records
         if (outputRecordToBeDeleted != null) {
@@ -1209,25 +1253,6 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
             results.add(outputRecordToBeDeleted);
         }
-        // dark side code because you are peering into the implementation of the DAO
-        else if (getRepositoryDAO().haveUnpersistedRecord(outputRecordToBeDeletedNum)) {
-            LOG.debug("DID NOT found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" dark side time!");
-            //TODO verify this as an alternative to 'dark side' code.  Seems to work better as it does not try to bypass existing
-            //     service mechanisms.  In conjunction with committing more often than at the end of service only, I
-            //     added the 'unpersisted' data structures back into the code. (search for unpersisted)
-            //
-            super.commitIfNecessary(true, 0);
-//            getRepositoryDAO().deleteUnpersistedRecord(outputRecordToBeDeletedNum);
-            outputRecordToBeDeleted = getOutputRecord(outputRecordToBeDeletedNum);
-            if (outputRecordToBeDeleted != null) {
-                LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
-                outputRecordToBeDeleted.setStatus(Record.DELETED);
-                // if the records did not get persisted, will get null record back, or you may have already
-                //  deleted it if it is part of a merge set.
-                LOG.debug("** just set status to D for record: "+outputRecordToBeDeletedNum);
-                results.add(outputRecordToBeDeleted);
-            }
-        }
 
         LOG.debug("** remove output record: "+outputRecordToBeDeletedNum);
         // you may have already deleted it, because 1 output record can be mapped to multiple input records
@@ -1235,16 +1260,12 @@ public class MarcAggregationService extends GenericMetadataService {
             for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
                 or.setStatus(Record.DELETED);
                 results.add(or);
-                Record _r = getRepository().getRecord(or.getId());
+                Record _r = getRecord(or.getId());
                 String type = getXCRecordService().getType(_r);
                 or.setType(type);
             }
         }
         return results;
-    }
-
-    private Record getOutputRecord(Long outputRecordToBeDeletedNum) {
-        return getRepository().getRecord(outputRecordToBeDeletedNum);
     }
 
     private TreeSet<Long> populateMatchedRecordIds(MatchSet ms) {

@@ -107,8 +107,12 @@ public class RepositoryDAO extends BaseDAO {
     protected boolean inBatch = false;
     protected List<Record> recordsToAdd = null;
 
+
     public void init() {
         LOG.debug("RepositoryDAO.init()");
+
+        recordsToAdd = new ArrayList<Record>();
+
         try {
             if (!tableExists(REPOS_TABLE)) {
                 for (String file : new String[] { "xc/mst/repo/sql/create_repo_platform.sql",
@@ -284,17 +288,10 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     public void addRecord(String name, Record r) {
-        if (recordsToAdd == null) {
-            recordsToAdd = new ArrayList<Record>();
-        }
         recordsToAdd.add(r);
     }
 
     public void addRecords(String name, List<Record> records, boolean force) {
-        if (recordsToAdd == null) {
-            LOG.debug("** recordsToAdd == null");
-            recordsToAdd = new ArrayList<Record>();
-        }
         if (records != null) {
             LOG.debug("** records != null");
             recordsToAdd.addAll(records);
@@ -323,18 +320,16 @@ public class RepositoryDAO extends BaseDAO {
     }
 
     protected boolean isNecessaryToCommit(boolean force, int batchSize, double memoryPercentageUsed) {
-        if (recordsToAdd != null) {
-            if (force) {
-                return true;
-            }
-            if (batchSize <= recordsToAdd.size()) {
-                return true;
-            }
+        if (force) {
+            return true;
+        }
+        if (batchSize <= recordsToAdd.size()) {
+            return true;
+        }
 //            double memoryUsageThreshold = MSTConfiguration.getInstance().getPropertyAsDouble("memoryUsageThreshold", .99);
 //            if (memoryPercentageUsed >= memoryUsageThreshold) {
 //                return true;
 //            }
-        }
         return false;
     }
 
@@ -406,7 +401,13 @@ public class RepositoryDAO extends BaseDAO {
                 for (Record r : recordsToAdd) {
                     r.setMode(Record.STRING_MODE);
                     if (!Record.UNCHANGED.equals(r.getOaiXml())) {
-                        recordXmls2Add.add(r);
+                    	// If it's changed and the XML (payload) is null,
+                    	// this means it's a DELETE.
+                    	// Let's *NOT* update the records_xml table, because
+                    	// I want to keep the payload information intact.
+                    	if (r.getOaiXml() != null) {
+                    		recordXmls2Add.add(r);
+                    	}
                     }
                 }
 
@@ -799,7 +800,8 @@ public class RepositoryDAO extends BaseDAO {
                 }
             }
 
-            recordsToAdd = null;
+            recordsToAdd = new ArrayList<Record>();
+
             TimingLogger.stop("commit to db");
             if (force) {
                 inBatch = false;
