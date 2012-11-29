@@ -318,7 +318,7 @@ public class TransformationService extends SolrTransformationService {
     
     protected Marc001_003Holder getHoldingMarcId4RecordIdProcessed(long l) {
     	List<Marc001_003Holder> r = getMarcIds4RecordIdProcessed(holdingsProcessedLongIdMap, holdingsProcessedStringIdMap, l, true);
-    	return r == null ? null : r.get(0);
+    	return (r == null || r.size() < 1) ? null : r.get(0);
     }
     
 
@@ -613,7 +613,7 @@ public class TransformationService extends SolrTransformationService {
                         		// Try to find another manifestation to link to, now that this one is being deleted.
                         		Marc001_003Holder holding_id = getHoldingMarcId4RecordIdProcessed(xc_holding_id);
                         		if (holding_id == null) {
-                        			LOG.error("Whoa!! Couldn't find holding marc id for xc record id of " + xc_holding_id);
+                        			LOG.error("Whoa!! In delete MANIFESTATION. Couldn't find holding marc id for xc record id of " + xc_holding_id);
                         			continue;
                         		}
                         		msg += "\tfound holding_id: " + holding_id + "\n";
@@ -659,7 +659,11 @@ public class TransformationService extends SolrTransformationService {
                         } else if (or.getType().equals("holdings")) {
                         	// remove the holding -> bib relationship in our map
                         	Marc001_003Holder holding_id = getHoldingMarcId4RecordIdProcessed(or.getId());
-                    		removeBibsforHolding(holding_id.get003(), holding_id.get001());
+                        	if (holding_id == null) {
+                    			LOG.error("Whoa!! In delete HOLDINGS. Couldn't find holding marc id for xc record id of " + or.getId());
+                        	} else {
+                        		removeBibsforHolding(holding_id.get003(), holding_id.get001());
+                        	}
                         }   
                         
                 }
