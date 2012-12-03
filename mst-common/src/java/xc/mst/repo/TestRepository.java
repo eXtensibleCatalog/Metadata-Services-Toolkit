@@ -436,6 +436,12 @@ public class TestRepository extends BaseService implements Repository {
     }
 
     @Override
+    public List<Long> getLinkedToRecordIds(Long fromRecordId) {
+        List<Long> toRecordIds = new ArrayList<Long>();
+        return toRecordIds;
+    }
+
+    @Override
     public void activateRecord(String type, long recordId) {
         Record pr = getRecord(recordId);
         if (pr == null) {

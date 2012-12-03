@@ -1748,6 +1748,18 @@ public class RepositoryDAO extends BaseDAO {
         return linkedRecordsIds;
     }
 
+    public List<Long> getLinkedToRecordIds(String name, Long fromRecordId) {
+        List<Long> linkedRecordsIds = new ArrayList<Long>();
+        String sql = "select to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id = ?";
+        List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql, fromRecordId);
+        if (results != null) {
+            for (Map<String, Object> row : results) {
+                linkedRecordsIds.add((Long) row.get("to_record_id"));
+            }
+        }
+        return linkedRecordsIds;
+    }
+
     public void persistLinkedRecordIds(String name, final List<long[]> links) {
         String sql = "replace into " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id, to_record_id) values (?,?)";
         TimingLogger.start(RECORD_LINKS_TABLE + ".insert");

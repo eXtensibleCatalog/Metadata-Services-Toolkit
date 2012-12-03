@@ -398,6 +398,17 @@ public class DefaultRepository extends BaseService implements Repository {
         return l;
     }
 
+    public List<Long> getLinkedToRecordIds(Long fromRecordId) {
+        List<Long> l = getRepositoryDAO().getLinkedToRecordIds(name, fromRecordId);
+        for (Long id : getLongKeyedMap(fromRecordId, toFromUplinks)) {
+        	l.add(id);
+        }
+        for (Long id : getLongKeyedMap(fromRecordId, toFromUplinksRemoved)) {
+        	l.remove(id);
+        }
+        return l;
+    }
+
     public void activateRecord(String type, long recordId) {
         AtomicInteger ai = recordCountsToActivateByType.get(type);
         if (ai == null) {

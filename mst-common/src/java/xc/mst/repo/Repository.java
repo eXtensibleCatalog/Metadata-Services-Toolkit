@@ -110,6 +110,8 @@ public interface Repository {
     public void activateRecord(String type, long recordId);
 
     public List<Long> getLinkedRecordIds(Long toRecordId);
+    
+    public List<Long> getLinkedToRecordIds(Long fromRecordId);
 
     public void processComplete();
 
