@@ -64,7 +64,7 @@ public class TestRepository extends BaseService implements Repository {
     protected String basePath = null;
     protected String currentFile = null;
     protected XmlHelper xmlHelper = new XmlHelper();
-
+    
     public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
     }
 
@@ -78,6 +78,10 @@ public class TestRepository extends BaseService implements Repository {
 
     public int getNumActiveRecords() {
         return -1;
+    }
+    
+    public long activateLinkedRecords() {
+    	return 0;
     }
 
     protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

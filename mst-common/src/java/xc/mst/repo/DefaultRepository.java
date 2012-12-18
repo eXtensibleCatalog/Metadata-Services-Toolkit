@@ -46,6 +46,7 @@ public class DefaultRepository extends BaseService implements Repository {
     protected Map<Long, java.util.Set<Record>> predSuccMap = new HashMap<Long, java.util.Set<Record>>();
 
     // I need bidirectional random access to uplinks...
+    protected boolean recordLinksLoaded = false;
     protected Map<Long, List<Long>> fromToUplinks = new HashMap<Long, List<Long>>();
     protected Map<Long, List<Long>> toFromUplinks = new HashMap<Long, List<Long>>();
     // used to persist links to db...
@@ -62,7 +63,7 @@ public class DefaultRepository extends BaseService implements Repository {
 
     protected Provider provider = null;
     protected Service service = null;
-
+    
     public Map<String, Long> getCompletListSizeMap() {
         return this.completeListSizeMap;
     }
@@ -365,48 +366,83 @@ public class DefaultRepository extends BaseService implements Repository {
         return arrList;
     }
 
+    protected void initRecordLinks() {
+    	if (! recordLinksLoaded) {
+    		recordLinksLoaded = true;
+    	}
+    	getRepositoryDAO().populateRecordLinks(name, fromToUplinks);
+
+    	for (Long fromId : fromToUplinks.keySet()) {
+	    	List<Long> m = getLongKeyedMap(fromId, fromToUplinksAdded);
+	    	for (Long toId : m) {
+		    	List<Long> m2 = getLongKeyedMap(toId, toFromUplinks);
+	    		m2.add(toId);
+	    	}
+    	}   	
+    }
+    
     public void addLink(long fromRecordId, long toRecordId) {
+    	initRecordLinks();
     	List<Long> m = getLongKeyedMap(fromRecordId, fromToUplinks);
-    	m.add(toRecordId);
-    	m = getLongKeyedMap(toRecordId, toFromUplinks);
-    	m.add(fromRecordId);
-    	
-    	m = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
-    	m.add(toRecordId);    	
+    	if (! m.contains(toRecordId)) {
+    		m.add(toRecordId);
+	    	m = getLongKeyedMap(toRecordId, toFromUplinks);
+	    	m.add(fromRecordId);
+	    	
+	    	m = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
+	    	m.add(toRecordId);
+    	}
     }
 
     public void removeLink(long fromRecordId, long toRecordId) {
+    	initRecordLinks();
     	List<Long> m = getLongKeyedMap(fromRecordId, fromToUplinks);
-    	m.remove(toRecordId);
-    	m = getLongKeyedMap(toRecordId, toFromUplinks);
-    	m.remove(fromRecordId);    	
-    	
-    	m = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
-    	m.add(toRecordId);
-    	m = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
-    	m.add(fromRecordId);    	
+    	if (m.contains(toRecordId)) {
+	    	m.remove(toRecordId);
+	    	m = getLongKeyedMap(toRecordId, toFromUplinks);
+	    	m.remove(fromRecordId);    	
+	    	
+	    	m = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
+	    	m.add(toRecordId);
+	    	m = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
+	    	m.add(fromRecordId);
+    	}
     }
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {
+    	initRecordLinks();
         List<Long> l = getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
-        for (Long id : getLongKeyedMap(toRecordId, fromToUplinks)) {
-        	l.add(id);
+        for (Long id : getLongKeyedMap(toRecordId, toFromUplinks)) {
+        	if (! l.contains(id)) l.add(id);
         }
-        for (Long id : getLongKeyedMap(toRecordId, fromToUplinksRemoved)) {
+        for (Long id : getLongKeyedMap(toRecordId, toFromUplinksRemoved)) {
         	l.remove(id);
         }
         return l;
     }
 
     public List<Long> getLinkedToRecordIds(Long fromRecordId) {
+    	initRecordLinks();
         List<Long> l = getRepositoryDAO().getLinkedToRecordIds(name, fromRecordId);
-        for (Long id : getLongKeyedMap(fromRecordId, toFromUplinks)) {
-        	l.add(id);
+        for (Long id : getLongKeyedMap(fromRecordId, fromToUplinks)) {
+        	if (! l.contains(id)) l.add(id);
         }
-        for (Long id : getLongKeyedMap(fromRecordId, toFromUplinksRemoved)) {
+        for (Long id : getLongKeyedMap(fromRecordId, fromToUplinksRemoved)) {
         	l.remove(id);
         }
         return l;
+    }
+    
+    public long activateLinkedRecords() {
+    	long activatedRecords = 0;
+    	List<Integer> ids = getRepositoryDAO().getAllRecordIdsHavingStatus(name, Record.HELD);
+    	for (Integer id : ids) {
+    		if (getRepositoryDAO().hasActiveRecordLinks(name, id)) {
+    			activateRecord("holdings", id);
+    			activatedRecords++;
+    		}
+    	}
+    	return activatedRecords;
     }
 
     public void activateRecord(String type, long recordId) {

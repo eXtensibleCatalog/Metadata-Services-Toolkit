@@ -1735,6 +1735,23 @@ public class RepositoryDAO extends BaseDAO {
         TimingLogger.stop("RepositoryDAO.getSuccessorIds");
         return succIds;
     }
+    
+    public void populateRecordLinks(String name, Map<Long, List<Long>> fromToList) {
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+                " select from_record_id, to_record_id " +
+                        " from " + getTableName(name, RECORD_LINKS_TABLE)
+                        );
+        for (Map<String, Object> row : rowList) {
+            Long fromId = (Long) row.get("from_record_id");
+            Long toId = (Long) row.get("to_record_id");
+            List<Long> m = fromToList.get(fromId);
+            if (m == null) {
+            	m = new ArrayList<Long>();
+                fromToList.put(fromId, m);
+            }
+            m.add(toId);
+        }    	
+    }
 
     public List<Long> getLinkedRecordIds(String name, Long toRecordId) {
         List<Long> linkedRecordsIds = new ArrayList<Long>();
@@ -1835,6 +1852,60 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
+/*
+ * This method determines whether or not a holdings record's links (to its referenced bib -- either the MARC 004 or 014) are present and active.
+ * This is useful to know in decided when/if to activate a previously "held" holdings record.
+    mysql> select * from record_links l left join records r on l.to_record_id = r.record_id where r.status = 'A' and  l.from_record_id = 2314;
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    | from_record_id | to_record_id | record_id | oai_datestamp       | type | status | prev_status | format_id |
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    |           2314 |         2248 |      2248 | 2012-12-04 14:32:21 | m    | A      | N           |         5 |
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    1 row in set (0.00 sec)
+
+    mysql> select * from record_links where from_record_id = 2314;
+    +----------------+--------------+
+    | from_record_id | to_record_id |
+    +----------------+--------------+
+    |           2314 |         2248 |
+    |           2314 |         2313 |
+    +----------------+--------------+
+    2 rows in set (0.00 sec)
+*/
+    public boolean hasActiveRecordLinks(String name, long holdingsId) {
+        java.util.Set<Long> linkToIds = new TreeSet<Long>();
+        String sql = "select to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id = " + holdingsId;
+        List<Map<String, Object>> rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Long recId = (Long) row.get("to_record_id");
+            linkToIds.add(recId);
+        }
+
+        java.util.Set<Long> linkToActiveIds = new TreeSet<Long>();
+        sql = "select l.to_record_id as to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " l left join " + getTableName(name, RECORDS_TABLE) + " r on l.to_record_id = r.record_id where r.status = 'A' and  l.from_record_id = " + holdingsId;
+        rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Long recId = (Long) row.get("to_record_id");
+            linkToActiveIds.add(recId);
+        }
+
+    	return linkToIds.equals(linkToActiveIds);
+    }
+    
+    public List<Integer> getAllRecordIdsHavingStatus(String name, char status) {
+        List<Integer> recIds = new ArrayList<Integer>();
+        String sql = "select record_id from " + getTableName(name, RECORDS_TABLE) + " where status = '" + status + "'";
+        List<Map<String, Object>> rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Integer recId = (Integer) row.get("record_id");
+            recIds.add(recId);
+        }
+        return recIds;
+    }
+    
     public void activateRecords(String name, final TLongHashSet recordIds) {
         if (recordIds.size() > 0) {
             long startTime = System.currentTimeMillis();

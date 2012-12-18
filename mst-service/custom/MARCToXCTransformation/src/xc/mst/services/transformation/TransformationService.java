@@ -15,6 +15,7 @@ import gnu.trove.TLongLongIterator;
 import gnu.trove.TLongProcedure;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import xc.mst.bo.provider.Format;
+import xc.mst.bo.provider.Set;
 import xc.mst.bo.record.AggregateXCRecord;
 import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.Manifestation;
@@ -140,10 +142,6 @@ public class TransformationService extends SolrTransformationService {
         }
         return m2;
     }
-    
-    protected TLongHashSet previouslyHeldManifestationIds = new TLongHashSet();
-
-    protected TLongLongHashMap heldHoldings = new TLongLongHashMap(); // recordId -> manifestationId
     
     protected Format xcFormat = null;
 
@@ -514,6 +512,8 @@ public class TransformationService extends SolrTransformationService {
                     bibsProcessedLongIdRemovedMap, bibsProcessedStringIdRemovedMap,
                     holdingsProcessedLongIdAddedMap, holdingsProcessedStringIdAddedMap,
                     holdingsProcessedLongIdRemovedMap, holdingsProcessedStringIdRemovedMap);
+            
+                        
             getTransformationDAO().persistBibsYet2Arrive(
                     bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveStringIdAddedMap,
                     bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveStringIdRemovedMap);
@@ -539,42 +539,24 @@ public class TransformationService extends SolrTransformationService {
             bibsToHoldingsAddedMap.clear();
             bibsToHoldingsRemovedMap.clear();
             
-            previouslyHeldManifestationIds.forEach(new TLongProcedure() {
-                public boolean execute(long recordId) {
-                    LOG.debug("previouslyHeldManifestationId: " + recordId + "");
-                    return true;
-                }
-            });
-            getTransformationDAO().persistHeldHoldings(heldHoldings);
-            getTransformationDAO().getHoldingIdsToActivate(previouslyHeldManifestationIds).forEach(
-                    new TLongProcedure() {
-                        public boolean execute(long recordId) {
-                            LOG.debug("getRepository().activateRecord(" + recordId + ")");
-                            getRepository().activateRecord("holdings", recordId);
-                            return true;
-                        }
-                    });
-            
-
             TimingLogger.start("TransformationDAO.non-generic");
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("TransformationDAO.non-generic");
-            heldHoldings.clear();
-            getTransformationDAO().deleteHeldHoldings(previouslyHeldManifestationIds);
-            previouslyHeldManifestationIds.clear();
-            
+                        
+            if (getRepository().activateLinkedRecords() > 0) super.commitIfNecessary(true, 0);
+	            
             TimingLogger.stop("TransformationDAO.non-generic");
             TimingLogger.stop("TransformationDAO.endBatch");
 
             getRepository().setPersistentProperty("inputBibs", inputBibs);
             getRepository().setPersistentProperty("inputHoldings", inputHoldings);
+            
             TimingLogger.reset();
         } catch (Throwable t) {
             getUtil().throwIt(t);
         }
         return true;
-    }
-    
+    }       
 
     @Override
     public List<OutputRecord> process(InputRecord record) {
@@ -587,14 +569,14 @@ public class TransformationService extends SolrTransformationService {
             List<OutputRecord> results = new ArrayList<OutputRecord>();
             
             if (Record.DELETED == record.getStatus()) {
-            	            	
+LOG.info("CHRISD: DELETE input record: " + record.getId());            	            	
                 	for (OutputRecord or : record.getSuccessors()) {
                         or.setStatus(Record.DELETED);
                         results.add(or);
                         Record r = getRepository().getRecord(or.getId());
                         String type = getXCRecordService().getType(r);
                         or.setType(type);
-                        
+LOG.info("CHRISD:\tsuccessor: type: " + type + " record id: " + or.getId());                        
                         if (or.getType().equals("manifestation")) {
                         	
                         	// remove this bib from our map now, so that we don't re-use it later (it's not usable anymore)
@@ -604,7 +586,7 @@ public class TransformationService extends SolrTransformationService {
                         	LOG.info("Deleting a bib (incoming record_id: " + record.getId() + ", successor_id: " + or.getId() + ")");
                         	List<Long> xc_holdings_ids = getRepository().getLinkedRecordIds(or.getId());
                         	for (long xc_holding_id : xc_holdings_ids) {
-                        		// keep manifest -> holdings relationship up-to-date
+                        		// keep holdings -> manifestation relationship up-to-date
 	        					getRepository().removeLink(xc_holding_id, or.getId());
                         		
                         		LOG.info("\ttrying to fix orphaned holding record_id: " + xc_holding_id);                        		
@@ -629,7 +611,7 @@ public class TransformationService extends SolrTransformationService {
                         		        
                     			if (new_manifestation_ids.size() > 0) {
                     				// we found a match. add these new references
-                    				OutputRecord fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
+                    				Record fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
                             	    if (fixed != null) {
                             	    	results.add(fixed);                        		
                             	    }
@@ -639,7 +621,7 @@ public class TransformationService extends SolrTransformationService {
                         			for (String bib_id : bib_ids) {
                         				long new_manifestation_id = getRepositoryDAO().getNextIdAndIncr();
 
-                        				OutputRecord fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_id);
+                        				Record fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_id);
                                 	    if (fixed != null) {
                                 	    	LOG.info("\tcouldn't find a manifestation for this holding record; setting it to held (now waiting for manifestation id: " + new_manifestation_id + ")");
                                 	    	fixed.setStatus(Record.HELD);
@@ -648,7 +630,6 @@ public class TransformationService extends SolrTransformationService {
 
                         				addManifestationId4BibYet2Arrive(
 	                    						holding_id.get003(), bib_id, new_manifestation_id);
-	                    				heldHoldings.put(xc_holding_id, new_manifestation_id);
 	    	        					getRepository().addLink(xc_holding_id, new_manifestation_id);
                         			}
                     			}
@@ -687,6 +668,7 @@ public class TransformationService extends SolrTransformationService {
 
                 // Get the ORG code from the 003 or 035 field
                 orgCode = originalRecord.getOrgCode();
+LOG.info("CHRISD: UPDATE input record: " + record.getId());            	            	
 
                 boolean isBib = false;
                 boolean isHolding = false;
@@ -694,8 +676,10 @@ public class TransformationService extends SolrTransformationService {
                 char leader06 = originalRecord.getLeader().charAt(6);
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
                     isBib = true;
+LOG.info("CHRISD:\ttype BIB");            	            	                    
                 } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
                     isHolding = true;
+LOG.info("CHRISD:\ttype HOLDING");                    
                 } else { // If leader 6th character is invalid, then log error and do not process that record.
                     logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
                     return results;
@@ -716,6 +700,7 @@ public class TransformationService extends SolrTransformationService {
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
                 	isNew = false;
                     for (OutputRecord or : record.getSuccessors()) {
+LOG.info("CHRISD:\t\tsuccessor: record id: " + or.getId());                    	
                         Record succ = getRepository().getRecord(or.getId());
                         // ignore deleted successors
                         // they were deleted, so we need to ignore them forever
@@ -723,6 +708,7 @@ public class TransformationService extends SolrTransformationService {
                         if (! succ.getDeleted()) {
 	                        String type = getXCRecordService().getType(succ);
 	                        or.setType(type);
+LOG.info("CHRISD:\t\t\tsuccessor NOT DELETED: type: " + type);                    	
 	                        if (AggregateXCRecord.HOLDINGS.equals(type)) {
 	                            ar.getPreviousHoldingIds().add(or.getId());
 	                        } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
@@ -746,7 +732,7 @@ public class TransformationService extends SolrTransformationService {
                 }
                 if (isBib) {
                     Long manifestationId = null;
-                    
+
                     //
                     // This for-loop is for the sole purpose of handling "held" holding records:
                     //
@@ -767,6 +753,7 @@ public class TransformationService extends SolrTransformationService {
                         		this_001_003.get003(), this_001_003.get001());
                         
                         if (this_manifestationIds.size() > 0) {
+                        	
 	                        for (Long this_manifestationId : this_manifestationIds) {
 	                        	// Reminder: if a holding record arrived before its referenced bib (this is called a "held" holding record),
 	                        	// a manifestationId for this bib was generated ahead of time (when the holdings record arrived).
@@ -777,9 +764,6 @@ public class TransformationService extends SolrTransformationService {
 	                        	// Let's use the first match as the chosen "source" manifestationId.
 	                        	if (manifestationId == null) {
 	                        		manifestationId = this_manifestationId;
-	                        		
-	                                // Later on, during commit, these held holdings records will get activated based on the matched this_manifestationId
-	                                previouslyHeldManifestationIds.add(manifestationId);
 	                        	}
 	                       		
 	                        	// Remove the manifestationId that we just matched on, which may or may not be the "source"
@@ -789,31 +773,24 @@ public class TransformationService extends SolrTransformationService {
 	                            // This manifestationId needs to be represented by the above-chosen "source"
 	                            if (manifestationId != this_manifestationId) {
 	                            	
-	                            	// fix the "stale" manifestationId in the held holdings collection so that it will
-	                            	// get activated correctly later (during commit)
-	                            	List<Long> stale = new ArrayList<Long>();
-	                            	TLongLongIterator it = heldHoldings.iterator();
-	                            	while (it.hasNext()) {
-	                            		it.advance();
-	                            		if (it.value() == this_manifestationId) {
-	                            			stale.add(it.key());
-	                            		}
-	                            	}
-	                            	for (Long _stale : stale) {
-	                            		heldHoldings.put(_stale, manifestationId);
-	
-	                            		// We need to edit this holdings output record by changing its stale manifestationHeld Id to the chosen "source" manifestationId.
-	                            	    OutputRecord fixed = fixManifestationId(_stale, this_manifestationId, manifestationId);
+	                            	// fix the "stale" manifestationId
+	                            	List<Long> stale_holding_ids = getRepository().getLinkedRecordIds(this_manifestationId);
+
+	                            	for (Long stale_holding_id : stale_holding_ids) {
+		                            	// We need to edit this holdings output record by changing its stale manifestationHeld Id to the chosen "source" manifestationId.
+	                            	    Record fixed = fixManifestationId(stale_holding_id, this_manifestationId, manifestationId);
 	                            	    if (fixed != null) results.add(fixed);
-	                            	}  
+	                            	}
 	                            	
 	                            	// remove "stale" manifestationId here, too
 	                            	removeRecordId4BibProcessed(this_manifestationId);
 	                            }
 	                		}
+	                        
 	                	}
-                	}
                         
+                	}
+                			                	                        
                 	// No holding records are waiting for us...
                     if (manifestationId == null) {
                         if (ar.getPreviousManifestationId() != null) {
@@ -840,7 +817,6 @@ public class TransformationService extends SolrTransformationService {
                 } else if (isHolding) {
                     char status = Record.ACTIVE;
                     List<Long> manifestationIds = new ArrayList<Long>();
-                    List<Long> manifestationsIdsInWaiting = new ArrayList<Long>();
                     if (ar.getReferencedBibs() == null) {
                         LOG.error("ar.getReferencedBibs() == null!!!");
                     } else {
@@ -886,7 +862,6 @@ public class TransformationService extends SolrTransformationService {
 	                                    waitingManifestationIds.add(manifestationId);
 	                                }
                                 	for (Long this_manifestationId : waitingManifestationIds) {	                                    
-	                                	manifestationsIdsInWaiting.add(this_manifestationId);
 	                                	manifestationIds.add(this_manifestationId);
 	                                }
                         
@@ -899,13 +874,6 @@ public class TransformationService extends SolrTransformationService {
 	
 	                        if (holdingsRecords != null) {
 	                            for (OutputRecord r : holdingsRecords) {
-	                                // addErrorToOutput(r, 16, RecordMessage.INFO);
-	                                // addErrorToOutput(r, 17, RecordMessage.INFO, "the output is fubed");
-	                                if (status == Record.HELD) {
-	                                    for (Long mid : manifestationsIdsInWaiting) {
-	                                        heldHoldings.put(r.getId(), mid);
-	                                    }
-	                                }
 	                                r.setStatus(status);
 	                                results.add(r);
 	                                if (isNew) {
@@ -953,15 +921,14 @@ public class TransformationService extends SolrTransformationService {
     	return r;
     }
     
-    
-    // This isn't very OO, but, then again, nor is AggregateXCRecord and XCRecordService, nor much of TransformationService for that matter.
-	protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId) {
+    protected Record fixManifestationId(Long recordId, Long staleManifestationId, Long newManifestationId) {
     	List<Long> l = new ArrayList<Long>();
     	l.add(newManifestationId);
     	return fixManifestationId(recordId, staleManifestationId, l);
     }
     
-    protected OutputRecord fixManifestationId(Long recordId, Long staleManifestationId, List<Long> newManifestationIds) {
+    @SuppressWarnings("unchecked")
+	protected Record fixManifestationId(Long recordId, Long staleManifestationId, List<Long> newManifestationIds) {
        
     	final String staleUplink = getRecordService().getOaiIdentifier(
     			staleManifestationId, getMetadataService().getService());

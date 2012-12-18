@@ -23,7 +23,7 @@ import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 
 public interface Repository {
-
+	
     public String getName();
 
     public void setName(String name);
@@ -108,6 +108,8 @@ public interface Repository {
     public void removeLink(long fromRecordId, long toRecordId);
 
     public void activateRecord(String type, long recordId);
+    
+    public long activateLinkedRecords();
 
     public List<Long> getLinkedRecordIds(Long toRecordId);
     
