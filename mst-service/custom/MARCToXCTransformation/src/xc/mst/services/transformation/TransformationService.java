@@ -569,14 +569,12 @@ public class TransformationService extends SolrTransformationService {
             List<OutputRecord> results = new ArrayList<OutputRecord>();
             
             if (Record.DELETED == record.getStatus()) {
-LOG.info("CHRISD: DELETE input record: " + record.getId());            	            	
                 	for (OutputRecord or : record.getSuccessors()) {
                         or.setStatus(Record.DELETED);
                         results.add(or);
                         Record r = getRepository().getRecord(or.getId());
                         String type = getXCRecordService().getType(r);
                         or.setType(type);
-LOG.info("CHRISD:\tsuccessor: type: " + type + " record id: " + or.getId());                        
                         if (or.getType().equals("manifestation")) {
                         	
                         	// remove this bib from our map now, so that we don't re-use it later (it's not usable anymore)
@@ -668,7 +666,6 @@ LOG.info("CHRISD:\tsuccessor: type: " + type + " record id: " + or.getId());
 
                 // Get the ORG code from the 003 or 035 field
                 orgCode = originalRecord.getOrgCode();
-LOG.info("CHRISD: UPDATE input record: " + record.getId());            	            	
 
                 boolean isBib = false;
                 boolean isHolding = false;
@@ -676,10 +673,8 @@ LOG.info("CHRISD: UPDATE input record: " + record.getId());
                 char leader06 = originalRecord.getLeader().charAt(6);
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
                     isBib = true;
-LOG.info("CHRISD:\ttype BIB");            	            	                    
                 } else if (leader06 == 'u' || leader06 == 'v' || leader06 == 'x' || leader06 == 'y') {
                     isHolding = true;
-LOG.info("CHRISD:\ttype HOLDING");                    
                 } else { // If leader 6th character is invalid, then log error and do not process that record.
                     logDebug("Record Id " + record.getId() + " with leader character " + leader06 + " not processed.");
                     return results;
@@ -700,7 +695,6 @@ LOG.info("CHRISD:\ttype HOLDING");
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
                 	isNew = false;
                     for (OutputRecord or : record.getSuccessors()) {
-LOG.info("CHRISD:\t\tsuccessor: record id: " + or.getId());                    	
                         Record succ = getRepository().getRecord(or.getId());
                         // ignore deleted successors
                         // they were deleted, so we need to ignore them forever
@@ -708,7 +702,6 @@ LOG.info("CHRISD:\t\tsuccessor: record id: " + or.getId());
                         if (! succ.getDeleted()) {
 	                        String type = getXCRecordService().getType(succ);
 	                        or.setType(type);
-LOG.info("CHRISD:\t\t\tsuccessor NOT DELETED: type: " + type);                    	
 	                        if (AggregateXCRecord.HOLDINGS.equals(type)) {
 	                            ar.getPreviousHoldingIds().add(or.getId());
 	                        } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
