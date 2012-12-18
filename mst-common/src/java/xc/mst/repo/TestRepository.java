@@ -64,7 +64,7 @@ public class TestRepository extends BaseService implements Repository {
     protected String basePath = null;
     protected String currentFile = null;
     protected XmlHelper xmlHelper = new XmlHelper();
-
+    
     public void populatePredSuccMaps(TLongObjectHashMap predKeyedMap, TLongObjectHashMap succKeyedMap) {
     }
 
@@ -78,6 +78,10 @@ public class TestRepository extends BaseService implements Repository {
 
     public int getNumActiveRecords() {
         return -1;
+    }
+    
+    public long activateLinkedRecords() {
+    	return 0;
     }
 
     protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -310,6 +314,10 @@ public class TestRepository extends BaseService implements Repository {
     public Record getRecord(long id) {
         return (Record) repo.get(id);
     }
+    
+    public Record getUnpersistedRecord(long id) {
+    	return null;
+    }
 
     public List<Record> getPredecessors(Record r) {
         throw new RuntimeException("not implemented");
@@ -418,6 +426,10 @@ public class TestRepository extends BaseService implements Repository {
     }
 
     @Override
+    public void removeLink(long fromRecordId, long toRecordId) {
+    }
+    
+    @Override
     public List<Long> getLinkedRecordIds(Long toRecordId) {
         List<Long> fromRecordIds = new ArrayList<Long>();
         Set<Long> fromIds = links.get(toRecordId);
@@ -425,6 +437,12 @@ public class TestRepository extends BaseService implements Repository {
             fromRecordIds.addAll(fromIds);
         }
         return fromRecordIds;
+    }
+
+    @Override
+    public List<Long> getLinkedToRecordIds(Long fromRecordId) {
+        List<Long> toRecordIds = new ArrayList<Long>();
+        return toRecordIds;
     }
 
     @Override

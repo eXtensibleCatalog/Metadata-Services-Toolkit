@@ -499,7 +499,6 @@ public class MarcAggregationService extends GenericMetadataService {
                     // increments RecordCounts.OTHER
                     //
                     ((Record) r).setType(type);
-
                     results = processBib(r, smr, inputRepo);
                     TimingLogger.stop("bib steps");
                 }

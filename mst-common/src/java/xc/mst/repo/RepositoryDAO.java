@@ -106,12 +106,14 @@ public class RepositoryDAO extends BaseDAO {
 
     protected boolean inBatch = false;
     protected List<Record> recordsToAdd = null;
+    protected Map<Long, Record> recordsToAddInx = null;
 
 
     public void init() {
         LOG.debug("RepositoryDAO.init()");
 
         recordsToAdd = new ArrayList<Record>();
+	recordsToAddInx = new HashMap<Long, Record>();
 
         try {
             if (!tableExists(REPOS_TABLE)) {
@@ -131,35 +133,21 @@ public class RepositoryDAO extends BaseDAO {
 
     // probably a bad idea exposing some of this implementation stuff but am going for it.
     public boolean haveUnpersistedRecord(Long id) {
-        for (Record record: recordsToAdd) {
-            if (record.getId() == id) {
-                return true;
-            }
-        }
-        return false;
+    	return recordsToAddInx == null ? false : recordsToAddInx.containsKey(id);
     }
 
-    public Record getUnpersistedRecord(Long id) {
-        for (Record record: recordsToAdd) {
-            if (record.getId() == id) {
-                return record;
-            }
+    public Record getUnpersistedRecord(long id) {
+    	if (haveUnpersistedRecord(id)) {
+    		return recordsToAddInx.get(id);
         }
         return null;
     }
 
     public boolean deleteUnpersistedRecord(Long id) {
-        Record recordToDelete = null;
-        if (haveUnpersistedRecord(id)) {
-            for (Record record: recordsToAdd) {
-                if (record.getId() == id) {
-                    recordToDelete = record;
-                    break;
-                }
-            }
-        }
+        Record recordToDelete = getUnpersistedRecord(id);
         if (recordToDelete != null) {
             recordsToAdd.remove(recordToDelete);
+            recordsToAddInx.remove(id);
             return true;
         }
         return false;
@@ -289,13 +277,14 @@ public class RepositoryDAO extends BaseDAO {
 
     public void addRecord(String name, Record r) {
         recordsToAdd.add(r);
+        recordsToAddInx.put(r.getId(), r);
     }
 
     public void addRecords(String name, List<Record> records, boolean force) {
-        if (records != null) {
-            LOG.debug("** records != null");
-            recordsToAdd.addAll(records);
-        }
+    	for (Record r : records) {
+            recordsToAdd.add(r);
+            recordsToAddInx.put(r.getId(), r);
+    	}
     }
 
     private double getMemUsage() {
@@ -801,6 +790,7 @@ public class RepositoryDAO extends BaseDAO {
             }
 
             recordsToAdd = new ArrayList<Record>();
+            recordsToAddInx = new HashMap<Long, Record>();
 
             TimingLogger.stop("commit to db");
             if (force) {
@@ -1745,6 +1735,23 @@ public class RepositoryDAO extends BaseDAO {
         TimingLogger.stop("RepositoryDAO.getSuccessorIds");
         return succIds;
     }
+    
+    public void populateRecordLinks(String name, Map<Long, List<Long>> fromToList) {
+        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(
+                " select from_record_id, to_record_id " +
+                        " from " + getTableName(name, RECORD_LINKS_TABLE)
+                        );
+        for (Map<String, Object> row : rowList) {
+            Long fromId = (Long) row.get("from_record_id");
+            Long toId = (Long) row.get("to_record_id");
+            List<Long> m = fromToList.get(fromId);
+            if (m == null) {
+            	m = new ArrayList<Long>();
+                fromToList.put(fromId, m);
+            }
+            m.add(toId);
+        }    	
+    }
 
     public List<Long> getLinkedRecordIds(String name, Long toRecordId) {
         List<Long> linkedRecordsIds = new ArrayList<Long>();
@@ -1758,8 +1765,20 @@ public class RepositoryDAO extends BaseDAO {
         return linkedRecordsIds;
     }
 
+    public List<Long> getLinkedToRecordIds(String name, Long fromRecordId) {
+        List<Long> linkedRecordsIds = new ArrayList<Long>();
+        String sql = "select to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id = ?";
+        List<Map<String, Object>> results = this.jdbcTemplate.queryForList(sql, fromRecordId);
+        if (results != null) {
+            for (Map<String, Object> row : results) {
+                linkedRecordsIds.add((Long) row.get("to_record_id"));
+            }
+        }
+        return linkedRecordsIds;
+    }
+
     public void persistLinkedRecordIds(String name, final List<long[]> links) {
-        String sql = "insert into " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id, to_record_id) values (?,?)";
+        String sql = "replace into " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id, to_record_id) values (?,?)";
         TimingLogger.start(RECORD_LINKS_TABLE + ".insert");
         int[] updateCounts = jdbcTemplate.batchUpdate(
                 sql,
@@ -1775,6 +1794,25 @@ public class RepositoryDAO extends BaseDAO {
                     }
                 });
         TimingLogger.stop(RECORD_LINKS_TABLE + ".insert");
+    }
+
+    public void persistLinkedRecordIdsRemoved(String name, final List<long[]> links) {
+        String sql = "delete from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id=? and to_record_id=?";
+        TimingLogger.start(RECORD_LINKS_TABLE + ".delete");
+        int[] updateCounts = jdbcTemplate.batchUpdate(
+                sql,
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int j) throws SQLException {
+                        long[] link = links.get(j);
+                        ps.setLong(1, link[0]);
+                        ps.setLong(2, link[1]);
+                    }
+
+                    public int getBatchSize() {
+                        return links.size();
+                    }
+                });
+        TimingLogger.stop(RECORD_LINKS_TABLE + ".delete");
     }
 
     public void persistPreviousStatuses(String repoName, TLongByteHashMap previousStatuses) {
@@ -1814,6 +1852,60 @@ public class RepositoryDAO extends BaseDAO {
         }
     }
 
+/*
+ * This method determines whether or not a holdings record's links (to its referenced bib -- either the MARC 004 or 014) are present and active.
+ * This is useful to know in decided when/if to activate a previously "held" holdings record.
+    mysql> select * from record_links l left join records r on l.to_record_id = r.record_id where r.status = 'A' and  l.from_record_id = 2314;
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    | from_record_id | to_record_id | record_id | oai_datestamp       | type | status | prev_status | format_id |
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    |           2314 |         2248 |      2248 | 2012-12-04 14:32:21 | m    | A      | N           |         5 |
+    +----------------+--------------+-----------+---------------------+------+--------+-------------+-----------+
+    1 row in set (0.00 sec)
+
+    mysql> select * from record_links where from_record_id = 2314;
+    +----------------+--------------+
+    | from_record_id | to_record_id |
+    +----------------+--------------+
+    |           2314 |         2248 |
+    |           2314 |         2313 |
+    +----------------+--------------+
+    2 rows in set (0.00 sec)
+*/
+    public boolean hasActiveRecordLinks(String name, long holdingsId) {
+        java.util.Set<Long> linkToIds = new TreeSet<Long>();
+        String sql = "select to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " where from_record_id = " + holdingsId;
+        List<Map<String, Object>> rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Long recId = (Long) row.get("to_record_id");
+            linkToIds.add(recId);
+        }
+
+        java.util.Set<Long> linkToActiveIds = new TreeSet<Long>();
+        sql = "select l.to_record_id as to_record_id from " + getTableName(name, RECORD_LINKS_TABLE) + " l left join " + getTableName(name, RECORDS_TABLE) + " r on l.to_record_id = r.record_id where r.status = 'A' and  l.from_record_id = " + holdingsId;
+        rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Long recId = (Long) row.get("to_record_id");
+            linkToActiveIds.add(recId);
+        }
+
+    	return linkToIds.equals(linkToActiveIds);
+    }
+    
+    public List<Integer> getAllRecordIdsHavingStatus(String name, char status) {
+        List<Integer> recIds = new ArrayList<Integer>();
+        String sql = "select record_id from " + getTableName(name, RECORDS_TABLE) + " where status = '" + status + "'";
+        List<Map<String, Object>> rowList = jdbcTemplate.queryForList(
+        		sql);
+        for (Map<String, Object> row : rowList) {
+            Integer recId = (Integer) row.get("record_id");
+            recIds.add(recId);
+        }
+        return recIds;
+    }
+    
     public void activateRecords(String name, final TLongHashSet recordIds) {
         if (recordIds.size() > 0) {
             long startTime = System.currentTimeMillis();

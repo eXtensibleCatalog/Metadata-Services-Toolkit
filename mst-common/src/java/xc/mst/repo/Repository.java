@@ -23,7 +23,7 @@ import xc.mst.bo.record.RecordCounts;
 import xc.mst.bo.service.Service;
 
 public interface Repository {
-
+	
     public String getName();
 
     public void setName(String name);
@@ -86,7 +86,7 @@ public interface Repository {
     public Record getRecord(String oaiId);
 
     public Record getRecord(long id);
-
+    
     public List<Long> getPredecessorIds(Record r);
 
     public void injectSuccessors(Record r);
@@ -104,10 +104,16 @@ public interface Repository {
     public void populatePredecessors(TLongHashSet predecessors);
 
     public void addLink(long fromRecordId, long toRecordId);
+    
+    public void removeLink(long fromRecordId, long toRecordId);
 
     public void activateRecord(String type, long recordId);
+    
+    public long activateLinkedRecords();
 
     public List<Long> getLinkedRecordIds(Long toRecordId);
+    
+    public List<Long> getLinkedToRecordIds(Long fromRecordId);
 
     public void processComplete();
 
