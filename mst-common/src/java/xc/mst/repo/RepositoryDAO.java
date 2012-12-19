@@ -257,6 +257,11 @@ public class RepositoryDAO extends BaseDAO {
     public long getNextIdAndIncr() {
         oaiIdLock.lock();
         if (nextId == nextIdInDB) {
+        	// special case: when we are restarting the MST, let's use a continuous sequence of IDs
+        	// (i.e., no "holes"). This is especially helpful during MST testing and regression testing.
+        	if (nextId == -1) {
+        		resetNextId();
+        	}
             int idsAtOnce = 1000;
             nextId = this.getNextOaiId.executeObject(Integer.class, idsAtOnce);
             nextIdInDB = nextId + idsAtOnce;
@@ -266,6 +271,20 @@ public class RepositoryDAO extends BaseDAO {
         oaiIdLock.unlock();
         return id;
     }
+    
+    public void resetNextId() {
+    	long maxId = -1;
+    	List<Repository> allRepos = getAll();
+    	for (Repository r : allRepos) {
+    		long retId = this.jdbcTemplate.queryForLong("select max(record_id) from " + getTableName(r.getName(), RECORDS_TABLE));
+    		if (retId > maxId) maxId = retId;
+    	}
+    	if (maxId != -1) {
+    		maxId++;
+    		this.jdbcTemplate.update("update oai_id_sequence set id=?", maxId);
+    	}
+    }
+    
 
     public long getNextId() {
         return this.nextId + 1;
