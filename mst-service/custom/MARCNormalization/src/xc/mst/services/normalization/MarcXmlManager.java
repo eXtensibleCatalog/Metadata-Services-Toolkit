@@ -1300,6 +1300,22 @@ public class MarcXmlManager {
 	public void removeInvalid014s(String validFirstChars, String invalidFirstChars) {
         if (log.isDebugEnabled())
             log.debug("In removeInvalid014s...");
+        
+        boolean allInvalid = false;
+        boolean allValid = false;
+        
+        // special settings: [all] [none]
+        if (validFirstChars.equals("[all]")) allValid = true;
+        if (validFirstChars.equals("[none]")) allInvalid = true;
+        if (invalidFirstChars.equals("[none]")) allValid = true;
+        if (invalidFirstChars.equals("[all]")) allInvalid = true;
+        
+        if (allValid && allInvalid) {
+        	log.error("removeInvalid014s: Configuration error (all 014s considered valid and invalid at the same time?!)");
+        	return;
+        }
+        
+        if (allValid) return; // nothing to do
 
         List<Element> fields = marcXml.getChildren("datafield", marcNamespace);
     	ArrayList<Element> badFlds = new ArrayList<Element>();
@@ -1317,7 +1333,7 @@ public class MarcXmlManager {
                     if (("a").equals(e.getAttributeValue("code"))) {
                     	if (e.getText().length() > 0) {
                     		CharSequence fc = e.getText().subSequence(0, 1);
-                        	if ( (validFirstChars.length() > 0 && !validFirstChars.contains(fc)) || 
+                        	if (allInvalid || (validFirstChars.length() > 0 && !validFirstChars.contains(fc)) || 
                         		 (invalidFirstChars.length() > 0 && invalidFirstChars.contains(fc)) ) {
                         		badEls.add(e);
                         		badCnt++;

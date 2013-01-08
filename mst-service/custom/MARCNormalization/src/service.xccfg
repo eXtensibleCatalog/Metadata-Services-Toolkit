@@ -408,11 +408,46 @@ remove945Field = 0
 # Holdings Record steps 
 #----------------------------------------- 
 
-# Remove the 014$a subfield if the first character is not one of # the following:
+#####################################################################################
+#
+# OPTIONAL 014$a processing:
+#
+# You may filter out 014$a fields via two configuration options, ValidFirstChar014 and/or InvalidFirstChar014
+#
+#############
+#
+# ValidFirstChar014 - Remove the 014$a subfield if the first character is *not* one of # the following:
+# (Note: the values [none] and [all] have a special meaning.)
+#
+# Some examples:
+#
+# E.g., the following means that no 014s are valid (i.e., remove all 014s):
+# ValidFirstChar014=[none]
+#
+# E.g., the following means that all 014s are valid (i.e., retain all 014s):
+# ValidFirstChar014=[all]
+#
+# E.g., the following means that only 014s beginning with a numeric value are valid:
 # ValidFirstChar014 = 0123456789
-
-# Remove the 014$a subfield if the first character is one of the # following:
+#
+#############
+#
+# InvalidFirstChar014 - Remove the 014$a subfield if the first character *is* one of the # following:
+# (Note: the values [none] and [all] have a special meaning.)
+#
+# Some examples:
+#
+# E.g., the following means that all 014s are valid (i.e., retain all 014s):
+# InvalidFirstChar014=[none]
+#
+# E.g., the following means that no 014s are valid (i.e., remove all 014s):
+# InvalidFirstChar014=[all]
+#
+# E.g., the following means that all 014s beginning with an alphabetical characters will be removed:
+#
 # InvalidFirstChar014 = ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+#
+#####################################################################################
 
 # 1 to add a subfield b to the 014 containing the characters
 # found in MARCNormalization custom.properties file
