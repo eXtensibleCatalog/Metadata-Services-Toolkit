@@ -1546,50 +1546,47 @@ public class MarcXmlManager {
             }
         }
         
-        if (cnt004 > 1) {
-        	if (fixMultiple004s.equals("protect")) return false;
-            
-            for (Element old004 : old004s) {
-            	marcXml.removeContent(old004);
-            } 
-        	
-        	fields = marcXml.getChildren("datafield", marcNamespace);
-        	
-        	ArrayList<Element> removeFlds = new ArrayList<Element>();
+    	if (cnt004 > 1 && fixMultiple004s.equals("protect")) return false;
+        
+        for (Element old004 : old004s) {
+        	marcXml.removeContent(old004);
+        } 
+    	
+    	fields = marcXml.getChildren("datafield", marcNamespace);
+    	
+    	ArrayList<Element> removeFlds = new ArrayList<Element>();
 
-            for (Element field : fields) {
-                String tag = field.getAttributeValue("tag");
-                String ind1 = field.getAttributeValue("ind1");
+        for (Element field : fields) {
+            String tag = field.getAttributeValue("tag");
+            String ind1 = field.getAttributeValue("ind1");
 
-                if (tag.equals("014") && ind1.equals("1")) {
-                	ArrayList<Element> removeEls = new ArrayList<Element>();
-                   	int totCnt = 0; int removeCnt = 0;
-                	for (Object o : field.getChildren("subfield", field.getNamespace())) {
-                        Element e = (Element) o;
-                        totCnt++;
-                        if (("a").equals(e.getAttributeValue("code"))) {
-                    		removeEls.add(e);
-                    		removeCnt++;
-                        }
-                    }
-                    for (Element removeEl : removeEls) {
-                    	field.removeContent(removeEl);
-                    }   
-                    if (totCnt == removeCnt) {
-                    	removeFlds.add(field);
+            if (tag.equals("014") && ind1.equals("1")) {
+            	ArrayList<Element> removeEls = new ArrayList<Element>();
+               	int totCnt = 0; int removeCnt = 0;
+            	for (Object o : field.getChildren("subfield", field.getNamespace())) {
+                    Element e = (Element) o;
+                    totCnt++;
+                    if (("a").equals(e.getAttributeValue("code"))) {
+                		removeEls.add(e);
+                		removeCnt++;
                     }
                 }
+                for (Element removeEl : removeEls) {
+                	field.removeContent(removeEl);
+                }   
+                if (totCnt == removeCnt) {
+                	removeFlds.add(field);
+                }
             }
-            for (Element removeFld : removeFlds) {
-            	marcXml.removeContent(removeFld);
-            }   
-            
-            for (Element new014 : new014s) {
-            	addMarcXmlField("014", new014.getText(), null, "1", null, null);
-            }
-
         }
+        for (Element removeFld : removeFlds) {
+        	marcXml.removeContent(removeFld);
+        }   
         
+        for (Element new014 : new014s) {
+        	addMarcXmlField("014", new014.getText(), null, "1", null, null);
+        }
+
         return true;
         
     }    
