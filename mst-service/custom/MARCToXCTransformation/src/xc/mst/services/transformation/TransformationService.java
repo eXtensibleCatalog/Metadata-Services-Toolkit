@@ -1113,7 +1113,10 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process810(originalRecord, transformedRecord);
         transformedRecord = process811(originalRecord, transformedRecord);
         transformedRecord = process830(originalRecord, transformedRecord);
-        transformedRecord = process852(originalRecord, transformedRecord, record);
+
+        // TODO: The following process does not work correctly.
+        //transformedRecord = process852(originalRecord, transformedRecord, record);
+        
         transformedRecord = process856(originalRecord, transformedRecord);
         transformedRecord = process866(originalRecord, transformedRecord);
         transformedRecord = process867(originalRecord, transformedRecord);
@@ -1126,7 +1129,10 @@ public class TransformationService extends SolrTransformationService {
         transformedRecord = process937(originalRecord, transformedRecord);
         transformedRecord = process939(originalRecord, transformedRecord);
         transformedRecord = process943(originalRecord, transformedRecord);
-        transformedRecord = process945(originalRecord, transformedRecord);
+        
+        // TODO: The following process does not work correctly.
+        //transformedRecord = process945(originalRecord, transformedRecord);
+        
         transformedRecord = process947(originalRecord, transformedRecord);
         transformedRecord = process959(originalRecord, transformedRecord);
         transformedRecord = process963(originalRecord, transformedRecord);
