@@ -926,6 +926,8 @@ public class TransformationService extends SolrTransformationService {
     	final String staleUplink = getRecordService().getOaiIdentifier(
     			staleManifestationId, getMetadataService().getService());
     	
+    	List<String> currentUplinks = new ArrayList<String>();
+    	
     	Record r = getRecord(recordId);
 		if (r != null) {
 			r.setMode(Record.JDOM_MODE);
@@ -945,6 +947,7 @@ public class TransformationService extends SolrTransformationService {
 	            		if(uplink.equals(staleUplink)) {
 	            				deleteThese.add(heldEl);
 	            		}
+	            		currentUplinks.add(uplink);
 	            	}
 	            	for (Element deleteThis : deleteThese) {
         				// delete
@@ -960,10 +963,14 @@ public class TransformationService extends SolrTransformationService {
 
 	        // need to keep repo's links up-to-date too
 			getRepository().removeLink(recordId, staleManifestationId);
-	        
+			
 			for (Long newManifestationId : newManifestationIds) {
 		    	String newUplink = getRecordService().getOaiIdentifier(
 		    			newManifestationId, getMetadataService().getService());
+		    	
+				// Make sure we do not add any duplicate references
+		    	if (currentUplinks.contains(newUplink)) continue;
+		    	
 		        Element linkManifestation = new Element("manifestationHeld",
 	                    AggregateXCRecord.XC_NAMESPACE);
 	            linkManifestation.setText(newUplink);
