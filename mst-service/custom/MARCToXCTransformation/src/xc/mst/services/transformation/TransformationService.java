@@ -60,15 +60,89 @@ import xc.mst.utils.XmlHelper;
  * @author Benjamin D. Anderson
  */
 public class TransformationService extends SolrTransformationService {
+
     private final static Logger LOG = Logger.getLogger(TransformationService.class);
     protected XmlHelper xmlHelper = new XmlHelper();
+
+    // TODO - these datastructures need to be read in and they need to be persisted.
+    // which begs the question about the lack of transactions... I need a way to
+    // rollback if something bad happens. Probably the easiest thing to do is just to delete
+    // records with some id higher than something.
+
+    // keep track of missing/not-yet-received bibs (those which have a holding record referring to it)
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdMap = new HashMap<String, Map<String, List<Long>>>();
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdAddedMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdAddedMap = new HashMap<String, Map<String, List<Long>>>();
+    protected Map<String, Map<Long, List<Long>>> bibsYet2ArriveLongIdRemovedMap = new HashMap<String, Map<Long, List<Long>>>();
+    protected Map<String, Map<String, List<Long>>> bibsYet2ArriveStringIdRemovedMap = new HashMap<String, Map<String, List<Long>>>();
+
+    // keep track of bib -> its record id
+    protected Map<String, TLongLongHashMap> bibsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> bibsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, TLongLongHashMap> bibsProcessedLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> bibsProcessedStringIdAddedMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, TLongLongHashMap> bibsProcessedLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> bibsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, Boolean> bibsOrgsProcessed = new HashMap<String, Boolean> ();
+
+    // keep track of bib references  (and for adding and removing)
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsMap = new HashMap<String, Map<String, List<String>>>();
+    protected Map<String, Map<String, List<String>>> holdingsToBibsMap = new HashMap<String, Map<String, List<String>>>(); 
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsAddedMap = new HashMap<String, Map<String, List<String>>>();
+    protected Map<String, Map<String, List<String>>> bibsToHoldingsRemovedMap = new HashMap<String, Map<String, List<String>>>();
+    
+    // keep track of holding -> its record id
+    protected Map<String, TLongLongHashMap> holdingsProcessedLongIdMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> holdingsProcessedStringIdMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, TLongLongHashMap> holdingsProcessedLongIdAddedMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> holdingsProcessedStringIdAddedMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, TLongLongHashMap> holdingsProcessedLongIdRemovedMap = new HashMap<String, TLongLongHashMap>();
+    protected Map<String, Map<String, Long>> holdingsProcessedStringIdRemovedMap = new HashMap<String, Map<String, Long>>();
+    protected Map<String, Boolean> holdingsOrgsProcessed = new HashMap<String, Boolean> ();
 
     // Keep track of records we wish to edit payload only (and not their predecessor linkage)
     protected Map<Long, Boolean> unchangedPredecessors = new HashMap<Long, Boolean>();
     
     // XC's org code
     public static final String XC_SOURCE_OF_MARC_ORG = "NyRoXCO";
-   
+
+    protected TLongLongHashMap getLongKeyedMap(String key, Map<String, TLongLongHashMap> m1) {
+        TLongLongHashMap m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new TLongLongHashMap();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
+    
+    protected Map<Long, List<Long>> getLongListMap(String key, Map<String, Map<Long, List<Long>>> m1) {
+        Map<Long, List<Long>> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new HashMap<Long, List<Long>>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
+    
+    protected Map<String, Long> getStringKeyedMap(String key, Map<String, Map<String, Long>> m1) {
+        Map<String, Long> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new HashMap<String, Long>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
+
+    protected Map<String, List<Long>> getStringListMap(String key, Map<String, Map<String, List<Long>>> m1) {
+        Map<String, List<Long>> m2 = m1.get(key);
+        if (m2 == null) {
+            m2 = new HashMap<String, List<Long>>();
+            m1.put(key, m2);
+        }
+        return m2;
+    }
+    
     protected Format xcFormat = null;
 
     protected TransformationDAO transformationDAO = null;
@@ -104,58 +178,272 @@ public class TransformationService extends SolrTransformationService {
         LOG.info("TransformationService.setup");
         TimingLogger.outputMemory();
         
+        TimingLogger.start("getTransformationDAO().loadBibMaps");
+        bibsProcessedLongIdMap.clear();
+        bibsProcessedStringIdMap.clear();
+        holdingsProcessedLongIdMap.clear();
+        holdingsProcessedStringIdMap.clear();
+        bibsYet2ArriveLongIdMap.clear();
+        bibsYet2ArriveStringIdMap.clear();
+        getTransformationDAO().loadBibMaps(
+                bibsProcessedLongIdMap,
+                bibsProcessedStringIdMap,
+                holdingsProcessedLongIdMap,
+                holdingsProcessedStringIdMap);
+        getTransformationDAO().loadBibsYet2Arrive(bibsYet2ArriveLongIdMap, bibsYet2ArriveStringIdMap);
+        TimingLogger.stop("getTransformationDAO().loadBibMaps");
+        
+        // keep list of orgs used in our records
+    	for (String org : bibsProcessedLongIdMap.keySet()) {
+    		bibsOrgsProcessed.put(org, true);
+    	}
+    	for (String org : bibsProcessedStringIdMap.keySet()) {
+    		bibsOrgsProcessed.put(org, true);
+    	}
+    	for (String org : holdingsProcessedLongIdMap.keySet()) {
+    		holdingsOrgsProcessed.put(org, true);
+    	}
+    	for (String org : holdingsProcessedStringIdMap.keySet()) {
+    		holdingsOrgsProcessed.put(org, true);
+    	}
+
+        TimingLogger.start("getTransformationDAO().loadBibRefs");
+        bibsToHoldingsMap.clear();
+        holdingsToBibsMap.clear();
+        getTransformationDAO().loadBibRefs(bibsToHoldingsMap, holdingsToBibsMap);
+        TimingLogger.stop("getTransformationDAO().loadBibRefs");
+
         TimingLogger.reset();
         inputBibs = getRepository().getPersistentPropertyAsInt("inputBibs", 0);
         inputHoldings = getRepository().getPersistentPropertyAsInt("inputHoldings", 0);
     }
+
+    protected Long getLongFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap, String s) {
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            long l = longLongMap.get(bibMarcId);
+            if (l == 0) {
+                return null;
+            } else {
+                return (Long) l;
+            }
+        } catch (NumberFormatException nfe) {
+            return stringLongMap.get(s);
+        } catch (NullPointerException npe) {
+            return null;
+        }
+    }
+
+    private void add2Map(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+            TLongLongHashMap longLongMapAdded, Map<String, Long> stringLongMapAdded, String s, long lv) {
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            longLongMap.put(bibMarcId, lv);
+            longLongMapAdded.put(bibMarcId, lv);
+        } catch (NumberFormatException nfe) {
+            stringLongMap.put(s, lv);
+            stringLongMapAdded.put(s, lv);
+        }
+    }
+    private List<Long> getLongListFromLongMap(Long l, Map<Long, List<Long>> m) {
+        List <Long> list;
+        if (m.containsKey(l)) {
+        	list = m.get(l);
+        } else {
+        	list = new ArrayList<Long>();
+        	m.put(l, list);
+        }
+        return list;
+    }
+    
+    private List<Long> getLongListFromStringMap(String l, Map<String, List<Long>> m) {
+        List <Long> list;
+        if (m.containsKey(l)) {
+        	list = m.get(l);
+        } else {
+        	list = new ArrayList<Long>();
+        	m.put(l, list);
+        }
+        return list;
+    }
+
+    private void add2ListMap(Map<Long, List<Long>> longLongMap, Map<String, List<Long>> stringLongMap,
+            Map<Long, List<Long>> longLongMapAdded, Map<String, List<Long>> stringLongMapAdded, String s, long lv) {
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            List <Long> list = getLongListFromLongMap(bibMarcId, longLongMap);
+            list.add(lv);
+            list = getLongListFromLongMap(bibMarcId, longLongMapAdded);
+            list.add(lv);
+        } catch (NumberFormatException nfe) {
+            List <Long> list = getLongListFromStringMap(s.trim(), stringLongMap);
+            list.add(lv);
+            list = getLongListFromStringMap(s.trim(), stringLongMapAdded);
+            list.add(lv);
+        }
+    }
+
+    private void removeFromListMap(Map<Long, List<Long>> longLongMap, Map<String, List<Long>> stringLongMap,
+            Map<Long, List<Long>> longLongMapRemoved, Map<String, List<Long>> stringLongMapRemoved, String s, long lv) {
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            List <Long> list = getLongListFromLongMap(bibMarcId, longLongMap);
+            list.remove(lv);
+            list = getLongListFromLongMap(bibMarcId, longLongMapRemoved);
+            list.add(lv);
+        } catch (NumberFormatException nfe) {
+            List <Long> list = getLongListFromStringMap(s.trim(), stringLongMap);
+            list.remove(lv);
+            list = getLongListFromStringMap(s.trim(), stringLongMapRemoved);
+            list.add(lv);
+        }
+    }
+
+    private void removeAllFromMap(TLongLongHashMap longLongMap, Map<String, Long> stringLongMap,
+            TLongLongHashMap longLongMapRemoved, Map<String, Long> stringLongMapRemoved, long lv) {
+
+            for (Long key : longLongMap.keys()) {
+            	Long val = longLongMap.get(key);
+            	if (val.equals(lv)) {
+            		longLongMap.remove(key);
+            		longLongMapRemoved.put(key, val);
+            	}
+            }
+            for (String key : stringLongMap.keySet()) {
+            	Long val = stringLongMap.get(key);
+            	if (val.equals(lv)) {
+            		stringLongMap.remove(key);
+            		stringLongMapRemoved.put(key, val);
+            	}
+            }
+    }
+
     
     protected Long getRecordId4BibProcessed(String orgCode, String s) {
-    	List<Long> r = getTransformationDAO().getRecordId4BibProcessed(new Marc001_003Holder(s, orgCode));
-    	return (r == null || r.size() < 1) ? null : r.get(0);
+        return getLongFromMap(
+                getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
+                getStringKeyedMap(orgCode, bibsProcessedStringIdMap),
+                s);
+    }
 
+    protected List<Marc001_003Holder> getBibMarcIds4RecordIdProcessed(long l) {
+    	return getMarcIds4RecordIdProcessed(new ArrayList<String>(bibsOrgsProcessed.keySet()), bibsProcessedLongIdMap, bibsProcessedStringIdMap, l, false);
     }
     
     protected Marc001_003Holder getHoldingMarcId4RecordIdProcessed(long l) {
-    	List<Marc001_003Holder> r = getTransformationDAO().getHoldingMarcId4RecordIdProcessed(l);
+    	List<Marc001_003Holder> r = getMarcIds4RecordIdProcessed(new ArrayList<String>(holdingsOrgsProcessed.keySet()), holdingsProcessedLongIdMap, holdingsProcessedStringIdMap, l, true);
     	return (r == null || r.size() < 1) ? null : r.get(0);
     }
     
+
+    protected List<Marc001_003Holder> getMarcIds4RecordIdProcessed(
+    		List<String> orgsProcessed,
+    		Map<String, TLongLongHashMap> longIdsMap,
+    		Map<String, Map<String, Long>> stringIdsMap,
+    		long l,
+    		boolean firstRecordOnly) {
+    	
+    	List<Marc001_003Holder> results = new ArrayList<Marc001_003Holder> ();
+
+    	for (String orgCode : orgsProcessed) {
+	    	TLongLongHashMap m = getLongKeyedMap(orgCode, longIdsMap);
+	    	for (Long id : m.keys()) {
+	    		if (m.get(id) == l) {
+	    			results.add(new Marc001_003Holder(String.valueOf(id), orgCode));
+	    			if (firstRecordOnly) return results;
+	    		}
+	    	}
+	    	Map<String, Long> m2 = getStringKeyedMap(orgCode, stringIdsMap);
+	    	for (String id2 : m2.keySet()) {
+	    		if (m2.get(id2) == l) {
+	    			results.add(new Marc001_003Holder(id2, orgCode));
+	    			if (firstRecordOnly) return results;
+	    		}
+	    	}
+    	}
+    	
+    	return results;
+    }
     
     protected void addRecordId4BibProcessed(String orgCode, String s, Long l) {
-    	getTransformationDAO().addRecordId4BibProcessed(new Marc001_003Holder(s, orgCode), l);
+    	bibsOrgsProcessed.put(orgCode, true);
+        add2Map(
+                getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
+                getStringKeyedMap(orgCode, bibsProcessedStringIdMap),
+                getLongKeyedMap(orgCode, bibsProcessedLongIdAddedMap),
+                getStringKeyedMap(orgCode, bibsProcessedStringIdAddedMap),
+                s, l);
     }
 
     protected void addRecordId4HoldingProcessed(String orgCode, String s, Long l) {
-    	getTransformationDAO().addRecordId4HoldingProcessed(new Marc001_003Holder(s, orgCode), l);
+    	holdingsOrgsProcessed.put(orgCode, true);
+        add2Map(
+                getLongKeyedMap(orgCode, holdingsProcessedLongIdMap),
+                getStringKeyedMap(orgCode, holdingsProcessedStringIdMap),
+                getLongKeyedMap(orgCode, holdingsProcessedLongIdAddedMap),
+                getStringKeyedMap(orgCode, holdingsProcessedStringIdAddedMap),
+                s, l);
     }
 
     protected void removeRecordId4BibProcessed(Long l) {
-    	getTransformationDAO().removeRecordId4BibProcessed(l);
+    	for (String orgCode : bibsOrgsProcessed.keySet()) {
+        	removeAllFromMap(
+                getLongKeyedMap(orgCode, bibsProcessedLongIdMap),
+                getStringKeyedMap(orgCode, bibsProcessedStringIdMap),
+                getLongKeyedMap(orgCode, bibsProcessedLongIdRemovedMap),
+                getStringKeyedMap(orgCode, bibsProcessedStringIdRemovedMap),
+                l);
+    	}
     }
 
     protected void removeRecordId4HoldingProcessed(Long l) {
-    	getTransformationDAO().removeRecordId4HoldingProcessed(l);
+    	for (String orgCode : holdingsOrgsProcessed.keySet()) {
+        	removeAllFromMap(
+                getLongKeyedMap(orgCode, holdingsProcessedLongIdMap),
+                getStringKeyedMap(orgCode, holdingsProcessedStringIdMap),
+                getLongKeyedMap(orgCode, holdingsProcessedLongIdRemovedMap),
+                getStringKeyedMap(orgCode, holdingsProcessedStringIdRemovedMap),
+                l);
+    	}
     }
 
     protected List<Long> getManifestationId4BibYet2Arrive(String orgCode, String s) {
-    	return getTransformationDAO().getManifestationId4BibYet2Arrive(new Marc001_003Holder(orgCode, s));
+    	List <Long> listReturned = new ArrayList<Long>();
+    	List <Long> list;
+        try {
+            Long bibMarcId = Long.parseLong(s.trim());
+            list = getLongListFromLongMap(bibMarcId, getLongListMap(orgCode, bibsYet2ArriveLongIdMap));
+        } catch (NumberFormatException nfe) {
+            list = getLongListFromStringMap(s.trim(), getStringListMap(orgCode, bibsYet2ArriveStringIdMap));
+        }
+        listReturned.addAll(list);
+        return listReturned;
     }
 
     protected void addManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
-    	getTransformationDAO().addManifestationId4BibYet2Arrive(new Marc001_003Holder(s, orgCode), l);
+        add2ListMap(
+                getLongListMap(orgCode, bibsYet2ArriveLongIdMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdMap),
+                getLongListMap(orgCode, bibsYet2ArriveLongIdAddedMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdAddedMap),
+                s, l);
     }
 
     protected void removeManifestationId4BibYet2Arrive(String orgCode, String s, Long l) {
-    	getTransformationDAO().removeManifestationId4BibYet2Arrive(new Marc001_003Holder(s, orgCode), l);
-    	
+        removeFromListMap(
+        		getLongListMap(orgCode, bibsYet2ArriveLongIdMap),
+        		getStringListMap(orgCode, bibsYet2ArriveStringIdMap),
+                getLongListMap(orgCode, bibsYet2ArriveLongIdRemovedMap),
+                getStringListMap(orgCode, bibsYet2ArriveStringIdRemovedMap),
+                s, l);
     }
  
     protected List<String> getHoldingsForBib(String orgCode, String bib_id) {
-    	return getTransformationDAO().getHoldingsForBib(new Marc001_003Holder(bib_id, orgCode));
+        return getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsMap);
     }
     
     protected List<String> getBibsForHolding(String orgCode, String hold_id) {
-    	return getTransformationDAO().getBibsForHoldings(new Marc001_003Holder(hold_id, orgCode));
+        return getKeyedMapListStringList(orgCode, hold_id, holdingsToBibsMap);    	
     }
 
     protected void addBibsforHolding(String orgCode, String holding_id, List<String> bib_ids) {
@@ -164,14 +452,51 @@ public class TransformationService extends SolrTransformationService {
         }    	
     }
     	
-    protected void addBibforHolding(String orgCode, String holding_id, String bib_id) {  
-    	getTransformationDAO().addBibforHolding(orgCode, holding_id, bib_id);
+    protected void addBibforHolding(String orgCode, String holding_id, String bib_id) {    	
+        List<String> list = getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsMap);
+        if (list.contains(holding_id)) return; // no duplicates!
+        list.add(holding_id);
+        list = getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsAddedMap);
+        list.add(holding_id);        	
+
+        list = getKeyedMapListStringList(orgCode, holding_id, holdingsToBibsMap);
+        list.add(bib_id);
     }
 
-    protected void removeBibsforHolding(Marc001_003Holder holding) {
-    	getTransformationDAO().removeBibsForHoldings(holding);
+    protected void removeBibsforHolding(String orgCode, String holding_id) {
+        List<String> bibs = getKeyedMapListStringList(orgCode, holding_id, holdingsToBibsMap);
+        if (bibs.size() > 0) {
+                for (String bib : bibs) {
+                        List<String> list2 = getKeyedMapListStringList(orgCode, bib, bibsToHoldingsRemovedMap);
+                        list2.add(holding_id);
+                }
+        }
+        bibs.clear();
     }
 
+    /*
+    protected void removeHoldingsforBib(String orgCode, String bib_id) {
+    	List<String> holds = getKeyedMapListStringList(orgCode, bib_id, bibsToHoldingsMap);   	
+    	for (String hold : holds) {
+    		removeBibsforHolding(orgCode, hold);
+    	}
+    }
+    */
+
+    protected List<String> getKeyedMapListStringList(String org_code, String key, Map<String, Map<String, List<String>>> m1) {
+        Map<String, List<String>> m2 = m1.get(org_code);
+        if (m2 == null) {
+            m2 = new HashMap<String, List<String>>();
+            m1.put(org_code, m2);
+        }
+        List<String> list = m2.get(key);
+        if (list == null) {
+                list = new ArrayList<String>();
+                m2.put(key, list);
+        } 
+        return list;
+    }    
+    
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
         if (!force) {
@@ -182,7 +507,37 @@ public class TransformationService extends SolrTransformationService {
 
             TimingLogger.start("TransformationDAO.non-generic");
             
+            getTransformationDAO().persistBibMaps(
+                    bibsProcessedLongIdAddedMap, bibsProcessedStringIdAddedMap,
+                    bibsProcessedLongIdRemovedMap, bibsProcessedStringIdRemovedMap,
+                    holdingsProcessedLongIdAddedMap, holdingsProcessedStringIdAddedMap,
+                    holdingsProcessedLongIdRemovedMap, holdingsProcessedStringIdRemovedMap);
+            
+                        
+            getTransformationDAO().persistBibsYet2Arrive(
+                    bibsYet2ArriveLongIdAddedMap, bibsYet2ArriveStringIdAddedMap,
+                    bibsYet2ArriveLongIdRemovedMap, bibsYet2ArriveStringIdRemovedMap);
+            
+            bibsProcessedLongIdAddedMap.clear();
+            bibsProcessedStringIdAddedMap.clear();
+            bibsProcessedLongIdRemovedMap.clear();
+            bibsProcessedStringIdRemovedMap.clear();
+      
+            holdingsProcessedLongIdAddedMap.clear();
+            holdingsProcessedStringIdAddedMap.clear();
+            holdingsProcessedLongIdRemovedMap.clear();
+            holdingsProcessedStringIdRemovedMap.clear();
+
+            bibsYet2ArriveLongIdAddedMap.clear();
+            bibsYet2ArriveStringIdAddedMap.clear();
+            bibsYet2ArriveLongIdRemovedMap.clear();
+            bibsYet2ArriveStringIdRemovedMap.clear();
+            
             unchangedPredecessors.clear();
+            
+            getTransformationDAO().persistBibRefs(bibsToHoldingsAddedMap, bibsToHoldingsRemovedMap);
+            bibsToHoldingsAddedMap.clear();
+            bibsToHoldingsRemovedMap.clear();
             
             TimingLogger.start("TransformationDAO.non-generic");
             super.commitIfNecessary(true, 0);
@@ -205,8 +560,7 @@ public class TransformationService extends SolrTransformationService {
 
     @Override
     public List<OutputRecord> process(InputRecord record) {
-
-		// addErrorToInput(record, 12, RecordMessage.WARN);
+        // addErrorToInput(record, 12, RecordMessage.WARN);
         // addErrorToInput(record, 13, RecordMessage.ERROR, "the input is fubed");
         LOG.debug("getHarvestedOaiIdentifier(): " + ((Record) record).getHarvestedOaiIdentifier());
         LOG.debug("getOaiIdentifier(): " + ((Record) record).getOaiIdentifier());
@@ -285,7 +639,7 @@ public class TransformationService extends SolrTransformationService {
                         	if (holding_id == null) {
                     			LOG.error("Whoa!! In delete HOLDINGS. Couldn't find holding marc id for xc record id of " + or.getId());
                         	} else {
-                        		removeBibsforHolding(holding_id);
+                        		removeBibsforHolding(holding_id.get003(), holding_id.get001());
                         	}
                         	removeRecordId4HoldingProcessed(or.getId());   
                         	
