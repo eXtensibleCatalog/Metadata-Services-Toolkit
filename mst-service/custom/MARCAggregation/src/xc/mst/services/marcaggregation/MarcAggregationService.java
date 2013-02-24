@@ -113,6 +113,28 @@ public class MarcAggregationService extends GenericMetadataService {
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
+    private void clear_objects() {
+        matcherMap = null;
+        matchRuleMap = null;
+        masBld = null;
+        masRsm = null;
+        masMatchSetList = null;
+
+        scores             = null;
+        scores_unpersisted = null;
+
+        allBibRecordsO2Imap = null;
+
+        allBibRecordsI2Omap = null;
+        allBibRecordsI2Omap_unpersisted = null;
+
+        mergedInRecordsList = null;
+        mergedInRecordsList_unpersisted = null;
+        
+        recordOfSourceMap = null;
+        
+        System.gc();
+    }
 
     /**
      * Setup record of source rules, setup transformers for modifying xml, validate the service, setup matchers and rules,
@@ -121,7 +143,6 @@ public class MarcAggregationService extends GenericMetadataService {
     @Override
     public void setup() {
         LOG.debug("MAS:  setup()");
-
         try {
             marc21 = getFormatService().getFormatByName("marc21");
         } catch (DatabaseConfigException e) {
@@ -427,6 +448,8 @@ public class MarcAggregationService extends GenericMetadataService {
             //mergeAll(matches, repo);
         }
         //end real work of the service (getting matches and merging)
+        
+        clear_objects();
     }
 
     private void logToServiceLog(String status) {
