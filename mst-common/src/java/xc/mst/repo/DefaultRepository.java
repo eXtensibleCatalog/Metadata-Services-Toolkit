@@ -386,27 +386,35 @@ public class DefaultRepository extends BaseService implements Repository {
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {
         List<Long> l = getRepositoryDAO().getLinkedRecordIds(name, toRecordId);
-    	List<Long> added = getLongKeyedMap(toRecordId, toFromUplinksAdded);
-    	for (Long id: added) {
-    		if (!l.contains(id)) l.add(id);
-    	}
-    	List<Long> removed = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
-    	for (Long id: removed) {
-    		l.remove(id);
-    	}
+	    if (toFromUplinksAdded.containsKey(toRecordId)) {    
+	    	List<Long> added = getLongKeyedMap(toRecordId, toFromUplinksAdded);
+	    	for (Long id: added) {
+	    		if (!l.contains(id)) l.add(id);
+	    	}
+	    }
+	    if (toFromUplinksRemoved.containsKey(toRecordId)) {
+	    	List<Long> removed = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
+	    	for (Long id: removed) {
+	    		l.remove(id);
+	    	}
+	    }
         return l;
     }
 
     public List<Long> getLinkedToRecordIds(Long fromRecordId) {
         List<Long> l = getRepositoryDAO().getLinkedToRecordIds(name, fromRecordId);
-    	List<Long> added = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
-    	for (Long id: added) {
-    		if (!l.contains(id)) l.add(id);
-    	}
-    	List<Long> removed = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
-    	for (Long id: removed) {
-    		l.remove(id);
-    	}
+        if (fromToUplinksAdded.containsKey(fromRecordId)) {
+	    	List<Long> added = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
+	    	for (Long id: added) {
+	    		if (!l.contains(id)) l.add(id);
+	    	}
+        }
+        if (fromToUplinksRemoved.containsKey(fromRecordId)) {
+	    	List<Long> removed = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
+	    	for (Long id: removed) {
+	    		l.remove(id);
+	    	}
+        }
         return l;
     }
     
