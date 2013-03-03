@@ -169,7 +169,7 @@ public class TransformationService extends SolrTransformationService {
     	boolean forceIt = force;
     	
     	if (! forceIt) {
-    		if (processedRecordCount >= COMMIT_EVERY) {
+    		if (processedRecordCount - lastCommitCount >= COMMIT_EVERY) {
     			forceIt = true;
     		}
     	}
