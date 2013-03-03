@@ -80,8 +80,7 @@ public class TestRepository extends BaseService implements Repository {
         return -1;
     }
     
-    public long activateLinkedRecords() {
-    	return 0;
+    public void activateLinkedRecords() {
     }
 
     protected DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

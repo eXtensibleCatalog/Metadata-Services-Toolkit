@@ -109,7 +109,7 @@ public interface Repository {
 
     public void activateRecord(String type, long recordId);
     
-    public long activateLinkedRecords();
+    public void activateLinkedRecords();
 
     public List<Long> getLinkedRecordIds(Long toRecordId);
     
