@@ -92,6 +92,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         return "";
     }
 
+    /* I don't believe we ever want to just pick out the numeric part of SCN Data (035$a) - Issue MST-563
     protected long getNumericId(final String s) {
         String stripped = null;
         long strippedL = 0l;
@@ -110,12 +111,22 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         }
         return strippedL;
     }
+    */
 
     protected SCNData getMapId(String s) {
         // return (getNumericId(s)*1000)+getPrefixId(s);
         final String prefix = getPrefix(s);
-        LOG.debug("mapID:" + prefix + getNumericId(s));
-        return new SCNData(prefix ,prefixList.indexOf(prefix) ,getNumericId(s), s);
+        
+        String numericId = "";
+        int inx = s.indexOf(prefix);
+        if (inx >= 0) {
+        	numericId = s.substring(inx + prefix.length() + 1);
+        } else {
+        	LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , original=" + s);
+        }
+        
+        LOG.debug("mapID:" + prefix + numericId);
+        return new SCNData(prefix, prefixList.indexOf(prefix), numericId, s);
     }
 
     @Override

@@ -131,10 +131,10 @@ DROP TABLE IF EXISTS matchpoints_035a;
 CREATE  TABLE `matchpoints_035a` (
   `full_string` VARCHAR(255) NOT NULL ,
   `prefix_id` INT UNSIGNED NOT NULL ,
-  `numeric_id` BIGINT NOT NULL ,
+  `numeric_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY  (`input_record_id`, `numeric_id`),
+  PRIMARY KEY  (`input_record_id`, `full_string`),
 
   -- may want to not do this and create it after 1st load create, ala repo
   INDEX idx_mp_035a_numeric_id (numeric_id),

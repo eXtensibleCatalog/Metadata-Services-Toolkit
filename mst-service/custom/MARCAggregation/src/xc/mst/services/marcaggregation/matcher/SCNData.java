@@ -1,13 +1,13 @@
 package xc.mst.services.marcaggregation.matcher;
 
 public class SCNData {
-    public SCNData(String prefix, Integer prefixNum, Long scn, String full) {
+    public SCNData(String prefix, Integer prefixNum, String scn, String full) {
         this.prefix = prefix;
         this.prefixNum = prefixNum;
         this.scn = scn;
         this.full = full;
     }
-    public SCNData(Integer prefixNum, Long scn, String full) {
+    public SCNData(Integer prefixNum, String scn, String full) {
         this.prefixNum = prefixNum;
         this.scn = scn;
         this.full = full;
@@ -22,11 +22,11 @@ public class SCNData {
     }
 
     public int hashCode() {
-        return scn.hashCode();
+        return full.hashCode();
     }
 
     public String full;
     public String prefix;
     public Integer prefixNum;
-    public Long scn;
+    public String scn;
 }

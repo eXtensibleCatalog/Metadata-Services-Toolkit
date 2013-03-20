@@ -713,7 +713,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
         for (Map<String, Object> row : rowList) {
             String full = (String) row.get("full_string");
             Integer prefix_id = ((Long) row.get("prefix_id")).intValue();
-            Long num_id = (Long) row.get("numeric_id");
+            String num_id = (String) row.get("numeric_id");
             Long in_id = (Long) row.get("input_record_id");
             SCNData goods = new SCNData(prefix_id, num_id, full);
 
