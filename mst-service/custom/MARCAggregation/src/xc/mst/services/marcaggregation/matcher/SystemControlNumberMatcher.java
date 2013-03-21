@@ -64,6 +64,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     protected Map<SCNData, List<Long>> scn2inputIds = new HashMap<SCNData, List<Long>>();
 
     protected List<String> prefixList = new ArrayList<String>();
+    protected List<String> prefixList_unpersisted = new ArrayList<String>();
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
 
@@ -83,6 +84,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                         LOG.debug("found a prefix of " + prefix);
                         if (!prefixList.contains(prefix)) {
                             prefixList.add(prefix);
+                            if (MarcAggregationService.hasIntermediatePersistence) {
+                            	prefixList_unpersisted.add(prefix);
+                            }
+
                         }
                         return prefix;
                     }
@@ -323,11 +328,11 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         if (force) {
             MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
             if (MarcAggregationService.hasIntermediatePersistence) {
-                s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
+                s.getMarcAggregationServiceDAO().persistPrefixList(prefixList_unpersisted, MarcAggregationServiceDAO.prefixes_035a_table);
 
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn_unpersisted, MarcAggregationServiceDAO.matchpoints_035a_table);
 
-                // allow prefix list to grow - should not get too big?
+                prefixList_unpersisted.clear();
                 inputId2scn_unpersisted.clear();
 
             }
