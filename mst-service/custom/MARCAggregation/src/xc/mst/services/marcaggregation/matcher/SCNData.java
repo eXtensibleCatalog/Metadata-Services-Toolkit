@@ -22,8 +22,11 @@ public class SCNData {
     }
 
     public int hashCode() {
-        return full.hashCode();
+    	final String v = prefixNum.toString().concat(scn);
+        return v.hashCode();
     }
+    
+    public String toString() { return full; }
 
     public String full;
     public String prefix;

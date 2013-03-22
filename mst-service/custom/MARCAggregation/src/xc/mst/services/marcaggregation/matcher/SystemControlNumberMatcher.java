@@ -76,7 +76,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             if (s.contains(")")) {
                 end = s.indexOf(")");
                 LOG.debug(s);
-                final String prefix = s.substring(start + 1, end);
+                final String prefix = (s.substring(start + 1, end)).toUpperCase(); // case-insensitive matching MST-538
                 Character first = prefix.charAt(0);
                 // probably really need to be a 3 alpha prefix but for now make sure it starts with alpha.
                 if (prefix != null && prefix.length() >0) {
@@ -96,27 +96,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         }
         return "";
     }
-
-    /* I don't believe we ever want to just pick out the numeric part of SCN Data (035$a) - Issue MST-563
-    protected long getNumericId(final String s) {
-        String stripped = null;
-        long strippedL = 0l;
-        try {
-            // return the numeric portion, may be SAFER to return the int AFTER the () part,
-            // if it exists (to avoid picking up a number within that)
-            stripped = s.replaceAll("[^\\d]", "");
-            strippedL = Long.parseLong(stripped);
-            LOG.debug("numericID:" + strippedL);
-        } catch (NumberFormatException e) {
-            LOG.error("** Problem with stripped string, not numeric, original=" + s + " all_data=" + " stripped=" + stripped);
-            stripped = null;
-        }
-        if (stripped == null) {
-            return 0l;
-        }
-        return strippedL;
-    }
-    */
 
     protected SCNData getMapId(String s) {
         // return (getNumericId(s)*1000)+getPrefixId(s);
@@ -220,7 +199,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
-        final String oclc = "OCoLC";
+        //final String oclc = "OCoLC";
+    	final String oclc = "OCOLC"; // case-insensitive matching MST-538
         List<Field> fields = r.getDataFields(35);
         boolean haveSeenOCoLC = false;
         for (Field field : fields) {
