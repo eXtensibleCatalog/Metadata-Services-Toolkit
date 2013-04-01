@@ -102,7 +102,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         final String prefix = getPrefix(s);
         
         String numericId = "";
-        int inx = s.indexOf(prefix);
+        int inx = s.toUpperCase().indexOf(prefix); // case-insensitive matching MST-538
         if (inx >= 0) {
         	numericId = s.substring(inx + prefix.length() + 1);
         } else {
