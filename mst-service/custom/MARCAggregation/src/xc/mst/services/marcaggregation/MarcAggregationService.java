@@ -418,7 +418,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     	// useful to know the bib info, too
                     	Record r = inputRepo.getRecord(num);
                         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-                        sb.append(" [").append(smr.getControlField(003)).append("] ").append(smr.getControlField(1));
+                        sb.append(" [").append(smr.getControlField(3)).append("] ").append(smr.getControlField(1));
                     	
                     	if (recordOfSourceMap.get(num) == num) {
                     		sb.append(" [**Record of Source**]");
