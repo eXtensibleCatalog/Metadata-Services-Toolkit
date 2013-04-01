@@ -456,7 +456,7 @@ Substitute035_a_bWithMap.NumberOfRows = 4
 Dedup035 = 1
 
 # 1 to remove leading zeros. 
-035LeadingZero = 1
+035LeadingZero = 0
 
 #######################################################
 
