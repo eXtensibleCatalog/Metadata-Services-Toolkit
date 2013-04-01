@@ -310,17 +310,155 @@ MoveMARCOrgCode_moveAll = 1
 # and the original record's control number 
 SupplyMARCOrgCode = 1
 
-# 1 to cleanup common problems with OCoLC 035 fields. 
-Fix035 = 1
+#######################################################
+# Clean up 035s
+#######################################################
+
+###
+# 035$a translations, e.g.,
+# 
+# Substitute035_aWithMap.1.MatchPrefix = ^\(OCoLC\)ocm([0-9]+)
+# Substitute035_aWithMap.1.ReplaceWith = (OCoLC)${1}
+#
+# (Note: MatchPrefix expects a Regular Expression used to match a known pattern; 
+#        it also expects you to identify the system number by enclosing its pattern within parentheses)
+# (Note: ReplaceWith expects a Regular Expression used to create the newly translated system number;
+#        it also expects you to supply both a valid Prefix and the matched system number from MatchPrefix;
+#        the system number is denoted by the expression ${1} for the first match, ${2} for the second, etc.
+#
+#
+# 035 $a (OCoLC)ocm123456789
+#
+#     will get translated to
+#
+# 035 $a (OCoLC)123456789
+#
+Substitute035_aWithMap.1.MatchPrefix = ^\(OCoLC\)ocm([0-9]+)
+Substitute035_aWithMap.1.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.2.MatchPrefix = ^\(OCoLC\)ocn([0-9]+)
+Substitute035_aWithMap.2.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.3.MatchPrefix = ^\(OCoLC\)ocl([0-9]+)
+Substitute035_aWithMap.3.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.4.MatchPrefix = ^\(OCoLC\)on([0-9]+)
+Substitute035_aWithMap.4.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.5.MatchPrefix = ^ocm([0-9]+)
+Substitute035_aWithMap.5.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.6.MatchPrefix = ^ocn([0-9]+)
+Substitute035_aWithMap.6.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.7.MatchPrefix = ^ocl([0-9]+)
+Substitute035_aWithMap.7.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.8.MatchPrefix = ^on([0-9]+)
+Substitute035_aWithMap.8.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.9.MatchPrefix = ^\(OCLC\)ocm([0-9]+)
+Substitute035_aWithMap.9.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.10.MatchPrefix = ^\(OCLC\)ocn([0-9]+)
+Substitute035_aWithMap.10.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.11.MatchPrefix = ^\(OCLC\)ocl([0-9]+)
+Substitute035_aWithMap.11.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.12.MatchPrefix = ^\(OCLC\)on([0-9]+)
+Substitute035_aWithMap.12.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.13.MatchPrefix = ^\(OCLC\)([0-9]+)
+Substitute035_aWithMap.13.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.14.MatchPrefix = ^\(OCoCL\)ocm([0-9]+)
+Substitute035_aWithMap.14.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.15.MatchPrefix = ^\(OCoCL\)ocn([0-9]+)
+Substitute035_aWithMap.15.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.16.MatchPrefix = ^\(OCoCL\)ocl([0-9]+)
+Substitute035_aWithMap.16.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.17.MatchPrefix = ^\(OCoCL\)on([0-9]+)
+Substitute035_aWithMap.17.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.18.MatchPrefix = ^\(OCoCL\)([0-9]+)
+Substitute035_aWithMap.18.ReplaceWith = (OCoLC)${1}
+
+Substitute035_aWithMap.NumberOfRows = 18
+###
+
+###
+#
+# 035$9 translations, e.g.,
+# 
+# Substitute035_9WithMap.1.MatchPrefix = ^ocm([0-9]+)
+# Substitute035_9WithMap.1.ReplaceWith = (OCoLC)${1}
+#
+# (Note: MatchPrefix expects a Regular Expression used to match a known pattern; 
+#        it also expects you to identify the system number by enclosing its pattern within parentheses)
+# (Note: ReplaceWith expects a Regular Expression used to create the newly translated system number;
+#        it also expects you to supply both a valid Prefix and the matched system number from MatchPrefix;
+#        the system number is denoted by the expression ${1} for the first match, ${2} for the second, etc.
+#
+# 035 $9 ocm123456789
+#
+#     will get translated to
+#
+# 035 $a (OCoLC)123456789
+#
+Substitute035_9WithMap.1.MatchPrefix = ^ocm([0-9]+)
+Substitute035_9WithMap.1.ReplaceWith = (OCoLC)${1}
+
+Substitute035_9WithMap.2.MatchPrefix = ^ocn([0-9]+)
+Substitute035_9WithMap.2.ReplaceWith = (OCoLC)${1}
+
+Substitute035_9WithMap.3.MatchPrefix = ^ocl([0-9]+)
+Substitute035_9WithMap.3.ReplaceWith = (OCoLC)${1}
+
+Substitute035_9WithMap.4.MatchPrefix = ^on([0-9]+)
+Substitute035_9WithMap.4.ReplaceWith = (OCoLC)${1}
+
+Substitute035_9WithMap.NumberOfRows = 4
+###
+
+###
+#
+# 035$a $b translations, e.g.,
+#
+# Substitute035_a_bWithMap.1.MatchPrefix = ocm
+# Substitute035_a_bWithMap.1.ReplaceWith = (OCoLC)
+#
+# 035 $b ocm $a 123456789
+#
+#     will get translated to
+#
+# 035 $a (OCoLC)123456789
+#
+Substitute035_a_bWithMap.1.MatchPrefix = ocm
+Substitute035_a_bWithMap.1.ReplaceWith = (OCoLC)
+
+Substitute035_a_bWithMap.2.MatchPrefix = ocn
+Substitute035_a_bWithMap.2.ReplaceWith = (OCoLC)
+
+Substitute035_a_bWithMap.3.MatchPrefix = ocl
+Substitute035_a_bWithMap.3.ReplaceWith = (OCoLC)
+
+Substitute035_a_bWithMap.4.MatchPrefix = on
+Substitute035_a_bWithMap.4.ReplaceWith = (OCoLC)
+
+Substitute035_a_bWithMap.NumberOfRows = 4
+###
+
+# 1 to remove duplicate 035 fields. 
+Dedup035 = 1
 
 # 1 to remove leading zeros. 
 035LeadingZero = 1
 
-# 1 to cleanup OCoLC 035 fields for $9. By default 0
-Fix035Code9 = 0
-
-# 1 to remove duplicate 035 fields. 
-Dedup035 = 1
+#######################################################
 
 # 1 to create a field with a language code for 
 # each unique language code found in the original 

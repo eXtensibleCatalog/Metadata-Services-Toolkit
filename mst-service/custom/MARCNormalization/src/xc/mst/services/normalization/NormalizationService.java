@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.*;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.csv.CSVParser;
@@ -147,6 +148,14 @@ public class NormalizationService extends GenericMetadataService {
     
     private HashMap<String, HashMap<String, String>> orgCodeProperties001;
     private HashMap<String, HashMap<String, String>> orgCodeProperties003;
+    
+    private static Pattern variablePattern = Pattern.compile("\\$\\{([0-9]+)\\}");
+    private static int MAX_035_REGEX_MATCHES = 3;
+    private static List<String> matches = new ArrayList<String>(MAX_035_REGEX_MATCHES);
+    private List<HashMap<String, Object>> substitute035_a;
+    private List<HashMap<String, Object>> substitute035_9;
+    private List<HashMap<String, String>> substitute035_a_b;
+
     
     private String sourceRepositoryURL;
     
@@ -332,7 +341,7 @@ public class NormalizationService extends GenericMetadataService {
             }
             ((Record) record).setType(type);
             
-            if (getSourceOfOrganizationCode().equals("1")) {
+            if (getSourceOfOrganizationCode()) {
             	try {
             		normalizedXml = processSourceOfRecord(normalizedXml, record);
             	} catch (Exception e) {
@@ -418,9 +427,7 @@ public class NormalizationService extends GenericMetadataService {
                 if (enabledSteps.getProperty(CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE, "0").equals("1"))
                     normalizedXml = supplyMARCOrgCode(normalizedXml);
 
-                if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")
-                        || enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")
-                        || enabledSteps.getProperty(CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
+                if (needToFix035()) {
                     normalizedXml = fix035(normalizedXml);
                 }
 
@@ -1881,6 +1888,38 @@ public class NormalizationService extends GenericMetadataService {
     /**
      * Edits OCLC 035 records with common incorrect formats to take the format
      * (OCoLC)%CONTROL_NUMBER%.
+     * 
+     * Current list of patterns we will process:
+     * 
+     * 035 $b ocm $a <control_number>
+     * 035 $b ocn $a <control_number>
+     * 035 $b ocl $a <control_number>
+     * 035 $b on $a <control_number>
+     * 
+     * 035 $9 ocm<control_number>
+     * 035 $9 ocn<control_number>
+     * 035 $9 ocl<control_number>
+     * 035 $9 on<control_number>
+     * 
+     * 035 $a (OCoLC)ocm<control_number>
+     * 035 $a (OCoLC)ocn<control_number>
+     * 035 $a (OCoLC)ocl<control_number>
+     * 035 $a (OCoLC)on<control_number>
+     * 035 $a ocm<control_number>
+     * 035 $a ocn<control_number>
+     * 035 $a ocl<control_number>
+     * 035 $a on<control_number>
+     * 035 $a (OCLC)ocm<control_number>
+     * 035 $a (OCLC)ocn<control_number>
+     * 035 $a (OCLC)ocl<control_number>
+     * 035 $a (OCLC)on<control_number>
+     * 035 $a (OCLC)<control_number>
+     * 035 $a (OCoCL)ocm<control_number>
+     * 035 $a (OCoCL)ocn<control_number>
+     * 035 $a (OCoCL)ocl<control_number>
+     * 035 $a (OCoCL)on<control_number>
+     * 035 $a (OCoCL)<control_number>
+     * 
      *
      * @param marcXml
      *            The original MARCXML record
@@ -1890,6 +1929,8 @@ public class NormalizationService extends GenericMetadataService {
     private MarcXmlManager fix035(MarcXmlManager marcXml) {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering fix035 normalization step.");
+        
+        boolean fix035_0s = enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1");        
 
         // Get the original list of 035 elements. We know that any 035 we
         // supplied had the correct format, so all incorrect 035 records must
@@ -1902,11 +1943,11 @@ public class NormalizationService extends GenericMetadataService {
             Element aSubfield = null;
             Element bSubfield = null;
             Element subfield9 = null;
-
+            
             // Get the control fields
             List<Element> subfields = field035.getChildren("subfield", marcNamespace);
 
-            StringBuilder err_sb = new StringBuilder("");
+            //StringBuilder err_sb = new StringBuilder("");
             // Iterate over the subfields to find the $a and $b subfields
             for (Element subfield : subfields) {
 
@@ -1916,117 +1957,203 @@ public class NormalizationService extends GenericMetadataService {
                 }
 
                 // Initialize the bSubfield if we found the $b
-                if (subfield.getAttribute("code").getValue().equals("b")) {
-                    err_sb.append("subfield b");
+                else if (subfield.getAttribute("code").getValue().equals("b")) {
+                    //err_sb.append("subfield b");
                     bSubfield = subfield;
                 }
 
                 // Initialize the subfield9 if we found the $9
-                if (subfield.getAttribute("code").getValue().equals("9")) {
-                    err_sb.append("subfield 9");
+                else if (subfield.getAttribute("code").getValue().equals("9")) {
+                    //err_sb.append("subfield 9");
                     subfield9 = subfield;
                 }
 
             } // end loop over 035 subfields
-
-            if (bSubfield != null || subfield9 != null) {
-                // for now treat 'b' and '9' both as errors code can't diff. between INFO and ERROR yet anyway.
-                LOG.debug("*** just added 035 error message 107, contents="+err_sb.toString());
-
-                addMessage(marcXml.getInputRecord(), 107, RecordMessage.ERROR, err_sb.toString());
+            
+            boolean modified = false;
+            
+            
+            // First, process those b/a patterns:
+            /*
+            * 035 $b ocm $a <control_number>
+            * 035 $b ocn $a <control_number>
+            * 035 $b ocl $a <control_number>
+            * 035 $b on $a <control_number>
+			*/
+            if (substitute035_a_b != null && aSubfield != null && bSubfield != null) {
+            	
+        		for (int i=0; i< substitute035_a_b.size(); i++) {
+            		final String matchPrefix = substitute035_a_b.get(i).get("MatchPrefix");            			
+            		final String replaceWith = substitute035_a_b.get(i).get("ReplaceWith"); 
+	            	
+            		if (bSubfield.getText().equals(matchPrefix)) {
+	            		String controlNumber = aSubfield.getText().trim();
+	            		// Set $a to (OCoLC)%CONTROL_NUMBER%
+	                    aSubfield.setText(replaceWith + controlNumber);
+	                    modified = true;
+	                    break;
+	            	}
+        		}
+            	
             }
-
-            // Execute only if Fix035 step is enabled
-            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
-                // First case: $b = ocm or $b = ocn or $b = ocl, and $a contains only the control number
-                if (bSubfield != null) {
-                    // Check if the $b subfield was "ocm", "ocn", or "ocl"
-                    if (bSubfield.getText().equals("ocm") || bSubfield.getText().equals("ocn") || bSubfield.getText().equals("ocl")) {
-                        // Try to parse out the control number from the $a subfield
-                        if (aSubfield != null) {
-                            try {
-                                String controlNumber = aSubfield.getText().trim();
-
-                                // Set $a to (OCoLC)%CONTROL_NUMBER%
-                                aSubfield.setText("(OCoLC)" + controlNumber);
-                            } catch (NumberFormatException e) {
+            
+            // Now, the sub-9-only patterns:
+            /*
+             * 035 $9 ocm<control_number>
+             * 035 $9 ocn<control_number>
+             * 035 $9 ocl<control_number>
+             * 035 $9 on<control_number>
+             */
+            else if (substitute035_9 != null && subfield9 != null) {
+            	
+        		for (int i=0; i < substitute035_9.size(); i++) {
+            		final Pattern matchPrefix = (Pattern) substitute035_9.get(i).get("MatchPrefix");            			
+            		
+            		if (matchPrefix != null) {
+            			Matcher matcher = matchPrefix.matcher(subfield9.getText());
+            			
+            			if (matcher.find()) {
+            				matches.clear();
+                            int numMatches = matcher.groupCount();
+                            for (int j=1; j <= MAX_035_REGEX_MATCHES && j <= numMatches; j++) {
+                                    matches.add(j-1, matcher.group(j));
                             }
-                        }
+                            
+                    		final String replaceWith = (String) substitute035_9.get(i).get("ReplaceWith"); 
+                    		Matcher action = variablePattern.matcher(replaceWith);
+                            StringBuffer sb = new StringBuffer(replaceWith.length());
+                            int j = 0;
+                            while (action.find()) {
+                                    String text = matches.get(j++);
+                                    action.appendReplacement(sb, Matcher.quoteReplacement(text));
+                            }
+                            action.appendTail(sb);
+                            
+		            		// Add an $a subfield if there wasn't one
+		                    if (aSubfield == null) {
+		                        aSubfield = new Element("subfield", marcNamespace);
+		                        aSubfield.setAttribute("code", "a");
+		                        field035.addContent("\t").addContent(aSubfield).addContent("\n");
+		                    }
+	            		
+	                		// Set $a to (OCoLC)%CONTROL_NUMBER%
+	                        aSubfield.setText(sb.toString());
+		                    modified = true;
+	                        break;
+                            
+            			}
+            		}
+            	}
+            	
+            }
+            
+            // Finally, the sub-a-only patterns:
+            /*
+		     * 035 $a (OCoLC)ocm<control_number>
+		     * 035 $a (OCoLC)ocn<control_number>
+		     * 035 $a (OCoLC)ocl<control_number>
+		     * 035 $a (OCoLC)on<control_number>
+		     * 035 $a ocm<control_number>
+		     * 035 $a ocn<control_number>
+		     * 035 $a ocl<control_number>
+		     * 035 $a on<control_number>
+		     * 035 $a (OCLC)ocm<control_number>
+		     * 035 $a (OCLC)ocn<control_number>
+		     * 035 $a (OCLC)ocl<control_number>
+		     * 035 $a (OCLC)on<control_number>
+		     * 035 $a (OCLC)<control_number>
+		     * 035 $a (OCoCL)ocm<control_number>
+		     * 035 $a (OCoCL)ocn<control_number>
+		     * 035 $a (OCoCL)ocl<control_number>
+		     * 035 $a (OCoCL)on<control_number>
+		     * 035 $a (OCoCL)<control_number>
+             * 
+             */
+            
+            else if (substitute035_a != null && aSubfield != null) {
+            	
+        		for (int i=0; i < substitute035_a.size(); i++) {
+            		final Pattern matchPrefix = (Pattern) substitute035_a.get(i).get("MatchPrefix");            			
+            		
+            		if (matchPrefix != null) {
+            			Matcher matcher = matchPrefix.matcher(aSubfield.getText());
+            			
+            			if (matcher.find()) {
+            				matches.clear();
+                            int numMatches = matcher.groupCount();
+                            for (int j=1; j <= MAX_035_REGEX_MATCHES && j <= numMatches; j++) {
+                                    matches.add(j-1, matcher.group(j));
+                            }
+                            
+                    		final String replaceWith = (String) substitute035_a.get(i).get("ReplaceWith"); 
+                    		Matcher action = variablePattern.matcher(replaceWith);
+                            StringBuffer sb = new StringBuffer(replaceWith.length());
+                            int j = 0;
+                            while (action.find()) {
+                                    String text = matches.get(j++);
+                                    action.appendReplacement(sb, Matcher.quoteReplacement(text));
+                            }
+                            action.appendTail(sb);
+                            
+	                		// Set $a to (OCoLC)%CONTROL_NUMBER%
+	                        aSubfield.setText(sb.toString());
+		                    modified = true;
+	                        break;
+                            
+            			}
+            		}
+        		}
+
+            }
+            
+
+            // If the $a has more than one prefix, only use the first one
+            if (modified && aSubfield != null) {
+                String aSubfieldText = aSubfield.getText();
+                if (aSubfieldText.contains("(") && aSubfieldText.contains(")"))
+                    aSubfield.setText(aSubfieldText.substring(0, aSubfieldText.indexOf(')') + 1) + aSubfieldText.substring(aSubfieldText.lastIndexOf(')') + 1));
+            }
+
+            // remove preceeding 0s
+            if (fix035_0s && aSubfield != null) {
+                // Get value of $a
+                String value = aSubfield.getText();
+                String newValue = "";
+
+                // Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052
+                int indexOfBracket = value.indexOf(")");
+                newValue = value.substring(0, indexOfBracket + 1);
+
+                boolean numericValueStarts = false;
+                String regex = "[1-9]";
+
+                for (int i = indexOfBracket + 1; i < value.length(); i++) {
+
+                    if (String.valueOf(value.charAt(i)).matches(regex)) {
+                        numericValueStarts = true;
                     }
 
-                    // Remove the b subfield as we shouldn't ever have one
-                    field035.removeContent(bSubfield);
-                }
-
-                // Second case: $a = (OCoLC)ocm%CONTROL_NUMBER% or (OCoLC)ocn%CONTROL_NUMBER% or (OCoLC)ocl%CONTROL_NUMBER%
-                if (aSubfield != null && (aSubfield.getText().startsWith("(OCoLC)ocm") || aSubfield.getText().startsWith("(OCoLC)ocn") || aSubfield.getText().startsWith("(OCoLC)ocl")))
-                    aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(10));
-
-                // Third case: $a = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
-                if (aSubfield != null && (aSubfield.getText().startsWith("ocm") || aSubfield.getText().startsWith("ocn") || aSubfield.getText().startsWith("ocl")))
-                    aSubfield.setText("(OCoLC)" + aSubfield.getText().substring(3));
-            }
-
-            // Execute only if Fix035Code9 step is enabled
-            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035_CODE_9, "0").equals("1")) {
-                // Forth case: $9 = ocm%CONTROL_NUMBER% or ocn%CONTROL_NUMBER% or ocl%CONTROL_NUMBER%
-                if (subfield9 != null && (subfield9.getText().startsWith("ocm") || subfield9.getText().startsWith("ocn") || subfield9.getText().startsWith("ocl"))) {
-                    // Add an $a subfield if there wasn't one
-                    if (aSubfield == null) {
-                        aSubfield = new Element("subfield", marcNamespace);
-                        aSubfield.setAttribute("code", "a");
-                        field035.addContent("\t").addContent(aSubfield).addContent("\n");
+                    if (value.charAt(i) != '0') {
+                        newValue = newValue + value.charAt(i);
+                    } else if (numericValueStarts) {
+                        newValue = newValue + value.charAt(i);
                     }
-
-                    aSubfield.setText("(OCoLC)" + subfield9.getText().substring(3));
-                    field035.removeContent(subfield9);
-                }
-            }
-
-            // Execute only if Fix035 step is enabled
-            if (enabledSteps.getProperty(CONFIG_ENABLED_FIX_035, "0").equals("1")) {
-                // If the $a has more than one prefix, only use the first one
-                if (aSubfield != null) {
-                    String aSubfieldText = aSubfield.getText();
-                    if (aSubfieldText.contains("(") && aSubfieldText.contains(")"))
-                        aSubfield.setText(aSubfieldText.substring(0, aSubfieldText.indexOf(')') + 1) + aSubfieldText.substring(aSubfieldText.lastIndexOf(')') + 1));
-                }
-            }
-
-            // Execute only if 035LeadingZero step is enabled. Removes leading zeros in 035 $a records. Changes (OCoLC)00021452 to (OCoLC)21452
-            if (enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1")) {
-
-                if (aSubfield != null) {
-                    // Get value of $a
-                    String value = aSubfield.getText();
-                    String newValue = "";
-
-                    // Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052
-                    int indexOfBracket = value.indexOf(")");
-                    newValue = value.substring(0, indexOfBracket + 1);
-
-                    boolean numericValueStarts = false;
-                    String regex = "[1-9]";
-
-                    for (int i = indexOfBracket + 1; i < value.length(); i++) {
-
-                        if (String.valueOf(value.charAt(i)).matches(regex)) {
-                            numericValueStarts = true;
-                        }
-
-                        if (value.charAt(i) != '0') {
-                            newValue = newValue + value.charAt(i);
-                        } else if (numericValueStarts) {
-                            newValue = newValue + value.charAt(i);
-                        }
-                    }
-
-                    // Set the new value back in subfield $a
-                    aSubfield.setText(newValue);
                 }
 
+                // Set the new value back in subfield $a
+                aSubfield.setText(newValue);
             }
-        }
+            
+            // Remove unnecessary sub-b and sub-9
+            if (modified && bSubfield != null) {
+                field035.removeContent(bSubfield);
+            }
+            if (modified && subfield9 != null) {
+                field035.removeContent(subfield9);
+            }
+        
+
+        } // end loop over 035 elements
 
         return marcXml;
     }
@@ -2923,11 +3050,11 @@ public class NormalizationService extends GenericMetadataService {
             throw new ServiceValidationException("Service configuration file is missing the required section: FIELD 006/008 OFFSET 23 TO FORM OF ITEM");
         else if (enabledSteps == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: ENABLED STEPS");
-        else if (getSourceOfOrganizationCode().equals("1"))
+        else if (getSourceOfOrganizationCode())
         {
         	setupOrganizationCodeProperties();
         } 
-        else if (getSourceOfOrganizationCode().equals("0"))
+        else if (! getSourceOfOrganizationCode())
         {
             if (getOrganizationCode() == null)
                 throw new ServiceValidationException("Service configuration file Organization Code error:  Please set an OrganizationCode.");
@@ -2937,13 +3064,89 @@ public class NormalizationService extends GenericMetadataService {
         }
         else if (locationLimitNameProperties == null)
             throw new ServiceValidationException("Service configuration file is missing the required section: LOCATION CODE TO LOCATION LIMIT NAME");
+        
+        setupFix035Parameters();
 
-    }
-
-    protected String getSourceOfOrganizationCode() {
-        return enabledSteps.getProperty(CONFIG_SOURCE_OF_MARC_ORG);
     }
     
+    protected boolean needToFix035() {
+        return substitute035_a != null || substitute035_9 != null || substitute035_a_b != null
+                || enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1");
+
+    }
+
+    protected void setupFix035Parameters() throws ServiceValidationException {
+    	int num035_aProperties = 0;
+    	try {
+    		num035_aProperties = Integer.parseInt(enabledSteps.getProperty("Substitute035_aWithMap.NumberOfRows"));
+    	} catch (NumberFormatException nfe) {
+        	num035_aProperties = 0;
+        	substitute035_a = null;
+    	}
+    	if (num035_aProperties > 0) {
+    		substitute035_a = new ArrayList<HashMap<String, Object>>(num035_aProperties);
+	    	for (int i=1; i<= num035_aProperties; i++) {
+		    	HashMap <String, Object> parms = new HashMap <String, Object> (2); // currently 2 parms each instance
+	    		final String matchPrefixString = enabledSteps.getProperty("Substitute035_aWithMap." + i + ".MatchPrefix", "");
+	    		if (matchPrefixString.length() > 0) {
+		    		Pattern matchPrefix = Pattern.compile(matchPrefixString);
+		    		parms.put("MatchPrefix", matchPrefix);
+	    		} else {
+		    		parms.put("MatchPrefix", null);	    			
+	    		}
+	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_aWithMap." + i + ".ReplaceWith", ""));
+	    		substitute035_a.add(i-1, parms);	
+	    	}
+    	}    	
+    	
+    	int num035_9Properties = 0;
+    	try {
+    		num035_9Properties = Integer.parseInt(enabledSteps.getProperty("Substitute035_9WithMap.NumberOfRows"));
+    	} catch (NumberFormatException nfe) {
+        	num035_9Properties = 0;
+        	substitute035_9 = null;
+    	}
+    	if (num035_9Properties > 0) {
+    		substitute035_9 = new ArrayList<HashMap<String, Object>>(num035_9Properties);
+	    	for (int i=1; i<= num035_9Properties; i++) {
+		    	HashMap <String, Object> parms = new HashMap <String, Object> (2); // currently 2 parms each instance
+	    		final String matchPrefixString = enabledSteps.getProperty("Substitute035_aWithMap." + i + ".MatchPrefix", "");
+	    		if (matchPrefixString.length() > 0) {
+		    		Pattern matchPrefix = Pattern.compile(matchPrefixString);
+		    		parms.put("MatchPrefix", matchPrefix);
+	    		} else {
+		    		parms.put("MatchPrefix", null);	    			
+	    		}
+	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_9WithMap." + i + ".ReplaceWith", ""));
+	    		substitute035_9.add(i-1, parms);	
+	    	}
+    	}    	
+
+    	int num035_a_bProperties = 0;
+    	try {
+    		num035_a_bProperties = Integer.parseInt(enabledSteps.getProperty("Substitute035_a_bWithMap.NumberOfRows"));
+    	} catch (NumberFormatException nfe) {
+        	num035_a_bProperties = 0;
+        	substitute035_a_b = null;
+    	}
+    	if (num035_a_bProperties > 0) {
+    		substitute035_a_b = new ArrayList<HashMap<String, String>>(num035_a_bProperties);
+	    	for (int i=1; i<= num035_a_bProperties; i++) {
+		    	HashMap <String, String> parms = new HashMap <String, String> (2); // currently 2 parms each instance
+	    		parms.put("MatchPrefix", enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".MatchPrefix", ""));
+	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".ReplaceWith", ""));
+	    		substitute035_a_b.add(i-1, parms);	
+	    	}
+    	}    	
+
+
+    }
+   
+    protected boolean getSourceOfOrganizationCode() {
+        return enabledSteps.getProperty(CONFIG_SOURCE_OF_MARC_ORG, "0").equals("1");
+    }
+
+
     protected void setupOrganizationCodeProperties() throws ServiceValidationException {
     	int num001Properties = 0;
     	boolean valid = true;
