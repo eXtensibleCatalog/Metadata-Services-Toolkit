@@ -149,8 +149,9 @@ public class NormalizationService extends GenericMetadataService {
     private HashMap<String, HashMap<String, String>> orgCodeProperties001;
     private HashMap<String, HashMap<String, String>> orgCodeProperties003;
     
+    // 035 processing
     private static Pattern variablePattern = Pattern.compile("\\$\\{([0-9]+)\\}");
-    private static int MAX_035_REGEX_MATCHES = 3;
+    private static int MAX_035_REGEX_MATCHES = 5;
     private static List<String> matches = new ArrayList<String>(MAX_035_REGEX_MATCHES);
     private List<HashMap<String, Object>> substitute035_a;
     private List<HashMap<String, Object>> substitute035_9;
@@ -1930,7 +1931,7 @@ public class NormalizationService extends GenericMetadataService {
         if (LOG.isDebugEnabled())
             LOG.debug("Entering fix035 normalization step.");
         
-        boolean fix035_0s = enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1");        
+        boolean fix035_0s = enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1");   
 
         // Get the original list of 035 elements. We know that any 035 we
         // supplied had the correct format, so all incorrect 035 records must
@@ -1980,21 +1981,20 @@ public class NormalizationService extends GenericMetadataService {
             * 035 $b ocl $a <control_number>
             * 035 $b on $a <control_number>
 			*/
-            if (substitute035_a_b != null && aSubfield != null && bSubfield != null) {
-            	
+            if (aSubfield != null && bSubfield != null && substitute035_a_b != null) {
         		for (int i=0; i< substitute035_a_b.size(); i++) {
-            		final String matchPrefix = substitute035_a_b.get(i).get("MatchPrefix");            			
-            		final String replaceWith = substitute035_a_b.get(i).get("ReplaceWith"); 
-	            	
-            		if (bSubfield.getText().equals(matchPrefix)) {
-	            		String controlNumber = aSubfield.getText().trim();
-	            		// Set $a to (OCoLC)%CONTROL_NUMBER%
-	                    aSubfield.setText(replaceWith + controlNumber);
-	                    modified = true;
-	                    break;
-	            	}
+            		final String matchPrefix = substitute035_a_b.get(i).get("MatchPrefix");    
+            		if (matchPrefix != null) {
+	            		final String replaceWith = substitute035_a_b.get(i).get("ReplaceWith"); 
+	            		if (bSubfield.getText().equals(matchPrefix)) {
+		            		String controlNumber = aSubfield.getText().trim();
+		            		// Set $a to (OCoLC)%CONTROL_NUMBER%
+		                    aSubfield.setText(replaceWith + controlNumber);
+		                    modified = true;
+		                    break;
+		            	}
+            		}
         		}
-            	
             }
             
             // Now, the sub-9-only patterns:
@@ -2004,7 +2004,7 @@ public class NormalizationService extends GenericMetadataService {
              * 035 $9 ocl<control_number>
              * 035 $9 on<control_number>
              */
-            else if (substitute035_9 != null && subfield9 != null) {
+            if (subfield9 != null && substitute035_9 != null) {
             	
         		for (int i=0; i < substitute035_9.size(); i++) {
             		final Pattern matchPrefix = (Pattern) substitute035_9.get(i).get("MatchPrefix");            			
@@ -2044,7 +2044,6 @@ public class NormalizationService extends GenericMetadataService {
             			}
             		}
             	}
-            	
             }
             
             // Finally, the sub-a-only patterns:
@@ -2070,7 +2069,7 @@ public class NormalizationService extends GenericMetadataService {
              * 
              */
             
-            else if (substitute035_a != null && aSubfield != null) {
+            if (aSubfield != null && substitute035_a != null) {
             	
         		for (int i=0; i < substitute035_a.size(); i++) {
             		final Pattern matchPrefix = (Pattern) substitute035_a.get(i).get("MatchPrefix");            			
@@ -2103,45 +2102,41 @@ public class NormalizationService extends GenericMetadataService {
             			}
             		}
         		}
-
             }
             
-
             // If the $a has more than one prefix, only use the first one
             if (modified && aSubfield != null) {
                 String aSubfieldText = aSubfield.getText();
                 if (aSubfieldText.contains("(") && aSubfieldText.contains(")"))
                     aSubfield.setText(aSubfieldText.substring(0, aSubfieldText.indexOf(')') + 1) + aSubfieldText.substring(aSubfieldText.lastIndexOf(')') + 1));
             }
-
+            
             // remove preceeding 0s
-            if (fix035_0s && aSubfield != null) {
+            if (aSubfield != null && fix035_0s) {
                 // Get value of $a
                 String value = aSubfield.getText();
-                String newValue = "";
 
                 // Remove leading zeros in value. Ex. Change (OCoLC)000214052 to (OCoLC)214052
                 int indexOfBracket = value.indexOf(")");
-                newValue = value.substring(0, indexOfBracket + 1);
+                
+                if (indexOfBracket >= 0) {
+                    StringBuffer newValue = new StringBuffer(value.length());
+                    
+	                int currInx = indexOfBracket + 1;
+                    newValue.append(value.substring(0, currInx));
 
-                boolean numericValueStarts = false;
-                String regex = "[1-9]";
+                    // ignore any white space after closing parenthesis and before numeric
+                    while (String.valueOf(value.charAt(currInx)).matches("\\s")) currInx++;
 
-                for (int i = indexOfBracket + 1; i < value.length(); i++) {
+                    // now, ignore any leading zeroes
+                    while (value.charAt(currInx) == '0') currInx++;
 
-                    if (String.valueOf(value.charAt(i)).matches(regex)) {
-                        numericValueStarts = true;
-                    }
-
-                    if (value.charAt(i) != '0') {
-                        newValue = newValue + value.charAt(i);
-                    } else if (numericValueStarts) {
-                        newValue = newValue + value.charAt(i);
-                    }
+                    // finally, keep the rest
+                    newValue.append(value.substring(currInx));
+                	
+	                // Set the new value back in subfield $a
+	                aSubfield.setText(newValue.toString());
                 }
-
-                // Set the new value back in subfield $a
-                aSubfield.setText(newValue);
             }
             
             // Remove unnecessary sub-b and sub-9
@@ -3071,8 +3066,7 @@ public class NormalizationService extends GenericMetadataService {
     
     protected boolean needToFix035() {
         return substitute035_a != null || substitute035_9 != null || substitute035_a_b != null
-                || enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1");
-
+        		|| enabledSteps.getProperty(CONFIG_ENABLED_035_LEADING_ZERO, "0").equals("1"); 
     }
 
     protected void setupFix035Parameters() throws ServiceValidationException {
@@ -3091,10 +3085,10 @@ public class NormalizationService extends GenericMetadataService {
 	    		if (matchPrefixString.length() > 0) {
 		    		Pattern matchPrefix = Pattern.compile(matchPrefixString);
 		    		parms.put("MatchPrefix", matchPrefix);
+		    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_aWithMap." + i + ".ReplaceWith", ""));
 	    		} else {
 		    		parms.put("MatchPrefix", null);	    			
 	    		}
-	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_aWithMap." + i + ".ReplaceWith", ""));
 	    		substitute035_a.add(i-1, parms);	
 	    	}
     	}    	
@@ -3114,10 +3108,10 @@ public class NormalizationService extends GenericMetadataService {
 	    		if (matchPrefixString.length() > 0) {
 		    		Pattern matchPrefix = Pattern.compile(matchPrefixString);
 		    		parms.put("MatchPrefix", matchPrefix);
+		    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_9WithMap." + i + ".ReplaceWith", ""));
 	    		} else {
 		    		parms.put("MatchPrefix", null);	    			
 	    		}
-	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_9WithMap." + i + ".ReplaceWith", ""));
 	    		substitute035_9.add(i-1, parms);	
 	    	}
     	}    	
@@ -3133,8 +3127,13 @@ public class NormalizationService extends GenericMetadataService {
     		substitute035_a_b = new ArrayList<HashMap<String, String>>(num035_a_bProperties);
 	    	for (int i=1; i<= num035_a_bProperties; i++) {
 		    	HashMap <String, String> parms = new HashMap <String, String> (2); // currently 2 parms each instance
-	    		parms.put("MatchPrefix", enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".MatchPrefix", ""));
-	    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".ReplaceWith", ""));
+	    		final String matchPrefixString = enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".MatchPrefix", "");
+	    		if (matchPrefixString.length() > 0) {
+	    			parms.put("MatchPrefix", matchPrefixString);
+		    		parms.put("ReplaceWith", enabledSteps.getProperty("Substitute035_a_bWithMap." + i + ".ReplaceWith", ""));
+	    		} else {
+		    		parms.put("MatchPrefix", null);	    			
+	    		}
 	    		substitute035_a_b.add(i-1, parms);	
 	    	}
     	}    	

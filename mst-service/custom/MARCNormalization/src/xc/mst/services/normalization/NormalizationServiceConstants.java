@@ -175,10 +175,10 @@ public class NormalizationServiceConstants {
      */
     public static final String CONFIG_ENABLED_SUPPLY_MARC_ORG_CODE = "SupplyMARCOrgCode";
 
-    /**
-     * Parameter for looking up the whether or not the Fix035 normalization step is enabled.
+    /** 
+     * Parameter for looking up the whether or not the 035LeadingZero normalization step is enabled.
      */
-    public static final String CONFIG_ENABLED_FIX_035 = "Fix035";
+    public static final String CONFIG_ENABLED_035_LEADING_ZERO = "035LeadingZero";
 
     /**
      * Parameter for looking up the whether or not the Dedup035 normalization step is enabled.
@@ -309,11 +309,6 @@ public class NormalizationServiceConstants {
      * Parameter for looking up the whether or not the TitleArticle normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_TITLE_ARTICLE = "TitleArticle";
-
-    /**
-     * Parameter for looking up the whether or not the 035LeadingZero normalization step is enabled.
-     */
-    public static final String CONFIG_ENABLED_035_LEADING_ZERO = "035LeadingZero";
 
     /**
      * Parameter for looking up the whether or not the HoldingsLocationName normalization step is enabled.
