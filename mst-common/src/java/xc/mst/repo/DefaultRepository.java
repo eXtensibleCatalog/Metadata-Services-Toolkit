@@ -375,6 +375,17 @@ public class DefaultRepository extends BaseService implements Repository {
     	m.add(toRecordId);
     	m = getLongKeyedMap(toRecordId, toFromUplinksAdded);
     	m.add(fromRecordId);
+    	
+    	// If this link had been removed earlier (and before being flushed to db), then added, we need to zero it out.
+    	if (fromToUplinksRemoved.containsKey(fromRecordId)) {
+    		List<Long> m2 = getLongKeyedMap(fromRecordId, fromToUplinksRemoved);
+    		m2.remove(toRecordId);
+        	if (toFromUplinksRemoved.containsKey(toRecordId)) {
+        		m2 = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
+        		m2.remove(fromRecordId);
+        	}
+    	}
+
     }
 
     public void removeLink(long fromRecordId, long toRecordId) {
@@ -382,6 +393,17 @@ public class DefaultRepository extends BaseService implements Repository {
     	m.add(toRecordId);
     	m = getLongKeyedMap(toRecordId, toFromUplinksRemoved);
     	m.add(fromRecordId);
+    	
+    	// If this link had been added earlier (and before being flushed to db), then removed, we need to zero it out.
+    	if (fromToUplinksAdded.containsKey(fromRecordId)) {
+    		List<Long> m2 = getLongKeyedMap(fromRecordId, fromToUplinksAdded);
+    		m2.remove(toRecordId);
+        	if (toFromUplinksAdded.containsKey(toRecordId)) {
+        		m2 = getLongKeyedMap(toRecordId, toFromUplinksAdded);
+        		m2.remove(fromRecordId);
+        	}
+    	}
+
     }
 
     public List<Long> getLinkedRecordIds(Long toRecordId) {

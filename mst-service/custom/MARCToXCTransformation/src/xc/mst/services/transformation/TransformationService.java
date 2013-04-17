@@ -160,8 +160,8 @@ public class TransformationService extends SolrTransformationService {
     	getTransformationDAO().addBibforHolding(orgCode, holding_id, bib_id);
     }
 
-    protected void removeBibsforHolding(Marc001_003Holder holding) {
-    	getTransformationDAO().removeBibsForHoldings(holding);
+    protected void removeBibsForHolding(String orgCode, String holding_id) {
+    	getTransformationDAO().removeBibsForHoldings(orgCode, holding_id);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class TransformationService extends SolrTransformationService {
                         	if (holding_id == null) {
                     			LOG.error("Whoa!! In delete HOLDINGS. Couldn't find holding marc id for xc record id of " + or.getId());
                         	} else {
-                        		removeBibsforHolding(holding_id);
+                        		removeBibsForHolding(holding_id.get003(), holding_id.get001());
                         	}
                         	removeRecordId4HoldingProcessed(or.getId());   
                         	
@@ -334,6 +334,7 @@ public class TransformationService extends SolrTransformationService {
                 }
                 
                 boolean isNew = true;
+                long editedHoldingsRecord = -1; // useful placeholder - there is always only 1 incoming holding record
 
                 // this means it's an edit, i.e., not a new record
                 if (record.getSuccessors() != null && record.getSuccessors().size() > 0) {
@@ -348,6 +349,7 @@ public class TransformationService extends SolrTransformationService {
 	                        or.setType(type);
 	                        if (AggregateXCRecord.HOLDINGS.equals(type)) {
 	                            ar.getPreviousHoldingIds().add(or.getId());
+	                            editedHoldingsRecord = or.getId();
 	                        } else if (AggregateXCRecord.MANIFESTATION.equals(type)) {
 	                            ar.setPreviousManifestationId(or.getId());
 	                        } else if (AggregateXCRecord.EXPRESSION.equals(type)) {
@@ -462,7 +464,19 @@ public class TransformationService extends SolrTransformationService {
                             addMessage(record, 106, RecordMessage.ERROR);
                             return null;
                         } else {
-	                        
+	                        // we need to reset the holdings -> bibs/manifestations maps, if it's an update
+	                        if (! isNew) {
+	                        	removeBibsForHolding(orgCode, originalRecord.getControlField(1));
+	                        	if (editedHoldingsRecord > -1) {
+		                        	List<Long> xc_manifestation_ids = getRepository().getLinkedToRecordIds(editedHoldingsRecord);
+		                        	for (long xc_manifestation_id : xc_manifestation_ids) {
+		                        		LOG.error("removeLink... from: " + editedHoldingsRecord + " to: " + xc_manifestation_id);
+		                        		// keep holding -> manifest relationship up-to-date
+		                        		getRepository().removeLink(editedHoldingsRecord, xc_manifestation_id);
+	
+		                        	}
+	                        	}
+	                        }
 	                    	addBibsforHolding(orgCode, originalRecord.getControlField(1), new ArrayList<String>(ar.getReferencedBibs()));
 	                    	
 	                        for (String ref001 : ar.getReferencedBibs()) {
@@ -506,6 +520,7 @@ public class TransformationService extends SolrTransformationService {
 	                            	manifestationIds.add(manifestationId);
 	                            }
 	                        }
+	                        
 	                        List<OutputRecord> holdingsRecords = getXCRecordService().getSplitXCRecordXMLForHoldingRecord(
 	                                getRepository(), ar, manifestationIds, 0L /* ignored */);
 	
