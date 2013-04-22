@@ -164,6 +164,10 @@ public class TransformationService extends SolrTransformationService {
     	getTransformationDAO().removeBibsForHoldings(orgCode, holding_id);
     }
 
+    protected void removeBibForHolding(String orgCode, String holding_id, String bib_id) {
+    	getTransformationDAO().removeBibForHolding(orgCode, holding_id, bib_id);
+    }
+
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
     	boolean forceIt = force;
@@ -230,7 +234,7 @@ public class TransformationService extends SolrTransformationService {
                         	for (long xc_holding_id : xc_holdings_ids) {
                         		// keep holdings -> manifestation relationship up-to-date
 	        					getRepository().removeLink(xc_holding_id, or.getId());
-                        		
+ 
                         		LOG.info("\ttrying to fix orphaned holding record_id: " + xc_holding_id);                        		
                         		// Try to find another manifestation to link to, now that this one is being deleted.
                         		Marc001_003Holder holding_id = getHoldingMarcId4RecordIdProcessed(xc_holding_id);
@@ -241,39 +245,40 @@ public class TransformationService extends SolrTransformationService {
                         		LOG.info("\tfound holding_id: " + holding_id);
                         		List<Long> new_manifestation_ids = new ArrayList<Long>();
                         		List<String> bib_ids = getBibsForHolding(holding_id.get003(), holding_id.get001());
+                        		boolean held = false; // is the holding record referring to this bib 'held' (orphan)?
                     			for (String bib_id : bib_ids) {
-                    				LOG.info("\tfound bib_id: " + bib_id + " for this holding id: " + holding_id);
+                    				LOG.info("\tfound bib_id: " + bib_id + " for this holding_id: " + holding_id);
                            			Long new_manifestation_id = getRecordId4BibProcessed(holding_id.get003(), bib_id);
-                           			if (new_manifestation_id != null) {
-                           				LOG.info("\tfound new manifestation id: " + new_manifestation_id);
+                           			if (new_manifestation_id == null) {
+                           				held = true;
+                        				new_manifestation_id = getRepositoryDAO().getNextIdAndIncr();
+                           				LOG.info("\tcouldn't find a manifestation for this bib_id; using placeholder id: " + new_manifestation_id);
+                           				new_manifestation_ids.add(new_manifestation_id);
+                        				addManifestationId4BibYet2Arrive(
+                        						holding_id.get003(), bib_id, new_manifestation_id);
+                           			} else {
+                           				LOG.info("\tfound a manifestation for this bib_id id: " + new_manifestation_id);
                            				new_manifestation_ids.add(new_manifestation_id);
                     				}
-                    			}
+    	        					getRepository().addLink(xc_holding_id, new_manifestation_id);
 
+                    			}
                         		        
+                    			Record fixed = null;
                     			if (new_manifestation_ids.size() > 0) {
                     				// we found a match. add these new references
-                    				Record fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
+                    				fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
                             	    if (fixed != null) {
                             	    	results.add(fixed);                        		
                             	    }
-                    				                        			
-                    			} else {
-                    				// no matches. we need to set this holding record as "held" (waiting for manifestation)
-                        			for (String bib_id : bib_ids) {
-                        				long new_manifestation_id = getRepositoryDAO().getNextIdAndIncr();
+                    			}
 
-                        				Record fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_id);
-                                	    if (fixed != null) {
-                                	    	LOG.info("\tcouldn't find a manifestation for this holding record; setting it to held (now waiting for manifestation id: " + new_manifestation_id + ")");
-                                	    	fixed.setStatus(Record.HELD);
-                                	    	results.add(fixed);                        		
-                                	    }
-
-                        				addManifestationId4BibYet2Arrive(
-	                    						holding_id.get003(), bib_id, new_manifestation_id);
-	    	        					getRepository().addLink(xc_holding_id, new_manifestation_id);
-                        			}
+                    			if (held) {
+                    				// we're missing bib(s). we need to set this holding record as "held" (waiting for manifestation)
+                            	    if (fixed != null) {
+                            	    	LOG.info("\tcouldn't find (at least) one manifestation for this holding record; setting it to held");
+                            	    	fixed.setStatus(Record.HELD);
+                            	    }
                     			}
                         	}
 
@@ -470,7 +475,6 @@ public class TransformationService extends SolrTransformationService {
 	                        	if (editedHoldingsRecord > -1) {
 		                        	List<Long> xc_manifestation_ids = getRepository().getLinkedToRecordIds(editedHoldingsRecord);
 		                        	for (long xc_manifestation_id : xc_manifestation_ids) {
-		                        		LOG.error("removeLink... from: " + editedHoldingsRecord + " to: " + xc_manifestation_id);
 		                        		// keep holding -> manifest relationship up-to-date
 		                        		getRepository().removeLink(editedHoldingsRecord, xc_manifestation_id);
 	

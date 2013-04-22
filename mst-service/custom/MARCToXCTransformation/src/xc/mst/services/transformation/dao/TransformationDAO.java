@@ -124,6 +124,12 @@ public class TransformationDAO extends GenericMetadataServiceDAO {
                 org_code, holding_id);
     }
 
+    public void removeBibForHolding(String org_code, String holding_id, String bib_id) {
+        this.jdbcTemplate.update("delete from " + bibRefs_table +
+                " where org_code=? and holding_001=? and bib_001=?",
+                org_code, holding_id, bib_id);
+    }
+
     public List<Long> getRecordId4BibProcessed(Marc001_003Holder bib) {
     	List<Long> results = new ArrayList<Long>();
     	
