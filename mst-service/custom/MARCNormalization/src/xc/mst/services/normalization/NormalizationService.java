@@ -156,7 +156,8 @@ public class NormalizationService extends GenericMetadataService {
     private List<HashMap<String, Object>> substitute035_a;
     private List<HashMap<String, Object>> substitute035_9;
     private List<HashMap<String, String>> substitute035_a_b;
-
+    private Pattern valid_035a_format_pattern = null; 
+    private static String default_035a_org_code = "";
     
     private String sourceRepositoryURL;
     
@@ -2004,7 +2005,7 @@ public class NormalizationService extends GenericMetadataService {
              * 035 $9 ocl<control_number>
              * 035 $9 on<control_number>
              */
-            if (subfield9 != null && substitute035_9 != null) {
+            else if (subfield9 != null && substitute035_9 != null) {
             	
         		for (int i=0; i < substitute035_9.size(); i++) {
             		final Pattern matchPrefix = (Pattern) substitute035_9.get(i).get("MatchPrefix");            			
@@ -2069,7 +2070,7 @@ public class NormalizationService extends GenericMetadataService {
              * 
              */
             
-            if (aSubfield != null && substitute035_a != null) {
+            else if (aSubfield != null && substitute035_a != null) {
             	
         		for (int i=0; i < substitute035_a.size(); i++) {
             		final Pattern matchPrefix = (Pattern) substitute035_a.get(i).get("MatchPrefix");            			
@@ -2102,6 +2103,17 @@ public class NormalizationService extends GenericMetadataService {
             			}
             		}
         		}
+            }
+            
+            // Allow admin to supply a prefix for 035$a's lacking one
+            if (aSubfield != null && !modified && valid_035a_format_pattern != null) {
+            	final Matcher matcher = valid_035a_format_pattern.matcher(aSubfield.getText());
+            	// if it doesn't match, it's invalid
+            	if (! matcher.find()) {        		
+            		// Set $a to (OCoLC)%CONTROL_NUMBER%
+                    aSubfield.setText("(" + default_035a_org_code + ")" + aSubfield.getText());
+                    modified = true;
+    			}
             }
             
             // If the $a has more than one prefix, only use the first one
@@ -3136,8 +3148,17 @@ public class NormalizationService extends GenericMetadataService {
 	    		}
 	    		substitute035_a_b.add(i-1, parms);	
 	    	}
-    	}    	
-
+    	}    
+    	
+        final String valid_035a_format = enabledSteps.getProperty(CONFIG_VALID_035A_FORMAT, "");
+        default_035a_org_code = enabledSteps.getProperty(CONFIG_DEFAULT_035A_ORG_CODE, "");
+        if (valid_035a_format.length() > 0 && default_035a_org_code.length() > 0) {
+        	try {
+        		valid_035a_format_pattern = Pattern.compile(valid_035a_format);
+        	} catch (Exception e) {
+        		valid_035a_format_pattern = null;
+        	}
+        }
 
     }
    

@@ -452,6 +452,17 @@ Substitute035_a_bWithMap.4.ReplaceWith = (OCoLC)
 Substitute035_a_bWithMap.NumberOfRows = 4
 ###
 
+# The MARC standard requires the 035$a to have a valid organization code prefix enclosed in parentheses
+# followed immediately by the system control number in the following format: "^\([^\)]+\)\s*[^\s]+"
+# e.g., "035 $a (OrgCode)123456" or "035 $a (OrgCode)wln123456" or "035 $a (OrgCode1)123456Abc"
+Valid_035a_Format = ^\([^\)]+\)\s*[^\s]+
+
+# For 035$a's without a prefix and therefore not following the pattern, Valid_035a_format, 
+# you may designate a "catch-all" organization code to be applied to the 035$a
+# e.g., "035 $a abc123" becomes "035 $a (Default)abc123"
+# If this parameter is not set, a "catch-all" organization code will not be used.
+Default_035a_OrganizationCode = Default
+
 # 1 to remove duplicate 035 fields. 
 Dedup035 = 1
 

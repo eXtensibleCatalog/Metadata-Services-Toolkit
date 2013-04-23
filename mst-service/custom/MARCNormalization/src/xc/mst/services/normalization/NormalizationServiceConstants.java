@@ -179,6 +179,16 @@ public class NormalizationServiceConstants {
      * Parameter for looking up the whether or not the 035LeadingZero normalization step is enabled.
      */
     public static final String CONFIG_ENABLED_035_LEADING_ZERO = "035LeadingZero";
+    
+    /**
+     * Parameter for dealing with missing prefixes in 035 fields
+     */
+    public static final String CONFIG_VALID_035A_FORMAT = "Valid_035a_Format";
+    
+    /**
+     * Parameter for setting default value for missing prefixes ing 035 fields
+     */
+    public static final String CONFIG_DEFAULT_035A_ORG_CODE = "Default_035a_OrganizationCode";
 
     /**
      * Parameter for looking up the whether or not the Dedup035 normalization step is enabled.
