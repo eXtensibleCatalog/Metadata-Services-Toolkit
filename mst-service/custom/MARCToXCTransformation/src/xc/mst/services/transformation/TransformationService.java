@@ -232,8 +232,17 @@ public class TransformationService extends SolrTransformationService {
                         	LOG.info("Deleting a bib (incoming record_id: " + record.getId() + ", successor_id: " + or.getId() + ")");
                         	List<Long> xc_holdings_ids = getRepository().getLinkedRecordIds(or.getId());
                         	for (long xc_holding_id : xc_holdings_ids) {
-                        		// keep holdings -> manifestation relationship up-to-date
-	        					getRepository().removeLink(xc_holding_id, or.getId());
+	        					//
+	        					// we need to remove the linkages from the orphaned holding record to this manifestation
+	        					//
+	        					List<Long> xc_manifestation_ids_orphan = getRepository().getLinkedToRecordIds(xc_holding_id);
+	        					for (long xc_manifestation_id_orphan : xc_manifestation_ids_orphan) {
+	        						if (xc_manifestation_id_orphan == or.getId()) {
+	        							LOG.info("Sanity check. Good. We see that the orphan references this deleted manifestation as expected.");
+	        						}
+                            		// keep holdings -> manifestation relationship up-to-date
+    	        					getRepository().removeLink(xc_holding_id, xc_manifestation_id_orphan);	    	        					
+	        					}
  
                         		LOG.info("\ttrying to fix orphaned holding record_id: " + xc_holding_id);                        		
                         		// Try to find another manifestation to link to, now that this one is being deleted.
@@ -243,7 +252,8 @@ public class TransformationService extends SolrTransformationService {
                         			continue;
                         		}
                         		LOG.info("\tfound holding_id: " + holding_id);
-                        		List<Long> new_manifestation_ids = new ArrayList<Long>();
+                        		
+	        					List<Long> new_manifestation_ids = new ArrayList<Long>(); // keep all the others
                         		List<String> bib_ids = getBibsForHolding(holding_id.get003(), holding_id.get001());
                         		boolean held = false; // is the holding record referring to this bib 'held' (orphan)?
                     			for (String bib_id : bib_ids) {
@@ -260,14 +270,12 @@ public class TransformationService extends SolrTransformationService {
                            				LOG.info("\tfound a manifestation for this bib_id id: " + new_manifestation_id);
                            				new_manifestation_ids.add(new_manifestation_id);
                     				}
-    	        					getRepository().addLink(xc_holding_id, new_manifestation_id);
-
                     			}
                         		        
                     			Record fixed = null;
                     			if (new_manifestation_ids.size() > 0) {
                     				// we found a match. add these new references
-                    				fixed = fixManifestationId(xc_holding_id, or.getId(), new_manifestation_ids);
+                    				fixed = fixManifestationId(xc_holding_id, null, new_manifestation_ids);
                             	    if (fixed != null) {
                             	    	results.add(fixed);                        		
                             	    }
@@ -584,9 +592,11 @@ public class TransformationService extends SolrTransformationService {
     }
     
     @SuppressWarnings("unchecked")
+    // if staleManifestationId is null, we reset all manifestationIds
 	protected Record fixManifestationId(Long recordId, Long staleManifestationId, List<Long> newManifestationIds) {
        
-    	final String staleUplink = getRecordService().getOaiIdentifier(
+    	String staleUplink = "";
+    	if (staleManifestationId != null) staleUplink = getRecordService().getOaiIdentifier(
     			staleManifestationId, getMetadataService().getService());
     	
     	List<String> currentUplinks = new ArrayList<String>();
@@ -607,10 +617,11 @@ public class TransformationService extends SolrTransformationService {
 	            	List<Element> deleteThese = new ArrayList<Element>();
 	            	for (Element heldEl : heldEls) {
 	            		final String uplink = heldEl.getText();
-	            		if(uplink.equals(staleUplink)) {
-	            				deleteThese.add(heldEl);
+	            		if(staleManifestationId==null || uplink.equals(staleUplink)) {
+	            			deleteThese.add(heldEl);
+	            		} else {
+	            			currentUplinks.add(uplink);
 	            		}
-	            		currentUplinks.add(uplink);
 	            	}
 	            	for (Element deleteThis : deleteThese) {
         				// delete
@@ -625,7 +636,7 @@ public class TransformationService extends SolrTransformationService {
             }
 
 	        // need to keep repo's links up-to-date too
-			getRepository().removeLink(recordId, staleManifestationId);
+			if (staleManifestationId!=null) getRepository().removeLink(recordId, staleManifestationId);
 			
 			for (Long newManifestationId : newManifestationIds) {
 		    	String newUplink = getRecordService().getOaiIdentifier(
