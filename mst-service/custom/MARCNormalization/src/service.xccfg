@@ -333,16 +333,16 @@ SupplyMARCOrgCode = 1
 #
 # 035 $a (OCoLC)123456789
 #
-Substitute035_aWithMap.1.MatchPrefix = ^\([Oo][Cc][Oo][Ll][Cc]\)ocm([0-9]+)
+Substitute035_aWithMap.1.MatchPrefix = ^\([Oo][Cc][Oo]*[LlCc][CcLl]\)ocm([0-9]+)
 Substitute035_aWithMap.1.ReplaceWith = (OCoLC)${1}
 
-Substitute035_aWithMap.2.MatchPrefix = ^\([Oo][Cc][Oo][Ll][Cc]\)ocn([0-9]+)
+Substitute035_aWithMap.2.MatchPrefix = ^\([Oo][Cc][Oo]*[LlCc][CcLl]\)ocn([0-9]+)
 Substitute035_aWithMap.2.ReplaceWith = (OCoLC)${1}
 
-Substitute035_aWithMap.3.MatchPrefix = ^\([Oo][Cc][Oo][Ll][Cc]\)ocl([0-9]+)
+Substitute035_aWithMap.3.MatchPrefix = ^\([Oo][Cc][Oo]*[LlCc][CcLl]\)ocl([0-9]+)
 Substitute035_aWithMap.3.ReplaceWith = (OCoLC)${1}
 
-Substitute035_aWithMap.4.MatchPrefix = ^\([Oo][Cc][Oo][Ll][Cc]\)on([0-9]+)
+Substitute035_aWithMap.4.MatchPrefix = ^\([Oo][Cc][Oo]*[LlCc][CcLl]\)on([0-9]+)
 Substitute035_aWithMap.4.ReplaceWith = (OCoLC)${1}
 
 Substitute035_aWithMap.5.MatchPrefix = ^ocm([0-9]+)
@@ -357,7 +357,7 @@ Substitute035_aWithMap.7.ReplaceWith = (OCoLC)${1}
 Substitute035_aWithMap.8.MatchPrefix = ^on([0-9]+)
 Substitute035_aWithMap.8.ReplaceWith = (OCoLC)${1}
 
-Substitute035_aWithMap.9.MatchPrefix = ^\([Oo][Cc][Ll][Cc]\)([0-9]+)
+Substitute035_aWithMap.9.MatchPrefix = ^\([Oo][Cc][LlCc][CcLl]\)([0-9]+)
 Substitute035_aWithMap.9.ReplaceWith = (OCoLC)${1}
 
 Substitute035_aWithMap.NumberOfRows = 9
