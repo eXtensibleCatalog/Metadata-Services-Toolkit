@@ -3116,7 +3116,7 @@ public class NormalizationService extends GenericMetadataService {
     		substitute035_9 = new ArrayList<HashMap<String, Object>>(num035_9Properties);
 	    	for (int i=1; i<= num035_9Properties; i++) {
 		    	HashMap <String, Object> parms = new HashMap <String, Object> (2); // currently 2 parms each instance
-	    		final String matchPrefixString = enabledSteps.getProperty("Substitute035_aWithMap." + i + ".MatchPrefix", "");
+	    		final String matchPrefixString = enabledSteps.getProperty("Substitute035_9WithMap." + i + ".MatchPrefix", "");
 	    		if (matchPrefixString.length() > 0) {
 		    		Pattern matchPrefix = Pattern.compile(matchPrefixString);
 		    		parms.put("MatchPrefix", matchPrefix);
