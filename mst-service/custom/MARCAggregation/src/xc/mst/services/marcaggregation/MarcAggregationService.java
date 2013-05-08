@@ -55,7 +55,7 @@ public class MarcAggregationService extends GenericMetadataService {
     protected MarcAggregationServiceDAO              masDAO = null;
     protected MASMarcBuilder                         masBld = null;
     protected RecordOfSourceManager                  masRsm = null;
-    protected List<TreeSet<Long>>                    masMatchSetList = null;
+    protected List<HashSet<Long>>                    masMatchSetList = null;
 
     /**
      * to sort/figure record of source, place items we are interested in, that are used to determine
@@ -68,7 +68,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * map output records to corresponding input records map
      * not only tracked merged records, 1 to many, but track unmerged 1 to 1
      */
-    protected Map<Long, TreeSet<Long>>               allBibRecordsO2Imap = null;
+    protected Map<Long, HashSet<Long>>               allBibRecordsO2Imap = null;
 
     /** map input records to corresponding output map,
      *  not only tracked merged records, many to 1, but track unmerged 1 to 1
@@ -195,6 +195,7 @@ public class MarcAggregationService extends GenericMetadataService {
             mergedInRecordsList_unpersisted = new ArrayList<Long>();
         }
     }
+    
 
     /**
      *
@@ -203,20 +204,20 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param i_to_o_map
      * @return
      */
-    private Map<Long, TreeSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
+    private Map<Long, HashSet<Long>> createMergedRecordsO2Imap(TLongLongHashMap i_to_o_map) {
         LOG.info("start createMergedRecordsO2Imap");
-        TreeMap<Long,TreeSet<Long>> results = new TreeMap<Long, TreeSet<Long>>();
+        TreeMap<Long,HashSet<Long>> results = new TreeMap<Long, HashSet<Long>>();
         // obviously there can be multiple input records corresponding to one output record.
         for (Long in: i_to_o_map.keys()) {
             Long out = i_to_o_map.get(in);
             if (!results.containsKey(out)) {
-                TreeSet<Long> set = new TreeSet<Long>();
+                HashSet<Long> set = new HashSet<Long>();
                 set.add(in);
                 results.put(out, set);
             }
             else {
                 // this output record already had at least one input record associated with it.
-                TreeSet<Long> _set = results.get(out);
+                HashSet<Long> _set = results.get(out);
                 _set.add(in);
                 results.put(out, _set);
             }
@@ -253,7 +254,7 @@ public class MarcAggregationService extends GenericMetadataService {
         if (this.masDAO == null) {  // this was really an initial unit test
             LOG.error("***  ERROR, DAO did not get initialized by Spring!");
         }
-        masMatchSetList = new ArrayList<TreeSet<Long>>();
+        masMatchSetList = new ArrayList<HashSet<Long>>();
         scores = new TLongObjectHashMap<RecordOfSourceData>();   /// TODO load what you have in the db!
 
         if (hasIntermediatePersistence) {
@@ -319,7 +320,7 @@ public class MarcAggregationService extends GenericMetadataService {
      *
      * @return
      */
-    public List<TreeSet<Long>> getCurrentMatchSetList() {
+    public List<HashSet<Long>> getCurrentMatchSetList() {
         return masMatchSetList;
     }
 
@@ -388,7 +389,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // start to do the real work of the service.  Probably belongs
         // up higher than processCompleted method!!
         //
-        List<TreeSet<Long>> matches = getCurrentMatchSetList();
+        List<HashSet<Long>> matches = getCurrentMatchSetList();
         if (matches != null && matches.size() > 0) {
             final String SEP = System.getProperty("line.separator");
             final String TAB = "\t";
@@ -592,7 +593,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     }
                     if (isAbibWithSuccessors) {
 
-                        TreeSet<Long> formerMatchSet = deleteAllMergeDetails(r);
+                        HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
 
                         // lastly must remerge the affected records, if this was part of a merge set.
                         if (formerMatchSet.size() > 1) {
@@ -632,11 +633,11 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param matches
      * @param repo
      */
-    private void mergeAll(List<TreeSet<Long>> matches, Repository repo) {
+    private void mergeAll(List<HashSet<Long>> matches, Repository repo) {
         // merge each match set, 1 winning record used to pull static content,
         // all in the set used to pull dynamic content
 
-        for (TreeSet<Long> set: matches) {
+        for (HashSet<Long> set: matches) {
             InputRecord record = masRsm.getRecordOfSourceRecord(set, repo, scores, recordOfSourceMap);
             String xml = mergeBibSet(record, set, repo);
             createNewBibRecord(record, xml, set);
@@ -648,7 +649,9 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param outputRecordId
      * @param mergedInputRecordSet
      */
-    private void addToMasMergedRecordsMemory(Long outputRecordId, TreeSet<Long> mergedInputRecordSet) {
+    private void addToMasMergedRecordsMemory(Long outputRecordId, HashSet<Long> mergedInputRecordSet) {
+        TimingLogger.start("addToMasMergedRecordsMemory");
+
         for (Long num: mergedInputRecordSet) {
             allBibRecordsI2Omap.put(num,outputRecordId);
             if (hasIntermediatePersistence) {
@@ -665,6 +668,7 @@ public class MarcAggregationService extends GenericMetadataService {
                 }
             }
         }
+        TimingLogger.stop("addToMasMergedRecordsMemory");
     }
 
 
@@ -676,7 +680,9 @@ public class MarcAggregationService extends GenericMetadataService {
      *              service can we avoid looking up and using record content from the source?
      * @return returns static xml + saved dynamic content (included or not?)
      */
-    private String mergeBibSet(InputRecord theSrcRecord, TreeSet<Long> set, Repository repo) {
+    private String mergeBibSet(InputRecord theSrcRecord, HashSet<Long> set, Repository repo) {
+        TimingLogger.start("mergeBibSet");
+
         String oaiXml = theSrcRecord.getOaiXml();
         //SaxMarcXmlRecord smr = new SaxMarcXmlRecord(oaiXml);
 
@@ -691,11 +697,12 @@ public class MarcAggregationService extends GenericMetadataService {
         oaiXml = masBld.updateDynamicRecordWithStaticContent(oaiXml, dynamic);
         //LOG.info("STATIC-"+recordOfSource);
         //LOG.info(oaiXml);
-
+        TimingLogger.stop("mergeBibSet");
         return oaiXml;
     }
 
-    private List<OutputRecord> createNewBibRecord(InputRecord theSrcRecord, String oaiXml, TreeSet<Long> set) {
+    private List<OutputRecord> createNewBibRecord(InputRecord theSrcRecord, String oaiXml, HashSet<Long> set) {
+        TimingLogger.start("createNewBibRecord");
 
         List<OutputRecord> list = createNewRecord(theSrcRecord, "b", oaiXml);
 
@@ -704,6 +711,7 @@ public class MarcAggregationService extends GenericMetadataService {
             // will get 1 agg. record back.
             addToMasMergedRecordsMemory(list.get(0).getId(), set);
         }
+        TimingLogger.stop("createNewBibRecord");
         return list;
     }
 
@@ -799,7 +807,7 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     @Override
     protected void addPredecessor(Record in, Record out) {
-        TreeSet<Long> set = allBibRecordsO2Imap.get(out.getId());
+        HashSet<Long> set = allBibRecordsO2Imap.get(out.getId());
         if (set==null || set.isEmpty()) {
             // picks up the holding records
             LOG.debug("addPredecessor, empty or null set for record id: "+out.getId());
@@ -824,7 +832,7 @@ public class MarcAggregationService extends GenericMetadataService {
      *            input records that share the output record
      * @return - the complete set of input records that share an output record with the given input record
      */
-    private TreeSet<Long> deleteAllMergeDetails(InputRecord r) {
+    private HashSet<Long> deleteAllMergeDetails(InputRecord r) {
         //
         //
         // 1st, delete from the database
@@ -835,7 +843,7 @@ public class MarcAggregationService extends GenericMetadataService {
         removeRecordsFromMatchers(r);
 
         // 2nd, get the related merged records:
-        TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+        HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
 
         // 3rd, remove related records from memory structures in preparation for remerge.
 
@@ -866,11 +874,11 @@ public class MarcAggregationService extends GenericMetadataService {
         return allBibRecordsI2Omap.get(id);
     }
 
-    private TreeSet<Long> getCurrentMatchSetForRecord(InputRecord r) {
+    private HashSet<Long> getCurrentMatchSetForRecord(InputRecord r) {
         Long outputId = getBibOutputId(r);
-        TreeSet<Long> matchSet = allBibRecordsO2Imap.get(outputId);
+        HashSet<Long> matchSet = allBibRecordsO2Imap.get(outputId);
         if (matchSet == null) {
-            matchSet = new TreeSet<Long>();
+            matchSet = new HashSet<Long>();
         }
         return matchSet;
     }
@@ -884,8 +892,10 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param formerMatchSet
      * @return
      */
-    private List<OutputRecord> remerge(TreeSet<Long> formerMatchSet) {
-        List<TreeSet<Long>> listOfMatchSets = new ArrayList<TreeSet<Long>>();
+    private List<OutputRecord> remerge(HashSet<Long> formerMatchSet) {
+        TimingLogger.start("remerge");
+
+        List<HashSet<Long>> listOfMatchSets = new ArrayList<HashSet<Long>>();
         
         // First go through the matchset and look for any deleted records we haven't yet
         // encountered, then delete the merge data so that we do not include them in the remerge.
@@ -914,7 +924,7 @@ public class MarcAggregationService extends GenericMetadataService {
             smr.setRecordId(r.getId());
 
             MatchSet ms = populateMatchSet(r, smr);
-            TreeSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
+            HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
             //
             // populateMatchedRecordIds does not return the record itself as part of the match set,
             // in this case I want it in the set.
@@ -926,10 +936,12 @@ public class MarcAggregationService extends GenericMetadataService {
             }
         }
         List<OutputRecord> results = new ArrayList<OutputRecord>();
-        for (TreeSet<Long> matchset: listOfMatchSets) {
+        for (HashSet<Long> matchset: listOfMatchSets) {
             results = mergeOverlord(results, matchset, getInputRepo());
         }
         // will pred-succ relationships automatically be correct? --> it seems so.
+        
+        TimingLogger.stop("remerge");
 
         return results;
     }
@@ -1001,9 +1013,25 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     protected List<OutputRecord> processBib(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         List<OutputRecord> results;
-        if (r.getSuccessors().size() == 0) {
+        int numSuccessors = r.getSuccessors().size();
+        
+        boolean processNew = true;
+        if (numSuccessors > 0) {
+        	// if all successors of this incoming record are deletes, then this service has completely "forgotten" about it;
+        	// treat it as if it were a brand new record.
+        	for (OutputRecord succ : r.getSuccessors()) {
+        		if (! succ.getDeleted()) {
+        			processNew = false;
+        			break;
+        		}
+        	}
+        }
+        
+        if (processNew) {
             // NEW-ACTIVE
+            TimingLogger.start("processBib.processBibNewActive");
             results = processBibNewActive(r, smr, repo);
+            TimingLogger.stop("processBib.processBibNewActive");
 
         } else {
             // UPDATE-ACTIVE
@@ -1016,7 +1044,9 @@ public class MarcAggregationService extends GenericMetadataService {
                     customProcessQueue.push(inputHoldingId)
                 }
                 */
+            TimingLogger.start("processBib.processBibUpdateActive");
             results = processBibUpdateActive(r, smr, repo);
+            TimingLogger.stop("processBib.processBibUpdateActive");
         }
 
         return results;
@@ -1035,6 +1065,8 @@ public class MarcAggregationService extends GenericMetadataService {
 
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+    	TimingLogger.start("processBibUpdateActive");
+
         LOG.debug("*AM in processBibUpdateActive!");
 
         // before deleting anything, check if match set is the same?  if so, just update? (need to re-get record of source)
@@ -1044,12 +1076,12 @@ public class MarcAggregationService extends GenericMetadataService {
         //    could be the customProcessQueue
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
-        TreeSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+        HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
 
         removeRecordsFromMatchers(r);
 
         MatchSet ms = populateMatchSet(r, smr);
-        TreeSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
+        HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
 
 
         Long oldOutputId;
@@ -1058,7 +1090,7 @@ public class MarcAggregationService extends GenericMetadataService {
         boolean sameSet = areMatchSetsEquivalent(formerMatchSet, newMatchedRecordIds);
         if (!sameSet) {
             // must clear out ALL pertinent old record stuff, not just formerMatchSet, but stuff pertaining to newly matching records too!
-            TreeSet<Long> union = new TreeSet<Long>();
+            HashSet<Long> union = new HashSet<Long>();
             union.addAll(newMatchedRecordIds);
             union.addAll(formerMatchSet);
             // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
@@ -1088,8 +1120,9 @@ public class MarcAggregationService extends GenericMetadataService {
 
             // note both sides of the if below should produce the same record.
             //   (as long as we continue to put ALL bibs into I2O map and O2I map, and not just merged records)
-            if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey(newMatchedRecordIds.first())) {
-                oldOutputId = getBibOutputId(newMatchedRecordIds.first());
+        	Long first;
+            if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey((first=newMatchedRecordIds.iterator().next()))) {
+                oldOutputId = getBibOutputId(first);
                 oldOutput = getRecord(oldOutputId);
             }
             else {
@@ -1145,6 +1178,9 @@ public class MarcAggregationService extends GenericMetadataService {
 */   
             
         }
+        
+    	TimingLogger.stop("processBibUpdateActive");
+
         return results;
     }
 
@@ -1153,7 +1189,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
         MatchSet ms = populateMatchSet(r, smr);
 
-        TreeSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
+        HashSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
 
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
@@ -1184,7 +1220,8 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param repo - the input records
      * @return - the prior passed in results + new results of OutputRecord resulting from the merge
      */
-    private List<OutputRecord> mergeOverlord(List<OutputRecord> results, TreeSet<Long> matchedRecordIds, Repository repo) {
+    private List<OutputRecord> mergeOverlord(List<OutputRecord> results, HashSet<Long> matchedRecordIds, Repository repo) {
+        TimingLogger.start("mergeOverlord");
 
         if (LOG.isDebugEnabled()) {
             StringBuffer buf = new StringBuffer();
@@ -1208,14 +1245,14 @@ public class MarcAggregationService extends GenericMetadataService {
 
         }
         else {
-            InputRecord r = repo.getRecord(matchedRecordIds.first());
+            InputRecord r = repo.getRecord(matchedRecordIds.iterator().next());
             String xml = masBld.update005(r.getOaiXml(), _005_Transformer);
 
             list = createNewRecord(r, "b", xml);
             // even though it is not merged, must still track the I<->O relationships!
             if (list.size() > 0) {
                 // will get 1 agg. record back.
-                TreeSet<Long> littleSet = new TreeSet<Long>();
+                HashSet<Long> littleSet = new HashSet<Long>();
                 littleSet.add(r.getId());
                 addToMasMergedRecordsMemory(list.get(0).getId(), littleSet);
             }
@@ -1223,6 +1260,7 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
         }
         results.addAll(list);
+        TimingLogger.stop("mergeOverlord");
         return results;
     }
 
@@ -1232,7 +1270,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param results - possibly already has OutputRecord data in it, to be added, or to be deleted when all is said and done.
      * @return - the OutputRecord list, with any necessary OutputRecord deletions added to it.
      */
-    private List<OutputRecord> cleanupOldMergedOutputInfo(TreeSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord) {
+    private List<OutputRecord> cleanupOldMergedOutputInfo(HashSet<Long> matchedRecordIds, List<OutputRecord> results, boolean deleteOutputRecord) {
         LOG.debug("*** IN cleanupOldMergedOutputInfo!");
         for (Long input: matchedRecordIds) {
             //delete from memory;
@@ -1295,12 +1333,17 @@ public class MarcAggregationService extends GenericMetadataService {
         return results;
     }
 
-    private TreeSet<Long> populateMatchedRecordIds(MatchSet ms) {
-        TreeSet<Long> matchedRecordIds = new TreeSet<Long>();
+    private HashSet<Long> populateMatchedRecordIds(MatchSet ms) {
+    	TimingLogger.start("populateMatchedRecordIds.populateMatchedRecordIds");
+        HashSet<Long> matchedRecordIds = new HashSet<Long>();
         for (Map.Entry<String, MatchRuleIfc> me : this.matchRuleMap.entrySet()) {
             String matchRuleKey = me.getKey();
+            
+            TimingLogger.start("populateMatchedRecordIds.populateMatchedRecordIds.determineMatches." + matchRuleKey);
             MatchRuleIfc matchRule = me.getValue();
             Set<Long> set = matchRule.determineMatches(ms);
+            TimingLogger.stop("populateMatchedRecordIds.populateMatchedRecordIds.determineMatches." + matchRuleKey);
+            
             if (set !=null && !set.isEmpty()) {
                 matchedRecordIds.addAll(set);
             }
@@ -1309,6 +1352,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // make sure to get all the disjoint merge sets in the total set, i.e. if this given input record
         // does not match something that another record it did match did, it needs to be in the total.
         matchedRecordIds = expandMatchedRecords(matchedRecordIds,allBibRecordsI2Omap,allBibRecordsO2Imap);
+    	TimingLogger.stop("populateMatchedRecordIds.populateMatchedRecordIds");
 
         return matchedRecordIds;
     }
@@ -1323,8 +1367,35 @@ public class MarcAggregationService extends GenericMetadataService {
             matcher.removeRecordFromMatcher(r);
         }
     }
+    
+    private void addRecordToMatchers(InputRecord r, SaxMarcXmlRecord smr) {
+        TimingLogger.start("addRecordToMatchers");
+
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            FieldMatcher matcher = me.getValue();
+            matcher.addRecordToMatcher(smr, r); 
+        }
+        TimingLogger.stop("addRecordToMatchers");
+    }
+    
+    private MatchSet getMatchSet(InputRecord r, SaxMarcXmlRecord smr) {
+        TimingLogger.start("getMatchSet");
+
+        MatchSet ms = new MatchSet(smr);
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            String matchPointKey = me.getKey();
+            FieldMatcher matcher = me.getValue();
+            ms.addMatcher(matchPointKey, matcher);
+        }
+        TimingLogger.stop("getMatchSet");
+        
+        return ms;
+    }
+
 
     private MatchSet populateMatchSet(InputRecord r, SaxMarcXmlRecord smr) {
+        TimingLogger.start("populateMatchSet");
+
         MatchSet ms = new MatchSet(smr);
         for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
             String matchPointKey = me.getKey();
@@ -1333,6 +1404,8 @@ public class MarcAggregationService extends GenericMetadataService {
             // possibly need/want to add all match points 1st, then look for matches.
             ms.addMatcher(matchPointKey, matcher);
         }
+        TimingLogger.stop("populateMatchSet");
+        
         return ms;
     }
 
@@ -1349,36 +1422,60 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param origMasMatchSetList
      * @return
      */
-    private List<TreeSet<Long>> addToMatchSetList(TreeSet<Long> matchset,  final List<TreeSet<Long>> origMasMatchSetList) {
+    private List<HashSet<Long>> addToMatchSetList(HashSet<Long> matchset,  final List<HashSet<Long>> origMasMatchSetList) {
+        TimingLogger.start("addToMatchSetList");
+
         if (matchset==null) {
+            TimingLogger.stop("addToMatchSetList");
             return origMasMatchSetList;
         }
         if (matchset.size() < 1) {   ///TODO shouldn't this be <2 ?
+            TimingLogger.stop("addToMatchSetList");
             return origMasMatchSetList;
         }
 
         LOG.debug("** addToMatchSetList, matchset length="+matchset.size()+" TOTAL matchset size ="+origMasMatchSetList.size());
-        List<TreeSet<Long>> newMasMatchSetList = new ArrayList<TreeSet<Long>>();
+        List<HashSet<Long>> newMasMatchSetList = new ArrayList<HashSet<Long>>();
+        
+        TimingLogger.start("addToMatchSetList.addAll()");
         newMasMatchSetList.addAll(origMasMatchSetList);
+        TimingLogger.stop("addToMatchSetList.addAll()");
 
+        TimingLogger.start("addToMatchSetList.set.processing");
         boolean added = false;
-        for (TreeSet<Long> set: origMasMatchSetList) {
+        for (HashSet<Long> set: origMasMatchSetList) {
             for (Long number: matchset) {
+                TimingLogger.start("addToMatchSetList.set.contains");
                 if (set.contains(number)) {
+                    TimingLogger.stop("addToMatchSetList.set.contains");
+                    TimingLogger.start("addToMatchSetList.set.notcontainsall");
                     if (!set.containsAll(matchset)) {
+                        TimingLogger.stop("addToMatchSetList.set.notcontainsall");
+                        TimingLogger.start("newMasMatchSetList.remove()");
                         newMasMatchSetList.remove(set);
+                        TimingLogger.stop("newMasMatchSetList.remove()");
+                        TimingLogger.start("set.addAll()");
                         set.addAll(matchset);
+                        TimingLogger.stop("set.addAll()");
+                        TimingLogger.start("newMasMatchSetList.add()");
                         newMasMatchSetList.add(set);
+                        TimingLogger.stop("newMasMatchSetList.add()");
                         LOG.debug("addToMatchSetList, post-merge!  set.contains("+number+") merged newMasMatchSetList set="+set);
                     }
                     else {
+                        TimingLogger.stop("addToMatchSetList.set.notcontainsall");
                         LOG.debug("addToMatchSetList, will not add in: "+matchset);
                     }
                     added = true;  // this flag means that we don't want this set added to the big list below
                     break;   // get you out of THIS set, but still must check the others.
+                } else {
+                	TimingLogger.stop("addToMatchSetList.set.contains");
                 }
+
             }
         }
+        TimingLogger.stop("addToMatchSetList.set.processing");
+
         //
         // the list of sets has to start somewhere, and if you don't find a set including some part
         // of your set, you must add your set explicitly.
@@ -1388,6 +1485,7 @@ public class MarcAggregationService extends GenericMetadataService {
             newMasMatchSetList.add(matchset);
         }
         LOG.debug("** addToMatchSetList, NEW TOTAL matchset size ="+newMasMatchSetList.size());
+        TimingLogger.stop("addToMatchSetList");
         return newMasMatchSetList;
     }
 
@@ -1398,7 +1496,7 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param newMatchSet
      * @return true if they are equivalent (same record ids in each)
      */
-    private boolean areMatchSetsEquivalent(TreeSet<Long> oldMatchSet, TreeSet<Long> newMatchSet) {
+    private boolean areMatchSetsEquivalent(HashSet<Long> oldMatchSet, HashSet<Long> newMatchSet) {
         if (oldMatchSet.size() != newMatchSet.size()) {
             return false;
         }
@@ -1419,14 +1517,14 @@ public class MarcAggregationService extends GenericMetadataService {
      * @param _mergedRecordsO2Imap
      * @return merged sets (dedup'd)
      */
-    private TreeSet<Long> expandMatchedRecords(TreeSet<Long> matchedRecordIds,TLongLongHashMap _mergedRecordsI2Omap, Map<Long, TreeSet<Long>> _mergedRecordsO2Imap) {
-        TreeSet<Long> results = new TreeSet<Long>();
+    private HashSet<Long> expandMatchedRecords(HashSet<Long> matchedRecordIds,TLongLongHashMap _mergedRecordsI2Omap, Map<Long, HashSet<Long>> _mergedRecordsO2Imap) {
+        HashSet<Long> results = new HashSet<Long>();
         results.addAll(matchedRecordIds);
 
         for (Long input: matchedRecordIds) {
             Long output = _mergedRecordsI2Omap.get(input);
             if (output != null) {
-                TreeSet<Long> temp = _mergedRecordsO2Imap.get(output);
+                HashSet<Long> temp = _mergedRecordsO2Imap.get(output);
                 if (temp != null) {
                     results.addAll(_mergedRecordsO2Imap.get(output));
                 }

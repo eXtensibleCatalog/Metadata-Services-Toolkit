@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +16,7 @@ import xc.mst.bo.record.Record;
 import xc.mst.manager.BaseService;
 import xc.mst.repo.Repository;
 import xc.mst.services.marcaggregation.dao.MarcAggregationServiceDAO;
+import xc.mst.utils.TimingLogger;
 
 /**
  * This is a collection of methods used by the MARC Aggregation Service, MAS, to determine
@@ -68,11 +69,11 @@ public class RecordOfSourceManager extends BaseService {
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
     }
 
-    protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
+    protected InputRecord getRecordOfSourceRecord(HashSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
     	return getRecordOfSourceRecord(set, repo, scores, null);
     }
     
-    protected InputRecord getRecordOfSourceRecord(TreeSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores, TLongLongHashMap rosMap) {
+    protected InputRecord getRecordOfSourceRecord(HashSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores, TLongLongHashMap rosMap) {
         final Long recordOfSource = determineRecordOfSource(set, repo, scores, rosMap);
         LOG.debug("**** Record of Source == "+recordOfSource);  // obviously produces much writing to log
         //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
@@ -108,6 +109,7 @@ public class RecordOfSourceManager extends BaseService {
      * @return
      */
     protected Long determineRecordOfSource(Set<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> _scores, TLongLongHashMap rosMap) {
+        TimingLogger.start("RecordOfSourceManager.determineRecordOfSource");
 
         TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap = new TreeMap<SortableRecordOfSourceData, RecordOfSourceData>();
         for (Long num: set) {
@@ -139,7 +141,7 @@ public class RecordOfSourceManager extends BaseService {
             	rosMap.put(num, RoS);
             }
         }
-        
+        TimingLogger.stop("RecordOfSourceManager.determineRecordOfSource");
         return RoS;
     }
 
