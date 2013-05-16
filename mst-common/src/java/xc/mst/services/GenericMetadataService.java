@@ -507,6 +507,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
         }
         return force;
     }
+    
+    // Allow Services the opportunity to pre-process records
+    // By default, they will not
+    public boolean doPreProcess() { return false; }
+    public void preProcess(InputRecord r) {  }
 
     public void process(Repository repo, Format inputFormat, Set inputSet,
             Set outputSet) {
@@ -515,6 +520,53 @@ public abstract class GenericMetadataService extends SolrMetadataService
         processStatusDisplay(repo, inputFormat, inputSet, outputSet);
         running.acquireUninterruptibly();
 
+        boolean previouslyPaused = false;
+        ServiceHarvest sh = null;
+                
+        if (doPreProcess()) {
+            LOG.debug("gettingServiceHarvest for pre-process");
+            sh = getServiceHarvest(inputFormat, inputSet,
+                    repo.getName(), getService());
+            LOG.debug("pre-process sh: " + sh);            
+LOG.error("pre-process sh: " + sh);            
+        	
+        	List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
+            while (records != null && records.size() > 0 && !stopped) {
+                if (paused) {
+                    previouslyPaused = true;
+                    running.release();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                        throw new RuntimeException(t);
+                    }
+                    continue;
+                }
+                if (previouslyPaused) {
+                    running.acquireUninterruptibly();
+                    previouslyPaused = false;
+                }
+                
+                for (Record in : records) {
+LOG.error("PRE-processing record id=" + in.getId());                	
+                    TimingLogger.start(getServiceName() + ".preprocess");
+                    boolean unexpectedError = false;
+                    try {
+                        preProcess(in);
+                    } catch (Throwable t) {
+                        unexpectedError = true;
+                        LOG.error("error preprocessing record w/ id: " + in.getId(), t);
+                    }
+                    TimingLogger.stop(getServiceName() + ".preprocess");
+                    if (unexpectedError) break;
+                    
+                    sh.setHighestId(in.getId());
+                }
+                
+                records = getRecords(repo, sh, inputFormat, inputSet);
+            }
+        }
+        
         // what do we consider a "large" update?  If it's large enough, we will then cache statuses ahead of time
         String strLHT = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LARGE_HARVEST_THRESHOLD);
         largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
@@ -526,12 +578,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
         }
 
-        LOG.debug("gettingServiceHarvest");
-        ServiceHarvest sh = getServiceHarvest(inputFormat, inputSet,
-                repo.getName(), getService());
+        
+        if (sh == null) {
+	        LOG.debug("gettingServiceHarvest");
+	        sh = getServiceHarvest(inputFormat, inputSet,
+	                repo.getName(), getService());
+        } else {
+            sh.setHighestId(null);        	
+        }
+        
         // this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
         // sh.getUntil(), inputFormat, inputSet);
         LOG.debug("sh: " + sh);
+LOG.error("sh: " + sh);
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
                 sh.getUntil(), inputFormat, inputSet);
 
@@ -570,8 +629,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     new RecordCounts(sh.getUntil(), RecordCounts.OUTGOING));
         }
 
+        previouslyPaused = false;
         int getRecordLoops = 0;
-        boolean previouslyPaused = false;
         boolean atLeastOneRecordProcessed = false;
         while (records != null && records.size() > 0 && !stopped) {
             atLeastOneRecordProcessed = true;
@@ -596,6 +655,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
             }
             //TODO here is the code to break out!!!!!
             for (Record in : records) {
+LOG.error("processing record id=" + in.getId());            	
             /*
             for (int i=0; i<records.size();) {
                 Record in = customProcessQueue.pop();

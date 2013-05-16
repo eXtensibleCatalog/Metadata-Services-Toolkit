@@ -9,6 +9,18 @@
 -- Table structure for MARC Aggregation service
 -- -------------------------------------------------------------
 
+
+-- -----------------------------------------------------
+-- Table `temp_records_xml`
+-- -----------------------------------------------------
+create table temp_records_xml (
+	record_id      int         not null,
+	xml            longtext,
+	
+        INDEX idx_record_id (record_id),
+	PRIMARY KEY (record_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- -----------------------------------------------------
 -- Table `bib_records`
 -- -----------------------------------------------------

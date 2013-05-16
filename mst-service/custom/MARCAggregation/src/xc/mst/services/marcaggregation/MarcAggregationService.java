@@ -75,6 +75,10 @@ public class MarcAggregationService extends GenericMetadataService {
      */
     protected TLongLongHashMap                       allBibRecordsI2Omap = null;
     protected TLongLongHashMap                       allBibRecordsI2Omap_unpersisted = null;
+    
+    protected TLongLongHashMap                       currentMatchSets = null;
+    protected HashMap<Long, OutputRecord>				 currentMatchSetRecords = null;
+
 
     /** track input records that have been merged (>1 input to an output),
      */
@@ -194,6 +198,10 @@ public class MarcAggregationService extends GenericMetadataService {
             allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
             mergedInRecordsList_unpersisted = new ArrayList<Long>();
         }
+        
+        currentMatchSets = new TLongLongHashMap();
+        currentMatchSetRecords = new HashMap<Long, OutputRecord>();
+
     }
     
 
@@ -486,6 +494,38 @@ public class MarcAggregationService extends GenericMetadataService {
             LOG.error("MarcAggregationService, processing repo "+ repo.getName()+" failed.", e);
         }
     }
+    
+    public boolean doPreProcess() { return true; }
+    
+    public void preProcess(InputRecord r) { 
+            SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+            smr.setRecordId(r.getId());
+
+            // Get the Leader 06. This will allow us to determine the record's type
+            final char leader06 = smr.getLeader().charAt(6);
+
+            // check if the record is a bibliographic record
+            if ("abcdefghijkmnoprt".contains("" + leader06)) {
+
+                if (r.getStatus() == Record.DELETED) {
+                	//removeRecordsFromMatchers(r);
+                } else {
+	
+	                // get record of source data for this bib
+	                //  (only a bib would be a record of source)
+	                final char leaderByte17 = smr.getLeader().charAt(17);
+	                final int rSize = r.getOaiXml().getBytes().length;
+	                scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+	                if (hasIntermediatePersistence) {
+	                    scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+	                }
+	                
+	                addRecordToMatchers(r, smr);
+
+                }
+            }
+
+    }
 
     /**
      * each record run by the service,
@@ -511,15 +551,6 @@ public class MarcAggregationService extends GenericMetadataService {
                 if ("abcdefghijkmnoprt".contains("" + leader06)) {
 
                     TimingLogger.start("bib steps");
-
-                    // get record of source data for this bib
-                    //  (only a bib would be a record of source)
-                    final char leaderByte17 = smr.getLeader().charAt(17);
-                    final int rSize = r.getOaiXml().getBytes().length;
-                    scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                    if (hasIntermediatePersistence) {
-                        scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                    }
 
                     type = "b";
                     //
@@ -556,54 +587,7 @@ public class MarcAggregationService extends GenericMetadataService {
                     logDebug("Record Id " + r.getId() + " with leader character " + leader06 + " not processed.");
                 }
             } else {// Record.DELETED
-                if (r.getSuccessors().size() == 0) {
-                    // NEW-DELETED
-                    //
-                    // nothing to do?  should we still double-check datastructures and db?
-                } else {
-                    // UPDATE-DELETED
-                    //
-                    // ( mostly ) directly lifted from norm...
-                    //
-                    boolean isAbibWithSuccessors = false;
-                    results = new ArrayList<OutputRecord>();
-                    TimingLogger.start("processRecord.updateDeleted");
-                    List<OutputRecord> successors = r.getSuccessors();
-
-                    // If there are successors then the record exist and needs to be deleted. Since we are
-                    // deleting the record, we need to decrement the count.
-                    if (successors != null && successors.size() > 0) {
-                        inputRecordCount--;
-
-                        // and if the record exists, check if it is a bib
-                        // if it is in mergedRecordsI2Omap, it is a bib, fastest way.  don't try to parse record, deleted could be incomplete
-                        // and unparseable,
-                        //
-                        if (allBibRecordsI2Omap.containsKey(r.getId())) {
-                            // is bib!  flag it for later...
-                            isAbibWithSuccessors = true;
-                        }
-
-                        // Handle reprocessing of successors
-                        for (OutputRecord successor : successors) {
-                            successor.setStatus(Record.DELETED);
-                            successor.setFormat(marc21);
-                            results.add(successor);
-                        }
-                    }
-                    if (isAbibWithSuccessors) {
-
-                        HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
-
-                        // lastly must remerge the affected records, if this was part of a merge set.
-                        if (formerMatchSet.size() > 1) {
-                            formerMatchSet.remove(r.getId());       // remove the input that is gone.
-
-                            results.addAll(remerge(formerMatchSet));
-                        }
-                    }
-                    TimingLogger.stop("processRecord.updateDeleted");
-                }
+            	results = processBibDelete(r);
             }
             if (results != null && results.size() != 1) {
                 // TODO increment records counts no output
@@ -1035,15 +1019,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
         } else {
             // UPDATE-ACTIVE
-                // unmerge
-                /*
-                for (inputBibId : inputBibIds) {
-                    customProcessQueue.push(inputBibId)
-                }
-                for (inputHoldingId : inputHoldingIds) {
-                    customProcessQueue.push(inputHoldingId)
-                }
-                */
             TimingLogger.start("processBib.processBibUpdateActive");
             results = processBibUpdateActive(r, smr, repo);
             TimingLogger.stop("processBib.processBibUpdateActive");
@@ -1067,140 +1042,95 @@ public class MarcAggregationService extends GenericMetadataService {
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
     	TimingLogger.start("processBibUpdateActive");
 
-        LOG.debug("*AM in processBibUpdateActive!");
-
-        // before deleting anything, check if match set is the same?  if so, just update? (need to re-get record of source)
-        //
-        // Example to illustrate: For instance {1,2,3} may have used to match,
-        // now with update this is the match situation: {1,2},{3} so now need TWO output records!
-        //    could be the customProcessQueue
         List<OutputRecord> results = new ArrayList<OutputRecord>();
-
-        HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
-
-        removeRecordsFromMatchers(r);
-
-        MatchSet ms = populateMatchSet(r, smr);
-        HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
-
-
-        Long oldOutputId;
-        OutputRecord oldOutput;
-
-        boolean sameSet = areMatchSetsEquivalent(formerMatchSet, newMatchedRecordIds);
-        if (!sameSet) {
-            // must clear out ALL pertinent old record stuff, not just formerMatchSet, but stuff pertaining to newly matching records too!
-            HashSet<Long> union = new HashSet<Long>();
-            union.addAll(newMatchedRecordIds);
-            union.addAll(formerMatchSet);
-            // unmerge type step, we will undo what has been done then redo from scratch, easiest to assure proper results.
-            oldOutput = r.getSuccessors().get(0);
-            results = cleanupOldMergedOutputInfo(union, results, true);
-            
-            /***
-             * I'm guessing we should really remerge the everything (union), not just the formerMatchSet.
-             * Because, how else would the newMatchedRecordIds ever get processed? Maybe an accidental
-             * typo from the past that's haunting us today (e.g., I attempted to re-activate a deleted
-             * record belonging to a match set, but it only resulted in a deleted output records and no
-             * new active output records).
-            results.addAll(remerge(formerMatchSet));
-            ***/
-            results.addAll(remerge(union));
-            
-        }
-        else {   // same size merge set, must update.
-            // this is the merge as you go along spot, and will be impacted if you change that paradigm.
-            // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
-            // TODO possibly could change to merge at end, looping a 2nd time through the records, if need be. (though I don't know
-            //      how well that would work for updates/deletes/remerges!)
-
-            // do not think you need to bother with this - you already verified the match set is the same, and it will have been added already.
-            // if you are paranoid though you COULD run this - it is an idempotent method.
-            //masMatchSetList = addToMatchSetList(newMatchedRecordIds, masMatchSetList);
-
-            // note both sides of the if below should produce the same record.
-            //   (as long as we continue to put ALL bibs into I2O map and O2I map, and not just merged records)
-        	Long first;
-            if (newMatchedRecordIds.size() > 0 /***it can be empty!!!***/ && allBibRecordsI2Omap.containsKey((first=newMatchedRecordIds.iterator().next()))) {
-                oldOutputId = getBibOutputId(first);
-                oldOutput = getRecord(oldOutputId);
-            }
-            else {
-                // Get the record which was processed from the record we just processed
-                // (any of the matchset input records should map to the same output record, right?)
-                oldOutput = r.getSuccessors().get(0);
-            }
-            // since same set, don't clean up any memory details, it all points to the right stuff still.
-
-//            List<OutputRecord> list = null;
-            // may not have any matches!
-            final boolean hasMatches = newMatchedRecordIds.size() > 0;
-            String xml;
-            if (hasMatches) {
-
-                InputRecord record = masRsm.getRecordOfSourceRecord(newMatchedRecordIds, repo, scores, recordOfSourceMap);
-                xml = mergeBibSet(record, newMatchedRecordIds, repo);
-
-                // now that we remerged, update the existing output record below!
-            }
-            else {
-                // no matches, just update the output with the latest, include an update to the 005.
-                xml = masBld.update005(r.getOaiXml(), _005_Transformer);
-            }
-
-            oldOutput.setMode(Record.STRING_MODE);
-            oldOutput.setFormat(marc21);
-            oldOutput.setStatus(Record.ACTIVE);
-
-            // Set the XML to the updated XML - remerged and reconstituted the xml
-
-            // Do NOT create a new record, update, the OLD record!
-            // Set the XML to the updated XML - reconstituted the xml
-            oldOutput.setOaiXml(xml);
-         
-            // we need the clear out the old updatedAt value
-            // so that the MST will correctly set it later (when repo is persisted)
-            // issue: mst-549
-            ((Record) oldOutput).setUpdatedAt( null );
-            
-            // Add the updated record
-            oldOutput.setType("b");
-            results.add(oldOutput);
-/*
- * * What's the purpose of the following??? Seems like just adding the same record, oldOutput, to the results a second time.
- * I'm going to comment it out for now...
-            list = new ArrayList<OutputRecord>();
-            list.add(oldOutput);
-
-            LOG.debug("** create unmerged output record: "+list.get(0).getId()+" status="+list.get(0).getStatus());
-
-            results.addAll(list);
-*/   
-            
-        }
         
-    	TimingLogger.stop("processBibUpdateActive");
+        results = processBibDelete(r);
+        results = processBibNewActive(r, smr, repo);
 
         return results;
     }
 
+    private List<OutputRecord> processBibDelete(InputRecord r) {
+        List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+        if (r.getSuccessors().size() == 0) {
+            // NEW-DELETED
+            //
+            // nothing to do?  should we still double-check datastructures and db?
+        } else {
+            // UPDATE-DELETED
+            //
+            // ( mostly ) directly lifted from norm...
+            //
+            boolean isAbibWithSuccessors = false;
+            results = new ArrayList<OutputRecord>();
+            TimingLogger.start("processRecord.updateDeleted");
+            List<OutputRecord> successors = r.getSuccessors();
+
+            // If there are successors then the record exist and needs to be deleted. Since we are
+            // deleting the record, we need to decrement the count.
+            if (successors != null && successors.size() > 0) {
+                inputRecordCount--;
+
+                // and if the record exists, check if it is a bib
+                // if it is in mergedRecordsI2Omap, it is a bib, fastest way.  don't try to parse record, deleted could be incomplete
+                // and unparseable,
+                //
+                if (allBibRecordsI2Omap.containsKey(r.getId())) {
+                    // is bib!  flag it for later...
+                    isAbibWithSuccessors = true;
+                }
+
+                // Handle reprocessing of successors
+                for (OutputRecord successor : successors) {
+                    successor.setStatus(Record.DELETED);
+                    successor.setFormat(marc21);
+                    results.add(successor);
+                }
+            }
+            if (isAbibWithSuccessors) {
+
+                HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
+
+                // lastly must remerge the affected records, if this was part of a merge set.
+                if (formerMatchSet.size() > 1) {
+                    formerMatchSet.remove(r.getId());       // remove the input that is gone.
+
+                    results.addAll(remerge(formerMatchSet));
+                }
+            }
+            TimingLogger.stop("processRecord.updateDeleted");
+        }
+        return results;
+    }
+    
+    
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
         LOG.debug("*AM in processBibNewActive!");
 
-        MatchSet ms = populateMatchSet(r, smr);
+        List<OutputRecord> results = new ArrayList<OutputRecord>();
+
+        if (currentMatchSets.contains(r.getId())) {
+        	// we already processed this record; it was included in a matchset (aggregated record)
+        	results.add(currentMatchSetRecords.get(currentMatchSets.get(r.getId())));
+        	return results;
+        }
+        
+        List<OutputRecord> deletes = new ArrayList<OutputRecord>();
+
+        MatchSet ms = getMatchSet(r, smr);
 
         HashSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
 
-        List<OutputRecord> results = new ArrayList<OutputRecord>();
-
+  
         // un-merge type step, we will undo what has been done then re-do from scratch, easiest to assure proper results.
         // this could happen a lot in a merge as you go situation, i.e. each time the match set increases.
         // TODO for re-merge, this was already done right?  do it again? (idempotent/not run then?  / Test)
         // no need for record itself to be part of match set, yet, it is new, so won't be any old merge info.
-        results = cleanupOldMergedOutputInfo(matchedRecordIds, results, true);
+        deletes = cleanupOldMergedOutputInfo(matchedRecordIds, deletes, true);
 
         // maybe this will come into play with rules that have parts that are alike...
-        Set<Long> previouslyMatchedRecordIds = null;
+     //   Set<Long> previouslyMatchedRecordIds = null;
 
         // this is the merge as you go along spot,
         // does not seem like it is most efficient but if fits our paradigm of running through all records 1x.
@@ -1208,6 +1138,16 @@ public class MarcAggregationService extends GenericMetadataService {
 
         matchedRecordIds.add(r.getId());
         results = mergeOverlord(results, matchedRecordIds, repo);
+        
+        OutputRecord outputRecord = results.get(0);
+        long outputRecordId = outputRecord.getId();
+        for (long id : matchedRecordIds) {
+        	currentMatchSets.put(id, outputRecordId);
+        	if (id != r.getId()) ((Record)outputRecord).addPredecessor(repo.getRecord(id));
+        }
+        currentMatchSetRecords.put(results.get(0).getId(), results.get(0));
+        
+        if (deletes.size() > 0) results.addAll(deletes);
 
         return results;
     }
