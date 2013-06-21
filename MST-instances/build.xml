@@ -55,7 +55,8 @@
 	<target name="mi.refetch-example">
 		<delete dir="${mi.service.dir}/example"/>
 		<property file="mst-service/example/custom.properties" />
-		<unzip src="mst-service/example/build/example-${service.version}.zip" dest="${mi.service.dir}" />
+ 		<property file="mst-service/example/dev.properties" />
+ 		<unzip src="mst-service/example/build/${service.name}-${service.version}.zip" dest="${mi.service.dir}" />
 	</target>
 
 	<target name="mi.deploy" depends="mi.jar">
