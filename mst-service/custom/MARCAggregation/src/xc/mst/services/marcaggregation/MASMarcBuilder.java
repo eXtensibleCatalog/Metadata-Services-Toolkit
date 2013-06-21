@@ -104,9 +104,9 @@ public class MASMarcBuilder extends BaseService{
      * original plan: got to figure out correctly what OAI ID currently represents the successor that this holding should link to:
      *
      * For every holdings record, whether or not its parent bibliographic record matches on and is merged with
-     * another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+     * another record, the Service generates one or more new 904 "XC Uplink" fields in each Output Holdings
      * record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
-     * to the record represented in the input Holdings record’s 004 field.
+     * to the record represented in the input Holdings record's 004 field.
      *
      * New plan - no 904's just pass through holdings.
      *
@@ -141,15 +141,15 @@ public class MASMarcBuilder extends BaseService{
         Grab the 5 fields below for all of the records that match,
         then dedup  fields with identical content.
 
-        035- just $a, and only when the field is properly formatted with a prefix in parens followed by the number
-        010 – just $a  (1 and only 1 allowed, prefer the record of source version, else grab any other found in the match set)
-        020 – just $a (which may contain more than just the ISBN – it may contain additional text, like “ (v. 1)” or “paperback”)
-        022 – In addition to $a, also $ l [lowercase L], $m, and $z.
-              The rationale here is that rather than lumping “invalid” and “incorrect” into the $z,
-              in this case the “invalid” ones have their own subfield codes.
-              These may be useful in some cases.  Also, a new kind of ISSN, called the “Linking ISSN” has just been defined in $l,
+        035 - just $a, and only when the field is properly formatted with a prefix in parens followed by the number
+        010 - just $a  (1 and only 1 allowed, prefer the record of source version, else grab any other found in the match set)
+        020 - just $a (which may contain more than just the ISBN - it may contain additional text, like " (v. 1)" or "paperback")
+        022 - In addition to $a, also $ l [lowercase L], $m, and $z.
+              The rationale here is that rather than lumping "invalid" and "incorrect" into the $z,
+              in this case the "invalid" ones have their own subfield codes.
+              These may be useful in some cases.  Also, a new kind of ISSN, called the "Linking ISSN" has just been defined in $l,
               and we may want to do something more with that someday so we need to keep it in the output record.
-        024 – just $a.
+        024 - just $a.
 
         Copy all of this to the output record even when not from the record of source.
 
@@ -503,20 +503,20 @@ public class MASMarcBuilder extends BaseService{
         holdings record will be identical to the content of the Input record, with the following exceptions:
 
         For every holdings record, whether or not its parent bibliographic record matches on and is merged with
-        another record, the Service generates one or more new 904 “XC Uplink” fields in each Output Holdings
+        another record, the Service generates one or more new 904 "XC Uplink" fields in each Output Holdings
         record. This 904 field contains, in $a, the OAI ID for the Output parent record; that is, for the successor
-        to the record represented in the input Holdings record’s 004 field. In addition, the 904 field contains $1
+        to the record represented in the input Holdings record's 004 field. In addition, the 904 field contains $1
         NyRoXCO to identify it as a field created by an XC service.
 
         The Service generates additional 904 fields to contain links to the successors to additional linked
-        bibliographic records linked through 014 fields in the input records (“bound withs”) if the following
+        bibliographic records linked through 014 fields in the input records ("bound withs") if the following
         conditions are met:
 
         014 first indicator value=1
         If an 014 $b is present, the code matches that in the 003 of the incoming holdings record
 
-        The Transformation Service will use these 904 fields as “uplinks” instead of using 004 or 014 fields
-        in the MARC record to create the “uplinks” between XC Holdings and XC Manifestation records. These
+        The Transformation Service will use these 904 fields as "uplinks" instead of using 004 or 014 fields
+        in the MARC record to create the "uplinks" between XC Holdings and XC Manifestation records. These
         additional 904 fields will contain the same subfields ($a, $1) as 904 fields created from 004 fields.
      * @param oaiXml
      * @return can return null, so check for it!

@@ -16,9 +16,9 @@ import org.apache.log4j.Logger;
 import xc.mst.services.marcaggregation.matcher.MatchSet;
 
 /**
- * compare the normalized 035a to all previously processed records’ 035a’s.
+ * compare the normalized 035a to all previously processed records' 035a's.
  * (This is done by doing a lookup on the matchpoints_035a data structure using the normalized 035a as a key).
- * If there are any records with equivalent 035a’s, then those records are considered a match.
+ * If there are any records with equivalent 035a's, then those records are considered a match.
 
  * @author John Brand
  *

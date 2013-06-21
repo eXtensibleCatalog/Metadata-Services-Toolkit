@@ -32,7 +32,7 @@ public class Marc904Generator {
     /*
     Holdings record associated with a selected bibliographic record lacks 003: Any holdings record
     processed by Aggregation that lacks an 003 field should generate an error, and the holdings record
-    is “held”.
+    is "held".
 
     so we don't get here if no 003 present.
     */
