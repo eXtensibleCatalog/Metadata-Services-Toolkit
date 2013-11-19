@@ -5,7 +5,7 @@ $DATABASE = "xc_marcaggregation";
 $DATABASE_DRIVER = "mysql";
 $DATABASE_OPTIONS = "";
 $DATABASE_USER = "root";
-$DATABASE_PASSWORD = "";
+$DATABASE_PASSWORD = "root";
 
 $INDENT = 4;
 
@@ -13,9 +13,9 @@ use DBI;
 
 &connect_to_db();
 
-$sql = <<"EOF";
+my $sql_template = <<"EOF";
 SELECT
-    t1.output_record_id, t1.input_record_id, t2.leaderByte17, t2.size, t3.xml
+    t1.output_record_id, t1.input_record_id, t2.leaderByte17, t2.size, t3.xml, if (isnull(t4.input_record_id), '', '***')
 
     FROM bib_records t1
 
@@ -23,20 +23,17 @@ SELECT
 
         LEFT OUTER JOIN xc_marcnormalization.records_xml t3 ON t1.input_record_id=t3.record_id
 
-        where t1.output_record_id in (SELECT
-                        output_record_id
-                        FROM bib_records
-                        GROUP BY output_record_id
-                        HAVING COUNT(*)>1
-                    )
+        LEFT OUTER JOIN record_of_source t4 ON t1.input_record_id=t4.input_record_id  and t1.output_record_id=t4.output_record_id
 
 ORDER BY t1.output_record_id,
-         t1.input_record_id;
+         t1.input_record_id
 
+;
 
 EOF
 
-$sth = $DBH->prepare($sql);
+
+$sth = $DBH->prepare($sql_template);
 if (! $sth->execute()) {
    $err = $sth->errstr;
    $sth->finish;
@@ -44,54 +41,83 @@ if (! $sth->execute()) {
    die "$err";
 }
 
-my $last_rec_id = "";
-my $last_rec = "";
-
-my (@row);
-while (@row = $sth->fetchrow_array()) {
-   my ($output_record_id,
-   $input_record_id,
-   $leaderByte17,
-   $size,
-   $xml) = @row;
-
-   if ($output_record_id ne $last_rec_id) {
-       if ($last_rec_id ne "") {
-          &print_header($last_rec_id);
-          print $last_rec . "\n";
-       }
-       $last_rec = "";
-       $last_rec_id = $output_record_id;
-   }
-
-#<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd"><marc:leader>00793nam a2200277 i 4500</marc:leader><marc:controlfield tag="001">81802</marc:controlfield><marc:controlfield tag="003">NIUdb</marc:controlfield>
-
-   my $bib_id = "";
-   if ($xml =~ /<marc:controlfield tag=\"001\">([^<]+)</) {
-      $bib_id = $1;
-   }
-   my $org_code = "";
-   if ($xml =~ /<marc:controlfield tag=\"003\">([^<]+)</) {
-      $org_code = $1;
-   }
-
-   $last_rec .= &indent(1) . "INPUT ID: ${input_record_id}: [${org_code}] ${bib_id}\n";
-   $last_rec .= &indent(2) . "LDR/17: [${leaderByte17}]; Size: ${size} \n";
-
-   my $matchsets = &get_matchsets($DBH, $input_record_id);
-   $last_rec .= $matchsets if ($matchsets ne "");
-   $last_rec .= "\n";
-
-}
-
-if ($output_record_id ne $last_rec_id) {
-    &print_header($last_rec_id);
-    print $last_rec . "\n";
-}
+&process($sth);
 
 $sth->finish;
+
 &clean_up;
 
+   
+sub process {
+   my ($sth) = @_;
+
+   my $last_rec_id = "";
+   my $last_rec = "";
+
+   my $cnt = 0;
+   
+   my (@row);
+   while (@row = $sth->fetchrow_array()) {
+      my ($output_record_id,
+      $input_record_id,
+      $leaderByte17,
+      $size,
+      $xml,
+      $ros) = @row;
+
+      $cnt++;
+   
+      if ($output_record_id ne $last_rec_id) {
+          if ($last_rec_id ne "") {
+             #if ($cnt > 1) {
+                &print_header($last_rec_id);
+                print $last_rec . "\n";
+             #}
+          }
+          $last_rec = "";
+          $last_rec_id = $output_record_id;
+
+          $cnt = 0;
+      }
+   
+   #<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://localhost:8080/OAIToolkit/schema/MARC21slim_custom.xsd"><marc:leader>00793nam a2200277 i 4500</marc:leader><marc:controlfield tag="001">81802</marc:controlfield><marc:controlfield tag="003">NIUdb</marc:controlfield>
+   
+      my $bib_id = "";
+      if ($xml =~ /<marc:controlfield tag=\"001\">([^<]+)</) {
+         $bib_id = $1;
+      }
+      my $org_code = "";
+      if ($xml =~ /<marc:controlfield tag=\"003\">([^<]+)</) {
+         $org_code = $1;
+      }
+
+      my $title = "";
+#<marc:datafield ind1="1" ind2="0" tag="245"><marc:subfield code="a">Introduction to boolean algebras</marc:subfield><marc:subfield code="h">[electronic resource] /</marc:subfield><marc:subfield code="c">Steven Givant, Paul Halmos.</marc:subfield></marc:datafield>
+      if ($xml =~ /<marc:datafield ind1=\".\" ind2=\".\" tag=\"245\">(.*?)<\/marc:datafield>/) {
+         $title = $1;
+         if ($title =~ /<marc:subfield code=\"a\">(.*?)<\/marc:subfield>/) {
+            $title = $1;
+         }
+      }
+   
+      $last_rec .= &indent(1) . "INPUT ID: ${input_record_id}${ros}: [${org_code}] ${bib_id}\n";
+      $last_rec .= &indent(2) . "245\$a: ${title} \n";
+      $last_rec .= &indent(2) . "LDR/17: [${leaderByte17}]; Size: ${size} \n";
+   
+      my $matchsets = &get_matchsets($DBH, $input_record_id);
+      $last_rec .= $matchsets if ($matchsets ne "");
+      $last_rec .= "\n";
+   
+   }
+   
+   #if ($cnt > 1) {
+      if ($output_record_id ne $last_rec_id) {
+          &print_header($last_rec_id);
+          print $last_rec . "\n";
+      }
+   #}
+   
+}
 
 sub get_matchsets {
    my ($dbh, $id) = @_;
@@ -155,4 +181,4 @@ sub connect_to_db {
    $DBH = DBI->connect($dsn, $DATABASE_USER, $DATABASE_PASSWORD);
 }
 
-
+1;

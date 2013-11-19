@@ -81,8 +81,9 @@ sub compare {
       if (! $matched) {
          print "Missing in '${set2_filename}':\n";
          &print_array(\@set1);
+         print "\n";
          $ret = 1;
-         last;
+#        last;
       }
    }
    return $ret;
@@ -187,7 +188,7 @@ sub collect_data {
    
       if ($next_line_is_bib) {
          $next_line_is_bib = 0;
-         if ($line =~ /^\s+INPUT ID: [0-9]+: (.+)$/) {
+         if ($line =~ /^\s+INPUT ID: [0-9]+\**: (.+)$/) {
             $bib_id = $1;
          } else {
             die "2Parsing error!\n";

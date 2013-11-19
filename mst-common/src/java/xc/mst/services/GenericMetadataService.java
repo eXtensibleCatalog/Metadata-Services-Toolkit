@@ -524,11 +524,10 @@ public abstract class GenericMetadataService extends SolrMetadataService
         ServiceHarvest sh = null;
                 
         if (doPreProcess()) {
-            LOG.debug("gettingServiceHarvest for pre-process");
+            //LOG.debug("gettingServiceHarvest for pre-process");
             sh = getServiceHarvest(inputFormat, inputSet,
                     repo.getName(), getService());
-            LOG.debug("pre-process sh: " + sh);            
-LOG.error("pre-process sh: " + sh);            
+            //LOG.debug("pre-process sh: " + sh);            
         	
         	List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
             while (records != null && records.size() > 0 && !stopped) {
@@ -548,7 +547,7 @@ LOG.error("pre-process sh: " + sh);
                 }
                 
                 for (Record in : records) {
-LOG.error("PRE-processing record id=" + in.getId());                	
+                	//LOG.debug("PRE-processing record id=" + in.getId());                	
                     TimingLogger.start(getServiceName() + ".preprocess");
                     boolean unexpectedError = false;
                     try {
@@ -589,8 +588,8 @@ LOG.error("PRE-processing record id=" + in.getId());
         
         // this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
         // sh.getUntil(), inputFormat, inputSet);
-        LOG.debug("sh: " + sh);
-LOG.error("sh: " + sh);
+        
+        //LOG.debug("sh: " + sh);
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
                 sh.getUntil(), inputFormat, inputSet);
 
@@ -655,7 +654,7 @@ LOG.error("sh: " + sh);
             }
             //TODO here is the code to break out!!!!!
             for (Record in : records) {
-LOG.error("processing record id=" + in.getId());            	
+            	//LOG.debug("processing record id=" + in.getId());            	
             /*
             for (int i=0; i<records.size();) {
                 Record in = customProcessQueue.pop();

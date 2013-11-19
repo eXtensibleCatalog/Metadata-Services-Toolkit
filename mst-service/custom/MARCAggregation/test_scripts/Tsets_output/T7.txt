@@ -1,0 +1,2090 @@
+-----------------------------------
+OUTPUT ID: 971:
+-----------------------------------
+    INPUT ID: 417: [ISUdb] 24986
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 12192 
+        010a: 73646537
+                022a: 00921904
+                        035a: (ISUdb)24986
+                        035a: (OCoLC)01788884
+
+    INPUT ID: 456: [NEIdb] 14808
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 12192 
+        010a: 73646537
+                022a: 00921904
+                        035a: (NEIdb)14808
+                        035a: (OCoLC)01788884
+
+    INPUT ID: 476: [NIUdb] 33280
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 14686 
+        010a: 73646537
+                022a: 00921904
+                        035a: (NIUdb)33280
+                        035a: (OCoLC)01788884
+
+    INPUT ID: 499: [RSHdb] 3495
+        245$a: The United States Government manual. 
+        LDR/17: []; Size: 5657 
+        010a: 73646537
+                022a: 00921904
+                        035a: (OCoLC)01788884
+                        035a: (RSHdb)3495
+
+    INPUT ID: 520: [SICdb] 30182
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 12693 
+        010a: 73646537
+                022a: 00921904
+                        035a: (OCoLC)01788884
+                        035a: (SICdb)30182
+
+    INPUT ID: 546: [UICdb] 115705
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 10243 
+        010a: 73646537
+                022a: 00921904
+                        035a: (GPO)89001652 
+                        035a: (OCoLC)01788884
+                        035a: (UICdb)115705
+
+    INPUT ID: 578: [UISdb] 14362
+        245$a: The United States government manual 
+        LDR/17: []; Size: 12753 
+        010a: 73646537
+                022a: 00921904
+                        035a: (OCoLC)01788884
+                        035a: (UISdb)14362
+
+    INPUT ID: 610: [UIUdb] 116388
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 12745 
+        010a: 73646537
+                022a: 00921904
+                        035a: (OCoLC)01788884
+                        035a: (UIUdb)116388
+
+    INPUT ID: 664***: [WIUdb] 23578
+        245$a: The United States government manual. 
+        LDR/17: []; Size: 16222 
+        010a: 73646537
+                022a: 00921904
+                        035a: (OCoLC)01788884
+                        035a: (WIUdb)23578
+
+
+-----------------------------------
+OUTPUT ID: 973:
+-----------------------------------
+    INPUT ID: 408: [ISUdb] 623878
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6301 
+            020a: 0268018715
+                        035a: (ISUdb)623878
+                        035a: (OCoLC)20691010
+
+    INPUT ID: 433: [NCCdb] 81407
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6152 
+            020a: 0268018715
+                        035a: (NCCdb)81407
+                        035a: (OCoLC)20691010
+
+    INPUT ID: 450: [NEIdb] 282090
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6154 
+            020a: 0268018715
+                        035a: (NEIdb)282090
+                        035a: (OCoLC)20691010
+
+    INPUT ID: 512: [SICdb] 943021
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6154 
+            020a: 0268018715
+                        035a: (OCoLC)20691010
+                        035a: (SICdb)943021
+
+    INPUT ID: 544***: [UICdb] 665680
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 7507 
+        010a: 89029275
+            020a: 0268018715
+                        035a: (OCoLC)20691010
+                        035a: (UICdb)665680
+
+    INPUT ID: 599: [UIUdb] 1648942
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6156 
+            020a: 0268018715
+                        035a: (OCoLC)20691010
+                        035a: (UIUdb)1648942
+
+    INPUT ID: 659: [WIUdb] 483570
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6154 
+            020a: 0268018715
+                        035a: (OCoLC)20691010
+                        035a: (WIUdb)483570
+
+    INPUT ID: 961: [CTUdb] 59564
+        245$a: Three rival versions of moral enquiry : 
+        LDR/17: []; Size: 6152 
+            020a: 0268018715
+                        035a: (CTUdb)59564
+                        035a: (OCoLC)20691010
+
+
+-----------------------------------
+OUTPUT ID: 974:
+-----------------------------------
+    INPUT ID: 336: [BENdb] 217731
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7602 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (BENdb)217731
+                        035a: (OCoLC)314182885
+
+    INPUT ID: 360: [EIUdb] 928006
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7550 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (EIUdb)928006
+                        035a: (OCoLC)314182885
+
+    INPUT ID: 383: [IITdb] 807553
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7661 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (IITdb)807553
+                        035a: (OCoLC)314182885
+
+    INPUT ID: 429: [NCCdb] 177084
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7395 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (NCCdb)177084
+                        035a: (OCoLC)314182885
+
+    INPUT ID: 442: [NEIdb] 577666
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7468 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (NEIdb)577666
+                        035a: (OCoLC)314182885
+
+    INPUT ID: 502: [SICdb] 2135861
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 6781 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (OCoLC)314182885
+                        035a: (SICdb)2135861
+
+    INPUT ID: 532: [UICdb] 2748109
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 6580 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (OCoLC)314182885
+                        035a: (UICdb)2748109
+
+    INPUT ID: 534: [UICdb] 2434995
+        245$a: Introduction to boolean algebras 
+        LDR/17: [3]; Size: 7839 
+            020a: 0387402934
+            020a: 0387684360
+            020a: 9780387402932
+            020a: 9780387684369
+                        035a: (CaONFJC)cis10957589
+                        035a: (Default)2434995
+                        035a: (OCoLC)314182885
+                        035a: (UICdb)2434995
+
+    INPUT ID: 569: [UISdb] 496660
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7187 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (OCoLC)314182885
+                        035a: (UISdb)496660
+
+    INPUT ID: 586: [UIUdb] 5801805
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7447 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (OCoLC)314182885
+                        035a: (UIUdb)5801805
+
+    INPUT ID: 651: [WIUdb] 1047872
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 7241 
+            020a: 0387684360
+            020a: 9780387684369
+                        035a: (OCoLC)314182885
+                        035a: (WIUdb)1047872
+
+    INPUT ID: 953***: [PRCdb] 252483
+        245$a: Introduction to boolean algebras 
+        LDR/17: [I]; Size: 8914 
+            020a: 0387402934
+            020a: 0387684360
+            020a: 9780387402932
+            020a: 9780387684369
+                    024a: 97866119268618
+                        035a: (OCoLC)314182885
+                        035a: (PRCdb)252483
+
+
+-----------------------------------
+OUTPUT ID: 983:
+-----------------------------------
+    INPUT ID: 345: [DPUdb] 697537
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 6634 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (DPUdb)697537
+                        035a: (OCoLC)302099344
+
+    INPUT ID: 364: [EIUdb] 984649
+        245$a: Questioning the veil : 
+        LDR/17: []; Size: 6430 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (EIUdb)984649
+                        035a: (OCoLC)302099344
+
+    INPUT ID: 387***: [IITdb] 785100
+        245$a: Questioning the veil : 
+        LDR/17: []; Size: 7469 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (IITdb)785100
+                        035a: (OCoLC)302099344
+
+    INPUT ID: 401: [ISUdb] 1331177
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 8063 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (ISUdb)1331177
+                        035a: (OCoLC)302099344
+
+    INPUT ID: 467: [NIUdb] 2110056
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 7730 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (NIUdb)2110056
+                        035a: (OCoLC)302099344
+
+    INPUT ID: 506: [SICdb] 2107381
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 6381 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (OCoLC)302099344
+                        035a: (SICdb)2107381
+
+    INPUT ID: 540: [UICdb] 2416154
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 8607 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                    024a: 40017146453 
+                        035a: (OCoLC)302099344
+                        035a: (UICdb)2416154
+
+    INPUT ID: 590: [UIUdb] 6023436
+        245$a: Questioning the veil : 
+        LDR/17: []; Size: 7386 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (OCoLC)302099344
+                        035a: (UIUdb)6023436
+
+    INPUT ID: 955: [PRCdb] 224649
+        245$a: Questioning the veil : 
+        LDR/17: [4]; Size: 8022 
+        010a: 2009003499
+            020a: 0691138184
+            020a: 9780691138183
+                        035a: (PRCdb)224649
+
+
+-----------------------------------
+OUTPUT ID: 988:
+-----------------------------------
+    INPUT ID: 963: [NIUdb] 291148
+        245$a: United States government organization manual. 
+        LDR/17: []; Size: 9448 
+                022a: 00831174
+                        035a: (NIUdb)291148
+                        035a: (OCoLC)08508797
+
+
+-----------------------------------
+OUTPUT ID: 989:
+-----------------------------------
+    INPUT ID: 474: [NIUdb] 81802
+        245$a: Position and change : 
+        LDR/17: []; Size: 5468 
+            020a: 9027707871
+                        035a: (NIUdb)81802
+                        035a: (OCoLC)02695105
+
+    INPUT ID: 964***: [DPUdb] 32025
+        245$a: Position and change : 
+        LDR/17: []; Size: 5468 
+            020a: 9027707871
+                        035a: (DPUdb)32025
+                        035a: (OCoLC)02695105
+
+
+-----------------------------------
+OUTPUT ID: 1228:
+-----------------------------------
+    INPUT ID: 368: [EIUdb] 822971
+        245$a: The delinquent girl / 
+        LDR/17: []; Size: 9970 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                        035a: (EIUdb)822971
+                        035a: (OCoLC)213765828
+
+    INPUT ID: 406: [ISUdb] 1307629
+        245$a: The delinquent girl / 
+        LDR/17: [4]; Size: 8452 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                        035a: (ISUdb)1307629
+                        035a: (OCoLC)213765828
+
+    INPUT ID: 448***: [NEIdb] 602041
+        245$a: The delinquent girl / 
+        LDR/17: []; Size: 11672 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                    024a: 999404155248
+                        035a: (NEIdb)602041
+                        035a: (OCoLC)213765828
+
+    INPUT ID: 472: [NIUdb] 2008011
+        245$a: The delinquent girl / 
+        LDR/17: [4]; Size: 8563 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                        035a: (NIUdb)2008011
+                        035a: (OCoLC)213765828
+
+    INPUT ID: 510: [SICdb] 2094403
+        245$a: The delinquent girl / 
+        LDR/17: [4]; Size: 7616 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                        035a: (OCoLC)213765828
+                        035a: (SICdb)2094403
+
+    INPUT ID: 542: [UICdb] 2186662
+        245$a: The delinquent girl / 
+        LDR/17: [4]; Size: 9193 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                    024a: 99933197795 
+                        035a: (OCoLC)213765828
+                        035a: (UICdb)2186662
+
+    INPUT ID: 597: [UIUdb] 5774782
+        245$a: The delinquent girl / 
+        LDR/17: []; Size: 9796 
+        010a: 2008012509
+            020a: 1592139515
+            020a: 1592139523
+            020a: 9781592139514
+            020a: 9781592139521
+                        035a: (OCoLC)213765828
+                        035a: (UIUdb)5774782
+
+
+-----------------------------------
+OUTPUT ID: 1234:
+-----------------------------------
+    INPUT ID: 1113***: [ISUdb] 136028
+        245$a: Acta arithmetica. 
+        LDR/17: []; Size: 8846 
+        010a: 38001584
+                022a: 00651036
+                        035a: (ISUdb)136028
+
+    INPUT ID: 1127: [UICdb] 569922
+        245$a: Acta arithmetica. 
+        LDR/17: []; Size: 8059 
+        010a: 38001584
+                022a: 00651036
+                        035a: (UICdb)569922
+
+
+-----------------------------------
+OUTPUT ID: 1244:
+-----------------------------------
+    INPUT ID: 1134: [KCCdb] 35440
+        245$a: Global studies. 
+        LDR/17: []; Size: 5000 
+                022a: 10612831
+                        035a: (KCCdb)35440
+
+
+-----------------------------------
+OUTPUT ID: 1290:
+-----------------------------------
+    INPUT ID: 1193: [IECdb] 45235
+        245$a: History of modern science and mathematics / 
+        LDR/17: []; Size: 9027 
+        010a: 2002004042
+            020a: 0684806320
+            020a: 0684806339
+            020a: 0684806347
+            020a: 0684806355
+            020a: 0684806363
+                        035a: (IECdb)45235
+                        035a: (OCoLC)49576697
+
+
+-----------------------------------
+OUTPUT ID: 1291:
+-----------------------------------
+    INPUT ID: 1194: [IECdb] 1000
+        245$a: Noah and the great flood / 
+        LDR/17: []; Size: 6584 
+        010a: 77003217
+            020a: 068950098X
+                        035a: (IECdb)1000
+
+
+-----------------------------------
+OUTPUT ID: 1292:
+-----------------------------------
+    INPUT ID: 1195: [KNXdb] 1000
+        245$a: The Congress of Vienna, 1814-1815, 
+        LDR/17: [I]; Size: 4401 
+        010a: 19003391
+                        035a: (KNXdb)1000
+                        035a: (OCoLC)02973581
+
+
+-----------------------------------
+OUTPUT ID: 1293:
+-----------------------------------
+    INPUT ID: 1196: [JOLdb] 1000
+        245$a: Mediums, mystics, &amp; the occult / 
+        LDR/17: []; Size: 5020 
+            020a: 0690004761
+                        035a: (JOLdb)1000
+                        035a: (OCoLC)01095102
+
+
+-----------------------------------
+OUTPUT ID: 1294:
+-----------------------------------
+    INPUT ID: 1197: [JOLdb] 36341
+        245$a: The science of animal husbandry / 
+        LDR/17: []; Size: 4982 
+            020a: 0879097647
+                        035a: (JOLdb)36341
+                        035a: (OCoLC)01637976
+
+
+-----------------------------------
+OUTPUT ID: 1295:
+-----------------------------------
+    INPUT ID: 1198: [EIUdb] 303877
+        245$a: Father DeSmet : 
+        LDR/17: [I]; Size: 7226 
+        010a: 48009451
+                        035a: (EIUdb)303877
+                        035a: (OCoLC)02066061
+
+
+-----------------------------------
+OUTPUT ID: 1296:
+-----------------------------------
+    INPUT ID: 1199: [EIUdb] 573853
+        245$a: British envoys to Germany, 1816-1866 / 
+        LDR/17: []; Size: 18052 
+        010a: 26228
+            020a: 0521790662
+            020a: 0521818680
+            020a: 0521872529
+            020a: 1107009448
+            020a: 9780521790666
+            020a: 9780521818681
+            020a: 9780521872522
+            020a: 9781107009448
+                        035a: (EIUdb)573853
+                        035a: (OCoLC)43569317
+
+
+-----------------------------------
+OUTPUT ID: 1299:
+-----------------------------------
+    INPUT ID: 1202: [EIUdb] 748565
+        245$a: Motetti de Passione, de Cruce, de Sacramento, de Beata Virgine et huiusmodi B : 
+        LDR/17: []; Size: 7861 
+        010a: 2004561304
+            020a: 0226162362
+            020a: 9780226162362
+                        035a: (EIUdb)748565
+                        035a: (OCoLC)51456024
+
+
+-----------------------------------
+OUTPUT ID: 1301:
+-----------------------------------
+    INPUT ID: 1204***: [EIUdb] 492292
+        245$a: Scientific papers / 
+        LDR/17: []; Size: 6437 
+                022a: 04453395
+                        035a: (EIUdb)492292
+                        035a: (OCoLC)01741077
+
+    INPUT ID: 1209: [ISUdb] 858639
+        245$a: Scientific papers / 
+        LDR/17: []; Size: 6437 
+                022a: 04453395
+                        035a: (ISUdb)858639
+                        035a: (OCoLC)01741077
+
+
+-----------------------------------
+OUTPUT ID: 1302:
+-----------------------------------
+    INPUT ID: 1205: [EIUdb] 66737
+        245$a: Geology and origin of the Chilean nitrate deposits / 
+        LDR/17: []; Size: 5863 
+        010a: 80607111
+                        035a: (EIUdb)66737
+                        035a: (OCoLC)06306042
+
+
+-----------------------------------
+OUTPUT ID: 1303:
+-----------------------------------
+    INPUT ID: 1206: [EIUdb] 17825
+        245$a: Geological Survey professional paper. 
+        LDR/17: []; Size: 11099 
+                022a: 00960446
+                        035a: (EIUdb)17825
+                        035a: (OCoLC)01445516
+
+
+-----------------------------------
+OUTPUT ID: 1305:
+-----------------------------------
+    INPUT ID: 1208: [ISUdb] 1229704
+        245$a: Monuments of Renaissance music. 
+        LDR/17: []; Size: 6306 
+        010a: 64024965
+                022a: 00771503
+                        035a: (ISUdb)1229704
+                        035a: (OCoLC)02253212
+
+
+-----------------------------------
+OUTPUT ID: 1306:
+-----------------------------------
+    INPUT ID: 1212: [UIUdb] 4173152
+        245$a: Fleet Street, press barons, and politics : 
+        LDR/17: []; Size: 9178 
+        010a: 99490365
+            020a: 0521662397
+                        035a: (OCoLC)42383115
+                        035a: (UIUdb)4173152
+
+
+-----------------------------------
+OUTPUT ID: 1333:
+-----------------------------------
+    INPUT ID: 1112: [ISUdb] 136039
+        245$a: Journal of number theory. 
+        LDR/17: []; Size: 9339 
+                022a: 0022314X
+                        035a: (ISUdb)136039
+
+
+-----------------------------------
+OUTPUT ID: 1334:
+-----------------------------------
+    INPUT ID: 1109***: [ISUdb] 24982
+        245$a: Africa. 
+        LDR/17: []; Size: 9413 
+        010a: 67011537
+                022a: 00842281
+                        035a: (ISUdb)24982
+                        035a: (OCoLC)01625885
+
+    INPUT ID: 1133: [IMSdb] 50316
+        245$a: Africa. 
+        LDR/17: []; Size: 6161 
+        010a: 67011537
+                022a: 00842281
+                        035a: (IMSdb)50316
+
+    INPUT ID: 1176: [IECdb] 3994
+        245$a: Africa. 
+        LDR/17: []; Size: 6295 
+        010a: 67011537
+                022a: 00842281
+                        035a: (IECdb)3994
+
+    INPUT ID: 1179: [EIUdb] 15324
+        245$a: Africa. 
+        LDR/17: []; Size: 9086 
+        010a: 67011537
+                022a: 00842281
+                        035a: (EIUdb)15324
+                        035a: (OCoLC)01625885
+
+
+-----------------------------------
+OUTPUT ID: 1340:
+-----------------------------------
+    INPUT ID: 1120: [SIEdb] 82064
+        245$a: Acta arithmetica. 
+        LDR/17: []; Size: 6389 
+                022a: 00651036
+                        035a: (OCoLC)01460834
+                        035a: (SIEdb)82064
+
+    INPUT ID: 1137***: [EIUdb] 76253
+        245$a: Acta arithmetica. 
+        LDR/17: []; Size: 6389 
+                022a: 00651036
+                        035a: (EIUdb)76253
+                        035a: (OCoLC)01460834
+
+
+-----------------------------------
+OUTPUT ID: 1341:
+-----------------------------------
+    INPUT ID: 1130: [UIUdb] 560211
+        245$a: Acta arithmetica. 
+        LDR/17: []; Size: 6483 
+                        035a: (UIUdb)560211
+
+
+-----------------------------------
+OUTPUT ID: 1342:
+-----------------------------------
+    INPUT ID: 1111***: [ISUdb] 605269
+        245$a: Western Europe. 
+        LDR/17: []; Size: 9954 
+        010a: 83643780
+                022a: 00842338
+                        035a: (ISUdb)605269
+                        035a: (OCoLC)08275645
+
+    INPUT ID: 1116: [JWCdb] 2911
+        245$a: Western Europe. 
+        LDR/17: []; Size: 8477 
+        010a: 83643780
+                022a: 00842338
+                        035a: (JWCdb)2911
+
+    INPUT ID: 1178: [IECdb] 4889
+        245$a: Western Europe. 
+        LDR/17: []; Size: 7405 
+        010a: 83643780
+                022a: 00842338
+                        035a: (IECdb)4889
+
+    INPUT ID: 1181: [PRCdb] 101654
+        245$a: Western Europe. 
+        LDR/17: []; Size: 9764 
+        010a: 83643780
+                022a: 00842338
+                        035a: (OCoLC)08275645
+                        035a: (PRCdb)101654
+
+
+-----------------------------------
+OUTPUT ID: 1346:
+-----------------------------------
+    INPUT ID: 1123: [NIUdb] 2076575
+        245$a: ACM journal of data and information quality. 
+        LDR/17: [8]; Size: 6602 
+        010a: 2007214262
+                022a: 19361955
+                        035a: (NIUdb)2076575
+
+    INPUT ID: 1132: [UIUdb] 5978251
+        245$a: ACM journal of data and information quality. 
+        LDR/17: [8]; Size: 8071 
+        010a: 2007214262
+                022a: 19361955
+                        035a: (UIUdb)5978251
+
+    INPUT ID: 1138: [IITdb] 772895
+        245$a: ACM journal of data and information quality. 
+        LDR/17: [8]; Size: 5566 
+                022a: 19361955
+                        035a: (IITdb)772895
+                        035a: (OCoLC)85776277
+
+    INPUT ID: 1139***: [IWUdb] 298941
+        245$a: ACM journal of data and information quality. 
+        LDR/17: []; Size: 8775 
+        010a: 2007214262
+                022a: 19361955
+                        035a: (IWUdb)298941
+                        035a: (OCoLC)85776277
+
+    INPUT ID: 1140: [KNXdb] 221672
+        245$a: ACM journal of data and information quality. 
+        LDR/17: []; Size: 8756 
+        010a: 2007214262
+                022a: 19361955
+                        035a: (KNXdb)221672
+
+
+-----------------------------------
+OUTPUT ID: 1347:
+-----------------------------------
+    INPUT ID: 1117: [SIEdb] 454125
+        245$a: Global studies. 
+        LDR/17: []; Size: 5118 
+                022a: 10612831
+                        035a: (OCoLC)18367573
+                        035a: (SIEdb)454125
+
+
+-----------------------------------
+OUTPUT ID: 1348:
+-----------------------------------
+    INPUT ID: 1110***: [ISUdb] 749840
+        245$a: Global studies. 
+        LDR/17: []; Size: 7641 
+        010a: 88659281
+                022a: 10612831
+                        035a: (ISUdb)749840
+
+    INPUT ID: 1177: [IECdb] 6403
+        245$a: Global studies. 
+        LDR/17: []; Size: 4868 
+        010a: 88659281
+                022a: 10612831
+                        035a: (IECdb)6403
+
+
+-----------------------------------
+OUTPUT ID: 1351:
+-----------------------------------
+    INPUT ID: 1211: [UIUdb] 3552118
+        245$a: Camden fifth series. 
+        LDR/17: []; Size: 10021 
+        010a: 95642750
+                022a: 09601163
+                        035a: (OCoLC)28755432
+                        035a: (UIUdb)3552118
+
+
+-----------------------------------
+OUTPUT ID: 1353:
+-----------------------------------
+    INPUT ID: 1327: [AUGdb] 147094
+        245$a: The basic training of Pavlo Hummel, and Sticks and bones; 
+        LDR/17: []; Size: 5126 
+        010a: 72075746
+            020a: 0670003670
+            020a: 0670148814
+                        035a: (AUGdb)147094
+                        035a: (OCoLC)00623310
+
+
+-----------------------------------
+OUTPUT ID: 1354:
+-----------------------------------
+    INPUT ID: 1328: [AUGdb] 20000
+        245$a: Nineteenth-century stories by women / 
+        LDR/17: []; Size: 5495 
+        010a: 93175166
+            020a: 1551110008
+                        035a: (AUGdb)20000
+                        035a: (OCoLC)28889592
+
+
+-----------------------------------
+OUTPUT ID: 1496:
+-----------------------------------
+    INPUT ID: 338: [BENdb] 203013
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10837 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (BENdb)203013
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 362: [EIUdb] 912933
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10643 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (EIUdb)912933
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 385: [IITdb] 792495
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10225 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (IITdb)792495
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 399: [ISUdb] 1359362
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10008 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (ISUdb)1359362
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 431: [NCCdb] 160636
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10640 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (NCCdb)160636
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 444: [NEIdb] 562965
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10561 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (NEIdb)562965
+                        035a: (OCoLC)262826278
+
+    INPUT ID: 497: [RSHdb] 58583
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 9355 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (RSHdb)58583
+
+    INPUT ID: 504: [SICdb] 2137510
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 9497 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (SICdb)2137510
+
+    INPUT ID: 538: [UICdb] 2750666
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 9033 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (UICdb)2750666
+
+    INPUT ID: 571: [UISdb] 499065
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10410 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (UISdb)499065
+
+    INPUT ID: 588***: [UIUdb] 5568599
+        245$a: Biomedical informatics 
+        LDR/17: []; Size: 9969 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (UIUdb)5568599
+
+    INPUT ID: 653: [WIUdb] 1032831
+        245$a: Biomedical informatics 
+        LDR/17: [I]; Size: 10486 
+            020a: 0387362789
+            020a: 9780387362786
+                        035a: (OCoLC)262826278
+                        035a: (WIUdb)1032831
+
+
+-----------------------------------
+OUTPUT ID: 1498:
+-----------------------------------
+    INPUT ID: 340: [BENdb] 151319
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: [8]; Size: 7227 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (BENdb)151319
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 349: [DPUdb] 698031
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 18652 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (DPUdb)698031
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 370: [EIUdb] 856283
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 17828 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (EIUdb)856283
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 389: [IITdb] 766974
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: [I]; Size: 8411 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 9781603290241
+                        035a: (IITdb)766974
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 410: [ISUdb] 1307338
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: [I]; Size: 8162 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 9781603290241
+                        035a: (ISUdb)1307338
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 435: [NCCdb] 154819
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: [4]; Size: 7025 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (NCCdb)154819
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 452: [NEIdb] 549601
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 11941 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (NEIdb)549601
+                        035a: (OCoLC)276228865
+
+    INPUT ID: 514: [SICdb] 2075258
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 9554 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (OCoLC)276228865
+                        035a: (SICdb)2075258
+
+    INPUT ID: 575***: [UISdb] 480002
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 19533 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (OCoLC)276228865
+                        035a: (UISdb)480002
+
+    INPUT ID: 602: [UIUdb] 5803234
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 19449 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (OCoLC)276228865
+                        035a: (UIUdb)5803234
+
+    INPUT ID: 661: [WIUdb] 1013400
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: []; Size: 17873 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (OCoLC)276228865
+                        035a: (WIUdb)1013400
+
+    INPUT ID: 948: [IWUdb] 303877
+        245$a: MLA handbook for writers of research papers. 
+        LDR/17: [I]; Size: 20526 
+        010a: 2008047484
+            020a: 1603290249
+            020a: 1603290257
+            020a: 9781603290241
+            020a: 9781603290258
+                        035a: (IWUdb)303877
+
+
+-----------------------------------
+OUTPUT ID: 1501:
+-----------------------------------
+    INPUT ID: 1427: [EIUdb] 130420
+        245$a: A momentary lapse of reason 
+        LDR/17: []; Size: 6524 
+        010a: 91759258
+                    024a: 746440599221
+                        035a: (EIUdb)130420
+
+
+-----------------------------------
+OUTPUT ID: 1503:
+-----------------------------------
+    INPUT ID: 1429: [EIUdb] 358133
+        245$a: Les mise?rables 
+        LDR/17: []; Size: 10498 
+        010a: 89754922
+                    024a: 0759924151251
+                    024a: 20642415121
+                    024a: 75992415121
+                        035a: (EIUdb)358133
+                        035a: (OCoLC)21443262
+
+    INPUT ID: 1445: [SIEdb] 596062
+        245$a: Cameron Mackintosh presents Les mise?rables 
+        LDR/17: []; Size: 7377 
+        010a: 89754922
+                    024a: 75992415127[isan]
+                        035a: (SIEdb)596062
+
+    INPUT ID: 1457***: [SICdb] 2141857
+        245$a: Les mise?rables 
+        LDR/17: []; Size: 11184 
+        010a: 89754922
+                    024a: 0759924151251
+                    024a: 20642415121
+                    024a: 75992415121
+                        035a: (SICdb)2141857
+
+    INPUT ID: 1458: [ISUdb] 626534
+        245$a: Cameron Mackintosh presents Les mise?rables 
+        LDR/17: [I]; Size: 8208 
+        010a: 89754922
+                    024a: 7206424151221
+                    024a: 75992415121
+                        035a: (ISUdb)626534
+                        035a: (OCoLC)21443262
+
+    INPUT ID: 1459: [IWUdb] 151002
+        245$a: Les mise?rables 
+        LDR/17: []; Size: 10690 
+        010a: 89754922
+                    024a: 0759924151251
+                    024a: 20642415121
+                    024a: 75992415127[isan]
+                        035a: (IWUdb)151002
+
+
+-----------------------------------
+OUTPUT ID: 1510:
+-----------------------------------
+    INPUT ID: 1437: [DPUdb] 268174
+        245$a: Les mise?rables 
+        LDR/17: []; Size: 7628 
+        010a: 89754922
+                    024a: 0759924151257[isan]
+                        035a: (DPUdb)268174
+
+
+-----------------------------------
+OUTPUT ID: 1520:
+-----------------------------------
+    INPUT ID: 1452: [UIUdb] 1659915
+        245$a: Les mise?rables 
+        LDR/17: []; Size: 7044 
+        010a: 89754922
+                    024a: 0759924151257[iswc]
+                        035a: (UIUdb)1659915
+
+
+-----------------------------------
+OUTPUT ID: 1525:
+-----------------------------------
+    INPUT ID: 1460: [NIUdb] 2164656
+        245$a: Boris Godounov 
+        LDR/17: []; Size: 11739 
+        010a: 91755115
+                    024a: 0229245418278
+                        035a: (NIUdb)2164656
+
+
+-----------------------------------
+OUTPUT ID: 1532:
+-----------------------------------
+    INPUT ID: 1472: [TIUdb] 165332
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [I]; Size: 5958 
+        010a: 2002614102
+                    024a: 28942922721
+                        035a: (TIUdb)165332
+
+
+-----------------------------------
+OUTPUT ID: 1538:
+-----------------------------------
+    INPUT ID: 1479: [SICdb] 1489796
+        245$a: The Hobbit, or, There and back again / 
+        LDR/17: [I]; Size: 4360 
+            020a: 0345339681
+                        035a: (OCoLC)50007347
+                        035a: (SICdb)1489796
+
+
+-----------------------------------
+OUTPUT ID: 1539:
+-----------------------------------
+    INPUT ID: 1480: [ONUdb] 281208
+        245$a: The hobbit, or, There and back again / 
+        LDR/17: [I]; Size: 7704 
+        010a: 67029221
+            020a: 0395071224
+            020a: 0739410741
+            020a: 0965442489
+            020a: 9780395071229
+            020a: 9780739410745
+            020a: 9780965442480
+                        035a: (OCoLC)43887325
+                        035a: (ONUdb)281208
+
+
+-----------------------------------
+OUTPUT ID: 1540:
+-----------------------------------
+    INPUT ID: 1481: [NPUdb] 285127
+        245$a: The hobbit, or, There and back again / 
+        LDR/17: []; Size: 8995 
+        010a: 2007028554
+            020a: 0618968636
+            020a: 9780618968633
+                        035a: (NPUdb)285127
+                        035a: (OCoLC)164801908
+
+
+-----------------------------------
+OUTPUT ID: 1541:
+-----------------------------------
+    INPUT ID: 1482: [ISUdb] 1446103
+        245$a: The hobbit, or, There and back again 
+        LDR/17: [K]; Size: 10025 
+            020a: 0061917737
+            020a: 0061917745
+            020a: 0061952842
+            020a: 9780061917738
+            020a: 9780061917745
+            020a: 9780061952845
+                        035a: (ISUdb)1446103
+                        035a: (OCoLC)432659865
+
+
+-----------------------------------
+OUTPUT ID: 1542:
+-----------------------------------
+    INPUT ID: 1483: [TIUdb] 426094
+        245$a: The hobbit 
+        LDR/17: [I]; Size: 10439 
+            020a: 0790762595
+            020a: 9780790762593
+                    024a: 0125690566261
+                        035a: (OCoLC)47856098
+                        035a: (TIUdb)426094
+
+
+-----------------------------------
+OUTPUT ID: 1543:
+-----------------------------------
+    INPUT ID: 1484: [SAIdb] 121570
+        245$a: The hobbit 
+        LDR/17: [I]; Size: 8662 
+            020a: 0788789821
+            020a: 9780788789823
+                        035a: (OCoLC)70866352
+                        035a: (SAIdb)121570
+
+
+-----------------------------------
+OUTPUT ID: 1544:
+-----------------------------------
+    INPUT ID: 1485: [UIUdb] 7069045
+        245$a: El hobbit / 
+        LDR/17: [I]; Size: 8252 
+            020a: 6070712714
+            020a: 8445000659
+            020a: 9786070712715
+            020a: 9788445000656
+                        035a: (OCoLC)811153966
+                        035a: (UIUdb)7069045
+
+
+-----------------------------------
+OUTPUT ID: 1592:
+-----------------------------------
+    INPUT ID: 395***: [IITdb] 18834
+        245$a: Roots / 
+        LDR/17: []; Size: 5945 
+            020a: 0385037872
+                        035a: (IITdb)18834
+                        035a: (OCoLC)02188350
+
+    INPUT ID: 424: [ISUdb] 733872
+        245$a: Roots / 
+        LDR/17: []; Size: 4885 
+            020a: 0385037872
+                        035a: (ISUdb)733872
+                        035a: (OCoLC)02188350
+
+    INPUT ID: 439: [NCCdb] 87680
+        245$a: Roots / 
+        LDR/17: []; Size: 4883 
+            020a: 0385037872
+                        035a: (NCCdb)87680
+                        035a: (OCoLC)02188350
+
+    INPUT ID: 460: [NEIdb] 311291
+        245$a: Roots / 
+        LDR/17: []; Size: 4885 
+            020a: 0385037872
+                        035a: (NEIdb)311291
+                        035a: (OCoLC)02188350
+
+    INPUT ID: 489: [NIUdb] 1006419
+        245$a: Roots / 
+        LDR/17: []; Size: 4887 
+            020a: 0385037872
+                        035a: (NIUdb)1006419
+                        035a: (OCoLC)02188350
+
+    INPUT ID: 526: [SICdb] 1129105
+        245$a: Roots / 
+        LDR/17: []; Size: 4887 
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (SICdb)1129105
+
+    INPUT ID: 557: [UICdb] 179489
+        245$a: Roots / 
+        LDR/17: []; Size: 5210 
+        010a: 72076164
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (UICdb)179489
+
+    INPUT ID: 583: [UISdb] 302964
+        245$a: Roots / 
+        LDR/17: []; Size: 4885 
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (UISdb)302964
+
+    INPUT ID: 643: [UIUdb] 2410012
+        245$a: Roots / 
+        LDR/17: []; Size: 5825 
+        010a: 72076164
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (UIUdb)2410012
+
+    INPUT ID: 647: [UIUdb] 3532105
+        245$a: Roots / 
+        LDR/17: []; Size: 4887 
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (UIUdb)3532105
+
+    INPUT ID: 668: [WIUdb] 530486
+        245$a: Roots / 
+        LDR/17: []; Size: 4885 
+            020a: 0385037872
+                        035a: (OCoLC)02188350
+                        035a: (WIUdb)530486
+
+    INPUT ID: 951: [IWUdb] 166524
+        245$a: Roots / 
+        LDR/17: []; Size: 4880 
+        010a: 72076164
+            020a: 0385037872
+                        035a: (IWUdb)166524
+
+    INPUT ID: 957: [PRCdb] 112282
+        245$a: Roots / 
+        LDR/17: []; Size: 5292 
+        010a: 72076164
+            020a: 0385037872
+            020a: 9780385037877
+                        035a: (PRCdb)112282
+
+
+-----------------------------------
+OUTPUT ID: 1593:
+-----------------------------------
+    INPUT ID: 357: [DPUdb] 323470
+        245$a: Roots / 
+        LDR/17: []; Size: 4905 
+            020a: 0385037872
+                        035a: (DPUdb)323470
+                        035a: (OCoLC)03389837
+
+
+-----------------------------------
+OUTPUT ID: 1595:
+-----------------------------------
+    INPUT ID: 366***: [EIUdb] 531810
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 12459 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+            020a: 9780060277307
+            020a: 9780060277314
+                        035a: (EIUdb)531810
+                        035a: (OCoLC)12345678
+
+    INPUT ID: 403: [ISUdb] 986302
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10425 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (ISUdb)986302
+                        035a: (OCoLC)42061091
+
+    INPUT ID: 446: [NEIdb] 382388
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10419 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (NEIdb)382388
+                        035a: (OCoLC)42061091
+
+    INPUT ID: 469: [NIUdb] 1258024
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10427 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (NIUdb)1258024
+                        035a: (OCoLC)42061091
+
+    INPUT ID: 508: [SICdb] 1407234
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10427 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (OCoLC)42061091
+                        035a: (SICdb)1407234
+
+    INPUT ID: 573: [UISdb] 367092
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10555 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (OCoLC)42061091
+                        035a: (UISdb)367092
+
+    INPUT ID: 592: [UIUdb] 4266443
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 10427 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (OCoLC)42061091
+                        035a: (UIUdb)4266443
+
+    INPUT ID: 946: [AUGdb] 62833
+        245$a: The Wanderer / 
+        LDR/17: [8]; Size: 7510 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+                        035a: (AUGdb)62833
+
+    INPUT ID: 959: [PRCdb] 123354
+        245$a: The Wanderer / 
+        LDR/17: []; Size: 7910 
+        010a: 99042699
+            020a: 0060277300
+            020a: 0060277319
+            020a: 9780060277307
+            020a: 9780060277314
+                        035a: (PRCdb)123354
+
+
+-----------------------------------
+OUTPUT ID: 1596:
+-----------------------------------
+    INPUT ID: 1572: [RMCdb] 263457
+        245$a: The woman who died a lot : 
+        LDR/17: []; Size: 9997 
+                        035a: (OCoLC)779263724
+                        035a: (RMCdb)263457
+
+    INPUT ID: 1578: [ICCdb] 223348
+        245$a: The woman who died a lot : 
+        LDR/17: [8]; Size: 7607 
+        010a: 2012019120
+            020a: 9780670025022
+                        035a: (ICCdb)223348
+                        035a: (OCoLC)779263724
+
+    INPUT ID: 1580***: [UIUdb] 7014411
+        245$a: The woman who died a lot : 
+        LDR/17: []; Size: 10690 
+        010a: 2012019120
+            020a: 067002502X
+            020a: 9780670025022
+                        035a: (UIUdb)7014411
+
+
+-----------------------------------
+OUTPUT ID: 1598:
+-----------------------------------
+    INPUT ID: 1574: [RMCdb] 115877
+        245$a: Up country : 
+        LDR/17: [I]; Size: 6056 
+            020a: 0739422987
+                        035a: (OCoLC)49054750
+                        035a: (RMCdb)115877
+
+
+-----------------------------------
+OUTPUT ID: 1600:
+-----------------------------------
+    INPUT ID: 1576: [RMCdb] 44524
+        245$a: Banner in the sky / 
+        LDR/17: [I]; Size: 5393 
+        010a: 54007296
+            020a: 0064470482
+                        035a: (OCoLC)35796851
+                        035a: (RMCdb)44524
+
+
+-----------------------------------
+OUTPUT ID: 1694:
+-----------------------------------
+    INPUT ID: 1114: [ISUdb] 77395
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 4672 
+                022a: 00924563
+                        035a: (ISUdb)77395
+                        035a: (OCoLC)01783623
+
+    INPUT ID: 1121: [SIEdb] 46973
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 4901 
+        010a: 72009423
+                022a: 00924563
+                        035a: (OCoLC)01783623
+                        035a: (SIEdb)46973
+
+    INPUT ID: 1125***: [UISdb] 46321
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 6898 
+        010a: 72009423
+                022a: 00924563
+                        035a: (UISdb)46321
+
+    INPUT ID: 1128: [UICdb] 115605
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 6069 
+        010a: 72009423
+                022a: 00924563
+                        035a: (OCoLC)01783623
+                        035a: (UICdb)115605
+
+    INPUT ID: 1131: [UIUdb] 306744
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 4674 
+                022a: 00924563
+                        035a: (OCoLC)01783623
+                        035a: (UIUdb)306744
+
+    INPUT ID: 1656: [ILCdb] 20919
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 4874 
+        010a: 72009423
+                022a: 00924563
+                        035a: (ILCdb)20919
+                        035a: (OCoLC)01783623
+
+    INPUT ID: 1660: [NEIdb] 49222
+        245$a: Syntax and semantics. 
+        LDR/17: []; Size: 4672 
+                022a: 00924563
+                        035a: (NEIdb)49222
+                        035a: (OCoLC)01783623
+
+
+-----------------------------------
+OUTPUT ID: 1696:
+-----------------------------------
+    INPUT ID: 1425***: [EIUdb] 107228
+        245$a: Bob Dylan's greatest hits 
+        LDR/17: []; Size: 7943 
+        010a: 91755140
+                    024a: 0208311385291
+                    024a: 0746409463251
+                    024a: 74640946321
+                        035a: (EIUdb)107228
+                        035a: (OCoLC)11242752
+
+    INPUT ID: 1435: [DPUdb] 81870
+        245$a: Bob Dylan's greatest hits 
+        LDR/17: []; Size: 6886 
+        010a: 91755140
+                    024a: 0746409463251
+                    024a: 74640946321
+                        035a: (DPUdb)81870
+                        035a: (OCoLC)11242752
+
+    INPUT ID: 1441: [SIEdb] 596011
+        245$a: Bob Dylan's greatest hits 
+        LDR/17: []; Size: 6479 
+        010a: 91755140
+                    024a: 74640946321
+                        035a: (Default)UNI035
+                        035a: (SIEdb)596011
+
+    INPUT ID: 1447: [UIUdb] 884822
+        245$a: Bob Dylan's greatest hits 
+        LDR/17: []; Size: 5736 
+                    024a: 74640946321
+                        035a: (OCoLC)11242752
+                        035a: (UIUdb)884822
+
+
+-----------------------------------
+OUTPUT ID: 1698:
+-----------------------------------
+    INPUT ID: 1443***: [SIEdb] 596001
+        245$a: A momentary lapse of reason 
+        LDR/17: []; Size: 6222 
+        010a: 91759258
+                        035a: (OCoLC)16875152
+                        035a: (SIEdb)596001
+
+    INPUT ID: 1450: [UIUdb] 1054567
+        245$a: A momentary lapse of reason 
+        LDR/17: []; Size: 5975 
+        010a: 91759258
+                        035a: (OCoLC)16875152
+                        035a: (UIUdb)1054567
+
+
+-----------------------------------
+OUTPUT ID: 1700:
+-----------------------------------
+    INPUT ID: 1433***: [EIUdb] 930407
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [1]; Size: 7675 
+        010a: 2002614102
+                    024a: 0289429227231
+                    024a: 28942922720
+                        035a: (EIUdb)930407
+                        035a: (OCoLC)22186565
+
+    INPUT ID: 1469: [CSUdb] 377512
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [I]; Size: 4554 
+                        035a: (CSUdb)377512
+                        035a: (OCoLC)22186565
+
+    INPUT ID: 1470: [PRCdb] 150883
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [1]; Size: 7559 
+        010a: 2002614102
+                    024a: 0289429227230
+                    024a: 28942922720
+                        035a: (PRCdb)150883
+
+    INPUT ID: 1471: [IMSdb] 21184
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [I]; Size: 4059 
+                        035a: (IMSdb)21184
+                        035a: (OCoLC)22186565
+
+    INPUT ID: 1473: [USFdb] 66782
+        245$a: 24 pre?ludes, op. 28 
+        LDR/17: [I]; Size: 6077 
+                        035a: (OCoLC)22186565
+                        035a: (USFdb)66782
+
+
+-----------------------------------
+OUTPUT ID: 1701:
+-----------------------------------
+    INPUT ID: 1653***: [BENdb] 219772
+        245$a: The interpretation of cultures 
+        LDR/17: []; Size: 6404 
+        010a: 73081196
+            020a: 046503425X
+                        035a: (BENdb)219772
+                        035a: (Default)MIU01000000000000007296150
+                        035a: (dli)HEB01005
+
+    INPUT ID: 1655: [EIUdb] 41337
+        245$a: The interpretation of cultures; 
+        LDR/17: []; Size: 6177 
+        010a: 73081196
+            020a: 046503425X
+                        035a: (EIUdb)41337
+                        035a: (OCoLC)00737285
+
+    INPUT ID: 1658: [IWUdb] 320043
+        245$a: The interpretation of cultures 
+        LDR/17: []; Size: 5938 
+        010a: 73081196
+            020a: 046503425X
+                        035a: (Default)MIU01000000000000007296150
+                        035a: (dli)HEB01005
+                        035a: (IWUdb)320043
+
+    INPUT ID: 1665: [ONUdb] 65104
+        245$a: The interpretation of cultures 
+        LDR/17: []; Size: 5929 
+            020a: 046503425X
+                        035a: (Default)MIU01000000000000007296150
+                        035a: (dli)HEB01005
+                        035a: (ONUdb)65104
+
+    INPUT ID: 1670: [UISdb] 510961
+        245$a: The interpretation of cultures 
+        LDR/17: []; Size: 6058 
+            020a: 046503425X
+                        035a: (Default)MIU01000000000000007296150
+                        035a: (UISdb)510961
+
+
+-----------------------------------
+OUTPUT ID: 1702:
+-----------------------------------
+    INPUT ID: 1575: [RMCdb] 117220
+        245$a: Up country : 
+        LDR/17: []; Size: 6574 
+        010a: 2001026414
+            020a: 0446516570
+                        035a: (OCoLC)46976453
+                        035a: (RMCdb)117220
+
+    INPUT ID: 1654***: [EIUdb] 1006288
+        245$a: Up country / 
+        LDR/17: []; Size: 8416 
+        010a: 2001026414
+            020a: 0446516570
+            020a: 9780446516570
+                        035a: (EIUdb)1006288
+                        035a: (OCoLC)46976453
+
+    INPUT ID: 1667: [SICdb] 1444063
+        245$a: Up country / 
+        LDR/17: []; Size: 6597 
+        010a: 2001026414
+            020a: 0446516570
+                        035a: (OCoLC)46976453
+                        035a: (SICdb)1444063
+
+
+-----------------------------------
+OUTPUT ID: 1703:
+-----------------------------------
+    INPUT ID: 1657: [IVCdb] 113153
+        245$a: Culture and customs of Croatia 
+        LDR/17: []; Size: 8072 
+        010a: 2010037596
+            020a: 0313351171
+            020a: 031335118X
+            020a: 9780313351174
+            020a: 9780313351181
+                        035a: (Default)ABC031335118X
+                        035a: (IVCdb)113153
+
+    INPUT ID: 1661: [NEIdb] 604269
+        245$a: Culture and customs of Croatia / 
+        LDR/17: []; Size: 8257 
+        010a: 2010037596
+            020a: 0313351171
+            020a: 031335118X
+            020a: 9780313351174
+            020a: 9780313351181
+                        035a: (NEIdb)604269
+                        035a: (OCoLC)664259084
+
+    INPUT ID: 1668: [SICdb] 2204276
+        245$a: Culture and customs of Croatia / 
+        LDR/17: []; Size: 7993 
+        010a: 2010037596
+            020a: 0313351171
+            020a: 031335118X
+            020a: 9780313351174
+            020a: 9780313351181
+                        035a: (OCoLC)664259084
+                        035a: (SICdb)2204276
+
+    INPUT ID: 1672***: [WRHdb] 274630
+        245$a: Culture and customs of Croatia / 
+        LDR/17: []; Size: 8444 
+            020a: 0313351171
+            020a: 9780313351174
+                        035a: (Default)ABC031335118X
+                        035a: (WRHdb)274630
+
+
+-----------------------------------
+OUTPUT ID: 1704:
+-----------------------------------
+    INPUT ID: 1573: [RMCdb] 263435
+        245$a: The long earth / 
+        LDR/17: []; Size: 9712 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (Jess)5214804
+                        035a: (OCoLC)785019206
+                        035a: (RMCdb)263435
+
+    INPUT ID: 1579: [ICCdb] 222064
+        245$a: The long Earth / 
+        LDR/17: [I]; Size: 7309 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (ICCdb)222064
+                        035a: (Jess)5214804
+
+    INPUT ID: 1581***: [UIUdb] 6989325
+        245$a: The long earth / 
+        LDR/17: []; Size: 9978 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (OCoLC)785019206
+                        035a: (UIUdb)6989325
+
+    INPUT ID: 1659: [LLCdb] 113966
+        245$a: The long Earth / 
+        LDR/17: [I]; Size: 8512 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (LLCdb)113966
+                        035a: (OCoLC)785019206
+
+    INPUT ID: 1666: [PRKdb] 145631
+        245$a: The long earth / 
+        LDR/17: []; Size: 9895 
+        010a: 2012026959
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (OCoLC)785019206
+                        035a: (PRKdb)145631
+
+
+-----------------------------------
+OUTPUT ID: 1705:
+-----------------------------------
+    INPUT ID: 1201***: [EIUdb] 127291
+        245$a: Monuments of Renaissance music / 
+        LDR/17: [I]; Size: 4695 
+        010a: 64024965
+                        035a: (EIUdb)127291
+                        035a: (OCoLC)01826337
+
+    INPUT ID: 1662: [NIUdb] 271847
+        245$a: Monuments of Renaissance music / 
+        LDR/17: [I]; Size: 4309 
+                        035a: (NIUdb)271847
+                        035a: (OCoCL)ocm02253212
+                        035a: (OCoLC)01826337
+
+
+-----------------------------------
+OUTPUT ID: 1706:
+-----------------------------------
+    INPUT ID: 1663: [NIUdb] 232384
+        245$a: A Florentine chansonnier from the time of Lorenzo the Magnificent / 
+        LDR/17: []; Size: 6475 
+            020a: 0226076237
+                        035a: (NIUdb)232384
+                        035a: (OCoLC)09748653
+
+
+-----------------------------------
+OUTPUT ID: 1707:
+-----------------------------------
+    INPUT ID: 1664: [NIUdb] 2245254
+        245$a: The planter's daughter 
+        LDR/17: []; Size: 7238 
+                        035a: (Default)TGPSM07-B218
+                        035a: (NIUdb)2245254
+
+
+-----------------------------------
+OUTPUT ID: 1708:
+-----------------------------------
+    INPUT ID: 1207: [EIUdb] 215115
+        245$a: Professional paper / 
+        LDR/17: []; Size: 4300 
+                        035a: (EIUdb)215115
+                        035a: (OCoLC)11206085
+
+    INPUT ID: 1210***: [ISUdb] 365413
+        245$a: Professional paper / 
+        LDR/17: []; Size: 8122 
+        010a: 85003059
+                022a: 10449620
+                        035a: (ISUdb)365413
+                        035a: (OCoLC)11206085
+
+    INPUT ID: 1669: [UICdb] 727370
+        245$a: Professional paper / 
+        LDR/17: []; Size: 6057 
+        010a: 85003059
+                022a: 10449620
+                        035a: (OCoLC)11206085
+                        035a: (UICdb)727370
+
+
+-----------------------------------
+OUTPUT ID: 1709:
+-----------------------------------
+    INPUT ID: 1671: [WRHdb] 299701
+        245$a: The long Earth / 
+        LDR/17: [I]; Size: 7404 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (OCLC)ocn785019206
+                        035a: (WRHdb)299701
+
+
+-----------------------------------
+OUTPUT ID: 1710:
+-----------------------------------
+    INPUT ID: 1673: [JOLdb] 120564
+        245$a: The cat in the hat / 
+        LDR/17: [I]; Size: 6591 
+            020a: 039480001X
+            020a: 0394900014
+            020a: 9780394800011
+            020a: 9780394900018
+                        035a: (JOLdb)120564
+                        035a: (OCoLC)55485426
+
+
+-----------------------------------
+OUTPUT ID: 1731:
+-----------------------------------
+    INPUT ID: 397: [ISUdb] 1364486
+        245$a: Journal of policy and practice in intellectual disabilities 
+        LDR/17: []; Size: 8835 
+        010a: 2004255451
+                022a: 17411130
+                        035a: (ISUdb)1364486
+                        035a: (OCoLC)55051710
+
+
+-----------------------------------
+OUTPUT ID: 1732:
+-----------------------------------
+    INPUT ID: 536: [UICdb] 2447017
+        245$a: Journal of policy and practice in intellectual disabilities 
+        LDR/17: []; Size: 9284 
+                022a: 17411130
+                        035a: (UICdb)2447017
+                        035a: (WaSeSS)ssj0029556
+
+
+-----------------------------------
+OUTPUT ID: 1733:
+-----------------------------------
+    INPUT ID: 495: [RSHdb] 69304
+        245$a: Journal of policy and practice in intellectual disabilities 
+        LDR/17: []; Size: 8592 
+                022a: 17411130
+                        035a: (RSHdb)69304
+
+
+-----------------------------------
+OUTPUT ID: 1734:
+-----------------------------------
+    INPUT ID: 1119***: [SIEdb] 82071
+        245$a: Journal of number theory. 
+        LDR/17: []; Size: 5997 
+                022a: 0022314X
+                        035a: (OCoLC)01800049
+                        035a: (SIEdb)82071
+
+    INPUT ID: 1136: [EIUdb] 76263
+        245$a: Journal of number theory. 
+        LDR/17: []; Size: 5997 
+                022a: 0022314X
+                        035a: (EIUdb)76263
+                        035a: (OCoLC)01800049
+
+
+-----------------------------------
+OUTPUT ID: 1735:
+-----------------------------------
+    INPUT ID: 1126: [UICdb] 593841
+        245$a: Journal of number theory. 
+        LDR/17: []; Size: 7606 
+        010a: 78006864
+                022a: 0022314X
+                        035a: (UICdb)593841
+
+
+-----------------------------------
+OUTPUT ID: 1736:
+-----------------------------------
+    INPUT ID: 1129: [UIUdb] 560246
+        245$a: Journal of number theory. 
+        LDR/17: []; Size: 6051 
+                022a: 0022314X
+                        035a: (UIUdb)560246
+
+
+-----------------------------------
+OUTPUT ID: 1738:
+-----------------------------------
+    INPUT ID: 1124***: [UISdb] 309057
+        245$a: Who's who in America. 
+        LDR/17: []; Size: 9090 
+        010a: 4016934
+                022a: 00839396
+                        035a: (UISdb)309057
+
+    INPUT ID: 1189: [IECdb] 17744
+        245$a: Who's who in America. 
+        LDR/17: []; Size: 8343 
+        010a: 4016934
+                022a: 00839396
+                        035a: (IECdb)17744
+
+
+-----------------------------------
+OUTPUT ID: 1739:
+-----------------------------------
+    INPUT ID: 1118: [SIEdb] 455959
+        245$a: Who's who in America. 
+        LDR/17: []; Size: 9094 
+                022a: 00839396
+                        035a: (OCoLC)01141571
+                        035a: (SIEdb)455959
+
+    INPUT ID: 1122: [NIUdb] 1033327
+        245$a: Who's who in America. 
+        LDR/17: []; Size: 9096 
+                022a: 00839396
+                        035a: (NIUdb)1033327
+                        035a: (OCoLC)01141571
+
+    INPUT ID: 1190***: [RSHdb] 3678
+        245$a: Who's who in America. 
+        LDR/17: []; Size: 9582 
+                022a: 00839396
+                        035a: (COLdb)122596
+                        035a: (OCoLC)01141571
+                        035a: (RSHdb)3678
+
+
+-----------------------------------
+OUTPUT ID: 1740:
+-----------------------------------
+    INPUT ID: 1455: [UIUdb] 3348468
+        245$a: Boris Godounov 
+        LDR/17: [I]; Size: 8715 
+                    024a: 22924541821
+                        035a: (OCoLC)24503779
+                        035a: (UIUdb)3348468
+
+    INPUT ID: 1462***: [WHEdb] 78113
+        245$a: Boris Godounov 
+        LDR/17: [I]; Size: 10160 
+        010a: 91755115
+                    024a: 22924541821
+                        035a: (OCoLC)24503779
+                        035a: (WHEdb)78113
+
+
+-----------------------------------
+OUTPUT ID: 1741:
+-----------------------------------
+    INPUT ID: 1431: [EIUdb] 384268
+        245$a: Boris Godounov 
+        LDR/17: []; Size: 11107 
+        010a: 91755115
+                    024a: 0229245418271
+                        035a: (EIUdb)384268
+
+    INPUT ID: 1439: [DPUdb] 291764
+        245$a: Boris Godounov 
+        LDR/17: []; Size: 11050 
+        010a: 91755115
+                    024a: 0229245418271
+                        035a: (DPUdb)291764
+
+    INPUT ID: 1461***: [ARUdb] 104102
+        245$a: Boris Godounov 
+        LDR/17: []; Size: 11203 
+        010a: 91755115
+                    024a: 0229245418271
+                        035a: (ARUdb)104102
+
+

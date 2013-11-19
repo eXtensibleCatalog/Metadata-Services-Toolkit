@@ -69,12 +69,9 @@ public class RecordOfSourceManager extends BaseService {
         bigger_record_weighting_enabled= config.getPropertyAsBoolean("bigger_record_weighting_enabled", false);
     }
 
-    protected InputRecord getRecordOfSourceRecord(HashSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
-    	return getRecordOfSourceRecord(set, repo, scores, null);
-    }
     
-    protected InputRecord getRecordOfSourceRecord(HashSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores, TLongLongHashMap rosMap) {
-        final Long recordOfSource = determineRecordOfSource(set, repo, scores, rosMap);
+    protected InputRecord getRecordOfSourceRecord(HashSet<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> scores) {
+        final Long recordOfSource = determineRecordOfSource(set, repo, scores);
         LOG.debug("**** Record of Source == "+recordOfSource);  // obviously produces much writing to log
         //TODO should we be hanging on to who we chose as record of source?  (for the update case?)
 
@@ -108,7 +105,7 @@ public class RecordOfSourceManager extends BaseService {
      * @param repo //for date tie-breaker
      * @return
      */
-    protected Long determineRecordOfSource(Set<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> _scores, TLongLongHashMap rosMap) {
+    protected Long determineRecordOfSource(Set<Long> set, Repository repo, TLongObjectHashMap<RecordOfSourceData> _scores) {
         TimingLogger.start("RecordOfSourceManager.determineRecordOfSource");
 
         TreeMap<SortableRecordOfSourceData, RecordOfSourceData> sortedMap = new TreeMap<SortableRecordOfSourceData, RecordOfSourceData>();
@@ -135,12 +132,6 @@ public class RecordOfSourceManager extends BaseService {
         }
         final Long RoS = sortedMap.firstKey().recordId;
         
-        // In case caller wants to keep track of the Record of Source for the matchset (each member of the set will be mapped to the RoS)
-        if (rosMap != null) {
-            for (Long num: set) {
-            	rosMap.put(num, RoS);
-            }
-        }
         TimingLogger.stop("RecordOfSourceManager.determineRecordOfSource");
         return RoS;
     }
