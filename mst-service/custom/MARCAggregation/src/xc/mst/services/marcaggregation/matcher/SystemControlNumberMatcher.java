@@ -63,8 +63,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // multiple records might have the same normalized 035$a, this would be an indication of a match
     protected Map<SCNData, List<Long>> scn2inputIds = new HashMap<SCNData, List<Long>>();
 
-    protected List<String> prefixList = new ArrayList<String>();
-    protected List<String> prefixList_unpersisted = new ArrayList<String>();
+    protected Map<Integer, String> id2prefix = new HashMap<Integer, String>();
+    protected Map<Integer, String> id2prefix_unpersisted = new HashMap<Integer, String>();
+
+    protected Map<String, Integer> prefix2id = new HashMap<String, Integer>();
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
 
@@ -82,12 +84,17 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 if (prefix != null && prefix.length() >0) {
                     if (Character.isLetter(first)) {
                         LOG.debug("found a prefix of " + prefix);
-                        if (!prefixList.contains(prefix)) {
-                            prefixList.add(prefix);
-                            if (MarcAggregationService.hasIntermediatePersistence) {
-                            	prefixList_unpersisted.add(prefix);
-                            }
-
+                        // threads need to lock - critical section
+                        synchronized(this) {
+	                        if (!prefix2id.containsKey(prefix)) {
+	                        	int newId = prefix2id.size();
+	                            prefix2id.put(prefix, newId);
+	                            id2prefix.put(newId, prefix);
+	                            if (MarcAggregationService.hasIntermediatePersistence) {	                            	
+	                            	id2prefix_unpersisted.put(newId, prefix);
+	                            }
+	
+	                        }
                         }
                         return prefix;
                     }
@@ -110,7 +117,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         }
         
         LOG.debug("mapID:" + prefix + numericId);
-        return new SCNData(prefix, prefixList.indexOf(prefix), numericId, s);
+        return new SCNData(prefix, prefix2id.get(prefix), numericId, s);
     }
 
     @Override
@@ -271,11 +278,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     @Override
     public void load() {
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        Map<Integer,String> map = s.getMarcAggregationServiceDAO().getPrefixes();
-
-        // want these ordered, guaranteed to have a 0-based incrementing set of numbers in the map.
-        for (int i=0; i<map.size(); i++) {
-            prefixList.add(map.get(i));
+        
+        id2prefix = s.getMarcAggregationServiceDAO().getPrefixes();
+        for (Integer id : id2prefix.keySet()) {
+            prefix2id.put(id2prefix.get(id), id);
         }
 
         // Retrieve all match point integer data into memory,
@@ -308,17 +314,15 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         if (force) {
             MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
             if (MarcAggregationService.hasIntermediatePersistence) {
-                s.getMarcAggregationServiceDAO().persistPrefixList(prefixList_unpersisted, MarcAggregationServiceDAO.prefixes_035a_table);
-
+                s.getMarcAggregationServiceDAO().persistPrefixList(id2prefix_unpersisted, MarcAggregationServiceDAO.prefixes_035a_table);
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn_unpersisted, MarcAggregationServiceDAO.matchpoints_035a_table);
 
-                prefixList_unpersisted.clear();
+                id2prefix_unpersisted.clear();
                 inputId2scn_unpersisted.clear();
 
             }
             else {
-                s.getMarcAggregationServiceDAO().persistPrefixList(prefixList, MarcAggregationServiceDAO.prefixes_035a_table);
-
+                s.getMarcAggregationServiceDAO().persistPrefixList(id2prefix, MarcAggregationServiceDAO.prefixes_035a_table);
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn/* _unpersisted */, MarcAggregationServiceDAO.matchpoints_035a_table);
             }
 

@@ -301,7 +301,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public void persistPrefixList(List<String> prefixList, String tableName) {
+    public void persistPrefixList(Map<Integer, String> prefixList, String tableName) {
         TimingLogger.start("MarcAggregationServiceDAO.persistPrefixMap");
         TimingLogger.start("prepare to write");
 
@@ -311,8 +311,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         try {
             final MutableInt j = new MutableInt(0);
-            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-            for (int id=0; id<prefixList.size(); id++) {
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));            
+            for (Integer id : prefixList.keySet()) {
                 Object prefixO = prefixList.get(id);
 
                 try {

@@ -118,7 +118,6 @@ public class MarcAggregationService extends GenericMetadataService {
      * Is this the first time running through this service?
      */
     boolean firstTime = false;
-long preProcessCount = 0;    
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -208,7 +207,6 @@ long preProcessCount = 0;
         
         // This service needs to retrieve records during the first run, therefore this index needs to get created initially!
         firstTime = getRepositoryDAO().createIndicesOnRecordUpdates(getRepository().getName());
-preProcessCount = 0;
     }
     
 
@@ -497,10 +495,6 @@ preProcessCount = 0;
     public void preProcess(InputRecord r) { 
         TimingLogger.start("preProcess");
         
-if (++preProcessCount % 1000 == 0) {
-	LOG.error("in preProcess: count: " + preProcessCount);
-}
-    
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
         smr.setRecordId(r.getId());
 
@@ -556,6 +550,8 @@ if (++preProcessCount % 1000 == 0) {
 
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
             smr.setRecordId(r.getId());
+
+LOG.error("INCOMING RECORD: " + r.getId() + " [" + smr.getControlField(3) + "] " + smr.getControlField(1));
 
             // Get the Leader 06. This will allow us to determine the record's type
             final char leader06 = smr.getLeader().charAt(6);
