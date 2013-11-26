@@ -9,6 +9,18 @@
 -- Table structure for MARC Aggregation service
 -- -------------------------------------------------------------
 
+
+-- -----------------------------------------------------
+-- Table `temp_records_xml`
+-- -----------------------------------------------------
+create table temp_records_xml (
+	record_id      int         not null,
+	xml            longtext,
+	
+        INDEX idx_record_id (record_id),
+	PRIMARY KEY (record_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- -----------------------------------------------------
 -- Table `bib_records`
 -- -----------------------------------------------------
@@ -21,6 +33,21 @@ CREATE  TABLE `bib_records` (
   INDEX idx_merged_input_id (input_record_id),
 
   PRIMARY KEY (`input_record_id`, `output_record_id`) )
+
+ENGINE = MyISAM DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `record_of_source`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS record_of_source;
+CREATE  TABLE `record_of_source` (
+  `output_record_id` BIGINT NOT NULL ,
+  `input_record_id` BIGINT NOT NULL ,
+
+  INDEX idx_ros_output_id (output_record_id),
+  INDEX idx_ros_input_id (input_record_id),
+
+  PRIMARY KEY (`output_record_id`, `input_record_id`) )
 
 ENGINE = MyISAM DEFAULT CHARSET=utf8;
 

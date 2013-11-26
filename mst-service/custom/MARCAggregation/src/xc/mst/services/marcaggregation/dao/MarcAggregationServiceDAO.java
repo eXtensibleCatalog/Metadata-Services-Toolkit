@@ -45,6 +45,9 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
     private final static Logger LOG = Logger.getLogger(MarcAggregationServiceDAO.class);
     private final int RECORDS_AT_ONCE = 100000;
+    
+    // can't load into mysql table if the field data exceeds its type size
+    private final static int MAX_STRING_LENGTH = 255;
 
     // not yet used starts
     public final static String matchpoints_028a_table   = "matchpoints_028a";
@@ -64,6 +67,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public final static String merge_scores_table       = "merge_scores";
     public final static String merged_records_table     = "merged_records";
     public final static String bib_records_table        = "bib_records";
+    public final static String record_of_source_table   = "record_of_source";
 
     public final static String input_record_id_field    = "input_record_id";
     public final static String string_id_field          = "string_id";
@@ -91,8 +95,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         try {
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            final MutableInt j2 = new MutableInt(0);
 
-            final MutableInt j = new MutableInt(0);
             for (Object keyObj : inputId2matcherMap.keySet()) {
                 Long id = (Long) keyObj;
                 final byte[] idBytes = String.valueOf(id).getBytes();
@@ -102,18 +106,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     if (list == null) {
                         continue;
                     }
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-
-                    final MutableInt j2 = new MutableInt(0);
                     List<SCNData> scnList = (List<SCNData>) list;
                     LOG.debug("insert: " + tableName + ".size(): " + scnList.size());
                     if (scnList != null && scnList.size() > 0) {
                         for (SCNData _scn: scnList) {
                             try {   // need to loop through all strings associated with id!
+	                                if (_scn.full.length() > MAX_STRING_LENGTH || _scn.scn.length() > MAX_STRING_LENGTH) {
+	                                	LOG.error("*** problem with data (TOO LONG > " + MAX_STRING_LENGTH + ") readying id="+id);
+	                                	continue;
+	                                }
+
                                     if (j2.intValue() > 0) {
                                         os.write(newLineBytes);
                                     } else {
@@ -166,8 +168,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         try {
             final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
+            final MutableInt j2 = new MutableInt(0);
 
-            final MutableInt j = new MutableInt(0);
             for (Object keyObj : inputId2matcherMap.keySet()) {
                 Long id = (Long) keyObj;
                 final byte[] idBytes = String.valueOf(id).getBytes();
@@ -177,18 +179,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     if (list == null) {
                         continue;
                     }
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-
-                    final MutableInt j2 = new MutableInt(0);
                     List<String[]> strList = (List<String[]>) list;
                     LOG.debug("insert: " + tableName + ".size(): " + strList.size());
                     if (strList != null && strList.size() > 0) {
                         for (String[] _s: strList) {
                             try {   // need to loop through all strings associated with id!
+	                                if (_s.length > MAX_STRING_LENGTH) {
+	                                	LOG.error("*** problem with data (TOO LONG > " + MAX_STRING_LENGTH + ") readying id="+id);
+	                                	continue;
+	                                }
+
                                     if (j2.intValue() > 0) {
                                         os.write(newLineBytes);
                                     } else {
@@ -246,31 +246,31 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     if (list == null) {
                         continue;
                     }
-                    if (j.intValue() > 0) {
-                        os.write(newLineBytes);
-                    } else {
-                        j.increment();
-                    }
-
                     final byte[] idBytes = String.valueOf(id).getBytes();
-                    final MutableInt _j = new MutableInt(0);
 
                     List<String> strList = (List<String>) list;
                     LOG.debug("insert: " + tableName + ".size(): " + strList.size());
                     if (strList != null && strList.size() > 0) {
                         for (String _s: strList) {
                             if (StringUtils.isEmpty(_s)) {
+                            	LOG.error("*** problem with data (EMPTY) readying id="+id);
+                            	continue;
+                            }
+                            if (_s.length() > MAX_STRING_LENGTH) {
+                            	LOG.error("*** problem with data (TOO LONG > " + MAX_STRING_LENGTH + ") readying id="+id);
                                 continue;
                             }
                             try {
+                            	
+                                if (j.intValue() > 0) {
+                                    os.write(newLineBytes);
+                                } else {
+                                    j.increment();
+                                }
+
                                 // need to loop through all strings associated with id!
                                 //
                                 // write the newline after we have written a line, but not at the end of the last line
-                                if (_j.intValue() > 0) {
-                                    os.write(newLineBytes);
-                                } else {
-                                    _j.increment();
-                                }
                                 os.write(getBytes(_s));
                                 os.write(tabBytes);
                                 os.write(idBytes);
@@ -301,7 +301,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public void persistPrefixList(List<String> prefixList, String tableName) {
+    public void persistPrefixList(Map<Integer, String> prefixList, String tableName) {
         TimingLogger.start("MarcAggregationServiceDAO.persistPrefixMap");
         TimingLogger.start("prepare to write");
 
@@ -311,14 +311,24 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
 
         try {
             final MutableInt j = new MutableInt(0);
-            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));
-            for (int id=0; id<prefixList.size(); id++) {
+            final OutputStream os = new BufferedOutputStream(new FileOutputStream(dbLoadFileStr));            
+            for (Integer id : prefixList.keySet()) {
                 Object prefixO = prefixList.get(id);
 
                 try {
                     if (prefixO == null) {
                         continue;
                     }
+                    String prefix = (String) prefixO;
+                    if (StringUtils.isEmpty(prefix)) {
+                    	LOG.error("*** problem with data (EMPTY) readying id="+id);
+                    	continue;
+                    }
+                    if (prefix.length() > MAX_STRING_LENGTH) {
+                    	LOG.error("*** problem with data (TOO LONG > " + MAX_STRING_LENGTH + ") readying id="+id);
+                        continue;
+                    }
+
                     if (j.intValue() > 0) {
                         os.write(newLineBytes);
                     } else {
@@ -326,19 +336,8 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                     }
 
                     final byte[] idBytes = String.valueOf(id).getBytes();
-                    final MutableInt _j = new MutableInt(0);
 
-                    String prefix = (String) prefixO;
-                    if (StringUtils.isEmpty(prefix)) {
-                        continue;
-                    }
                     try {
-                        // write the newline after we have written a line, but not at the end of the last line
-                        if (_j.intValue() > 0) {
-                            os.write(newLineBytes);
-                        } else {
-                            _j.increment();
-                        }
                         os.write(getBytes(prefix));
                         os.write(tabBytes);
                         os.write(idBytes);
@@ -426,7 +425,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                         public boolean execute(long id, long num) {
                             try {
                                 if (j.intValue() > 0) {
-                                    LOG.debug("line break!!! j:" + j.intValue());
                                     os.write(newLineBytes);
                                 } else {
                                     j.increment();
@@ -480,7 +478,6 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                         public boolean execute(long id, xc.mst.services.marcaggregation.RecordOfSourceData source) {
                             try {
                                 if (j.intValue() > 0) {
-                                    LOG.debug("line break!!! j:" + j.intValue());
                                     os.write(newLineBytes);
                                 } else {
                                     j.increment();
