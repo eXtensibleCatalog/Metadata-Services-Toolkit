@@ -551,8 +551,6 @@ public class MarcAggregationService extends GenericMetadataService {
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
             smr.setRecordId(r.getId());
 
-LOG.error("INCOMING RECORD: " + r.getId() + " [" + smr.getControlField(3) + "] " + smr.getControlField(1));
-
             // Get the Leader 06. This will allow us to determine the record's type
             final char leader06 = smr.getLeader().charAt(6);
             
