@@ -193,6 +193,7 @@ public class SolrIndexService extends GenericMetadataService {
         this.incomingRepository = repo;
         this.preserveStatuses = false;
         try {
+LOG.error("SolrIndexService, processing repo "+ repo.getName()+" NOW...");
             super.process(repo, inputFormat, inputSet, outputSet);
         } catch (Exception e) {
             LOG.error("SolrIndexService, processing repo "+ repo.getName()+" failed.", e);

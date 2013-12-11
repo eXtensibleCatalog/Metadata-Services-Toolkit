@@ -1362,7 +1362,11 @@ public class RepositoryDAO extends BaseDAO {
     // have gotten to that point, the background thread will already have completed.
     public long getRecordCount(String name, Date from, Date until,
             Format inputFormat, Set inputSet, boolean force) {
-        // return -1l;
+
+    	
+    	force = true; /****** COMPLEXITY I do not like the inconsistent results coming from of all this complexity. Just "force" a complete count! For now, I'm going to enclose all the complexity within long asterisk comment; eventually, we should just remove it all. 
+        
+    	// return -1l;
         LOG.debug("from: " + from);
         LOG.debug("until: " + until);
         LOG.debug("inputFormat: " + inputFormat);
@@ -1477,7 +1481,7 @@ public class RepositoryDAO extends BaseDAO {
                     return 0;
                 }
             }
-        }
+        } COMPLEXITY *******/
 
         {
             List<Object> params = new ArrayList<Object>();
@@ -1537,20 +1541,22 @@ public class RepositoryDAO extends BaseDAO {
             rows2examine = (BigInteger) records.get(0).get("rows");
             LOG.debug("rows: " + rows2examine);
             LOG.debug("force: " + force);
+            /******* COMPLEXITY
             if (rows2examine.intValue() < completeListSizeThreshold || force) {
-                countMethod2use = 3;
+                countMethod2use = 3; COMPLEXITY *******/
                 recordCount = this.jdbcTemplate.queryForLong(sb.toString(), obj);
                 lastCompleteListSizeMethod = 3;
                 return recordCount;
-            }
+            /******* COMPLEXITY } COMPLEXITY ******/
         }
 
-        if (countMethod2use == 0) {
+        /******* COMPLEXITY if (countMethod2use == 0) {
             // TODO: take a guess
             return -1l;
         }
 
-        return -1l;
+        return -1l; COMPLEXITY ********/
+        
     }
 
     public List<Set> getSets(String repoName, long recordId) {
@@ -1602,6 +1608,7 @@ public class RepositoryDAO extends BaseDAO {
                             " group by u.record_id " +
                             " order by u.record_id ");
             LOG.debug("name: " + name + " startingId: " + startingId + " highestId: " + highestId + " from:" + from + " until:" + until);
+LOG.error("name: " + name + " startingId: " + startingId + " highestId: " + highestId + " from:" + from + " until:" + until);            
             params.add(startingId);
             params.add(startingId);
             params.add(highestId);

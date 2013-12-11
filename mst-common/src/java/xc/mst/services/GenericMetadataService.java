@@ -521,14 +521,19 @@ public abstract class GenericMetadataService extends SolrMetadataService
         running.acquireUninterruptibly();
 
         boolean previouslyPaused = false;
-        ServiceHarvest sh = null;
-                
+        ServiceHarvest sh = getServiceHarvest(inputFormat, inputSet,
+	                repo.getName(), getService());
+        
+        this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
+                sh.getUntil(), inputFormat, inputSet);
+LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. TotalRecordCount: " + this.totalRecordCount);
+        
         if (doPreProcess()) {
-            //LOG.debug("gettingServiceHarvest for pre-process");
-            sh = getServiceHarvest(inputFormat, inputSet,
-                    repo.getName(), getService());
-            //LOG.debug("pre-process sh: " + sh);            
-        	
+            int getRecordLoops = 0;
+            
+            // To show preProcessing progress, we'll display the count down starting with negative numbers, beginning with negative total and ending with zero
+            processedRecordCount = (int) -this.totalRecordCount;
+                  	
         	List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
             while (records != null && records.size() > 0 && !stopped) {
                 if (paused) {
@@ -545,6 +550,13 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     running.acquireUninterruptibly();
                     previouslyPaused = false;
                 }
+
+                if (++getRecordLoops % 100 == 0) {
+                    // TODO here is the place to display performance!
+                    // processedRecordCount is a sensible count to pass here as the number of records updated.
+                    TimingLogger.reset(processedRecordCount);
+                }
+
                 
                 for (Record in : records) {
                 	//LOG.debug("PRE-processing record id=" + in.getId());                	
@@ -556,6 +568,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                         unexpectedError = true;
                         LOG.error("error preprocessing record w/ id: " + in.getId(), t);
                     }
+                    processedRecordCount++;
                     TimingLogger.stop(getServiceName() + ".preprocess");
                     if (unexpectedError) break;
                     
@@ -565,6 +578,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 records = getRecords(repo, sh, inputFormat, inputSet);
             }
         }
+        processedRecordCount = 0;
+
         
         // what do we consider a "large" update?  If it's large enough, we will then cache statuses ahead of time
         String strLHT = MSTConfiguration.getInstance().getProperty(Constants.CONFIG_LARGE_HARVEST_THRESHOLD);
@@ -576,22 +591,6 @@ public abstract class GenericMetadataService extends SolrMetadataService
             	largeHarvestThreshold = LARGE_HARVEST_THRESHOLD_DEFAULT;
             }
         }
-
-        
-        if (sh == null) {
-	        LOG.debug("gettingServiceHarvest");
-	        sh = getServiceHarvest(inputFormat, inputSet,
-	                repo.getName(), getService());
-        } else {
-            sh.setHighestId(null);        	
-        }
-        
-        // this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
-        // sh.getUntil(), inputFormat, inputSet);
-        
-        //LOG.debug("sh: " + sh);
-        this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
-                sh.getUntil(), inputFormat, inputSet);
 
         if (!isSolrIndexer() && preserveStatuses) {
             // do we cache statuses?
@@ -619,7 +618,11 @@ public abstract class GenericMetadataService extends SolrMetadataService
                     .getPropertyAsInt("db.insertsAtOnce", 10000));
         }
 
+        sh.setHighestId(null); // reset harvest
         List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
+
+LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. Actual RecordCount: " + records.size());
+
 
         if (getMetadataServiceManager() != null) {
             getMetadataServiceManager().setIncomingRecordCounts(

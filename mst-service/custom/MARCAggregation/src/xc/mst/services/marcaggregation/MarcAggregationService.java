@@ -118,6 +118,8 @@ public class MarcAggregationService extends GenericMetadataService {
      * Is this the first time running through this service?
      */
     boolean firstTime = false;
+    
+    boolean isSetUp = false;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -141,6 +143,10 @@ public class MarcAggregationService extends GenericMetadataService {
         
         recordOfSourceMap = null;
         
+        currentMatchSets = null;
+        
+        isSetUp = false;
+        
         System.gc();
     }
 
@@ -160,7 +166,17 @@ public class MarcAggregationService extends GenericMetadataService {
         }
         
         debugMode = config.getPropertyAsBoolean("debug_mode", false);
+        
+        // This service needs to retrieve records during the first run, therefore this index needs to get created initially!
+        firstTime = getRepositoryDAO().createIndicesOnRecordUpdates(getRepository().getName());
+        
+        isSetUp = false;
+    }
 
+    // Too time-consuming to do on "real" setup(); fire this off only if we need to process records! (totalRecordCount > 0)
+    public void doSetup() {
+    	if (isSetUp) return;
+    	
         recordOfSourceMap = new TLongLongHashMap();
 
         masRsm = (RecordOfSourceManager) config.getBean("RecordOfSourceManager");
@@ -205,10 +221,8 @@ public class MarcAggregationService extends GenericMetadataService {
         currentMatchSets = new TLongLongHashMap();
         //currentMatchSetRecords = new HashMap<Long, OutputRecord>();
         
-        // This service needs to retrieve records during the first run, therefore this index needs to get created initially!
-        firstTime = getRepositoryDAO().createIndicesOnRecordUpdates(getRepository().getName());
+        isSetUp = true;
     }
-    
 
     /**
      *
@@ -495,6 +509,9 @@ public class MarcAggregationService extends GenericMetadataService {
     public void preProcess(InputRecord r) { 
         TimingLogger.start("preProcess");
         
+        // we do the "real" setup here, since we now know that we will need to process at least 1 record!
+    	doSetup();
+    	       
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
         smr.setRecordId(r.getId());
 
