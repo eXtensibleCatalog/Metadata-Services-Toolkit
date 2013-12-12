@@ -28,19 +28,8 @@ public class SolrWorkDelegate extends WorkerThread {
     // protected ReentrantLock lock = new ReentrantLock();
     protected Semaphore lock = new Semaphore(1);
     
-    // Sometimes it's useful to disable solr indexing,
-    // e.g., if you decide to add-a-service-as-you-go-along during initial MST setup (which
-    // might be useful if your repo is HUGE) and want to verify each
-    // service one-at-a-time. This is necessary because if you do not, every time you add
-    // a new service, the previous (incoming) service's solr index gets reprocessed in its
-    // entirety.
-    // Once all services have processed, one must shutdown MST, then set solr.index.enabled=true,
-    // then once MST starts up, the solr indexes will get processed
-    protected boolean solrEnabled;
-
     public SolrWorkDelegate() {
         lock.acquireUninterruptibly();
-        solrEnabled = true;
     }
 
     public void setup() {
@@ -50,7 +39,6 @@ public class SolrWorkDelegate extends WorkerThread {
         s2.setName("solr-indexer");
         solrIndexService.setService(s2);
         LOG.debug("about to release");
-        solrEnabled = config.getPropertyAsBoolean("solr.index.enabled", true);
         lock.release();
         LOG.debug("released");
     }
@@ -84,33 +72,31 @@ public class SolrWorkDelegate extends WorkerThread {
         wait4availability();
         setJobStatus(Status.RUNNING);
         LOG.debug("doSomeWork");
-        if (solrEnabled) {
-	        try {
-	            List<Provider> providers = getProviderDAO().getAll();
-	            if (providers != null) {
-	                for (Provider p : providers) {
-	                    Repository repo = getRepositoryService().getRepository(p);
-	                    if (repo.ready4harvest()) {
-	                        LOG.debug("SolrWorkDelegate, repo IS ready4harvest! provider="+p.getName()+" repo="+repo.getName());
-	                        solrIndexService.process(repo, null, null, null);
-	                    }
-	                    else {
-	                        LOG.debug("SolrWorkDelegate, repo not ready4harvest! provider="+p.getName()+" repo="+repo.getName());
-	                    }
-	                }
-	            }
-	            List<Service> services = getServicesService().getAllServices();
-	            if (services != null) {
-	                for (Service s : services) {
-	                    Repository repo = s.getMetadataService().getRepository();
-	                    if (repo.ready4harvest()) {
-	                        solrIndexService.process(repo, null, null, null);
-	                    }
-	                }
-	            }
-	        } catch (Throwable t) {
-	            LOG.error("", t);
-	        }
+        try {
+            List<Provider> providers = getProviderDAO().getAll();
+            if (providers != null) {
+                for (Provider p : providers) {
+                    Repository repo = getRepositoryService().getRepository(p);
+                    if (repo.ready4harvest()) {
+                        LOG.debug("SolrWorkDelegate, repo IS ready4harvest! provider="+p.getName()+" repo="+repo.getName());
+                        solrIndexService.process(repo, null, null, null);
+                    }
+                    else {
+                        LOG.debug("SolrWorkDelegate, repo not ready4harvest! provider="+p.getName()+" repo="+repo.getName());
+                    }
+                }
+            }
+            List<Service> services = getServicesService().getAllServices();
+            if (services != null) {
+                for (Service s : services) {
+                    Repository repo = s.getMetadataService().getRepository();
+                    if (repo.ready4harvest()) {
+                        solrIndexService.process(repo, null, null, null);
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            LOG.error("", t);
         }
         if (getJobStatus().equals(Status.RUNNING)) {
             setJobStatus(Status.IDLE);

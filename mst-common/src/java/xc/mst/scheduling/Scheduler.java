@@ -79,6 +79,16 @@ public class Scheduler extends BaseService implements Runnable {
         WorkerThread solrWorkerThread = null;
         Thread solrThread = null;
 
+        // Sometimes it's useful to disable solr indexing,
+        // e.g., if you decide to add-a-service-as-you-go-along during initial MST setup (which
+        // might be useful if your repo is HUGE) and want to verify each
+        // service one-at-a-time. This is necessary because if you do not, every time you add
+        // a new service, the previous (incoming) service's solr index gets reprocessed in its
+        // entirety.
+        // Once all services have processed, one must shutdown MST, then set solr.index.enabled=true,
+        // then once MST starts up, the solr indexes will get processed
+        boolean solrEnabled = config.getPropertyAsBoolean("solr.index.enabled", true);
+
         try {
             for (Service s : getServiceDAO().getAll()) {
                 if (Status.RUNNING.equals(s.getStatus())) {
@@ -139,13 +149,16 @@ public class Scheduler extends BaseService implements Runnable {
         }
 
         boolean solrWorkerThreadStarted = false;
-        if (config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
+        if (solrEnabled && config.getPropertyAsBoolean("solr.index.whenIdle", false)) {
             LOG.info("solr.index.whenIdle is true");
             solrWorkerThread = (SolrWorkDelegate) config.getBean("SolrWorkDelegate");
             solrThread = new Thread(solrWorkerThread, "SolrWorkDelegate");
             LOG.debug("solrWorkerThread: " + solrWorkerThread);
         } else {
-            LOG.info("solr.index.whenIdle is false");
+        	if (solrEnabled)
+        		LOG.info("solr.index.whenIdle is false");
+        	else
+        		LOG.info("solr.index.enabled is false");
         }
         HarvestManager hm = (HarvestManager) MSTConfiguration.getInstance().getBean("HarvestManager");
 
@@ -280,7 +293,7 @@ public class Scheduler extends BaseService implements Runnable {
                     Job jobToStart = getJobService().getNextJobToExecute();
                     if (jobToStart != null)
                         LOG.debug("jobToStart: " + jobToStart);
-                    if (jobToStart == null && runningJob != solrWorkerThread && solrWorkerThread != null) {
+                    if (jobToStart == null && solrEnabled && runningJob != solrWorkerThread && solrWorkerThread != null) {
                         LOG.debug("solrWorkerThead.proceed");
                         if (!solrWorkerThreadStarted) {
                             solrWorkerThreadStarted = true;
@@ -298,7 +311,7 @@ public class Scheduler extends BaseService implements Runnable {
                     // LOG.debug("jobToStart: "+jobToStart);
                     // If there was a service job in the waiting queue, start it. Otherwise break from the loop
                     if (jobToStart != null) {
-                        if (solrWorkerThread != null && solrWorkerThreadStarted) {
+                        if (solrEnabled && solrWorkerThread != null && solrWorkerThreadStarted) {
                             solrWorkerThread.pause();
                         }
                         runningJob = null;
