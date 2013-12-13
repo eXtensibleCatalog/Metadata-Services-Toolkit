@@ -106,7 +106,13 @@ public class LccnMatcher extends FieldMatcherService {
             return Long.parseLong(candidate);
         }
         else if (candidate.toCharArray().length <=3) {
-            candidate = st.nextToken();
+        	if (st.hasMoreTokens()) {
+                candidate = st.nextToken();
+            }
+            else {
+                LOG.error("** Problem with 010$a, length<=3, original="+s);
+                return -1l;
+            }
             if (StringUtils.isNotEmpty(candidate) && StringUtils.isNumeric(candidate)) {
                 return Long.parseLong(candidate);
             }

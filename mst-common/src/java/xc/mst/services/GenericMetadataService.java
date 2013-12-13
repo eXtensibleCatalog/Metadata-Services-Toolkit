@@ -561,16 +561,13 @@ LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. Tota
                 for (Record in : records) {
                 	//LOG.debug("PRE-processing record id=" + in.getId());                	
                     TimingLogger.start(getServiceName() + ".preprocess");
-                    boolean unexpectedError = false;
                     try {
                         preProcess(in);
                     } catch (Throwable t) {
-                        unexpectedError = true;
                         LOG.error("error preprocessing record w/ id: " + in.getId(), t);
                     }
                     processedRecordCount++;
                     TimingLogger.stop(getServiceName() + ".preprocess");
-                    if (unexpectedError) break;
                     
                     sh.setHighestId(in.getId());
                 }
