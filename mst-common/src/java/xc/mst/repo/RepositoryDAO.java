@@ -1608,7 +1608,6 @@ public class RepositoryDAO extends BaseDAO {
                             " group by u.record_id " +
                             " order by u.record_id ");
             LOG.debug("name: " + name + " startingId: " + startingId + " highestId: " + highestId + " from:" + from + " until:" + until);
-LOG.error("name: " + name + " startingId: " + startingId + " highestId: " + highestId + " from:" + from + " until:" + until);            
             params.add(startingId);
             params.add(startingId);
             params.add(highestId);
