@@ -267,7 +267,7 @@
 
     <dependency org="trove" name="trove" rev="2.1.0" transitive="false">
       <artifact name="trove" type="jar"
-                url="http://www.extensiblecatalog.org/doc/Ivy/trove/trove/trove-2.1.0.jar" />
+                url="http://xc-web.carli.illinois.edu/doc/Ivy/trove/trove/trove-2.1.0.jar" />
     </dependency>
 
     <dependency org="joda-time" name="joda-time" rev="1.6" transitive="false">
