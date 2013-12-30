@@ -120,6 +120,7 @@ public class MarcAggregationService extends GenericMetadataService {
     boolean firstTime = false;
     
     boolean isSetUp = false;
+    boolean isSetUp2 = false;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -170,11 +171,13 @@ public class MarcAggregationService extends GenericMetadataService {
         // This service needs to retrieve records during the first run, therefore this index needs to get created initially!
         firstTime = getRepositoryDAO().createIndicesOnRecordUpdates(getRepository().getName());
         
-        isSetUp = false;
+        isSetUp = false; // save intensive setup for later
+        isSetUp2 = false;
+        
     }
 
     // Too time-consuming to do on "real" setup(); fire this off only if we need to process records! (totalRecordCount > 0)
-    public void doSetup() {
+    private void doSetup() {
     	if (isSetUp) return;
     	
         recordOfSourceMap = new TLongLongHashMap();
@@ -220,8 +223,32 @@ public class MarcAggregationService extends GenericMetadataService {
         
         currentMatchSets = new TLongLongHashMap();
         //currentMatchSetRecords = new HashMap<Long, OutputRecord>();
-        
+                
         isSetUp = true;
+    }
+    
+    private void doSetup2() {
+    	if (isSetUp2) return;
+
+        //
+        // Since matcher data is complete (after running through preProcess), we should flush to db
+        //
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            final FieldMatcher matcher = me.getValue();
+            matcher.flush(true);
+            LOG.debug("flush matcher: "+matcher.getName());
+        }
+        
+        if (hasIntermediatePersistence) {
+            masDAO.persistScores(scores_unpersisted);
+            //flush from memory now that these have been persisted to database
+            scores_unpersisted.clear();
+        }
+        else {
+            masDAO.persistScores(scores);	
+        }
+        
+        isSetUp2 = true;
     }
 
     /**
@@ -560,6 +587,8 @@ public class MarcAggregationService extends GenericMetadataService {
     public List<OutputRecord> process(InputRecord r) {
         String type = null;
         List<OutputRecord> results = null;
+        
+        doSetup2();
 
         try {
         			
@@ -1618,21 +1647,6 @@ public class MarcAggregationService extends GenericMetadataService {
 
     @Override
     protected boolean commitIfNecessary(boolean force, long processedRecordsCount) {
-        try {
-            LOG.debug("***mas.commitIfNecessary force="+force+ " recordCount="+processedRecordsCount);
-            TimingLogger.start("mas.commitIfNecessary");
-
-            // break down timing logger more later if necessary.
-            for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
-                final FieldMatcher matcher = me.getValue();
-                matcher.flush(force);
-                LOG.debug("flush matcher: "+matcher.getName());
-            }
-
-        } catch (Throwable t) {
-            TimingLogger.stop("mas.commitIfNecessary");
-            getUtil().throwIt(t);
-        }
         if (!force) {
             return super.commitIfNecessary(force, 0);
         }
@@ -1651,7 +1665,6 @@ public class MarcAggregationService extends GenericMetadataService {
         } catch (Throwable t) {
             getUtil().throwIt(t);
         } finally {
-            TimingLogger.stop("mas.commitIfNecessary");
             TimingLogger.reset();
         }
         return true;
@@ -1659,18 +1672,15 @@ public class MarcAggregationService extends GenericMetadataService {
 
     protected void persistFromMASmemory() {
         if (hasIntermediatePersistence) {
-            masDAO.persistScores(scores_unpersisted);
             masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
                     MarcAggregationServiceDAO.bib_records_table, false);
             masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
 
             //flush from memory now that these have been persisted to database
-            scores_unpersisted.clear();
             mergedInRecordsList_unpersisted.clear();
             allBibRecordsI2Omap_unpersisted.clear();
         }
         else {
-            masDAO.persistScores(scores);
             masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap,
                     MarcAggregationServiceDAO.bib_records_table, false);
             masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);

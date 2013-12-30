@@ -526,7 +526,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
         
         this.totalRecordCount = repo.getRecordCount(sh.getFrom(),
                 sh.getUntil(), inputFormat, inputSet);
-LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. TotalRecordCount: " + this.totalRecordCount);
+//LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. TotalRecordCount: " + this.totalRecordCount);
         
         if (doPreProcess()) {
             int getRecordLoops = 0;
@@ -618,7 +618,7 @@ LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. Tota
         sh.setHighestId(null); // reset harvest
         List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
 
-LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. Actual RecordCount: " + records.size());
+//LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. Actual RecordCount: " + records.size());
 
 
         if (getMetadataServiceManager() != null) {
