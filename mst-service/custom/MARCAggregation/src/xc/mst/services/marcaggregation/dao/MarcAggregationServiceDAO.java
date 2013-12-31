@@ -126,7 +126,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
                                     os.write(tabBytes);
                                     os.write((String.valueOf(_scn.prefixNum).getBytes()));
                                     os.write(tabBytes);
-                                    os.write((String.valueOf(_scn.scn).getBytes()));
+                                    os.write(getBytesFixTabs(_scn.scn));
                                     os.write(tabBytes);
                                     os.write(idBytes);
                             } catch (Exception e) {
@@ -518,6 +518,11 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     protected static byte[] getBytes(String s) {
         s = s.replaceAll("\\\\", "\\\\\\\\");
         final String s3 = getQuoted(s);
+        return s3.getBytes();
+    }
+
+    protected static byte[] getBytesFixTabs(String s) {
+    	final String s3 = s.replaceAll("\t", " ");
         return s3.getBytes();
     }
 

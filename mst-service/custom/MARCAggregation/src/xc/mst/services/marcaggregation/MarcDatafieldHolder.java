@@ -167,13 +167,19 @@ public class MarcDatafieldHolder implements Comparable<MarcDatafieldHolder> {
     public int compareTo(MarcDatafieldHolder o2) {
         MarcDatafieldHolder o1 = this;
         if (o1.equals(o2)) return 0;
-        if (o1.getDatafield().equals("010")) {
-            Long long0 =LccnMatcher.getUniqueId(this.getSubfields().get(0).getSubfieldContents());
-            Long long1 =LccnMatcher.getUniqueId(o2.getSubfields().get(0).getSubfieldContents());
-            return  long0.compareTo(long1);
+        
+        try {
+	        if (o1.getDatafield().equals("010")) {
+	            Long long0 =LccnMatcher.getUniqueId(this.getSubfields().get(0).getSubfieldContents());
+	            if (o2.getDatafield().equals("010")) {
+		            Long long1 =LccnMatcher.getUniqueId(o2.getSubfields().get(0).getSubfieldContents());
+		            return  long0.compareTo(long1);
+	            }
+	        }
+        } catch (Exception e) {
+        	// fall through...
         }
-        else {
-            return getString(this).compareTo(getString(o2));
-        }
+        
+        return getString(this).compareTo(getString(o2));
     }
 }
