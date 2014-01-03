@@ -168,9 +168,8 @@ public class MarcAggregationService extends GenericMetadataService {
         
         debugMode = config.getPropertyAsBoolean("debug_mode", false);
         
-        // This service NO LONGER needs to retrieve records during the first run, therefore this index NO LONGER needs to get created initially!
-        // However, we do still want to know if this is an initial run.
-        firstTime = getRepositoryDAO().ready4harvest(getRepository().getName());
+        // This service needs to retrieve records during the first run, therefore this index needs to get created initially!
+        firstTime = getRepositoryDAO().createIndicesOnRecordUpdates(getRepository().getName());
         
         isSetUp = false; // save intensive setup for later
         isSetUp2 = false;
