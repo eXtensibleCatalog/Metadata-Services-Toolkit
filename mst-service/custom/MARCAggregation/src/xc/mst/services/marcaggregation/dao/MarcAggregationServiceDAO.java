@@ -1073,4 +1073,52 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     public void loadMaps(
         ) {
     }
+    
+    
+    public void createIndicesIfNecessary() {
+        TimingLogger.start("MarcAggregationServiceDAO.createIndicesIfNecessary");
+
+    	boolean createdIndices = false;
+        List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("show indexes from " + MarcAggregationServiceDAO.matchpoints_020a_table);
+        if (rows != null) {
+            for (Map<String, Object> row : rows) {
+                String indexName = (String) row.get("Key_name");
+                LOG.debug("indexName: " + indexName);
+                if ("idx_mp_020a_string_id".equals(indexName)) {
+                	createdIndices = true;
+                	break;
+                }
+            }
+        }
+
+        if (!createdIndices) {
+            String[] indices2create = new String[] {
+                    "create index idx_mp_010a_numeric_id on " + MarcAggregationServiceDAO.matchpoints_010a_table + " (numeric_id)",
+
+                    "create index idx_mp_020a_string_id on " + MarcAggregationServiceDAO.matchpoints_020a_table + " (string_id)",
+                    
+                    "create index idx_mp_022a_string_id on " + MarcAggregationServiceDAO.matchpoints_022a_table + " (string_id)",
+                    
+                    "create index idx_mp_024a_string_id on " + MarcAggregationServiceDAO.matchpoints_024a_table + " (string_id)",
+                    
+                    "create index idx_mp_035a_prefix on " + MarcAggregationServiceDAO.prefixes_035a_table + " (prefix)",
+                    
+                    "create index idx_mp_035a_numeric_id on " + MarcAggregationServiceDAO.matchpoints_035a_table + " (numeric_id)",
+                    "create index idx_mp_035a_prefix_id on " + MarcAggregationServiceDAO.matchpoints_035a_table + " (prefix_id)",
+                    
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                    this.jdbcTemplate.execute(i2c);
+                } catch (Throwable t) {
+                    LOG.error("", t);
+                }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }
+        }
+        
+        TimingLogger.stop("MarcAggregationServiceDAO.createIndicesIfNecessary");
+        TimingLogger.reset();
+    }
 }

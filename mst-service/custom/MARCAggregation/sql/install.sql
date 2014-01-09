@@ -82,10 +82,10 @@ CREATE  TABLE `matchpoints_010a` (
   `numeric_id` BIGINT NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY (`input_record_id`),
+  PRIMARY KEY (`input_record_id`)/*,
 
   -- may want to not do this and create it after 1st load create, ala repo
-  INDEX idx_mp_010a_numeric_id (numeric_id)
+  INDEX idx_mp_010a_numeric_id (numeric_id)*/
 
 ) ENGINE = InnoDB;
 
@@ -98,10 +98,10 @@ CREATE  TABLE `matchpoints_020a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY (`input_record_id`, `string_id`),
+  PRIMARY KEY (`input_record_id`, `string_id`)/*,
 
   -- may want to not do this and create it after 1st load create, ala repo
-  INDEX idx_mp_020a_string_id (string_id)
+  INDEX idx_mp_020a_string_id (string_id)*/
 
 ) ENGINE = InnoDB;
 
@@ -114,10 +114,10 @@ CREATE  TABLE `matchpoints_022a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY (`input_record_id`, `string_id`),
+  PRIMARY KEY (`input_record_id`, `string_id`)/*,
 
   -- may want to not do this and create it after 1st load create, ala repo
-  INDEX idx_mp_022a_string_id (string_id)
+  INDEX idx_mp_022a_string_id (string_id)*/
 
 ) ENGINE = InnoDB;
 
@@ -130,10 +130,10 @@ CREATE  TABLE `matchpoints_024a` (
   `string_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY (`input_record_id`, `string_id`),
+  PRIMARY KEY (`input_record_id`, `string_id`)/*,
 
   -- may want to not do this and create it after 1st load create, ala repo
-  INDEX idx_mp_024a_string_id (string_id)
+  INDEX idx_mp_024a_string_id (string_id)*/
 
 ) ENGINE = InnoDB;
 
@@ -146,8 +146,8 @@ CREATE  TABLE `prefixes_035a` (
   `prefix` VARCHAR(255)  NOT NULL ,
   `prefix_id` INT UNSIGNED NOT NULL ,
 
-  PRIMARY KEY  (`prefix_id`),
-  INDEX idx_mp_035a_prefix (prefix)
+  PRIMARY KEY  (`prefix_id`)/*,
+  INDEX idx_mp_035a_prefix (prefix)*/
 
 ) ENGINE = InnoDB;
 
@@ -161,10 +161,10 @@ CREATE  TABLE `matchpoints_035a` (
   `numeric_id` VARCHAR(255) NOT NULL ,
   `input_record_id` BIGINT NOT NULL ,
 
-  PRIMARY KEY  (`input_record_id`, `full_string`),
+  PRIMARY KEY  (`input_record_id`, `full_string`)/*,
 
   -- may want to not do this and create it after 1st load create, ala repo
   INDEX idx_mp_035a_numeric_id (numeric_id),
-  INDEX idx_mp_035a_prefix_id (prefix_id)
+  INDEX idx_mp_035a_prefix_id (prefix_id)*/
 
 ) ENGINE = InnoDB;

@@ -120,7 +120,6 @@ public class MarcAggregationService extends GenericMetadataService {
     boolean firstTime = false;
     
     boolean isSetUp = false;
-    boolean isSetUp2 = false;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
 
@@ -173,8 +172,8 @@ public class MarcAggregationService extends GenericMetadataService {
         firstTime = !getRepositoryDAO().ready4harvest(getRepository().getName());
         
         isSetUp = false; // save intensive setup for later
-        isSetUp2 = false;
         
+        doPreProcess = true;
     }
 
     // Too time-consuming to do on "real" setup(); fire this off only if we need to process records! (totalRecordCount > 0)
@@ -229,8 +228,6 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     
     private void doSetup2() {
-    	if (isSetUp2) return;
-
         //
         // Since matcher data is complete (after running through preProcess), we should flush to db
         //
@@ -248,8 +245,6 @@ public class MarcAggregationService extends GenericMetadataService {
         else {
             masDAO.persistScores(scores);	
         }
-        
-        isSetUp2 = true;
     }
 
     /**
@@ -437,65 +432,7 @@ public class MarcAggregationService extends GenericMetadataService {
         // evaluate match sets here?
         LOG.info("** START processComplete!");
 
-/*** no longer relevant -- remove soon
-        //
-        // This method simply logs debug info. At one time, original developer may have
-        // considered processing all records here (at the end). Instead, I decided to allow
-        // a preProcess() hook as a way to perform a two-pass processing pipeline, where the preProcess()
-        // is used to crunch matching point data, and the "real" process() follows
-        // the original design of returning (an) output record(s)
-        // one-at-a-time for each input record.
-        //
-        List<HashSet<Long>> matches = getCurrentMatchSetList();
-        if (matches != null && matches.size() > 0) {
-            final String SEP = System.getProperty("line.separator");
-            final String TAB = "\t";
-            LOG.info("** processComplete, matchset length="+matches.size());
-
-            StringBuilder sb = new StringBuilder(SEP);
-            sb.append("********** MATCHPOINT DUMP START **************************************************************");
-            sb.append(SEP).append("*").append(SEP);
-            for (Set<Long> set: matches) {
-                sb.append("*** Matchset In: {").append(SEP);
-                Long _num = null;
-                for (Long num: set) {
-                    sb.append(TAB).append(num+", ");
-                    if (debugMode) {
-                    	
-                    	// the RoS data may not be in-memory (if not, get it from the db)
-                    	RecordOfSourceData source;
-                        if (!scores.containsKey(num)) {
-                            MarcAggregationServiceDAO masDAO = (MarcAggregationServiceDAO) config.getBean("MarcAggregationServiceDAO");
-                            source = masDAO.getScoreData(num);
-                        }
-                        else {
-                            source = scores.get(num);
-                        }                    	
-                    	sb.append(source);
-                    	
-                    	// useful to know the bib info, too
-                    	Record r = inputRepo.getRecord(num);
-                        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-                        sb.append(" [").append(smr.getControlField(3)).append("] ").append(smr.getControlField(1));
-                    	
-                    	if (recordOfSourceMap.get(allBibRecordsI2Omap.get(_num)) == num) {
-                    		sb.append(" [**Record of Source**]");
-                    	}
-                    }
-                    sb.append(SEP);
-                    _num=num;
-                }
-                sb.append("}");
-
-                sb.append(", Out: ");
-                sb.append(allBibRecordsI2Omap.get(_num));
-                sb.append(SEP);
-            }
-            sb.append("*").append(SEP);
-            sb.append("********** MATCHPOINT DUMP END ****************************************************************");
-            logToServiceLog(sb.toString());
-        }
-***/
+        masDAO.createIndicesIfNecessary();
         
         clear_objects();
     }
@@ -577,6 +514,12 @@ public class MarcAggregationService extends GenericMetadataService {
         TimingLogger.stop("preProcess");
 
     }
+    
+    public void preProcessCompleted() {
+        doSetup2();
+        
+        if (firstTime) masDAO.createIndicesIfNecessary();
+    }
 
     /**
      * each record run by the service,
@@ -589,8 +532,6 @@ public class MarcAggregationService extends GenericMetadataService {
         String type = null;
         List<OutputRecord> results = null;
         
-        doSetup2();
-
         try {
         			
             LOG.debug("MAS:  process record+"+r.getId());

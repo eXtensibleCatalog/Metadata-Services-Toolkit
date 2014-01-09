@@ -97,6 +97,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
     protected long timeDiff = 0;
 
     protected Repository repository = null;
+    
+    protected boolean doPreProcess = false;
 
     /**
      * A list of identifiers to add to the record currently being processed
@@ -510,8 +512,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
     
     // Allow Services the opportunity to pre-process records
     // By default, they will not
-    public boolean doPreProcess() { return false; }
     public void preProcess(InputRecord r) {  }
+    public void preProcessCompleted() { }
 
     public void process(Repository repo, Format inputFormat, Set inputSet,
             Set outputSet) {
@@ -528,7 +530,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 sh.getUntil(), inputFormat, inputSet);
 //LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. TotalRecordCount: " + this.totalRecordCount);
         
-        if (doPreProcess()) {
+        if (doPreProcess) {
             int getRecordLoops = 0;
             
             // To show preProcessing progress, we'll display the count down starting with negative numbers, beginning with negative total and ending with zero
@@ -574,6 +576,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 
                 records = getRecords(repo, sh, inputFormat, inputSet);
             }
+            preProcessCompleted();
         }
         processedRecordCount = 0;
 
