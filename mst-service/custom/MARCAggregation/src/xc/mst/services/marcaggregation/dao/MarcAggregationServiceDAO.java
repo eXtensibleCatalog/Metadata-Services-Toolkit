@@ -522,7 +522,7 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     protected static byte[] getBytesFixTabs(String s) {
-    	final String s3 = s.replaceAll("\t", " ");
+    	final String s3 = s.replaceAll("\t", " ").replaceAll("\\\\", "\\\\\\\\");
         return s3.getBytes();
     }
 
