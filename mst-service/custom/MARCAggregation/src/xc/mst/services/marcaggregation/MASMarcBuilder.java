@@ -393,6 +393,21 @@ public class MASMarcBuilder extends BaseService{
     }
 
     /**
+     * transform the given xml by inserting new 001 and 003, and moving the current values to a 035$a using an xsl to do the transformation.
+     *
+     * @param oaiXml
+     * @param __NEW001_Transformer
+     * @param new001
+     * @param new003
+     * @return
+     */
+    protected String getXmlNew001(String oaiXml, Transformer __NEW001_Transformer, String new001, String new003) {
+    	__NEW001_Transformer.setParameter("new001", new001);
+    	__NEW001_Transformer.setParameter("new003", new003);    	
+        return getTransformedXml(oaiXml, __NEW001_Transformer);
+    }
+
+    /**
      * run a sax transformation
      * @param oaiXml
      * @param transformer

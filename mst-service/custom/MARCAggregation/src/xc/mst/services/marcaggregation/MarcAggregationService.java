@@ -99,15 +99,22 @@ public class MarcAggregationService extends GenericMetadataService {
     private Transformer staticTransformer;
     private Transformer holdingTransformer;
     private Transformer _005_Transformer;
+    private Transformer _001_Transformer;
 
     private static final String STATIC_TRANSFORM  = "createStatic.xsl";
     private static final String HOLDING_TRANSFORM = "stripHolding.xsl";
     private static final String _005_TRANSFORM    = "strip005.xsl";
+    private static final String _001_TRANSFORM = "new001.xsl";
     
     /**
      * are we in DEBUG mode?
      */
     private boolean debugMode = false;
+    
+    private boolean insert001;
+    private String insert001_prefix;
+    private boolean insert003;
+    private String insert003_value;
 
     /**
      * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
@@ -167,6 +174,12 @@ public class MarcAggregationService extends GenericMetadataService {
         
         debugMode = config.getPropertyAsBoolean("debug_mode", false);
         
+        // 001/003 manipulation
+        insert001 = config.getPropertyAsBoolean("insert_001", false);
+        insert001_prefix = config.getProperty("insert_001.prefix", "");
+        insert003 = config.getPropertyAsBoolean("insert_003", false);
+        insert003_value = config.getProperty("insert_003.value", "");
+        
         // This service NO LONGER needs to retrieve records during the first run, therefore this index NO LONGER needs to get created initially!
         // However, we do still want to know if this is an initial run.
         firstTime = !getRepositoryDAO().ready4harvest(getRepository().getName());
@@ -187,6 +200,7 @@ public class MarcAggregationService extends GenericMetadataService {
         masBld = (MASMarcBuilder) config.getBean("MASMarcBuilder");
         staticTransformer = setupTransformer(getTransformForStaticFilename());
         _005_Transformer  = setupTransformer(getTransformFor005Filename());
+        _001_Transformer  = setupTransformer(getTransformFor001Filename());
 
         final boolean transformHolding = false;
         if (transformHolding) {
@@ -350,6 +364,10 @@ public class MarcAggregationService extends GenericMetadataService {
 
     protected String getTransformFor005Filename() {
         return _005_TRANSFORM;
+    }
+
+    protected String getTransformFor001Filename() {
+        return _001_TRANSFORM;
     }
 
     protected String getTransformForHoldingFilename() {
@@ -679,6 +697,18 @@ public class MarcAggregationService extends GenericMetadataService {
         TimingLogger.stop("mergeBibSet");
         return oaiXml;
     }
+    
+    private String injectNew001(long id, String xml) {
+    	String new001 = "";
+    	String new003 = "";
+    	if (insert001) {
+    		new001 = insert001_prefix + id;
+    	}
+    	if (insert003) {
+    		new003 = insert003_value;
+    	}
+    	return masBld.getXmlNew001(xml, _001_Transformer, new001, new003);
+    }
 
     private List<OutputRecord> createNewBibRecord(InputRecord theSrcRecord, String oaiXml, HashSet<Long> set) {
         TimingLogger.start("createNewBibRecord");
@@ -715,6 +745,8 @@ public class MarcAggregationService extends GenericMetadataService {
 
         // Create the aggregated record
         OutputRecord aggRecord = getRecordService().createRecord();
+        
+        newXml = injectNew001(aggRecord.getId(), newXml);
 
         aggRecord.setMode(Record.STRING_MODE);
         aggRecord.setOaiXml(newXml); /* use the merged content */
