@@ -242,6 +242,9 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     
     private void doSetup2() {
+    	//make sure Setup() has been called first
+    	doSetup();
+    	
         //
         // Since matcher data is complete (after running through preProcess), we should flush to db
         //
