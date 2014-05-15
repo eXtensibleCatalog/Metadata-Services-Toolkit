@@ -73,10 +73,11 @@
 
     <div class="record_metadata">
       Status:
+      <c:set var="recordStatus" scope="page" >${record.status}</c:set>
       <c:choose>
-        <c:when test="${record.status == 'A'}">Active</c:when>
-        <c:when test="${record.status == 'H'}">Held</c:when>
-        <c:when test="${record.status == 'D'}">Deleted</c:when>
+        <c:when test="${recordStatus == 'A'}">Active</c:when>
+        <c:when test="${recordStatus == 'H'}">Held</c:when>
+        <c:when test="${recordStatus == 'D'}">Deleted</c:when>
       </c:choose>
       <br />
       <c:if test="${record.provider != null}">
