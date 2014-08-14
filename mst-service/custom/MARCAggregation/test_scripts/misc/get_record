@@ -1,0 +1,11 @@
+#!/bin/sh
+BIB=$1
+
+CWD=`dirname $0`
+
+marcxml=`perl ${CWD}/get_record.pl ${BIB}`
+if [ -z $marcxml ]; then
+   echo hmmmm
+   marcxml=`perl ${CWD}/get_record.pl ${BIB} xc_marcnormalization`
+fi
+echo $marcxml | perl ${CWD}/filter_nonprintable.pl | xmllint --format -

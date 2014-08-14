@@ -1,0 +1,6 @@
+#!/bin/sh
+ID=$1
+
+CWD=`dirname $0`
+
+perl ${CWD}/get_set.pl ${ID}

@@ -612,18 +612,6 @@ OUTPUT ID: 1303:
 
 
 -----------------------------------
-OUTPUT ID: 1305:
------------------------------------
-    INPUT ID: 1208: [ISUdb] 1229704
-        245$a: Monuments of Renaissance music. 
-        LDR/17: []; Size: 6306 
-        010a: 64024965
-                022a: 00771503
-                        035a: (ISUdb)1229704
-                        035a: (OCoLC)02253212
-
-
------------------------------------
 OUTPUT ID: 1306:
 -----------------------------------
     INPUT ID: 1212: [UIUdb] 4173152
@@ -1836,23 +1824,39 @@ OUTPUT ID: 1704:
                         035a: (OCoLC)785019206
                         035a: (PRKdb)145631
 
+    INPUT ID: 1671: [WRHdb] 299701
+        245$a: The long Earth / 
+        LDR/17: [I]; Size: 7402 
+            020a: 0062067753
+            020a: 9780062067753
+                        035a: (OCoLC)785019206
+                        035a: (WRHdb)299701
+
 
 -----------------------------------
 OUTPUT ID: 1705:
 -----------------------------------
-    INPUT ID: 1201***: [EIUdb] 127291
+    INPUT ID: 1201: [EIUdb] 127291
         245$a: Monuments of Renaissance music / 
         LDR/17: [I]; Size: 4695 
         010a: 64024965
                         035a: (EIUdb)127291
                         035a: (OCoLC)01826337
 
+    INPUT ID: 1208***: [ISUdb] 1229704
+        245$a: Monuments of Renaissance music. 
+        LDR/17: []; Size: 6306 
+        010a: 64024965
+                022a: 00771503
+                        035a: (ISUdb)1229704
+                        035a: (OCoLC)02253212
+
     INPUT ID: 1662: [NIUdb] 271847
         245$a: Monuments of Renaissance music / 
-        LDR/17: [I]; Size: 4309 
+        LDR/17: [I]; Size: 4306 
                         035a: (NIUdb)271847
-                        035a: (OCoCL)ocm02253212
                         035a: (OCoLC)01826337
+                        035a: (OCoLC)02253212
 
 
 -----------------------------------
@@ -1905,18 +1909,6 @@ OUTPUT ID: 1708:
 -----------------------------------
 OUTPUT ID: 1709:
 -----------------------------------
-    INPUT ID: 1671: [WRHdb] 299701
-        245$a: The long Earth / 
-        LDR/17: [I]; Size: 7404 
-            020a: 0062067753
-            020a: 9780062067753
-                        035a: (OCLC)ocn785019206
-                        035a: (WRHdb)299701
-
-
------------------------------------
-OUTPUT ID: 1710:
------------------------------------
     INPUT ID: 1673: [JOLdb] 120564
         245$a: The cat in the hat / 
         LDR/17: [I]; Size: 6591 
@@ -1929,7 +1921,7 @@ OUTPUT ID: 1710:
 
 
 -----------------------------------
-OUTPUT ID: 1731:
+OUTPUT ID: 1730:
 -----------------------------------
     INPUT ID: 397: [ISUdb] 1364486
         245$a: Journal of policy and practice in intellectual disabilities 
@@ -1941,7 +1933,7 @@ OUTPUT ID: 1731:
 
 
 -----------------------------------
-OUTPUT ID: 1732:
+OUTPUT ID: 1731:
 -----------------------------------
     INPUT ID: 536: [UICdb] 2447017
         245$a: Journal of policy and practice in intellectual disabilities 
@@ -1952,7 +1944,7 @@ OUTPUT ID: 1732:
 
 
 -----------------------------------
-OUTPUT ID: 1733:
+OUTPUT ID: 1732:
 -----------------------------------
     INPUT ID: 495: [RSHdb] 69304
         245$a: Journal of policy and practice in intellectual disabilities 
@@ -1962,7 +1954,7 @@ OUTPUT ID: 1733:
 
 
 -----------------------------------
-OUTPUT ID: 1734:
+OUTPUT ID: 1733:
 -----------------------------------
     INPUT ID: 1119***: [SIEdb] 82071
         245$a: Journal of number theory. 
@@ -1980,7 +1972,7 @@ OUTPUT ID: 1734:
 
 
 -----------------------------------
-OUTPUT ID: 1735:
+OUTPUT ID: 1734:
 -----------------------------------
     INPUT ID: 1126: [UICdb] 593841
         245$a: Journal of number theory. 
@@ -1991,7 +1983,7 @@ OUTPUT ID: 1735:
 
 
 -----------------------------------
-OUTPUT ID: 1736:
+OUTPUT ID: 1735:
 -----------------------------------
     INPUT ID: 1129: [UIUdb] 560246
         245$a: Journal of number theory. 
@@ -2001,7 +1993,7 @@ OUTPUT ID: 1736:
 
 
 -----------------------------------
-OUTPUT ID: 1738:
+OUTPUT ID: 1737:
 -----------------------------------
     INPUT ID: 1124***: [UISdb] 309057
         245$a: Who's who in America. 
@@ -2019,7 +2011,7 @@ OUTPUT ID: 1738:
 
 
 -----------------------------------
-OUTPUT ID: 1739:
+OUTPUT ID: 1738:
 -----------------------------------
     INPUT ID: 1118: [SIEdb] 455959
         245$a: Who's who in America. 
@@ -2045,7 +2037,7 @@ OUTPUT ID: 1739:
 
 
 -----------------------------------
-OUTPUT ID: 1740:
+OUTPUT ID: 1739:
 -----------------------------------
     INPUT ID: 1455: [UIUdb] 3348468
         245$a: Boris Godounov 
@@ -2064,7 +2056,7 @@ OUTPUT ID: 1740:
 
 
 -----------------------------------
-OUTPUT ID: 1741:
+OUTPUT ID: 1740:
 -----------------------------------
     INPUT ID: 1431: [EIUdb] 384268
         245$a: Boris Godounov 

@@ -1,0 +1,15 @@
+#!/bin/sh
+ID=$1
+
+CWD=`dirname $0`
+
+marcxml=`perl ${CWD}/get_bib.pl ${ID}`
+if [ "$?" -ne "0" ]; then
+  exit $?
+fi
+
+if [ -n "$marcxml" ]; then
+   echo $marcxml | perl ${CWD}/filter_nonprintable.pl | xmllint --format -
+else
+   echo "\"${ID}\" not found!"
+fi

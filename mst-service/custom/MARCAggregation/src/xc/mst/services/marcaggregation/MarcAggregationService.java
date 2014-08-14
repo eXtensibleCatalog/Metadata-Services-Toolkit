@@ -515,25 +515,34 @@ public class MarcAggregationService extends GenericMetadataService {
             if (r.getStatus() == Record.DELETED) {
                 //removeRecordsFromMatchers(r);
             } else {
-            	TimingLogger.start("preProcess.addScores");
-                // get record of source data for this bib
-                //  (only a bib would be a record of source)
-                final char leaderByte17 = smr.getLeader().charAt(17);
-                final int rSize = r.getOaiXml().getBytes().length;
-                scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                if (hasIntermediatePersistence) {
-                    scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
-                }
-            	TimingLogger.stop("preProcess.addScores");
-                
-            	TimingLogger.start("preProcess.addToMatchers");
-                addRecordToMatchers(r, smr);
-            	TimingLogger.stop("preProcess.addToMatchers");
-
+            	
+            	addAndPersistScores(r, smr);
             }
         }
         TimingLogger.stop("preProcess");
 
+    }
+    
+
+    private void addAndPersistScores (InputRecord r, SaxMarcXmlRecord smr) {
+    	TimingLogger.start("addAndPersistScores");
+        // get record of source data for this bib
+        //  (only a bib would be a record of source)
+        final char leaderByte17 = smr.getLeader().charAt(17);
+        final int rSize = r.getOaiXml().getBytes().length;
+        
+    	TimingLogger.start("addAndPersistScores.addScores");
+        scores.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+        if (hasIntermediatePersistence) {
+            scores_unpersisted.put(r.getId(), new RecordOfSourceData(leaderByte17, rSize));
+        }
+    	TimingLogger.stop("addAndPersistScores.addScores");
+        
+    	TimingLogger.start("addAndPersistScores.addToMatchers");
+        addRecordToMatchers(r, smr);
+    	TimingLogger.stop("addAndPersistScores.addToMatchers");
+    	
+    	TimingLogger.stop("addAndPersistScores");
     }
     
     public void preProcessCompleted() {
@@ -1149,7 +1158,7 @@ public class MarcAggregationService extends GenericMetadataService {
     	List<OutputRecord> results = processBibDelete(r);
 
     	// processBibDelete nukes all the record's score data; must re-add it
-        addRecordToMatchers(r, smr);
+    	addAndPersistScores(r, smr);
     	
     	results.addAll(processBibNewActive(r, smr, repo));
     	return results;
@@ -1632,6 +1641,24 @@ public class MarcAggregationService extends GenericMetadataService {
             TimingLogger.start("MarcAggregationService.non-generic");
 
             persistFromMASmemory();
+
+            // During PROCESSING(as well as PRE-PROCESSING) of record updates, we delete this data, then add it back
+            // (since it could be different, i.e., it's an update), therefore we must again persist to db
+            for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+                final FieldMatcher matcher = me.getValue();
+                matcher.flush(true);
+                LOG.debug("flush matcher: "+matcher.getName());
+            }
+            
+            if (hasIntermediatePersistence) {
+                masDAO.persistScores(scores_unpersisted);
+                //flush from memory now that these have been persisted to database
+                scores_unpersisted.clear();
+            }
+            else {
+                masDAO.persistScores(scores);	
+            }
+
 
             super.commitIfNecessary(true, 0);
             TimingLogger.stop("MarcAggregationService.non-generic");
