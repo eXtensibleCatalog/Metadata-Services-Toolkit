@@ -497,6 +497,12 @@ public class MarcAggregationService extends GenericMetadataService {
         
         // we do the "real" setup here, since we now know that we will need to process at least 1 record!
     	doSetup();
+    	
+    	// we don't need to do anything with these (also: note that the XML for this incoming record is EMPTY!)
+    	if (r.getStatus() == Record.DELETED) {
+            TimingLogger.stop("preProcess");
+            return;
+    	}
     	       
         SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
         smr.setRecordId(r.getId());
@@ -511,13 +517,8 @@ public class MarcAggregationService extends GenericMetadataService {
         	// Save a lot of processing time by not having to worry about update info/scoring
         	if (! firstTime) removeRecordsFromMatchers(r);
         	TimingLogger.stop("preProcess.removeFromMatchers");
-        	
-            if (r.getStatus() == Record.DELETED) {
-                //removeRecordsFromMatchers(r);
-            } else {
             	
-            	addAndPersistScores(r, smr);
-            }
+        	addAndPersistScores(r, smr);
         }
         TimingLogger.stop("preProcess");
 
