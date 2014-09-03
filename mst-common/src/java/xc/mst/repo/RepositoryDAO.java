@@ -2174,26 +2174,66 @@ public class RepositoryDAO extends BaseDAO {
 
     public void createIndicesIfNecessary(String name) {
         name = getUtil().getDBSchema(name);
+
         TimingLogger.start("createIndicesIfNecessary." + name);
-        List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORDS_TABLE));
-        boolean genericRepoIndexExists = false;
-        if (rows != null) {
-            for (Map<String, Object> row : rows) {
-                String indexName = (String) row.get("Key_name");
-                LOG.debug("indexName: " + indexName);
-                if (("idx_records_status").equals(indexName)) {
-                    genericRepoIndexExists = true;
-                    break;
-                }
-            }
-        }
+        
         java.util.Set<String> tables = new HashSet<String>();
-        rows = this.jdbcTemplate.queryForList("show tables in " + name);
+        List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("show tables in " + name);
         if (rows != null) {
             for (Map<String, Object> row : rows) {
                 tables.add((String) row.values().iterator().next());
             }
         }
+                
+        boolean genericRepoIndexExists = ready4harvest(name);
+        if (!genericRepoIndexExists) {
+            String[] indices2create = new String[] {
+                    "create index idx_records_date_created on " + getTableName(name, RECORDS_TABLE) + " (oai_datestamp)",
+                    "create index idx_records_status on " + getTableName(name, RECORDS_TABLE) + " (status)",
+                    "create index idx_records_format_id on " + getTableName(name, RECORDS_TABLE) + " (format_id)",
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                    this.jdbcTemplate.execute(i2c);
+                } catch (Throwable t) {
+                    LOG.error("", t);
+                }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }
+        }
+        
+        boolean createIndicesOnRecordUpdates = false;
+        if (tables.contains(RECORD_UPDATES_TABLE)) {
+            createIndicesOnRecordUpdates = true;
+            rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_UPDATES_TABLE));
+            if (rows != null) {
+                for (Map<String, Object> row : rows) {
+                    String indexName = (String) row.get("Key_name");
+                    LOG.debug("indexName: " + indexName);
+                    if (("idx_record_updates_date_updated").equals(indexName)) {
+                    	createIndicesOnRecordUpdates = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (createIndicesOnRecordUpdates) {
+            String[] indices2create = new String[] {
+                    "create index idx_record_updates_date_updated on " + getTableName(name, RECORD_UPDATES_TABLE) + " (date_updated)",
+                    "create index idx_record_updates_record_id on " + getTableName(name, RECORD_UPDATES_TABLE) + " (record_id)"
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                	this.jdbcTemplate.execute(i2c);
+                } catch (Throwable t) {
+                    LOG.error("", t);
+                }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }    	        	
+        }
+               
         boolean createIndicesOnRecordOaiIds = false;
         if (tables.contains(RECORD_OAI_IDS)) {
             createIndicesOnRecordOaiIds = true;
@@ -2209,6 +2249,23 @@ public class RepositoryDAO extends BaseDAO {
                 }
             }
         }
+        if (createIndicesOnRecordOaiIds) {
+            // idx_oai_id is a new index created in version 1.4
+        	// make sure it exists when/if someone upgraded MST version from < 1.4
+            String[] indices2create = new String[] {
+                    "create index idx_oai_id on "+getTableName(name, RECORD_OAI_IDS)+" (oai_id)"
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                	this.jdbcTemplate.execute(i2c);
+	            } catch (Throwable t) {
+	                LOG.error("", t);
+	            }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }
+        }
+        
         boolean createIndicesOnRecordLinks = false;
         if (tables.contains(RECORD_LINKS_TABLE)) {
             createIndicesOnRecordLinks = true;
@@ -2224,22 +2281,72 @@ public class RepositoryDAO extends BaseDAO {
                 }
             }
         }
-
-        if (!genericRepoIndexExists) {
+        if (createIndicesOnRecordLinks) {
+            // TODO: you might have to remove duplicates
             String[] indices2create = new String[] {
-                    // "alter table"+getTableName(name, RECORDS_TABLE)+" add primary key (record_id)",
-                    "create index idx_records_date_created on " + getTableName(name, RECORDS_TABLE) + " (oai_datestamp)",
-                    "create index idx_records_status on " + getTableName(name, RECORDS_TABLE) + " (status)",
-                    "create index idx_records_format_id on " + getTableName(name, RECORDS_TABLE) + " (format_id)",
+                    "create index idx_from_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id)",
+                    "create index idx_to_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (to_record_id)"
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                	this.jdbcTemplate.execute(i2c);
+                } catch (Throwable t) {
+                    LOG.error("", t);
+                }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }
+        }
 
-                    // "alter table"+getTableName(name, RECORDS_XML_TABLE)+" add primary key (record_id)",
-
-                    // "alter table"+getTableName(name, RECORDS_SETS_TABLE)+" add primary key (record_id, set_id)",
+        boolean createIndicesOnRecordSets = false;
+        if (tables.contains(RECORDS_SETS_TABLE)) {
+        	createIndicesOnRecordSets = true;
+            rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORDS_SETS_TABLE));
+            if (rows != null) {
+                for (Map<String, Object> row : rows) {
+                    String indexName = (String) row.get("Key_name");
+                    LOG.debug("indexName: " + indexName);
+                    if (("idx_" + RECORDS_SETS_TABLE + "_record_id").equals(indexName)) {
+                    	createIndicesOnRecordSets = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (createIndicesOnRecordSets) {
+            String[] indices2create = new String[] {
                     "create index idx_" + RECORDS_SETS_TABLE + "_record_id on " + getTableName(name, RECORDS_SETS_TABLE) + " (record_id)",
                     "create index idx_" + RECORDS_SETS_TABLE + "_set_id on " + getTableName(name, RECORDS_SETS_TABLE) + " (set_id)",
 
-                    // "alter table "+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (id)",
-                    // "alter table"+getTableName(name, RECORD_PREDECESSORS_TABLE)+" add primary key (record_id, pred_record_id)",
+            };
+            for (String i2c : indices2create) {
+                TimingLogger.start(i2c.split(" ")[2]);
+                try {
+                    this.jdbcTemplate.execute(i2c);
+                } catch (Throwable t) {
+                    LOG.error("", t);
+                }
+                TimingLogger.stop(i2c.split(" ")[2]);
+            }
+        }
+
+        boolean createIndicesOnRecordPredecessors = false;
+        if (tables.contains(RECORD_PREDECESSORS_TABLE)) {
+        	createIndicesOnRecordPredecessors = true;
+            rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_PREDECESSORS_TABLE));
+            if (rows != null) {
+                for (Map<String, Object> row : rows) {
+                    String indexName = (String) row.get("Key_name");
+                    LOG.debug("indexName: " + indexName);
+                    if (("idx_" + RECORD_PREDECESSORS_TABLE + "_record_id").equals(indexName)) {
+                    	createIndicesOnRecordPredecessors = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (createIndicesOnRecordPredecessors) {
+            String[] indices2create = new String[] {
                     "create index idx_" + RECORD_PREDECESSORS_TABLE + "_record_id on " + getTableName(name, RECORD_PREDECESSORS_TABLE) + " (record_id)",
                     "create index idx_" + RECORD_PREDECESSORS_TABLE + "_pred_record_id on " + getTableName(name, RECORD_PREDECESSORS_TABLE) + " (pred_record_id)",
 
@@ -2254,78 +2361,11 @@ public class RepositoryDAO extends BaseDAO {
                 TimingLogger.stop(i2c.split(" ")[2]);
             }
         }
-        if (createIndicesOnRecordOaiIds) {
-            // idx_oai_id is a new index created in version 1.4
-        	// make sure it exists when/if someone upgraded MST version from < 1.4
-            String[] indices2create = new String[] {
-                    "create index idx_oai_id on "+getTableName(name, RECORD_OAI_IDS)+" (oai_id)"
-            };
-            for (String i2c : indices2create) {
-                TimingLogger.start(i2c.split(" ")[2]);
-                this.jdbcTemplate.execute(i2c);
-                TimingLogger.stop(i2c.split(" ")[2]);
-            }
-
-
-        }
-        if (createIndicesOnRecordLinks) {
-            // TODO: you might have to remove duplicates
-            String[] indices2create = new String[] {
-                    "create index idx_from_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (from_record_id)",
-                    "create index idx_to_record_id on " + getTableName(name, RECORD_LINKS_TABLE) + " (to_record_id)"
-            };
-            for (String i2c : indices2create) {
-                TimingLogger.start(i2c.split(" ")[2]);
-                this.jdbcTemplate.execute(i2c);
-                TimingLogger.stop(i2c.split(" ")[2]);
-            }
-        }
-
-        createIndicesOnRecordUpdates(name);
-        
+                
         TimingLogger.stop("createIndicesIfNecessary." + name);
         TimingLogger.reset();
     }
     
-    public boolean createIndicesOnRecordUpdates(String name) {
-    	name = getUtil().getDBSchema(name);
-        java.util.Set<String> tables = new HashSet<String>();
-        List<Map<String, Object>> rows = this.jdbcTemplate.queryForList("show tables in " + name);
-        if (rows != null) {
-            for (Map<String, Object> row : rows) {
-                tables.add((String) row.values().iterator().next());
-            }
-        }
-
-        boolean createIndices = true;
-        if (tables.contains(RECORD_UPDATES_TABLE)) {
-            rows = this.jdbcTemplate.queryForList("show indexes from " + getTableName(name, RECORD_UPDATES_TABLE));
-            if (rows != null) {
-                for (Map<String, Object> row : rows) {
-                    String indexName = (String) row.get("Key_name");
-                    LOG.debug("indexName: " + indexName);
-                    if (("idx_record_updates_date_updated").equals(indexName)) {
-                    	createIndices = false;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        if (createIndices) {
-            String[] indices2create = new String[] {
-                    "create index idx_record_updates_date_updated on " + getTableName(name, RECORD_UPDATES_TABLE) + " (date_updated)",
-                    "create index idx_record_updates_record_id on " + getTableName(name, RECORD_UPDATES_TABLE) + " (record_id)"
-            };
-            for (String i2c : indices2create) {
-                TimingLogger.start(i2c.split(" ")[2]);
-                this.jdbcTemplate.execute(i2c);
-                TimingLogger.stop(i2c.split(" ")[2]);
-            }    	        	
-        }
-        return createIndices;
-    }
-
     public boolean ready4harvest(String name) {
         boolean genericRepoIndexExists = false;
         name = getUtil().getDBSchema(name);
