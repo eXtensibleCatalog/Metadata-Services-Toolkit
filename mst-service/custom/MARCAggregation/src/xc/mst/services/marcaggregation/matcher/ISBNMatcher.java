@@ -105,7 +105,6 @@ public class ISBNMatcher extends FieldMatcherService {
     @Override
     // return all matching records!!! a match means the same int part of isbn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord r) {
-
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
 
         ArrayList<Long> results = new ArrayList<Long>();
@@ -121,7 +120,11 @@ public class ISBNMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
                 if (isbn2inputIds.get(isbn) != null) {
-                    results.addAll(isbn2inputIds.get(isbn));
+                	List<Long> m = isbn2inputIds.get(isbn);
+                	if (m != null && m.size() > 0) {
+                		results.addAll(m);
+                	}
+                    
                     if (results.contains(id)) {
                         results.remove(id);
                     }
@@ -202,7 +205,7 @@ public class ISBNMatcher extends FieldMatcherService {
                 if (!isIsbnValid(isbn)) {
                     LOG.error("** problem with 020$a ISBN in: " + r.recordId);
                     attachError104(ir);
-                    break;   // bad data will cause trouble up the road.
+                    continue;   // bad data will cause trouble up the road.
                 }
 
                 //note, originally saved orig string too, but I don't see the need

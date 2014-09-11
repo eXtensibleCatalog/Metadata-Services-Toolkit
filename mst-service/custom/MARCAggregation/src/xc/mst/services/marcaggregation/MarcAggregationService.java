@@ -61,6 +61,10 @@ public class MarcAggregationService extends GenericMetadataService {
      * to sort/figure record of source, place items we are interested in, that are used to determine
      * record of source, in this map, as we go.
      */
+    // TODO: I could be wrong, but it appears that since scores does not get loaded into memory at the start, we
+    // probably don't need to worry about keeping a scores_unpersisted variable around. If this is true, then
+    // we could remove the scores_unpersisted variable and replace it with the scores variable. This needs to be
+    // verified with regression testing first, though...
     protected TLongObjectHashMap<RecordOfSourceData> scores             = null;
     protected TLongObjectHashMap<RecordOfSourceData> scores_unpersisted = null;
 
@@ -117,7 +121,7 @@ public class MarcAggregationService extends GenericMetadataService {
     private String insert003_value;
 
     /**
-     * when commitIfNecessary is called, do we persist every n records, or do we wait until force == true? (at the end of processing)
+     * when commitIfNecessary is called, do we persist every n records (true), or do we wait until force == true? (false) at the end of processing)
      */
     public static boolean hasIntermediatePersistence = true;
     
@@ -153,7 +157,6 @@ public class MarcAggregationService extends GenericMetadataService {
         currentMatchSets = null;
         
         isSetUp = false;
-        
         System.gc();
     }
 
@@ -220,14 +223,27 @@ public class MarcAggregationService extends GenericMetadataService {
             // in case the WorkerThread code addition causes issues, simply uncomment the below:
             // throw new RuntimeException(e);
         }
+        
+        TimingLogger.start("MAS.doSetup.setupMatchers");
         setupMatchers();
+        TimingLogger.stop("MAS.doSetup.setupMatchers");
+
+        TimingLogger.start("MAS.doSetup.setupMatchRules");
         setupMatchRules();
+        TimingLogger.stop("MAS.doSetup.setupMatchRules");
+        
+        TimingLogger.start("MAS.doSetup.loadMasBibIORecords");
         allBibRecordsI2Omap = loadMasBibIORecords();
+        TimingLogger.stop("MAS.doSetup.loadMasBibIORecords");
         LOG.info("allBibRecordsI2Omap size: "+allBibRecordsI2Omap.size());
 
+        TimingLogger.start("MAS.doSetup.createMergedRecordsO2Imap");
         allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
+        TimingLogger.stop("MAS.doSetup.createMergedRecordsO2Imap");
 
+        TimingLogger.start("MAS.doSetup.loadMasMergedInputRecords");
         mergedInRecordsList = loadMasMergedInputRecords();
+        TimingLogger.stop("MAS.doSetup.loadMasMergedInputRecords");
         LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());
 
         if (hasIntermediatePersistence) {
@@ -497,16 +513,30 @@ public class MarcAggregationService extends GenericMetadataService {
         
         // we do the "real" setup here, since we now know that we will need to process at least 1 record!
     	doSetup();
+
+		String inputType = r.getType();
+		boolean inputDeleted = r.getDeleted();
+    	SaxMarcXmlRecord smr = null;
     	
-    	// we don't need to do anything with these (also: note that the XML for this incoming record is EMPTY!)
-    	if (r.getStatus() == Record.DELETED) {
-            TimingLogger.stop("preProcess");
+    	// special case for deleted recs
+    	if (inputDeleted) {
+    		if (inputType.equals("b")) {
+    			// Save a lot of processing time by not having to worry about update info/scoring
+    			if (! firstTime) removeRecordsFromMatchers(r);    
+    		}
+    		TimingLogger.stop("preProcess");
             return;
     	}
-    	       
-        SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-        smr.setRecordId(r.getId());
-
+    	
+    	try {    	    	       
+    		smr = new SaxMarcXmlRecord(r.getOaiXml());
+    		smr.setRecordId(r.getId());
+        } catch (Throwable t) {
+            LOG.error("error pre-processing record :" + r + " type: " + inputType + " isDeleted? " + inputDeleted, t);
+            TimingLogger.stop("preProcess");
+            return;
+        }
+    	
         // Get the Leader 06. This will allow us to determine the record's type
         final char leader06 = smr.getLeader().charAt(6);
 
@@ -517,8 +547,12 @@ public class MarcAggregationService extends GenericMetadataService {
         	// Save a lot of processing time by not having to worry about update info/scoring
         	if (! firstTime) removeRecordsFromMatchers(r);
         	TimingLogger.stop("preProcess.removeFromMatchers");
-            	
-        	addAndPersistScores(r, smr);
+        	
+        	if (r.getStatus() == Record.DELETED) {
+            	// we don't need to do anything with these        		
+        	} else {            	
+        		addAndPersistScores(r, smr);
+        	}
         }
         TimingLogger.stop("preProcess");
 
@@ -566,6 +600,18 @@ public class MarcAggregationService extends GenericMetadataService {
         try {
         			
             LOG.debug("MAS:  process record+"+r.getId());
+
+			String inputType = r.getType();
+			boolean inputDeleted = r.getDeleted();
+			
+			// special case for deleted recs
+			if (inputDeleted) {
+				if (inputType.equals("b")) {
+            		results = processBibDelete(r);
+				} else if (inputType == "h")  {
+            		results = processHoldDelete(r);
+            	}
+			}
 
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
             smr.setRecordId(r.getId());
@@ -620,12 +666,14 @@ public class MarcAggregationService extends GenericMetadataService {
                     logDebug("Record Id " + r.getId() + " with leader character " + leader06 + " not processed.");
                 }
             } else {// Record.DELETED
-            	if (type == "b") {
+            	// These *should* have been handled earlier...
+            	LOG.error("We probably should have processed this record earlier (based on incoming type); record: " + r);
+				if (type == "b") {
             		results = processBibDelete(r);
-            	}
-            	else if (type == "h")  {
+				} else if (type == "h")  {
             		results = processHoldDelete(r);
             	}
+
             }
             
 /*            
@@ -1189,7 +1237,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     
     private List<OutputRecord> processBibDelete(InputRecord r) {
-        List<OutputRecord> results = new ArrayList<OutputRecord>();
+    	List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (r.getSuccessors().size() == 0) {
             // NEW-DELETED
@@ -1256,7 +1304,6 @@ public class MarcAggregationService extends GenericMetadataService {
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (currentMatchSets.contains(r.getId())) {
-
             // we already processed this record; it was included in a matchset (aggregated record)
         	//////results.add(currentMatchSetRecords.get(currentMatchSets.get(r.getId())));
         	return results;
@@ -1274,7 +1321,6 @@ public class MarcAggregationService extends GenericMetadataService {
 		LOG.debug("** processBibNewActive, BEGINNING matchedRecordIds length="+matchedRecordIds.size());
 
         return remerge(results, matchedRecordIds);
-
     }
 
     /**

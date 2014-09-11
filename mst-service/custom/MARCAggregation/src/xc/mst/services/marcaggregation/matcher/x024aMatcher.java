@@ -42,13 +42,13 @@ public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(24);
 
         final Long id = new Long(ir.recordId);
+        
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -58,8 +58,9 @@ public class x024aMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 if (StringUtils.isNotEmpty(subfield)) {
                     String goods = getFieldDataIntoCorrectFormat(field, subfield);
-                    if (x024a2inputIds.get(goods) != null) {
-                        results.addAll(x024a2inputIds.get(goods));
+                    List<Long> m = x024a2inputIds.get(goods);
+                    if (m != null && m.size() > 0) {
+                        results.addAll(m);
                         if (results.contains(id)) {
                             results.remove(id);
                         }
@@ -134,6 +135,11 @@ public class x024aMatcher extends FieldMatcherService {
                 }
                 List<String> list = inputId2x024a.get(id);
                 String goods = getFieldDataIntoCorrectFormat(field, subfield);
+                
+                if (StringUtils.isEmpty(goods)) {
+                    LOG.error("** problem with 024$a in: " + r.recordId);
+                    continue;   // bad data will cause trouble up the road.                	
+                }
 
                 if (list == null) {
                     list = new ArrayList<String>();

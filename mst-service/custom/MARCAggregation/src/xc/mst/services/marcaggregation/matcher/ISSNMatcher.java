@@ -99,8 +99,9 @@ public class ISSNMatcher extends FieldMatcherService {
             }
             for (String subfield : subfields) {
                 String issn = getAllButDash(subfield);
-                if (issn2inputIds.get(issn) != null) {
-                    results.addAll(issn2inputIds.get(issn));
+                List<Long> m = issn2inputIds.get(issn);
+                if (m != null && m.size() > 0) {
+                    results.addAll(m);
                     if (results.contains(id)) {
                         results.remove(id);
                     }
@@ -174,7 +175,7 @@ public class ISSNMatcher extends FieldMatcherService {
                 String issn = getAllButDash(subfield);
                 if (StringUtils.isEmpty(issn)) {
                     LOG.error("** problem with 022$a ISSN in: " + r.recordId);
-                    break;   // bad data will cause trouble up the road.
+                    continue;   // bad data will cause trouble up the road.
                 }
                 List<String> issnList = inputId2issn.get(id);
 

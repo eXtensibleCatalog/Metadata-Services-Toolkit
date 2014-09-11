@@ -64,6 +64,8 @@ public class LccnMatcher extends FieldMatcherService {
     // you can have exactly 1 010$a fields within a record  (1 010, w/1 $a)
     protected TLongLongHashMap inputId2lccn = new TLongLongHashMap();
     protected TLongLongHashMap inputId2lccn_unpersisted = new TLongLongHashMap();
+    
+    private boolean preloadOnStart = false; //true;
 
     //don't need to save this
     //protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
@@ -149,7 +151,6 @@ public class LccnMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
 
         ArrayList<Long> results = new ArrayList<Long>();
@@ -168,30 +169,33 @@ public class LccnMatcher extends FieldMatcherService {
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
-                if (goods != -1) {
-                    if (lccn2inputIds.get(goods) != null) {
-                        results.addAll(lccn2inputIds.get(goods));
+                if (goods > 0L) { // we don't accept <= 0
+                	List<Long> m = lccn2inputIds.get(goods);
+                    if (m != null && m.size() > 0) {
+                        results.addAll(m);
                         if (results.contains(id)) {
                             results.remove(id);
                         }
                     }
                 }
 
-                //don't need this now because we are keeping them all in memory...
-/*
-                // now look in the database too!
-                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
-                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
-                LOG.debug("LCCN, DAO, getMatching records for "+goods+", numResults="+records.size());
-                for (Long record: records) {
-                    if (!record.equals(id)) {
-                        if (!results.contains(record)) {
-                            results.add(record);
-                            LOG.debug("**LCCN, DAO,  record id: "+record +" matches id "+id);
-                        }
-                    }
+                if (! preloadOnStart) {
+
+	                // now look in the database too!
+	                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
+	                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
+	                LOG.debug("LCCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+	                for (Long record: records) {
+	                    if (!record.equals(id)) {
+	                        if (!results.contains(record)) {
+	                            results.add(record);
+	                            LOG.debug("**LCCN, DAO,  record id: "+record +" matches id "+id);
+	                        }
+	                    }
+	                }
+
                 }
-*/
+                
             }
         }
         LOG.debug("getMatchinginputIds, irId="+ ir.recordId+" results.size="+results.size());
@@ -255,8 +259,8 @@ public class LccnMatcher extends FieldMatcherService {
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 Long goods = new Long(getUniqueId(subfield));
-                if (goods == -1l) {   // then were not successful in parsing, i.e. bad data.
-                    break;
+                if (goods < 1l) {   // then were not successful in parsing, i.e. bad data. (we're also not accepting the value 0, which seems like another invalid value)
+                    continue;
                 }
                 if (debug) {
                     LOG.info("LccnMatcher, numeric Lccn="+goods+" for record "+r.recordId);
@@ -313,6 +317,8 @@ public class LccnMatcher extends FieldMatcherService {
      */
     @Override
     public void load() {
+    	
+    	if (! preloadOnStart) return;
 
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
         inputId2lccn = masDao.getLccnRecordsCache();
@@ -339,7 +345,9 @@ public class LccnMatcher extends FieldMatcherService {
     // at commit time put stuff into db, but for this one, don't need to do it as often, because we are able to keep the data in memory.
     public void flush(boolean force) {
         if (force) {
-            MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+            
+        	MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+              	
             if (MarcAggregationService.hasIntermediatePersistence) {
                 s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn_unpersisted, MarcAggregationServiceDAO.matchpoints_010a_table, true);
                 inputId2lccn_unpersisted.clear();
@@ -349,8 +357,6 @@ public class LccnMatcher extends FieldMatcherService {
             }
         }
 
-        //inputId2lccn.clear();    //now keep these in memory!
-        //lccn2inputIds.clear();
     }
 
     /**

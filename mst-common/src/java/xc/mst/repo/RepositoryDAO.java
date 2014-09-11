@@ -581,11 +581,11 @@ public class RepositoryDAO extends BaseDAO {
                 LOG.debug("processedRecordsCount: " + processedRecordsCount);
                 /****
                  * Why is this in here? I could maybe understand if you dropped indices *before* the updates (then later re-created them)...
+                ****/
                 LOG.debug("db.numInserts2dropIndexes: " + MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0));
                 if (processedRecordsCount > MSTConfiguration.getInstance().getPropertyAsInt("db.numInserts2dropIndexes", 0)) {
                     dropIndices(name);
                 }
-                ****/
             } else {
                 try {
                     LOG.debug("recordsToAdd.size(): " + recordsToAdd.size());

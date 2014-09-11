@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import xc.mst.bo.record.InputRecord;
@@ -69,6 +70,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     protected Map<String, Integer> prefix2id = new HashMap<String, Integer>();
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
+    
+    private boolean preloadOnStart = false; //true;
 
     // as a side effect populates prefix list, for now, only if it finds a non-blank prefix.
     protected String getPrefix(String s) {
@@ -104,7 +107,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         return "";
     }
 
-    protected SCNData getMapId(String s) {
+    protected SCNData getMapId(String s) throws Exception {
         // return (getNumericId(s)*1000)+getPrefixId(s);
         final String prefix = getPrefix(s);
         
@@ -116,13 +119,17 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         	LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , original=" + s);
         }
         
+        if (! isSCNValid(numericId)) {
+        	LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , numeric ID=" + numericId);
+        	throw new Exception("Bad SCN Data");
+        }
+        
         LOG.debug("mapID:" + prefix + numericId);
         return new SCNData(prefix, prefix2id.get(prefix), numericId, s);
     }
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
 
         ArrayList<Long> results = new ArrayList<Long>();
@@ -136,35 +143,44 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 LOG.error("ERROR: Multiple $a subfields in 035 in record! " + ir.recordId);
             }
             for (String subfield : subfields) {
-                SCNData goods = getMapId(subfield);
+                SCNData goods = null;
+            	try {
+            		goods = getMapId(subfield);
+            	} catch (Exception e) {
+            		continue;
+            	}
 
                 // for now don't consider 035$a if no prefix.
                 if (!goods.prefix.equals("")) {
                     // look in memory
                     if (scn2inputIds.get(goods) != null) {
-                        results.addAll(scn2inputIds.get(goods));
+                    	List<Long> m = scn2inputIds.get(goods);
+                    	if (m!= null && m.size() > 0) {
+                    		results.addAll(m);
+                    	}
                         if (results.contains(id)) {
                             results.remove(id);
                         }
                     }
-/*
-                    // now look in the database too!
-                    List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
-                            MarcAggregationServiceDAO.input_record_id_field,
-                            MarcAggregationServiceDAO.numeric_id_field,
-                            MarcAggregationServiceDAO.prefix_id_field, goods);
-
-                    LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
-                    for (Long record: records) {
-                        if (!record.equals(id)) {
-                            if (!results.contains(record)) {
-                                results.add(record);
-                                LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
-                            }
-                        }
-                    }
- */
-                }
+                    if (! preloadOnStart) {
+	                    // now look in the database too!
+	                    List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
+	                            MarcAggregationServiceDAO.input_record_id_field,
+	                            MarcAggregationServiceDAO.numeric_id_field,
+	                            MarcAggregationServiceDAO.prefix_id_field, goods);
+	
+	                    LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+	                    for (Long record: records) {
+	                        if (!record.equals(id)) {
+	                            if (!results.contains(record)) {
+	                                results.add(record);
+	                                LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
+	                            }
+	                        }
+	                    }
+	 
+	                }
+	            }
             }
         }
         LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
@@ -222,7 +238,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 if (prefix.equals("")) {
                     // must have a prefix to use as a match point.
                     // TODO MST-503
-                    break;
+                    continue;
                 }
                 else if (prefix.equals(oclc)) {
                     if (haveSeenOCoLC) {
@@ -236,7 +252,14 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     }
                     haveSeenOCoLC = true;
                 }
-                SCNData goods = getMapId(subfield);
+
+                SCNData goods = null;
+            	try {
+            		goods = getMapId(subfield);
+            	} catch (Exception e) {
+            		continue;
+            	}
+                
                 List<SCNData> goodsList = inputId2scn.get(id);
                 if (goodsList == null || goodsList.size() == 0) {
                     goodsList = new ArrayList<SCNData>();
@@ -273,10 +296,21 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             }
         }
     }
+    
+    
+    /**
+     * test to see if String is valid (not empty)
+     * @param numeric string, allegedly
+     * @return the trueness of it all
+     */
+    private boolean isSCNValid(String numeric) {
+        return ! StringUtils.isEmpty(numeric);
+    }
 
     // from db
     @Override
     public void load() {
+    	// we NEED to always load prefixes. (It's a small list, anyway, but very, very NECESSARY).
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
         
         id2prefix = s.getMarcAggregationServiceDAO().getPrefixes();
@@ -284,6 +318,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             prefix2id.put(id2prefix.get(id), id);
         }
 
+    	if (! preloadOnStart) return;
+    	
         // Retrieve all match point integer data into memory,
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
         inputId2scn = masDao.getSCCNRecordsCache();
@@ -312,7 +348,9 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     @Override
     public void flush(boolean force) {
         if (force) {
+        	
             MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        	
             if (MarcAggregationService.hasIntermediatePersistence) {
                 s.getMarcAggregationServiceDAO().persistPrefixList(id2prefix_unpersisted, MarcAggregationServiceDAO.prefixes_035a_table);
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn_unpersisted, MarcAggregationServiceDAO.matchpoints_035a_table);
@@ -326,9 +364,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn/* _unpersisted */, MarcAggregationServiceDAO.matchpoints_035a_table);
             }
 
-            // no longer clear these we are keeping it in mem.
-            //inputId2scn.clear();
-            //scn2inputIds.clear();
         }
     }
 
