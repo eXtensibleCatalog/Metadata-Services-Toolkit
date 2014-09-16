@@ -286,9 +286,9 @@ public class SaxMarcXmlRecord implements ContentHandler {
 		List<Marc001_003Holder> ret = new ArrayList<Marc001_003Holder>();
     	String bib001 = getControlField(1);
     	String orgCode = getOrgCode();
-    	if (bib001 != null) {
+	if (bib001 != null && orgCode != null && orgCode.length() > 0) {
     		ret.add(new Marc001_003Holder(bib001, orgCode));
-    		return ret;
+		/return ret; // let's collect 035$a's too
     	}
     	List<String> sfs = getSubfield(35, 'a');
     	for (String sf : sfs) {
