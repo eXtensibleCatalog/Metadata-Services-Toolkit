@@ -248,7 +248,7 @@ public class ISBNMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void load() {
+    public void load(boolean firstTime) {
         // TODO Auto-generated method stub
 
     }

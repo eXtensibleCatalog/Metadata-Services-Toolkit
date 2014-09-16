@@ -123,7 +123,7 @@ public class MarcAggregationService extends GenericMetadataService {
     /**
      * when commitIfNecessary is called, do we persist every n records (true), or do we wait until force == true? (false) at the end of processing)
      */
-    public static boolean hasIntermediatePersistence = true;
+    public static boolean hasIntermediatePersistence = false; // for now, we are only flushing records at the very end, therefore do not waste any RAM or processing on intermediate objects
     
     /**
      * Is this the first time running through this service?
@@ -133,7 +133,7 @@ public class MarcAggregationService extends GenericMetadataService {
     boolean isSetUp = false;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
-
+private long flushTimer = System.currentTimeMillis();;
     private void clear_objects() {
         matcherMap = null;
         matchRuleMap = null;
@@ -157,6 +157,7 @@ public class MarcAggregationService extends GenericMetadataService {
         currentMatchSets = null;
         
         isSetUp = false;
+flushTimer = System.currentTimeMillis();;        
         System.gc();
     }
 
@@ -354,7 +355,7 @@ public class MarcAggregationService extends GenericMetadataService {
             m.setName(n);
             m.setMarcAggregationService(this);
             matcherMap.put(mp, m);
-            m.load();
+            m.load(firstTime);
         }
     }
 
@@ -600,6 +601,12 @@ public class MarcAggregationService extends GenericMetadataService {
         try {
         			
             LOG.debug("MAS:  process record+"+r.getId());
+long tnow = System.currentTimeMillis();	
+if (tnow - flushTimer >= 3600000) {
+	flushTimer = tnow;
+	TimingLogger.reset();
+}
+LOG.error("ChrisD MAS:  process record: "+r.getId());
 
 			String inputType = r.getType();
 			boolean inputDeleted = r.getDeleted();
@@ -1204,6 +1211,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+	LOG.error("ChrisD MAS:  processBibUpdateActive: "+r.getId());    	
     	List<OutputRecord> results = processBibDelete(r);
 
     	// processBibDelete nukes all the record's score data; must re-add it
@@ -1237,6 +1245,7 @@ public class MarcAggregationService extends GenericMetadataService {
     }
     
     private List<OutputRecord> processBibDelete(InputRecord r) {
+LOG.error("ChrisD MAS:  processBibDelete: "+r.getId());    	        
     	List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (r.getSuccessors().size() == 0) {
@@ -1276,6 +1285,7 @@ public class MarcAggregationService extends GenericMetadataService {
             }
             if (isAbibWithSuccessors) {
                 HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
+LOG.error("ChrisD MAS:  processBibDelete formerMatchSet =  deleteAllMergeDetails: "+formerMatchSet);    	                
                 for (long formerId: formerMatchSet) {
                 	currentMatchSets.remove(formerId);                	
                 	recordOfSourceMap.remove(formerId);
@@ -1288,7 +1298,9 @@ public class MarcAggregationService extends GenericMetadataService {
                 if (formerMatchSet.size() > 0) {
                 	List<HashSet<Long>> listOfMatchSets = findMatchSets(formerMatchSet);
                 	for (HashSet<Long> matchset: listOfMatchSets) {
+LOG.error("ChrisD MAS:  processBibDelete listOfMatchSets =  findMatchSets: "+matchset);    	                                	
                 		results = remerge(results, matchset);
+LOG.error("ChrisD MAS:  processBibDelete results =  remerge: returned results"/*+results*/);    	                                	                		
                 	}
                 }
                 
@@ -1300,10 +1312,12 @@ public class MarcAggregationService extends GenericMetadataService {
     
     
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
+	LOG.error("ChrisD MAS:  processBibUpdateActive: "+r.getId());    	
         LOG.debug("*AM in processBibNewActive!");
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (currentMatchSets.contains(r.getId())) {
+LOG.error("ChrisD MAS:  processBibNewActive currentMatchSets already processed this bib!: "+r.getId());    	                                	
             // we already processed this record; it was included in a matchset (aggregated record)
         	//////results.add(currentMatchSetRecords.get(currentMatchSets.get(r.getId())));
         	return results;
@@ -1311,15 +1325,18 @@ public class MarcAggregationService extends GenericMetadataService {
         
         MatchSet ms = getMatchSet(smr);
         HashSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
+LOG.error("ChrisD MAS:  processBibNewActive matchedRecordIds =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
         matchedRecordIds.add(r.getId());
         
         // We need to account for associativity,
 		TimingLogger.start("findMatchSets.expandMatchedRecords");
 		matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+LOG.error("ChrisD MAS:  processBibNewActive matchedRecordIds =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
 		TimingLogger.stop("findMatchSets.expandMatchedRecords");
         
 		LOG.debug("** processBibNewActive, BEGINNING matchedRecordIds length="+matchedRecordIds.size());
 
+LOG.error("ChrisD MAS:  processBibNewActive res =  remerge: returned results"/*+res*/);    	                                	        		
         return remerge(results, matchedRecordIds);
     }
 

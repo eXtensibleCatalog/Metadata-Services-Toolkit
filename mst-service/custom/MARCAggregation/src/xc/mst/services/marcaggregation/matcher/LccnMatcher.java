@@ -65,8 +65,8 @@ public class LccnMatcher extends FieldMatcherService {
     protected TLongLongHashMap inputId2lccn = new TLongLongHashMap();
     protected TLongLongHashMap inputId2lccn_unpersisted = new TLongLongHashMap();
     
-    private boolean preloadOnStart = false; //true;
-
+    private boolean keepAllCached = false; //true;
+    
     //don't need to save this
     //protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
 
@@ -162,40 +162,35 @@ public class LccnMatcher extends FieldMatcherService {
         final Long id = new Long(ir.recordId);
         for (Field field: fields) {
                 List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size>1) {
                 LOG.error("ERROR: Multiple $a subfields in 010 in record! "+ir.recordId);
-            }
+            }*/
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
-                if (goods > 0L) { // we don't accept <= 0
-                	List<Long> m = lccn2inputIds.get(goods);
-                    if (m != null && m.size() > 0) {
-                        results.addAll(m);
-                        if (results.contains(id)) {
-                            results.remove(id);
+                if (goods <= 0L) continue; // we don't accept <= 0
+                
+                // look in memory first
+            	List<Long> m = lccn2inputIds.get(goods);
+                if (m != null && m.size() > 0) {
+                    results.addAll(m);
+                    if (results.contains(id)) {
+                        results.remove(id);
+                    }
+                }
+                // also, look in the database
+                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
+                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
+                LOG.debug("LCCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("**LCCN, DAO,  record id: "+record +" matches id "+id);
                         }
                     }
                 }
-
-                if (! preloadOnStart) {
-
-	                // now look in the database too!
-	                //mysql -u root --password=root -D xc_marcaggregation -e 'select input_record_id  from matchpoints_010a where string_id = "24094664" '
-	                List<Long> records = masDao.getMatchingRecords(MarcAggregationServiceDAO.matchpoints_010a_table, MarcAggregationServiceDAO.input_record_id_field,MarcAggregationServiceDAO.numeric_id_field,goods);
-	                LOG.debug("LCCN, DAO, getMatching records for "+goods+", numResults="+records.size());
-	                for (Long record: records) {
-	                    if (!record.equals(id)) {
-	                        if (!results.contains(record)) {
-	                            results.add(record);
-	                            LOG.debug("**LCCN, DAO,  record id: "+record +" matches id "+id);
-	                        }
-	                    }
-	                }
-
-                }
-                
             }
         }
         LOG.debug("getMatchinginputIds, irId="+ ir.recordId+" results.size="+results.size());
@@ -239,13 +234,13 @@ public class LccnMatcher extends FieldMatcherService {
         // lccn2inputIds.add(r.getId(), getUniqueId(s));
 
         List<Field> fields = r.getDataFields(10);
-        if (fields.size()>1) {
+/*        if (fields.size()>1) {
             LOG.error("ERROR: Multiple 010 fields in record! "+r.recordId);
             final MarcAggregationService service = getMarcAggregationService();
             if (service != null) {
                 service.addMessage(ir, 102, RecordMessage.ERROR);
             }
-        }
+        }*/
         for (Field field: fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
@@ -316,9 +311,11 @@ public class LccnMatcher extends FieldMatcherService {
      * unnecessarily loading stuff into memory.
      */
     @Override
-    public void load() {
+    public void load(boolean firstTime) {
+    	// we will only keep object in-memory for the initial (large) load; otherwise, we will rely database
+    	keepAllCached = firstTime;
     	
-    	if (! preloadOnStart) return;
+    	if (! keepAllCached) return;
 
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
         inputId2lccn = masDao.getLccnRecordsCache();
@@ -354,6 +351,12 @@ public class LccnMatcher extends FieldMatcherService {
             }
             else {
                 s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn, MarcAggregationServiceDAO.matchpoints_010a_table, true);
+            }
+            
+        	// we persisted everything already; no need to keep in-memory objects too
+            if (! keepAllCached) {
+            	inputId2lccn.clear();
+            	lccn2inputIds.clear();
             }
         }
 

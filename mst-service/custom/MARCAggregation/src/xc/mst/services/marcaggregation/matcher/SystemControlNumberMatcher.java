@@ -71,8 +71,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     private static final Logger LOG = Logger.getLogger(SystemControlNumberMatcher.class);
     
-    private boolean preloadOnStart = false; //true;
-
+    private boolean keepAllCached = false; //true;
+    
     // as a side effect populates prefix list, for now, only if it finds a non-blank prefix.
     protected String getPrefix(String s) {
         int start, end;
@@ -138,10 +138,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         final Long id = new Long(ir.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size > 1) {
                 LOG.error("ERROR: Multiple $a subfields in 035 in record! " + ir.recordId);
-            }
+            }*/
             for (String subfield : subfields) {
                 SCNData goods = null;
             	try {
@@ -151,36 +151,33 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             	}
 
                 // for now don't consider 035$a if no prefix.
-                if (!goods.prefix.equals("")) {
-                    // look in memory
-                    if (scn2inputIds.get(goods) != null) {
-                    	List<Long> m = scn2inputIds.get(goods);
-                    	if (m!= null && m.size() > 0) {
-                    		results.addAll(m);
-                    	}
-                        if (results.contains(id)) {
-                            results.remove(id);
+                if (goods.prefix.equals("")) continue;
+                
+                // look in memory first
+                if (scn2inputIds.get(goods) != null) {
+                	List<Long> m = scn2inputIds.get(goods);
+                	if (m!= null && m.size() > 0) {
+                		results.addAll(m);
+                	}
+                    if (results.contains(id)) {
+                        results.remove(id);
+                    }
+                }
+                // also, look in the database
+                List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
+                        MarcAggregationServiceDAO.input_record_id_field,
+                        MarcAggregationServiceDAO.numeric_id_field,
+                        MarcAggregationServiceDAO.prefix_id_field, goods);
+
+                LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
+                for (Long record: records) {
+                    if (!record.equals(id)) {
+                        if (!results.contains(record)) {
+                            results.add(record);
+                            LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
                         }
                     }
-                    if (! preloadOnStart) {
-	                    // now look in the database too!
-	                    List<Long> records = masDao.getMatchingSCCNRecords(MarcAggregationServiceDAO.matchpoints_035a_table,
-	                            MarcAggregationServiceDAO.input_record_id_field,
-	                            MarcAggregationServiceDAO.numeric_id_field,
-	                            MarcAggregationServiceDAO.prefix_id_field, goods);
-	
-	                    LOG.debug("SCN, DAO, getMatching records for "+goods+", numResults="+records.size());
-	                    for (Long record: records) {
-	                        if (!record.equals(id)) {
-	                            if (!results.contains(record)) {
-	                                results.add(record);
-	                                LOG.debug("**SCN, DAO,  record id: "+record +" matches id "+id);
-	                            }
-	                        }
-	                    }
-	 
-	                }
-	            }
+                }
             }
         }
         LOG.debug("getMatchingInputIds, irId=" + ir.recordId + " results.size=" + results.size());
@@ -223,15 +220,15 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         //final String oclc = "OCoLC";
-    	final String oclc = "OCOLC"; // case-insensitive matching MST-538
+//    	final String oclc = "OCOLC"; // case-insensitive matching MST-538
         List<Field> fields = r.getDataFields(35);
-        boolean haveSeenOCoLC = false;
+//        boolean haveSeenOCoLC = false;
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size > 1) {
                 LOG.error("ERROR: Multiple $a subfields in 035 in record! " + r.recordId);
-            }
+            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 String prefix = getPrefix(subfield);
@@ -240,7 +237,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     // TODO MST-503
                     continue;
                 }
-                else if (prefix.equals(oclc)) {
+/*                else if (prefix.equals(oclc)) {
                     if (haveSeenOCoLC) {
                         LOG.error("ERROR: 035$a prefix (OCoLC) seen > 1 time for recordId: " + r.recordId);
 //
@@ -252,7 +249,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     }
                     haveSeenOCoLC = true;
                 }
-
+*/
                 SCNData goods = null;
             	try {
             		goods = getMapId(subfield);
@@ -309,7 +306,10 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     // from db
     @Override
-    public void load() {
+    public void load(boolean firstTime) {
+    	// we will only keep object in-memory for the initial (large) load; otherwise, we will rely database
+    	keepAllCached = firstTime;
+    	
     	// we NEED to always load prefixes. (It's a small list, anyway, but very, very NECESSARY).
         MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
         
@@ -318,7 +318,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             prefix2id.put(id2prefix.get(id), id);
         }
 
-    	if (! preloadOnStart) return;
+    	if (! keepAllCached) return;
     	
         // Retrieve all match point integer data into memory,
         MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
@@ -362,6 +362,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
             else {
                 s.getMarcAggregationServiceDAO().persistPrefixList(id2prefix, MarcAggregationServiceDAO.prefixes_035a_table);
                 s.getMarcAggregationServiceDAO().persistSCNMatchpointMaps(inputId2scn/* _unpersisted */, MarcAggregationServiceDAO.matchpoints_035a_table);
+            }
+            
+           	// we persisted everything already; no need to keep in-memory objects too (but do keep id2prefix in memory!)
+           if (! keepAllCached) {
+            	inputId2scn.clear();
+            	scn2inputIds.clear();
             }
 
         }

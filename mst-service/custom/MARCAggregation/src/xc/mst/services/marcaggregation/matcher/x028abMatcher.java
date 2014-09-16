@@ -50,7 +50,7 @@ public class x028abMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void load() {
+    public void load(boolean firstTime) {
         // nothing to do here?  well sure there is some is persisted, should  it be?
 
     }

@@ -25,20 +25,25 @@ public class SaxMarcXmlRecord implements ContentHandler {
     private static final Logger LOG = Logger.getLogger(SaxMarcXmlRecord.class);
     private static final List<Field> EMPTY_ARRAY_LIST = new ArrayList<Field>();
 
-    protected static XMLReader xmlReader = null;
+    private static ThreadLocal<XMLReader> xmlReaderTL = new ThreadLocal<XMLReader>() {
+    	@Override protected XMLReader initialValue() {
+            return null;
+    	}
+    };
+    protected XMLReader xmlReader = null;
 
     private static final String LEADER = "leader";
     private static final String CONTROL_FIELD = "controlfield";
     private static final String DATA_FIELD = "datafield";
     private static final String SUB_FIELD = "subfield";
 
-    static {
+ /*   static {
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
         } catch (Throwable t) {
             Util.getUtil().throwIt(t);
         }
-    }
+    }*/
 
     public long recordId = -1l;
     protected boolean inTextValueField = false;
@@ -63,9 +68,39 @@ public class SaxMarcXmlRecord implements ContentHandler {
     public String getLeader() {
         return marcRecord.getLeader();
     }
-
+    
+    
+    public XMLReader getXMLReader () {
+    	/*
+    	XMLReader r = null;
+		try {
+			r = XMLReaderFactory.createXMLReader();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			r = null;
+		}
+		return r;
+    	*/
+    	XMLReader r = xmlReaderTL.get();
+    	if (r == null) {
+    		//LOG.error("in SaxMarcXmlRecord::getXMLReader(): r==null");
+    		try {
+    			r = XMLReaderFactory.createXMLReader();
+    		} catch (SAXException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			r = null;
+    		}
+    		xmlReaderTL.set(r);
+    	}
+		//LOG.error("in SaxMarcXmlRecord::getXMLReader(): r=" + r);    
+		return r;
+    }
+    
     public SaxMarcXmlRecord(String marcXml, String sourceOfRecords) {
     	this.sourceOfRecords = sourceOfRecords;
+    	xmlReader = getXMLReader();
         try {
             TimingLogger.start("sax");
             xmlReader.setContentHandler(this);
@@ -251,9 +286,9 @@ public class SaxMarcXmlRecord implements ContentHandler {
 		List<Marc001_003Holder> ret = new ArrayList<Marc001_003Holder>();
     	String bib001 = getControlField(1);
     	String orgCode = getOrgCode();
-    	if (bib001 != null && orgCode != null && orgCode.length() > 0) {
+    	if (bib001 != null) {
     		ret.add(new Marc001_003Holder(bib001, orgCode));
-    		//return ret; // let's collect 035$a's too
+    		return ret;
     	}
     	List<String> sfs = getSubfield(35, 'a');
     	for (String sf : sfs) {

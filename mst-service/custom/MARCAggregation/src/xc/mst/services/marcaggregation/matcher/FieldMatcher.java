@@ -60,7 +60,7 @@ public interface FieldMatcher {
      * reason, this load method should do what it can to load as much as it can to get the data from disk
      * into memory.  This method should be called once per service processing.
      */
-    public void load();
+    public void load(boolean initialLoad);
 
     /**
      * For testing.
@@ -94,4 +94,6 @@ public interface FieldMatcher {
      *        rescued.
      */
     public void flush(boolean freeUpMemory);
+    
+
 }

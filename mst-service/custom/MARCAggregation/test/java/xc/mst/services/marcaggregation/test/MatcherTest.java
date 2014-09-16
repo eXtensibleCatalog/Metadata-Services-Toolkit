@@ -48,7 +48,7 @@ public class MatcherTest extends MASBaseTest {
             FieldMatcher m = (FieldMatcher) applicationContext.getBean(n);
             m.setName(n);
             matcherMap.put(mp, m);
-            m.load();
+            m.load(true);
         }
         this.matchRuleMap = new HashMap<String, MatchRuleIfc>();
         List<String> mrStrs = getConfigFileValues("match.rules.value");
@@ -250,7 +250,7 @@ public class MatcherTest extends MASBaseTest {
     protected void load() {
         for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
             FieldMatcher matcher = me.getValue();
-            matcher.load();
+            matcher.load(true);
         }
     }
 

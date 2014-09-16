@@ -51,10 +51,10 @@ public class x024aMatcher extends FieldMatcherService {
         
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size > 1) {
                 LOG.error("ERROR: Multiple $a subfields in 024 in record! " + ir.recordId);
-            }
+            }*/
             for (String subfield : subfields) {
                 if (StringUtils.isNotEmpty(subfield)) {
                     String goods = getFieldDataIntoCorrectFormat(field, subfield);
@@ -123,10 +123,10 @@ public class x024aMatcher extends FieldMatcherService {
         }
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size > 1) {
                 LOG.error("** ERROR: Multiple $a subfields in 024 in record! " + r.recordId);
-            }
+            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
@@ -186,7 +186,7 @@ public class x024aMatcher extends FieldMatcherService {
     }
 
     @Override
-    public void load() {
+    public void load(boolean firstTime) {
         // TODO may not use this for string-based matchers.
 
     }
