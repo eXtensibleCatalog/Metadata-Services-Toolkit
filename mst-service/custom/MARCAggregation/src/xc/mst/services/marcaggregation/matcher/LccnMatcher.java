@@ -312,7 +312,7 @@ public class LccnMatcher extends FieldMatcherService {
      */
     @Override
     public void load(boolean firstTime) {
-    	// we will only keep object in-memory for the initial (large) load; otherwise, we will rely database
+    	// we will only keep all objects in-memory for the initial (large) load; otherwise, we need to consult database too
     	keepAllCached = firstTime;
     	
     	if (! keepAllCached) return;

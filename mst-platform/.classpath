@@ -69,7 +69,9 @@
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/stax-utils-snapshot-20040917.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/testng-5.8.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/wstx-asl-3.2.7.jar"/>
-	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/xercesImpl-2.8.1.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/commons-net-2.0.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/javassist-3.7.ga.jar"/>
 	<classpathentry kind="lib" path="build/webapp/WEB-INF/lib/ognl-3.0.jar"/>

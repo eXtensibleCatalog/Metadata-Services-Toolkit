@@ -307,7 +307,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // from db
     @Override
     public void load(boolean firstTime) {
-    	// we will only keep object in-memory for the initial (large) load; otherwise, we will rely database
+    	// we will only keep all objects in-memory for the initial (large) load; otherwise, we need to consult database too
     	keepAllCached = firstTime;
     	
     	// we NEED to always load prefixes. (It's a small list, anyway, but very, very NECESSARY).

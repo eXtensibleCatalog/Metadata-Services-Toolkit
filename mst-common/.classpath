@@ -74,7 +74,10 @@
 	<classpathentry kind="lib" path="build/lib/testng-5.8.jar" sourcepath="C:/Documents and Settings/BenjaminA/.m2/repository/org/testng/testng/5.8/testng-5.8-sources.jar"/>
 	<classpathentry kind="lib" path="build/lib/trove-2.1.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/wstx-asl-3.2.7.jar"/>
-	<classpathentry kind="lib" path="build/lib/xercesImpl-2.8.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="build/lib/xml-resolver-1.2.jar"/>
+/>
 	<classpathentry kind="lib" path="build/lib/xwork-core-2.2.1.jar" sourcepath="C:/Documents and Settings/BenjaminA/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1-sources.jar"/>
 	<classpathentry kind="lib" path="build/lib/ant-1.6.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/slf4j-log4j12-1.6.1.jar"/>
