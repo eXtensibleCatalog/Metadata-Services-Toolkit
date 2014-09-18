@@ -618,6 +618,7 @@ LOG.error("ChrisD MAS:  process record: "+r.getId());
 				} else if (inputType == "h")  {
             		results = processHoldDelete(r);
             	}
+				return results;
 			}
 
             SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
