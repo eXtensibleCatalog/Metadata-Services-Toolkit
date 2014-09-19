@@ -115,7 +115,7 @@ public class ISBNMatcher extends FieldMatcherService {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size > 1) {
-                LOG.error("ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
+                //LOG.error("ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
             }
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
@@ -193,7 +193,7 @@ public class ISBNMatcher extends FieldMatcherService {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
             if (size > 1) {
-                LOG.error("** ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
+                //LOG.error("** ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
             }
             for (String subfield : subfields) {
                 Long id = r.recordId;   // autoboxing for better or worse...

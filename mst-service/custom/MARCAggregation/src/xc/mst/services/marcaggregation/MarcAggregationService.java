@@ -606,10 +606,10 @@ if (tnow - flushTimer >= 3600000) {
 	flushTimer = tnow;
 	TimingLogger.reset();
 }
-LOG.error("ChrisD MAS:  process record: "+r.getId());
 
 			String inputType = r.getType();
 			boolean inputDeleted = r.getDeleted();
+LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDeleted:"+inputDeleted);
 			
 			// special case for deleted recs
 			if (inputDeleted) {
@@ -983,7 +983,20 @@ LOG.error("ChrisD MAS:  process record: "+r.getId());
     		TimingLogger.start("findMatchSets.populateMatchedRecords");
             Record r = getInputRepo().getRecord(id);
             
-            SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
+            // do not process deletes (faster to ignore, plus it's possible the XML is empty, which will cause issues below)            
+            if (r.getDeleted()) {
+LOG.error("ChrisD MAS:  findMatchSets, this record is marked for deletion, therefore ignore it, id: "+r.getId());            	
+            	continue;
+            }
+            
+            SaxMarcXmlRecord smr = null;
+            try {            
+            	smr = new SaxMarcXmlRecord(r.getOaiXml());
+            } catch (RuntimeException re) {
+LOG.error("ChrisD MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId()+ ", XML: "+r.getOaiXml());
+				LOG.warn("findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId());
+            	continue;
+            }
             smr.setRecordId(r.getId());
 
             MatchSet ms = populateMatchSet(r, smr);
