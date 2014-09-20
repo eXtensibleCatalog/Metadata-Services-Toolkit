@@ -116,11 +116,12 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         if (inx >= 0) {
         	numericId = s.substring(inx + prefix.length() + 1);
         } else {
-        	LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , original=" + s);
+        	//LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , original=" + s);
+        	throw new Exception("Bad SCN Data");        	
         }
         
         if (! isSCNValid(numericId)) {
-        	LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , numeric ID=" + numericId);
+        	//LOG.error("** Problem with numeric ID in SCNData, prefix=" + prefix + " , numeric ID=" + numericId);
         	throw new Exception("Bad SCN Data");
         }
         
@@ -301,7 +302,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
      * @return the trueness of it all
      */
     private boolean isSCNValid(String numeric) {
-        return ! StringUtils.isEmpty(numeric);
+        return ! StringUtils.isBlank(numeric);
     }
 
     // from db

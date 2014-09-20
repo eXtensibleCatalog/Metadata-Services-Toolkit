@@ -926,6 +926,7 @@ LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDe
 
         // 2nd, get the related merged records:
         HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+LOG.error("ChrisD MAS:  deleteAllMergeDetails formerMatchSet =  getCurrentMatchSetForRecord(" + r.getId() + ": "+formerMatchSet);    	                        
 
         // 3rd, remove related records from memory structures in preparation for remerge.
 
@@ -954,12 +955,15 @@ LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDe
     }
 
     private Long getBibOutputId(Long id) {
-        return allBibRecordsI2Omap.get(id);
+    	if (allBibRecordsI2Omap.containsKey(id)) return allBibRecordsI2Omap.get(id);
+LOG.error("ChrisD MAS: getBibOutput(" + id + ") came up empty.");
+    	return null;
     }
 
     private HashSet<Long> getCurrentMatchSetForRecord(InputRecord r) {
         Long outputId = getBibOutputId(r);
-        return getCurrentMatchSetForRecordId(outputId);
+        if (outputId != null) return getCurrentMatchSetForRecordId(outputId);
+        return new HashSet<Long>();
     }
     	
     private HashSet<Long> getCurrentMatchSetForRecordId(Long id) {
