@@ -1024,7 +1024,7 @@ LOG.error("ChrisD MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.get
             }
     		TimingLogger.stop("findMatchSets.buildListOfMatchsets");
         }
-        TimingLogger.start("findMatchSets");
+        TimingLogger.stop("findMatchSets");
 
     	return listOfMatchSets;
     }
