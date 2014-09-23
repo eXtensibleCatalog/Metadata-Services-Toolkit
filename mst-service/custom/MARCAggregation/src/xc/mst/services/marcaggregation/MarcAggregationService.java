@@ -91,6 +91,13 @@ public class MarcAggregationService extends GenericMetadataService {
     /** it's informative (debugging) to track a matchset's record of source
      */
     protected TLongLongHashMap						recordOfSourceMap = null;
+    
+    /** 
+     * SaxMarcXmlRecord processing occurs often, perhaps on the same records multiple times.
+     * Let's cache these as we preProcess.
+     */
+    protected TLongObjectHashMap<SaxMarcXmlRecord> SMRs             = null;
+    private boolean cacheSMRs = true;
 
     /**
      * the repository feeding this service.  we need to hang on to this because of remerging, etc.
@@ -167,7 +174,6 @@ flushTimer = System.currentTimeMillis();;
      */
     @Override
     public void setup() {
-        LOG.debug("MAS:  setup()");
         try {
             marc21 = getFormatService().getFormatByName("marc21");
         } catch (DatabaseConfigException e) {
@@ -177,6 +183,7 @@ flushTimer = System.currentTimeMillis();;
         }
         
         debugMode = config.getPropertyAsBoolean("debug_mode", false);
+        cacheSMRs = config.getPropertyAsBoolean("cache_smr", true);
         
         // 001/003 manipulation
         insert001 = config.getPropertyAsBoolean("insert_001", false);
@@ -196,6 +203,8 @@ flushTimer = System.currentTimeMillis();;
     // Too time-consuming to do on "real" setup(); fire this off only if we need to process records! (totalRecordCount > 0)
     private void doSetup() {
     	if (isSetUp) return;
+    	
+    	SMRs = new TLongObjectHashMap<SaxMarcXmlRecord>();
     	
         recordOfSourceMap = new TLongLongHashMap();
 
@@ -532,6 +541,7 @@ flushTimer = System.currentTimeMillis();;
     	try {    	    	       
     		smr = new SaxMarcXmlRecord(r.getOaiXml());
     		smr.setRecordId(r.getId());
+    		if(cacheSMRs && inputType.equals("b")) SMRs.put(r.getId(), smr);
         } catch (Throwable t) {
             LOG.error("error pre-processing record :" + r + " type: " + inputType + " isDeleted? " + inputDeleted, t);
             TimingLogger.stop("preProcess");
@@ -557,6 +567,23 @@ flushTimer = System.currentTimeMillis();;
         }
         TimingLogger.stop("preProcess");
 
+    }
+    
+    private SaxMarcXmlRecord getSMR(InputRecord r) {
+    	if (cacheSMRs && SMRs.contains(r.getId())) {
+    		LOG.info("MAS: getSMR() returned a cached record: " + r.getId());
+    		return SMRs.get(r.getId());
+    	}
+    	SaxMarcXmlRecord smr = null;
+    	try {    	    	       
+    		smr = new SaxMarcXmlRecord(r.getOaiXml());
+    		smr.setRecordId(r.getId());
+    		if (cacheSMRs) SMRs.put(r.getId(), smr);
+    		return smr;
+        } catch (Throwable t) {
+            LOG.error("Couldn't create SaxMarcXmlRecord for id="+r.getId()+" error="+t);
+            return null;
+        }    	
     }
     
 
@@ -600,7 +627,6 @@ flushTimer = System.currentTimeMillis();;
         
         try {
         			
-            LOG.debug("MAS:  process record+"+r.getId());
 long tnow = System.currentTimeMillis();	
 if (tnow - flushTimer >= 3600000) {
 	flushTimer = tnow;
@@ -609,7 +635,7 @@ if (tnow - flushTimer >= 3600000) {
 
 			String inputType = r.getType();
 			boolean inputDeleted = r.getDeleted();
-LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDeleted:"+inputDeleted);
+			LOG.info("MAS:  process record: "+r.getId()+", type:"+inputType+", getDeleted:"+inputDeleted);
 			
 			// special case for deleted recs
 			if (inputDeleted) {
@@ -621,9 +647,14 @@ LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDe
 				return results;
 			}
 
-            SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-            smr.setRecordId(r.getId());
-
+            SaxMarcXmlRecord smr = null;
+            if (inputType.equals("b")) {
+            	smr = getSMR(r);
+            } else {
+            	smr = new SaxMarcXmlRecord(r.getOaiXml());
+            	smr.setRecordId(r.getId());
+            }
+            
             // Get the Leader 06. This will allow us to determine the record's type
             final char leader06 = smr.getLeader().charAt(6);
             
@@ -926,7 +957,7 @@ LOG.error("ChrisD MAS:  process record: "+r.getId()+", type:"+inputType+", getDe
 
         // 2nd, get the related merged records:
         HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
-LOG.error("ChrisD MAS:  deleteAllMergeDetails formerMatchSet =  getCurrentMatchSetForRecord(" + r.getId() + ": "+formerMatchSet);    	                        
+        LOG.info("MAS:  deleteAllMergeDetails formerMatchSet =  getCurrentMatchSetForRecord(" + r.getId() + ": "+formerMatchSet);    	                        
 
         // 3rd, remove related records from memory structures in preparation for remerge.
 
@@ -956,7 +987,7 @@ LOG.error("ChrisD MAS:  deleteAllMergeDetails formerMatchSet =  getCurrentMatchS
 
     private Long getBibOutputId(Long id) {
     	if (allBibRecordsI2Omap.containsKey(id)) return allBibRecordsI2Omap.get(id);
-LOG.error("ChrisD MAS: getBibOutput(" + id + ") came up empty.");
+    	LOG.info("MAS: getBibOutput(" + id + ") came up empty.");
     	return null;
     }
 
@@ -989,19 +1020,15 @@ LOG.error("ChrisD MAS: getBibOutput(" + id + ") came up empty.");
             
             // do not process deletes (faster to ignore, plus it's possible the XML is empty, which will cause issues below)            
             if (r.getDeleted()) {
-LOG.error("ChrisD MAS:  findMatchSets, this record is marked for deletion, therefore ignore it, id: "+r.getId());            	
+            	LOG.info("MAS:  findMatchSets, this record is marked for deletion, therefore ignore it, id: "+r.getId());            	
             	continue;
             }
             
-            SaxMarcXmlRecord smr = null;
-            try {            
-            	smr = new SaxMarcXmlRecord(r.getOaiXml());
-            } catch (RuntimeException re) {
-LOG.error("ChrisD MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId()+ ", XML: "+r.getOaiXml());
-				LOG.warn("findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId());
+            SaxMarcXmlRecord smr = getSMR(r);
+            if (smr == null) {
+            	LOG.error("MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId()+ ", XML: "+r.getOaiXml());
             	continue;
             }
-            smr.setRecordId(r.getId());
 
             MatchSet ms = populateMatchSet(r, smr);
             HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
@@ -1229,7 +1256,7 @@ LOG.error("ChrisD MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.get
 
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-	LOG.error("ChrisD MAS:  processBibUpdateActive: "+r.getId());    	
+    	LOG.info("MAS:  processBibUpdateActive: "+r.getId());    	
     	List<OutputRecord> results = processBibDelete(r);
 
     	// processBibDelete nukes all the record's score data; must re-add it
@@ -1263,7 +1290,7 @@ LOG.error("ChrisD MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.get
     }
     
     private List<OutputRecord> processBibDelete(InputRecord r) {
-LOG.error("ChrisD MAS:  processBibDelete: "+r.getId());    	        
+    	LOG.info("MAS:  processBibDelete: "+r.getId());    	        
     	List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (r.getSuccessors().size() == 0) {
@@ -1303,7 +1330,7 @@ LOG.error("ChrisD MAS:  processBibDelete: "+r.getId());
             }
             if (isAbibWithSuccessors) {
                 HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
-LOG.error("ChrisD MAS:  processBibDelete formerMatchSet =  deleteAllMergeDetails: "+formerMatchSet);    	                
+                LOG.info("MAS:  processBibDelete formerMatchSet =  deleteAllMergeDetails: "+formerMatchSet);    	                
                 for (long formerId: formerMatchSet) {
                 	currentMatchSets.remove(formerId);                	
                 	recordOfSourceMap.remove(formerId);
@@ -1316,9 +1343,8 @@ LOG.error("ChrisD MAS:  processBibDelete formerMatchSet =  deleteAllMergeDetails
                 if (formerMatchSet.size() > 0) {
                 	List<HashSet<Long>> listOfMatchSets = findMatchSets(formerMatchSet);
                 	for (HashSet<Long> matchset: listOfMatchSets) {
-LOG.error("ChrisD MAS:  processBibDelete listOfMatchSets =  findMatchSets: "+matchset);    	                                	
+                		LOG.info("MAS:  processBibDelete listOfMatchSets =  findMatchSets: "+matchset);    	                                	
                 		results = remerge(results, matchset);
-LOG.error("ChrisD MAS:  processBibDelete results =  remerge: returned results"/*+results*/);    	                                	                		
                 	}
                 }
                 
@@ -1330,12 +1356,11 @@ LOG.error("ChrisD MAS:  processBibDelete results =  remerge: returned results"/*
     
     
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-	LOG.error("ChrisD MAS:  processBibUpdateActive: "+r.getId());    	
-        LOG.debug("*AM in processBibNewActive!");
+    	LOG.info("MAS:  processBibUpdateActive: "+r.getId());    	
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (currentMatchSets.contains(r.getId())) {
-LOG.error("ChrisD MAS:  processBibNewActive currentMatchSets already processed this bib!: "+r.getId());    	                                	
+        	LOG.info("MAS:  processBibNewActive currentMatchSets already processed this bib!: "+r.getId());    	                                	
             // we already processed this record; it was included in a matchset (aggregated record)
         	//////results.add(currentMatchSetRecords.get(currentMatchSets.get(r.getId())));
         	return results;
@@ -1343,18 +1368,15 @@ LOG.error("ChrisD MAS:  processBibNewActive currentMatchSets already processed t
         
         MatchSet ms = getMatchSet(smr);
         HashSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
-LOG.error("ChrisD MAS:  processBibNewActive matchedRecordIds =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
+        LOG.info("MAS:  processBibNewActive matchedRecordIds =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
         matchedRecordIds.add(r.getId());
         
         // We need to account for associativity,
 		TimingLogger.start("findMatchSets.expandMatchedRecords");
 		matchedRecordIds = expandMatchedRecords(matchedRecordIds);
-LOG.error("ChrisD MAS:  processBibNewActive matchedRecordIds =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
+		LOG.info("MAS:  processBibNewActive matchedRecordIds =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
 		TimingLogger.stop("findMatchSets.expandMatchedRecords");
         
-		LOG.debug("** processBibNewActive, BEGINNING matchedRecordIds length="+matchedRecordIds.size());
-
-LOG.error("ChrisD MAS:  processBibNewActive res =  remerge: returned results"/*+res*/);    	                                	        		
         return remerge(results, matchedRecordIds);
     }
 
@@ -1421,8 +1443,7 @@ LOG.error("ChrisD MAS:  processBibNewActive res =  remerge: returned results"/*+
         	HashSet<Long> results = new HashSet<Long>();
         	for (Long match: matchedRecordIds) {
 	        	Record r = getInputRepo().getRecord(match);
-	        	SaxMarcXmlRecord smr = new SaxMarcXmlRecord(r.getOaiXml());
-	            smr.setRecordId(r.getId());
+	        	SaxMarcXmlRecord smr = getSMR(r);
 	            
 	            MatchSet ms = getMatchSet(smr);
 	            HashSet<Long> matchedRecordIdsAssoc = populateMatchedRecordIds(ms);

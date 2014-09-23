@@ -13,6 +13,8 @@ log4j.logger.harvestOut=INFO, harvestOut
 log4j.logger.prodDebug=DEBUG, prodDebug
 log4j.logger.mstRules=DEBUG, mstRules
 log4j.logger.xc.mst.utils.TimingLogger=DEBUG, timing
+# It's very useful to see what's going on in MarcAggregationService
+log4j.logger.xc.mst.services.marcaggregation.MarcAggregationService=INFO, file
 
 # To stop logging struts warning messages - 'Could not find property [org.apache.catalina.jsp_file]'
 
