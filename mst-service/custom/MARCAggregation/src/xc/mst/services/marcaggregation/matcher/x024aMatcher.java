@@ -118,9 +118,9 @@ public class x024aMatcher extends FieldMatcherService {
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(24);
         final int size3 = fields.size();
-        if (size3 > 1) {
+/*        if (size3 > 1) {
             LOG.info("** INFO: Multiple 024 fields in record! " + r.recordId);
-        }
+        }*/
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
 /*            final int size = subfields.size();
