@@ -155,9 +155,9 @@ public class LccnMatcher extends FieldMatcherService {
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(10);
-        if (fields.size()>1) {
+/*        if (fields.size()>1) {
             LOG.error("ERROR: Multiple 010 fields in record! "+ir.recordId);
-        }
+        }*/
 
         final Long id = new Long(ir.recordId);
         for (Field field: fields) {
@@ -243,14 +243,14 @@ public class LccnMatcher extends FieldMatcherService {
         }*/
         for (Field field: fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size>1) {
                 LOG.error("*ERROR: Multiple $a subfields in 010 in record! "+r.recordId);
                 final MarcAggregationService service = getMarcAggregationService();
                 if (service != null) {
                     service.addMessage(ir, 102, RecordMessage.ERROR);
                 }
-            }
+            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 Long goods = new Long(getUniqueId(subfield));

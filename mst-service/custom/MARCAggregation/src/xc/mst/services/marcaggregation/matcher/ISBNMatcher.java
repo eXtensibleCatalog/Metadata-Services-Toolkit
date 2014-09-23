@@ -113,10 +113,10 @@ public class ISBNMatcher extends FieldMatcherService {
         final Long id = new Long(r.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
+/*            final int size = subfields.size();
             if (size > 1) {
                 //LOG.error("ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
-            }
+            }*/
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
                 if (isbn2inputIds.get(isbn) != null) {
@@ -182,13 +182,13 @@ public class ISBNMatcher extends FieldMatcherService {
     // TODO refactor out the commonalities!
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(20);
-        final int size3 = fields.size();
+/*        final int size3 = fields.size();
         if (size3 > 1) {
             //NOTE, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
             //      (both for UR and CARLI records)
             //
             LOG.debug("** INFO: Multiple 020 fields in record! " + ir.getId());
-        }
+        }*/
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
             final int size = subfields.size();
