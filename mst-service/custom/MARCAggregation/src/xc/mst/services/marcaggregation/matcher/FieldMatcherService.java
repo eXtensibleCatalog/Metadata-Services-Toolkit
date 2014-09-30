@@ -14,6 +14,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 
+import xc.mst.bo.record.InputRecord;
 import xc.mst.bo.record.SaxMarcXmlRecord;
 import xc.mst.manager.BaseService;
 import xc.mst.services.marcaggregation.MASSolrIndexManager;
@@ -55,6 +56,10 @@ public abstract class FieldMatcherService extends BaseService implements FieldMa
 
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir, List<Long> filterBy) {
         return null;
+    }
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	return false;
     }
 
     protected SolrServer getMASSolrServer() {

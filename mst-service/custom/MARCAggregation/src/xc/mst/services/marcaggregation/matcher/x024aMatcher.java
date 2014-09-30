@@ -3,8 +3,10 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -39,10 +41,20 @@ public class x024aMatcher extends FieldMatcherService {
 
     private static final Logger LOG = Logger.getLogger(x024aMatcher.class);
     private boolean debug = false;
+    
+    MarcAggregationService mas = null;
+    
+    private MarcAggregationService getMAS() {
+		if (mas == null) {
+			mas = (MarcAggregationService)config.getBean("MarcAggregationService");
+		}
+		return mas;
+	}
+
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(24);
@@ -51,10 +63,7 @@ public class x024aMatcher extends FieldMatcherService {
         
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                LOG.error("ERROR: Multiple $a subfields in 024 in record! " + ir.recordId);
-            }*/
+
             for (String subfield : subfields) {
                 if (StringUtils.isNotEmpty(subfield)) {
                     String goods = getFieldDataIntoCorrectFormat(field, subfield);
@@ -110,23 +119,15 @@ public class x024aMatcher extends FieldMatcherService {
         inputId2x024a.remove(id);
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_024a_table, id);
+        getMAS().getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_024a_table, id);
     }
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(24);
-        final int size3 = fields.size();
-/*        if (size3 > 1) {
-            LOG.info("** INFO: Multiple 024 fields in record! " + r.recordId);
-        }*/
+
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                LOG.error("** ERROR: Multiple $a subfields in 024 in record! " + r.recordId);
-            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
@@ -184,6 +185,43 @@ public class x024aMatcher extends FieldMatcherService {
         }
         return goods;
     }
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	LOG.debug("x024a matchpointsHaveChanged? ID: " + ir.getId()); 
+    	Map<Long, List<String>> cachedListId2x024a = getMAS().getMarcAggregationServiceDAO().get1StrMatchpointsRecordsCache(Long.valueOf(ir.getId()), MarcAggregationServiceDAO.matchpoints_024a_table);
+    	LOG.debug("cachedListId2x024a: " + cachedListId2x024a);    	
+    	    	
+    	List<String> cachedId2x024a = new ArrayList<String>();
+    	if (cachedListId2x024a.containsKey(ir.getId())) {
+    		cachedId2x024a = cachedListId2x024a.get(ir.getId());
+    		LOG.debug("cachedId2x024a: " + cachedId2x024a);  
+    	}
+    	
+        List<String> thisId2x024a = new ArrayList<String>();
+        
+        List<Field> fields = r.getDataFields(24);
+        for (Field field : fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            for (String subfield : subfields) {
+                
+            	String x024a = getFieldDataIntoCorrectFormat(field, subfield);
+                
+                if (StringUtils.isEmpty(x024a)) {
+                    continue;   // bad data will cause trouble up the road.                	
+                }
+
+                LOG.debug("adding thisId2x024a: " + x024a);  
+                thisId2x024a.add(x024a);
+            }
+        }
+        LOG.error("gonna compare cachedId2x024a: " + cachedId2x024a + "  ...with... thisId2x024a: " + thisId2x024a);
+        
+        Set<String> setA = new HashSet<String>(cachedId2x024a);
+        Set<String> setB = new HashSet<String>(thisId2x024a);
+        boolean same = setA.containsAll(thisId2x024a) && setB.containsAll(cachedId2x024a);
+	        
+       	return (! same);        
+    }
 
     @Override
     public void load(boolean firstTime) {
@@ -193,8 +231,7 @@ public class x024aMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2x024a, MarcAggregationServiceDAO.matchpoints_024a_table);
+        getMAS().getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2x024a, MarcAggregationServiceDAO.matchpoints_024a_table);
         inputId2x024a.clear();
         x024a2inputIds.clear();
     }
@@ -206,7 +243,7 @@ public class x024aMatcher extends FieldMatcherService {
     public int getNumRecordIdsInMatcher() {
         //return inputId2x024a.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 024 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_024a_table)+ " unique records in dB & "+inputId2x024a.size() +" records in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_024a_table);
     }
@@ -221,7 +258,7 @@ public class x024aMatcher extends FieldMatcherService {
     public int getNumMatchPointsInMatcher() {
         //return x024a2inputIds.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 024 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_024a_table)+ " unique strings in dB & "+x024a2inputIds.size() +" strs in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_024a_table);
     }

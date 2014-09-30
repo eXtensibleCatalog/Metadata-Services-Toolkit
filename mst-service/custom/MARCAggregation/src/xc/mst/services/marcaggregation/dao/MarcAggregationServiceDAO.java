@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -662,14 +663,22 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * use to load into memory at service start time.
      * @return
      */
-    private TLongLongHashMap getLccnRecords(int page) {
+    private TLongLongHashMap getLccnRecords(int page, Long id) {
         TimingLogger.start("MarcAggregationServiceDAO.getLccnRecords");
 
-        String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table +
-                " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+        String sql = "select input_record_id, numeric_id from " + matchpoints_010a_table;
+        if (id != null) {
+        	sql += " where input_record_id = ? ";
+        }      
+    	sql += " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
         LOG.info(sql);
 
-        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rowList;
+        if (id != null) {
+        	rowList = this.jdbcTemplate.queryForList(sql, new Object[] {id});
+        } else {
+        	rowList = this.jdbcTemplate.queryForList(sql);
+        }
         TLongLongHashMap results = new TLongLongHashMap();
         for (Map<String, Object> row : rowList) {
             Long in_id = (Long) row.get("input_record_id");
@@ -681,12 +690,16 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     public TLongLongHashMap getLccnRecordsCache() {
+    	return getLccnRecordsCache(null);
+    }
+    
+    public TLongLongHashMap getLccnRecordsCache(Long id) {
         TimingLogger.start("getLccnRecordsCache");
         int page = 0;
-        TLongLongHashMap  records = getLccnRecords(page);
+        TLongLongHashMap  records = getLccnRecords(page, id);
         boolean gotResults = records != null && records.size() > 0;
         while (gotResults) {
-            TLongLongHashMap _records = getLccnRecords(++page);
+            TLongLongHashMap _records = getLccnRecords(++page, id);
             if (_records != null && _records.size() > 0) {
                 records.putAll(_records);
             }
@@ -702,15 +715,23 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
      * use to load into memory at service start time.
      * @return
      */
-    private Map<Long, List<SCNData>> getSCCNRecords(int page) {
+    private Map<Long, List<SCNData>> getSCCNRecords(int page, Long id) {
         TimingLogger.start("MarcAggregationServiceDAO.getSCCNRecords");
 
         String sql = "select full_string, prefix_id, numeric_id, input_record_id from " +
-                matchpoints_035a_table +
-                " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+                matchpoints_035a_table;
+        if (id != null) {
+        	sql += " where input_record_id = ? ";
+        }       
+    	sql += " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
         LOG.info(sql);
 
-        List<Map<String, Object>> rowList = this.jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rowList;
+        if (id != null) {
+        	rowList = this.jdbcTemplate.queryForList(sql, new Object[] {id});
+        } else { 
+        	rowList = this.jdbcTemplate.queryForList(sql);
+        }
         Map<Long, List<SCNData>> results = new TreeMap<Long, List<SCNData>>();
         for (Map<String, Object> row : rowList) {
             String full = (String) row.get("full_string");
@@ -738,13 +759,17 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
     }
 
     public Map<Long, List<SCNData>> getSCCNRecordsCache() {
+    	return getSCCNRecordsCache(null);
+    }
+    
+    public Map<Long, List<SCNData>> getSCCNRecordsCache(Long id) {
         TimingLogger.start("getSCCNRecordsCache");
         int page = 0;
-        Map<Long, List<SCNData>>  records = getSCCNRecords(page);
+        Map<Long, List<SCNData>>  records = getSCCNRecords(page, id);
         boolean gotResults = records != null && records.size() > 0;
         while (gotResults) {
             //got to go through and look for common id's
-            Map<Long, List<SCNData>> _records = getSCCNRecords(++page);
+            Map<Long, List<SCNData>> _records = getSCCNRecords(++page, id);
             if (_records != null && _records.size() > 0) {
                 for (Long key: _records.keySet()) {
                     // maybe its as simple as this:
@@ -763,6 +788,71 @@ public class MarcAggregationServiceDAO extends GenericMetadataServiceDAO {
             }
         }
         TimingLogger.stop("getSCCNRecordsCache");
+        return records;
+    }
+    
+    /*
+     * Used to load "generic" matchpoints data (string_id, input_record_id)
+     */
+    
+    private Map<Long, List<String>> get1StrMachpointRecords(int page, Long id, String tableName) {
+        TimingLogger.start("MarcAggregationServiceDAO.get1StrMatchpointsRecordsCache");
+
+        String sql = "select input_record_id, string_id from " + tableName;
+        if (id != null) {
+        	sql += " where input_record_id = ? ";
+        }      
+    	sql += " limit " + (page * RECORDS_AT_ONCE) + "," + RECORDS_AT_ONCE;
+        LOG.info(sql);
+
+        List<Map<String, Object>> rowList;
+        if (id != null) {
+        	rowList = this.jdbcTemplate.queryForList(sql, new Object[] {id});
+        } else {
+        	rowList = this.jdbcTemplate.queryForList(sql);
+        }
+        Map<Long, List<String>> results = new HashMap<Long, List<String>>();
+        for (Map<String, Object> row : rowList) {
+            Long in_id = (Long) row.get("input_record_id");
+            String string_id = (String) row.get("string_id");
+            
+            List<String> goodsList = results.get(in_id);
+            if (goodsList == null || goodsList.size() == 0) {
+                goodsList = new ArrayList<String>();
+                goodsList.add(string_id);
+                results.put(in_id, goodsList);
+            }
+            else if (!goodsList.contains(in_id)) {
+                goodsList.add(string_id);
+                results.put(in_id, goodsList);
+            }
+            else {
+                LOG.debug("we have already seen " + string_id + " for recordId: " + in_id);
+            }
+        }
+        TimingLogger.stop("MarcAggregationServiceDAO.get1StrMatchpointsRecordsCache");
+        return results;
+    }
+
+    public Map<Long, List<String>> get1StrMatchpointsRecordsCache(String tableName) {
+    	return get1StrMatchpointsRecordsCache(null, tableName);
+    }
+    
+    public Map<Long, List<String>> get1StrMatchpointsRecordsCache(Long id, String tableName) {
+        TimingLogger.start("get1StrMatchpointsRecordsCache");
+        int page = 0;
+        Map<Long, List<String>>  records = get1StrMachpointRecords(page, id, tableName);
+        boolean gotResults = records != null && records.size() > 0;
+        while (gotResults) {
+        	Map<Long, List<String>> _records = get1StrMachpointRecords(++page, id, tableName);
+            if (_records != null && _records.size() > 0) {
+                records.putAll(_records);
+            }
+            else {
+                gotResults = false;
+            }
+        }
+        TimingLogger.stop("get1StrMatchpointsRecordsCache");
         return records;
     }
 

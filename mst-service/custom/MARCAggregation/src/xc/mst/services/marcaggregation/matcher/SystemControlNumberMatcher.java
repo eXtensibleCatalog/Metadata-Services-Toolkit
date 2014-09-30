@@ -10,8 +10,10 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -73,6 +75,8 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     
     private boolean keepAllCached = false; //true;
     
+    MarcAggregationService mas = null;
+    
     // as a side effect populates prefix list, for now, only if it finds a non-blank prefix.
     protected String getPrefix(String s) {
         int start, end;
@@ -131,7 +135,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(35);
@@ -212,7 +216,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
         }
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_035a_table, id);
     }
 
@@ -220,16 +224,9 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     // * It shall be considered an error to have > 1 035$a with prefix (OCoLC), must test for this, and log it.
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
-        //final String oclc = "OCoLC";
-//    	final String oclc = "OCOLC"; // case-insensitive matching MST-538
         List<Field> fields = r.getDataFields(35);
-//        boolean haveSeenOCoLC = false;
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                LOG.error("ERROR: Multiple $a subfields in 035 in record! " + r.recordId);
-            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 String prefix = getPrefix(subfield);
@@ -238,19 +235,6 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
                     // TODO MST-503
                     continue;
                 }
-/*                else if (prefix.equals(oclc)) {
-                    if (haveSeenOCoLC) {
-                        LOG.error("ERROR: 035$a prefix (OCoLC) seen > 1 time for recordId: " + r.recordId);
-//
-//                      For now, log only, don't add to error facet
-//                        final MarcAggregationService service = getMarcAggregationService();
-//                        if (service != null) {
-//                            service.addMessage(ir, 101, RecordMessage.ERROR);
-//                        }
-                    }
-                    haveSeenOCoLC = true;
-                }
-*/
                 SCNData goods = null;
             	try {
             		goods = getMapId(subfield);
@@ -304,7 +288,55 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     private boolean isSCNValid(String numeric) {
         return ! StringUtils.isBlank(numeric);
     }
-
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	LOG.debug("Sccn matchpointsHaveChanged? ID: " + ir.getId()); 
+    	Map<Long, List<SCNData>> cachedListId2scn = getMAS().getMarcAggregationServiceDAO().getSCCNRecordsCache(Long.valueOf(ir.getId()));
+    	LOG.debug("cachedListId2scn: " + cachedListId2scn);    	
+    	
+    	List<SCNData> cachedId2scn = new ArrayList<SCNData>();
+    	if (cachedListId2scn.containsKey(ir.getId())) {
+        	cachedId2scn = cachedListId2scn.get(ir.getId());
+        	LOG.debug("cachedId2scn: " + cachedId2scn);  
+    	}
+    	
+        List<SCNData> thisId2scn = new ArrayList<SCNData>();
+        List<Field> fields = r.getDataFields(35);
+        for (Field field : fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            for (String subfield : subfields) {
+                String prefix = getPrefix(subfield);
+                if (prefix.equals("")) {
+                    // must have a prefix to use as a match point.
+                    // TODO MST-503
+                    continue;
+                }
+                SCNData goods = null;
+            	try {
+            		goods = getMapId(subfield);
+            	} catch (Exception e) {
+            		continue;
+            	}
+            	LOG.debug("adding thisId2scn: " + goods);  
+                thisId2scn.add(goods);
+            }
+        }
+        LOG.error("gonna compare cachedId2scn: " + cachedId2scn + "  ...with... thisId2scn: " + thisId2scn);
+        
+        Set<SCNData> setA = new HashSet<SCNData>(cachedId2scn);
+        Set<SCNData> setB = new HashSet<SCNData>(thisId2scn);
+        boolean same = setA.containsAll(thisId2scn) && setB.containsAll(cachedId2scn);
+        
+        return (! same);        
+    }
+    
+	private MarcAggregationService getMAS() {
+		if (mas == null) {
+			mas = (MarcAggregationService)config.getBean("MarcAggregationService");
+		}
+		return mas;
+	}
+	
     // from db
     @Override
     public void load(boolean firstTime) {
@@ -312,7 +344,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     	keepAllCached = firstTime;
     	
     	// we NEED to always load prefixes. (It's a small list, anyway, but very, very NECESSARY).
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+    	MarcAggregationService s = getMAS();
         
         id2prefix = s.getMarcAggregationServiceDAO().getPrefixes();
         for (Integer id : id2prefix.keySet()) {
@@ -322,8 +354,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     	if (! keepAllCached) return;
     	
         // Retrieve all match point integer data into memory,
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
-        inputId2scn = masDao.getSCCNRecordsCache();
+        inputId2scn = s.getMarcAggregationServiceDAO().getSCCNRecordsCache();
         LOG.info("inputId2scn loaded, size="+inputId2scn.size());
 
         // now go from inputId2scn to populate scn2inputIds
@@ -350,7 +381,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     public void flush(boolean force) {
         if (force) {
         	
-            MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+            MarcAggregationService s = getMAS();
         	
             if (MarcAggregationService.hasIntermediatePersistence) {
                 s.getMarcAggregationServiceDAO().persistPrefixList(id2prefix_unpersisted, MarcAggregationServiceDAO.prefixes_035a_table);
@@ -381,7 +412,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     public int getNumRecordIdsInMatcher() {
         //return inputId2scn.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique records in dB & "+inputId2scn.size() +" records in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_035a_table);
     }
@@ -398,7 +429,7 @@ public class SystemControlNumberMatcher extends FieldMatcherService {
     public int getNumMatchPointsInMatcher() {
         //return scn2inputIds.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 035 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_035a_table)+ " unique strings in dB & "+inputId2scn.size() +" strs in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_035a_table);
     }

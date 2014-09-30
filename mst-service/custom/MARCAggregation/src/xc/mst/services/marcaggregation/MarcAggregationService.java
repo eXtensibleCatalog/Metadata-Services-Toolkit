@@ -83,6 +83,13 @@ public class MarcAggregationService extends GenericMetadataService {
     protected TLongLongHashMap                       currentMatchSets = null;
     protected HashMap<Long, OutputRecord>				 currentMatchSetRecords = null;
     
+    /**
+     * We can save a lot of time if we keep track of changed matchpoints during updates.
+     * If the matchpoints have changed, then we need to worry about changing matchets; 
+     * otherwise, we just update the record and leave the matchset alone.
+     */
+    protected TLongLongHashMap changedMatchpoints = null;
+    
     /** track input records that have been merged (>1 input to an output),
      */
     protected List<Long>                             mergedInRecordsList = null;
@@ -263,7 +270,9 @@ flushTimer = System.currentTimeMillis();;
         
         currentMatchSets = new TLongLongHashMap();
         //currentMatchSetRecords = new HashMap<Long, OutputRecord>();
-                
+
+        changedMatchpoints = new TLongLongHashMap();
+
         isSetUp = true;
     }
     
@@ -554,6 +563,13 @@ flushTimer = System.currentTimeMillis();;
         // check if the record is a bibliographic record
         if ("abcdefghijkmnoprt".contains("" + leader06)) {
         	
+        	if (matchpointsHaveChanged(r, smr)) {
+        		LOG.info("MAS: preProcess() found updated record with changed matchpoints for record: " + r.getId());
+        		changedMatchpoints.put(r.getId(), r.getId());
+        	} else {
+        		LOG.info("MAS: preProcess() found updated record with NO changed matchpoints (good! we can optimize!) for record: " + r.getId());        		
+        	}
+        	
         	TimingLogger.start("preProcess.removeFromMatchers");
         	// Save a lot of processing time by not having to worry about update info/scoring
         	if (! firstTime) removeRecordsFromMatchers(r);
@@ -571,7 +587,7 @@ flushTimer = System.currentTimeMillis();;
     
     private SaxMarcXmlRecord getSMR(InputRecord r) {
     	if (cacheSMRs && SMRs.contains(r.getId())) {
-    		LOG.info("MAS: getSMR() returned a cached record: " + r.getId());
+    		//LOG.info("MAS: getSMR() returned a cached record: " + r.getId());
     		return SMRs.get(r.getId());
     	}
     	SaxMarcXmlRecord smr = null;
@@ -957,7 +973,7 @@ if (tnow - flushTimer >= 3600000) {
 
         // 2nd, get the related merged records:
         HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
-        LOG.info("MAS:  deleteAllMergeDetails formerMatchSet =  getCurrentMatchSetForRecord(" + r.getId() + ": "+formerMatchSet);    	                        
+        LOG.info("MAS:  deleteAllMergeDetails formerMatchSet [" + formerMatchSet.size() + "] =  getCurrentMatchSetForRecord(" + r.getId() + ": "+formerMatchSet);    	                        
 
         // 3rd, remove related records from memory structures in preparation for remerge.
 
@@ -1256,13 +1272,61 @@ if (tnow - flushTimer >= 3600000) {
 
 
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-    	LOG.info("MAS:  processBibUpdateActive: "+r.getId());    	
-    	List<OutputRecord> results = processBibDelete(r);
-
-    	// processBibDelete nukes all the record's score data; must re-add it
-    	addAndPersistScores(r, smr);
+    	LOG.info("MAS:  processBibUpdateActive: "+r.getId());
+    	List<OutputRecord> results = new ArrayList<OutputRecord>();
     	
-    	results.addAll(processBibNewActive(r, smr, repo));
+    	// If the match points are the same, then we do not need to worry about the match set changing; just update the record payload
+    	if (! changedMatchpoints.contains(r.getId())) {
+    		LOG.info("MAS:  processBibUpdateActive: matchpoints have NOT changed; going to re-use the current matchset.");
+    		OutputRecord oldOutput;
+        	String xml;
+
+    		HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+    		if (formerMatchSet.size() > 0) {
+    			Long oldOutputId = getBibOutputId(formerMatchSet.iterator().next());
+                oldOutput = getRecord(oldOutputId);
+                
+                InputRecord record = masRsm.getRecordOfSourceRecord(formerMatchSet, repo, scores);
+                xml = mergeBibSet(record, formerMatchSet, repo);
+    		} else {
+				// Get the record which was processed from the record we just processed
+	            // (any of the matchset input records should map to the same output record, right?)
+	            oldOutput = r.getSuccessors().get(0);
+	            
+	            xml = masBld.update005(r.getOaiXml(), _005_Transformer);
+    		}
+    		
+    		oldOutput.setMode(Record.STRING_MODE);
+            oldOutput.setFormat(marc21);
+            oldOutput.setStatus(Record.ACTIVE);
+
+            // Set the XML to the updated XML - remerged and reconstituted the xml
+
+            // Do NOT create a new record, update, the OLD record!
+            // Set the XML to the updated XML - reconstituted the xml
+            oldOutput.setOaiXml(xml);
+         
+            // we need the clear out the old updatedAt value
+            // so that the MST will correctly set it later (when repo is persisted)
+            // issue: mst-549
+            ((Record) oldOutput).setUpdatedAt( null );
+            
+            // Add the updated record
+            oldOutput.setType("b");
+            results.add(oldOutput);    		
+    		
+    	// If the match points change at all, we must re-match/merge all records in the set
+    	} else {
+    		LOG.info("MAS:  processBibUpdateActive: matchpoints HAVE changed; need to re-match/merge, i.e., delete-then-re-add.");
+
+	    	results = processBibDelete(r);
+	
+	    	// processBibDelete nukes all the record's score data; must re-add it
+	    	addAndPersistScores(r, smr);
+	    	
+	    	results.addAll(processBibNewActive(r, smr, repo));
+    	}
+    	
     	return results;
     }
 
@@ -1330,7 +1394,7 @@ if (tnow - flushTimer >= 3600000) {
             }
             if (isAbibWithSuccessors) {
                 HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
-                LOG.info("MAS:  processBibDelete formerMatchSet =  deleteAllMergeDetails: "+formerMatchSet);    	                
+                LOG.info("MAS:  processBibDelete formerMatchSet [" + formerMatchSet.size() + "] = deleteAllMergeDetails: "+formerMatchSet);    	                
                 for (long formerId: formerMatchSet) {
                 	currentMatchSets.remove(formerId);                	
                 	recordOfSourceMap.remove(formerId);
@@ -1343,7 +1407,7 @@ if (tnow - flushTimer >= 3600000) {
                 if (formerMatchSet.size() > 0) {
                 	List<HashSet<Long>> listOfMatchSets = findMatchSets(formerMatchSet);
                 	for (HashSet<Long> matchset: listOfMatchSets) {
-                		LOG.info("MAS:  processBibDelete listOfMatchSets =  findMatchSets: "+matchset);    	                                	
+                		LOG.info("MAS:  processBibDelete listOfMatchSets [" + matchset.size() + "]  = findMatchSets: "+matchset);    	                                	
                 		results = remerge(results, matchset);
                 	}
                 }
@@ -1356,7 +1420,7 @@ if (tnow - flushTimer >= 3600000) {
     
     
     private List<OutputRecord> processBibNewActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-    	LOG.info("MAS:  processBibUpdateActive: "+r.getId());    	
+    	LOG.info("MAS:  processBibNewActive: "+r.getId());    	
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
         if (currentMatchSets.contains(r.getId())) {
@@ -1368,13 +1432,13 @@ if (tnow - flushTimer >= 3600000) {
         
         MatchSet ms = getMatchSet(smr);
         HashSet<Long> matchedRecordIds = populateMatchedRecordIds(ms);
-        LOG.info("MAS:  processBibNewActive matchedRecordIds =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
+        LOG.info("MAS:  processBibNewActive matchedRecordIds [" + matchedRecordIds.size() + "] =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
         matchedRecordIds.add(r.getId());
         
         // We need to account for associativity,
 		TimingLogger.start("findMatchSets.expandMatchedRecords");
 		matchedRecordIds = expandMatchedRecords(matchedRecordIds);
-		LOG.info("MAS:  processBibNewActive matchedRecordIds =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
+		LOG.info("MAS:  processBibNewActive matchedRecordIds [" + matchedRecordIds.size() + "] =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
 		TimingLogger.stop("findMatchSets.expandMatchedRecords");
         
         return remerge(results, matchedRecordIds);
@@ -1575,6 +1639,21 @@ if (tnow - flushTimer >= 3600000) {
             matcher.addRecordToMatcher(smr, r); 
         }
         TimingLogger.stop("addRecordToMatchers");
+    }
+
+    private boolean matchpointsHaveChanged(InputRecord r, SaxMarcXmlRecord smr) {
+        TimingLogger.start("matchpointsHaveChanged");
+
+        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
+            FieldMatcher matcher = me.getValue();
+            if (matcher.matchpointsHaveChanged(smr, r)) {
+                TimingLogger.stop("matchpointsHaveChanged");
+                LOG.info("Matcher: " + matcher.getName() + " noticed that matchpoints have changed.");
+            	return true; 
+            }
+        }
+        TimingLogger.stop("matchpointsHaveChanged");
+       return false;
     }
     
     private MatchSet getMatchSet(SaxMarcXmlRecord smr) {

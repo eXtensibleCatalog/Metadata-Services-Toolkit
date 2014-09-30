@@ -49,6 +49,16 @@ public interface FieldMatcher {
      * @param ir In order to log errors, must pass along the InputRecord to associate the errors with.
      */
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir);
+    
+    /**
+     * During an update, for performance reasons, it's important to know if a record's matchpoints have changed.
+     * If they have *not* changed, then we can assume an update will not affect its current matchet
+     * 
+     * @param r The record to test
+     * @param ir The record to test
+     * @return true if the previous matchpoints are the same, otherwise false
+     */
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir);
 
     /**
      * @param r The record to remove

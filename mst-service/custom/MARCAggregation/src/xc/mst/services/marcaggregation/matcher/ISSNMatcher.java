@@ -3,8 +3,10 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -75,17 +77,27 @@ public class ISSNMatcher extends FieldMatcherService {
 
     private boolean debug = false;
     private boolean debug2 = false;
+    
+    MarcAggregationService mas = null;
 
     public static String getAllButDash(final String s) {
         String stripped = s.replaceAll("[-]", "");
         return stripped;
     }
+    
+    private MarcAggregationService getMAS() {
+		if (mas == null) {
+			mas = (MarcAggregationService)config.getBean("MarcAggregationService");
+		}
+		return mas;
+	}
+
 
     @Override
     // return all matching records!!! a match means the same int part of issn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
 
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(22);
@@ -93,10 +105,7 @@ public class ISSNMatcher extends FieldMatcherService {
         final Long id = new Long(ir.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                LOG.error("ERROR: Multiple $a subfields in 022 in record! " + ir.recordId);
-            }*/
+
             for (String subfield : subfields) {
                 String issn = getAllButDash(subfield);
                 List<Long> m = issn2inputIds.get(issn);
@@ -149,23 +158,15 @@ public class ISSNMatcher extends FieldMatcherService {
         inputId2issn.remove(id);
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_022a_table, id);
+        getMAS().getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_022a_table, id);
     }
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(22);
-/*        final int size3 = fields.size();
-        if (size3 > 1) {
-            LOG.info("** INFO: Multiple 022 fields in record! " + r.recordId);
-        }*/
+
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                LOG.error("** ERROR: Multiple $a subfields in 022 in record! " + r.recordId);
-            }*/
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
@@ -226,6 +227,40 @@ public class ISSNMatcher extends FieldMatcherService {
             }
         }
     }
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	LOG.debug("issn matchpointsHaveChanged? ID: " + ir.getId()); 
+    	Map<Long, List<String>> cachedListId2issn = getMAS().getMarcAggregationServiceDAO().get1StrMatchpointsRecordsCache(Long.valueOf(ir.getId()), MarcAggregationServiceDAO.matchpoints_022a_table);
+    	LOG.debug("cachedListId2isbn: " + cachedListId2issn);    	
+    	    	
+    	List<String> cachedId2issn = new ArrayList<String>();
+    	if (cachedListId2issn.containsKey(ir.getId())) {
+    		cachedId2issn = cachedListId2issn.get(ir.getId());
+    		LOG.debug("cachedId2issn: " + cachedId2issn);  
+    	}
+    	
+        List<String> thisId2issn = new ArrayList<String>();
+        
+        List<Field> fields = r.getDataFields(22);
+        for (Field field : fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            for (String subfield : subfields) {
+                String issn = getAllButDash(subfield);
+                if (StringUtils.isEmpty(issn)) {
+                    continue;   // bad data will cause trouble up the road.
+                }
+                LOG.debug("adding thisId2issn: " + issn);  
+                thisId2issn.add(issn);
+            }
+        }
+        LOG.error("gonna compare cachedId2issn: " + cachedId2issn + "  ...with... thisId2issn: " + thisId2issn);
+        
+        Set<String> setA = new HashSet<String>(cachedId2issn);
+        Set<String> setB = new HashSet<String>(thisId2issn);
+        boolean same = setA.containsAll(thisId2issn) && setB.containsAll(cachedId2issn);
+	        
+       	return (! same);        
+    }
 
     @Override
     public void load(boolean firstTime) {
@@ -235,8 +270,7 @@ public class ISSNMatcher extends FieldMatcherService {
 
     @Override
     public void flush(boolean freeUpMemory) {
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2issn, MarcAggregationServiceDAO.matchpoints_022a_table);
+        getMAS().getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2issn, MarcAggregationServiceDAO.matchpoints_022a_table);
         inputId2issn.clear();
         issn2inputIds.clear();
     }
@@ -252,7 +286,7 @@ public class ISSNMatcher extends FieldMatcherService {
     public int getNumRecordIdsInMatcher() {
         //return inputId2issn.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 022 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_022a_table)+ " unique records in dB & "+inputId2issn.size() +" records in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_022a_table);
     }
@@ -264,7 +298,7 @@ public class ISSNMatcher extends FieldMatcherService {
     public int getNumMatchPointsInMatcher() {
         //return issn2inputIds.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 022 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_022a_table)+ " unique strings in dB & "+issn2inputIds.size() +" strs in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_022a_table);
     }

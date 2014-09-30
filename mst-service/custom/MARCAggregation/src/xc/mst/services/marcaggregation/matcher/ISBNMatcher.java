@@ -3,8 +3,10 @@ package xc.mst.services.marcaggregation.matcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -64,6 +66,8 @@ public class ISBNMatcher extends FieldMatcherService {
     private static final Logger LOG = Logger.getLogger(ISBNMatcher.class);
 
     private boolean debug = false;
+    
+    MarcAggregationService mas = null;
 
     // filter out stuff after 1st space. trim to be sure. orig thought could use a long but have seen isbn's like this:
     // 123456789X
@@ -73,6 +77,13 @@ public class ISBNMatcher extends FieldMatcherService {
         String isbn = tokens[0];
         return isbn.trim();
     }
+    
+    private MarcAggregationService getMAS() {
+		if (mas == null) {
+			mas = (MarcAggregationService)config.getBean("MarcAggregationService");
+		}
+		return mas;
+	}
 
     @Override
     /**
@@ -98,14 +109,13 @@ public class ISBNMatcher extends FieldMatcherService {
         inputId2isbn.remove(id);
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_020a_table, id);
+        getMAS().getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_020a_table, id);
     }
 
     @Override
     // return all matching records!!! a match means the same int part of isbn.
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord r) {
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = r.getDataFields(20);
@@ -113,10 +123,7 @@ public class ISBNMatcher extends FieldMatcherService {
         final Long id = new Long(r.recordId);
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size > 1) {
-                //LOG.error("ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
-            }*/
+
             for (String subfield : subfields) {
                 String isbn = getIsbn(subfield);
                 if (isbn2inputIds.get(isbn) != null) {
@@ -182,19 +189,9 @@ public class ISBNMatcher extends FieldMatcherService {
     // TODO refactor out the commonalities!
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
         List<Field> fields = r.getDataFields(20);
-/*        final int size3 = fields.size();
-        if (size3 > 1) {
-            //NOTE, this is in the document wiki requirements to log, but it generates many many log entries i.e. > 50k.
-            //      (both for UR and CARLI records)
-            //
-            LOG.debug("** INFO: Multiple 020 fields in record! " + ir.getId());
-        }*/
+
         for (Field field : fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-            final int size = subfields.size();
-            if (size > 1) {
-                //LOG.error("** ERROR: Multiple $a subfields in 020 in record! " + r.recordId);
-            }
             for (String subfield : subfields) {
                 Long id = r.recordId;   // autoboxing for better or worse...
                 LOG.debug("here we go, processing subfield: "+subfield+" recordId:"+id+" numSubfields="+subfields.size()+ "numFields="+fields.size());
@@ -246,6 +243,43 @@ public class ISBNMatcher extends FieldMatcherService {
             }
         }
     }
+    
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	LOG.debug("isbn matchpointsHaveChanged? ID: " + ir.getId()); 
+    	Map<Long, List<String>> cachedListId2isbn = getMAS().getMarcAggregationServiceDAO().get1StrMatchpointsRecordsCache(Long.valueOf(ir.getId()), MarcAggregationServiceDAO.matchpoints_020a_table);
+    	LOG.debug("cachedListId2isbn: " + cachedListId2isbn);    	
+    	    	
+    	List<String> cachedId2isbn = new ArrayList<String>();
+    	if (cachedListId2isbn.containsKey(ir.getId())) {
+    		cachedId2isbn = cachedListId2isbn.get(ir.getId());
+    		LOG.debug("cachedId2isbn: " + cachedId2isbn);  
+    	}
+    	
+        List<String> thisId2isbn = new ArrayList<String>();
+        
+        List<Field> fields = r.getDataFields(20);
+        for (Field field : fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+            for (String subfield : subfields) {
+                String isbn = getIsbn(subfield);
+                if (!isIsbnValid(isbn)) {
+                    continue;   // bad data will cause trouble up the road.
+                }
+
+                LOG.debug("adding thisId2isbn: " + isbn);  
+                thisId2isbn.add(isbn);
+            }
+        }
+        LOG.error("gonna compare cachedId2isbn: " + cachedId2isbn + "  ...with... thisId2isbn: " + thisId2isbn);
+        
+        Set<String> setA = new HashSet<String>(cachedId2isbn);
+        Set<String> setB = new HashSet<String>(thisId2isbn);
+        boolean same = setA.containsAll(thisId2isbn) && setB.containsAll(cachedId2isbn);
+	        
+       	return (! same);   
+    }
+    
 
     @Override
     public void load(boolean firstTime) {
@@ -256,8 +290,7 @@ public class ISBNMatcher extends FieldMatcherService {
     // TODO this can fail.  so to sanitize the table?
     @Override
     public void flush(boolean freeUpMemory) {
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
-        s.getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2isbn, MarcAggregationServiceDAO.matchpoints_020a_table);
+        getMAS().getMarcAggregationServiceDAO().persist1StrMatchpointMaps(inputId2isbn, MarcAggregationServiceDAO.matchpoints_020a_table);
         inputId2isbn.clear();
         isbn2inputIds.clear();
     }
@@ -269,7 +302,7 @@ public class ISBNMatcher extends FieldMatcherService {
     public int getNumRecordIdsInMatcher() {
         //return inputId2isbn.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 020 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_020a_table)+ " unique records in dB & "+inputId2isbn.size() +" records in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_020a_table);
     }
@@ -284,7 +317,7 @@ public class ISBNMatcher extends FieldMatcherService {
     public int getNumMatchPointsInMatcher() {
         //return isbn2inputIds.size();
 
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 020 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_020a_table)+ " unique strings in dB & "+isbn2inputIds.size() +" strs in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueStringIds(MarcAggregationServiceDAO.matchpoints_020a_table);
     }

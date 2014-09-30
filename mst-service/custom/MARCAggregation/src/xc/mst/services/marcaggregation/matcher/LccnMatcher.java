@@ -15,8 +15,10 @@ import gnu.trove.TLongLongHashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,7 +56,7 @@ import xc.mst.utils.Util;
  */
 public class LccnMatcher extends FieldMatcherService {
 
-    private boolean debug = false;
+    //private boolean debug = false;
 
     private static final Logger LOG = Logger.getLogger(LccnMatcher.class);
 
@@ -66,6 +68,15 @@ public class LccnMatcher extends FieldMatcherService {
     protected TLongLongHashMap inputId2lccn_unpersisted = new TLongLongHashMap();
     
     private boolean keepAllCached = false; //true;
+    
+    MarcAggregationService mas = null;
+    
+	private MarcAggregationService getMAS() {
+		if (mas == null) {
+			mas = (MarcAggregationService)config.getBean("MarcAggregationService");
+		}
+		return mas;
+	}
     
     //don't need to save this
     //protected Map<Long, String> inputId2lccnStr = new HashMap<Long, String>();
@@ -151,21 +162,15 @@ public class LccnMatcher extends FieldMatcherService {
 
     @Override
     public List<Long> getMatchingInputIds(SaxMarcXmlRecord ir) {
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
 
         ArrayList<Long> results = new ArrayList<Long>();
         List<Field> fields = ir.getDataFields(10);
-/*        if (fields.size()>1) {
-            LOG.error("ERROR: Multiple 010 fields in record! "+ir.recordId);
-        }*/
 
         final Long id = new Long(ir.recordId);
         for (Field field: fields) {
-                List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size>1) {
-                LOG.error("ERROR: Multiple $a subfields in 010 in record! "+ir.recordId);
-            }*/
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+                
             // there will be only 1 subfield, but this won't hurt...
             for (String subfield : subfields) {
                 Long goods = new Long(getUniqueId(subfield));
@@ -224,68 +229,39 @@ public class LccnMatcher extends FieldMatcherService {
         }
 
         // keep database in sync.  Don't worry about the one-off performance hit...yet.
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         s.getMarcAggregationServiceDAO().deleteMergeRow(MarcAggregationServiceDAO.matchpoints_010a_table, id);
     }
 
     @Override
     public void addRecordToMatcher(SaxMarcXmlRecord r, InputRecord ir) {
-        // String s = r.getMARC().getDataFields().get(10).get('a');
-        // lccn2inputIds.add(r.getId(), getUniqueId(s));
-
         List<Field> fields = r.getDataFields(10);
-/*        if (fields.size()>1) {
-            LOG.error("ERROR: Multiple 010 fields in record! "+r.recordId);
-            final MarcAggregationService service = getMarcAggregationService();
-            if (service != null) {
-                service.addMessage(ir, 102, RecordMessage.ERROR);
-            }
-        }*/
+
         for (Field field: fields) {
             List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
-/*            final int size = subfields.size();
-            if (size>1) {
-                LOG.error("*ERROR: Multiple $a subfields in 010 in record! "+r.recordId);
-                final MarcAggregationService service = getMarcAggregationService();
-                if (service != null) {
-                    service.addMessage(ir, 102, RecordMessage.ERROR);
-                }
-            }*/
+
             for (String subfield : subfields) {
                 Long id = new Long(r.recordId);
                 Long goods = new Long(getUniqueId(subfield));
-                if (goods < 1l) {   // then were not successful in parsing, i.e. bad data. (we're also not accepting the value 0, which seems like another invalid value)
+                if (goods < 1l) {   // then we're not successful in parsing, i.e. bad data. (we're also not accepting the value 0, which seems like another invalid value)
                     continue;
                 }
-                if (debug) {
-                    LOG.info("LccnMatcher, numeric Lccn="+goods+" for record "+r.recordId);
-                    if (r.recordId==2) {   // currently, record 2 gets hit 2x, once for 2a matcher, once for 2c matcher.  really a bug?
-                        Util.getUtil().printStackTrace("who got me here?");
-                    }
-                }
                 Long oldGoods = inputId2lccn.get(id);
-                // but if the item is not in the longlong map, a 0 is returned???
-                //TODO somewhere in the below code is a logic error that causes an exception with, not enough data, or something, when putting into row.
-                if (oldGoods == null || oldGoods == 0l) {
+                if (oldGoods == null) {
                     inputId2lccn.put(id, goods);
                     if (MarcAggregationService.hasIntermediatePersistence) {
                         inputId2lccn_unpersisted.put(id, goods);
                     }
-                    //inputId2lccnStr.put(id, subfield);
-                }
-                else {
+                } else {
                     if (!goods.equals(oldGoods)) {
                         inputId2lccn.put(id, goods);
                         if (MarcAggregationService.hasIntermediatePersistence) {
                             inputId2lccn_unpersisted.put(id, goods);
                         }
-                        //inputId2lccnStr.put(id, subfield);
                         LOG.debug("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId+ " this 010: "+goods);
-                        //LOG.info("we have already seen a different 010 entry ("+oldGoods+") for recordId: "+r.recordId);
                     }
                     else {
                         LOG.debug("we have already seen "+ goods +" for recordId: "+r.recordId);
-                        //LOG.info("we have already seen "+ goods +" for recordId: "+r.recordId);
                     }
                 }
 
@@ -305,6 +281,48 @@ public class LccnMatcher extends FieldMatcherService {
             }
         }
     }
+    
+    public boolean matchpointsHaveChanged(SaxMarcXmlRecord r, InputRecord ir) {
+    	LOG.debug("LCCN matchpointsHaveChanged? ID: " + ir.getId());    	
+    	TLongLongHashMap cachedListId2lccn = getMAS().getMarcAggregationServiceDAO().getLccnRecordsCache(Long.valueOf(ir.getId()));
+    	
+    	Long cachedId2lccn = null;
+        if (cachedListId2lccn.contains(ir.getId())) {
+        	cachedId2lccn = cachedListId2lccn.get(ir.getId());
+        	LOG.debug("cachedId2lccn: " + cachedId2lccn);        	
+    	}
+        
+        Long thisId2lccn = null;
+        
+        List<Field> fields = r.getDataFields(10);
+
+        for (Field field: fields) {
+            List<String> subfields = SaxMarcXmlRecord.getSubfieldOfField(field, 'a');
+
+            for (String subfield : subfields) {
+                Long goods = new Long(getUniqueId(subfield));
+                if (goods < 1l) {   // then were not successful in parsing, i.e. bad data. (we're also not accepting the value 0, which seems like another invalid value)
+                    continue;
+                }
+                LOG.debug("setting thisId2lccn: " + goods);                
+                thisId2lccn = goods;
+            }
+        }
+        
+        if (cachedId2lccn == null) {
+        	if (thisId2lccn == null) return false;
+        	return true;
+        }
+        if (thisId2lccn == null) {
+        	if (cachedId2lccn == null) return false;
+        	return true;
+        }
+        
+        LOG.error("gonna compare cachedId2lccn: " + cachedId2lccn + "  ...with... thisId2lccn: " + thisId2lccn);
+                
+        return (! cachedId2lccn.equals(thisId2lccn));        
+    }
+
 
     /**
      * note, this will only get hit if this matcher is in use, via custom.properties, so no worries about
@@ -317,7 +335,7 @@ public class LccnMatcher extends FieldMatcherService {
     	
     	if (! keepAllCached) return;
 
-        MarcAggregationServiceDAO masDao = (MarcAggregationServiceDAO) config.getApplicationContext().getBean("MarcAggregationServiceDAO");
+        MarcAggregationServiceDAO masDao = getMAS().getMarcAggregationServiceDAO();
         inputId2lccn = masDao.getLccnRecordsCache();
         LOG.info("inputId2lccn loaded, size="+inputId2lccn.size());
 
@@ -343,7 +361,7 @@ public class LccnMatcher extends FieldMatcherService {
     public void flush(boolean force) {
         if (force) {
             
-        	MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        	MarcAggregationService s = getMAS();
               	
             if (MarcAggregationService.hasIntermediatePersistence) {
                 s.getMarcAggregationServiceDAO().persistLongMatchpointMaps(inputId2lccn_unpersisted, MarcAggregationServiceDAO.matchpoints_010a_table, true);
@@ -379,8 +397,7 @@ public class LccnMatcher extends FieldMatcherService {
      */
     public int getNumRecordIdsInMatcher() {
         //return inputId2lccn.size();
-
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 010 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_010a_table)+ " unique records in dB & "+inputId2lccn.size() +" records in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueRecordIds(MarcAggregationServiceDAO.matchpoints_010a_table);
     }
@@ -391,8 +408,7 @@ public class LccnMatcher extends FieldMatcherService {
      */
     public int getNumMatchPointsInMatcher() {
         //return lccn2inputIds.size();
-
-        MarcAggregationService s = (MarcAggregationService)config.getBean("MarcAggregationService");
+        MarcAggregationService s = getMAS();
         LOG.debug("** 010 matcher contains "+s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_010a_table)+ " unique strings in dB & "+lccn2inputIds.size() +" strs in mem.");
         return s.getMarcAggregationServiceDAO().getNumUniqueNumericIds(MarcAggregationServiceDAO.matchpoints_010a_table);
     }
