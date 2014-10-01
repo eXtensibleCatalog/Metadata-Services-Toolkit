@@ -92,8 +92,11 @@ public class MarcAggregationService extends GenericMetadataService {
     
     /** track input records that have been merged (>1 input to an output),
      */
+    /**** WHY, OH WHY, DO WE NEED TO KEEP TRACK OF THESE when we already have allBibRecordsI2Omap and allBibRecordsO2Imap ?????
+     * PLUS, IT'S SLOW TO MANIPULATE HUGE ArrayLists!
     protected List<Long>                             mergedInRecordsList = null;
     protected List<Long>                             mergedInRecordsList_unpersisted = null;
+    ****/
     
     /** it's informative (debugging) to track a matchset's record of source
      */
@@ -163,8 +166,8 @@ private long flushTimer = System.currentTimeMillis();;
         allBibRecordsI2Omap = null;
         allBibRecordsI2Omap_unpersisted = null;
 
-        mergedInRecordsList = null;
-        mergedInRecordsList_unpersisted = null;
+        /****mergedInRecordsList = null;
+        mergedInRecordsList_unpersisted = null;****/
         
         recordOfSourceMap = null;
         
@@ -258,14 +261,14 @@ flushTimer = System.currentTimeMillis();;
         allBibRecordsO2Imap = createMergedRecordsO2Imap(allBibRecordsI2Omap);
         TimingLogger.stop("MAS.doSetup.createMergedRecordsO2Imap");
 
-        TimingLogger.start("MAS.doSetup.loadMasMergedInputRecords");
+        /****TimingLogger.start("MAS.doSetup.loadMasMergedInputRecords");
         mergedInRecordsList = loadMasMergedInputRecords();
         TimingLogger.stop("MAS.doSetup.loadMasMergedInputRecords");
-        LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());
+        LOG.info("mergedInRecordsList.size: "+ mergedInRecordsList.size());****/
 
         if (hasIntermediatePersistence) {
             allBibRecordsI2Omap_unpersisted = new TLongLongHashMap();
-            mergedInRecordsList_unpersisted = new ArrayList<Long>();
+            /****mergedInRecordsList_unpersisted = new ArrayList<Long>();****/
         }
         
         currentMatchSets = new TLongLongHashMap();
@@ -779,14 +782,14 @@ if (tnow - flushTimer >= 3600000) {
         }
         allBibRecordsO2Imap.put(outputRecordId, mergedInputRecordSet);
 
-        if (mergedInputRecordSet.size() > 1) {
+        /****if (mergedInputRecordSet.size() > 1) {
             for (Long num: mergedInputRecordSet) {
                 mergedInRecordsList.add(num);
                 if (hasIntermediatePersistence) {
                     mergedInRecordsList_unpersisted.add(num);
                 }
             }
-        }
+        }****/
         TimingLogger.stop("addToMasMergedRecordsMemory");
     }
 
@@ -1542,10 +1545,10 @@ if (tnow - flushTimer >= 3600000) {
                 if (hasIntermediatePersistence) {
                     allBibRecordsI2Omap_unpersisted.remove(input);
                 }
-                mergedInRecordsList.remove(input);
+                /****mergedInRecordsList.remove(input);
                 if (hasIntermediatePersistence) {
                     mergedInRecordsList_unpersisted.remove(input);
-                }
+                }****/
                 allBibRecordsO2Imap.remove(outputRecordToBeDeletedNum);
                 if (deleteOutputRecord) {
                     LOG.debug("must delete output record! id="+outputRecordToBeDeletedNum);
@@ -1866,16 +1869,16 @@ if (tnow - flushTimer >= 3600000) {
         if (hasIntermediatePersistence) {
             masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap_unpersisted,
                     MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);
+            /****masDAO.persistLongOnly(mergedInRecordsList_unpersisted, MarcAggregationServiceDAO.merged_records_table);****/
 
             //flush from memory now that these have been persisted to database
-            mergedInRecordsList_unpersisted.clear();
+            /****mergedInRecordsList_unpersisted.clear();****/
             allBibRecordsI2Omap_unpersisted.clear();
         }
         else {
             masDAO.persistLongMatchpointMaps(allBibRecordsI2Omap,
                     MarcAggregationServiceDAO.bib_records_table, false);
-            masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);
+            /****masDAO.persistLongOnly(mergedInRecordsList, MarcAggregationServiceDAO.merged_records_table);****/
         }
         
         masDAO.persistLongMatchpointMaps(recordOfSourceMap,
