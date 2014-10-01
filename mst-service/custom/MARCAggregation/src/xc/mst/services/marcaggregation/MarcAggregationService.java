@@ -563,11 +563,17 @@ flushTimer = System.currentTimeMillis();;
         // check if the record is a bibliographic record
         if ("abcdefghijkmnoprt".contains("" + leader06)) {
         	
-        	if (matchpointsHaveChanged(r, smr)) {
-        		LOG.info("MAS: preProcess() found updated record with changed matchpoints for record: " + r.getId());
-        		changedMatchpoints.put(r.getId(), r.getId());
-        	} else {
-        		LOG.info("MAS: preProcess() found updated record with NO changed matchpoints (good! we can optimize!) for record: " + r.getId());        		
+        	// is it a new record? it is, if it doesn't exist in our map
+        	if (! allBibRecordsI2Omap.containsKey(r.getId())) {
+        		LOG.info("MAS: preProcess() found a new record (i.e., with changed matchpoints for record): " + r.getId());
+        		changedMatchpoints.put(r.getId(), 1L);        		
+        	} else {        	
+	        	if (matchpointsHaveChanged(r, smr)) {
+	        		LOG.info("MAS: preProcess() found an updated record with changed matchpoints for record: " + r.getId());
+	        		changedMatchpoints.put(r.getId(), 1L);
+	        	} else {
+	        		LOG.info("MAS: preProcess() found an updated record with NO changed matchpoints (good! we can optimize!) for record: " + r.getId());        		
+	        	}
         	}
         	
         	TimingLogger.start("preProcess.removeFromMatchers");
