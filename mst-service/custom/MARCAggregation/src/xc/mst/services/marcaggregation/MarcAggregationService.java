@@ -1589,6 +1589,7 @@ if (tnow - flushTimer >= 3600000) {
         if (outputRecordToBeDeleted != null && outputRecordToBeDeleted.getSuccessors() != null) {
             for (OutputRecord or : outputRecordToBeDeleted.getSuccessors()) {
                 or.setStatus(Record.DELETED);
+                ((Record) or).setUpdatedAt(null);
                 results.add(or);
                 Record _r = getRecord(or.getId());
                 String type = getXCRecordService().getType(_r);
