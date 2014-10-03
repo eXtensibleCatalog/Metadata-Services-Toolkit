@@ -1055,7 +1055,7 @@ if (tnow - flushTimer >= 3600000) {
             	continue;
             }
 
-            MatchSet ms = populateMatchSet(r, smr);
+            MatchSet ms = getMatchSet(smr);
             HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
             //
             // populateMatchedRecordIds does not return the record itself as part of the match set,
@@ -1676,23 +1676,6 @@ if (tnow - flushTimer >= 3600000) {
             ms.addMatcher(matchPointKey, matcher);
         }
         TimingLogger.stop("getMatchSet");
-        
-        return ms;
-    }
-
-
-    private MatchSet populateMatchSet(InputRecord r, SaxMarcXmlRecord smr) {
-        TimingLogger.start("populateMatchSet");
-
-        MatchSet ms = new MatchSet(smr);
-        for (Map.Entry<String, FieldMatcher> me : this.matcherMap.entrySet()) {
-            String matchPointKey = me.getKey();
-            FieldMatcher matcher = me.getValue();
-            matcher.addRecordToMatcher(smr, r);  // is this the place to do this?  (was originally missing)
-            // possibly need/want to add all match points 1st, then look for matches.
-            ms.addMatcher(matchPointKey, matcher);
-        }
-        TimingLogger.stop("populateMatchSet");
         
         return ms;
     }
