@@ -1061,15 +1061,10 @@ if (tnow - flushTimer >= 3600000) {
             //
             newMatchedRecordIds.add(id);
     		TimingLogger.stop("findMatchSets.populateMatchedRecords");
-            
-            // We need to account for associativity,
-    		TimingLogger.start("findMatchSets.expandMatchedRecords");
-            newMatchedRecordIds = expandMatchedRecordsFromMaps(newMatchedRecordIds);
-    		TimingLogger.stop("findMatchSets.expandMatchedRecords");
-            
+                        
     		TimingLogger.start("findMatchSets.buildListOfMatchsets");
             if (!listOfMatchSets.contains(newMatchedRecordIds)) {
-                // come up with a bare bones set of new match sets, I am guessing most of the time it will be 1 set
+                // We need to account for associativity (should be faster than expandMatchedRecords method)
                 listOfMatchSets = addToMatchSetList(newMatchedRecordIds,  listOfMatchSets);
             }
     		TimingLogger.stop("findMatchSets.buildListOfMatchsets");
