@@ -81,7 +81,6 @@ public class MarcAggregationService extends GenericMetadataService {
     protected TLongLongHashMap                       allBibRecordsI2Omap_unpersisted = null;
     
     protected TLongLongHashMap                       currentMatchSets = null;
-    protected HashMap<Long, OutputRecord>				 currentMatchSetRecords = null;
     
     /**
      * We can save a lot of time if we keep track of changed matchpoints during updates.
@@ -272,7 +271,6 @@ flushTimer = System.currentTimeMillis();;
         }
         
         currentMatchSets = new TLongLongHashMap();
-        //currentMatchSetRecords = new HashMap<Long, OutputRecord>();
 
         changedMatchpoints = new TLongLongHashMap();
 
@@ -1066,7 +1064,7 @@ if (tnow - flushTimer >= 3600000) {
             
             // We need to account for associativity,
     		TimingLogger.start("findMatchSets.expandMatchedRecords");
-            newMatchedRecordIds = expandMatchedRecords(newMatchedRecordIds);
+            newMatchedRecordIds = expandMatchedRecordsFromMaps(newMatchedRecordIds);
     		TimingLogger.stop("findMatchSets.expandMatchedRecords");
             
     		TimingLogger.start("findMatchSets.buildListOfMatchsets");
@@ -1080,8 +1078,12 @@ if (tnow - flushTimer >= 3600000) {
 
     	return listOfMatchSets;
     }
-    
+
     private List<OutputRecord> remerge(List<OutputRecord> results, HashSet<Long> matchset) {
+    	return remerge(results, matchset, false);
+    }
+    
+    private List<OutputRecord> remerge(List<OutputRecord> results, HashSet<Long> matchset, boolean cacheCurrentMatchSets) {
 		TimingLogger.start("remerge");
 	    // clean up any previous merge data for all elements in this new aggregated matchset
 	    List<OutputRecord> deletes = null;
@@ -1099,10 +1101,9 @@ if (tnow - flushTimer >= 3600000) {
 	        OutputRecord outputRecord = matchsetResults.get(0);
 	        long outputRecordId = outputRecord.getId();
 	        for (long id : matchset) {
-	        	currentMatchSets.put(id, outputRecordId);
+	        	if (cacheCurrentMatchSets) currentMatchSets.put(id, outputRecordId);
 	        	((Record)outputRecord).addPredecessor(getInputRepo().getRecord(id));
 	        }
-	        ////currentMatchSetRecords.put(results.get(0).getId(), results.get(0));
 	    }
 	    
 	    if (!firstTime && deletes != null && deletes.size() > 0) matchsetResults.addAll(deletes);
@@ -1283,14 +1284,15 @@ if (tnow - flushTimer >= 3600000) {
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
     	LOG.info("MAS:  processBibUpdateActive: "+r.getId());
     	List<OutputRecord> results = new ArrayList<OutputRecord>();
-    	
+    			    	
     	// If the match points are the same, then we do not need to worry about the match set changing; just update the record payload
     	if (! changedMatchpoints.contains(r.getId())) {
-    		LOG.info("MAS:  processBibUpdateActive: matchpoints have NOT changed; going to re-use the current matchset.");
+     		LOG.info("MAS:  processBibUpdateActive: matchpoints have NOT changed; going to re-use the current matchset's agg record.");
     		OutputRecord oldOutput;
         	String xml;
 
-    		HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+        	HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+
     		if (formerMatchSet.size() > 0) {
     			Long oldOutputId = getBibOutputId(formerMatchSet.iterator().next());
                 oldOutput = getRecord(oldOutputId);
@@ -1336,7 +1338,7 @@ if (tnow - flushTimer >= 3600000) {
 	    	results.addAll(processBibNewActive(r, smr, repo));
     	}
     	
-    	return results;
+    	return results; 
     }
 
     
@@ -1405,10 +1407,10 @@ if (tnow - flushTimer >= 3600000) {
                 HashSet<Long> formerMatchSet = deleteAllMergeDetails(r);
                 LOG.info("MAS:  processBibDelete formerMatchSet [" + formerMatchSet.size() + "] = deleteAllMergeDetails: "+formerMatchSet);    	                
                 for (long formerId: formerMatchSet) {
-                	currentMatchSets.remove(formerId);                	
+//                	currentMatchSets.remove(formerId);                	
                 	recordOfSourceMap.remove(formerId);
                 }
-                currentMatchSets.remove(r.getId());
+//                currentMatchSets.remove(r.getId());
             	recordOfSourceMap.remove(r.getId());
 
             	formerMatchSet.remove(r.getId());
@@ -1432,10 +1434,10 @@ if (tnow - flushTimer >= 3600000) {
     	LOG.info("MAS:  processBibNewActive: "+r.getId());    	
         List<OutputRecord> results = new ArrayList<OutputRecord>();
 
+        // Since we expand matchsets "deeply" during initial load, we end up processing multiple input records all at once.
+        // Therefore, during inital load (firstTime), we cache each of the already-processed ids so we do not duplicate our efforts.
         if (currentMatchSets.contains(r.getId())) {
         	LOG.info("MAS:  processBibNewActive currentMatchSets already processed this bib!: "+r.getId());    	                                	
-            // we already processed this record; it was included in a matchset (aggregated record)
-        	//////results.add(currentMatchSetRecords.get(currentMatchSets.get(r.getId())));
         	return results;
         }
         
@@ -1444,13 +1446,17 @@ if (tnow - flushTimer >= 3600000) {
         LOG.info("MAS:  processBibNewActive matchedRecordIds [" + matchedRecordIds.size() + "] =  populateMatchedRecordIds: "+matchedRecordIds);    	                                	        
         matchedRecordIds.add(r.getId());
         
-        // We need to account for associativity,
-		TimingLogger.start("findMatchSets.expandMatchedRecords");
-		matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+        // We need to account for associativity
+		if (firstTime) {
+			// I believe it's faster if we expand the set as deep as we can during initial load.
+			matchedRecordIds = expandMatchedRecords(matchedRecordIds);
+		} else {
+			// during updates, let's re-use the historical matchset info from our maps
+			matchedRecordIds = expandMatchedRecordsFromMaps(matchedRecordIds);
+		}
 		LOG.info("MAS:  processBibNewActive matchedRecordIds [" + matchedRecordIds.size() + "] =  expandMatchedRecords: "+matchedRecordIds);    	                                	        		
-		TimingLogger.stop("findMatchSets.expandMatchedRecords");
         
-        return remerge(results, matchedRecordIds);
+        return remerge(results, matchedRecordIds, firstTime);
     }
 
     /**
@@ -1508,6 +1514,7 @@ if (tnow - flushTimer >= 3600000) {
 
     // expects a set of matched record ids, i.e., > 1
     private HashSet<Long> expandMatchedRecords(HashSet<Long> matchedRecordIds) {
+    	TimingLogger.start("expandMatchedRecords");
         
         // matchedRecordIds contains all matches for incoming record. However, we also need to check the matched
         // records themselves (not including the incoming record we already checked), because we need to
@@ -1526,6 +1533,7 @@ if (tnow - flushTimer >= 3600000) {
         	if (results.size() > 0) matchedRecordIds.addAll(results);
 
         }
+    	TimingLogger.stop("expandMatchedRecords");
         return matchedRecordIds;
     }
     
@@ -1790,19 +1798,21 @@ if (tnow - flushTimer >= 3600000) {
      * @param _mergedRecordsO2Imap
      * @return merged sets (dedup'd)
      */
-    private HashSet<Long> expandMatchedRecords(HashSet<Long> matchedRecordIds,TLongLongHashMap _mergedRecordsI2Omap, Map<Long, HashSet<Long>> _mergedRecordsO2Imap) {
+    private HashSet<Long> expandMatchedRecordsFromMaps(HashSet<Long> matchedRecordIds) {
+    	TimingLogger.start("expandMatchedRecordsFromMaps");
         HashSet<Long> results = new HashSet<Long>();
         results.addAll(matchedRecordIds);
 
         for (Long input: matchedRecordIds) {
-            Long output = _mergedRecordsI2Omap.get(input);
+            Long output = allBibRecordsI2Omap.get(input);
             if (output != null) {
-                HashSet<Long> temp = _mergedRecordsO2Imap.get(output);
+                HashSet<Long> temp = allBibRecordsO2Imap.get(output);
                 if (temp != null) {
-                    results.addAll(_mergedRecordsO2Imap.get(output));
+                    results.addAll(allBibRecordsO2Imap.get(output));
                 }
             }
         }
+    	TimingLogger.stop("expandMatchedRecordsFromMaps");
         return results;
     }
 
