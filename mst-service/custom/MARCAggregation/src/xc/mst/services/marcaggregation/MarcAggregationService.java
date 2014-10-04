@@ -1287,6 +1287,7 @@ if (tnow - flushTimer >= 3600000) {
         	String xml;
 
         	HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
+            LOG.info("MAS:  processBibUpdateActive formerMatchSet [" + formerMatchSet.size() + "] = "+formerMatchSet);    	                
 
     		if (formerMatchSet.size() > 0) {
     			Long oldOutputId = getBibOutputId(formerMatchSet.iterator().next());
