@@ -1031,6 +1031,50 @@ if (tnow - flushTimer >= 3600000) {
 
 
     private List<HashSet<Long>> findMatchSets(HashSet<Long> formerMatchSet) {
+        TimingLogger.start("findMatchSets");
+
+        List<HashSet<Long>> listOfMatchSets = new ArrayList<HashSet<Long>>();
+        HashSet<Long> processedTheseAlready = new HashSet<Long>();
+                
+    	for (Long id: formerMatchSet) {
+
+    		if (processedTheseAlready.contains(id)) continue;
+    		
+            Record r = getInputRepo().getRecord(id);
+            
+            // do not process deletes (faster to ignore, plus it's possible the XML is empty, which will cause issues below)            
+            if (r.getDeleted()) {
+            	LOG.info("MAS:  findMatchSets, this record is marked for deletion, therefore ignore it, id: "+r.getId());            	
+            	continue;
+            }
+            
+            SaxMarcXmlRecord smr = getSMR(r);
+            if (smr == null) {
+            	LOG.error("MAS:  findMatchSets, couldn't create SaxMarcXmlRecord: "+r.getId()+ ", XML: "+r.getOaiXml());
+            	continue;
+            }
+
+            MatchSet ms = getMatchSet(smr);
+            HashSet<Long> newMatchedRecordIds = populateMatchedRecordIds(ms);
+            //
+            // populateMatchedRecordIds does not return the record itself as part of the match set,
+            // in this case I want it in the set.
+            //
+            newMatchedRecordIds.add(id);
+    		
+    		newMatchedRecordIds = expandMatchedRecords(newMatchedRecordIds);
+    		processedTheseAlready.addAll(newMatchedRecordIds);
+    		
+    		listOfMatchSets.add(newMatchedRecordIds);
+    		
+        }
+        TimingLogger.stop("findMatchSets");
+
+    	return listOfMatchSets;
+    }
+    
+    /*
+    private List<HashSet<Long>> findMatchSets(HashSet<Long> formerMatchSet) {
 	    
         TimingLogger.start("findMatchSets");
 
@@ -1073,6 +1117,7 @@ if (tnow - flushTimer >= 3600000) {
 
     	return listOfMatchSets;
     }
+    */
 
     private List<OutputRecord> remerge(List<OutputRecord> results, HashSet<Long> matchset) {
     	return remerge(results, matchset, false);
