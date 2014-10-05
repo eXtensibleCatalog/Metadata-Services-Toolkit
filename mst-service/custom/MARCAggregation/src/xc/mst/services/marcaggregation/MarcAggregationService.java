@@ -565,15 +565,17 @@ flushTimer = System.currentTimeMillis();;
         if ("abcdefghijkmnoprt".contains("" + leader06)) {
         	
         	// is it a new record? it is, if it doesn't exist in our map
-        	if (! allBibRecordsI2Omap.containsKey(r.getId())) {
-        		LOG.info("MAS: preProcess() found a new record (i.e., with changed matchpoints for record): " + r.getId());
-        		changedMatchpoints.put(r.getId(), 1L);        		
-        	} else {        	
-	        	if (matchpointsHaveChanged(r, smr)) {
-	        		LOG.info("MAS: preProcess() found an updated record with changed matchpoints for record: " + r.getId());
-	        		changedMatchpoints.put(r.getId(), 1L);
-	        	} else {
-	        		LOG.info("MAS: preProcess() found an updated record with NO changed matchpoints (good! we can optimize!) for record: " + r.getId());        		
+        	if (! firstTime) {
+	        	if (! allBibRecordsI2Omap.containsKey(r.getId())) {
+	        		LOG.info("MAS: preProcess() found a new record (i.e., with changed matchpoints for record): " + r.getId());
+	        		changedMatchpoints.put(r.getId(), 1L);        		
+	        	} else {        	
+		        	if (matchpointsHaveChanged(r, smr)) {
+		        		LOG.info("MAS: preProcess() found an updated record with changed matchpoints for record: " + r.getId());
+		        		changedMatchpoints.put(r.getId(), 1L);
+		        	} else {
+		        		LOG.info("MAS: preProcess() found an updated record with NO changed matchpoints (good! we can optimize!) for record: " + r.getId());        		
+		        	}
 	        	}
         	}
         	
@@ -651,7 +653,7 @@ flushTimer = System.currentTimeMillis();;
         try {
         			
 long tnow = System.currentTimeMillis();	
-if (tnow - flushTimer >= 3600000) {
+if (tnow - flushTimer >= 7200000 /* 2hrs */) {
 	flushTimer = tnow;
 	TimingLogger.reset();
 }
