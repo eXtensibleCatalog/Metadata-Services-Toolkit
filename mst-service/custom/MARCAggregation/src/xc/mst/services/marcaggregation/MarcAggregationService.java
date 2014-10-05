@@ -192,7 +192,7 @@ flushTimer = System.currentTimeMillis();;
         }
         
         debugMode = config.getPropertyAsBoolean("debug_mode", false);
-        cacheSMRs = config.getPropertyAsBoolean("cache_smr", true);
+        cacheSMRs = config.getPropertyAsBoolean("cache_smr", false);
         
         // 001/003 manipulation
         insert001 = config.getPropertyAsBoolean("insert_001", false);
