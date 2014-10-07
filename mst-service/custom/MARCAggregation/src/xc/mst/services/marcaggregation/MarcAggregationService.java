@@ -1336,6 +1336,20 @@ if (tnow - flushTimer >= 7200000 /* 2hrs */) {
         	HashSet<Long> formerMatchSet = getCurrentMatchSetForRecord(r);
             LOG.info("MAS:  processBibUpdateActive formerMatchSet [" + formerMatchSet.size() + "] = "+formerMatchSet);    	                
 
+            // Although rare, it's possible that one or more bibs in this set are marked for deletion, but haven't actually been deleted yet.
+            // So, let's not include any deleted records in the creation of this new aggregated record (because it will throw an exception later when MAS tries to read a potentially empty record).
+            // Although, MAS *should* fix this scenario later on when the deleted record gets processed, let's be pro-active.
+    		if (formerMatchSet.size() > 0) {
+				List<Long> deleteThese = new ArrayList<Long>();
+    			for (Long num: formerMatchSet) {
+    				if (repo.getRecord(num).getDeleted()) {
+    					LOG.info("MAS:  processBibUpdateActive: we found a bib that's been marked for deletion in formerMatchSet; we are skipping this record: " + num);
+    					deleteThese.add(num);
+    				}
+    			}
+    			formerMatchSet.removeAll(deleteThese);
+    		}
+    		
     		if (formerMatchSet.size() > 0) {
     			Long oldOutputId = getBibOutputId(formerMatchSet.iterator().next());
                 oldOutput = getRecord(oldOutputId);
