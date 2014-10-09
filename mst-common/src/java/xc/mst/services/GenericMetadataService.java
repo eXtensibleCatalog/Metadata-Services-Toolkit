@@ -530,6 +530,8 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 sh.getUntil(), inputFormat, inputSet);
 //LOG.error("GenericMetadataService, processing repo "+ repo.getName()+" NOW. TotalRecordCount: " + this.totalRecordCount);
         
+        boolean atLeastOneRecordProcessed = false;
+        
         if (doPreProcess) {
             int getRecordLoops = 0;
             
@@ -538,6 +540,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                   	
         	List<Record> records = getRecords(repo, sh, inputFormat, inputSet);
             while (records != null && records.size() > 0 && !stopped) {
+            	atLeastOneRecordProcessed = true;
                 if (paused) {
                     previouslyPaused = true;
                     running.release();
@@ -576,7 +579,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
                 
                 records = getRecords(repo, sh, inputFormat, inputSet);
             }
-            preProcessCompleted();
+            if (atLeastOneRecordProcessed) preProcessCompleted();
         }
         processedRecordCount = 0;
 
@@ -633,7 +636,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
 
         previouslyPaused = false;
         int getRecordLoops = 0;
-        boolean atLeastOneRecordProcessed = false;
+        atLeastOneRecordProcessed = false;
         while (records != null && records.size() > 0 && !stopped) {
             atLeastOneRecordProcessed = true;
             if (paused) {
