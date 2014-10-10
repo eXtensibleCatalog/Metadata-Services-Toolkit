@@ -149,7 +149,7 @@ public class MarcAggregationService extends GenericMetadataService {
     boolean isSetUp = false;
 
     private static final Logger LOG               = Logger.getLogger(MarcAggregationService.class);
-private long flushTimer = System.currentTimeMillis();;
+
     private void clear_objects() {
         matcherMap = null;
         matchRuleMap = null;
@@ -173,7 +173,7 @@ private long flushTimer = System.currentTimeMillis();;
         currentMatchSets = null;
         
         isSetUp = false;
-flushTimer = System.currentTimeMillis();;        
+       
         System.gc();
     }
 
@@ -652,12 +652,6 @@ flushTimer = System.currentTimeMillis();;
         
         try {
         			
-long tnow = System.currentTimeMillis();	
-if (tnow - flushTimer >= 7200000 /* 2hrs */) {
-	flushTimer = tnow;
-	TimingLogger.reset();
-}
-
 			String inputType = r.getType();
 			boolean inputDeleted = r.getDeleted();
 			LOG.info("MAS:  process record: "+r.getId()+", type:"+inputType+", getDeleted:"+inputDeleted);
