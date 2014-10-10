@@ -9,7 +9,7 @@ $DATABASE = "xc_marcaggregation";
 $DATABASE_DRIVER = "mysql";
 $DATABASE_OPTIONS = "";
 $DATABASE_USER = "root";
-$DATABASE_PASSWORD = "";
+$DATABASE_PASSWORD = "root";
 
 my $valid = 0;
 if ($#ARGV >= 0) {

@@ -6,7 +6,7 @@ $DATABASE = "xc_marcaggregation";
 $DATABASE_DRIVER = "mysql";
 $DATABASE_OPTIONS = "";
 $DATABASE_USER = "root";
-$DATABASE_PASSWORD = "";
+$DATABASE_PASSWORD = "root";
 
 if ($#ARGV >= 1) {
    $DATABASE = $ARGV[1];

@@ -9,6 +9,8 @@ $DATABASE_PASSWORD = "root";
 
 $INDENT = 4;
 
+$RECORDS_PER_PAGE = 100000;
+
 use DBI;
 
 &connect_to_db();
@@ -27,21 +29,54 @@ SELECT
 
 ORDER BY t1.output_record_id,
          t1.input_record_id
-
-;
-
 EOF
 
-
-$sth = $DBH->prepare($sql_template);
+my $sth = $DBH->prepare('select count(*) from bib_records');
 if (! $sth->execute()) {
-   $err = $sth->errstr;
+   my $err = $sth->errstr;
    $sth->finish;
    &clean_up;
    die "$err";
 }
+my @row = $sth->fetchrow_array();
+my $num_records = $row[0];
+$sth->finish;
 
-&process($sth);
+my $num_pages = int($num_records / $RECORDS_PER_PAGE + 0.5);
+$num_pages++;
+
+#print "NUM RECS: $num_records \n";
+#print "RECORDS_PER_PAGE: $RECORDS_PER_PAGE \n";
+#print "NUM PAGES: $num_pages \n";
+
+
+my ($output_record_id, $input_record_id, $leaderByte17, $size, $xml, $ros);
+my $last_rec_id = "";
+my $last_rec = "";
+my $cnt = 0;
+
+my $page = 1;
+my $sql = $sql_template . ' limit ' . $RECORDS_PER_PAGE;
+do {
+
+   $sth = $DBH->prepare($sql);
+   if (! $sth->execute()) {
+      my $err = $sth->errstr;
+      $sth->finish;
+      &clean_up;
+      die "$err";
+   }
+
+   &process($sth);
+
+   $sql = $sql_template . ' limit ' . ($page++ * $RECORDS_PER_PAGE) . ', ' . $RECORDS_PER_PAGE;
+
+} while ($page <= $num_pages);
+
+if ($output_record_id ne $last_rec_id) {
+    &print_header($last_rec_id);
+    print $last_rec . "\n";
+}
 
 $sth->finish;
 
@@ -50,15 +85,10 @@ $sth->finish;
    
 sub process {
    my ($sth) = @_;
-
-   my $last_rec_id = "";
-   my $last_rec = "";
-
-   my $cnt = 0;
    
    my (@row);
    while (@row = $sth->fetchrow_array()) {
-      my ($output_record_id,
+      ($output_record_id,
       $input_record_id,
       $leaderByte17,
       $size,
@@ -109,13 +139,6 @@ sub process {
       $last_rec .= "\n";
    
    }
-   
-   #if ($cnt > 1) {
-      if ($output_record_id ne $last_rec_id) {
-          &print_header($last_rec_id);
-          print $last_rec . "\n";
-      }
-   #}
    
 }
 
