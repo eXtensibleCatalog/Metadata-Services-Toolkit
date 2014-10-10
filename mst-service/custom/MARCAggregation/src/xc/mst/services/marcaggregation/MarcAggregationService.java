@@ -1242,6 +1242,9 @@ public class MarcAggregationService extends GenericMetadataService {
             oldHold.setMode(Record.STRING_MODE);
             oldHold.setFormat(marc21);
             oldHold.setStatus(Record.ACTIVE);
+            
+            // inject 001/003 if necessary (based on custom.properties settings)
+            oaiXml = injectNew001(oldHold.getId(), oaiXml);
 
             // Set the XML to the updated XML
             oldHold.setOaiXml(oaiXml);
@@ -1253,9 +1256,7 @@ public class MarcAggregationService extends GenericMetadataService {
 
             TimingLogger.stop("update hold");
             return list;
-        }
-
-        else {
+        } else {
             // originally I thought we were stripping 004/014 from holding.  We are not.
             //
             // oaiXml = masBld.getHoldingBase(oaiXml, holdingTransformer);
@@ -1320,6 +1321,7 @@ public class MarcAggregationService extends GenericMetadataService {
     private List<OutputRecord> processBibUpdateActive(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
     	LOG.info("MAS:  processBibUpdateActive: "+r.getId());
     	List<OutputRecord> results = new ArrayList<OutputRecord>();
+ 		boolean processedAlready = false;
     			    	
     	// If the match points are the same, then we do not need to worry about the match set changing; just update the record payload
     	if (! changedMatchpoints.contains(r.getId())) {
@@ -1350,35 +1352,34 @@ public class MarcAggregationService extends GenericMetadataService {
                 
                 InputRecord record = masRsm.getRecordOfSourceRecord(formerMatchSet, repo, scores);
                 xml = mergeBibSet(record, formerMatchSet, repo);
-    		} else {
-				// Get the record which was processed from the record we just processed
-	            // (any of the matchset input records should map to the same output record, right?)
-	            oldOutput = r.getSuccessors().get(0);
-	            
-	            xml = masBld.update005(r.getOaiXml(), _005_Transformer);
+
+                // inject 001/003 if necessary (based on custom.properties settings)
+        		xml = injectNew001(oldOutputId, xml);
+        		
+        		oldOutput.setMode(Record.STRING_MODE);
+                oldOutput.setFormat(marc21);
+                oldOutput.setStatus(Record.ACTIVE);
+
+                // Set the XML to the updated XML - remerged and reconstituted the xml
+
+                // Do NOT create a new record, update, the OLD record!
+                // Set the XML to the updated XML - reconstituted the xml
+                oldOutput.setOaiXml(xml);
+             
+                // we need the clear out the old updatedAt value
+                // so that the MST will correctly set it later (when repo is persisted)
+                // issue: mst-549
+                ((Record) oldOutput).setUpdatedAt( null );
+                
+                // Add the updated record
+                oldOutput.setType("b");
+                results.add(oldOutput);    		
+         		processedAlready = true;        		                
     		}
-    		
-    		oldOutput.setMode(Record.STRING_MODE);
-            oldOutput.setFormat(marc21);
-            oldOutput.setStatus(Record.ACTIVE);
-
-            // Set the XML to the updated XML - remerged and reconstituted the xml
-
-            // Do NOT create a new record, update, the OLD record!
-            // Set the XML to the updated XML - reconstituted the xml
-            oldOutput.setOaiXml(xml);
-         
-            // we need the clear out the old updatedAt value
-            // so that the MST will correctly set it later (when repo is persisted)
-            // issue: mst-549
-            ((Record) oldOutput).setUpdatedAt( null );
-            
-            // Add the updated record
-            oldOutput.setType("b");
-            results.add(oldOutput);    		
-    		
+    	}
+    	
     	// If the match points change at all, we must re-match/merge all records in the set
-    	} else {
+    	if (! processedAlready) {
     		LOG.info("MAS:  processBibUpdateActive: matchpoints HAVE changed; need to re-match/merge, i.e., delete-then-re-add.");
 
 	    	results = processBibDelete(r);
