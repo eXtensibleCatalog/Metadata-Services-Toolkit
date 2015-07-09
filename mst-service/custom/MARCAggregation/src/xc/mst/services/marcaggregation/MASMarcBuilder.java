@@ -116,7 +116,7 @@ public class MASMarcBuilder extends BaseService{
      * @return
      */
     protected StringBuilder add904toHolding(InputRecord r, SaxMarcXmlRecord smr, Repository repo) {
-        String _004 = smr.getControlField(4);
+        String _004 = smr.getControlField(4); // Umm.. why is this not being used?
 
         String dynamic = getDynamicHoldingContent(repo, r.getId());
         StringBuilder sb ;
@@ -126,7 +126,12 @@ public class MASMarcBuilder extends BaseService{
         // find:            </marc:record>
         //
         final String regex = "</marc:record>";
-        sb = new StringBuilder(insertDynamicAtBegin(r.getOaiXml(), dynamic, regex));
+        try {
+        	sb = new StringBuilder(insertDynamicAtBegin(r.getOaiXml(), dynamic, regex));
+        } catch (Exception e) {
+        	LOG.warn("Couldn't add 904 to end of record!");
+        	sb = new StringBuilder(r.getOaiXml());
+        }
         return sb;
     }
 
@@ -264,10 +269,25 @@ public class MASMarcBuilder extends BaseService{
 
 
     private String insertTextAfter008(String oaiXml, String dynData) {
+    	boolean success = true;
         // now insert the dynamic block into the correct spot in oaiXml,
         // it goes after the 008!
         final String regex = "controlfield tag=\"008\".*/marc:controlfield>";
-        oaiXml=insertDynamicAtEnd(oaiXml, dynData, regex);
+        try {
+        	oaiXml=insertDynamicAtEnd(oaiXml, dynData, regex);
+        } catch (Exception e) {
+            success = false;
+        }
+        // if we can't find a match, stick it at the end of the record
+        if (! success) {
+            LOG.warn("*** Could not find controlfield tag="+regex+".  Placing dynamic data at end of record!");        	
+            final String regex2 = "</marc:record>";
+            try {
+            	oaiXml=insertDynamicAtBegin(oaiXml, dynData, regex2);
+            } catch (Exception e2) {
+            	LOG.error("Couldn't place dynamic data at end of record!");
+            }
+        }
         return oaiXml;
     }
 
@@ -275,7 +295,7 @@ public class MASMarcBuilder extends BaseService{
      * Use a regular expression to search for a pattern.  Insert 'dynamic' right after the end
      * of the found match. If match not found insert at end.
      */
-    private String insertDynamicAtEnd(String inputXml, String dynamic, String regex) {
+    private String insertDynamicAtEnd(String inputXml, String dynamic, String regex) throws Exception {
         //
         // Create a Pattern instance
         //
@@ -296,8 +316,7 @@ public class MASMarcBuilder extends BaseService{
             sb.insert(end, dynamic);
         }
         else {
-            LOG.error("*** Could not find controlfield tag="+regex+".  Placed dynamic data at end of record!");
-            sb.append(dynamic);
+            throw new Exception("*** Could not find controlfield tag="+regex+"!");
         }
         return sb.toString();
     }
@@ -307,7 +326,7 @@ public class MASMarcBuilder extends BaseService{
      *  found match. If match not found insert at end.
      *  (at end would really would be an error, after end of </record>)
      */
-    private String insertDynamicAtBegin(String inputXml, String dynamic, String regex) {
+    private String insertDynamicAtBegin(String inputXml, String dynamic, String regex) throws Exception {
         //
         // Create a Pattern instance
         //
@@ -328,8 +347,7 @@ public class MASMarcBuilder extends BaseService{
             sb.insert(begin, dynamic);
         }
         else {
-            LOG.error("*** Could not find controlfield tag="+regex+".  Placed dynamic data at end of record!");
-            sb.append(dynamic);
+            throw new Exception("*** Could not find controlfield tag="+regex+"!");
         }
         return sb.toString();
     }
