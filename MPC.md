@@ -1,0 +1,1 @@
+<img src='https://docs.google.com/drawings/pub?id=1FfUg44IxjTFj23nOtzT48CxqDJTHfkVai3HkQVS3Eck&amp;w=1971&amp;h=1279'>

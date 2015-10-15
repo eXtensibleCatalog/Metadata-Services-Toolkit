@@ -1,0 +1,34 @@
+# Introducción al Servicio de Transformación de MARCXML a Esquema XC #
+
+El Servicio de Transformación de MARCXML a Esquema XC convierte los registros MARCXML Bibliográficos y de Ejemplares al Esquema XC. Traslada información desde los campos MARCXML en el correspondiente nivel FRBR al registro Esquema XC.
+Los registros procesados a través del Servicio de Transformación habrán pasado antes por el Servicio de Normalización MARCXML. Este servicio normaliza información de determinadas etiquetas MARC (como por ejemplo el 007) y genera localmente campos 9XX con su correspondiente término extraído del vocabulario MARC en inglés. El  Servicio de Normalización, además, elimina información adicional (por ejemplo en el campo 020). Incluimos más abajo el mapeado de cada uno de estos campos 9XX específicos de XC, creados por el Servicio de Normalización. Si un campo MARC concreto no se encuentra en esta lista y no es procesado por el Servicio de Normalización, dicho campo no será mapeado al Esquema XC por el momento.
+Esta sección aporta información sobre en qué lugar del registro XC se insertará la información de cada campo MARCXML. Para usar este Servicio, el lector deberá haber leído la sección de documentación MST que explica cómo configurar el MST para recolectar registros y aplicarles los Servicios.
+Antes de aplicar los mapeados de Transformación descritos en este documento, el Servicio comprueba la cabecera 06 del MARCXML para determinar el tipo de registro a procesar. Si una etiqueta MARC es tratada del mismo modo en bibliográficos y ejemplares, se indica más abajo. En otros casos, la misma etiqueta se usa en bibliográficos y ejemplares pero existen diferencias de mapeado entre los dos formatos. Esto también se indicará. Si no se indica nada, la etiqueta solo es válida para MARC bibliográfico.
+Algunos campos de MARC Ejemplares no se han mapeado aún porque por ejemplo algunos identificadores que se encuadran dentro del FRBR Grupo 1 “Manifestación” puede que se mapeen de distinta forma en Ejemplares que en Bibliográficos. Especialmente si una biblioteca ha usado información de MARC Ejemplares para representar una versión adicional de un recurso a través de lo que se conoce como “técnica de registro único” (“single record technique”). Abordaremos estos mapeados más complejos más adelante.
+## Salida de registros WEM XC a partir de bibliográficos ##
+Lo normal será que 1 registro bibliográfico genere 1 registro de obra, 1 registro de expresión y 1 registro de manifestación. Aunque, obviamente, ciertos registros bibliográficos pueden dar lugar a más de 3 registros WEM por contener más de una obra y expresión. Por ejemplo, tenemos una grabación de música clásica en la que un mismo pianista da un concierto donde interpreta obras de Hayden, Mozart y Beethoven. Dada la implementación actual del Servicio de Transformación MARC-XC, el número de expresiones resultante siempre será igual al número de obras resultante. Así que, dando por hecho que no existen ejemplares embebidos en el registro bibliográfico de entrada, el número de registros de salida siempre será impar:
+1 MARC bib => 3 registros de salida XC =  1 obra  +  1 expresión  + 1 manifestación
+
+1 MARC bib => 5 registros de salida XC =  2 obras   +  2 expresiones + 1 manifestación
+
+1 MARC bib => 21 registros de salida XC = 10 obras + 10 expresiones + 1 manifestación
+Salida de registro XC de Ejemplares ==
+Algunas instituciones tienen los datos de ejemplar embebidos en sus registros bibliográficos, otras tienen la información de ejemplares en el MARC de ejemplares y otras tendrán algunos ejemplares embebidos y otros en MARC Ejemplares. Lo normal será que un registro de ejemplar de entrada dé como resultado un registro de salida de ejemplar XC. Pero en estos dos casos es posible que el resultado sean más de 1 registro de ejemplar de salida:
+  1. MARC bib => 0..N ejemplares xc (además de los WEM)
+
+  1. MARC holding => 1..N ejemplares xc
+## Creación de Obras y Expresiones adicionales por cada registro bibliográfico MARC ##
+Cuando hay un  registro con  campos 700, 710, 711, o 730 cuyo 2º indicador es 2, la regla general es crear obras y expresiones adicionales (a parte de las que se crean para cualquier bibliográfico). Existen algunos matices a esta regla, pero es una regla general bastante válida. El Servicio crea un registro de obra SEPARADO para cada uno de estos campos 7XX cuyo 2º indicador es 2. Se mapean los siguientes subcampos:
+Nota: de todos ellos se ha eliminado el $l
+
+> 700 kmnoprst
+> 710 kmnoprst
+> 711 fkpst
+> 730 adgkmnoprst
+con el titleOfTheWork para cada uno de estos campos de forma que cada registro de Obra contenga este elemento más el work/creator mapeado con el 959 correspondiente. El Servicio de Transformación también copia el resto de elementos del registro de Obra ORIGINAL (excepto el creador y  el titleOfTheWork en el nuevo registro de Obra.
+El Servicio de Transformación también crea un registro de expresión SEPARADO por cada uno de estos campos 7XX cuyo 2º indicador es 2, que se corresponde con el registro de Obra que también ha sido creado. Este registro de Expresión contiene TODA la información del registro de Expresión creado a partir del registro MARC original completo (es decir, lo único que hace es una copia de él). Hay una excepción: reemplaza el titleOfTheExpression (antes, expressionTitle) del registro de Expresión original (el que está mapeado con el 130 y el 240) con el titleOfTheWork (antes, workTitle) del registro de Obra correspondiente (es decir, el que ha sido mapeado desde el 7XX $t y el resto de campos delante del $t) para que cada registro de Expresión y cada registro de Obra creados a partir de los 7XX contengan la misma información en sus respectivos elementos titleOfTheWork y titleOfTheExpression. La única diferencia aquí es que el 730 $l (lengua) se mapea con el titleOfTheExpression pero no con el titleOfTheWork.
+
+<font color='red'>ejemplo de registro de entrada <a href='http://code.google.com/p/xcmetadataservicestoolkit/source/browse/trunk/mst-service/custom/MARCToXCTransformation/test/mock_harvest_input/multipleWEs/010.xml'>aquí</a> y de salida <a href='http://code.google.com/p/xcmetadataservicestoolkit/source/browse/trunk/mst-service/custom/MARCToXCTransformation/test/mock_harvest_expected_output/multipleWEs/010.xml'>aquí</a></font>
+
+## Otros comentarios ##
+Hay que tener en cuenta que lo ideal sería que cada registro de Obra y Expresión tuviese su propia información, información que es exclusiva de cada tipo de registro (igual que la lengua de esa expresión particular, o la materia de aquella obra particular) pero la mayoría de la información MARC no va a proporcionar la información suficiente para determinar qué va con qué, así que básicamente copiamos toda la información, es la mejor solución.

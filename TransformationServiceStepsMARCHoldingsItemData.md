@@ -1,0 +1,8 @@
+| **MARC Tag** | **XC FRBR Level** | **XC Schema equivalent** | **Subfields to map** | **Mapping instructions** | **Additional comments** | **How used in XC** |
+|:-------------|:------------------|:-------------------------|:---------------------|:-------------------------|:------------------------|:-------------------|
+|876-878       |item               |xc:recordID               |a                     |"Add prefix for institution as type attribute, e.g. type=""NRU"""|                         |linking between FRBR levels|
+|876-878       |item               |xc:status                 |j                     |                          |Will probably need a lookup table if this contains a coded value|possible facet values|
+|876-878       |item               |xc:tempLocation           |l (L)                 |                          |Will probably need a lookup table if this contains a coded value|possible facet values|
+|876-878       |item               |xc:pieceDesignation       |p                     |                          |                         |                    |
+|876-878       |item               |xc:copyNumber             |t                     |                          |                         |                    |
+|876-878       |item               |xc:chronology, xc:enumeration|$3                    |                          |This will need some work to determine what this data is.|                    |
