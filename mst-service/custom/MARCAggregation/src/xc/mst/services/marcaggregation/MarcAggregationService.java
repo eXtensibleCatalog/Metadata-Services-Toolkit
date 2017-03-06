@@ -58,6 +58,14 @@ public class MarcAggregationService extends GenericMetadataService {
     protected List<HashSet<Long>>                    masMatchSetList = null;
 
     /**
+     * processBibUpdateActive is actually 2 separate actions: processBibDelete follwed by processBibNewActive
+     * 
+     *    Therefore it's possible that processBibDelete will create OutputRecords that will need to 
+     *    be deleted in processBibNewActive. When/if that occurs, simply remove the unnecessary OutputRecords
+    **/
+    protected TLongLongHashMap              removeTransientOutputRecords = new TLongLongHashMap();
+
+    /**
      * to sort/figure record of source, place items we are interested in, that are used to determine
      * record of source, in this map, as we go.
      */
@@ -650,6 +658,9 @@ public class MarcAggregationService extends GenericMetadataService {
         String type = null;
         List<OutputRecord> results = null;
         
+        // clear transient object used by processBibUpdateActive()
+        removeTransientOutputRecords.clear();
+
         try {
         			
 			String inputType = r.getType();
@@ -1382,12 +1393,22 @@ public class MarcAggregationService extends GenericMetadataService {
     	if (! processedAlready) {
     		LOG.info("MAS:  processBibUpdateActive: matchpoints HAVE changed; need to re-match/merge, i.e., delete-then-re-add.");
 
-	    	results = processBibDelete(r);
+                List<OutputRecord> tempResults = new ArrayList<OutputRecord>();
+	    	tempResults = processBibDelete(r);
 	
 	    	// processBibDelete nukes all the record's score data; must re-add it
 	    	addAndPersistScores(r, smr);
 	    	
-	    	results.addAll(processBibNewActive(r, smr, repo));
+                tempResults.addAll(processBibNewActive(r, smr, repo));
+           
+                for (OutputRecord or2: tempResults) {
+                   if (removeTransientOutputRecords.containsKey(or2.getId())) {
+                       LOG.debug("OutputRecord ID created from processBibDelete and/or processBibNewActive wants to be deleted; therefore remove it from our result list: " + or2.getId());
+                   } else {
+                       LOG.debug("Resulting OutputRecord ID from processBibNewActive: " + or2.getId());
+                       results.add(or2);
+                   }
+                }
     	}
     	
     	return results; 
@@ -1626,10 +1647,18 @@ public class MarcAggregationService extends GenericMetadataService {
     }
 
     private List<OutputRecord> deleteOutputRecord(List<OutputRecord> results, Long outputRecordToBeDeletedNum) {
+        LOG.info("in deleteOutputRecord() record ID: " + outputRecordToBeDeletedNum);
         Record outputRecordToBeDeleted = getRecord(outputRecordToBeDeletedNum);
 
+        // Here, it's possible we have a transient OutputRecord in memory. Add it to the list in case other methods (e.g., processBibUpdateActive)
+        // need to filter out these records from their results 
+        if (outputRecordToBeDeleted == null) {
+
+            LOG.debug("in deleteOutputRecord(); couldn't find record ID: " + outputRecordToBeDeletedNum + "; mark it as deleted in case it's a transient OutputRecord.");
+            removeTransientOutputRecords.put(outputRecordToBeDeletedNum, outputRecordToBeDeletedNum);
+
         // you may have already deleted it, because 1 output record can be mapped to multiple input records
-        if (outputRecordToBeDeleted != null) {
+        } else {
             LOG.debug("found outputRecordToBeDeleted in repo, id="+outputRecordToBeDeletedNum+" mark it deleted!");
             outputRecordToBeDeleted.setStatus(Record.DELETED);
             
