@@ -21,5 +21,6 @@ perl compare_mas.pl outputA.txt outputB.txt
    b. The directory Tsets_output will contain the expected output, T0.txt, ..., T7.txt
       You can use the utility scripts in 1) above to compare against these time steps.
 
-
+   c. Documentation explaining what is occuring in each step can be found in the
+      following spreadsheets: Tsets_explained.xlsx Tsets_explained_in_detail.xlsx
 
