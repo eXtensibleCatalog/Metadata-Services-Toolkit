@@ -602,6 +602,7 @@ public abstract class GenericMetadataService extends SolrMetadataService
             	cacheSetup = true;
             } else {
             	LOG.info("This is not a large update; we will not need to cache previous statuses (" + this.totalRecordCount + " < " + largeHarvestThreshold + ").");
+            	cacheSetup = false;
             }
 
         	previousStatuses.clear();
