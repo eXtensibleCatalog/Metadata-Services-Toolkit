@@ -434,11 +434,20 @@ public class RepositoryDAO extends BaseDAO {
                                 int i = 1;
                                 Record r = recordXmls2Add.get(j);
                                 r.setMode(Record.STRING_MODE);
+        //LOG.info("in commitIfNecessary(): importing record ID = " + r.getId());
+        String xmlFixed = null;
+        if (r.getOaiXml() != null) {
+           xmlFixed = fixUnicode(r.getOaiXml());
+        }
                                 ps.setLong(i++, r.getId());
-                                ps.setString(i++, r.getOaiXml());
-                                ps.setString(i++, r.getOaiXml());
-                                if (r.getOaiXml() != null) {
-                                    TimingLogger.add("RECORDS_XML_LENGTH", r.getOaiXml().length());
+                                //ps.setString(i++, r.getOaiXml());
+                                //ps.setString(i++, r.getOaiXml());
+        ps.setString(i++, xmlFixed);
+        ps.setString(i++, xmlFixed);
+                                //if (r.getOaiXml() != null) {
+                                if (xmlFixed != null) {
+                                    //TimingLogger.add("RECORDS_XML_LENGTH", r.getOaiXml().length());
+         TimingLogger.add("RECORDS_XML_LENGTH", xmlFixed.length());
                                 } else {
                                     TimingLogger.add("RECORDS_XML_LENGTH", 0);
                                 }
@@ -2610,4 +2619,18 @@ public class RepositoryDAO extends BaseDAO {
                 "select set_id from " + getTableName(name, RECORDS_SETS_TABLE) + " group by set_id", Integer.class);
         return setIds;
     }
+
+
+    public String fixUnicode(String text) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (!Character.isHighSurrogate(ch) && !Character.isLowSurrogate(ch)) {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
+
 }
