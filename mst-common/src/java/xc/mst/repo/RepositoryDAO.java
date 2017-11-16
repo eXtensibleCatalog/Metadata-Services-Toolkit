@@ -2623,12 +2623,19 @@ public class RepositoryDAO extends BaseDAO {
 
     public String fixUnicode(String text) {
         StringBuilder sb = new StringBuilder();
+boolean broken = false;
         for (int i = 0; i < text.length(); i++) {
             char ch = text.charAt(i);
             if (!Character.isHighSurrogate(ch) && !Character.isLowSurrogate(ch)) {
                 sb.append(ch);
             }
+else {
+broken = true;
+}
         }
+if (broken) {
+LOG.info("in fixUnicode()\nbefore:\n" + text + "\nafter:\n" + sb.toString() + "\n");
+}
         return sb.toString();
     }
 
